@@ -19,7 +19,7 @@
   Boolean showCached = null;
   try{
   	cachedDeList = (List)currInfoBean.getInfo(ProcessConstants.ALL_DATA_ELEMENTS);
-  	showCached = session.getAttribute("showCached");
+  	showCached = (Boolean)session.getAttribute("showCached");
   	
   }
   catch(Exception ex){}

@@ -16,6 +16,7 @@
 
 
 <%
+  pageContext.getSession().setAttribute("showCached",new Boolean("true"));
   DataElementSearchBean desb = (DataElementSearchBean)infoBean.getInfo("desb");
   List deList = (List)infoBean.getInfo(ProcessConstants.ALL_DATA_ELEMENTS);
   HTMLPageScroller myScroller = (HTMLPageScroller)infoBean.getInfo(
