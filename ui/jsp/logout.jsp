@@ -65,7 +65,7 @@ if (parent.frames[1])
       <tr><td>&nbsp;</td></tr>
       <tr><td>&nbsp;</td></tr>
       <tr class="OraTipLabel">
-          <td align="center" class="OraTipLabel">You have been successfully logged out of Formbuilder.
+          <td align="center" class="OraTipLabel">You have been successfully logged out.
           Click <a target="_top" href="<%=forwardUrl%>">here</a> to return to CDEBrowser.
           </td>
       </tr>
