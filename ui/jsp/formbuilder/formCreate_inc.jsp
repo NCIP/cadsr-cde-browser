@@ -49,7 +49,7 @@ function clearProtocol() {
       </td>
     </tr>         
     <tr>
-      <td class="OraHeaderSubSub" width="100%">New Form Header</td>
+      <td class="OraHeaderSubSub" width="100%">New Form Details</td>
     </tr>
     <tr>
       <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
@@ -57,8 +57,6 @@ function clearProtocol() {
   </table>
 
   <%@ include file="showValidationErrors.jsp" %>
-
-
 
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
     <tr class="OraTabledata">
@@ -166,6 +164,7 @@ function clearProtocol() {
   
  </table>
 
+ <!--
   <br/>
   <hr/>
   <br/>
@@ -187,6 +186,8 @@ function clearProtocol() {
         </td>
     </tr>
   </table>
+-->
+
 
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >
     <tr >
