@@ -88,7 +88,7 @@ public interface FormBuilderServiceRemote {
     String password) throws  RemoteException;
 
 
-  public CDECart retrieveCDECart(String username)
+  public CDECart retrieveCDECart()
     throws DMLException, RemoteException;
 
   public int addToCDECart(CDECartItem item)

@@ -253,19 +253,29 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return false;
   }
 
-  public CDECart retrieveCDECart(String username)
+  public CDECart retrieveCDECart()
     throws DMLException {
-    return null;
+    String user = context.getCallerPrincipal().getName();
+    CDECartDAO myDAO = daoFactory.getCDECartDAO();
+    CDECart cart = myDAO.findCDECart(user);
+    
+    return cart;
   }
 
   public int addToCDECart(CDECartItem item)
     throws DMLException {
-    return 0;
+    String user = context.getCallerPrincipal().getName();
+    CDECartDAO myDAO = daoFactory.getCDECartDAO();
+    item.setCreatedBy(user);
+    int ret = myDAO.insertCartItem(item);
+    return ret;
   }
 
   public int removeFromCDECart(String itemId)
     throws DMLException {
-    return 0;
+    CDECartDAO myDAO = daoFactory.getCDECartDAO();
+    int ret = myDAO.deleteCartItem(itemId);
+    return ret;
   }
 
   public Form copyForm(

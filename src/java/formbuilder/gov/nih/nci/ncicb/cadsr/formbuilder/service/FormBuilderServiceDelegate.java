@@ -82,7 +82,7 @@ public interface FormBuilderServiceDelegate {
     String username,
     String password) throws FormBuilderException;
 
-  public CDECart retrieveCDECart(String username) throws FormBuilderException;
+  public CDECart retrieveCDECart() throws FormBuilderException;
 
   public int addToCDECart(CDECartItem item) throws FormBuilderException;
 

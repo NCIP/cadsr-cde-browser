@@ -89,7 +89,7 @@ public interface FormBuilderServiceLocal  {
     String role) throws DMLException;
     **/
 
-  public CDECart retrieveCDECart(String username) throws DMLException;
+  public CDECart retrieveCDECart() throws DMLException;
 
   public int addToCDECart(CDECartItem item) throws DMLException;
 
