@@ -358,11 +358,10 @@ function gotoCDESearchPrefs() {
  
 <%@ include  file="cdebrowserCommon_html/tab_include_search.html" %>
 
- <%
-  if (pageContextInfo!=null&&!pageContextInfo.equals("")) {
-%>
+
+<%@ include file="../formbuilder/showMessages.jsp" %>   
 <table>
-    <%}
+ <%
       if (request.getAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS) != null) {
     %>
     
@@ -373,10 +372,6 @@ function gotoCDESearchPrefs() {
         </tr>
     <%
       }
-    %>
-    
-    <%@ include file="../formbuilder/showMessages.jsp" %>
-    <%
       if (!"".equals(src)) {
     %>
     
