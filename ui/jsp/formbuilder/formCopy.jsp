@@ -21,7 +21,7 @@
       String protoLOVUrl= 
       "javascript:newWin('/cdebrowser/formLOVAction.do?method=getProtocolsLOV&idVar=" + FormConstants.PROTOCOLS_LOV_ID_FIELD + "&chkContext=true&nameVar=" + FormConstants.PROTOCOLS_LOV_NAME_FIELD +pageUrl+"','protoLOV',700,600)";
       %>
-    <%@ include file="../common/common_header_inc.jsp"%>
+    <%@ include file="../common/in_process_common_header_inc.jsp"%>
     <jsp:include page="../common/tab_inc.jsp" flush="true">
       <jsp:param name="label" value="Copy&nbsp;Form"/>
       <jsp:param name="urlPrefix" value=""/>
