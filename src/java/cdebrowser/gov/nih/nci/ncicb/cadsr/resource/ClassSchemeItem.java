@@ -21,4 +21,7 @@ public interface ClassSchemeItem  {
 
   public String getCsCsiIdseq();
   public void setCsCsiIdseq(String csCsiIdseq);
+
+  public String getAcCsiIdseq();
+  public void setAcCsiIdseq(String acCsiIdseq);
 }

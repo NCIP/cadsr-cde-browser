@@ -21,6 +21,10 @@ public interface ValidValue extends Serializable{
   public String getDescription();
 
   public void setDescription(String vmDescription);
+
+  public String getVpIdseq();
+
+  public void setVpIdseq(String aVpIdseq);
   
   public Object clone() throws CloneNotSupportedException ;
 }

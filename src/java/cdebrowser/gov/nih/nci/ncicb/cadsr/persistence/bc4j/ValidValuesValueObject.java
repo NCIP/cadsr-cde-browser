@@ -14,6 +14,7 @@ public class ValidValuesValueObject implements ValidValue {
   protected String shortMeaningDescription;
   protected String shortMeaningValue;
   protected String vmDescription;
+  protected String vpIdseq;
 
   public ValidValuesValueObject() {
     super();
@@ -74,5 +75,13 @@ public class ValidValuesValueObject implements ValidValue {
   public Object clone() throws CloneNotSupportedException {
     return super.clone();
 
+  }
+
+  public String getVpIdseq() {
+    return vpIdseq;
+  }
+
+  public void setVpIdseq(String aVpIdseq) {
+    this.vpIdseq = aVpIdseq;
   }
 }
