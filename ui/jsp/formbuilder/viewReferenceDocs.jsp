@@ -209,6 +209,9 @@
                 target="_parent" >
                 <bean:write name="attachment" property="name"/>
               </html:link>                 
+           <logic:equal name="attachment" property="name" value="<%=(String) request.getSession().getAttribute(FormConstants.REFDOCS_TEMPLATE_ATT_NAME)%>">
+             (linked to linked to CDE Browser Download Template)
+            </logic:equal>
                           </td>
                         </tr>
                       </logic:iterate>                    
