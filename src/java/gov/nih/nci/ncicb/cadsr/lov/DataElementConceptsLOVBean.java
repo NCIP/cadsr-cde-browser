@@ -12,8 +12,11 @@ import java.util.*;
 import java.io.*;
 import gov.nih.nci.ncicb.cadsr.database.*;
 import gov.nih.nci.ncicb.cadsr.util.*;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
 public class DataElementConceptsLOVBean extends Object {
+  private static Log log = LogFactory.getLog(DataElementConceptsLOVBean.class.getName());
 
   private String[] searchName;
   private String[] displayName;
@@ -107,7 +110,7 @@ public class DataElementConceptsLOVBean extends Object {
 
     }
     catch( SQLException e){
-      System.out.println("my exception: " + e);
+      log.error("Exception: ", e);
     }
   }
 

@@ -5,17 +5,18 @@ package gov.nih.nci.ncicb.cadsr.lov;
  * <P>
  * @author Oracle Corporation
  */
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.sql.*;
-import java.util.*;
-import java.io.*;
-import gov.nih.nci.ncicb.cadsr.database.*;
 import gov.nih.nci.ncicb.cadsr.util.*;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
+import java.sql.*;
+
+import javax.servlet.http.*;
 //import healthtoolkit.beans.dbservice.*;
 //import healthtoolkit.utils.*;
 
 public class ClassificationsLOVBean extends Object {
+  private static Log log = LogFactory.getLog(ClassificationsLOVBean.class.getName());
 
   private String[] searchName;
   private String[] displayName;
@@ -121,7 +122,7 @@ public class ClassificationsLOVBean extends Object {
     }
     catch( SQLException e){
       //this.dBBroker = dBBroker;
-      System.out.println("my exception: " + e);
+      log.error("Exception: ", e);
     }
   }
 
