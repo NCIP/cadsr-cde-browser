@@ -4,6 +4,8 @@ import gov.nih.nci.ncicb.cadsr.dto.NCIUserTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.security.oc4j.OC4JUserObject;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
@@ -108,6 +110,10 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
       String role = (String) it.next();
       List l = (List) result.get(role);
       System.out.println("Role: " + role + " contexts count: " + l.size());
+      Iterator iter = l.iterator();
+      while (iter.hasNext()) {
+        System.out.println("Context Name: "+((Context)iter.next()).getName());
+      }
     }
   }
 
@@ -175,18 +181,23 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
       Iterator it = results.iterator();
       Map mp = new HashMap();
       String roleName;
+      Context conte;
 
       while (it.hasNext()) {
         mp = (Map) it.next();
         roleName = (String) mp.get("BusinessRole");
-
+        conte = new ContextTransferObject();
+        conte.setConteIdseq((String) mp.get("ConteIdseq"));
+        conte.setName((String) mp.get("ConteName"));
         if (out.containsKey(roleName)) {
           List availList = (List) out.get(roleName);
-          availList.add((String) mp.get("ConteIdseq"));
+          //availList.add((String) mp.get("ConteIdseq"));
+          availList.add(conte);
         }
         else {
           List contextsList = new ArrayList();
-          contextsList.add((String) mp.get("ConteIdseq"));
+          //contextsList.add((String) mp.get("ConteIdseq"));
+          contextsList.add(conte);
           out.put(roleName, contextsList);
         }
       }
