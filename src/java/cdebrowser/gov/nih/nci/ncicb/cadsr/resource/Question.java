@@ -14,4 +14,7 @@ public interface Question extends AdminComponent  {
 
   public List getValidValues();
   public void setValidValues(List values);
+
+  public DataElement getDataElement();
+  public void setDataElement(DataElement dataElement);
 }
