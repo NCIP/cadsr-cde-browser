@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
@@ -92,19 +93,10 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     Object sessionObject) {
     HttpSession session = req.getSession(false);
 
-    if (session != null) {
-      Collection keys =
-        (Collection) session.getAttribute(
-          CaDSRConstants.GLOBAL_SESSION_KEYS);
-
-      if (keys == null) {
-        keys = new ArrayList();
-      }
-
-      keys.add(attrName);
-      session.setAttribute(CaDSRConstants.GLOBAL_SESSION_KEYS, keys);
+    if (session != null) {     
       session.setAttribute(attrName, sessionObject);
     }
+    SessionUtils.addGlobalSessionKey(session,attrName);
   }
 
   /**

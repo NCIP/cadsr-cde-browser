@@ -63,13 +63,12 @@ function details(linkParms ){
 <BODY topmargin=0 bgcolor="#ffffff" topmargin="0">
 
 <% 
-  String urlPrefix = "";
+
   String downloadXMLURL = "javascript:fileDownloadWin('downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
   String downloadExcelURL = "javascript:fileDownloadWin('downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
 %>
 <jsp:include page="../common/common_header_inc.jsp" flush="true">
   <jsp:param name="loginDestination" value="formCDECartAction.do?method=displayCDECart"/>
-  <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
 <jsp:include page="../common/tab_inc.jsp" flush="true">
   <jsp:param name="label" value="CDE&nbsp;Cart"/>
@@ -163,17 +162,17 @@ function details(linkParms ){
       <tr>
         <td>
           <a href="javascript:saveItems()">
-            <html:img src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/> 
+            <html:img src='<%="i/save.gif"%>' border="0" alt="Save"/> 
           </a>
         </td>   
         <td>
           <a href="javascript:deleteItems()">
-            <html:img src='<%=urlPrefix+"i/deleteButton.gif"%>' border="0" alt="Delete"/> 
+            <html:img src='<%="i/deleteButton.gif"%>' border="0" alt="Delete"/> 
           </a>
         </td> 
         <td >
           <html:link href="cdeBrowse.jsp?PageId=DataElementsGroup">				
-            <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Back"/>
+            <html:img src='<%="i/backButton.gif"%>' border="0" alt="Back"/>
           </html:link>             
         </td> 
       </tr>

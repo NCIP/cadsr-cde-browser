@@ -1,3 +1,7 @@
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%
@@ -5,7 +9,7 @@
 %>
 
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/newWinJS.js"></SCRIPT>
-<SCRIPT LANGUAGE="JavaScript1.1" SRC="ljsLib/helpWinJS.js"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/helpWinJS.js"></SCRIPT>
 
 <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
   <tr>
@@ -14,7 +18,6 @@
 
     <img src=i/graphic6.gif border=0>
     </td>
-
     <td align=right valign=top colspan=2 nowrap>
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>

@@ -22,6 +22,7 @@ import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.impl.*;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
+
 import oracle.cle.persistence.HandlerFactory;
 
 import oracle.cle.process.ProcessInfoException;
@@ -141,7 +142,7 @@ public class GetDataElements extends BasePersistingProcess {
         getCurrentTimestamp() + " -Performed intialization successfully");
 
       tib = new TabInfoBean("cdebrowser_search_tabs");
-      
+
       tib.processRequest(myRequest);
 
       if (tib.getMainTabNum() != 0) {
@@ -355,7 +356,7 @@ public class GetDataElements extends BasePersistingProcess {
           System.out.println("DE Id: "+((CDECartItem)it.next()).getId());
         }
         //userSession.setAttribute(CaDSRConstants.CDE_CART,cart);
-        
+
       }
 
 
@@ -430,8 +431,9 @@ public class GetDataElements extends BasePersistingProcess {
       setResult("XML_FILE_MAX_RECORDS", params.getXMLFileMaxRecords());
       setResult("TREE_URL", params.getTreeURL());
       setResult("INITIALIZED", "yes");
-      CDECart cart = this.findCart(mySession);   
+      CDECart cart = this.findCart(mySession);
       mySession.setAttribute(CaDSRConstants.CDE_CART,cart);
+      SessionUtils.addGlobalSessionKey(mySession,CaDSRConstants.CDE_CART);
     }
     else {
       setResult("SBREXT_DSN", getStringInfo("SBREXT_DSN"));
