@@ -27,6 +27,7 @@ if(confirm(message)) location.href = url;
           	<th class="OraTableColumnHeader" nowrap>Action</th>
           	<th class="OraTableColumnHeader" nowrap>Long Name</th>
           	<th class="OraTableColumnHeader" nowrap>Type</th>
+            <th class="OraTableColumnHeader" nowrap>Protocol</th>
           	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	
           </tr>        
           <logic:iterate id="form" name="<%=FormConstants.FORM_SEARCH_RESULTS%>" 
@@ -101,6 +102,14 @@ if(confirm(message)) location.href = url;
           		<bean:write name="form" property="formType"/><br>
           	</td>
           	<td class="OraFieldText">
+             <logic:present name="form" property="protocol">
+          		<bean:write name="form" property="protocol.longName"/><br>
+             </logic:present>
+             <logic:notPresent name="form" property="protocol">
+               &nbsp;
+             </logic:notPresent>
+          	</td>             
+          	<td class="OraFieldText">
           		<bean:write name="form" property="aslName"/><br>
           	</td>          	
             </tr>
@@ -123,10 +132,11 @@ if(confirm(message)) location.href = url;
           	<th class="OraTableColumnHeader" nowrap>Action</th>
           	<th class="OraTableColumnHeader" nowrap>Long Name</th>
           	<th class="OraTableColumnHeader" nowrap>Type</th>
+            <th class="OraTableColumnHeader" nowrap>Protocol</th>
           	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	
           </tr>
       <tr class="OraTabledata" >
-         	<td colspan="4" ><bean:message key="cadsr.formbuilder.empty.search.results"/></td>
+         	<td colspan="5" ><bean:message key="cadsr.formbuilder.empty.search.results"/></td>
   	  </tr>
   	</table>        
                  
