@@ -368,8 +368,12 @@
          
                 <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
                   <tr class>
-                    <td >
-                      &nbsp;
+                        <td   align="right">
+                     <html:link action='<%="/createReferenceDoc.do?"+NavigationConstants.METHOD_PARAM+"=gotoCreateReferenceDoc"%>'
+                       paramId="selectedRefDocId" paramName="refDocSize" >
+                       <html:img src='<%="i/add.gif"%>' border="0" alt="Add new Reference Document"/>
+                     </html:link>                                    
+                     &nbsp;
                     </td>
                   </tr> 
                 </table>
