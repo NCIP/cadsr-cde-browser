@@ -35,7 +35,7 @@ public class DESearchQueryBuilder extends Object {
   public DESearchQueryBuilder(HttpServletRequest request,
                               String treeParamType,
                               String treeParamIdSeq,
-                              String treeConteIdSeq)  {
+                              String treeConteIdSeq,DataElementSearchBean searchBean)  {
 
     this.treeParamIdSeq = treeParamIdSeq;
     this.treeParamType =  treeParamType;
@@ -68,11 +68,43 @@ public class DESearchQueryBuilder extends Object {
 
     // release 3.0 updated to add display order for registration status
     String registrationFrom = " , sbr.ac_registrations acr , sbr.reg_status_lov rsl";
+    
+    //Added for preferences
     String registrationWhere = " and de.de_idseq = acr.ac_idseq (+) and acr.registration_status = rsl.registration_status (+) ";
+    
+    String registrationExcludeWhere = "";   
 
+    if(searchBean!=null)
+    {
+      String[] excludeArr = searchBean.getRegStatusExcludeList();
+      if(!StringUtils.isArrayWithEmptyStrings(excludeArr))
+       {
+           registrationExcludeWhere = " and "+searchBean.getExcludeWhereCluase("acr.registration_status",excludeArr);
+       }
+    }
+
+    
+    
+    
     String wkFlowFrom = " , sbr.ac_status_lov asl ";
     String workFlowWhere = " and de.asl_name = asl.asl_name (+)";
+    //Added for preferences
+    String workflowExcludeWhere = ""; 
+    if(searchBean!=null)
+    {
+      String[] excludeArr = searchBean.getAslNameExcludeList();
+      if(!StringUtils.isArrayWithEmptyStrings(excludeArr))
+       {
+           workflowExcludeWhere = " and "+searchBean.getExcludeWhereCluase("asl.asl_name",excludeArr);
+       }
+    }
 
+    String contextExludeWhere ="";
+    
+    if(searchBean.isExcludeTestContext())
+      contextExludeWhere = " and conte.name NOT IN ('TEST')";
+      
+    
     if (strArray == null) {
       searchStr = "";
       whereClause = "";
@@ -252,7 +284,8 @@ public class DESearchQueryBuilder extends Object {
                      //" and de.de_idseq = dc.ac_idseq (+) "+
                      //" and vd.vd_idseq = de.vd_idseq " +
                      //" and dec.dec_idseq = de.dec_idseq " +
-                     csiWhere + whereClause + registrationWhere + workFlowWhere;
+                     csiWhere + whereClause + registrationWhere + workFlowWhere
+                     +registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere;
 
       }
       else if (treeParamType.equals("CONTEXT")){
@@ -277,7 +310,8 @@ public class DESearchQueryBuilder extends Object {
                    //" and vd.vd_idseq = de.vd_idseq " +
                    //" and dec.dec_idseq = de.dec_idseq " +
                    //usageWhere +
-                    csiWhere + whereClause + registrationWhere+ workFlowWhere;
+                    csiWhere + whereClause + registrationWhere+ workFlowWhere+
+                    registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere;
 
       }
       else if (treeParamType.equals("PROTOCOL")){
@@ -309,7 +343,8 @@ public class DESearchQueryBuilder extends Object {
                          " and pt.proto_idseq = '"+treeParamIdSeq+"'" +
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " +
-                         csiWhere + whereClause + registrationWhere + workFlowWhere;
+                         csiWhere + whereClause + registrationWhere + workFlowWhere+
+                         registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere;
       }
       //Published Change Order
       else if (treeParamType.equals("PUBLISHING_PROTOCOL")){
@@ -369,7 +404,8 @@ public class DESearchQueryBuilder extends Object {
                          " and qc.de_idseq = de.de_idseq " +
                         // " and vd.vd_idseq = de.vd_idseq " +
                         // " and dec.dec_idseq = de.dec_idseq " +
-                         csiWhere + whereClause + registrationWhere+ workFlowWhere;
+                         csiWhere + whereClause + registrationWhere+ workFlowWhere+
+                         registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere;
 
       }
       else if (treeParamType.equals("CSI")){
@@ -398,7 +434,8 @@ public class DESearchQueryBuilder extends Object {
                          " and acs.ac_idseq = de.de_idseq " +
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " +
-                         whereClause+ registrationWhere+ workFlowWhere;
+                         whereClause+ registrationWhere+ workFlowWhere+
+                         registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere;
 
       }
       else if (treeParamType.equals("CLASSIFICATION")){
@@ -425,7 +462,8 @@ public class DESearchQueryBuilder extends Object {
                          //" and csc.cs_idseq = '"+treeParamIdSeq+"'" +
                          //" and csc.cs_csi_idseq = acs.cs_csi_idseq " +
                          //" and acs.ac_idseq = de.de_idseq " +
-                         csiWhere + whereClause+ registrationWhere + csWhere;
+                         csiWhere + whereClause+ registrationWhere + csWhere+
+                         registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere;
 
       }
       else if (treeParamType.equals("CORE")) {
@@ -452,7 +490,8 @@ public class DESearchQueryBuilder extends Object {
                                               " from   sbrext.core_noncore_de_view " +
                                               " where csi_idseq = '"+treeParamIdSeq+"'" +
                                               " and de_group = 'CORE') "+
-                         csiWhere + whereClause+ registrationWhere;
+                         csiWhere + whereClause+ registrationWhere+
+                         contextExludeWhere+registrationExcludeWhere + workflowExcludeWhere;
       }
       else if (treeParamType.equals("NON-CORE")) {
         fromWhere = " from sbr.data_elements de , "+
@@ -478,7 +517,8 @@ public class DESearchQueryBuilder extends Object {
                                               " from   sbrext.core_noncore_de_view " +
                                               " where csi_idseq = '"+treeParamIdSeq+"'" +
                                               " and de_group = 'NON-CORE') "+
-                         csiWhere + whereClause+ registrationWhere;
+                         csiWhere + whereClause+ registrationWhere+
+                         contextExludeWhere+registrationExcludeWhere + workflowExcludeWhere;
       }
       //String orderBy = " order by de.preferred_name, de.version ";
       StringBuffer finalSqlStmt = new StringBuffer ();

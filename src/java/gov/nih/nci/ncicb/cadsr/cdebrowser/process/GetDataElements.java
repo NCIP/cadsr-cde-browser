@@ -28,6 +28,7 @@ import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
 import gov.nih.nci.ncicb.cadsr.util.PageIterator;
 import gov.nih.nci.ncicb.cadsr.util.SortableColumnHeader;
+import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
 import gov.nih.nci.ncicb.cadsr.util.UserErrorMessage;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
@@ -51,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.6 2004-12-08 02:02:25 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.7 2005-02-17 23:37:24 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -248,11 +249,40 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
         dePageIterator = new BC4JPageIterator(40);
+         CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+        // Initialize Search Preference Values
+          boolean excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
+          desb.setExcludeTestContext(excludeTestContext);
+          String regVals = params.getExcludeRegistrationStatuses();
+          if(regVals!=null&&regVals!="")
+          {
+            String [] regStatusExcludeList = StringUtils.tokenizeCSVList(regVals);
+            desb.setRegStatusExcludeList(regStatusExcludeList);
+          }
+
+          String wfVals = params.getExcludeWorkFlowStatuses();
+          if(wfVals!=null&&wfVals!="")
+          {
+            String []  aslNameExcludeList = StringUtils.tokenizeCSVList(wfVals);
+            desb.setAslNameExcludeList(aslNameExcludeList);
+          }      
+          desb.setLOVLists(dbUtil);
       }
       else if (performQuery.equals("yes")) {
+        DataElementSearchBean oldDesb = (DataElementSearchBean) getInfoObject("desb");
+        
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
-
+        // Need to the session Preference which is per session
+        
+        if(oldDesb!=null)
+        {
+          desb.setAslNameExcludeList(oldDesb.getAslNameExcludeList());
+          desb.setExcludeTestContext(oldDesb.isExcludeTestContext());
+          desb.setRegStatusExcludeList(oldDesb.getRegStatusExcludeList());
+        }
+        
+        desb.setLOVLists(dbUtil);
         log.info("- Created DataElementSearchBean successfully");
 
         dePageIterator =
@@ -273,7 +303,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       
         queryBuilder =
           new DESearchQueryBuilder(
-            myRequest, paramType, paramIdSeq, treeConteIdseq);
+            myRequest, paramType, paramIdSeq, treeConteIdseq,desb);
 
         log.trace("- Created DESearchQueryBuilder successfully");
 
@@ -538,7 +568,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
     }
   }
 
-  private DBUtil getDBUtil() throws Exception {
+  public DBUtil getDBUtil() throws Exception {
     DBUtil dbUtil = null;
 
     if ((DBUtil) getInfoObject("dbUtil") == null) {

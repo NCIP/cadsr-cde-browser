@@ -13,5 +13,7 @@ public interface  BrowserNavigationConstants
   
   public static final String CHANGE_SCREEN_TYPE="changeScreenType";
   
+  public static final String GOTO_CDE_SEARCH_PREF="gotoCDESearchPref";
+  
   
 }

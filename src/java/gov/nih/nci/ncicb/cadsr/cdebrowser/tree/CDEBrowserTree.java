@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.util.ConnectionHelper;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.webtree.WebNode;
 import gov.nih.nci.ncicb.webtree.WebTree;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -29,17 +30,18 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class CDEBrowserTree extends WebTree implements TreeConstants {
 
   
-  final static String contextQueryStmt =
+  String contextQueryStmt =
     "SELECT conte_idseq " + 
     "      ,name " + 
     "      ,description " +
-    "FROM  sbr.contexts " + 
-    "ORDER BY name ";
+    "FROM  sbr.contexts " ;
+
   final static String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
   private String treeType;
   private String functionName;
   private String extraURLParameters = 
     "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+  private String contextExcludeListStr = null;
 
   private boolean  showFormsAlphebetically = false;
   public CDEBrowserTree() {
@@ -51,7 +53,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
   public DefaultMutableTreeNode getTree(Hashtable params) throws Exception {
     treeType = (String)params.get("treeType");
     functionName = (String)params.get("functionName");
-    
+    contextExcludeListStr = (String)params.get(TreeConstants.BR_CONTEXT_EXCLUDE_LIST_STR);
     return buildTree(params);
   }
 
@@ -84,7 +86,18 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
           +"('P_PARAM_TYPE=P_PARAM_TYPE&P_IDSEQ=P_IDSEQ&"
           +baseNode.getExtraURLParameters()+"')");
       tree = new DefaultMutableTreeNode(contexts);
+      System.out.println("contextExcludeListStr="+contextExcludeListStr);
+      if(!treeType.equals(TreeConstants.DE_SEARCH_TREE) || contextExcludeListStr==null)
+      {
+        contextQueryStmt = contextQueryStmt +" ORDER BY name ";
+      }
+      else
+      {
+        contextQueryStmt = contextQueryStmt +" where name NOT IN ( " +contextExcludeListStr + ") ORDER BY name ";
+      }
+      System.out.println("contextQueryStmt="+contextQueryStmt);
       pstmt = (PreparedStatement) conn.prepareStatement(contextQueryStmt);
+      
       //pstmt.defineColumnType(1, Types.VARCHAR);
       //pstmt.defineColumnType(2, Types.VARCHAR);
       //pstmt.defineColumnType(3, Types.VARCHAR);
@@ -166,7 +179,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
         //Filtering CTEP context in data element search tree
         
         if ((!ctx.getName().equals("CTEP")
-                && treeType.equals(TreeConstants.DE_SEARCH_TREE))
+                && treeType.equals(TreeConstants.DE_SEARCH_TREE)) 
               //Publish Change order
              || (baseNode.isCTEPUser().equals("Yes")&& treeType.equals(TreeConstants.DE_SEARCH_TREE))
              || (treeType.equals(TreeConstants.FORM_SEARCH_TREE))) {

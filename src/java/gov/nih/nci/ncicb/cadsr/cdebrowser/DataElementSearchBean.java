@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser;
 
+import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.util.GenericPopListBean;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
@@ -14,9 +15,19 @@ public class DataElementSearchBean extends Object {
   private String simpleSearchStr = "";
   private String whereClause = "";
   private String[] strArray = null;
+
+  //Hold only the non exluded Items
   private StringBuffer workflowList = null;
   private StringBuffer regStatusList = null;
+
   private StringBuffer altNameList = null;
+
+  //Preferences
+  //Holds the complete list of lov
+  private StringBuffer contextNameFullList = null;
+  private StringBuffer regStatusFullList = null;
+  private StringBuffer workflowFullList = null;
+
   private String xmlQueryStmt = "";
   private String vdPrefName = "";
   private String csiName = "";
@@ -27,6 +38,15 @@ public class DataElementSearchBean extends Object {
   private String[] aslName;
   private String[] regStatus;
   private String[] altNames;
+  private String[] contextNames;
+
+
+  //Prefrences
+  private String[] aslNameExcludeList=null;
+  private String[] regStatusExcludeList=null;
+  private boolean excludeTestContext=false;
+
+
   private String vdIdseq;
   private String decIdseq;
   private String cdeId;
@@ -40,6 +60,7 @@ public class DataElementSearchBean extends Object {
   private String conceptCode = "";
   private String objectClass;
   private String property;
+  private DBUtil dbUtil =null;
 
   public DataElementSearchBean(
     HttpServletRequest request,
@@ -66,7 +87,6 @@ public class DataElementSearchBean extends Object {
     basicSearchType = request.getParameter("jspBasicSearchType");
     conceptName = request.getParameter("jspConceptName");
     conceptCode = request.getParameter("jspConceptCode");
-    // release 3.0, TT1235, 1236
     objectClass = request.getParameter("jspObjectClass");
     property = request.getParameter("jspProperty");
 
@@ -76,14 +96,37 @@ public class DataElementSearchBean extends Object {
 
     String selIndex = null;
 
+    //Prefrences
+    //buildContextNameFullList(contextsExcludeList, dbUtil);
+
+
+    /*
+     Moved to diffrent method to support search pref
+
+    buildWorkflowFullList(aslNameExcludeList, dbUtil);
+    buildRegStatusFullList(regStatusExcludeList,dbUtil);
+
     buildWorkflowList(aslName, dbUtil);
     buildRegStatusList(regStatus,dbUtil);
     buildAlternateNameList(altNames, dbUtil);
     buildContextUseList(contextUse);
+    */
+
     searchInList = new StringBuffer("");
 
     String[] searchIn = request.getParameterValues("jspSearchIn");
     this.buildSearchInList(searchIn);
+  }
+
+  public void setLOVLists(DBUtil dbUtil) throws Exception
+  {
+    buildWorkflowFullList(aslNameExcludeList, dbUtil);
+    buildRegStatusFullList(regStatusExcludeList,dbUtil);
+
+    buildWorkflowList(aslName, dbUtil);
+    buildRegStatusList(regStatus,dbUtil);
+    buildAlternateNameList(altNames, dbUtil);
+    buildContextUseList(contextUse);
   }
 
   public String getSearchStr(int arrayIndex) {
@@ -95,7 +138,53 @@ public class DataElementSearchBean extends Object {
     }
   }
 
-  public StringBuffer getWorkflowList() {
+  public StringBuffer getWorkflowFullList() {
+    return workflowFullList;
+  }
+
+  public void buildWorkflowFullList(
+    String[] selectedIndex,
+    DBUtil dbUtil) {
+    String where = " ACTL_NAME = 'DATAELEMENT' AND ASL_NAME != 'RETIRED DELETED' ";
+    workflowFullList =
+      GenericPopListBean.buildList(
+        "sbrext.ASL_ACTL_EXT", "ASL_NAME", "ASL_NAME", selectedIndex,
+        "jspStatus", dbUtil, where, true, 8, false, true, false, false,
+        "LongLOVField");
+  }
+
+  public StringBuffer getRegStatusFullList() {
+    return regStatusFullList;
+  }
+
+  public void buildRegStatusFullList(
+    String[] selectedIndex,
+    DBUtil dbUtil) {
+    String where = null;
+    regStatusFullList =
+      GenericPopListBean.buildList(
+        "sbr.REG_STATUS_LOV", "REGISTRATION_STATUS", "REGISTRATION_STATUS", selectedIndex,
+        "regStatus", dbUtil, where, true, 8, false, true, false, false,
+        "LongLOVField");
+  }
+
+/**
+  public StringBuffer getContextNameFullList() {
+    return contextNameFullList;
+  }
+  public void buildContextNameFullList(
+    String[] selectedIndex,
+    DBUtil dbUtil) {
+    String where = null;
+    contextNameFullList =
+      GenericPopListBean.buildList(
+        "sbr.CONTEXTS", "NAME", "NAME", selectedIndex,
+        "contextNames", dbUtil, where, true, 4, true, true, false, false,
+        "LongLOVField");
+  }
+  **/
+
+ public StringBuffer getWorkflowList() {
     return workflowList;
   }
 
@@ -103,31 +192,36 @@ public class DataElementSearchBean extends Object {
     String[] selectedIndex,
     DBUtil dbUtil) {
     String where = " ACTL_NAME = 'DATAELEMENT' AND ASL_NAME != 'RETIRED DELETED' ";
+    String exludeWhere = getExcludeWhereCluase("ASL_NAME",aslNameExcludeList);
+    if(exludeWhere!=null)
+      where = where + " and "+ exludeWhere;
     workflowList =
       GenericPopListBean.buildList(
         "sbrext.ASL_ACTL_EXT", "ASL_NAME", "ASL_NAME", selectedIndex,
         "jspStatus", dbUtil, where, false, 4, true, true, false, true,
         "LongLOVField");
   }
-  
+
   public StringBuffer getRegStatusList() {
     return regStatusList;
   }
-  
+
   public void buildRegStatusList(
     String[] selectedIndex,
     DBUtil dbUtil) {
-    String where = null;
+    String where = getExcludeWhereCluase("REGISTRATION_STATUS",regStatusExcludeList);
     regStatusList =
       GenericPopListBean.buildList(
         "sbr.REG_STATUS_LOV", "REGISTRATION_STATUS", "REGISTRATION_STATUS", selectedIndex,
         "regStatus", dbUtil, where, false, 4, true, true, false, true,
         "LongLOVField");
   }
+
+
   public StringBuffer getAltNameList() {
     return altNameList;
   }
-  
+
 
   public void buildAlternateNameList(
     String[] selectedIndex,
@@ -159,7 +253,7 @@ public class DataElementSearchBean extends Object {
   public String getAslName() {
     return StringUtils.replaceNull(aslName);
   }
-  
+
   public String getRegStatus() {
     return StringUtils.replaceNull(regStatus);
   }
@@ -284,15 +378,15 @@ public class DataElementSearchBean extends Object {
   public String getValidValue() {
     return StringUtils.replaceNull(validValue);
   }
-  
+
   public String getObjectClass() {
     return StringUtils.replaceNull(objectClass);
   }
-  
+
   public String getProperty() {
     return StringUtils.replaceNull(property);
   }
-  
+
   public String getAltName() {
     return StringUtils.replaceNull(altName);
   }
@@ -326,4 +420,109 @@ public class DataElementSearchBean extends Object {
   public String getConceptCode() {
     return StringUtils.replaceNull(conceptCode);
   }
+
+/**
+  public String[] getContextsExcludeList()
+  {
+    return contextsExcludeList;
+  }
+   public String getContextsExcludeListAsStr()
+  {
+    if(contextsExcludeList==null)
+      return null;
+    if(contextsExcludeList.length <1)
+      return null;
+    String str = null;
+    for(int i=0;i<contextsExcludeList.length;i++)
+    {
+      if(str==null)
+        {
+          str = "'"+contextsExcludeList[i]+"'";
+        }
+      else
+      {
+        str = str +","+"'"+contextsExcludeList[i]+"'";
+      }
+    }
+    return str;
+  }
+
+  public void setContextsExcludeList(String[] contextsExcludeList)
+  {
+    this.contextsExcludeList = contextsExcludeList;
+  }
+
+**/
+  public String[] getRegStatusExcludeList()
+  {
+    return regStatusExcludeList;
+  }
+
+  public void setRegStatusExcludeList(String[] regStatusExcludeList)
+  {
+    this.regStatusExcludeList = regStatusExcludeList;
+  }
+  public String[] getAslNameExcludeList()
+  {
+    return aslNameExcludeList;
+  }
+
+  public void setAslNameExcludeList(String[] aslNameExcludeList)
+  {
+    this.aslNameExcludeList = aslNameExcludeList;
+  }
+
+  public void resetLOVList() throws Exception
+  {
+
+      try {
+        CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+        DBUtil dbUtil = new DBUtil();
+        dbUtil.getConnectionFromContainer(params.getSbrDSN());
+        buildWorkflowFullList(aslNameExcludeList, dbUtil);
+        buildRegStatusFullList(regStatusExcludeList,dbUtil);
+      }
+      catch (Exception ex) {
+        ex.printStackTrace();
+        throw ex;
+      }
+
+  }
+
+  public String getExcludeWhereCluase(String colName, String[] excludeArr)
+  {
+    String whereClauseStr = null;
+    if(excludeArr==null)
+      return whereClauseStr;
+    if(excludeArr.length <1)
+      return whereClauseStr;
+
+
+    for(int i=0; i<excludeArr.length;i++)
+    {
+      if(whereClauseStr== null)
+      {
+        whereClauseStr = colName+" NOT IN ( '" +excludeArr[i] +"'";
+      }
+      else
+      {
+        whereClauseStr = whereClauseStr + " , '" +excludeArr[i]+"'";
+      }
+    }
+    whereClauseStr = whereClauseStr +" ) " ;
+    return whereClauseStr;
+  }
+
+  public boolean isExcludeTestContext()
+  {
+    return excludeTestContext;
+  }
+
+  public void setExcludeTestContext(boolean excludeTestContext)
+  {
+    this.excludeTestContext = excludeTestContext;
+  }
+
+
 }
+
