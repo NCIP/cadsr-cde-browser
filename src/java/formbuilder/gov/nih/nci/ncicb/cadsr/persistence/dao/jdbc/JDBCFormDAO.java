@@ -597,12 +597,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     protected int createContent(
       Form sm,
       String qcIdseq) {
-System.out.println ("*******************************************in crateContext");
-      System.out.println ("%%%%%%%%%%%%%%%%%%%%%%%%%%%% sm.getContext().getConteIdseq() = " + 
-         sm.getContext().getConteIdseq());
-      System.out.println ("%%%%%%%%%%%%%%%%%%%%%%%%%%%% sm.getProtocol().getProtoIdseq() = " + 
-         sm.getProtocol().getProtoIdseq());
-         
+
       Object[] obj =
         new Object[] {
           qcIdseq, sm.getVersion().toString(),
