@@ -73,5 +73,6 @@ public interface NavigationConstants
 
  public static final String GO_TO_SEARCH = "gotoSearch";
 
+ public static final String GO_TO_MANAGE_CLASSIFICATIONS = "gotoManageClassifications";
 
 }
