@@ -88,9 +88,10 @@
     <action name="hrefCRFForm" path="/formDetailsAction" parameter="method" scope="request" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction" validate="false">
       <forward name="success" path="/formbuilder/formDetails.jsp" redirect="false"/>
     </action>
-    <action name="createModule" path="/createModule" parameter="method" scope="request" 
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCopyAction" validate="false">
+    <action name="createModuleForm" path="/createModule" parameter="method" scope="request" 
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ModuleCreateAction" validate="false">
       <forward name="toFormEdit" path="/formToEditAction.do?method=getFormToEdit"/>    
+      <forward name="toCreateModule" path="/formbuilder/moduleCreate.jsp"/>
       <forward name="toCreateForm" path=""/>
     </action>
     <action name="copyForm" path="/formToCopyAction" parameter="method" scope="request" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCopyAction" validate="false">
