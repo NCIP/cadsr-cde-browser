@@ -243,7 +243,9 @@ public class JDBCDAOFactory extends AbstractDAOFactory
 
     if (refDocTypeDAO == null) {
       refDocTypeDAO = new JDBCReferenceDocumentTypeDAO(serviceLocator);
-      daoCache.put(JDBC_CONCEPT_DAO, refDocTypeDAO);
+      // Cut-Paste error, fixed by Ram C
+      // daoCache.put(JDBC_CONCEPT_DAO, refDocTypeDAO);
+      daoCache.put(JDBC_REFERENCE_DOCUMENT_TYPE_DAO, refDocTypeDAO);
     }
 
     return refDocTypeDAO;
