@@ -22,8 +22,6 @@ public interface ServiceLocator {
 
   public static final String SERVICE_LOCATOR_CLASS_KEY="ServiceLocatorClassName";
 
-  public static final String DEPLOYMENT_FILENAME="app_deployment.properties";
-
   /**
    * will get the ejb Local home factory. clients need to cast to the type of
    * EJBHome they desire
@@ -65,4 +63,12 @@ public interface ServiceLocator {
    * @return the String value corresponding to the env entry name.
    */
   public String getString(String envName);
+  
+/**
+   * The oed by Object inserted by this method must be available by a getter
+   * with the matching key
+   * @param key 
+   * @param value
+   */
+  public void setObject(String key,Object value);
 }

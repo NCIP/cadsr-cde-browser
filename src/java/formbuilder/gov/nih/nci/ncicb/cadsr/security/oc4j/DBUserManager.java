@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class DBUserManager extends BaseUserManager implements PersistenceContant
 
   private AbstractDAOFactory daoFactory=null;
   private UserManagerDAO userManagerDAO =null;
+  private ServiceLocator locator = null;
 
   /**
    * Init method to initialise the variables.
@@ -31,17 +33,41 @@ public class DBUserManager extends BaseUserManager implements PersistenceContant
    */
   public void init(Properties properties) {
    
-    if(log.isDebugEnabled())
-      log.debug("Initializing DBUserManager"+this);
-    String daoFactoryClassName = properties.getProperty(DAO_FACTORY_CLASS_KEY);
-    String serviceLocatorClassName = properties.getProperty(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
-    if(log.isDebugEnabled())
+    try
     {
-      log.debug("daoFactoryClassName ="+daoFactoryClassName);  
-      log.debug("serviceLocatorClassName ="+serviceLocatorClassName);       
+      log = LogFactory.getLog(DBUserManager.class.getName());
+      
+      if(log.isDebugEnabled())
+        log.debug("Initializing DBUserManager"+this);
+      //String daoFactoryClassName = properties.getProperty(DAO_FACTORY_CLASS_KEY);
+      String serviceLocatorClassName = properties.getProperty(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
+      //String dsLookupKeyVal = properties.getProperty(DATASOURCE_KEY);
+      
+      if(log.isDebugEnabled())
+      {
+        //log.debug("daoFactoryClassName ="+daoFactoryClassName);  
+        log.debug("serviceLocatorClassName ="+serviceLocatorClassName);  
+        //log.debug("dsLookupKey ="+dsLookupKeyVal);   
+      }
+      locator = ServiceLocatorFactory.getLocator(serviceLocatorClassName);
+      
+      //log.debug("test*** ="+locator.getString(daoFactoryClassName)); 
+      
+     // locator.setObject(DAO_FACTORY_CLASS_KEY,daoFactoryClassName);
+      //locator.setObject(DATASOURCE_KEY,dsLookupKeyVal);
+      
+      //daoFactory=AbstractDAOFactory.getDAOFactory(locator);    
+
     }
-    ServiceLocator locator = ServiceLocatorFactory.getLocator(serviceLocatorClassName);
-    daoFactory=AbstractDAOFactory.getDAOFactory(locator);    
+    catch (Exception e)
+    {
+      System.out.println(e.getMessage());
+       if(log.isFatalEnabled())
+      {
+        e.printStackTrace();
+        log.fatal("Error Initializing DBUserManaber ="+e.getMessage());   
+      }     
+    }
   }
 
 
@@ -70,7 +96,7 @@ public class DBUserManager extends BaseUserManager implements PersistenceContant
     if(log.isDebugEnabled())
         log.debug("Check password for user ="+username);
     if(daoFactory==null)
-      return false;
+      setAbstractDAOFactory();
     if(userManagerDAO==null)
         userManagerDAO = daoFactory.getUserManagerDAO();
     return userManagerDAO.validUser(username,password);
@@ -89,10 +115,18 @@ public class DBUserManager extends BaseUserManager implements PersistenceContant
     if(log.isDebugEnabled())
         log.debug("Check if user = "+username+" in group = "+groupname);
     if(daoFactory==null)
-      return false;
+      setAbstractDAOFactory();
     if(userManagerDAO==null)
         userManagerDAO = daoFactory.getUserManagerDAO();       
     return userManagerDAO.userInGroup(username,groupname);
   }
   
+  private void setAbstractDAOFactory()
+  {
+    daoFactory=AbstractDAOFactory.getDAOFactory(locator);
+    if(log.isDebugEnabled())
+      {
+        log.debug("Set AbstractDAOFactory ="+daoFactory);  
+      }    
+  }
 }

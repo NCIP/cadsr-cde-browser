@@ -3,7 +3,7 @@ package gov.nih.nci.ncicb.cadsr.servicelocator.web;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.util.DataSourceUtil;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
-import gov.nih.nci.ncicb.cadsr.servicelocator.AbstractServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorAdapter;
 
 import java.net.URL;
 
@@ -34,7 +34,7 @@ import javax.transaction.UserTransaction;
  * strategy. This implementation is intended to be used on the web tier and
  * not on the ejb tier.
  */
-public class ServiceLocatorImpl extends AbstractServiceLocator  {
+public class ServiceLocatorImpl extends ServiceLocatorAdapter  {
   private static ServiceLocator instance = new ServiceLocatorImpl();
   private InitialContext ic;
 

@@ -84,7 +84,7 @@
       <pathelement location="${JAVA_LIB_DIR}/bc4jmt.jar"/>   
       
       <!-- Struts libs -->
-      <pathelement location="${JAVA_LIB_DIR}/struts.jar"/>
+      <pathelement location="${JAVA_LIB_DIR}/struts-1.1.jar"/>
       <pathelement location="${JAVA_LIB_DIR}/commons-beanutils.jar"/>
       <pathelement location="${JAVA_LIB_DIR}/commons-collections.jar"/>
       <pathelement location="${JAVA_LIB_DIR}/commons-fileupload.jar"/>
@@ -171,7 +171,8 @@
         	<attribute name="Built-By" value="${user.name}"/>
                <attribute name="Class-Path" 
                   value="common.jar persistence_form.jar spring.jar
-                              spring-jdbc.jar commons-logging.jar"/>
+                              spring-jdbc.jar commons-logging.jar 
+                              log4j-1.2.8.jar properties/"/>
             </manifest>           
         </jar>
       </target>
@@ -318,7 +319,7 @@
       	<include name="bc4jmt.jar"/>   
       	
       	<!-- Struts libs -->
-      	<include name="struts.jar"/>
+      	<include name="struts-1.1.jar"/>
       	<include name="commons-beanutils.jar"/>
       	<include name="commons-collections.jar"/>
       	<include name="commons-fileupload.jar"/>
@@ -360,7 +361,7 @@
                <attribute name="Built-By" value="${user.name}"/>
                <attribute name="Class-Path" 
                   value="persistence_form.jar common.jar spring.jar
-                              spring-jdbc.jar commons-logging.jar"/>
+                              spring-jdbc.jar commons-logging.jar log4j-1.2.8.jar properties/"/>
             </manifest>  	    
          </jar>         
       </target>
@@ -376,6 +377,13 @@
            </patternset>
          </fileset>      
       </copy>    
+     <copy todir="${CLASSES_BUILD_DIR}/properties">      
+         <fileset dir="${CONFIG_HOME}/properties">
+           <patternset>
+             <include name="data-sources.xml"/>
+           </patternset>
+         </fileset>      
+      </copy>        
       <!-- Create ear file -->      
       <ear earfile="${BUILD_DIR}/cdebrowser.ear" appxml="${CONFIG_HOME}/META-INF/application.xml">
         <fileset dir="${BUILD_DIR}">
@@ -385,6 +393,12 @@
           </patternset>
         </fileset>
 
+        <fileset dir="${CONFIG_HOME}">
+          <patternset>
+            <include name="properties/log4j.properties"/>
+          </patternset>
+        </fileset>
+        
         <fileset dir="${CLASSES_BUILD_DIR}">
           <patternset>
             <include name="persistence_form.jar"/>
@@ -398,6 +412,7 @@
             <include name="spring.jar"/>
             <include name="spring-jdbc.jar"/>
             <include name="commons-logging.jar"/>
+            <include name="log4j-1.2.8.jar"/>
           </patternset>
         </fileset>
         
@@ -442,7 +457,6 @@
  
        Settings:
            Project Home:    ${PROJECT_HOME}
-           App Server Home: ${APPSERVER_HOME}
  
        ===================================================================
  

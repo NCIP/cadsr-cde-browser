@@ -1,10 +1,14 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao;
+import gov.nih.nci.ncicb.cadsr.security.oc4j.BaseUserManager;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
-
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 
 public class BaseDAO 
 {
 
+  protected static Log log = LogFactory.getLog(BaseUserManager.class.getName());
+  
   private ServiceLocator serviceLocator;
   
    public BaseDAO()
@@ -17,6 +21,10 @@ public class BaseDAO
 
   public ServiceLocator getServiceLocator()
   {
+    if(log.isDebugEnabled())
+      {
+        log.debug("getServiceLocator() ="+serviceLocator);  
+      }
     return serviceLocator;
   }
 

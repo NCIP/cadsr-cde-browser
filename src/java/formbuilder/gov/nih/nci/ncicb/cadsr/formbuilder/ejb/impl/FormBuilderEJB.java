@@ -137,4 +137,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
     Collection validValues) throws DMLException {
     return null;
   }
+  public String getUserName()
+  {
+    return context.getCallerPrincipal().getName();
+  }
 }

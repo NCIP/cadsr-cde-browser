@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.servicelocator.ejb;
 
+
 import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.util.DataSourceUtil;
 import gov.nih.nci.ncicb.cadsr.security.oc4j.BaseUserManager;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
@@ -24,7 +25,7 @@ import javax.rmi.PortableRemoteObject;
 
 import javax.sql.DataSource;
 
-import gov.nih.nci.ncicb.cadsr.servicelocator.AbstractServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorAdapter;
 import org.apache.commons.logging.LogFactory;
 
 
@@ -32,9 +33,8 @@ import org.apache.commons.logging.LogFactory;
  * This class is an implementation of the Service Locator pattern. It is used
  * to looukup resources such as EJBHomes, JMS Destinations, etc.
  */
-public class ServiceLocatorImpl extends AbstractServiceLocator{
+public class ServiceLocatorImpl extends ServiceLocatorAdapter {
   private transient InitialContext ic;
-  
   
   public ServiceLocatorImpl()  {
     ejbLookupPrefix = "java:comp/env/ejb/";
@@ -63,6 +63,8 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
       return (EJBLocalHome) ic.lookup(resolveEJBLookupKey(jndiHomeName));
     }
     catch (Exception e) {
+      if(log.isDebugEnabled())
+            log.debug("Exception while EJBLocalHome lookup"+e);      
       throw new ServiceLocatorException("",e);
     }
   }
@@ -81,10 +83,11 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
       if(log.isDebugEnabled())
         log.debug("Lookup EJB Remote Home with key "+key);
       Object objref = ic.lookup(key);
-
       return (EJBHome) PortableRemoteObject.narrow(objref, className);
     }
     catch (Exception e) {
+      if(log.isDebugEnabled())
+            log.debug("Exception while EJBRemoteHome lookup"+e);      
       throw new ServiceLocatorException("",e);
     }
   }
@@ -99,11 +102,14 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
     {
       try {
           String key = resolveDsLookupKey(dataSourceName);
+          DataSource ds = (DataSource) ic.lookup(key);
           if(log.isDebugEnabled())
-            log.debug("Lookup DataSource with key "+key);
-          return (DataSource) ic.lookup(key);
+            log.debug("Lookup String with key="+key+" Value="+ds);
+          return ds;
       }
       catch (Exception e) {
+        if(log.isDebugEnabled())
+            log.debug("Exception while DS lookup"+e);      
         throw new ServiceLocatorException("",e);
       }
   }
@@ -114,9 +120,11 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
   public URL getUrl(String envName) throws ServiceLocatorException {
   
       try {
+          String key = resolveEnvLookupKey(envName);
+          URL url = (URL) ic.lookup(resolveEnvLookupKey(envName));
           if(log.isDebugEnabled())
-            log.debug("Lookup URL with key "+resolveEnvLookupKey(envName));
-        return (URL) ic.lookup(resolveEnvLookupKey(envName));
+            log.debug("Lookup String with key="+key+" Value="+url);
+          return url;
       }
       catch (Exception e) {
         throw new ServiceLocatorException("",e);
@@ -129,9 +137,12 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
    */
   public boolean getBoolean(String envName)  {        
       try {
+          boolean result ; 
+          String key = resolveEnvLookupKey(envName);
+          result = ((Boolean) ic.lookup(key)).booleanValue();
           if(log.isDebugEnabled())
-            log.debug("Lookup Boolean with key "+resolveEnvLookupKey(envName));       
-        return ((Boolean) ic.lookup(resolveEnvLookupKey(envName))).booleanValue();
+            log.debug("Lookup String with key="+key+" Value="+result);
+          return result;
       }
       catch (Exception e) {
         throw new ServiceLocatorException("",e);
@@ -146,8 +157,26 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
       try {
           String key = resolveEnvLookupKey(envName);
           if(log.isDebugEnabled())
-            log.debug("Lookup String with key "+key);
-        return (String) ic.lookup(key);
+            log.debug("Lookup String with key="+key);          
+          String result = (String) ic.lookup(key);
+          if(log.isDebugEnabled())
+            log.debug("Lookedup String with key="+key+" Value="+result);
+          return result;
+      }
+      catch (Throwable e) {
+        if(log.isDebugEnabled())
+            log.debug("Exception while String lookup"+e);
+        throw new ServiceLocatorException("",e);
+      }
+  }
+
+  public void setObject(String key, Object value)
+  {
+      try {
+          String resolvedKey = resolveEnvLookupKey(key);         
+          if(log.isDebugEnabled())
+            log.debug("Bind object with key "+resolvedKey);
+          ic.bind(resolvedKey,value);
       }
       catch (Exception e) {
         throw new ServiceLocatorException("",e);

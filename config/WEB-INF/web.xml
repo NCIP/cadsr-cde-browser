@@ -155,7 +155,12 @@
       <env-entry-value>gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
       <env-entry-type>java.lang.String</env-entry-type>
   </env-entry>
-  
+  <env-entry>
+        <env-entry-name>DataSourceKey</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>FormBuilderDS</env-entry-value>
+   </env-entry>   
+      
    <security-role>
        <description>The Only Secure Role</description>
        <role-name>FORMBUILDER_USERS</role-name>

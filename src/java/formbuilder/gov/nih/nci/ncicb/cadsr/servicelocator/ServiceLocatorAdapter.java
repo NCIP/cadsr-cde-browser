@@ -7,10 +7,10 @@ import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class AbstractServiceLocator implements ServiceLocator,PersistenceContants
+public class ServiceLocatorAdapter implements ServiceLocator,PersistenceContants
 {
 
-  protected Log log =  LogFactory.getLog(AbstractServiceLocator.class.getName());
+  protected Log log =  LogFactory.getLog(ServiceLocatorAdapter.class.getName());
   
   protected String dsLookupPrefix;
   protected String ejbLookupPrefix;
@@ -112,4 +112,7 @@ public class AbstractServiceLocator implements ServiceLocator,PersistenceContant
     else
       return key;       
   }
+    public void setObject(String key, Object value)
+    {
+    }
 }

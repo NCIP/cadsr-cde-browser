@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.servicelocator;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.util.DataSourceUtil;
 
 import java.net.URL;
@@ -11,7 +12,7 @@ import javax.ejb.EJBLocalHome;
 
 import javax.sql.DataSource;
 
-public class SimpleServiceLocator extends AbstractServiceLocator 
+public class SimpleServiceLocator extends ServiceLocatorAdapter implements PersistenceContants
 {
   private Map envEntrys =  new HashMap();
   private Map dataSources = new HashMap();
@@ -36,6 +37,8 @@ public class SimpleServiceLocator extends AbstractServiceLocator
        envEntrys.put(CONNECTION_STRING,"jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbdev");
        envEntrys.put(USERNAME,"sbrext");
        envEntrys.put(PASSWORD,"jjuser");
+
+       
        
        /**
         * envEntrys.put(CONNECTION_STRING,"jdbc:oracle:thin:@localhost:1521:red");
@@ -48,7 +51,7 @@ public class SimpleServiceLocator extends AbstractServiceLocator
         DataSource source = DataSourceUtil.getDriverManagerDS(getString(DRIVER_CLASS_NAME)
                       ,getString(CONNECTION_STRING),getString(USERNAME)
                       ,getString(PASSWORD));       
-        dataSources.put(DATASOURCE_LOCATION_KEY,source);
+        dataSources.put("FormBuilderDS",source);
 
       }
       catch(Exception ex)
@@ -94,6 +97,14 @@ public class SimpleServiceLocator extends AbstractServiceLocator
       log.debug("Lookup String with key "+ resolveEnvLookupKey(envName));
     return (String)envEntrys.get(resolveEnvLookupKey(envName));
   }
+  
+  public void setObject(String key, Object value)
+    {
+      String resolvedKey = resolveEnvLookupKey(key);
+      if(log.isDebugEnabled())
+        log.debug("Bind with key ="+resolvedKey+" value="+ value);      
+      envEntrys.put(resolvedKey,value);
+    }  
  public static void main(String[] args)
  {
    SimpleServiceLocator locator = new SimpleServiceLocator();

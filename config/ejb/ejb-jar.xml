@@ -20,10 +20,10 @@
         <env-entry-value>gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
       </env-entry>
       <env-entry>
-        <env-entry-name>ServiceLocatorClassName</env-entry-name>
+        <env-entry-name>DataSourceKey</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</env-entry-value>
-      </env-entry>      
+        <env-entry-value>FormBuilderDS</env-entry-value>
+      </env-entry>        
     </session>
   </enterprise-beans>
   <assembly-descriptor>
