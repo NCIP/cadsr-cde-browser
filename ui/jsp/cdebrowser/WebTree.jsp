@@ -3,6 +3,7 @@
 <%@ page import="gov.nih.nci.ncicb.webtree.*" %>
 <%@ page import="java.io.*"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.util.TreeUtils " %>
 
 <%
   	// get parameters
@@ -17,12 +18,43 @@
     // cross browser parameter null checks
     if (treeAction != null && treeAction.equals("null")) treeAction = null;
     if (skin != null && skin.equals("null")) skin = null;
-    if (skin == null) skin = "default";      
+    if (skin == null) skin = "default";
+    Hashtable params = null;
+    String callerParams = "";
+    try {
+      params = TreeUtils.parseParameters(treeParams);
+      String treeType = (String)params.get(TreeConstants.TREE_TYPE_URL_PARAM);
+      
+      if (treeType.equals(TreeConstants.DE_SEARCH_TREE)) {
+        String src = null;
+        if (params.containsKey("src")) {
+          src = (String)params.get("src");
+          String modIndex = (String)params.get("moduleIndex");
+          String quesIndex = (String)params.get("questionIndex");
+          callerParams += "&src="+src+"&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
+        }
+      }
+    } 
+    catch (Exception ex) {
+      System.out.println("Error: "+ex.getMessage());;
+    } 
+    
+    
 %>
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="skins/<%=skin%>/TreeBrowser.css"/>
   <script language="JavaScript1.2" src="skins/<%=skin%>/JavaScript.js"></script>
+  <script language="JavaScript1.2">
+  <!--
+  function performAction(urlParams){
+    var frm = findFrameByName('body');
+    document.body.style.cursor = "wait";
+    frm.document.body.style.cursor = "wait";
+    frm.document.location = "search?"+urlParams + "<%=callerParams%>";
+  }
+  //-->
+  </script>
 </head>
 <body>
 

@@ -295,6 +295,7 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     String protocolIdSeq = "";
+    String protocolLongName = "";
     String formIdSeq = "";
     String csCsiIdSeq = "";
     String nodeType = request.getParameter("P_PARAM_TYPE");
@@ -303,8 +304,10 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     if (contextIdSeq == null) contextIdSeq = "";
     String csiName = "";
 
-    if ("PROTOCOL".equals(nodeType))
+    if ("PROTOCOL".equals(nodeType)) {
       protocolIdSeq = nodeIdSeq;
+      protocolLongName = request.getParameter("protocolLongName");
+    }
     else if ("CRF".equals(nodeType) || "TEMPLATE".equals(nodeType))
       formIdSeq = nodeIdSeq;
     else if ("CSI".equals(nodeType)) {
@@ -315,6 +318,7 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     FormBuilderBaseDynaFormBean searchForm = (FormBuilderBaseDynaFormBean) form;
     searchForm.clear();
     searchForm.set(this.PROTOCOL_ID_SEQ, protocolIdSeq);
+    searchForm.set(this.PROTOCOLS_LOV_NAME_FIELD, protocolLongName);
     searchForm.set(this.CONTEXT_ID_SEQ, contextIdSeq);
     searchForm.set(this.FORM_ID_SEQ,formIdSeq);
     searchForm.set("jspClassification",csCsiIdSeq);

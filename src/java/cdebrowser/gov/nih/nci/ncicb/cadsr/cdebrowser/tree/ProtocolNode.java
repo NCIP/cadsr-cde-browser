@@ -37,7 +37,7 @@ public class ProtocolNode extends BaseTreeNode  {
                      ,_myProtoVO.getLongName()
                      ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=PROTOCOL&P_IDSEQ="+
                        _myProtoVO.getProtoIdseq()+"&P_CONTE_IDSEQ="+_myProtoVO.getConteIdseq()+
-                       getExtraURLParameters()+"')"
+                       "&protocolLongName="+_myProtoVO.getLongName()+getExtraURLParameters()+"')"
                      ,_myProtoVO.getPreferredDefinition()));
   }
 
