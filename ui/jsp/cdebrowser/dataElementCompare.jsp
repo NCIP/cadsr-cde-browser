@@ -249,7 +249,7 @@ function subTabClicked(tabNum,urlParams) {
 <br>
 <table cellpadding="0" cellspacing="0" width="80%" align="center" >
   <tr>
-    <td class="OraHeaderSubSub" width="100%">Designations</td>
+    <td class="OraHeaderSubSub" width="100%">Alternate Names</td>
   </tr>
   <tr>
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>

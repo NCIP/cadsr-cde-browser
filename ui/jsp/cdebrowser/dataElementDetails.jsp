@@ -175,7 +175,7 @@ function goPage(pageInfo) {
 <br>
 <table cellpadding="0" cellspacing="0" width="80%" align="center" >
   <tr>
-    <td class="OraHeaderSubSub" width="100%">Designations</td>
+    <td class="OraHeaderSubSub" width="100%">Alternate Names</td>
   </tr>
   <tr>
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
@@ -208,7 +208,7 @@ function goPage(pageInfo) {
   else {
 %>
        <tr class="OraTabledata">
-         <td colspan=4">There are no designations for the selected CDE.</td>
+         <td colspan=4">There are no alternate names for the selected CDE.</td>
        </tr>
 <%
   }
