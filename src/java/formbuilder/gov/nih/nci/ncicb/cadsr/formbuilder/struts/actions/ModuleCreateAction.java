@@ -20,11 +20,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import java.io.IOException;
 
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +29,7 @@ import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleInstructionTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 
 
 public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
@@ -87,31 +84,34 @@ public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
 	Module newModule = new ModuleTransferObject();
 	ModuleInstruction newModInst = new ModuleInstructionTransferObject();
 
+	int displayOrder = ((Integer)dynaForm.get(DISPLAY_ORDER)).intValue();
+	
 	Form f = (Form)getSessionObject(request, CRF);
 
-	try
-	    {
-		newModule.setForm(f);
-		newModule.setLongName((String)dynaForm.get(MODULE_LONG_NAME));
-		newModule.setAslName("DRAFT NEW");
-		newModule.setVersion(new Float(1.0));
-		newModule.setCreatedBy(request.getRemoteUser());
-		newModule.setDisplayOrder(((Integer)dynaForm.get(DISPLAY_ORDER)).intValue());
+	newModule.setForm(f);
+	newModule.setLongName((String)dynaForm.get(MODULE_LONG_NAME));
+	newModule.setAslName("DRAFT NEW");
+	newModule.setVersion(new Float(1.0));
+	newModule.setCreatedBy(request.getRemoteUser());
+	newModule.setDisplayOrder(displayOrder);
+	newModule.setQuestions(new ArrayList());
+	
+	newModInst.setLongName((String)dynaForm.get(MODULE_INSTRUCTION_LONG_NAME));
+	newModInst.setAslName("DRAFT NEW");
+	newModInst.setVersion(new Float(1.0));
+	newModInst.setCreatedBy(request.getRemoteUser());
 
-		newModInst.setLongName((String)dynaForm.get(MODULE_INSTRUCTION_LONG_NAME));
-		newModInst.setAslName("DRAFT NEW");
-		newModInst.setVersion(new Float(1.0));
-		newModInst.setCreatedBy(request.getRemoteUser());
-		
-		FormBuilderServiceDelegate service = getFormBuilderService();
-		service.createModule(newModule, newModInst);
-	    }
-	catch (FormBuilderException exp)
-	    {
-		if (log.isDebugEnabled()) {
-		    log.debug("Exception on copyForm =  " + exp);
-		}      
-	    }
+	Form crf = (Form) getSessionObject(request, CRF);
+	
+	List modules = crf.getModules();
+
+	if(displayOrder < modules.size()) {
+	    modules.add(displayOrder, newModule);
+	    FormActionUtil.incrementDisplayOrder(modules, displayOrder + 1);
+	} else {
+	    modules.add(newModule);
+	}
+
 	return mapping.findForward("toFormEdit");
 
     }

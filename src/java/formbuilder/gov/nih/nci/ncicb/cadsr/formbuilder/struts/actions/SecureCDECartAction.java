@@ -34,10 +34,59 @@ import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 
 import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 
 public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
+
+    public ActionForward addQuestion(
+					   ActionMapping mapping,
+					   ActionForm form,
+					   HttpServletRequest request,
+					   HttpServletResponse response) throws IOException, ServletException {
+
+	DynaActionForm dynaForm = (DynaActionForm)form;
+	String[] selectedItems = (String[])dynaForm.get(SELECTED_ITEMS);
+
+	CDECart sessionCart =
+	    (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+
+	List questions = ((Module)getSessionObject(request, MODULE)).getQuestions();
+
+	Collection col = sessionCart.getDataElements();
+	ArrayList al = new ArrayList(col);
+
+	int displayOrder = Integer.parseInt((String)dynaForm.get(QUESTION_INDEX));
+
+	for(int i=0; i<selectedItems.length; i++) {
+	    DataElement de = (DataElement)((CDECartItem)al.get(Integer.parseInt(selectedItems[i]))).getItem();
+	    
+	    Question q = new QuestionTransferObject();
+
+	    List values = de.getValueDomain().getValidValues();
+	    List newValidValues = DTOTransformer.toFormValidValueList(values);
+
+	    q.setValidValues(newValidValues);
+	    q.setDataElement(de);
+	    q.setLongName(de.getLongName());
+
+	    q.setDisplayOrder(displayOrder);
+	    
+	    if(displayOrder < questions.size()) {
+		questions.add(displayOrder, q);
+		
+		FormActionUtil.incrementDisplayOrder(questions, displayOrder+1);
+	    } else {
+		questions.add(q);
+	    }
+
+	}
+
+	return mapping.findForward("success");
+
+    }
 
     public ActionForward changeAssociation(
 					   ActionMapping mapping,
