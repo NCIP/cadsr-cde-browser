@@ -155,7 +155,11 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=dec.getVersion()%> </td>
  </tr>
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Conceptual Domain Preferred Name:</td>
+    <td class="TableRowPromptText">Conceptual Domain Public ID:</td>
+    <td class="OraFieldText"><%=dec.getCDPublicId()%></td>
+ </tr>
+ <tr class="OraTabledata">   
+   <td class="TableRowPromptText">Conceptual Domain Preferred Name:</td>
     <td class="OraFieldText"><%=dec.getCDPrefName()%> </td>
  </tr>
  <tr class="OraTabledata">
@@ -173,6 +177,10 @@ function goPage(pageInfo) {
     </td>
  </tr> 
  <tr class="OraTabledata">
+    <td class="TableRowPromptText">Property Public ID:</td>
+    <td class="OraFieldText"><%=dec.getPropertyPublicId()%></td>
+ </tr>
+ <tr class="OraTabledata"> 
     <td class="TableRowPromptText">Object Class Preferred Name:</td>
     <td class="OraFieldText"><%=dec.getObjClassPrefName()%> </td>
  </tr>
@@ -187,7 +195,8 @@ function goPage(pageInfo) {
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Object Class Concept Id:</td>
     <td class="OraFieldText">
-    <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
+ 
+ <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
     </td>
  </tr> 
  <tr class="OraTabledata">
@@ -195,6 +204,10 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=dec.getObjClassQualifier()%> </td>
  </tr>
  <tr class="OraTabledata">
+    <td class="TableRowPromptText">Property Public ID:</td>
+    <td class="OraFieldText"><%=dec.getPropertyPublicId()%></td>
+ </tr>
+ <tr class="OraTabledata"> 
     <td class="TableRowPromptText">Property Preferred Name:</td>
     <td class="OraFieldText"><%=dec.getPropertyPrefName()%> </td>
  </tr>
