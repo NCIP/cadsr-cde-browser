@@ -4,7 +4,7 @@ package gov.nih.nci.ncicb.cadsr.lov;
  * A Bean class.
  * <P>
  * @author Oracle Corporation
- * @version: $Id: ValueDomainsLOVBean.java,v 1.2 2004-08-17 15:34:53 jiangja Exp $
+ * @version: $Id: ValueDomainsLOVBean.java,v 1.3 2005-02-08 16:32:05 jiangja Exp $
  */
 import gov.nih.nci.ncicb.cadsr.util.*;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
@@ -43,6 +43,8 @@ public class ValueDomainsLOVBean extends Object {
       String newSearchStr = "";
       if (!searchStr.equals("")) {
         newSearchStr = StringReplace.strReplace(searchStr,"*","%");
+        //Release 3.0, TT#1178
+        newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
         searchWhere = " and   (upper(vd.long_name) like upper ( '"+newSearchStr+"') " +
                       " OR upper(vd.preferred_name) like upper ( '"+newSearchStr+"')) "
                       ;

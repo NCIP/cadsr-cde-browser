@@ -46,12 +46,16 @@ public class ClassificationsLOVBean extends Object {
          }
          if (!searchStr[0].equals("")){
             String newSearchStr0 = StringReplace.strReplace(searchStr[0],"*","%");
+            //Release 3.0, TT#1178
+            newSearchStr0 = StringReplace.strReplace(newSearchStr0,"'","''");
             csWhere = " and   (upper (cs.long_name) like upper ( '"+newSearchStr0+"') " +
                       " OR upper (cs.preferred_name) like upper ( '"+newSearchStr0+"')) "
                       ; 
          }
          if (!searchStr[1].equals("")){
             String newSearchStr1 = StringReplace.strReplace(searchStr[1],"*","%");
+            //Release 3.0, TT#1178
+            newSearchStr1 = StringReplace.strReplace(newSearchStr1,"'","''");
             csiWhere = " and upper (csi.csi_name) like upper ( '"+newSearchStr1+"') ";
          }
          if (request.getParameter("chkContext") == null){
