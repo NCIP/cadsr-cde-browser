@@ -1,6 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.xml;
 
 import gov.nih.nci.ncicb.cadsr.util.ConnectionHelper;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
@@ -13,6 +15,7 @@ import java.sql.Statement;
 import oracle.xml.sql.query.OracleXMLQuery;
 
 public class XMLGeneratorBean  {
+  private static Log log = LogFactory.getLog(XMLGeneratorBean.class.getName());
   private String targetView = "";
   private String whereClause = "";
   private String sqlQuery = "";
@@ -58,8 +61,7 @@ public class XMLGeneratorBean  {
     
     }
     catch (Exception e) {
-      e.getMessage();
-      e.printStackTrace();
+      log.error("getXMLString()", e);
     }
     finally {
       if (connHelper != null)
@@ -99,7 +101,7 @@ public class XMLGeneratorBean  {
     }
     catch (SQLException sqle) {
       closeResources();
-      sqle.printStackTrace();
+      log.error("Exception createOracleXMLQuery()", sqle);
       throw sqle;
     }
 
@@ -186,7 +188,7 @@ public class XMLGeneratorBean  {
       
     }
     catch (java.io.IOException e) {
-      e.printStackTrace();
+      log.error(e.getMessage(), e);
       throw e;
       
     }

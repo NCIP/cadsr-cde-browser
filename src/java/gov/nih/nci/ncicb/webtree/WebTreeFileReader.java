@@ -7,13 +7,20 @@ package gov.nih.nci.ncicb.webtree;
  * @version 1.0
  */
  
-import java.io.*;
-import java.util.*;
-import javax.swing.tree.*;
-import javax.servlet.http.*;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import javax.swing.tree.DefaultMutableTreeNode;
 
 public class WebTreeFileReader
 {
+   private static Log log = LogFactory.getLog(WebTreeFileReader.class.getName());
  	private	DefaultMutableTreeNode _root = null;   
   
   public static DefaultMutableTreeNode parseTabbedFile(String fileName, Class callingClass) throws Exception
@@ -52,7 +59,7 @@ public class WebTreeFileReader
     // Buffer the file for parsing using a BufferedReader
     BufferedReader br = new BufferedReader(readStream);
 
-    System.out.println("Parsing file: "+fileName);
+    log.info("Parsing file: "+fileName);
 
     try 
     {  
