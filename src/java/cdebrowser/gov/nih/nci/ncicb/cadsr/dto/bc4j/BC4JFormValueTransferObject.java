@@ -59,4 +59,11 @@ public class BC4JFormValueTransferObject extends AdminComponentTransferObject
 
   public void setVpIdseq(String vpIdseq) {
   }
+
+  public int getDisplayOrder() {
+    return 0;
+  }
+
+  public void setDisplayOrder(int dispOrder) {
+  }
 }

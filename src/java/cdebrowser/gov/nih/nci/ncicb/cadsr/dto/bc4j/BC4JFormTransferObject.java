@@ -79,4 +79,11 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
 
   public void setModules(List blocks) {
   }
+
+  public String getFormCategory() {
+    return null;
+  }
+
+  public void setFormCategory(String formCategory) {
+  }
 }

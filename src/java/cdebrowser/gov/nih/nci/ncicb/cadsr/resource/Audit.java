@@ -1,22 +1,27 @@
 package gov.nih.nci.ncicb.cadsr.resource;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-import java.sql.Date;
 
-public interface Audit extends CaDSRConstants
-{
+import java.sql.Date;
+import java.sql.Timestamp;
+
+
+public interface Audit extends CaDSRConstants {
   public String getCreatedBy();
+
   public void setCreatedBy(String pCreatedBy);
 
-  public Date getDateCreated();
-  public void setDateCreated(Date pCreatedDate);
+  public Timestamp getDateCreated();
+
+  public void setDateCreated(Timestamp pCreatedDate);
 
   public String getModifiedBy();
+
   public void setModifiedBy(String pModifiedBy);
 
-  public Date getDateModified();
-  public void setDateModified(Date pModifiedDate);
+  public Timestamp getDateModified();
+
+  public void setDateModified(Timestamp pModifiedDate);
 
   public String toString();
-
 }

@@ -36,6 +36,7 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
   GUIDGenerator idGen = null;
   public JDBCBaseDAO(ServiceLocator locator) {
     super(locator);
+    idGen = new GUIDGenerator (this.getDataSource());
     log = LogFactory.getLog(JDBCBaseDAO.class.getName());
   }
 
@@ -151,9 +152,7 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     return prefName;
   }
 
-  public synchronized GUIDGenerator getGUIDGenerator (){
-    if (idGen ==null) 
-      idGen = new GUIDGenerator (this.getDataSource());
+  public GUIDGenerator getGUIDGenerator (){
     return idGen;
   }
 
