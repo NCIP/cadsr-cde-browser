@@ -16,6 +16,22 @@
     </form-bean>
     <form-bean name="hrefCRFForm" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean" dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
+    </form-bean>    
+    <form-bean name="copyForm"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      dynamic="true">
+      <form-property name="formLongName" type="java.lang.String"/>
+      <form-property name="formIdSeq" type="java.lang.String"/>
+      <form-property name="preferredDefinition" type="java.lang.String"/>
+      <form-property name="conteIdseq" type="java.lang.String"/>
+      <form-property name="protocolLongName" type="java.lang.String"/>
+      <form-property name="protocolIdSeq" type="java.lang.String"/>
+      <form-property name="workflow" type="java.lang.String"/>
+      <form-property name="formCategory" type="java.lang.String"/>
+      <form-property name="formType" type="java.lang.String"/>
+      <form-property name="gotoEdit" type="java.lang.Boolean" />
+      <form-property name="formVersion" type="java.lang.Float" />
+      <form-property name="formComments" type="java.lang.String" />
     </form-bean>
     <form-bean name="protocolLOVForm" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean" dynamic="true">
       <form-property name="protocolLongName" type="java.lang.String"/>
@@ -64,6 +80,11 @@
     <action name="hrefCRFForm" path="/formDetailsAction" parameter="method" scope="request" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction" validate="false">
       <forward name="success" path="/formbuilder/formDetails.jsp" redirect="false"/>
     </action>
+    <action name="copyForm" path="/formToCopyAction" parameter="method" scope="request" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction" validate="false">
+      <forward name="showSuccess" path="/formbuilder/formCopy.jsp"/>
+      <forward name="gotoEdit" path="/formToEditAction.do?method=getFormToEdit"/>
+      <forward name="gotoView" path="/formDetailsAction.do?method=getFormDetails"/>
+    </action>   
     <action name="formEditForm" path="/formToEditAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction" validate="false">
       <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
     </action>
