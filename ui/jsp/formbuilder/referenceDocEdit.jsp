@@ -19,7 +19,10 @@
  function submitForm(methodName) {
        var f = document.forms[0];
        document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
- //      if (validateCreateReferenceDocForm(createReferenceDocForm)) 
+        if(document.forms[0].docName.value == ""){
+          alert('Reference Document Name is required.');
+       return;
+  }
           f.submit();
       
   }      
