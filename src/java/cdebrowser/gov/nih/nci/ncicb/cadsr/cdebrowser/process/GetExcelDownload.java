@@ -36,7 +36,7 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
  */
 public class GetExcelDownload extends BasePersistingProcess{
 	private static final String EMPTY_STRING = "";
-  private static final int NUMBER_OF_DE_COLUMNS = 28;
+  private static final int NUMBER_OF_DE_COLUMNS = 29;
     
 	public GetExcelDownload(){
 		this(null);
@@ -248,6 +248,7 @@ public class GetExcelDownload extends BasePersistingProcess{
         deList.add(rs.getString("HIGH_VALUE_NUM")); //25
         deList.add(Integer.toString(rs.getInt("DECIMAL_PLACE"))); //26
         deList.add(rs.getString("FORML_NAME")); //27
+        deList.add(rs.getString("VD_LONG_NAME")); //28
         
         deStr= getDataElementStr(deList);
 
@@ -408,6 +409,7 @@ public class GetExcelDownload extends BasePersistingProcess{
                   +"Context Version,"
                   +"Value Domain Public ID,"
                   +"Value Domain Preferred Name,"
+                  +"Value Domain Long Name,"
                   +"Value Domain Version,"
                   +"Value Domain Context Name,"
                   +"Value Domain Context Version,"
@@ -431,9 +433,9 @@ public class GetExcelDownload extends BasePersistingProcess{
                   +"Value Meaning,"
                   
                   +"Classification Scheme Preferred Name,"
-                  +"Classification Scheme Version,"
-                  +"Classification Scheme Context Name,"
                   +"Classification Scheme Context Version,"
+                  +"Classification Scheme Context Name,"
+                  +"Classification Scheme Version,"
                   +"Classification Scheme Item Name,"
                   +"Classification Scheme Item Type Name,"
                   
@@ -460,6 +462,7 @@ public class GetExcelDownload extends BasePersistingProcess{
                "\""+checkForNull((String)l.get(6))+"\"" +"," +
                "\""+checkForNull((String)l.get(19))+"\"" +"," +
                "\""+checkForNull((String)l.get(7))+"\"" +"," +
+               "\""+checkForNull((String)l.get(28))+"\"" +"," +
                "\""+checkForNull((String)l.get(8))+"\"" +"," +
                "\""+checkForNull((String)l.get(9))+"\"" +"," +
                "\""+checkForNull((String)l.get(10))+"\"" +"," +
