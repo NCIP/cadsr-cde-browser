@@ -21,3 +21,17 @@ function setChecked(val,chkName) {
   }
 }
 
+
+function validateMultiSelection(chkName,msg){
+  dml=document.forms[0];
+  len = dml.elements.length;
+  var i=0;
+  var numberselected=0;
+  for( i=0 ; i<len ; i++) {
+   if ((dml.elements[i].name==chkName) && (dml.elements[i].checked==1)) 
+    numberselected ++;
+   }
+   if (numberselected <= 1)
+     alert(msg);
+   return numberselected;
+}
