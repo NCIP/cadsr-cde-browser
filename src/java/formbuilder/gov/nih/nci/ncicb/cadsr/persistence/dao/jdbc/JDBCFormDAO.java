@@ -108,12 +108,16 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
-
+    
     //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
     // type, classificationIdseq
     formTest.getAllForms(
       "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "",
       "99BA9DC8-A622-4E69-E034-080020C9C0E0");
+
+    formTest.getAllForms(
+      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", "");
+    
     formTest.getModulesInAForm("99CD59C5-A9A0-3FA4-E034-080020C9C0E0");
 
     String formId = "99CD59C5-A9A0-3FA4-E034-080020C9C0E0";
@@ -287,7 +291,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
         }
         else {
           whereBuffer.append(
-            " QC_IDSEQ in (select ac_idseq from ac_csi where CS_CSI_IDSEQ ='" +
+            " WHERE QC_IDSEQ in (select ac_idseq from ac_csi where CS_CSI_IDSEQ ='" +
             classificationIdseq + "')");
           hasWhere = true;
         }

@@ -11,11 +11,13 @@ public class JDBCFormTransferObject extends FormTransferObject
 {
   public JDBCFormTransferObject(ResultSet rs) throws SQLException
   {
+    setFormIdseq(rs.getString(1));      // QC_IDSEQ
     setLongName(rs.getString(9));       //LONG_NAME
     setPreferredName(rs.getString(7));  // PREFERRED_NAME
     
     //setContext(new ContextTransferObject(rs.getString("context_name")));
     ContextTransferObject contextTransferObject = new ContextTransferObject();
+    contextTransferObject.setConteIdseq(rs.getString(4)); //CONTE_IDSEQ
     contextTransferObject.setName(rs.getString(12));  // CONTEXT_NAME
     setContext(contextTransferObject);
     
