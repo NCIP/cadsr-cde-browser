@@ -3,11 +3,12 @@ import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 
 public class ValidValueTransferObject implements ValidValue {
 
-  String vdIdseq;
-  String shortMeaning;
-  String shortMeaningDescription;
-  String shortMeaningValue;
-  String description;
+  protected String vdIdseq;
+  protected String vpIdseq;
+  protected String shortMeaning;
+  protected String shortMeaningDescription;
+  protected String shortMeaningValue;
+  protected String description;
   
   public ValidValueTransferObject() {
   }
@@ -70,5 +71,13 @@ public class ValidValueTransferObject implements ValidValue {
    }
    return false;
  }
+
+  public String getVpIdseq() {
+    return vpIdseq;
+  }
+
+  public void setVpIdseq(String aVpIdseq) {
+    vpIdseq = aVpIdseq;
+  }
   
 }
