@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding='windows-1252'?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="PropertiesExtView"
+   SelectList="PropertiesExt.PROP_IDSEQ, 
+       PropertiesExt.PREFERRED_NAME, 
+
+       PropertiesExt.LONG_NAME, 
+       PropertiesExt.PREFERRED_DEFINITION, 
+
+       PropertiesExt.CONTE_IDSEQ, 
+       PropertiesExt.VERSION, 
+
+       PropertiesExt.ASL_NAME, 
+       PropertiesExt.LATEST_VERSION_IND, 
+
+       PropertiesExt.CHANGE_NOTE, 
+       PropertiesExt.BEGIN_DATE, 
+
+       PropertiesExt.END_DATE, 
+       PropertiesExt.DATE_CREATED, 
+
+       PropertiesExt.CREATED_BY, 
+       PropertiesExt.DELETED_IND, 
+
+       PropertiesExt.DATE_MODIFIED, 
+       PropertiesExt.MODIFIED_BY, 
+
+       PropertiesExt.ORIGIN, 
+       PropertiesExt.DEFINITION_SOURCE, 
+
+       PropertiesExt.PROP_ID"
+   FromList="SBREXT.PROPERTIES_EXT PropertiesExt"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropertiesExtViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropertiesExtViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_CodeGenFlagNew" Value="36" />
+   </DesignTime>
+   <EntityUsage
+      Name="PropertiesExt"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropertiesExt" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="PropIdseq"
+      IsNotNull="true"
+      EntityAttrName="PropIdseq"
+      EntityUsage="PropertiesExt"
+      AliasName="PROP_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="PreferredName"
+      EntityUsage="PropertiesExt"
+      AliasName="PREFERRED_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      EntityAttrName="LongName"
+      EntityUsage="PropertiesExt"
+      AliasName="LONG_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="PropertiesExt"
+      AliasName="PREFERRED_DEFINITION"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="PropertiesExt"
+      AliasName="CONTE_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="Version"
+      EntityUsage="PropertiesExt"
+      AliasName="VERSION"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      EntityAttrName="AslName"
+      EntityUsage="PropertiesExt"
+      AliasName="ASL_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="PropertiesExt"
+      AliasName="LATEST_VERSION_IND"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNote"
+      EntityAttrName="ChangeNote"
+      EntityUsage="PropertiesExt"
+      AliasName="CHANGE_NOTE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      EntityAttrName="BeginDate"
+      EntityUsage="PropertiesExt"
+      AliasName="BEGIN_DATE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      EntityAttrName="EndDate"
+      EntityUsage="PropertiesExt"
+      AliasName="END_DATE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      EntityAttrName="DateCreated"
+      EntityUsage="PropertiesExt"
+      AliasName="DATE_CREATED"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      EntityAttrName="CreatedBy"
+      EntityUsage="PropertiesExt"
+      AliasName="CREATED_BY"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      EntityAttrName="DeletedInd"
+      EntityUsage="PropertiesExt"
+      AliasName="DELETED_IND"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      EntityAttrName="DateModified"
+      EntityUsage="PropertiesExt"
+      AliasName="DATE_MODIFIED"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="PropertiesExt"
+      AliasName="MODIFIED_BY"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      EntityAttrName="Origin"
+      EntityUsage="PropertiesExt"
+      AliasName="ORIGIN"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DefinitionSource"
+      EntityAttrName="DefinitionSource"
+      EntityUsage="PropertiesExt"
+      AliasName="DEFINITION_SOURCE"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PropId"
+      EntityAttrName="PropId"
+      EntityUsage="PropertiesExt"
+      AliasName="PROP_ID"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="ContextsRow"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProConteFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="DataElementConceptRows"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecProFKLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

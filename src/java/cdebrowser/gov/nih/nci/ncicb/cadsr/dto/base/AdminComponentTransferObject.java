@@ -1,0 +1,183 @@
+package gov.nih.nci.ncicb.cadsr.dto.base;
+
+import java.sql.Date;
+import gov.nih.nci.ncicb.cadsr.resource.*;
+import gov.nih.nci.ncicb.cadsr.persistence.base.BaseValueObject;
+import java.util.List;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+
+public class AdminComponentTransferObject extends BaseValueObject
+                          implements java.io.Serializable {
+	protected String preferredName;
+	protected String preferredDefinition;
+	protected String longName;
+	protected String aslName;
+	protected Float version;
+	protected String deletedInd;
+	protected String latestVerInd;
+	protected String createdBy;
+	protected Date createdDate;
+	protected String modifiedBy;
+	protected Date modifiedDate;
+	protected String conteIdseq;
+	protected Context context;
+	protected List refDocs;
+	protected List designations;
+  protected int publicId;
+  protected String origin;
+
+	public AdminComponentTransferObject() {
+		super();
+		preferredName = null;
+		preferredDefinition = null;
+		longName = null;
+		aslName = null;
+		version = null;
+		deletedInd = null;
+		latestVerInd = null;
+		createdBy = null;
+		createdDate = null;
+		modifiedBy = null;
+		modifiedDate = null;
+		conteIdseq = null;
+		context = null;
+		refDocs = null;
+		designations = null;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public Date getDateCreated() {
+		return createdDate;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public Date getDateModified() {
+		return modifiedDate;
+	}
+
+	public String getPreferredName() {
+		return preferredName;
+	}
+
+	public String getLongName() {
+		return longName;
+	}
+
+	public Float getVersion() {
+		return version;
+	}
+
+	public String getPreferredDefinition() {
+		return preferredDefinition;
+	}
+
+	public String getAslName() {
+		return aslName;
+	}
+
+	public String getLatestVersionInd() {
+		return latestVerInd;
+	}
+
+	public String getDeletedInd() {
+		return deletedInd;
+	}
+
+	public String getConteIdseq() {
+		return conteIdseq;
+	}
+
+	public Context getContext() {
+		return context;
+	}
+
+  public int getPublicId() {
+    return publicId;
+  }
+
+  public String getOrigin() {
+    return origin;
+  }
+
+	//setter methods
+
+	public void setPreferredName(String pPreferredName) {
+		preferredName = pPreferredName;
+	}
+
+	public void setLongName(String pLongName) {
+		longName = pLongName;
+	}
+
+	public void setVersion(Float pVersion) {
+		version = pVersion;
+	}
+
+	public void setPreferredDefinition(String pPreferredDefinition) {
+		preferredDefinition = pPreferredDefinition;
+	}
+
+	public void setAslName(String pAslName) {
+		aslName = pAslName;
+	}
+
+	public void setLatestVersionInd(String pLatestVersionInd) {
+		latestVerInd = pLatestVersionInd;
+	}
+
+	public void setDeletedInd(String pDeletedInd) {
+		deletedInd = pDeletedInd;
+	}
+
+	public void setCreatedBy(String pCreatedBy) {
+		createdBy = pCreatedBy;
+	}
+
+	public void setDateCreated(Date pCreatedDate) {
+		createdDate = pCreatedDate;
+	}
+
+	public void setModifiedBy(String pModifiedBy) {
+		modifiedBy = pModifiedBy;
+	}
+
+	public void setDateModified(Date pModifiedDate) {
+		modifiedDate = pModifiedDate;
+	}
+
+	public void setConteIdseq(String pContIdseq) {
+		conteIdseq = pContIdseq;
+	}
+
+	public void setContext(Context pContext) {
+		context = pContext;
+	}
+	public List getRefereceDocs() {
+		return refDocs;
+	}
+	public List getDesignations() {
+		return designations;
+	}
+
+	public void setReferenceDocs(List lRefDocs) {
+		refDocs = lRefDocs;
+	}
+
+	public void setDesignations(List lDes) {
+		designations = lDes;
+	}
+
+  public void setPublicId(int id) {
+    publicId = id;
+  }
+
+  public void setOrigin(String source) {
+    origin = source;
+  }
+}

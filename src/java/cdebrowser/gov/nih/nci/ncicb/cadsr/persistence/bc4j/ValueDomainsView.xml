@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding='windows-1252'?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="ValueDomainsView"
+   SelectList="ValueDomains.VD_IDSEQ, 
+       ValueDomains.VERSION, 
+       
+ValueDomains.PREFERRED_NAME, 
+       ValueDomains.CONTE_IDSEQ, 
+
+       ValueDomains.PREFERRED_DEFINITION, 
+       ValueDomains.DTL_NAME, 
+
+       ValueDomains.BEGIN_DATE, 
+       ValueDomains.CD_IDSEQ, 
+
+       ValueDomains.END_DATE, 
+       ValueDomains.VD_TYPE_FLAG, 
+
+       ValueDomains.ASL_NAME, 
+       ValueDomains.CHANGE_NOTE, 
+
+       ValueDomains.UOML_NAME, 
+       ValueDomains.LONG_NAME, 
+
+       ValueDomains.FORML_NAME, 
+       ValueDomains.MAX_LENGTH_NUM, 
+
+       ValueDomains.MIN_LENGTH_NUM, 
+       ValueDomains.DECIMAL_PLACE, 
+
+       ValueDomains.LATEST_VERSION_IND, 
+       ValueDomains.DELETED_IND, 
+
+       ValueDomains.DATE_CREATED, 
+       ValueDomains.CREATED_BY, 
+
+       ValueDomains.DATE_MODIFIED, 
+       ValueDomains.MODIFIED_BY, 
+
+       ValueDomains.CHAR_SET_NAME, 
+       ValueDomains.HIGH_VALUE_NUM, 
+
+       ValueDomains.LOW_VALUE_NUM, 
+       ValueDomains.QUALIFIER_NAME, 
+
+       ValueDomains.ORIGIN, 
+       ValueDomains.VD_ID"
+   FromList="VALUE_DOMAINS ValueDomains"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomainsViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomainsViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_CodeGenFlagNew" Value="36" />
+   </DesignTime>
+   <EntityUsage
+      Name="ValueDomains"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="VdIdseq"
+      IsNotNull="true"
+      EntityAttrName="VdIdseq"
+      EntityUsage="ValueDomains"
+      AliasName="VD_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="Version"
+      EntityUsage="ValueDomains"
+      AliasName="VERSION"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="PreferredName"
+      EntityUsage="ValueDomains"
+      AliasName="PREFERRED_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="ValueDomains"
+      AliasName="CONTE_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="ValueDomains"
+      AliasName="PREFERRED_DEFINITION"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DtlName"
+      IsNotNull="true"
+      EntityAttrName="DtlName"
+      EntityUsage="ValueDomains"
+      AliasName="DTL_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      EntityAttrName="BeginDate"
+      EntityUsage="ValueDomains"
+      AliasName="BEGIN_DATE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CdIdseq"
+      IsNotNull="true"
+      EntityAttrName="CdIdseq"
+      EntityUsage="ValueDomains"
+      AliasName="CD_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      EntityAttrName="EndDate"
+      EntityUsage="ValueDomains"
+      AliasName="END_DATE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VdTypeFlag"
+      IsNotNull="true"
+      EntityAttrName="VdTypeFlag"
+      EntityUsage="ValueDomains"
+      AliasName="VD_TYPE_FLAG"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      EntityAttrName="AslName"
+      EntityUsage="ValueDomains"
+      AliasName="ASL_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNote"
+      EntityAttrName="ChangeNote"
+      EntityUsage="ValueDomains"
+      AliasName="CHANGE_NOTE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="UomlName"
+      EntityAttrName="UomlName"
+      EntityUsage="ValueDomains"
+      AliasName="UOML_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      EntityAttrName="LongName"
+      EntityUsage="ValueDomains"
+      AliasName="LONG_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FormlName"
+      EntityAttrName="FormlName"
+      EntityUsage="ValueDomains"
+      AliasName="FORML_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MaxLengthNum"
+      EntityAttrName="MaxLengthNum"
+      EntityUsage="ValueDomains"
+      AliasName="MAX_LENGTH_NUM"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MinLengthNum"
+      EntityAttrName="MinLengthNum"
+      EntityUsage="ValueDomains"
+      AliasName="MIN_LENGTH_NUM"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DecimalPlace"
+      EntityAttrName="DecimalPlace"
+      EntityUsage="ValueDomains"
+      AliasName="DECIMAL_PLACE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="ValueDomains"
+      AliasName="LATEST_VERSION_IND"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      EntityAttrName="DeletedInd"
+      EntityUsage="ValueDomains"
+      AliasName="DELETED_IND"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      EntityAttrName="DateCreated"
+      EntityUsage="ValueDomains"
+      AliasName="DATE_CREATED"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      EntityAttrName="CreatedBy"
+      EntityUsage="ValueDomains"
+      AliasName="CREATED_BY"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      EntityAttrName="DateModified"
+      EntityUsage="ValueDomains"
+      AliasName="DATE_MODIFIED"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="ValueDomains"
+      AliasName="MODIFIED_BY"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CharSetName"
+      EntityAttrName="CharSetName"
+      EntityUsage="ValueDomains"
+      AliasName="CHAR_SET_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="HighValueNum"
+      EntityAttrName="HighValueNum"
+      EntityUsage="ValueDomains"
+      AliasName="HIGH_VALUE_NUM"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LowValueNum"
+      EntityAttrName="LowValueNum"
+      EntityUsage="ValueDomains"
+      AliasName="LOW_VALUE_NUM"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QualifierName"
+      EntityAttrName="QualifierName"
+      EntityUsage="ValueDomains"
+      AliasName="QUALIFIER_NAME"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      EntityAttrName="Origin"
+      EntityUsage="ValueDomains"
+      AliasName="ORIGIN"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VdId"
+      EntityAttrName="VdId"
+      EntityUsage="ValueDomains"
+      AliasName="VD_ID"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="ConceptualDomainsRow"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCdFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="DataElementsView"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeVdFkLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="VdPvsView"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding='windows-1252'?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="QuestContentsExtView"
+   SelectList="QuestContentsExt.QC_IDSEQ, 
+       QuestContentsExt.VERSION, 
+
+       QuestContentsExt.QTL_NAME, 
+       QuestContentsExt.CONTE_IDSEQ, 
+
+       QuestContentsExt.ASL_NAME, 
+       QuestContentsExt.PREFERRED_NAME, 
+
+       QuestContentsExt.PREFERRED_DEFINITION, 
+       QuestContentsExt.PROTO_IDSEQ, 
+
+       QuestContentsExt.DE_IDSEQ, 
+       QuestContentsExt.VP_IDSEQ, 
+
+       QuestContentsExt.QC_MATCH_IDSEQ, 
+       QuestContentsExt.QC_IDENTIFIER, 
+
+       QuestContentsExt.QCDL_NAME, 
+       QuestContentsExt.LONG_NAME, 
+
+       QuestContentsExt.LATEST_VERSION_IND, 
+       QuestContentsExt.DELETED_IND, 
+
+       QuestContentsExt.BEGIN_DATE, 
+       QuestContentsExt.END_DATE, 
+
+       QuestContentsExt.MATCH_IND, 
+       QuestContentsExt.NEW_QC_IND, 
+
+       QuestContentsExt.HIGHLIGHT_IND, 
+       QuestContentsExt.REVIEWER_FEEDBACK_ACTION, 
+
+       QuestContentsExt.REVIEWER_FEEDBACK_INTERNAL, 
+       
+QuestContentsExt.REVIEWER_FEEDBACK_EXTERNAL, 
+       QuestContentsExt.SYSTEM_MSGS, 
+
+       QuestContentsExt.REVIEWED_BY, 
+       QuestContentsExt.REVIEWED_DATE, 
+
+       QuestContentsExt.APPROVED_BY, 
+       QuestContentsExt.APPROVED_DATE, 
+
+       QuestContentsExt.CDE_DICTIONARY_ID, 
+       QuestContentsExt.DATE_CREATED, 
+
+       QuestContentsExt.CREATED_BY, 
+       QuestContentsExt.DATE_MODIFIED, 
+
+       QuestContentsExt.MODIFIED_BY, 
+       QuestContentsExt.CHANGE_NOTE, 
+
+       QuestContentsExt.SUBMITTED_LONG_CDE_NAME, 
+       QuestContentsExt.GROUP_COMMENTS, 
+
+       QuestContentsExt.SRC_NAME, 
+       QuestContentsExt.P_MOD_IDSEQ, 
+
+       QuestContentsExt.P_QST_IDSEQ, 
+       QuestContentsExt.P_VAL_IDSEQ, 
+
+       QuestContentsExt.DN_CRF_IDSEQ, 
+       QuestContentsExt.DN_VD_IDSEQ, 
+
+       QuestContentsExt.DISPLAY_IND, 
+       QuestContentsExt.GROUP_ACTION, 
+
+       QuestContentsExt.DE_LONG_NAME, 
+       QuestContentsExt.VD_LONG_NAME, 
+
+       QuestContentsExt.DEC_LONG_NAME, 
+       QuestContentsExt.DISPLAY_ORDER, 
+
+       QuestContentsExt.ORIGIN, 
+       QuestContentsExt.QC_ID"
+   FromList="SBREXT.QUEST_CONTENTS_EXT QuestContentsExt"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExtViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExtViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_CodeGenFlagNew" Value="36" />
+   </DesignTime>
+   <EntityUsage
+      Name="QuestContentsExt"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="QcIdseq"
+      IsNotNull="true"
+      EntityAttrName="QcIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="QC_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsNotNull="true"
+      EntityAttrName="Version"
+      EntityUsage="QuestContentsExt"
+      AliasName="VERSION"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QtlName"
+      IsNotNull="true"
+      EntityAttrName="QtlName"
+      EntityUsage="QuestContentsExt"
+      AliasName="QTL_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsNotNull="true"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="CONTE_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      EntityAttrName="AslName"
+      EntityUsage="QuestContentsExt"
+      AliasName="ASL_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsNotNull="true"
+      EntityAttrName="PreferredName"
+      EntityUsage="QuestContentsExt"
+      AliasName="PREFERRED_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="QuestContentsExt"
+      AliasName="PREFERRED_DEFINITION"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ProtoIdseq"
+      EntityAttrName="ProtoIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="PROTO_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeIdseq"
+      EntityAttrName="DeIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="DE_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VpIdseq"
+      EntityAttrName="VpIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="VP_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QcMatchIdseq"
+      EntityAttrName="QcMatchIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="QC_MATCH_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QcIdentifier"
+      EntityAttrName="QcIdentifier"
+      EntityUsage="QuestContentsExt"
+      AliasName="QC_IDENTIFIER"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QcdlName"
+      EntityAttrName="QcdlName"
+      EntityUsage="QuestContentsExt"
+      AliasName="QCDL_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      EntityAttrName="LongName"
+      EntityUsage="QuestContentsExt"
+      AliasName="LONG_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="LATEST_VERSION_IND"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      EntityAttrName="DeletedInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="DELETED_IND"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      EntityAttrName="BeginDate"
+      EntityUsage="QuestContentsExt"
+      AliasName="BEGIN_DATE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      EntityAttrName="EndDate"
+      EntityUsage="QuestContentsExt"
+      AliasName="END_DATE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MatchInd"
+      EntityAttrName="MatchInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="MATCH_IND"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NewQcInd"
+      EntityAttrName="NewQcInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="NEW_QC_IND"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="HighlightInd"
+      EntityAttrName="HighlightInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="HIGHLIGHT_IND"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewerFeedbackAction"
+      EntityAttrName="ReviewerFeedbackAction"
+      EntityUsage="QuestContentsExt"
+      AliasName="REVIEWER_FEEDBACK_ACTION"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewerFeedbackInternal"
+      EntityAttrName="ReviewerFeedbackInternal"
+      EntityUsage="QuestContentsExt"
+      AliasName="REVIEWER_FEEDBACK_INTERNAL"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewerFeedbackExternal"
+      EntityAttrName="ReviewerFeedbackExternal"
+      EntityUsage="QuestContentsExt"
+      AliasName="REVIEWER_FEEDBACK_EXTERNAL"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SystemMsgs"
+      EntityAttrName="SystemMsgs"
+      EntityUsage="QuestContentsExt"
+      AliasName="SYSTEM_MSGS"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewedBy"
+      EntityAttrName="ReviewedBy"
+      EntityUsage="QuestContentsExt"
+      AliasName="REVIEWED_BY"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewedDate"
+      EntityAttrName="ReviewedDate"
+      EntityUsage="QuestContentsExt"
+      AliasName="REVIEWED_DATE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ApprovedBy"
+      EntityAttrName="ApprovedBy"
+      EntityUsage="QuestContentsExt"
+      AliasName="APPROVED_BY"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ApprovedDate"
+      EntityAttrName="ApprovedDate"
+      EntityUsage="QuestContentsExt"
+      AliasName="APPROVED_DATE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CdeDictionaryId"
+      EntityAttrName="CdeDictionaryId"
+      EntityUsage="QuestContentsExt"
+      AliasName="CDE_DICTIONARY_ID"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      EntityAttrName="DateCreated"
+      EntityUsage="QuestContentsExt"
+      AliasName="DATE_CREATED"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      EntityAttrName="CreatedBy"
+      EntityUsage="QuestContentsExt"
+      AliasName="CREATED_BY"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      EntityAttrName="DateModified"
+      EntityUsage="QuestContentsExt"
+      AliasName="DATE_MODIFIED"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="QuestContentsExt"
+      AliasName="MODIFIED_BY"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNote"
+      EntityAttrName="ChangeNote"
+      EntityUsage="QuestContentsExt"
+      AliasName="CHANGE_NOTE"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SubmittedLongCdeName"
+      EntityAttrName="SubmittedLongCdeName"
+      EntityUsage="QuestContentsExt"
+      AliasName="SUBMITTED_LONG_CDE_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="GroupComments"
+      EntityAttrName="GroupComments"
+      EntityUsage="QuestContentsExt"
+      AliasName="GROUP_COMMENTS"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SrcName"
+      EntityAttrName="SrcName"
+      EntityUsage="QuestContentsExt"
+      AliasName="SRC_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PModIdseq"
+      EntityAttrName="PModIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="P_MOD_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PQstIdseq"
+      EntityAttrName="PQstIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="P_QST_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PValIdseq"
+      EntityAttrName="PValIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="P_VAL_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DnCrfIdseq"
+      EntityAttrName="DnCrfIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="DN_CRF_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DnVdIdseq"
+      EntityAttrName="DnVdIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="DN_VD_IDSEQ"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayInd"
+      EntityAttrName="DisplayInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="DISPLAY_IND"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="GroupAction"
+      EntityAttrName="GroupAction"
+      EntityUsage="QuestContentsExt"
+      AliasName="GROUP_ACTION"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeLongName"
+      EntityAttrName="DeLongName"
+      EntityUsage="QuestContentsExt"
+      AliasName="DE_LONG_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VdLongName"
+      EntityAttrName="VdLongName"
+      EntityUsage="QuestContentsExt"
+      AliasName="VD_LONG_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DecLongName"
+      EntityAttrName="DecLongName"
+      EntityUsage="QuestContentsExt"
+      AliasName="DEC_LONG_NAME"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayOrder"
+      EntityAttrName="DisplayOrder"
+      EntityUsage="QuestContentsExt"
+      AliasName="DISPLAY_ORDER"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      EntityAttrName="Origin"
+      EntityUsage="QuestContentsExt"
+      AliasName="ORIGIN"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QcId"
+      EntityAttrName="QcId"
+      EntityUsage="QuestContentsExt"
+      AliasName="QC_ID"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="ContextsRow"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcConteFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Protocol"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

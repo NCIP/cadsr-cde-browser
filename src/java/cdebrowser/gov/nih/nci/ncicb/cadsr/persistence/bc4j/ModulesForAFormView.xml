@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding='windows-1252'?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="ModulesForAFormView"
+   SelectList="mod.QC_IDSEQ AS MODULE_IDSEQ, 
+       mod.VERSION, 
+       mod.QTL_NAME, 
+
+       mod.CONTE_IDSEQ, 
+       mod.ASL_NAME, 
+       mod.PREFERRED_NAME, 
+
+       mod.PREFERRED_DEFINITION, 
+       mod.LONG_NAME, 
+   
+    mod.LATEST_VERSION_IND, 
+       mod.DELETED_IND, 
+       
+mod.DN_CRF_IDSEQ, 
+       qr.QR_IDSEQ, 
+       qr.P_QC_IDSEQ, 
+
+       qr.C_QC_IDSEQ, 
+       qr.DISPLAY_ORDER, 
+       qr.RL_NAME, 
+
+       frm.QC_IDSEQ AS FORM_IDSEQ"
+   FromList="SBREXT.QUEST_CONTENTS_EXT mod, QC_RECS_EXT qr, SBREXT.QUEST_CONTENTS_EXT frm"
+   Where="frm.QC_IDSEQ = qr.P_QC_IDSEQ
+AND   mod.QC_IDSEQ = qr.C_QC_IDSEQ
+AND   qr.RL_NAME = &#39;FORM_MODULE&#39;
+AND   frm.QC_IDSEQ = :1"
+   OrderBy="DISPLAY_ORDER"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModulesForAFormViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModulesForAFormViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_CodeGenFlagNew" Value="36" />
+   </DesignTime>
+   <EntityUsage
+      Name="mod"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="true" />
+         <Attr Name="_queryWhere" Value="frm.QC_IDSEQ = qr.P_QC_IDSEQ
+AND   mod.QC_IDSEQ = qr.C_QC_IDSEQ
+AND   qr.RL_NAME = &#39;FORM_MODULE&#39;
+AND   frm.QC_IDSEQ = :1" />
+         <Attr Name="_queryOrderBy" Value="DISPLAY_ORDER" />
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="qr"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcRecsExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk1Assoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk1Assoc.QcRecsExt"
+      SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModulesForAFormView.mod" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+         <AttrArray Name="_srcAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QcIdseq" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcRecsExt.PQcIdseq" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="frm"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk1Assoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk1Assoc.QuestContentsExt"
+      SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModulesForAFormView.qr"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+         <AttrArray Name="_srcAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcRecsExt.PQcIdseq" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QcIdseq" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="ModuleIdseq"
+      IsNotNull="true"
+      EntityAttrName="QcIdseq"
+      EntityUsage="mod"
+      AliasName="MODULE_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsNotNull="true"
+      EntityAttrName="Version"
+      EntityUsage="mod"
+      AliasName="VERSION"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QtlName"
+      IsNotNull="true"
+      EntityAttrName="QtlName"
+      EntityUsage="mod"
+      AliasName="QTL_NAME"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsNotNull="true"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="mod"
+      AliasName="CONTE_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      EntityAttrName="AslName"
+      EntityUsage="mod"
+      AliasName="ASL_NAME"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsNotNull="true"
+      EntityAttrName="PreferredName"
+      EntityUsage="mod"
+      AliasName="PREFERRED_NAME"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="mod"
+      AliasName="PREFERRED_DEFINITION"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      EntityAttrName="LongName"
+      EntityUsage="mod"
+      AliasName="LONG_NAME"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="mod"
+      AliasName="LATEST_VERSION_IND"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      EntityAttrName="DeletedInd"
+      EntityUsage="mod"
+      AliasName="DELETED_IND"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DnCrfIdseq"
+      EntityAttrName="DnCrfIdseq"
+      EntityUsage="mod"
+      AliasName="DN_CRF_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QrIdseq"
+      IsNotNull="true"
+      EntityAttrName="QrIdseq"
+      EntityUsage="qr"
+      AliasName="QR_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PQcIdseq"
+      IsNotNull="true"
+      EntityAttrName="PQcIdseq"
+      EntityUsage="qr"
+      AliasName="P_QC_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CQcIdseq"
+      IsNotNull="true"
+      EntityAttrName="CQcIdseq"
+      EntityUsage="qr"
+      AliasName="C_QC_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayOrder"
+      IsNotNull="true"
+      EntityAttrName="DisplayOrder"
+      EntityUsage="qr"
+      AliasName="DISPLAY_ORDER"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RlName"
+      IsNotNull="true"
+      EntityAttrName="RlName"
+      EntityUsage="qr"
+      AliasName="RL_NAME"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FormIdseq"
+      IsNotNull="true"
+      EntityAttrName="QcIdseq"
+      EntityUsage="frm"
+      AliasName="FORM_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>
