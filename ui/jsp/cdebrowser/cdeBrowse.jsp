@@ -23,9 +23,7 @@
   	
   }
   catch(Exception ex){}
-  if(cachedDeList!=null||showCached!=null)
-    pageContext.setAttribute("resultsPresent",new Boolean("true"));
-  
+    
   CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
   String pageId = request.getParameter("PageId");
   String treeURL;
@@ -55,6 +53,11 @@
     treeURL = treeURL + "&PageId="+pageId;
     browserURL = "search?PageId="+pageId+"&FirstTimer=0"+extraURLParams;
   }
+
+  if(cachedDeList!=null||showCached!=null) {
+    pageContext.setAttribute("resultsPresent",new Boolean("true"));
+    browserURL = "dataElementsSearch.jsp?performQuery=cached"+"&FirstTimer=0"+extraURLParams;
+  }
 %>
 <HTML>
 <HEAD>
@@ -69,11 +72,6 @@ CDE Browser
        <frame src="cdebrowserCommon_html/tree_hdr.html" frameborder="0" name="tree_header" scrolling = "no">
        <frame src="<%=treeURL%>" frameborder="0" name="tree">
     </frameset>    
-          <logic:present name="resultsPresent">
-            <frame src="<%="dataElementsSearch.jsp?performQuery=cached"%>" frameborder="0" name="body">
-          </logic:present>
-          <logic:notPresent name="resultsPresent">
-            <frame src="<%=browserURL%>" frameborder="0" name="body">
-          </logic:notPresent>      
-  </frameset>
+      <frame src="<%=browserURL%>" frameborder="0" name="body">
+   </frameset>
 </HTML>

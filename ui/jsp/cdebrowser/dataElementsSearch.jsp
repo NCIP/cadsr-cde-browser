@@ -63,11 +63,13 @@
   String doneURL = "";
 
   String src = request.getParameter("src");
+  if (src == null)
+    src="";
   String modIndex = "";
   String quesIndex = "";
   String urlParams = "";
   
-  if ((src != null) || ("".equals(src))) {
+  if ((src != null) && (!"".equals(src))) {
     modIndex = request.getParameter("moduleIndex");
     quesIndex = request.getParameter("questionIndex");
     doneURL= src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
@@ -331,7 +333,7 @@ function done() {
     <td colspan="4" nowrap align="left" class="AbbreviatedText">Wildcard character for search is *</td>
  </tr>
 <%
-  if (src == null) {
+  if ("".equals(src)) {
 %>
  <TR>
     <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a></td>
@@ -389,11 +391,11 @@ function done() {
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader"><input type="checkbox" name="deList" value="yes" onClick="ToggleAll(this)"/></th>
-    <th class="OraTableColumnHeader">Preferred Name</th>
     <th class="OraTableColumnHeader">Long Name</th>
     <th class="OraTableColumnHeader">Document Text</th>
     <th class="OraTableColumnHeader">Owned By</th>
     <th class="OraTableColumnHeader">Used By Context</th>
+    <th class="OraTableColumnHeader">Registration Status</th>
     <th class="OraTableColumnHeader">Workflow Status</th>
     <th class="OraTableColumnHeader">Public ID</th>
     <th class="OraTableColumnHeader">Version</th>
@@ -405,11 +407,11 @@ function done() {
 %>
   <tr class="OraTabledata">
     <td class="OraTableCellSelect"><input type="checkbox" name="selectDE" value="<%=de.getDeIdseq()%>"/></td>
-    <td class="OraFieldText"><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=<%=de.getDeIdseq()%>')"><%=de.getPreferredName()%></a></td>
-    <td class="OraFieldText"><%=de.getLongName()%> </td>
+    <td class="OraFieldText"><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=<%=de.getDeIdseq()%>')"><%=de.getLongName()%></a></td>
     <td class="OraFieldText"><%=de.getLongCDEName()%> </td>
     <td class="OraFieldText"><%=de.getContextName()%> </td>
     <td class="OraFieldText"><%=de.getUsingContexts()%> </td>
+    <td class="OraFieldText"><%=de.getRegistrationStatus()%> </td>
     <td class="OraFieldText"><%=de.getAslName()%> </td>
     <td class="OraFieldText"><%=de.getCDEId()%> </td>
     <td class="OraFieldText"><%=de.getVersion()%> </td>
@@ -435,11 +437,11 @@ function done() {
 
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Preferred Name</th>
     <th class="OraTableColumnHeader">Long Name</th>
     <th class="OraTableColumnHeader">Document Text</th>
     <th class="OraTableColumnHeader">Owned By</th>
     <th class="OraTableColumnHeader">Used By Context</th>
+    <th class="OraTableColumnHeader">Registration</th>
     <th class="OraTableColumnHeader">Workflow Status</th>
     <th class="OraTableColumnHeader">Public ID</th>
     <th class="OraTableColumnHeader">Version</th>
