@@ -110,6 +110,7 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
       DMLException dmlExp = new DMLException("No matching target record, " + 
         ", was found whose display order is to be updated.");
       dmlExp.setErrorCode(ERROR_UPDATING_DISPLAY_ORDER);
+      throw dmlExp;
     }
     return 1;  // success
   }

@@ -784,7 +784,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
 
    
    Map resultMap = new HashMap();
-   
+   //Get deleted Questions
    ListIterator iterate = orgQuestionList.listIterator();
    while(iterate.hasNext())
    {
@@ -795,11 +795,12 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
        deletedQuestionList.add(currQuestion);
      }
    }   
-   
+   // Get Edited and New Questions
    while(editedQuestionIterate.hasNext())
    {
      Question currQuestion = (Question)editedQuestionIterate.next();
      currQuestion.setModule(currModule);
+     //Get New Questions
      if(!orgQuestionList.contains(currQuestion))
      {
        List newQuestionVV = currQuestion.getValidValues();
@@ -812,13 +813,14 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
        newQuestionList.add(currQuestion);
        
      }
-     else
+     else// Get edited Questions
      {
        int orgQuestionIndex= orgQuestionList.indexOf(currQuestion);
        Question orgQuestion = (Question)orgQuestionList.get(orgQuestionIndex);
        DataElement orgQusetionDE = orgQuestion.getDataElement();
        DataElement currQusetionDE = currQuestion.getDataElement();
        boolean hasDEAssosiationChanged = true;
+       //Check If DE association has Changed
        if(orgQusetionDE==null&&currQusetionDE==null)
        {
          hasDEAssosiationChanged=false;
@@ -841,9 +843,8 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
            }
          }
        }
-       // Check if the LongName
-       // DisplayOrder has been updated
-       // DE Association Changed
+       //  if the LongName or DE Association or
+       // DisplayOrder has been updated add the Question to Edited List.
        if(!orgQuestion.getLongName().equals(currQuestion.getLongName())||
          orgQuestion.getDisplayOrder()!=currQuestion.getDisplayOrder()||
          hasDEAssosiationChanged)
@@ -853,12 +854,14 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
 
      // Check if there is change in ValidValues
      Map validValuesChanges = null;
-     if(!hasDEAssosiationChanged&&(orgQusetionDE!=null&&currQusetionDE!=null))
+     //Get ValidValue changes when there is no DE association Change
+     if(!hasDEAssosiationChanged)
       {
          validValuesChanges =  
             getNewDeletedUpdatedValidValues(currQuestion,orgQuestion.getValidValues(),
                                             currQuestion.getValidValues());        
       }
+      //Get ValidValue changes when there is a DE association Change
       else if(hasDEAssosiationChanged)
       {
         
