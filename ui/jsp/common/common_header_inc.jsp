@@ -40,10 +40,10 @@
     <TABLE align ="left" width="100%" Cellpadding=0 Cellspacing=0 border=0 >
           <tr>
            <td  valign="bottom" align="center" width="15%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-               <a href="http://cadsr-prod.nci.nih.gov" target="_blank" >Admin Tool&nbsp;</a> </span></td>
+               <a href="http://cadsr.nci.nih.gov" target="_blank" >Admin Tool&nbsp;</a> </span></td>
 
            <td  align="left" width="15%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-                <a href="http://ncicb.nci.nih.gov/cdecurate" target="_blank">
+                <a href="http://cdecurate.nci.nih.gov" target="_blank">
                       Curation Tool&nbsp;</a></span>
             </td>
            <td  align="center"  width="22%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
