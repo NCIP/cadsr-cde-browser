@@ -74,6 +74,7 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
     
     PedrmissibleValueQuery() {
       super();
+      vvMap = new HashMap();
     }
 
     public void setSql(String whereString, String dummy) {
@@ -95,9 +96,9 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
       vvto.setShortMeaning(rs.getString(4));  // PV_SHORT_MEANING
       vvto.setShortMeaningDescription(rs.getString(5)); // PV_MEANING_DESCRIPTION
 
-      if (vvMap == null) {
+      /*if (vvMap == null) {
         vvMap = new HashMap();
-      }
+      }*/
       List vvList = (List) vvMap.get(vdomainIdSeq);
       if (vvList != null) {
         vvList.add(vvto);
