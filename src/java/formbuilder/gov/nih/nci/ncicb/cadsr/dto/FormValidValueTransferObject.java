@@ -64,6 +64,20 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
       copy.setQuestion(null);   
       return copy;
   }  
+  
+ public boolean equals(Object obj)
+ {
+   if(obj == null)
+    return false;
+   if(!(obj instanceof FormValidValue))
+    return false;
+   FormValidValue vv = (FormValidValue)obj;
+   if(getLongName().equals(vv.getLongName()))
+   {
+     return true;
+   }
+   return false;
+ }  
   public String toString()
   {
     DebugStringBuffer sb = new DebugStringBuffer();

@@ -309,9 +309,26 @@ function clearProtocol() {
                                         <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                           <tr class="OraTabledata" >
                                            <td width="95%">&nbsp;</td>
-                                            <td align="center"><a href="javascript:submitFormEdit('<%=NavigationConstants.DELETE_MODULE%>','<%=validValueIndex%>')">
-                                              <a href="javascript:submitFormEdit('<%=NavigationConstants.MOVE_MODULE_DOWN%>','<%=validValueIndex%>')">
-                                               <img src="<%=urlPrefix%>i/add.gif" border="0" alt="Add"/>
+                                            <td align="center">
+                                                <logic:notEmpty name="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>">
+                                                  <td align="right"   class="OraFieldText" nowrap width="90%">    
+                                                    <cde:availableValidValues
+                                                      questionBeanId="question"
+                                                      valueDomainMapId="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>"
+                                                      selectClassName="FreeDropdown"
+                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE%>"/>
+                                                  </td>
+                                                  <td align="left" width="3%">
+                                                      <a href="javascript:submitModuleEdit('<%=NavigationConstants.ADD_FROM_AVAILABLE_VALID_VALUE_LIST%>','<%=questionIndex%>')">
+                                                         <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
+                                                      </a>                          
+                                                  </td>   
+                                                  </logic:notEmpty>
+                                                  <logic:empty name="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>">
+                                                  <td width="93%">
+                                                    &nbsp;
+                                                  </td>  
+                                                </logic:empty>                                              
                                               </a>
                                             </td>
                                           </tr>
@@ -354,46 +371,6 @@ function clearProtocol() {
                                     </td>
                                   </tr>                                  
                                 </logic:iterate>                                
-                          <tr class="OraTabledata">
-                            <td class="OraFieldText" width="50">&nbsp;</td>
-                            <td>
-                              <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">                                                                
-                                  <tr class="OraTabledata">
-                                    <td class="OraTabledata" width="50">&nbsp;</td>
-                                    <td class="OraTabledata" align="right" width="90%">                                                                        
-                                        <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                                          <tr class="OraTabledata" >
-                                           <td width="95%">&nbsp;</td>
-                                            <td align="center">
-                                                <logic:notEmpty name="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>">
-                                                  <td align="right"   class="OraFieldText" nowrap width="90%">    
-                                                    <cde:availableValidValues
-                                                      questionBeanId="question"
-                                                      valueDomainMapId="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>"
-                                                      selectClassName="FreeDropdown"
-                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE%>"/>
-                                                  </td>
-                                                  <td align="left" width="3%">
-                                                      <a href="javascript:submitModuleEdit('<%=NavigationConstants.ADD_FROM_AVAILABLE_VALID_VALUE_LIST%>','<%=questionIndex%>')">
-                                                         <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
-                                                      </a>                          
-                                                  </td>   
-                                                  </logic:notEmpty>
-                                                  <logic:empty name="<%=FormConstants.DELETED_QUESTIONS%>">
-                                                  <td width="93%">
-                                                    &nbsp;
-                                                  </td>  
-                                                </logic:empty>                                              
-                                              </a>
-                                            </td>
-                                          </tr>
-                                        </table>                                                                                                            
-                                    </td>
-                                  </tr>                                   
-                              </table>
-                            </td>
-                          </tr>                                
-                                
                               </table>
                             </td>
                           </tr>
