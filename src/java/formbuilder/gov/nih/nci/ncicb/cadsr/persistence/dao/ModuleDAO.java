@@ -26,7 +26,7 @@ public interface ModuleDAO {
    *
    * @throws <b>DMLException</b>
    */
-  public Module createModuleComponent(Module sourceModule)
+  public int createModuleComponent(Module sourceModule)
     throws DMLException;
 
   /**
@@ -36,8 +36,7 @@ public interface ModuleDAO {
    * @param <b>moduleId</b> Idseq of the form component.
    * @param <b>questions</b> Question objects to be added to the module
    *
-   * @return <b>Module</b> Module object representing the module after addition
-   *         of new questions.
+   * @return <b>int</b> 1 - success, 0 - failure.
    *
    * @throws <b>DMLException</b>
    */
