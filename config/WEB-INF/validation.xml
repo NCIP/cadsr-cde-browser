@@ -24,7 +24,7 @@
     <form name="formEditForm">
       <field   property="formLongName"
         depends="required, maxlength">
-        <arg0 key="cadsr.formbuilder.form.longName"/>
+        <arg0 key="cadsr.formbuilder.form.name"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
         <var>
           <var-name>maxlength</var-name>
@@ -46,7 +46,7 @@
     <form name="createForm">
       <field   property="formLongName"
         depends="required, maxlength">
-        <arg0 key="cadsr.formbuilder.form.longName"/>
+        <arg0 key="cadsr.formbuilder.form.name"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
         <var>
           <var-name>maxlength</var-name>
@@ -80,7 +80,7 @@
     <form name="copyForm">
       <field   property="formLongName"
         depends="required, maxlength">
-        <arg0 key="cadsr.formbuilder.form.longName"/>
+        <arg0 key="cadsr.formbuilder.form.name"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
         <var>
           <var-name>maxlength</var-name>
