@@ -5,6 +5,7 @@ import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 
 import java.rmi.RemoteException;
 
@@ -41,8 +42,8 @@ public interface FormBuilderServiceRemote {
   public int deleteForm(String formPK) throws  RemoteException;
 
   public Form createModule(
-    String formPK,
-    Module module) throws  RemoteException;
+    Module module,
+    ModuleInstruction modInstrustion) throws  RemoteException;
 
   public int removeModule(
     String formPK,

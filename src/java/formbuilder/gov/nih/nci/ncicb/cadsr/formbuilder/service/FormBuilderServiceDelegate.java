@@ -5,6 +5,7 @@ import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 
 import java.util.Collection;
 
@@ -37,8 +38,8 @@ public interface FormBuilderServiceDelegate {
   public int deleteForm(String formPK) throws FormBuilderException;
 
   public Form createModule(
-    String formPK,
-    Module module) throws FormBuilderException;
+    Module module,
+    ModuleInstruction moduleInstruction) throws FormBuilderException;
 
   public int removeModule(
     String formPK,
