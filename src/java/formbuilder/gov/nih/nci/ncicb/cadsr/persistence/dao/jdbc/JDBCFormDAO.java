@@ -204,7 +204,22 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     catch (DMLException e) {
       System.out.println("Failed to get a form for " + formId1);
     }
+try{
+  Form form1 = formTest.findFormByPrimaryKey("D3830147-13E8-11BF-E034-0003BA0B1A09");
+  Form form2 = formTest.findFormByPrimaryKey("D3830147-13E8-11BF-E034-0003BA0B1A09");
+  form2.setPreferredName("testcopyprna1456");
+  form2.setLongName("my form test 456123");
+  form2.setAslName("DRAFT MOD");
+  form2.setConteIdseq("29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+  System.out.println(form2.getProtocol().getProtoIdseq()+ "Conte_idseq");
 
+  System.out.println(formTest.copyForm(form1,form2).getFormIdseq());
+}
+
+    catch (DMLException e) {
+      System.out.println("Failed to find Form");
+    }
+  
     //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
     // type, classificationIdseq
     /*
@@ -537,7 +552,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       in.put("p_long_name", newForm.getLongName());
       in.put("p_preferred_definition", newForm.getPreferredDefinition()); 
       in.put("p_conte_idseq", newForm.getConteIdseq());  
-      in.put("p_proto_idseq", newForm.getProtoIdseq());
+      in.put("p_proto_idseq", newForm.getProtocol().getProtoIdseq());
       in.put("p_asl_name", newForm.getAslName());      
       in.put("p_created_by", newForm.getCreatedBy());
 
