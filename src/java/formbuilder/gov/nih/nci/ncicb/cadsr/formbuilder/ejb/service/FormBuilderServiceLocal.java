@@ -14,7 +14,8 @@ public interface FormBuilderServiceLocal  {
     String contextIdSeq,
     String workflow,
     String categoryName,
-    String type) throws DMLException;
+    String type,
+    String classificationIdSeq) throws DMLException;
 
   public Form getFormDetails(String formPK) throws DMLException;
 

@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface FormBuilderServiceDelegate {
 
   public Collection getAllForms(String formName, String protocol, String context, 
-    String workflow, String category, String type);
+    String workflow, String category, String type,String classificationIdSeq);
   
   public Form getFormDetails(String formPK) throws FormBuilderException;
 

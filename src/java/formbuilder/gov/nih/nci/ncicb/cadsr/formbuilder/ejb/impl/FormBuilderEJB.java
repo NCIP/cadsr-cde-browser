@@ -59,7 +59,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     String contextIdSeq,
     String workflow,
     String categoryName,
-    String type) throws DMLException {
+    String type, String classificationIdSeq) throws DMLException {
     //        JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory((ServiceLocator)new TestServiceLocatorImpl());
     FormDAO dao = daoFactory.getFormDAO();
     Collection forms = null;
@@ -68,7 +68,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
       forms =
         dao.getAllForms(
           formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
-          type);
+          type,classificationIdSeq);
     }
     catch (Exception ex) {
       throw new DMLException("Cannot get Forms", ex);

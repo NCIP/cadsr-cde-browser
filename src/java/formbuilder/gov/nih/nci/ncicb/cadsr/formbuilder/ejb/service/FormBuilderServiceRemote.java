@@ -16,7 +16,8 @@ public interface FormBuilderServiceRemote {
     String contextIdSeq,
     String workflow,
     String categoryName,
-    String type) throws DMLException, RemoteException;
+    String type,
+    String classificationIdSeq) throws DMLException, RemoteException;
 
   public Form getFormDetails(String formPK)
     throws DMLException, RemoteException;
