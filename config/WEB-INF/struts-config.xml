@@ -35,7 +35,7 @@
     </form-bean>
     <form-bean name="createModuleForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
-      dyanamic="true">
+      dynamic="true">
       <form-property name="longName" type="java.lang.String"/>
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="comments" type="java.lang.String"/>
