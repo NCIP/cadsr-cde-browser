@@ -1,38 +1,32 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-import gov.nih.nci.ncicb.cadsr.base.process.*;
+import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.database.*;
 import gov.nih.nci.ncicb.cadsr.lov.ClassificationsLOVBean;
-
-//CDE Browser Application Imports
-import gov.nih.nci.ncicb.cadsr.util.*;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
 
-//import oracle.cle.process.ProcessConstants;
-import oracle.cle.persistence.HandlerFactory;
+import java.util.Collection;
+import java.util.Iterator;
 
-import oracle.cle.process.PersistingProcess;
-import oracle.cle.process.ProcessInfo;
+import javax.servlet.http.HttpServletRequest;
+
 import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.ProcessParameter;
-import oracle.cle.process.ProcessResult;
 import oracle.cle.process.Service;
-
-// Framework imports
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
 
-import java.io.*;
-
+//CDE Browser Application Imports
+//import oracle.cle.process.ProcessConstants;
+// Framework imports
 // java imports
-import java.util.*;
-
-import javax.servlet.http.*;
 
 
 /**
  * @author Ram Chilukuri
+ * @version: $Id: GetClassificationsLOV.java,v 1.2 2004-08-17 13:56:41 jiangja Exp $
  */
 public class GetClassificationsLOV extends BasePersistingProcess {
   public GetClassificationsLOV() {
@@ -110,10 +104,6 @@ public class GetClassificationsLOV extends BasePersistingProcess {
 
       if (searchParam != null) {
         int numberOfSearchFields = searchParam.length;
-
-        for (int i = 0; i < numberOfSearchFields; i++) {
-          //System.out.println("Search[" +i +"]" + searchParam[i]);
-        }
       }
 
       performQuery = getStringInfo("performQuery");

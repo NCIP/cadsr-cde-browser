@@ -3,21 +3,15 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceBlob;
 
-import oracle.cle.persistence.*;
+import java.io.*;
 
+import oracle.clex.process.*;
 import oracle.cle.process.ProcessInfo;
 import oracle.cle.process.ProcessInfoException;
 import oracle.cle.process.ProcessParameter;
 import oracle.cle.process.ProcessResult;
 import oracle.cle.process.Service;
-
 import oracle.cle.util.statemachine.TransitionCondition;
-
-import oracle.clex.process.*;
-
-import java.io.*;
-
-import java.util.*;
 
 
 public class DownloadTemplate extends CreateGenericBinaryPage {
@@ -63,7 +57,6 @@ public class DownloadTemplate extends CreateGenericBinaryPage {
 
     String strContentType = rb.getMimeType();
 
-    //System.out.println("Mime type "+strContentType);
     return strContentType;
   }
 
@@ -93,7 +86,6 @@ public class DownloadTemplate extends CreateGenericBinaryPage {
 
     int length = rb.getDocSize();
 
-    //System.out.println("Length "+length);
     return length;
   }
 }
