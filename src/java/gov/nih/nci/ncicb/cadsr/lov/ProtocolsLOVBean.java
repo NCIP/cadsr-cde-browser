@@ -36,6 +36,7 @@ public class ProtocolsLOVBean extends Object {
       String newSearchStr = "";
       if (!searchStr.equals("")) {
         newSearchStr = StringReplace.strReplace(searchStr,"*","%");
+        newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
         searchWhere = " and   (upper (proto.long_name) like upper ( '" + newSearchStr+"') " +
                       " OR upper (proto.preferred_name) like upper ( '" + newSearchStr+"')) "
                       ;
