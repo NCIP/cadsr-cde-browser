@@ -57,6 +57,8 @@ public class LogoutServlet extends HttpServlet
             String key = (String)keyIt.next();
             Object obj = objMap.get(key);
             session.setAttribute(key,obj);
+            String str = (String)session.getAttribute(key);
+            System.out.println(str);
           }
         }
       }
