@@ -95,6 +95,12 @@
 //  	List list = compareList.getCdeList();
 //        cdeCompareSizeStr = (new Integer(list.size())).toString();
 //  }
+
+  String submitFunction ="submitForm()";
+  Object advancedSearch = (pageContext.getSession().getAttribute("BROWSER_SCREEN_TYPE_ADVANCED"));
+  if(advancedSearch!=null)
+  	submitFunction = "submitSimpleForm()";
+  
     
   
 %>
@@ -110,12 +116,11 @@
 <TITLE>
 Data Elements Search - Data Elements
 </TITLE>
-</HEAD>
-<BODY onLoad="turnOff()" topmargin="0">
-
- 
-
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/checkbox.js"></SCRIPT>
+
+</HEAD>
+
+<BODY  bgcolor="#ffffff" onLoad="turnOff()" topmargin="0" >
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function redirect1(detailReqType, linkParms )
@@ -149,6 +154,16 @@ function submitForm() {
   else {
      document.forms[0].submit();
   }
+}
+
+function submitSimpleForm() {
+     document.forms[0].submit();
+  }
+
+
+function clearSimpleForm() {
+  document.forms[0].jspKeyword.value = "";
+  document.forms[0].jspPublicIdInd.checked=0;
 }
 
 function clearForm() {
@@ -253,6 +268,13 @@ function compareCDEs(size) {
     
 }
 
+function changeScreenType(type) {
+  document.forms[0].<%=BrowserFormConstants.BROWSER_SEARCH_SCREEN_TYPE%>.value = type;
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.CHANGE_SCREEN_TYPE%>";
+  document.forms[0].action='<%=request.getContextPath()%>/cdebrowser/screenTypeAction.do';        
+  document.forms[0].submit();
+}
+
 function done() {
   top.location.href = "<%=doneURL%>";
 }
@@ -262,12 +284,30 @@ function newSearch(){
 }
 //-->
 </SCRIPT>
-<%@ include  file="cdebrowserCommon_html/tab_include_search.html" %>
 
-<center>
-  <h3 class="CDEBrowserPageContext"><%=pageContextInfo%></h3>
-</center>
+
+
+
+<form action="<%= infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(window.event.keyCode==13){<%=submitFunction%>};">
+<INPUT TYPE="HIDDEN" NAME="<%=NavigationConstants.METHOD_PARAM%>" > 
+<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
+<INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
+<INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
+<INPUT TYPE="HIDDEN" NAME="performQuery" VALUE="yes">
+<INPUT TYPE="HIDDEN" NAME="src" VALUE="<%=src%>">
+<INPUT TYPE="HIDDEN" NAME="moduleIndex" VALUE="<%=modIndex%>">
+<INPUT TYPE="HIDDEN" NAME="questionIndex" VALUE="<%=quesIndex%>">
+<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+<!--screenType-->
+<INPUT TYPE="HIDDEN" NAME="<%=BrowserFormConstants.BROWSER_SEARCH_SCREEN_TYPE%>" >
+ 
+<%@ include  file="cdebrowserCommon_html/tab_include_search.html" %>
 <%
+  if (pageContextInfo!=null&&!pageContextInfo.equals("")) {
+%>
+
+
+<%}
   if (request.getAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS) != null) {
 %>
 <p class="MessageText">
@@ -279,16 +319,7 @@ function newSearch(){
 
 <%@ include file="../formbuilder/showMessages.jsp" %>
 
-<form action="<%= infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(window.event.keyCode==13){submitForm()};">
-<INPUT TYPE="HIDDEN" NAME="<%=NavigationConstants.METHOD_PARAM%>" > 
-<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
-<INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
-<INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
-<INPUT TYPE="HIDDEN" NAME="performQuery" VALUE="yes">
-<INPUT TYPE="HIDDEN" NAME="src" VALUE="<%=src%>">
-<INPUT TYPE="HIDDEN" NAME="moduleIndex" VALUE="<%=modIndex%>">
-<INPUT TYPE="HIDDEN" NAME="questionIndex" VALUE="<%=quesIndex%>">
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+
 
 <logic:present name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>">
     <bean:size id="listSize" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" property="cdeList"/>
@@ -302,157 +333,15 @@ function newSearch(){
     <td colspan="4" align="left" class="AbbreviatedText">Note: Enter/select search criteria and click search button to initiate search. The wildcard character is *. Click the Help button above for more information on CDEBrowser.</td>
  </tr>
 </table>
+<logic:present name="<%=BrowserFormConstants.BROWSER_SCREEN_TYPE_ADVANCED%>">
+      <%@ include file="advancedSearch_inc.jsp"%>
+</logic:present>
 
-<table width="100%" align="center">
- 
- <tr>
-    <td class="OraFieldtitlebold" nowrap>Search For:</td>
-    <td class="OraFieldText" nowrap>
-      <input type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="20"> 
-    </td>
-
-    <td class="OraFieldtitlebold" nowrap>Alternate Name:</td>
-    <td class="OraFieldText" nowrap>
-      <input type="text" name="jspAltName" value="<%=desb.getAltName()%>" size ="20"> 
-    </td>
- </tr>
- <tr>
-    <td class="OraFieldtitlebold" nowrap>Search Field(s):</td>
-    <td class="OraFieldText"><%=desb.getSearchInList()%></td>
-    <td class="OraFieldtitlebold" nowrap>Alternate Name Type(s):</td>
-    <td class="OraFieldText"><%=desb.getAltNameList()%></td>
-</tr>
- <tr>
-     <td class="OraFieldtitlebold" nowrap>Permissible Value:</td>
-    <td class="OraFieldText" nowrap>
-      <input type="text" name="jspValidValue" value="<%=desb.getValidValue()%>" size ="20"> 
-    </td>
-
- </tr>
- <tr>
-    <td class="OraFieldtitlebold" nowrap>Value Domain:</td>
-    <td class="OraFieldText" nowrap>
-      <input type="text" name="txtValueDomain" 
-             value="<%=txtValueDomain%>" readonly onFocus="this.blur();"
-             class="LOVField"
-             size ="18"
-      >
-      &nbsp;<a href="<%=valueDomainLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Value Domains" /></a>&nbsp;
-      <a href="javascript:clearValueDomain()"><i>Clear</i></a>
-      <input type="hidden" name="jspValueDomain" value="<%=desb.getVdIdseq()%>" >
-    </td>
-
-    <td class="OraFieldtitlebold" nowrap>Public ID:</td>
-    <td class="OraFieldText" nowrap>
-      <input type="text" name="jspCdeId" value="<%=desb.getCdeId()%>" > 
-    </td>
-    
- </tr>
- <tr>
-    <td class="OraFieldtitlebold" nowrap>Data Element Concept:</td>
-    <td class="OraFieldText" nowrap>
-      <input type="text" name="txtDataElementConcept" 
-             value="<%=txtDataElementConcept%>" 
-             readonly onFocus="this.blur();"
-             class="LOVField"
-             size ="18"
-      >
-      &nbsp;<a href="<%=decLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Data Element Concepts" /></a>&nbsp;
-      <a href="javascript:clearDataElementConcept()"><i>Clear</i></a>
-      <input type="hidden" name="jspDataElementConcept" value="<%=desb.getDecIdseq()%>" >
-    </td>
-
-    <td class="OraFieldtitlebold" nowrap>Classification:</td>
-    <td class="OraFieldText" nowrap>
-      <input type="text" name="txtClassSchemeItem" 
-             value="<%=txtClassSchemeItem%>" 
-             readonly onFocus="this.blur();"
-             class="LOVField"
-             size ="18"
-      >
-      &nbsp;<a href="<%=csLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Classification Scheme Items" /></a>&nbsp;
-      <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
-      <input type="hidden" name="jspClassification" value="<%=desb.getCsCsiIdseq()%>" >
-    </td>
- </tr>
- <tr>
-    <td class="OraFieldtitlebold" nowrap>Version:</td>
-    <td align ="left" nowrap>
-      <table>
-        <tr>
-<%
-
-  if((paramType!=null)&&(paramType.equals("CRF")||paramType.equals("TEMPLATE")))
-    {
-       if (latestVer.equals(""))
-          latestVer = "No";
-    }
-    
-  if (latestVer.equals("Yes") || latestVer.equals("")) {
-%>
-          <td class="OraFieldText" nowrap>Latest Version<input type="radio" name="jspLatestVersion" value="Yes" checked></td>
-          <td class="OraFieldText" nowrap>All Versions<input type="radio" name="jspLatestVersion" value="No"></td>
-<%
-  }
-  else {
-%>
-          <td class="OraFieldText" nowrap>Latest Version<input type="radio" name="jspLatestVersion" value="Yes"></td>
-          <td class="OraFieldText" nowrap>All Versions<input type="radio" name="jspLatestVersion" value="No" checked></td>
-<%
-  }
-%>
-        </tr>
-      </table>
-    </td>
-    <td class="OraFieldtitlebold" nowrap>Context Use:</td>
-    <td class="OraFieldText" nowrap>
-      <%=desb.getContextUseList()%>
-    </td>
-   
- </tr>
- <tr>
-    <td class="OraFieldtitlebold" nowrap>Workflow Status:</td>
-    <td class="OraFieldText"><%=desb.getWorkflowList()%></td>
-    <td class="OraFieldtitlebold" nowrap>Registration Status:</td>
-    <td class="OraFieldText"><%=desb.getRegStatusList()%></td>
-</tr>
- 
- <TR>
-   <td colspan="4" align="center" nowrap> 
-     &nbsp;
-    </td>
- </TR>
-<%
-  if ("".equals(src)) {
-%>
- <TR>
-   <td colspan="4" align="center" nowrap> 
-   <table >
-    <td colspan="1" align="center" nowrap><a href="javascript:submitForm()"><html:img page="/i/SearchDataElements.gif" border="0" /></a></td>
-    <td colspan="1" align="center" nowrap><a href="javascript:clearForm()"><html:img page="/i/clear.gif" border="0" /></a></td>
-    <td colspan="1" align="center" nowrap><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a></td>
-    </table>
-    </td>
- </TR>
-<%
-  }
-  else {
-%>
-  <TR>
-    <td  nowrap colspan="4" align="center"><a href="javascript:submitForm()"><html:img page="/i/SearchDataElements.gif" border="0" /></a>
-    &nbsp;<a href="javascript:clearForm()"><html:img page="/i/clear.gif" border="0" /></a>
-    &nbsp; <a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a>
-    &nbsp;<a href="javascript:done()"><html:img page="/i/backButton.gif" border="0" /></a>
-    &nbsp;
-    </td>
- </TR>
-
-<%
-  }
-%>
-</table>
+<logic:notPresent name="<%=BrowserFormConstants.BROWSER_SCREEN_TYPE_ADVANCED%>">
+      <%@ include file="simpleSearch_inc.jsp"%>
+</logic:notPresent>
 <br>
-
+<A NAME="results"></A>
 <%
   if (!queryFlag.equals("")) {
     if (deList!=null&&deList.size()!=0) {
@@ -515,7 +404,7 @@ function newSearch(){
 
 
 
-           
+        
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader"><input type="checkbox" name="deList" value="yes" onClick="ToggleAll(this)"/></th>

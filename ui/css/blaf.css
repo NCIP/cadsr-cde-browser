@@ -2,6 +2,9 @@
 A:link {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#663300}
 A:active {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#ff6600}
 A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#996633}
+B:glink {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#009900}
+B:gactive {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#009900}
+B:gvisited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#009900}
 .OraBGColorVeryDark {background-color:#003366}
 .OraBGColorDark {background-color:#336699}
 .OraBGColorMedium {background-color:#6699cc}
@@ -36,6 +39,9 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .OraLinkText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#663300}
 .OraVLinkText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#996633}
 .OraALinkText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#ff6600}
+.GOraLinkText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#009900}
+.GOraVLinkText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#009900}
+.GOraALinkText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#009900}
 .OraTipLabel {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; color:#336699}
 .OraTipText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#336699}
 .OraInlineInfoText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:8pt; color:#336699}
@@ -157,4 +163,4 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .OraHeaderBlack {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt;  background-color:#cccc99; color:#000000; text-indent:1}
 .OraFieldTextInstruction {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-style:italic; color:#000000}
 .OraTableColumnHeaderInstruction {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; font-style:italic; text-align:left; background-color:#cccc99; color:#336699; text-indent:1}
-.OraTableColumnHeaderNoBG {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; color:#336699; text-indent:1}
+.OraTableColumnHeaderNoBG {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; color:#336699; BACKGROUND: #f7f7e7; text-indent:1}
