@@ -159,6 +159,9 @@
       <pathelement location="${java.lib.dir}/oc4j.jar"/>
       <pathelement location="${java.lib.dir}/ejb.jar"/>
       <pathelement location="${java.lib.dir}/jms.jar"/>
+
+      <!-- Apache POI  libs -->
+      <pathelement location="${java.lib.dir}/poi-2.5.1-final-20040804.jar"/>
       
    </path>
    
@@ -594,6 +597,8 @@
       	<include name="commons-validator.jar"/>
       	<include name="jakarta-oro.jar"/> 
       	
+      	<!-- POI libs -->
+      	<include name="poi-2.5.1-final-20040804.jar"/>
       </lib>
        
       <manifest>
