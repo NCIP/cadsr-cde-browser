@@ -168,8 +168,8 @@ function done() {
                    <td width="8%" ><input type="checkbox"  value="<%=cdeIndex%>" name="<%=BrowserFormConstants.CDE_TO_REMOVE%>"  /></td>
                    <td width="8%" >
                    <cde:displayOrderSelection
-                          collectionSize="<%=listSize%>" 
-                          currentIndex="<%=cdeIndex%>" 
+                          collectionSize="<%=listSize.toString()%>" 
+                          currentIndex="<%=cdeIndex.toString()%>" 
                           selectName="<%=BrowserFormConstants.CDE_COMPARE_DISPAY_ORDER%>"
                           selectClassName="Dropdown"                         
                    />                     
