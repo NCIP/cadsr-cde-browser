@@ -76,7 +76,7 @@ public class FormAction extends FormBuilderBaseDispatchAction {
       service.getAllForms(
         formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type,
         classificationIdSeq);
-    setSessionObject(request, this.FORM_SEARCH_RESULTS, forms);
+    setSessionObject(request, this.FORM_SEARCH_RESULTS, forms,true);
 
     //Initialize and add the PagenationBean to the Session
     PaginationBean pb = new PaginationBean();
@@ -85,7 +85,7 @@ public class FormAction extends FormBuilderBaseDispatchAction {
       pb.setListSize(forms.size());
     }
 
-    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb);
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);
 
     return mapping.findForward(SUCCESS);
   }
@@ -184,6 +184,7 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
+    setInitLookupValues(request);
     try {
       setFormForAction(form, request);
     }

@@ -75,7 +75,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     Form orgCRF = (Form)getSessionObject(request, CLONED_CRF);
     List orgModules = orgCRF.getModules();
     Module orgModule = (Module) orgModules.get(moduleIndex.intValue());
-    setSessionObject(request, CLONED_MODULE, orgModule);
+    setSessionObject(request, CLONED_MODULE, orgModule,true);
 
     
     crf = (Form) getSessionObject(request, CRF);
@@ -87,7 +87,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     moduleEditForm.set(
       MODULE_INSTRUCTION_LONG_NAME, selectedModule.getLongName());
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
-    setSessionObject(request, MODULE, selectedModule);
+    setSessionObject(request, MODULE, selectedModule,true);
 
     FormBuilderServiceDelegate service = getFormBuilderService();
     Collection allVdIds = getAllVDsForQuestions(selectedModule.getQuestions());
@@ -103,7 +103,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     }
     selectedModule.setForm(crf);
     Map availableValidValuesMap = getAvailableValidValuesForQuestions(selectedModule,selectedModule.getQuestions(),validValueMap);
-    setSessionObject(request, AVAILABLE_VALID_VALUES_MAP, availableValidValuesMap);
+    setSessionObject(request, AVAILABLE_VALID_VALUES_MAP, availableValidValuesMap,true);
 
     return mapping.findForward(SUCCESS);
   }
@@ -244,7 +244,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
       deletedQuestions.add(deletedQuestion);
     }
 
-    setSessionObject(request, DELETED_QUESTIONS, deletedQuestions);
+    setSessionObject(request, DELETED_QUESTIONS, deletedQuestions,true);
     questionArr = getQuestionsAsArray(module.getQuestions());
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
 
@@ -312,7 +312,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
       }
     }
 
-    setSessionObject(request, DELETED_QUESTIONS, deletedQuestions);
+    setSessionObject(request, DELETED_QUESTIONS, deletedQuestions,true);
     questionArr = getQuestionsAsArray(module.getQuestions());
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
 

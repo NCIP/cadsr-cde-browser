@@ -1,14 +1,19 @@
 package gov.nih.nci.ncicb.cadsr.security;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import javax.servlet.http.HttpSession;
 
 public class LogoutServlet extends HttpServlet 
 {
-  public LogoutServlet()
+  public LogoutServlet()  
   {
   }
 
@@ -23,8 +28,29 @@ public class LogoutServlet extends HttpServlet
     String logoutHome = request.getParameter(CaDSRConstants.LOGOUT_URL);
     if(logoutHome!=null)
     {
-      request.getSession().invalidate();
+      HttpSession session = request.getSession();
+      Collection keys = (Collection)session.getAttribute(CaDSRConstants.GLOBAL_SESSION_KEYS);
+      Map objMap = new HashMap();
+      if(keys!=null)
+      {
+        Iterator it  = keys.iterator();
+        while(it.hasNext())
+        {
+          objMap.put(it.next(),session.getAttribute((String)it.next()));
+        }
+      }
+      session.invalidate();
       String path=request.getContextPath()+"/"+logoutHome;
+      HttpSession newSession = request.getSession(true);
+      if(keys!=null)
+      {
+        Iterator keyIt  = keys.iterator();
+        while(keyIt.hasNext())
+        {
+          String key = (String)keyIt.next();
+          newSession.setAttribute(key,objMap.get(key));
+        }
+      }      
       response.sendRedirect(logoutHome);
     }
     else

@@ -63,7 +63,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     try {
       crf = setFormForAction(formEditForm, request);
       clonedCrf = (Form) crf.clone();
-      setSessionObject(request, CLONED_CRF, clonedCrf);
+      setSessionObject(request, CLONED_CRF, clonedCrf,true);
     }
     catch (FormBuilderException exp) {
       if (log.isDebugEnabled()) {
@@ -104,7 +104,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       log.debug("Cloned crf =  " + clonedCrf);
     }
 
-    setSessionObject(request, DELETED_MODULES, null);
+    removeSessionObject(request, DELETED_MODULES);
 
     return mapping.findForward(SUCCESS);
   }
@@ -234,7 +234,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       deletedModules.add(deletedModule);
     }
 
-    setSessionObject(request, DELETED_MODULES, deletedModules);
+    setSessionObject(request, DELETED_MODULES, deletedModules,true);
 
     if (log.isDebugEnabled()) {
       printDisplayOrder(modules);
@@ -342,9 +342,9 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
         saveMessage(exp.getErrorCode(), request);
         return mapping.findForward(FAILURE);
       }    
-    setSessionObject(request, DELETED_MODULES, null);
-    setSessionObject(request, CLONED_CRF, null);
-    setSessionObject(request, CRF, null);
+    removeSessionObject(request, DELETED_MODULES);
+    removeSessionObject(request, CLONED_CRF);
+    removeSessionObject(request, CRF);
     saveMessage("cadsr.formbuilder.form.delete.success", request);
     ActionForward forward = mapping.findForward(SUCCESS);
     return forward;
@@ -381,9 +381,9 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
           Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
           Collection addedModules = (Collection)getSessionObject(request,FORM_EDIT_ADDED_MODULES);
           Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules);
-          setSessionObject(request,CRF, updatedCrf);
+          setSessionObject(request,CRF, updatedCrf,true);
           Form clonedCrf = (Form) updatedCrf.clone();
-          setSessionObject(request, CLONED_CRF, clonedCrf);
+          setSessionObject(request, CLONED_CRF, clonedCrf,true);
         }
         catch (FormBuilderException exp) {
           if (log.isDebugEnabled()) {
@@ -679,10 +679,10 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     if (
         header!=null || ((deletedModules != null) && !deletedModules.isEmpty()) ||
           !updatedModules.isEmpty()||!addedModules.isEmpty()) {
-        setSessionObject(request,FORM_EDIT_HEADER,header);
-        setSessionObject(request,FORM_EDIT_UPDATED_MODULES,updatedModules);
-        setSessionObject(request,FORM_EDIT_DELETED_MODULES,deletedModules);
-        setSessionObject(request,FORM_EDIT_ADDED_MODULES,addedModules);
+        setSessionObject(request,FORM_EDIT_HEADER,header,true);
+        setSessionObject(request,FORM_EDIT_UPDATED_MODULES,updatedModules,true);
+        setSessionObject(request,FORM_EDIT_DELETED_MODULES,deletedModules,true);
+        setSessionObject(request,FORM_EDIT_ADDED_MODULES,addedModules,true);
         return true;
       }
     else

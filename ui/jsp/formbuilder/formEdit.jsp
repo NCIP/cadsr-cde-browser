@@ -60,8 +60,8 @@ function clearProtocol() {
     <html:form action="/formSaveAction.do">
      <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
      <html:hidden value="" property="<%=FormConstants.MODULE_INDEX%>"/>
-      <%@ include file="/formbuilder/common_header_inc.jsp"%>
-      <jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
+      <%@ include file="../common/common_header_inc.jsp"%>
+      <jsp:include page="../common/tab_inc.jsp" flush="true">
         <jsp:param name="label" value="Edit&nbsp;Form"/>
         <jsp:param name="urlPrefix" value=""/>
       </jsp:include>

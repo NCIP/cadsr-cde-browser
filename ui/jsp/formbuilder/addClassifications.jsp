@@ -26,8 +26,8 @@
       csLOVUrl[i] = "javascript:newWin('"+contextPath+"/search?classificationsLOV=9&idVar=jspClassification[" + i + "]&nameVar=txtClassSchemeItem" + i + pageUrl+"','csLOV',700,600)";
 
       %>
-    <%@ include file="/formbuilder/common_header_inc.jsp"%>
-    <jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
+    <%@ include file="../common/common_header_inc.jsp"%>
+    <jsp:include page="../common/tab_inc.jsp" flush="true">
       <jsp:param name="label" value="Add&nbsp;Classifications"/>
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>

@@ -19,14 +19,14 @@
 <HEAD>
 <TITLE>Welcome to Form Builder..</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
-<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=urlPrefix%>cdebrowserCommon_html/blaf.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
 
 </HEAD>
 <BODY topmargin=0 bgcolor="#ffffff">
 
-<%@ include  file="/formbuilder/common_header_inc.jsp" %>
+<%@ include  file="../common/common_header_inc.jsp" %>
 
-<jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
+<jsp:include page="../common/tab_inc.jsp" flush="true">
 	<jsp:param name="label" value="Create&nbsp;Form" />
 	<jsp:param name="urlPrefix" value="" />
 </jsp:include>

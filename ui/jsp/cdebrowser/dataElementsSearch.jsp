@@ -8,6 +8,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.* "%>
 <%@page import="gov.nih.nci.ncicb.cadsr.html.* " %>
 <%@page import="java.util.List "%>
+<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>

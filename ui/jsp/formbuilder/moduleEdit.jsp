@@ -65,8 +65,8 @@ function clearProtocol() {
       <html:hidden property="<%=FormConstants.QUESTION_ID_SEQ%>"/>
       <html:hidden property="<%=FormConstants.QUESTION_INDEX%>"/> 
       <html:hidden property="<%=FormConstants.VALID_VALUE_INDEX%>"/>
-      <%@ include file="/formbuilder/common_header_inc.jsp"%>
-      <jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
+      <%@ include file="../common/common_header_inc.jsp"%>
+      <jsp:include page="../common/tab_inc.jsp" flush="true">
         <jsp:param name="label" value="Edit&nbsp;Module"/>
         <jsp:param name="urlPrefix" value=""/>
       </jsp:include>

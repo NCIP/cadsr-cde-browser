@@ -22,9 +22,9 @@
 <%
   String urlPrefix = "";
 %>
-<%@ include  file="/formbuilder/common_header_inc.jsp" %>
+<%@ include  file="../common/common_header_inc.jsp" %>
 
-<jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
+<jsp:include page="../common/tab_inc.jsp" flush="true">
 	<jsp:param name="label" value="Form&nbsp;Search" />
 	<jsp:param name="urlPrefix" value="" />
 </jsp:include>
