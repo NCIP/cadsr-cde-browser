@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto.jdbc;
 import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.DataElementTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -20,6 +21,10 @@ public class JDBCQuestionTransferObject extends QuestionTransferObject
     dataElementTransferObject.setLongName(rs.getString(17)); // DE_LONG_NAME
     dataElementTransferObject.setCDEId(Integer.toString(rs.getInt(18)));
     setDataElement(dataElementTransferObject); 
-    dataElementTransferObject.setVdIdseq(rs.getString(19));
+
+    ValueDomainTransferObject valueDomainTransferObject = 
+      new ValueDomainTransferObject();
+    valueDomainTransferObject.setVdIdseq(rs.getString(19)); // VD_IDSEQ
+    dataElementTransferObject.setValueDomain(valueDomainTransferObject);
   }
 }
