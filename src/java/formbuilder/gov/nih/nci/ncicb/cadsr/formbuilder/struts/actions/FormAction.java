@@ -59,12 +59,12 @@ public class FormAction extends FormBuilderBaseDispatchAction {
 
      forms = service.getAllForms(
         formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type);
-
     setSessionObject(request, this.FORM_SEARCH_RESULTS, forms);
     PaginationBean pb = new PaginationBean();
     if(forms!=null)
       pb.setListSize(forms.size());
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb);
+   
     return mapping.findForward(SUCCESS);
   }
 

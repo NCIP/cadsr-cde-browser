@@ -19,7 +19,7 @@
       <forward name="success" path="/formbuilder/formResults.jsp"/>
       <forward name="defaultHome" path="/formbuilder/formbuilder.jsp" />
     </action>
-  <action  path="/pageAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.PagenationAction" validate="false">
+  <action  path="/pageAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.PaginationAction" validate="false">
       <forward name="success" path="/formbuilder/formResults.jsp"/>
     </action>    
   </action-mappings>  

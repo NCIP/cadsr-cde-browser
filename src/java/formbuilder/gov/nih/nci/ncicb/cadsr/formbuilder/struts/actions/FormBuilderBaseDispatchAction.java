@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceStartupException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
+import java.util.Arrays;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  * Base DispatchAction for all formbuilder DispatchActions
  * 
  */
-public class FormBuilderBaseDispatchAction extends DispatchAction implements FormConstants, NavigationConstants, PersistenceConstants
+public class FormBuilderBaseDispatchAction extends DispatchAction 
+      implements FormConstants, NavigationConstants, PersistenceConstants,CaDSRConstants
 {
 
  public static final String DEFAULT_METHOD_NAME= SEND_HOME_METHOD;
@@ -98,16 +100,23 @@ public class FormBuilderBaseDispatchAction extends DispatchAction implements For
       obj = getSessionObject(req,ALL_WORKFLOWS);
       if(obj==null)
       {
-        Collection contexts = getFormBuilderService().getStatusesForACType(FORM_ADMIN_COMPONENT_TYPE);
-        setSessionObject(req,ALL_WORKFLOWS,contexts);
+        Collection workflows = getFormBuilderService().getStatusesForACType(FORM_ADMIN_COMPONENT_TYPE);
+        setSessionObject(req,ALL_WORKFLOWS,workflows);
       }
 
       obj = getSessionObject(req,ALL_FORM_CATEGORIES);
       if(obj==null)
       {
-        Collection contexts = getFormBuilderService().getAllFormCategories();
-        setSessionObject(req,ALL_FORM_CATEGORIES,contexts);
+        Collection categories = getFormBuilderService().getAllFormCategories();
+        setSessionObject(req,ALL_FORM_CATEGORIES,categories);
       }
+      obj = getSessionObject(req,ALL_FORM_TYPES);
+      if(obj==null)
+      {
+        
+        Collection types = Arrays.asList(FORM_TYPE_VALUES);
+        setSessionObject(req,ALL_FORM_TYPES,types);
+      }      
 
     }
     /**

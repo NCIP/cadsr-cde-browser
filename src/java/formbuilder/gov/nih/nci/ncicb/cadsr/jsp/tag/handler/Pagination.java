@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.jsp.tag.handler;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-import gov.nih.nci.ncicb.cadsr.jsp.bean.PagenationBean;
+import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -46,7 +46,7 @@ public class Pagination extends TagSupport implements CaDSRConstants,FormConstan
     JspWriter out;
      try {
         req = ( HttpServletRequest )pageContext.getRequest();
-        PagenationBean pageBean = (PagenationBean)pageContext.getSession().getAttribute(this.beanId);  
+        PaginationBean pageBean = (PaginationBean)pageContext.getSession().getAttribute(this.beanId);  
         
         if(!pageBean.isInitialized())
         {
@@ -141,7 +141,7 @@ public class Pagination extends TagSupport implements CaDSRConstants,FormConstan
      StringBuffer htmlStr = new StringBuffer("</td> </tr> </table>");
      return htmlStr.toString();
   }
- private String generateSelectList(PagenationBean pageBean)
+ private String generateSelectList(PaginationBean pageBean)
  {
     StringBuffer htmlStr = new StringBuffer();
     htmlStr.append("<SELECT NAME="+name+" CLASS=\""+selectClassName+"\" onChange = \""+name+"setPageIndex('"+formIndex +"');\">");

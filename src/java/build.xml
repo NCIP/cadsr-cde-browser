@@ -149,7 +149,7 @@
               <include name="gov/nih/nci/ncicb/cadsr/servicelocator/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/util/StringUtils.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/CaDSRConstants.class"/>
-              <include name="gov/nih/nci/ncicb/cadsr/persistence/PersistenceContants.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/PersistenceConstants.class"/>
             </patternset>
           </fileset>           
         </jar>
