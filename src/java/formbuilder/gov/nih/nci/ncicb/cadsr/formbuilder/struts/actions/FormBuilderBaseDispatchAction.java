@@ -68,6 +68,20 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
 	return sessionObj;
     }
 
+
+    /**
+     * Remove a session object based on the request and the attribute name.
+     */
+  protected void removeSessionObject(
+				      HttpServletRequest req,
+				      String attrName) {
+	HttpSession session = req.getSession(false);
+
+	if (session != null) {
+	    session.removeAttribute(attrName);
+	}
+
+    }
     /**
      * Add an object to session based on the request and the attribute name.
      */

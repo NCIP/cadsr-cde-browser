@@ -31,6 +31,15 @@ public interface FormBuilderServiceRemote {
     Collection updatedModules,
     Collection deletedModules) throws RemoteException;
 
+  public Module updateModule(
+       Module moduleHeader,
+       Collection updatedQuestions,
+       Collection deletedQuestions,
+       Collection newQuestions,
+       Map updatedValidValues,
+       Map addedValidValues,
+       Map deletedValidValues) throws RemoteException;
+       
   public Form getFormRow(String formPK) throws RemoteException;
 
   public Form copyForm(

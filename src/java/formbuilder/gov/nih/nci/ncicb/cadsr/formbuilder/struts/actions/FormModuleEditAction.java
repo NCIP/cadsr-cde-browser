@@ -41,6 +41,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
   private static final String NEW_VV_LIST="newVVList";
   private static final String UPDATED_VV_LIST="updatedVVList";
   private static final String DELETED_QUESTION_LIST="deletedQuestionList";
+  private static final String VALID_VALUE_CHANGES="validValueChanges";
   /**
    * Sets Module given an Id for Edit.
    *
@@ -559,7 +560,39 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     setQuestionsFromArray(module, questionArr);
 
     Map changes = getUpdatedNewDeletedQuestions(orgModule.getQuestions(),module.getQuestions());
-    return mapping.findForward(MODULE_EDIT);
+    if(changes.isEmpty())
+    {
+      saveMessage("cadsr.formbuilder.form.edit.nochange", request);
+      return mapping.findForward(MODULE_EDIT);
+    }
+
+    FormBuilderServiceDelegate service = getFormBuilderService();
+  
+    try{
+    service.updateModule(module,(Collection)changes.get(UPDATED_QUESTION_LIST),
+                         (Collection)changes.get(DELETED_QUESTION_LIST),
+                         (Collection)changes.get(NEW_QUESTION_LIST),
+                         (Map)changes.get(UPDATED_VV_LIST),
+                         (Map)changes.get(NEW_VV_LIST),
+                         (Map)changes.get(DELETED_QUESTION_LIST));
+    }
+    catch(FormBuilderException exp)
+    {
+        if (log.isDebugEnabled()) {
+          log.debug("Exception on service.updateModule=  " + exp);
+        }
+
+        saveMessage(ERROR_MODULE_SAVE_FAILED, request);
+        saveMessage(exp.getErrorCode(), request);
+        return mapping.findForward(FAILURE);
+    }
+                         
+    saveMessage("cadsr.formbuilder.module.edit.save.success", request);
+    
+    removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
+    removeSessionObject(request,CLONED_MODULE);
+    removeSessionObject(request,MODULE);
+    return mapping.findForward(SUCCESS);
   }
   
  private Map getAvailableValidValuesForQuestions(List questions, Map vdvvMap)
@@ -608,7 +641,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
          ListIterator vvvdIterator = vdVVList.listIterator();         
          while(vvvdIterator.hasNext())
          {
-           ValidValue vv = (ValidValue)vvIterator.next();
+           ValidValue vv = (ValidValue)vvvdIterator.next();
            FormValidValue tempFvv = new FormValidValueTransferObject();
            tempFvv.setLongName(vv.getShortMeaningValue());
            tempFvv.setVpIdseq(vv.getVpIdseq());
@@ -669,6 +702,11 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    List newQuestionList = new ArrayList();
    List updatedQuestionList = new ArrayList();
    List deletedQuestionList = new ArrayList();
+   Map newValidValuesMap = new HashMap();
+   Map updatedValidValuesMap = new HashMap();
+   Map deletedValidValuesMap = new HashMap();
+   Map validValueChangesMap = new HashMap();
+   
    Map resultMap = new HashMap();
    
    ListIterator iterate = orgQuestionList.listIterator();
@@ -743,8 +781,19 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
           validValuesChanges.put(this.NEW_VV_LIST,newVVList);
       }
       if(validValuesChanges!=null&&!validValuesChanges.isEmpty())
-      {
-        resultMap.put(currQuestion.getQuesIdseq(), validValuesChanges);
+      {        
+        List newvvList = (List)validValuesChanges.get(NEW_VV_LIST);
+        if(newvvList!=null)
+          newValidValuesMap.put(currQuestion.getQuesIdseq(), newvvList);
+ 
+        List deletedList = (List)validValuesChanges.get(DELETED_VV_LIST);
+        if(deletedList!=null)
+          deletedValidValuesMap.put(currQuestion.getQuesIdseq(), deletedList);
+
+        List updatedvvList = (List)validValuesChanges.get(UPDATED_VV_LIST);
+        if(updatedvvList!=null)
+          updatedValidValuesMap.put(currQuestion.getQuesIdseq(), updatedvvList);          
+
       }
      }                                                  
    }
@@ -761,7 +810,18 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    {
      resultMap.put(this.DELETED_QUESTION_LIST,deletedQuestionList);
    }
-   
+   if(!updatedValidValuesMap.isEmpty())
+   {
+     resultMap.put(UPDATED_VV_LIST,updatedValidValuesMap);
+   }
+   if(!deletedValidValuesMap.isEmpty())
+   {
+     resultMap.put(DELETED_VV_LIST,deletedValidValuesMap);
+   }
+   if(!newValidValuesMap.isEmpty())
+   {
+     resultMap.put(NEW_VV_LIST,newValidValuesMap);
+   }   
    return resultMap;
  }
   

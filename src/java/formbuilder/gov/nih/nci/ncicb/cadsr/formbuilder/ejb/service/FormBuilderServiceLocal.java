@@ -29,6 +29,14 @@ public interface FormBuilderServiceLocal  {
     Collection updatedModules,
     Collection deletedModules) ;
 
+  public Module updateModule(
+       Module moduleHeader,
+       Collection updatedQuestions,
+       Collection deletedQuestions,
+       Collection newQuestions,
+       Map updatedValidValues,
+       Map addedValidValues,
+       Map deletedValidValues);
 
   public Form copyForm(
     String sourceFormPK,

@@ -28,6 +28,15 @@ public interface FormBuilderServiceDelegate {
     Collection updatedModules,
     Collection deletedModules) throws FormBuilderException;
 
+  public Module updateModule(
+       Module moduleHeader,
+       Collection updatedQuestions,
+       Collection deletedQuestions,
+       Collection newQuestions,
+       Map updatedValidValues,
+       Map addedValidValues,
+       Map deletedValidValues) throws FormBuilderException;
+       
   public Form getFormRow(String formPK) throws FormBuilderException;
 
   public Form copyForm(

@@ -17,6 +17,7 @@ public interface FormBuilderConstants {
   public static final String ERROR_FORM_SAVE_FAILED="FB001";
   public static final String ERROR_FORM_SAVE_RETRIEVE="FB002";
   public static final String ERROR_FORM_DELETE_FAILED="FB002";
+  public static final String ERROR_MODULE_SAVE_FAILED="FB004";
   public static final String ERROR_FATAL="FB911";
   
 
