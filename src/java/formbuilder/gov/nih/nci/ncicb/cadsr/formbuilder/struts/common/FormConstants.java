@@ -4,7 +4,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
 
 
 public interface FormConstants extends FormBuilderConstants {
-  public static final String FORM_PREFERRED_NAME = "formPreferredName";
+  public static final String FORM_PREFERRED_NAME = "formPreferredName";	
   public static final String FORM_LONG_NAME = "formLongName";
   public static final String FORM_PREFERRED_DEFITION = "preferredDefinition";
   public static final String CRF_CONTEXT_ID_SEQ = "conteIdseq";
@@ -72,7 +72,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String VALID_VALUE_INDEX = "validValueIndex";
   public static final String AVAILABLE_VALID_VALUES = "AvailableValidValue";
   public static final String ADD_AVAILABLE_VALID_VALUE_INDEX =
-    "addAvailableValidValueIndex";
+      "addAvailableValidValueIndex";
   public static final String VALUE_DOMAIN_VALID_VALUES_MAP =
     "valueDomainValidValueMap";
   public static final String AVAILABLE_VALID_VALUES_MAP =
@@ -80,4 +80,9 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String SELECTED_ITEMS = "selectedItems";
   public static final String CLASSIFICATIONS = "classifications";
   public static final String DE_SEARCH_SRC = "src";
+  
+  public static final int LONG_NAME_MAX_LENGTH = 255;
+  public static final int DEFINITION_MAX_LENGTH = 2000;
+  public static final int VERSION_MAX_LENGTH = 4;
+
 }
