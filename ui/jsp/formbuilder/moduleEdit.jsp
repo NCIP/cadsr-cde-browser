@@ -34,8 +34,10 @@ function submitModuleEdit(methodName,questionIndexValue) {
   document.forms[0].submit();
 }
 function submitModuleToSave(methodName) {
+  if(validateModuleEditForm(moduleEditForm)) {
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
   document.forms[0].submit();
+  }
 }
 
 function clearProtocol() {
@@ -69,6 +71,9 @@ function clearProtocol() {
         <jsp:param name="urlPrefix" value=""/>
       </jsp:include>
       <%@ include file="/formbuilder/moduleEditButton_inc.jsp"%>
+
+        <%@ include file="showValidationErrors.jsp" %>
+
       <logic:messagesPresent message="true">
         <table width="80%" align="center">
           <html:messages id="message" message="true">
@@ -501,4 +506,5 @@ function clearProtocol() {
     </html:form>
     <%@ include file="/common/common_bottom_border.jsp"%>
   </BODY>
+  <html:javascript formName="moduleEditForm"/>
 </HTML>

@@ -123,5 +123,16 @@
       </field>
     </form>
 
+    <form name="moduleEditForm">
+      <field   property="moduleLongName"
+        depends="required">
+        <arg0 key="cadsr.formbuilder.module.name"/>
+      </field>
+      <field   property="moduleInstructionLongName"
+        depends="required">
+        <arg0 key="cadsr.formbuilder.moduleinstruction.name"/>
+      </field>
+    </form>
+
   </formset>
 </form-validation>
