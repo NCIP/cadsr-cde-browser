@@ -195,6 +195,12 @@
       <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
       <forward name="failure" path="/formbuilder/moduleEdit.jsp" redirect="false"/>
     </action> 
+    <action name="moduleEditForm" path="/cancelModuleEditAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction"
+      validate="false">
+      <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
+    </action>
     
     <action name="hrefCRFForm" path="/formHrefDeleteAction" parameter="method"
       scope="request"
