@@ -1,28 +1,26 @@
 <?xml version = '1.0' encoding = 'windows-1252'?>
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
-   <form-beans>
-      <form-bean name="searchForm" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean" dynamic="true">
-         <form-property name="formName" type="java.lang.String"/>
-         <form-property name="protocol" type="java.lang.String"/>
-         <form-property name="context" type="java.lang.String"/>
-         <form-property name="workflow" type="java.lang.String"/>
-         <form-property name="category" type="java.lang.String"/>
-         <form-property name="type" type="java.lang.String"/>
-      </form-bean>
-   </form-beans>
-   <action-mappings>
-      <action path="/formAction" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction" parameter="method" name="searchForm" scope="request" validate="false">
-         <forward path="/formbuilder/formSearch.jsp" name="success"/>
-      </action>
-   </action-mappings>
-   <controller
-    contentType="text/html;charset=UTF-8"
-    debug="3"
-    locale="true"
-    nocache="true"
-    processorClass="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureRequestProcessor"/>
-
-   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
-   <plug-in className="gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory"/>
+  <form-beans>
+    <form-bean name="searchForm" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean" dynamic="true">
+      <form-property name="formLongName" type="java.lang.String"/>
+      <form-property name="protocolIdSeq" type="java.lang.String"/>
+      <form-property name="contextIdSeq" type="java.lang.String"/>
+      <form-property name="workflow" type="java.lang.String"/>
+      <form-property name="categoryName" type="java.lang.String"/>
+      <form-property name="type" type="java.lang.String"/>
+    </form-bean>
+  </form-beans>
+  <global-forwards>
+    <forward name="cdebrowserHome" path="/cdebrowser" redirect="true"/>
+  </global-forwards>
+  <action-mappings>
+    <action name="searchForm" path="/formAction" parameter="method" scope="request" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction" validate="false">
+      <forward name="success" path="/formbuilder/formResults.jsp"/>
+      <forward name="defaultHome" path="/formbuilder/formbuilder.jsp" />
+    </action>
+  </action-mappings>
+  <controller debug="3" nocache="true" processorClass="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureRequestProcessor" contentType="text/html;charset=UTF-8" locale="true"/>
+  <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
+  <plug-in className="gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory"/>
 </struts-config>
