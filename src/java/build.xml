@@ -193,7 +193,7 @@
           <fileset dir="${classes.build.dir}">
             <patternset>
               <include name="gov/nih/nci/ncicb/cadsr/resource/*"/>
-              <include name="gov/nih/nci/ncicb/cadsr/resource/impl/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/resource/impl/*"/>              
               <include name="gov/nih/nci/ncicb/cadsr/cdecart/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/dto/*"/>
               <include name="gov/nih/nci/ncicb/cadsr/dto/base/*"/>
@@ -259,6 +259,7 @@
          <fileset dir="${config.home}/properties">
            <patternset>
              <include name="*.properties"/>
+             <exclude name="log4j.properties"/>
            </patternset>
          </fileset>
        </copy>
@@ -476,6 +477,7 @@
            <patternset>
              <include name="gov/nih/nci/ncicb/cadsr/base/process/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/cdebrowser/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/struts/common/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/crfbuilder/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/database/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/database/**"/>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class DataElementSearchBean extends Object {
   private String searchStr = "";
+  private String simpleSearchStr = "";
   private String whereClause = "";
   private String[] strArray = null;
   private StringBuffer workflowList = null;
@@ -34,7 +35,7 @@ public class DataElementSearchBean extends Object {
   private StringBuffer searchInList;
   private String validValue;
   private String altName;
-  private String publicIdInd;
+  private String publicIdInd="";
 
   public DataElementSearchBean(
     HttpServletRequest request,
@@ -46,6 +47,7 @@ public class DataElementSearchBean extends Object {
     decPrefName = request.getParameter("txtDataElementConcept");
     csiName = request.getParameter("txtClassSchemeItem");
     searchText = request.getParameter("jspKeyword");
+    simpleSearchStr = request.getParameter("jspSimpleKeyword");
     aslName = request.getParameterValues("jspStatus");
     regStatus = request.getParameterValues("regStatus");
     altNames = request.getParameterValues("altName");
@@ -96,7 +98,7 @@ public class DataElementSearchBean extends Object {
       GenericPopListBean.buildList(
         "sbrext.ASL_ACTL_EXT", "ASL_NAME", "ASL_NAME", selectedIndex,
         "jspStatus", dbUtil, where, false, 4, true, true, false, true,
-        "LOVField");
+        "LongLOVField");
   }
   
   public StringBuffer getRegStatusList() {
@@ -111,7 +113,7 @@ public class DataElementSearchBean extends Object {
       GenericPopListBean.buildList(
         "sbr.REG_STATUS_LOV", "REGISTRATION_STATUS", "REGISTRATION_STATUS", selectedIndex,
         "regStatus", dbUtil, where, false, 4, true, true, false, true,
-        "LOVField");
+        "LongLOVField");
   }
   public StringBuffer getAltNameList() {
     return altNameList;
@@ -126,7 +128,7 @@ public class DataElementSearchBean extends Object {
       GenericPopListBean.buildList(
         "sbr.DESIGNATION_TYPES_LOV", "DETL_NAME", "DETL_NAME", selectedIndex,
         "altName", dbUtil, where, true, 4, false, true, false, true,
-        "LOVField");
+        "LongLOVField");
   }
 
   public String getVDPrefName() {
@@ -209,7 +211,7 @@ public class DataElementSearchBean extends Object {
 
   private void buildSearchInList(String[] searchIn) {
     searchInList.append(
-      "<select multiple name=\"jspSearchIn\" size=\"4\" class=\"LOVField\"> ");
+      "<select multiple name=\"jspSearchIn\" size=\"4\" class=\"LongLOVField\"> ");
 
     if (searchIn == null) {
       searchInList.append("<option value=\"ALL\">ALL</option> ");
@@ -280,11 +282,21 @@ public class DataElementSearchBean extends Object {
 
   public String getPublicIdInd()
   {
-    return publicIdInd;
+    return StringUtils.replaceNull(publicIdInd);
   }
 
   public void setPublicIdInd(String publicIdInd)
   {
-    this.publicIdInd = publicIdInd;
+      this.publicIdInd = publicIdInd;
+  }
+
+  public String getSimpleSearchStr()
+  {
+    return StringUtils.replaceNull(simpleSearchStr);
+  }
+
+  public void setSimpleSearchStr(String simpleSearchStr)
+  {
+    this.simpleSearchStr = simpleSearchStr;
   }
 }

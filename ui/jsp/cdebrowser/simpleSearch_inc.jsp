@@ -5,6 +5,8 @@
 <INPUT TYPE="HIDDEN" NAME="contextUse" VALUE="both">
 <INPUT TYPE="HIDDEN" NAME="jspStatus" VALUE="ALL">
 <INPUT TYPE="HIDDEN" NAME="regStatus" VALUE="ALL">
+<INPUT TYPE="HIDDEN" NAME="jspCdeId">
+<INPUT TYPE="HIDDEN" NAME="jspKeyword">
 
 <table width="100%" >
  
@@ -53,7 +55,7 @@
  <table align="center" width="60%" border="0" cellpadding="0" cellspacing="1" class="OraBGAccentVeryDark" border="0" >
  <tr>
     <td class="OraTabledata"  align="center" nowrap >
-      <input type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="65"> 
+      <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" size ="65"> 
     </td>
 
  </tr>
@@ -64,7 +66,7 @@
          <td  nowrap>&nbsp;</td>
          <td class="OraTableColumnHeaderNoBG" nowrap>Search by public ID </td>
          <td class="OraTabledata"  nowrap>
-            <input type="checkbox" name="jspPublicIdInd" value="<%=desb.getSearchText()%>" size ="60"> 
+            <input type="checkbox" name="jspPublicIdInd" value="checked" "<%=desb.getPublicIdInd()%>" size ="60"> 
          </td>
        </tr>
       </table>

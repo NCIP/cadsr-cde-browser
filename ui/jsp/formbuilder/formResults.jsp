@@ -28,7 +28,13 @@
 	<jsp:param name="label" value="Form&nbsp;Search" />
 	<jsp:param name="urlPrefix" value="" />
 </jsp:include>
-
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.search.page"/>
+      </td>
+    </tr>  
+</table> 
 <html:form action="/formSearchAction.do">
  <%@ include  file="/formbuilder/formSearch_inc.jsp" %> 
 <logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
@@ -37,6 +43,7 @@
           <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
         </tr>
       </table>   
+  <A NAME="results"></A>
   <%@ include  file="/formbuilder/formResults_inc.jsp" %>
 </logic:present> 
    

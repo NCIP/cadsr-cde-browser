@@ -137,7 +137,7 @@
                          </td>
                         </tr>    
                         <tr >
-                          <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Alternate Name Type(s)</td>
+                          <td width="30%" class="OraTableColumnHeaderNoBG" >Alternate Name    Type(s)</td>
                           <td width="70%" class="OraTabledata"><%=desb.getAltNameList()%></td>
                         </tr>               
                         </table>
