@@ -36,7 +36,6 @@ public class DTOTransformer {
     fvv.setVersion(new Float(1.0)); //Bug Fix tt#1058
     fvv.setShortMeaning(validValue.getShortMeaning());
     fvv.setQuestion(question);
-    fvv.setVersion(question.getVersion());
 
     return fvv;
   }

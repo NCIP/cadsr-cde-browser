@@ -354,6 +354,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
                Instruction qInstr = currQuestion.getInstruction();
                if(qInstr!=null)
                {
+                  qInstr.setCreatedBy(getUserName());
                   questionInstrDao.createInstruction(qInstr,newQusetion.getQuesIdseq());
                }
              List currQuestionValidValues = currQuestion.getValidValues();
@@ -361,11 +362,13 @@ public class FormBuilderEJB extends SessionBeanAdapter
              while(currQuestionValidValuesIt!=null&&currQuestionValidValuesIt.hasNext())
              {
                FormValidValue fvv = (FormValidValue)currQuestionValidValuesIt.next();
+               fvv.setCreatedBy(getUserName());
                String newFVVIdseq = formValidValueDao.createFormValidValueComponent(fvv);
                //instructions
                Instruction vvInstr = fvv.getInstruction();
                if(vvInstr!=null)
                {
+                  vvInstr.setCreatedBy(getUserName());
                   validValueInstrDao.createInstruction(vvInstr,newFVVIdseq);
                }
              }
@@ -406,6 +409,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
                Instruction vvInstr = fvv.getInstruction();
                if(vvInstr!=null)
                {
+                  vvInstr.setCreatedBy(getUserName());
                   validValueInstrDao.createInstruction(vvInstr,newFVVIdseq);
                }
 
@@ -787,6 +791,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
            while(updatedInstrIt.hasNext())
            {
              Instruction instr = (Instruction)updatedInstrIt.next();
+             instr.setModifiedBy(getUserName());
              dao.updateInstruction(instr);
            }
     }
@@ -827,6 +832,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
            while(updatedInstrIt.hasNext())
            {
              Instruction instr = (Instruction)updatedInstrIt.next();
+             instr.setModifiedBy(getUserName());
              dao.updateInstruction(instr);
            }
     }

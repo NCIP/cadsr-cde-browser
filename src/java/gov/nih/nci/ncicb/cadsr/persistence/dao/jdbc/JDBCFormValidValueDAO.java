@@ -1,9 +1,11 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.jdbc.object.SqlUpdate;
 
@@ -64,10 +66,11 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       throw dml;
     }
     **/
-
+    
+/**
     InsertQuestContent  insertQuestContent  = 
       new InsertQuestContent (this.getDataSource());
-    String qcIdseq = generateGUID(); 
+     String qcIdseq = generateGUID();
     int res = insertQuestContent.createContent(newValidValue, qcIdseq);
     if (res != 1) {
       DMLException dml = new DMLException("Did not succeed creating valid value record " + 
@@ -75,7 +78,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       dml.setErrorCode(ERROR_CREATEING_VALID_VALUE);
       throw dml;
     }
-    
+
     InsertQuestRec  insertQuestRec  = 
       new InsertQuestRec (this.getDataSource());
     String qrIdseq = generateGUID();
@@ -89,6 +92,24 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
        dml.setErrorCode(this.ERROR_CREATEING_VALID_VALUE);
       throw  dml;
     }
+  **/
+  
+    InsertFormValidValue insertValidValue = new InsertFormValidValue(this.getDataSource());
+    Map out = insertValidValue.executInsertCommand(newValidValue);
+
+    String returnCode = (String) out.get("p_return_code");
+    String returnDesc = (String) out.get("p_return_desc");
+    String newFVVIdeq = (String) out.get("p_val_idseq");
+    
+    if (!StringUtils.doesValueExist(returnCode)) {
+      return newFVVIdeq;
+    }
+    else{
+      DMLException dml =  new DMLException(returnDesc);
+      dml.setErrorCode(this.ERROR_CREATEING_VALID_VALUE);
+      throw dml;
+    }
+    
   }
 
   public int createFormValidValueComponents(Collection validValues)
@@ -157,7 +178,9 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
 
       Form form = new FormTransferObject();
       form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
-      form.setProtocol(new ProtocolTransferObject(""));  // template does not have protocol
+      Protocol prot = new ProtocolTransferObject();
+      prot.setProtoIdseq("B175A671-B163-5E06-E034-0003BA12F5E7");
+      form.setProtocol(prot);  
       Module module = new ModuleTransferObject();
       module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
       module.setForm(form);
@@ -169,14 +192,16 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       formValidValue.setVersion(new Float(2.31));
       formValidValue.setLongName("Test ValidValue Long Name 022904 1");
       formValidValue.setPreferredDefinition("Test Valid Value pref def");
-      formValidValue.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+      Context conte = new ContextTransferObject();
+      conte.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+      formValidValue.setContext(conte);
       formValidValue.setAslName("DRAFT NEW");
       formValidValue.setCreatedBy("Hyun Kim");
       formValidValue.setVpIdseq("99BA9DC8-5B9F-4E69-E034-080020C9C0E0"); 
       formValidValue.setDisplayOrder(100);
 
-      //int res = test.createFormValidValueComponent(formValidValue);
-      //System.out.println("\n*****Create Valid Value Result 2: " + res);
+     String res = test.createFormValidValueComponent(formValidValue);
+      System.out.println("\n*****Create Valid Value Result 2: " + res);
     }
     catch (DMLException de) {
       de.printStackTrace();
@@ -193,13 +218,14 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     }
     */
     // test for updateDisplayOrder
-    try {
+   /* try {
       int res = test.updateDisplayOrder("D458E178-32A5-7522-E034-0003BA0B1A09", 7);
       System.out.println("\n*****Update Display Order 1: " + res);
     }
     catch (DMLException de) {
       de.printStackTrace();
     }
+    */
   }
 
   /**
@@ -319,4 +345,57 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     }
   }
 
+  /**
+   * Inner class that accesses database to delete a valid value.
+   */
+  private class InsertFormValidValue extends StoredProcedure {
+    public InsertFormValidValue(DataSource ds) {
+      super(ds, "sbrext_form_builder_pkg.ins_value");
+      declareParameter(new SqlParameter("p_ques_idseq", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_version", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_preferred_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_long_name", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_preferred_definition", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_conte_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_proto_idseq", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_asl_name", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_vp_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_created_by", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_display_order", Types.NUMERIC));
+      
+      declareParameter(new SqlOutParameter("p_ques_idseq", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_qr_idseq", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
+      
+      
+      compile();
+    }
+
+    public Map executInsertCommand(FormValidValue fvv) {
+      String protocolIdSeq = null;
+
+      if( fvv.getQuestion().getModule().getForm().getProtocol()!=null)
+      {
+         protocolIdSeq=fvv.getQuestion().getModule().getForm().getProtocol().getProtoIdseq();
+      }      
+      Map in = new HashMap();
+      
+      in.put("p_ques_idseq", fvv.getQuestion().getQuesIdseq());
+      in.put("p_version", fvv.getVersion().toString());
+      in.put("p_preferred_name", fvv.getPreferredName());
+      in.put("p_long_name", fvv.getLongName());
+      in.put("p_preferred_definition", fvv.getPreferredDefinition());
+      in.put("p_conte_idseq", fvv.getContext().getConteIdseq());
+      in.put("p_proto_idseq", protocolIdSeq);
+      in.put("p_asl_name", fvv.getAslName());
+      in.put("p_vp_idseq", fvv.getVpIdseq());
+      in.put("p_created_by", fvv.getCreatedBy());
+      in.put("p_display_order", new Integer(fvv.getDisplayOrder()));
+
+      Map out = execute(in);
+      return out;
+    }
+  }
+  
 }
