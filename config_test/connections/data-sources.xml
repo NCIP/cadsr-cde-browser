@@ -17,8 +17,7 @@
      pooled-location="jdbc/pooled/FormBuilderDS"
      url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest" 
      username="sbrext" xa-location="jdbc/xa/SBREXT_FB_XADS"
-     max-connections="5" 
-     min-connections="1" 
+     min-connections="5" 
      >
      <property name="cacheScheme"
        value="1"/>

@@ -253,6 +253,13 @@
              </patternset>
            </fileset>      
         </copy> 
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.test}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy>         
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
          <fileset dir="${config.test}/connections">
            <patternset>
@@ -266,7 +273,14 @@
              <include name="cdebrowser.properties"/>
            </patternset>
          </fileset>
-      </copy>       
+      </copy>   
+     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
+         <fileset dir="${config.test}/properties">
+           <patternset>
+             <include name="log4j.properties"/>
+           </patternset>
+         </fileset>
+      </copy>         
     </target>
   <!-- =========== END DEV CONFIG ======================= -->
   
@@ -468,16 +482,9 @@
 
   <!-- =========== CREATE EAR FILE ======================= -->
     <target name="ear_cdebrowser" depends="jar_ejb,war_cdebrowser">
-       
-     <copy todir="${classes.build.dir}/properties">      
-         <fileset dir="${config.home}/properties">
-           <patternset>
-             <include name="data-sources.xml"/>
-           </patternset>
-         </fileset>      
-      </copy>        
+            
       <!-- Create ear file -->      
-      <ear earfile="${build.dir}/${ear.name}.ear" appxml="${config.home}/META-INF/application.xml">
+      <ear earfile="${build.dir}/${ear.name}.ear" appxml="${classes.build.dir}/META-INF/application.xml">
         <fileset dir="${build.dir}">
           <patternset>
             <include name="*.war"/>
@@ -485,7 +492,7 @@
           </patternset>
         </fileset>
 
-        <fileset dir="${config.home}">
+        <fileset dir="${classes.build.dir}/META-INF">
           <patternset>
             <include name="properties/log4j.properties"/>
           </patternset>
