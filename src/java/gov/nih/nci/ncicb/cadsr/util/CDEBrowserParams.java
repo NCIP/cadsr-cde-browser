@@ -1,9 +1,12 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import java.util.ResourceBundle;
 
 public class CDEBrowserParams
 {
+    private static Log log = LogFactory.getLog(CDEBrowserParams.class.getName());
     String sbrextDSN = "";
     String sbrDSN = "";
     String xmlDownloadDir = "";
@@ -29,7 +32,7 @@ public class CDEBrowserParams
         int index = 0;
         try
         {
-            System.out.println("*** Resource File Name ***: " + propFilename);
+            log.info("*** Resource File Name ***: " + propFilename);
             ResourceBundle b = ResourceBundle.getBundle(propFilename, java.util.Locale.getDefault());
             sbrextDSN = b.getString("SBREXT_DATA_SOURCE_NAME");
             index++;
@@ -47,14 +50,14 @@ public class CDEBrowserParams
         } 
         catch (java.util.MissingResourceException mre) 
         {
-            System.out.println("Error getting init parameters, missing resource values");
-            System.out.println("Property missing index: " + index);
-            System.out.println(mre.getMessage());
+            log.error("Error getting init parameters, missing resource values");
+            log.error("Property missing index: " + index);
+            log.error(mre.getMessage(), mre);
             System.exit(-1);
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            log.error("Exception occurred", e);
             System.exit(-1);
         }
     }
