@@ -40,7 +40,7 @@
   String downloadExcelURL = "javascript:fileDownloadWin('downloadExcelPage.jsp','excelWin',500,200)";
   String valueDomainLOVUrl= "javascript:newWin('search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain"+pageUrl+"','vdLOV',700,600)";
   String decLOVUrl= "javascript:newWin('search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept"+pageUrl+"','decLOV',700,600)";
-  String csLOVUrl= "javascript:newWin('search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
+  String csLOVUrl= "javascript:newBrowserWin('search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
 
   
   String txtDataElementConcept = desb.getDECPrefName();
@@ -72,7 +72,7 @@ Data Elements Search - Data Elements
 <BODY onLoad="turnOff()" topmargin="0">
 
 
-
+<SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/checkbox.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function redirect1(detailReqType, linkParms )
@@ -100,6 +100,7 @@ function clearClassSchemeItem() {
 function submitForm() {
   document.forms[0].submit();
 }
+
 function clearForm() {
   var version = document.forms[0].jspLatestVersion
   clearValueDomain();
@@ -172,6 +173,23 @@ function modifyForm() {
   top.location.href = urlString;
 }
 
+function ToggleAll(e){
+	if (e.checked) {
+	    setChecked(1,'selectDE');
+	}
+	else {
+	    setChecked(0,'selectDE');
+	}
+}
+
+function updateCart() {
+  if (validateSelection('selectDE','Please select atleast one data element to add to the CDE Cart')) {
+    document.forms[0].performQuery.value = "addToCart";
+    document.forms[0].submit();
+    return true;
+  }
+}
+
 
 //-->
 </SCRIPT>
@@ -195,7 +213,7 @@ function modifyForm() {
       <input type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="20"> 
     </td>
 
-    <td class="OraFieldtitlebold" nowrap>Valid Value:</td>
+    <td class="OraFieldtitlebold" nowrap>Permissible Value:</td>
     <td class="OraFieldText" nowrap>
       <input type="text" name="jspValidValue" value="<%=desb.getValidValue()%>" size ="20"> 
     </td>
@@ -286,8 +304,8 @@ function modifyForm() {
     <td colspan="4" nowrap align="left" class="AbbreviatedText">Wildcard character for search is *</td>
  </tr>
  <TR>
-    <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=i/search.gif border=0></a></td>
-    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=i/clear.gif border=0></a></td>
+    <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a></td>
+    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=i/Clear.gif border=0></a></td>
  </TR>
 </table>
 <br>
@@ -314,26 +332,18 @@ function modifyForm() {
   <tr>
     <td width="100%" nowrap><img height=2 src="i/beigedot.gif" width="99%" align=top border=0> </td>
   </tr>
-<%
-      if (paramType.equals("CRF")||paramType.equals("TEMPLATE")){
-%>
-  <tr>
-    <td>
-      <input type="button" name="copy_form" value="Copy Form" onClick="copyForm()">
-      &nbsp;&nbsp;<input type="button" name="modify_form" value="Modify Form" onClick="modifyForm()">
-    </td>
-  </tr>
-<%
-  }
-%>
 </table>
 
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
-    <tr><td align="right"><%=topScroller.getScrollerHTML()%></td></tr>
+    <tr>
+      <td align="left"><a href="javascript:updateCart()"><img src="i/AddToCDECart.gif" border=0></a></td>
+      <td align="right"><%=topScroller.getScrollerHTML()%></td>
+    </tr>
 </table>
 
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader"><input type="checkbox" name="deList" value="yes" onClick="ToggleAll(this)"/></th>
     <th class="OraTableColumnHeader">Preferred Name</th>
     <th class="OraTableColumnHeader">Long Name</th>
     <th class="OraTableColumnHeader">Document Text</th>
@@ -349,6 +359,7 @@ function modifyForm() {
         DataElement de = (DataElement)deList.get(i);
 %>
   <tr class="OraTabledata">
+    <td class="OraTableCellSelect"><input type="checkbox" name="selectDE" value="<%=de.getDeIdseq()%>"/></td>
     <td class="OraFieldText"><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=<%=de.getDeIdseq()%>')"><%=de.getPreferredName()%></a></td>
     <td class="OraFieldText"><%=de.getLongName()%> </td>
     <td class="OraFieldText"><%=de.getLongCDEName()%> </td>
@@ -400,4 +411,3 @@ function modifyForm() {
 
 </BODY>
 </HTML>
-

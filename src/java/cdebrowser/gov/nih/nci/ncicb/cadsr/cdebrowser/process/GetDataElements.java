@@ -12,9 +12,14 @@ import gov.nih.nci.ncicb.cadsr.persistence.bc4j.handler.*;
 import gov.nih.nci.ncicb.cadsr.resource.CDEBrowserPageContext;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.TreeParameters;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.handler.CDEBrowserPageContextHandler;
 import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.util.*;
+import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 import oracle.cle.persistence.HandlerFactory;
 
@@ -100,6 +105,7 @@ public class GetDataElements extends BasePersistingProcess {
       registerResultObject(ProcessConstants.DE_SEARCH_PAGE_SCROLLER);
       registerResultObject(ProcessConstants.DE_SEARCH_TOP_PAGE_SCROLLER);
       registerResultObject("uem");
+      registerParameterObject(ProcessConstants.SELECT_DE);
     }
     catch (ProcessInfoException pie) {
       reportException(pie, true);
@@ -116,6 +122,7 @@ public class GetDataElements extends BasePersistingProcess {
    */
   public void persist() throws Exception {
     HttpServletRequest myRequest = null;
+    HttpSession userSession = null;
     TabInfoBean tib = null;
     String treeWhereClause = null;
     String[] searchParam = null;
@@ -133,6 +140,7 @@ public class GetDataElements extends BasePersistingProcess {
 
       tib = new TabInfoBean("cdebrowser_search_tabs");
       myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
+      userSession = myRequest.getSession(false);
       tib.processRequest(myRequest);
 
       if (tib.getMainTabNum() != 0) {
@@ -309,6 +317,41 @@ public class GetDataElements extends BasePersistingProcess {
         createPageScroller(
           dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER);
       }
+
+      else if (performQuery.equals("addToCart")) {
+        System.out.println("In add to cart");
+        desb = (DataElementSearchBean) getInfoObject("desb");
+        dePageIterator =
+          (PageIterator) getInfoObject(
+            ProcessConstants.DE_SEARCH_PAGE_ITERATOR);
+        queryBuilder =
+          (DESearchQueryBuilder) getInfoObject(
+            ProcessConstants.DE_SEARCH_QUERY_BUILDER);
+        queryResults = (List)getInfoObject(
+            ProcessConstants.ALL_DATA_ELEMENTS);
+
+        CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
+        if (cart == null)
+          cart = new CDECartTransferObject();
+        String [] itemsList = getInfoStringArray(ProcessConstants.SELECT_DE);
+        CDECartItem cdeItem = null;
+        for (int i=0; i <itemsList.length; i++){
+          cdeItem = new CDECartItemTransferObject();
+          cdeItem.setId(itemsList[i]);
+          cdeItem.setType("DATAELEMENT");
+          cart.setDataElement(cdeItem);
+        }
+
+        Collection coll = cart.getDataElements();
+        System.out.println("Cart count: "+coll.size());
+        Iterator it = coll.iterator();
+        while (it.hasNext()) {
+          System.out.println("DE Id: "+((CDECartItem)it.next()).getId());
+        }
+        userSession.setAttribute(CaDSRConstants.CDE_CART,cart);
+        
+      }
+
 
       setResult("desb", desb);
       setResult(ProcessConstants.DE_SEARCH_PAGE_ITERATOR, dePageIterator);
