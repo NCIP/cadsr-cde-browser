@@ -17,6 +17,10 @@ public interface PersistenceConstants {
   public static final String JDBC_CONTEXT_DAO = "jdbcContextDAO";
   public static final String JDBC_FORM_CATEGORY_DAO = "jdbcFormCategoryDAO";
   public static final String JDBC_WK_FLOW_STATUS_DAO = "jdbcWkFlowStatusDAO";
+  public static final String JDBC_FORM_INSTR_DAO = "jdbcFormInstrDAO";
+  public static final String JDBC_MODULE_INSTR_DAO = "jdbcModuleInstrDAO";
+  public static final String JDBC_QUESTION_INSTR_DAO = "jdbcQuestionInstrDAO";
+  public static final String JDBC_VALUE_INSTR_DAO = "jdbcValueInstrDAO";
 
 
 
