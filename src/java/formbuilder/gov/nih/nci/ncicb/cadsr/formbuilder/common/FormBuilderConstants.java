@@ -1,4 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.common;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An interface which holds all the constants that are used in FormBuilder application.
@@ -12,8 +14,9 @@ public interface FormBuilderConstants {
   public static final String FAILURE_KEY = "Failure";
   public static final String SIGNON_KEY = "Login";
   public static final String LOGIN_TOKEN_KEY = "Loginkey";
-  
-  
+  //public static final String[] EDITABLE_WORKFLOW_STATUS= {};
+  //public static final String[] DELETABLE_WORKFLOW_STATUS= {};
+  //public static final String[] COPYABLE_WORKFLOW_STATUS= {};
   public static final String ERROR_FORM_SAVE_FAILED="FB001";
   public static final String ERROR_FORM_SAVE_RETRIEVE="FB002";
   public static final String ERROR_FORM_DELETE_FAILED="FB002";

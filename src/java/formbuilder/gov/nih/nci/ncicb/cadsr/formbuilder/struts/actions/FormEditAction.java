@@ -518,6 +518,34 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     }
 
   /**
+   * Cancel Save before ModuleEdit 
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward cancelFormChangesModuleEdit(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    FormBuilderBaseDynaFormBean editForm = (FormBuilderBaseDynaFormBean) form;
+    removeSessionObject(request, FORM_EDIT_HEADER);
+    removeSessionObject(request, FORM_EDIT_UPDATED_MODULES);
+    removeSessionObject(request, FORM_EDIT_DELETED_MODULES);
+    removeSessionObject(request, FORM_EDIT_ADDED_MODULES);    
+   
+    return mapping.findForward(FORM_EDIT);
+      
+    }
+
+  /**
    * Check if there are updated to form and set the value in the request
    *
    * @param mapping The ActionMapping used to select this instance.

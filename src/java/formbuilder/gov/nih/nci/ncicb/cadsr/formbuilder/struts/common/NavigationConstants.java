@@ -49,6 +49,7 @@ public interface NavigationConstants
   public static final String SAVE_FORM="saveForm";
   public static final String SAVE_FORM_MODULE_EDIT="saveFormModuleEdit";
   public static final String CHECK_CHANGES_MODULE_EDIT="checkChangesModuleEdit";
+  public static final String CANCEL_FORM_CHANGES_MODULE_EDIT="cancelFormChangesModuleEdit";
 
 
   public static final String CREATE_MODULE = "createModule";
