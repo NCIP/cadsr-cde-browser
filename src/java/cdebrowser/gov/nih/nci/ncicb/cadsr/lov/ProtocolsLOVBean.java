@@ -1,10 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.lov;
 
-/**
- * A Bean class.
- * <P>
- * @author Oracle Corporation
- */
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
@@ -54,10 +49,10 @@ public class ProtocolsLOVBean extends Object {
       }
       // pass the following parameters to CommonListCntrlBean
       String[] searchParm ={"proto.long_name","Keyword"};
-      String[] jspLinkParm={ "proto.prot_idseq","P_ID"};
+      String[] jspLinkParm={ "proto.proto_idseq","P_ID"};
       String[] displayParm={"proto.preferred_name","Preferred Name" ,
                             "proto.long_name","Long Name",
-                            "proto.name","Context",
+                            "proto_conte.name","Context",
                             "proto.asl_name","Workflow Status",
                             "proto.preferred_definition","Definition"};
       String[] sqlStmtParm = new String[2];
@@ -82,7 +77,7 @@ public class ProtocolsLOVBean extends Object {
       clb.setCompressFlag(false); // set compress flag
       clb.setLinkCol(0);          // set detail page link column, 0-> first; 1->second
       clb.setDetailReq_Type("protocols_ext"); //set req_type for detail page
-      clb.setShowRowNum(40);
+      clb.setShowRowNum(5);
       clb.setJsId(request.getParameter("idVar"));
       clb.setJsName(request.getParameter("nameVar"));
       if (isContextSpecific) 

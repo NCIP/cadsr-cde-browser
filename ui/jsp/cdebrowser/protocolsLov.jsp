@@ -7,19 +7,19 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.lov.ProtocolsLOVBean " %>
-
-<jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
-<jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
+<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants" %>
 
 <%@include  file="cdebrowserCommon_html/SessionAuth.html"%>
 
 <%
-  TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
-  ProtocolsLOVBean protolb = (ProtocolsLOVBean)infoBean.getInfo(ProcessConstants.PROTO_LOV);
+  TabInfoBean tib = 
+    (TabInfoBean)session.getAttribute(FormConstants.PROTOCOLS_LOV_TAB_BEAN);
+  ProtocolsLOVBean protolb = 
+    (ProtocolsLOVBean)session.getAttribute(FormConstants.PROTOCOLS_LOV_BEAN);
   CommonLOVBean clb = protolb.getCommonLOVBean();
     
-  String pageId = infoBean.getPageId();
-  String pageName = PageConstants.PAGEID;
+  String pageName = "PageId";
+  String pageId = "DataElementsGroup";
   String pageUrl = "&"+pageName+"="+pageId;
 
 %>
@@ -50,7 +50,7 @@ function closeOnClick() {
 }
 
 function goPage(pageInfo) {
-  document.location.href = "search?protocolsLOV=9&"+pageInfo + "<%= pageUrl %>";
+  document.location.href = "/cdebrowser/formLOVAction.do?method=getProtocolsLOV&"+pageInfo + "<%= pageUrl %>";
     
 }
   
@@ -61,12 +61,12 @@ function goPage(pageInfo) {
 <p class="OraHeaderSubSub">Protocols </p>
 </center>
 
-<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+<form method="POST" action="/cdebrowser/formLOVAction.do">
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= clb.getJsId() %>">
 <INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= clb.getJsName() %>">
-<INPUT TYPE="HIDDEN" NAME="protocolsLOV" VALUE="9">
+<INPUT TYPE="HIDDEN" NAME="method" VALUE="getProtocolsLOV">
+
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">
   Please enter a keyword. This search will display all protocols which have
@@ -142,4 +142,3 @@ function goPage(pageInfo) {
 <%@ include  file="cdebrowserCommon_html/bottom_border_lov.html" %>
 </BODY>
 </HTML>
-

@@ -12,8 +12,8 @@ function clearClassSchemeItem() {
 }
 
 function clearProtocol() {
-  document.forms[0].jspProtocol.value = "";
-  document.forms[0].txtProtocol.value = "";
+  document.forms[0].protocolIdSeq.value = "";
+  document.forms[0].protocolLongName.value = "";
 }
 
 -->
@@ -23,8 +23,8 @@ function clearProtocol() {
   // HSK
 
   String csLOVUrl= "javascript:newWin('/cdebrowser/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
-
-  String protoLOVUrl= "javascript:newWin('/cdebrowser/search?protocolsLOV=9&idVar=jspProtocol&nameVar=txtProtocol"+pageUrl+"','protoLOV',700,600)";
+  String protoLOVUrl= 
+    "javascript:newWin('/cdebrowser/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
 
 %>
   <table cellspacing="2" cellpadding="3" border="0" width="100%">
@@ -36,15 +36,14 @@ function clearProtocol() {
 
     <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/>:</td>
     <td class="OraFieldText" nowrap>
-      <input type="text" name="txtProtocol" 
-             value="" 
-             readonly onFocus="this.blur();"
-             class="LOVField"
-             size ="18"
-      >
-      &nbsp;<a href="<%=protoLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Protocols"></a>&nbsp;
+      <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
+      	     readonly="true" 
+      	     size="19"
+      	     styleClass="LOVField"
+      	     onfocus="this.blur();"/>
+      &nbsp;<a href="<%=protoLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
       <a href="javascript:clearProtocol()"><i>Clear</i></a>
-      <input type="hidden" name="jspProtocol" value="" >
+      <html:hidden  property="<%=PROTOCOLS_ID%>"/>
     </td>
 
 
@@ -119,4 +118,3 @@ function clearProtocol() {
   <P>
     
   </P>
-

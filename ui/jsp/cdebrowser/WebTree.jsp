@@ -21,14 +21,6 @@
 <head>
   <link rel="stylesheet" type="text/css" href="skins/<%=skin%>/TreeBrowser.css"/>
   <script language="JavaScript1.2" src="skins/<%=skin%>/JavaScript.js"></script>
-  <script language="JavaScript1.2">
-  function formSearchAction(urlParams){
-    var frm = findFrameByName('body');
-    document.body.style.cursor = "wait";
-    frm.document.body.style.cursor = "wait";
-    frm.document.location = "formAction.do?method=getAllFormsForTreeNode&"+urlParams;
-	}
-</script>
 </head>
 <body>
 
