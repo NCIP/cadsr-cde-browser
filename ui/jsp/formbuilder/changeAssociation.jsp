@@ -65,8 +65,10 @@
           <bean:write name="de" property="item.longName"/>
         </td>
         <td class="OraFieldText">
-          <html:radio property="selectedText" value="<%= itemId + \",\" + de.getItem().getPreferredName() %>"/>
-          <bean:write name="de" property="item.longCDEName"/>
+          <logic:notEmpty name="de" property="item.longCDEName">
+            <html:radio property="selectedText" value="<%= itemId + \",\" + ((gov.nih.nci.ncicb.cadsr.resource.DataElement)de.getItem()).getLongCDEName() %>"/>
+              <bean:write name="de" property="item.longCDEName"/>
+          </logic:notEmpty>
         </td>
         <td class="OraFieldText">
           <bean:write name="de" property="item.contextName"/>
