@@ -7,6 +7,7 @@ import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 
 import java.util.Collection;
+import java.util.Map;
 
 
 public interface FormBuilderServiceLocal  {
@@ -95,4 +96,6 @@ public interface FormBuilderServiceLocal  {
     String deId,
     String newLongName,
     String username);
+    
+  public Map getValidValule(Collection vdIdSeqs);
 }

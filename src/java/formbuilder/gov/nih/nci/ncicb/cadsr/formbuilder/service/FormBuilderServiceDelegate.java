@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 
 import java.util.Collection;
+import java.util.Map;
 
 
 public interface FormBuilderServiceDelegate {
@@ -94,4 +95,6 @@ public interface FormBuilderServiceDelegate {
     String deId,
     String newLongName,
     String username) throws FormBuilderException;
+    
+  public Map getValidValule(Collection vdIdSeqs) throws FormBuilderException;
 }

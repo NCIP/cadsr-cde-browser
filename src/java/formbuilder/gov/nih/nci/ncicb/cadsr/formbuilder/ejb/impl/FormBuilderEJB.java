@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import java.util.Map;
 import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
@@ -331,5 +332,13 @@ public class FormBuilderEJB extends SessionBeanAdapter
         questionId, deId, newLongName, this.getUserName());
 
     return ret;
+  }
+  
+  public Map getValidValule(Collection vdIdSeqs)
+  {
+    ValueDomainDAO myDAO = daoFactory.getValueDomainDAO();
+    Map valueMap =
+      myDAO.getPermissibleValues(vdIdSeqs);
+    return valueMap;
   }
 }

@@ -4,10 +4,13 @@ import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
+import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.ListIterator;
 import java.util.Map;
 import javax.servlet.jsp.PageContext;
@@ -55,6 +58,21 @@ public class FormModuleEditAction extends FormEditAction {
     moduleEditForm.set(MODULE_INSTRUCTION_LONG_NAME,selectedModule.getLongName());
     moduleEditForm.set(MODULE_QUESTIONS,questionArr);
     setSessionObject(request, MODULE,selectedModule);
+    FormBuilderServiceDelegate service = getFormBuilderService();
+    Collection allVdIds = getAllVDsForQuestions(selectedModule.getQuestions());
+    Map validValueMap = null; 
+    try
+    {
+      validValueMap = service.getValidValule(allVdIds);
+    }
+    catch(FormBuilderException exp)
+    {
+       if (log.isDebugEnabled()) {
+        log.debug("Exp while getting validValue"+exp);
+      }
+    }
+    
+    setSessionObject(request, VALUE_DOMAIN_VALID_VALUES_MAP,validValueMap);
     
     return mapping.findForward(SUCCESS);
     
@@ -571,4 +589,23 @@ public class FormModuleEditAction extends FormEditAction {
       currQuestion.setLongName(questionStr);
     } 
   }  
+  private Collection getAllVDsForQuestions(List questions)
+  {
+    ListIterator iterate = questions.listIterator();
+    Collection vdIds = new ArrayList();
+    while (iterate.hasNext()) {
+      Question question = (Question) iterate.next();
+      DataElement de = question.getDataElement();
+      if(de!=null)
+      {
+        ValueDomain vd = de.getValueDomain();
+        if(vd!=null)
+        {
+          if(!vdIds.contains(vd.getVdIdseq()))
+            vdIds.add(vd.getVdIdseq());
+        }          
+      }
+    }
+    return vdIds;
+  }
 }

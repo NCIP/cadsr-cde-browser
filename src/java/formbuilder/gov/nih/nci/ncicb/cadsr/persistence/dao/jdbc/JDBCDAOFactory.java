@@ -14,6 +14,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.WorkFlowStatusDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.*;
@@ -179,6 +180,18 @@ public class JDBCDAOFactory extends AbstractDAOFactory
     if (myDAO == null) {
       myDAO = new JDBCCDECartDAO(serviceLocator);
       daoCache.put(JDBC_CDE_CART_DAO, myDAO);
+    }
+
+    return myDAO;
+  }
+  
+  public ValueDomainDAO getValueDomainDAO () {
+    ValueDomainDAO myDAO =
+      (JDBCValueDomainDAO) daoCache.get(JDBC_VALUE_DOMAIN_DAO);
+
+    if (myDAO == null) {
+      myDAO = new JDBCValueDomainDAO(serviceLocator);
+      daoCache.put(JDBC_VALUE_DOMAIN_DAO, myDAO);
     }
 
     return myDAO;
