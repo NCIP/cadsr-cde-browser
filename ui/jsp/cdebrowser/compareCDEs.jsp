@@ -239,7 +239,9 @@ function done() {
                 <tr class="OraTabledata">
                    <td class="OraTableColumnHeader" width="10%" nowrap >Used by Context</td>
                      <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                             <td class="OraFieldText" width='30%'  >Need to be Fixed</td>
+                             <td class="OraFieldText" width='30%'  >
+                              <bean:write name="currCDE" property="usingContexts"/> 
+                             </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">

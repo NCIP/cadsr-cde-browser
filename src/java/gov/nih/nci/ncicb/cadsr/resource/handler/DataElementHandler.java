@@ -31,4 +31,9 @@ public interface DataElementHandler extends HandlerDefinition {
     Object deIdseq,
     Object sessionId,
     PageIterator deIterator) throws Exception;
+
+  public List getAllFormUsages(
+    Object deIdseq,
+    Object sessionId
+    ) throws Exception;    
 }

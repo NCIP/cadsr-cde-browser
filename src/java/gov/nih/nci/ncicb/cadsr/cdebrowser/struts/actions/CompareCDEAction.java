@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.9 2005-01-21 20:46:15 jiangja Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.10 2005-02-14 21:22:32 kakkodis Exp $
  */
 
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
@@ -477,6 +477,7 @@ public class CompareCDEAction
   DataElementHandler dh = (DataElementHandler)HandlerFactory.getHandler(DataElement.class);
 
   de = (DataElement)dh.findObject(de.getDeIdseq(), sessionId);
+  
   ServiceLocator locator = ServiceLocatorFactory.getLocator(CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
   AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
   ConceptDAO conDAO = daoFactory.getConceptDAO();

@@ -252,6 +252,28 @@ public class DataElementHandlerImpl extends Handler
 
     return usages;
   }
+  public List getAllFormUsages(
+    Object deIdseq,
+    Object sessionId
+    ) throws Exception {
+    List usages = null;
+
+    try {
+      CDEBrowserBc4jModuleImpl am =
+        (CDEBrowserBc4jModuleImpl) getConnection(sessionId);
+      usages = am.getFormUsagesForADataElement(deIdseq);
+    }
+    catch (Exception ex) {
+      System.out.println("Exception caught in getAllFormUsages(...)");
+      ex.printStackTrace();
+      throw ex;
+    }
+    finally {
+      releaseConnection(sessionId);
+    }
+
+    return usages;
+  }  
 
   public static void main(String[] args) {
     Integer sessionId = new Integer(1);

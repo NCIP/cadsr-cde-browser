@@ -261,6 +261,22 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
 
     return results;
   }
+    public List getFormUsagesForADataElement(
+    Object aDeIdseq) throws Exception {
+    List results = new ArrayList(29);
+    Row[] queryResults;
+    FormUsagesForACdeViewRowImpl usageRow;
+
+    ViewObject view = this.getFormUsagesForACdeView();
+    view.setWhereClause("DE_IDSEQ = '" + aDeIdseq + "'");
+    view.executeQuery();
+
+    while (view.hasNext()) {
+        usageRow = (FormUsagesForACdeViewRowImpl) view.next();
+        results.add(new BC4JDataElementFormUsageTO(usageRow));
+      }
+    return results;
+  }
 
   public BC4JValueDomainTransferObject getValueDomains(Object key)
     throws Exception {
