@@ -29,5 +29,8 @@ public abstract class BaseDAO {
   public void setServiceLocator(ServiceLocator newServiceLocator) {
     serviceLocator = newServiceLocator;
   }
-  
+
+  public AbstractDAOFactory getDAOFactory() {
+    return AbstractDAOFactory.getDAOFactory(serviceLocator);
+  }
 }

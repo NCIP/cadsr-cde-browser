@@ -7,6 +7,7 @@ import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.DataElementTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
@@ -20,6 +21,9 @@ import java.sql.Types;
 import javax.sql.DataSource;
 
 import java.util.List;
+import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
@@ -29,11 +33,13 @@ import org.springframework.jdbc.object.SqlUpdate;
 public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
   private DataElementsInCartQuery deCartQuery;
   private FormsInCartQuery frmCartQuery;
+  private ValueDomainDAO vdDAO;
   
   public JDBCCDECartDAO(ServiceLocator locator) {
     super(locator);
     deCartQuery = new DataElementsInCartQuery(this.getDataSource());
     frmCartQuery = new FormsInCartQuery(this.getDataSource());
+    vdDAO = this.getDAOFactory().getValueDomainDAO();
   }
 
   public CDECart findCDECart(String username) throws DMLException  {
@@ -112,9 +118,18 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
       int rownum) throws SQLException {
       CDECartItem item = new CDECartItemTransferObject();
       DataElement de = new DataElementTransferObject();
-      /*Context conte = new ContextTransferObject();
+      //Getting Value Domain Information
       ValueDomain vd = new ValueDomainTransferObject();
-      DataElementConcept dec = new DataElementConceptTransferObject();*/
+      Collection vdColl = new ArrayList(1);
+      vdColl.add(rs.getString(13));
+      Map hm = vdDAO.getPermissibleValues(vdColl);
+      List values = (List)hm.get(rs.getString(13)) ;
+      vd.setValidValues(values);
+      vd.setVdIdseq(rs.getString(13));
+      vd.setPublicId(rs.getInt(14));
+      vd.setPreferredName(rs.getString(16));
+      vd.setLongName(rs.getString(17));
+      //Getting Data Element Information
       de.setDeIdseq((String)rs.getString(3));
       de.setPublicId(rs.getInt(4));
       de.setVersion(new Float(rs.getFloat(5)));
@@ -124,7 +139,7 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
       de.setLongName(rs.getString(10));
       de.setPreferredDefinition(rs.getString(11));
       de.setLongCDEName(rs.getString(12));
-      //de.setV
+      de.setValueDomain(vd);
       item.setPersistedInd(true);
       item.setDeletedInd(false);
       item.setItem(de);
