@@ -145,12 +145,7 @@
     <name>urlPrefix</name>
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
-    </attribute>   
-    <attribute>
-    <name>anchor</name>
-    <required>false</required>
-    <rtexprvalue>true</rtexprvalue>
-    </attribute>      
+    </attribute>         
   </tag>   
   
   <tag>
@@ -311,7 +306,7 @@
     <name>target</name>
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
-    </attribute>      
+    </attribute>       
   </tag>
   <tag>
     <name>enumeratedVDIcon</name>

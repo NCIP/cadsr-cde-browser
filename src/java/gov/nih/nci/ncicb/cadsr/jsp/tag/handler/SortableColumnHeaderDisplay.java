@@ -7,6 +7,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 import gov.nih.nci.ncicb.cadsr.util.SortableColumnHeader;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 /**
  * This Tag is used to display Columnn header which is displayed
@@ -41,7 +42,6 @@ public class SortableColumnHeaderDisplay extends TagSupport
   private String sortFieldId;
   private String sortFieldValue;
   private String target;
-
   public SortableColumnHeaderDisplay()
   {
   }
@@ -51,6 +51,8 @@ public class SortableColumnHeaderDisplay extends TagSupport
     HttpServletRequest req = ( HttpServletRequest )pageContext.getRequest();
     JspWriter out = pageContext.getOut();
     HttpSession session = req.getSession();
+   // if(anchor!=null)
+     //   session.setAttribute(CaDSRConstants.ANCHOR,anchor);    
     int newOrderValue=1;
     String imageUrl = "";
     SortableColumnHeader sortableTableHeader = (SortableColumnHeader)session.getAttribute(sortableColumnHeaderBeanId);
@@ -189,4 +191,5 @@ public class SortableColumnHeaderDisplay extends TagSupport
   {
     return target;
   }
+
 }

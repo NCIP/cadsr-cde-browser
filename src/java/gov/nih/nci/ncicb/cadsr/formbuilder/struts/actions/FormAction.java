@@ -125,8 +125,7 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     }
       
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);
-    request.setAttribute(CaDSRConstants.ANCHOR, "results");
-
+    setSessionObject(request, ANCHOR, "results",true);  
     return mapping.findForward(SUCCESS);
   }
 
@@ -190,7 +189,8 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
       pb.setListSize(forms.size());
     }
     Collections.sort(forms,comparator);
-    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);    
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);
+    setSessionObject(request, ANCHOR, "results",true);  
     return mapping.findForward(SUCCESS);
   }
   
@@ -425,10 +425,14 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     //Publish Change Order
     searchForm.set(this.CS_ID,nodeIdSeq);
     
+    setSessionObject(request, ANCHOR, "results",true);  
+    
     if ("CRF".equals(nodeType) || "TEMPLATE".equals(nodeType))
       return this.getFormDetails(mapping, form, request, response);
     else
       return this.getAllForms(mapping, form, request, response);
+      
+    
   }
   
   /**

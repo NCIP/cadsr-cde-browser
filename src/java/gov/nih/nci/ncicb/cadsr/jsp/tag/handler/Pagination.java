@@ -41,7 +41,6 @@ public class Pagination extends TagSupport implements CaDSRConstants,FormConstan
   private String nextOnImage;
   private String nextOffImage;
   private String urlPrefix="";
-  private String anchor ;
   
   public Pagination()
   {   
@@ -84,8 +83,6 @@ public class Pagination extends TagSupport implements CaDSRConstants,FormConstan
         {
           out.print("<img src=\""+urlPrefix+nextOffImage+"\" border=\"0\" alt=\"Next Page\">&nbsp;");
         }
-       if(anchor!=null)
-        req.setAttribute(ANCHOR,anchor);
         
        out.print(getTableFooter());
       } catch( IOException ioe ) {
@@ -301,13 +298,4 @@ public class Pagination extends TagSupport implements CaDSRConstants,FormConstan
     urlPrefix = newUrlPrefix;
   }
 
-  public String getAnchor()
-  {
-    return anchor;
-  }
-
-  public void setAnchor(String anchor)
-  {
-    this.anchor = anchor;
-  }
 }

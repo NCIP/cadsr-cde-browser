@@ -39,7 +39,6 @@ if(confirm(message)) location.href = url;
         	     nextOnImage="i/next_on.gif"
         	     nextOffImage="i/next_off.gif"
         	     urlPrefix="<%=urlPrefix%>"
-               anchor="results"
         	     /> 
                 
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -217,12 +216,11 @@ if(confirm(message)) location.href = url;
         	     nextOnImage="i/next_on.gif"
         	     nextOffImage="i/next_off.gif"
         	     urlPrefix="<%=urlPrefix%>"
-               anchor="results"
         	     /> 
        
         </logic:notEmpty>
         <logic:empty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
-	<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+	       <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   	      <tr class="OraTableColumnHeader">
           	<th class="OraTableColumnHeader" nowrap>Action</th>
           	<th class="OraTableColumnHeader" nowrap>Long Name</th>

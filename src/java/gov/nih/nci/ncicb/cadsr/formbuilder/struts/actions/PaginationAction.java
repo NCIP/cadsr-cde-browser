@@ -85,6 +85,7 @@ public class PaginationAction extends FormBuilderBaseDispatchAction
     PaginationBean pb = (PaginationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION);
     pb.next();
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);
+    setSessionObject(request, ANCHOR, "results",true);  
     return mapping.findForward(SUCCESS);
     }
     
@@ -107,6 +108,7 @@ public class PaginationAction extends FormBuilderBaseDispatchAction
     HttpServletResponse response) throws IOException, ServletException {
     PaginationBean pb = (PaginationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION);
     pb.previous();
+    setSessionObject(request, ANCHOR, "results",true);  
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);
     return mapping.findForward(SUCCESS);
     }    
@@ -137,6 +139,7 @@ public class PaginationAction extends FormBuilderBaseDispatchAction
     PaginationBean pb = (PaginationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION);
     pb.setPageIndex(pageIndex);
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);
+    setSessionObject(request, ANCHOR, "results",true);  
     return mapping.findForward(SUCCESS);
     }        
 }
