@@ -138,3 +138,4 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .OraFieldtitlebold {FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: right}
 .InputFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000;text-align: left}
 .Dropdown {font-family:Arial, Helvetica, Geneva, sans-serif; width:39mm ; font-size:10pt; color:#000000; text-align: center}
+.UnderlineOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; border-bottom:1px solid #999966;}

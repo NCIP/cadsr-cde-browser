@@ -114,6 +114,43 @@ public class FormAction extends FormBuilderBaseDispatchAction {
   }
 
   /**
+   * Returns Complete form given an Id for Edit.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward getFormToEdit(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    FormBuilderServiceDelegate service = getFormBuilderService();
+    DynaActionForm searchForm = (DynaActionForm) form;
+    
+    Form crf = (Form)getSessionObject(request, CRF);
+    if(crf==null)
+    {
+      String formIdSeq = (String) searchForm.get(FORM_ID_SEQ);
+      try {
+        crf = service.getFormDetails(formIdSeq);
+      }
+      catch (FormBuilderException ex) {
+        if (log.isDebugEnabled()) {
+          log.debug("Exception on getFormBy Id =  " + ex);
+        }
+      }      
+    }
+    setSessionObject(request, CRF, crf);
+    return mapping.findForward(SUCCESS);
+  }
+  /**
    * Returns all forms for the search criteria specified by clicking on a tree
    * node.
    *

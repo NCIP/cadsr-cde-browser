@@ -1,4 +1,4 @@
- 
+
    <logic:notEmpty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
         <bean:define id="pageBean" name="<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
         	type="gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean"/>
@@ -29,7 +29,11 @@
             <tr class="OraTabledata">
                    
                   <td align=center>
-                      	<a href='test'/><img src="<%=urlPrefix%>i/view.gif" border=0 alt='View'></a>
+ 			<html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+ 				paramName="form" paramProperty="formIdseq"
+ 				target="_parent">
+			   <html:img src='<%=urlPrefix+"i/view.gif"%>' border="0" alt="View"/>
+			</html:link>  			
                   </td>
 		  <td align=center>
 		       <cde:secureIcon  formId="form" activeImageSource="i/copy.gif" activeUrl="test" 
@@ -51,8 +55,8 @@
 		</td>                
           	<td class="OraFieldText">
  			<html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
- 				paramName="form" paramProperty="formIdseq">
- 				target="_parent"
+ 				paramName="form" paramProperty="formIdseq"
+ 				target="_parent" >
 			<bean:write name="form" property="longName"/>
 			</html:link>          		    
           	</td>

@@ -12,7 +12,10 @@ public interface NavigationConstants
   public static final String GET_ALL_FORMS_METHOD="getAllForms";
   public static final String SEND_HOME_METHOD="sendHome";
   public static final String DEFAULT_METHOD=SEND_HOME_METHOD;
-    public static final String GET_FORM_DETAILS="getFormDetails";
+  public static final String GET_FORM_DETAILS="getFormDetails";
+  public static final String GET_FORM_TO_EDIT="getFormToEdit";
+  public static final String DELETE_FORM="deleteForm";
+  public static final String GET_FORM_TO_COPY="getFormToCopy";
 
   public static final String GET_PROTOCOL_LOV_METHOD="getProtocolsLOV";
 
