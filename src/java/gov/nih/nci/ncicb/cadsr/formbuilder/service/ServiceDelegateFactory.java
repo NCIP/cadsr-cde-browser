@@ -1,22 +1,25 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.service;
 
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
-
-import gov.nih.nci.ncicb.cadsr.servicelocator.Locate;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+
+import java.util.*;
+
+import javax.servlet.ServletException;
+
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.PlugIn;
 import org.apache.struts.config.ModuleConfig;
 
-import java.util.*;
-import javax.servlet.ServletException;
-
-
 public class ServiceDelegateFactory implements PlugIn {
+  private static Log log = LogFactory.getLog(ServiceDelegateFactory.class.getName());
   private static final String SERVICE_LOCATOR_TYPE="gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator";
   private String serviceClassName =
     "gov.nih.nci.ncicb.cadsr.formbuilder.service.ejb.FormBuilderDynamicRemoteServiceDelegateImpl";
@@ -38,7 +41,7 @@ public class ServiceDelegateFactory implements PlugIn {
     String locatorClassName = servlet.getInitParameter(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
     
     locator = ServiceLocatorFactory.getLocator(locatorClassName);
-    System.out.println(locator);
+    log.info("Service Locator" + locator);
     servlet.getServletContext().setAttribute(
       FormBuilderConstants.SERVICE_DELEGATE_FACTORY_KEY, this);
   }
@@ -66,10 +69,10 @@ public class ServiceDelegateFactory implements PlugIn {
       Class[] serviceInterface =  new Class[]{FormBuilderServiceDelegate.class};
       proxy = (FormBuilderServiceDelegate)Proxy.newProxyInstance(
       	Thread.currentThread().getContextClassLoader(),serviceInterface,(InvocationHandler)serviceInstance);
-      System.out.println("proxycreate done");
+      log.trace("proxycreate done");
     }
     catch (Exception ex) {
-      ex.printStackTrace();
+      log.error("Unable to create new service", ex);
       throw new ServiceStartupException("Unable to create new service", ex);
     }
 
