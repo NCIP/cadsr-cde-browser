@@ -23,7 +23,11 @@ public class JDBCFormTransferObject extends FormTransferObject
     contextTransferObject.setName(rs.getString(12));  // CONTEXT_NAME
     setContext(contextTransferObject);
     
-    setProtocol(new ProtocolTransferObject(rs.getString(11))); //PROTOCOL_LONG_NAME
+    ProtocolTransferObject protocolTransferObject = 
+      new ProtocolTransferObject(rs.getString(11)); //PROTOCOL_LONG_NAME
+    protocolTransferObject.setProtoIdseq(rs.getString(10));  // PROTO_IDSEQ
+    setProtocol(protocolTransferObject);
+    
     setFormType(rs.getString(3)); // TYPE
     setAslName(rs.getString(6)); // WORKFLOW
     setVersion(new Float(rs.getString(2))); // VERSION

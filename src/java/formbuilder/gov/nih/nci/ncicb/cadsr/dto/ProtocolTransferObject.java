@@ -84,6 +84,7 @@ public class ProtocolTransferObject extends AdminComponentTransferObject impleme
     sb.append(OBJ_SEPARATOR_START);
     sb.append(super.toString());
     sb.append(ATTR_SEPARATOR+"longName="+getLongName());  
+    sb.append(ATTR_SEPARATOR+"protocolIdseq="+getProtoIdseq());
     sb.append(OBJ_SEPARATOR_END);  
     return sb.toString();
   }

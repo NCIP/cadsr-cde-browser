@@ -184,9 +184,10 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
 
-    String formId1 = "9E343E83-5FEB-119F-E034-080020C9C0E0";
+    //String formId1 = "9E343E83-5FEB-119F-E034-080020C9C0E0";  //CRF
+    String formId1 = "99CD59C5-A98A-3FA4-E034-080020C9C0E0";  // TEMPLATE
     try {
-      System.out.println(formTest.findFormByPrimaryKey(formId1).getVersion().toString());
+      System.out.println(formTest.findFormByPrimaryKey(formId1));
     }
     catch (DMLException e) {
       System.out.println("Failed to get a form for " + formId1);
@@ -211,6 +212,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       System.out.println("Failed to get a form for " + formId);
     }
     */
+    /*
     // test createFormComponent method.
     // for each test, change long name(preferred name generated from long name)
     try {
@@ -235,6 +237,8 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       de.printStackTrace();
       System.out.println("******Finishing printing DMLException*******");
     }
+    */
+    
     /*
     try {
       int res = formTest.deleteForm("D4700045-2FD0-0DAA-E034-0003BA0B1A09");
