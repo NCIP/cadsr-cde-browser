@@ -138,121 +138,45 @@ function details(linkParms ){
     <td class="OraFieldText" width='<%=colWidth%>'></td>
     <% } %>
  </tr>
-</table>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Reference Documents:</td>
+    <% for (int i=0; i< numberCompared; i++) { %>
+    <td class="OraFieldText" width='<%=colWidth%>'>LONG_NAME_522<%=i+1%></td>
+    <% } %>
+ </tr>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Designations:</td>
+    <% for (int i=0; i< numberCompared; i++) { %>
+    <td class="OraFieldText" width='<%=colWidth%>'></td>
+    <% } %>
+ </tr>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Data Element Concept:</td>
+    <% for (int i=0; i< numberCompared; i++) { %>
+    <td class="OraFieldText" width='<%=colWidth%>'>ADVERSE_EVENT/PATIENT_OUTCOME</td>
+    <% } %>
+ </tr>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Value Domain:</td>
+    <% for (int i=0; i< numberCompared; i++) { %>
+    <td class="OraFieldText" width='<%=colWidth%>'>ADVERSE_EVENT/PATIENT_OUTCO_VD</td>
+    <% } %>
+ </tr>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Permissible Values:</td>
+    <% for (int i=0; i< numberCompared; i++) { %>
+    <td class="OraFieldText" width='<%=colWidth%>'>Alive, Recovered /Alive, Sequela /Alive, Under Treatment /Dead </td>
+    <% } %>
+ </tr>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Classifications:</td>
+    <% for (int i=0; i< numberCompared; i++) { %>
+    <td class="OraFieldText" width='<%=colWidth%>'>USAGE-CLINICAL TRIALS /CRF_DISEASE-Lung /CRF_TTU-NSCLC-Advanced /CRF_TTU-Advanced/CRF_TTU-Unresect Pancreatic  </td>
+    <% } %>
+ </tr> </table>
  <br>
 
 
-<table cellpadding="0" cellspacing="0" width="80%" align="center" >
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
-  </tr>
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
-  </tr>
-</table>
-<table width="80%" align="center" cellpadding="2" cellspacing="5" border="0" >
-<tr>
-<td valign="top">
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Document Name</th>
-    <th class="OraTableColumnHeader">Document Type</th>
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">ADDRESS </td>
-        <td class="OraFieldText">LONG_NAME </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CTEP_SHORT_NAME3169 </td>
-        <td class="OraFieldText">HISTORIC SHORT CDE NAME </td>
-      </tr>
-
-</table>
-</td>
-<td valign="top">
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Document Name</th>
-    <th class="OraTableColumnHeader">Document Type</th>
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CRF Text </td>
-        <td class="OraFieldText">HISTORIC SHORT CDE NAME </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CRF Text </td>
-        <td class="OraFieldText">LONG_NAME </td>
-      </tr>
-      <tr class="OraTabledata">
-        <td class="OraFieldText">ADDRESS </td>
-        <td class="OraFieldText">LONG_NAME </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CTEP_SHORT_NAME3169 </td>
-        <td class="OraFieldText">HISTORIC SHORT CDE NAME </td>
-      </tr>
-
-</table>
-</td>
-</tr>
-</table>
-
-<br>
-<table cellpadding="0" cellspacing="0" width="80%" align="center" >
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Designations</td>
-  </tr>
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
-  </tr>
-</table>
-<table width="80%" align="center" cellpadding="2" cellspacing="0" border="0" >
-<tr>
-<td valign="top">
-<table width="40%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Name</th>
-    <th class="OraTableColumnHeader">Type</th>
-    <th class="OraTableColumnHeader">Context</th>
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">ENGLISH </td>
-        <td class="OraFieldText">CONTEXT NAME</td>
-        <td class="OraFieldText">CTEP</td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">ADDITIONAL_DIAGNOSES_SPECIFY</td>
-        <td class="OraFieldText">USED_BY</td>
-        <td class="OraFieldText">TEST</td>
-      </tr>
-
-</table>
-</td>
-<td valign="top">
-<table width="40%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Name</th>
-    <th class="OraTableColumnHeader">Type</th>
-    <th class="OraTableColumnHeader">Context</th>
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">ADDITIONAL_DIAGNOSES_SPECIFY</td>
-        <td class="OraFieldText">USED_BY</td>
-        <td class="OraFieldText">TEST</td>
-      </tr>
-
-</table>
-</td>
-</tr>
-</table>
 
 <%@ include file="../common/common_bottom_border.jsp"%>
 </body>
