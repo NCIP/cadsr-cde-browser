@@ -15,6 +15,33 @@
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
 <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
 <SCRIPT LANGUAGE="JavaScript">
+  function validate(fo) {
+	var len = fo.elements.length;
+        var oneChecked = false;
+	for (var i = 0; i < len; i++) {
+	    var e = fo.elements[i];
+            if (e.name == "selectedText") {
+              if(e.checked == true) {
+                 oneChecked=true;
+                 i = len;
+              }
+            }            
+        }    
+        if(oneChecked == true) {
+          return true;
+        } else {
+          alert("Please Select a Data Element");
+          return false;
+        }
+  }
+
+  function submitForm() {
+     var f = document.forms[0];
+     if(validate(f) == true)
+       f.submit();
+  }
+  
+
 </SCRIPT>
 </HEAD>
 <BODY topmargin=0 bgcolor="#ffffff" topmargin="0">
@@ -95,7 +122,7 @@
     </logic:iterate>
       <tr>
         <td colspan="8">
-          <html:radio property="selectedText" value=""/><bean:message key="cadsr.formbuilder.question.noAssociation"/>
+          <html:radio property="selectedText" value="false"/><bean:message key="cadsr.formbuilder.question.noAssociation"/>
         </td>
       </tr>
     </table>
