@@ -16,7 +16,10 @@
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
     <SCRIPT LANGUAGE="JavaScript">
-      
+      function submitForm() {
+        if(validateCreateModuleForm(createModuleForm))
+          document.forms[0].submit();
+      }
     </SCRIPT>
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff">
@@ -34,8 +37,7 @@
 
     <logic:present name="<%=FormConstants.CRF%>">
       <html:form action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_MODULE%>'
-        onsubmit="validateCreateModuleForm(this)">
-
+        >
       <%@ include file="/formbuilder/createModule_inc.jsp"%>    
       <%@ include file="showMessages.jsp" %>
       <html:hidden property="<%= FormConstants.DISPLAY_ORDER %>"/>

@@ -1,7 +1,7 @@
       <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
         <tr >
           <td >
-            <html:image src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Save"/>
+            <a href="javascript:submitForm()"><html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Save"/></a>
           </td>           
           <td >
             <html:link action='<%= "/cancelAction?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_FORM_TO_EDIT %>'>
