@@ -141,6 +141,8 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
 	if (log.isDebugEnabled()) {
 	  log.debug("Exception on copyForm =  " + exp);
 	}
+	saveError(exp.getErrorCode(), request);
+	return mapping.findForward("failure");
       }
 
     setSessionObject(request, CRF, newForm);

@@ -150,6 +150,9 @@ public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
           log.debug("Exception on creating Form and its header and footer " +
             "instructions =  " + exp);
         }
+	saveError(exp.getErrorCode(), request);
+	mapping.findForward("failure");
+	  
     }
 
     setSessionObject(request, CRF, createdForm);
