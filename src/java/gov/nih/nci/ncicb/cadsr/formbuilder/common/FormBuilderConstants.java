@@ -31,6 +31,9 @@ public interface FormBuilderConstants {
   public static final String ERROR_FORM_PUBLISH="FB0012";
   public static final String ERROR_FORM_UNPUBLISH="FB0013";  
   public static final String ERROR_FATAL="FB911";
-  
+  // Reference Documents
+  public static final String ERROR_REFERENCE_DOC_SAVE_FAILED="FB0014"; 
+  public static final String ERROR_DUP_ATTACHMENT="FB0015"; 
+
 
 }
