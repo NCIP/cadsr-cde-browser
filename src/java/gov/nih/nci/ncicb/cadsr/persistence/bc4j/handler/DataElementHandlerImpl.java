@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.DataElementConceptTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModuleImpl;
+import gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsViewRowImpl;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.resource.DataElementConcept;
@@ -27,6 +28,7 @@ import oracle.jbo.domain.Number;
 
 import java.util.ArrayList;
 import java.util.List;
+import oracle.jbo.server.ViewRowImpl;
 
 
 public class DataElementHandlerImpl extends Handler
@@ -178,6 +180,45 @@ public class DataElementHandlerImpl extends Handler
         de.setUsingContexts(checkForNull((String) deRows[i].getAttribute(7)));*/
 
         deList.add(de);
+      }
+    }
+    catch (Exception ex) {
+      System.out.println(
+        "Exception caught in " +
+        "DataElementHandlerImpl.findDataElementsBasedOnQuery(String , String) " +
+        ex.getMessage());
+      ex.printStackTrace();
+      throw ex;
+    }
+    finally {
+      if (runtimeVO != null) {
+        runtimeVO.clearCache();
+      }
+
+      releaseConnection(sessionId);
+    }
+
+    return deList;
+  }
+
+  public List findDataElementIdsFromQueryClause(
+    String sqlQuery,
+    String orderByClause,
+    Object sessionId) throws Exception {
+    List deList = new ArrayList(1);
+    ViewObject runtimeVO = null;
+
+    try {
+      CDEBrowserBc4jModuleImpl am =
+        (CDEBrowserBc4jModuleImpl) getConnection(sessionId);
+      runtimeVO = am.createViewObjectFromQueryStmt(null, sqlQuery);
+      runtimeVO.setOrderByClause(orderByClause);
+      runtimeVO.executeQuery();
+
+      while (runtimeVO!=null&&runtimeVO.hasNext()) {
+        ViewRowImpl vvImpl =  (ViewRowImpl)runtimeVO.next();
+        String deId = (String)vvImpl.getAttribute(0);
+        deList.add(deId);
       }
     }
     catch (Exception ex) {

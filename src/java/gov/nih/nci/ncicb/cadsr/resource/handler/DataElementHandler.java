@@ -22,6 +22,11 @@ public interface DataElementHandler extends HandlerDefinition {
     Object sessionId,
     PageIterator deIterator) throws Exception;
 
+  public List findDataElementIdsFromQueryClause(
+    String sqlQuery,
+    String orderByClause,
+    Object sessionId) throws Exception;
+    
   public DataElement findDataElementsByPublicId(
     int cdeId,
     float version,

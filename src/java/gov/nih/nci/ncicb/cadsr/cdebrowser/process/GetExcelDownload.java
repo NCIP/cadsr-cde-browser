@@ -7,6 +7,8 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.util.ApplicationParameters;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 
@@ -23,11 +25,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import oracle.cle.persistence.HandlerFactory;
 import oracle.cle.process.ProcessInfoException;
 import oracle.cle.process.Service;
 import oracle.cle.util.statemachine.TransitionCondition;
@@ -48,7 +52,7 @@ import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 /**
  *
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.5 2005-02-17 19:42:19 jiangja Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.6 2005-03-07 18:34:49 kakkodis Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess{
    private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -220,10 +224,30 @@ public class GetExcelDownload extends BasePersistingProcess{
       cn = DBUtil.createOracleConnection(ap.getDBUrl(),ap.getUser(),ap.getPassword());
       st = cn.createStatement();
       if ("deSearch".equals(source)) {
+        
         desb = (DataElementSearchBean)getInfoObject("desb");
         deSearch = (DESearchQueryBuilder)getInfoObject(
                                 ProcessConstants.DE_SEARCH_QUERY_BUILDER);
-        where = deSearch.getXMLQueryStmt();
+        String searchQuery = deSearch.getSQLWithoutOrderBy();
+        String orderBy = deSearch.getOrderBy();
+        DataElementHandler dh = (DataElementHandler) HandlerFactory.getHandler(DataElement.class);
+        List deList = (List)dh.findDataElementIdsFromQueryClause(searchQuery,orderBy,getSessionId());
+    
+        String id = null;
+        boolean firstOne = true;
+        StringBuffer whereBuffer = new StringBuffer("");        
+        ListIterator deIt = deList.listIterator();
+        while (deIt.hasNext()) {
+           id = (String)deIt.next();
+          if (firstOne) {
+            whereBuffer.append("'" +id+"'");
+            firstOne = false;
+          }
+          else
+            whereBuffer.append(",'" +id+"'");
+        }
+        where = whereBuffer.toString();        
+        //where = deSearch.getXMLQueryStmt();
       }
       else if ("cdeCart".equals(source)) {
         HttpServletRequest myRequest =
