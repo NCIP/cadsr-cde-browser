@@ -113,7 +113,7 @@ function done() {
       
       <jsp:include page="../common/tab_variable_length_inc.jsp" flush="true">
         <jsp:param name="label" value="Compare&nbsp;CDEs"/>
-        <jsp:param name="width" value="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" />
+        <jsp:param name="width" value="100" />
       </jsp:include>
      
       <%@ include file="compareCDEs_inc.jsp"%>
@@ -140,8 +140,7 @@ function done() {
 
       <A NAME="dataElement"></A> 
             
-
-      <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center" border=0>
+      <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center">
         <tr>
           <td class="OraHeaderSubSub" width="100%">Data Element</td>
         </tr>
@@ -151,24 +150,24 @@ function done() {
       </table>   
 
 
-     <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center" valign="top" border="0">
+     <table cellpadding="0" cellspacing="0" align="center" valign="top" border="0">
         <tr>
-          <td class="OraHeaderSubSub" width="10%">&nbsp;
-            <table cellpadding="0" cellspacing="0" align="center" valign="top" width="100%"  border="0">
+          <td class="OraHeaderSubSub" width="<%=CDECompareJspUtils.getHeaderSize()%>">&nbsp;
+            <table cellpadding="0" cellspacing="0" align="center" valign="top" border="0">
              <tr>
-               <td width="8%" ><a href="javascript:CheckAll()">Check All</a></td>
-               <td width="8%" ><a href="javascript:ClearAll()">Clear All</a></td>
+               <td width="75" ><a href="javascript:CheckAll()">Check All</a></td>
+               <td width="75" ><a href="javascript:ClearAll()">Clear All</a></td>
              </tr>
            </table>    
           </td> 
           <!-- For each CDE display the Checkbox and the Display order drop down -->
           <logic:notEmpty name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" property = "cdeList">
            <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-              <td width="30%">
-                <table cellpadding="0" cellspacing="0" align="left" valign="top" width="10%"  border="0">
+              <td>
+                <table cellpadding="0" cellspacing="0" align="left" valign="top" border="0" width="<%=CDECompareJspUtils.getColumnSize()%>">
                  <tr>
-                   <td width="8%" ><input type="checkbox"  value="<%=cdeIndex%>" name="<%=BrowserFormConstants.CDE_TO_REMOVE%>"  /></td>
-                   <td width="8%" >
+                   <td><input type="checkbox"  value="<%=cdeIndex%>" name="<%=BrowserFormConstants.CDE_TO_REMOVE%>"  /></td>
+                   <td>
                    <cde:displayOrderSelection
                           collectionSize="<%=listSize.toString()%>" 
                           currentIndex="<%=cdeIndex.toString()%>" 
@@ -180,12 +179,13 @@ function done() {
                 </table>     
               </td>
              </logic:iterate>
+             </tr>
             <!--DataElement details Start-->
-           <table width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
-             <tr class="OraTabledata">
-                <td class="OraTableColumnHeader" width="10%" nowrap >Public ID</td>
+           <table width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
+               <tr class="OraTabledata">
+                <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Public ID</td>
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                         <td class="OraFieldText" width='30%' >
+                         <td class="OraFieldText" width="<%=CDECompareJspUtils.getColumnSize()%>" >
                               <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
                                                 paramId = "p_de_idseq"
                                                 paramName="currCDE"
@@ -197,81 +197,81 @@ function done() {
                    </logic:iterate>             
              </tr> 
               <tr class="OraTabledata">
-                <td class="OraTableColumnHeader" width="10%" nowrap >Long Name</td>
+                <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Long Name</td>
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                         <td class="OraFieldText" width='30%' >
+                         <td class="OraFieldText" width="<%=CDECompareJspUtils.getColumnSize()%>">
                            <bean:write name="currCDE" property="longName"/>
                          </td>
                    </logic:iterate>    
               </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Preferred Name</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Preferred Name</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%' >
+                            <td class="OraFieldText" width="<%=CDECompareJspUtils.getColumnSize()%>" >
                              <bean:write name="currCDE" property="preferredName"/>
                             </td>
                     </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Document Text</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Document Text</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                           <td class="OraFieldText" width='30%'  >
+                           <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                              <bean:write name="currCDE" property="longCDEName"/>
                            </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Definition</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Definition</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                          <td class="OraFieldText" width='30%'  >
+                          <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                            <bean:write name="currCDE" property="preferredDefinition"/>               
                           </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Owned by Context</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Owned by Context</td>
                      <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                             <td class="OraFieldText" width='30%'  >
+                             <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                               <bean:write name="currCDE" property="contextName"/> 
                              </td>
                      </logic:iterate> 
                </tr> 
                 <tr class="OraTabledata">
-                   <td class="OraTableColumnHeader" width="10%" nowrap >Used by Context</td>
+                   <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Used by Context</td>
                      <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                             <td class="OraFieldText" width='30%'  >
+                             <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                               <bean:write name="currCDE" property="usingContexts"/> 
                              </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Origin</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Origin</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'  >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                              <bean:write name="currCDE" property="origin"/>                           
                             </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">Workflow Status</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">Workflow Status</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                               <bean:write name="currCDE" property="aslName"/> 
                             </td>
                      </logic:iterate> 
                </tr> 
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap>Registration Status</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap>Registration Status</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                           <td class="OraFieldText" width='30%'  >
+                           <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                             <bean:write name="currCDE" property="registrationStatus"/> 
                            </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Version</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Version</td>
                      <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                              <td class="OraFieldText" width='30%'  >
+                              <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                               <bean:write name="currCDE" property="version"/>
                               </td>
                       </logic:iterate> 
@@ -282,7 +282,7 @@ function done() {
              <br>
             <A NAME="dataElementConcept"></A>
             
-            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center">
               <tr>
                 <td class="OraHeaderSubSub" width="100%">Data Element Concept</td>
               </tr>
@@ -291,87 +291,87 @@ function done() {
               </tr>  
             </table> 
             
-           <table width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
+           <table width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
              <tr class="OraTabledata">
-                <td class="OraTableColumnHeader" width="10%" nowrap >Public ID</td>
+                <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Public ID</td>
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                         <td class="OraFieldText" width='30%' >
+                         <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>' >
                                 <bean:write name="currCDE" property="dataElementConcept.publicId"/>
                           </td>
                    </logic:iterate>             
              </tr> 
               <tr class="OraTabledata">
-                <td class="OraTableColumnHeader" width="10%" nowrap >Long Name</td>
+                <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Long Name</td>
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                         <td class="OraFieldText" width='30%' >
+                         <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>' >
                            <bean:write name="currCDE" property="dataElementConcept.longName"/>
                          </td>
                    </logic:iterate>    
               </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Preferred Name</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Preferred Name</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%' >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>' >
                              <bean:write name="currCDE" property="dataElementConcept.preferredName"/>
                             </td>
                     </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Definition</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Definition</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                          <td class="OraFieldText" width='30%'  >
+                          <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                            <bean:write name="currCDE" property="dataElementConcept.preferredDefinition"/>               
                           </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Context</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Context</td>
                      <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                             <td class="OraFieldText" width='30%'  >
+                             <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                               <bean:write name="currCDE" property="dataElementConcept.contextName"/> 
                              </td>
                      </logic:iterate> 
                </tr> 
                 <tr class="OraTabledata">
-                   <td class="OraTableColumnHeader" width="10%" >Conceptual Domain Preferred Name</td>
+                   <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" >Conceptual Domain Preferred Name</td>
                      <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                             <td class="OraFieldText" width='30%'  >
+                             <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                               <bean:write name="currCDE" property="dataElementConcept.CDPrefName"/> 
                              </td>                            
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%"  >Object Class Preferred Name</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>"  >Object Class Preferred Name</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                           <logic:present name="currCDE" property = "dataElementConcept.objectClass">                             
-                            <td class="OraFieldText" width='30%'  >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                              <bean:write name="currCDE" property="dataElementConcept.objectClass.preferredName"/>                           
                             </td>
                           </logic:present>
                           <logic:notPresent name="currCDE" property = "dataElementConcept.objectClass"> 
-                            <td class="OraFieldText" width='30%'  >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                              &nbsp;              
                             </td>                            
                           </logic:notPresent>
                      </logic:iterate> 
                </tr>             
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%"  >Object Class Concept Codes</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>"  >Object Class Concept Codes</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                           <logic:present name="currCDE" property = "dataElementConcept.objectClass">                         
                               <logic:present name="currCDE" property = "dataElementConcept.objectClass.conceptDerivationRule">                             
-                                <td class="OraFieldText" width='30%'  >                                                          
+                                <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >                                                          
                                     <%=CDEDetailsUtils.getConceptCodesUrl(currCDE.getDataElementConcept().getObjectClass().getConceptDerivationRule(),params,"link",",")%>
                                 </td>
                               </logic:present>
                               <logic:notPresent name="currCDE" property = "dataElementConcept.objectClass.conceptDerivationRule"> 
-                                <td class="OraFieldText" width='30%'  >
+                                <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                                  &nbsp;                   
                                 </td>                            
                               </logic:notPresent>
                           </logic:present>
                           <logic:notPresent name="currCDE" property = "dataElementConcept.objectClass"> 
-                            <td class="OraFieldText" width='30%'  >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                              &nbsp;                   
                             </td>                            
                           </logic:notPresent>
@@ -379,15 +379,15 @@ function done() {
                </tr>    
                
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">Property Preferred Name</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">Property Preferred Name</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                           <logic:present name="currCDE" property = "dataElementConcept.property"> 
-                            <td class="OraFieldText" width='30%'  >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                              <bean:write name="currCDE" property="dataElementConcept.property.preferredName"/>                           
                             </td>
                           </logic:present>
                           <logic:notPresent name="currCDE" property = "dataElementConcept.property"> 
-                            <td class="OraFieldText" width='30%'  >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                              &nbsp;                   
                             </td>  
                           </logic:notPresent>
@@ -395,22 +395,22 @@ function done() {
                </tr>       
                
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%"  >Property Concept Codes</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>"  >Property Concept Codes</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                           <logic:present name="currCDE" property = "dataElementConcept.property">                         
                               <logic:present name="currCDE" property = "dataElementConcept.property.conceptDerivationRule">                             
-                                <td class="OraFieldText" width='30%'  >                                                                                
+                                <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >                                                                                
                                     <%=CDEDetailsUtils.getConceptCodesUrl(currCDE.getDataElementConcept().getProperty().getConceptDerivationRule(),params,"link",",")%>
                                 </td>
                               </logic:present>
                               <logic:notPresent name="currCDE" property = "dataElementConcept.property.conceptDerivationRule"> 
-                                <td class="OraFieldText" width='30%'  >
+                                <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                                  &nbsp;                   
                                 </td>                            
                               </logic:notPresent>
                           </logic:present>
                           <logic:notPresent name="currCDE" property = "dataElementConcept.property"> 
-                            <td class="OraFieldText" width='30%'  >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                              &nbsp;                   
                             </td>                            
                           </logic:notPresent>
@@ -418,17 +418,17 @@ function done() {
                </tr>    
     
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" >Origin</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" >Origin</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                           <td class="OraFieldText" width='30%'  >
+                           <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                             <bean:write name="currCDE" property="dataElementConcept.origin"/> 
                            </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%"  >Workflow Status</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>"  >Workflow Status</td>
                      <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                              <td class="OraFieldText" width='30%'  >
+                              <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                               <bean:write name="currCDE" property="dataElementConcept.aslName"/>
                               </td>
                       </logic:iterate> 
@@ -441,7 +441,7 @@ function done() {
             <br>
             <A NAME="valueDomain"></A>
             
-            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center">
               <tr>
                 <td class="OraHeaderSubSub" width="100%">Value Domain</td>
               </tr>
@@ -449,176 +449,176 @@ function done() {
                 <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
               </tr>  
             </table>
-           <table width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
+           <table width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
              <tr class="OraTabledata">
-                <td class="OraTableColumnHeader" width="10%" nowrap >Public ID</td>
+                <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Public ID</td>
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                         <td class="OraFieldText" width='30%' >
+                         <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>' >
                                 <bean:write name="currCDE" property="valueDomain.publicId"/>
                           </td>
                    </logic:iterate>             
              </tr> 
               <tr class="OraTabledata">
-                <td class="OraTableColumnHeader" width="10%" nowrap >Long Name</td>
+                <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Long Name</td>
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                         <td class="OraFieldText" width='30%' >
+                         <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>' >
                            <bean:write name="currCDE" property="valueDomain.longName"/>
                          </td>
                    </logic:iterate>    
               </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Preferred Name</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Preferred Name</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%' >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>' >
                              <bean:write name="currCDE" property="valueDomain.preferredName"/>
                             </td>
                     </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Definition</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Definition</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                          <td class="OraFieldText" width='30%'  >
+                          <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                            <bean:write name="currCDE" property="valueDomain.preferredDefinition"/>               
                           </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" nowrap >Data Type</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Data Type</td>
                      <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                             <td class="OraFieldText" width='30%'  >
+                             <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                               <bean:write name="currCDE" property="valueDomain.datatype"/> 
                              </td>
                      </logic:iterate> 
                </tr> 
                 <tr class="OraTabledata">
-                   <td class="OraTableColumnHeader" width="10%" >Unit of Measure</td>
+                   <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" >Unit of Measure</td>
                      <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                             <td class="OraFieldText" width='30%'  >
+                             <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                               <bean:write name="currCDE" property="valueDomain.unitOfMeasure"/> 
                              </td>                            
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%"  >Display Format</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>"  >Display Format</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'  >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                              <bean:write name="currCDE" property="valueDomain.displayFormat"/>                           
                             </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">Maximum Length</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">Maximum Length</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                               <bean:write name="currCDE" property="valueDomain.maxLength"/> 
                             </td>
                      </logic:iterate> 
                </tr> 
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">Minimum Length</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">Minimum Length</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                               <bean:write name="currCDE" property="valueDomain.minLength"/> 
                             </td>
                      </logic:iterate> 
                </tr> 
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">Decimal Place</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">Decimal Place</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                               <bean:write name="currCDE" property="valueDomain.decimalPlace"/> 
                             </td>
                      </logic:iterate> 
                </tr> 
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">High Value</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">High Value</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                               <bean:write name="currCDE" property="valueDomain.highValue"/> 
                             </td>
                      </logic:iterate> 
                </tr> 
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">Low Value</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">Low Value</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                               <bean:write name="currCDE" property="valueDomain.lowValue"/> 
                             </td>
                      </logic:iterate> 
                </tr> 
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">Value Domain Type</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">Value Domain Type</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                               <bean:write name="currCDE" property="valueDomain.VDType"/> 
                             </td>
                      </logic:iterate> 
                </tr> 
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">Conceptual Domain Preferred Name</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">Conceptual Domain Preferred Name</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                               <bean:write name="currCDE" property="valueDomain.CDPrefName"/> 
                             </td>
                      </logic:iterate> 
                </tr> 
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">Representation</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">Representation</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                       <logic:present name="currCDE" property="valueDomain.representation">
-                        <td class="OraFieldText" width='30%'>
+                        <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                           <bean:write name="currCDE" property="valueDomain.representation.longName"/>
                         </TD>
                       </logic:present>    
                       <logic:notPresent name="currCDE" property="valueDomain.representation">
-                        <td class="OraFieldText" width='30%'>
+                        <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                           &nbsp;
                         </TD>
                       </logic:notPresent>                         
                      </logic:iterate> 
                </tr>    
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%"  >Concept Codes</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>"  >Concept Codes</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                           <logic:present name="currCDE" property = "valueDomain">                         
                               <logic:present name="currCDE" property = "valueDomain.conceptDerivationRule">                             
-                                <td class="OraFieldText" width='30%'>                                                          
+                                <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>                                                          
                                     <%=CDEDetailsUtils.getConceptCodesUrl(currCDE.getValueDomain().getConceptDerivationRule(),params,"link",",")%>
                                 </td>
                               </logic:present>
                               <logic:notPresent name="currCDE" property = "valueDomain.conceptDerivationRule"> 
-                                <td class="OraFieldText" width='30%'  >
+                                <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                                  &nbsp;                   
                                 </td>                            
                               </logic:notPresent>
                           </logic:present>
                           <logic:notPresent name="currCDE" property = "valueDomain"> 
-                            <td class="OraFieldText" width='30%'  >
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                              &nbsp;                   
                             </td>                            
                           </logic:notPresent>
                      </logic:iterate> 
                </tr>                   
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%" >Origin</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" >Origin</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                           <td class="OraFieldText" width='30%'  >
+                           <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                             <bean:write name="currCDE" property="valueDomain.origin"/> 
                            </td>
                      </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%"  >Workflow Status</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>"  >Workflow Status</td>
                      <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                              <td class="OraFieldText" width='30%'  >
+                              <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'  >
                               <bean:write name="currCDE" property="valueDomain.aslName"/>
                               </td>
                       </logic:iterate> 
                </tr>
                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="10%">Version</td>
+                  <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>">Version</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
+                            <td class="OraFieldText" width='<%=CDECompareJspUtils.getColumnSize()%>'>
                               <bean:write name="currCDE" property="valueDomain.version"/> 
                             </td>
                      </logic:iterate> 
@@ -629,7 +629,7 @@ function done() {
             <br>
             <A NAME="permissibleValues"></A>
             
-            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center">
               <tr>
                 <td class="OraHeaderSubSub" width="100%">Permissible Values</td>
               </tr>
@@ -638,28 +638,28 @@ function done() {
               </tr>  
             </table>
 
-            <table cellSpacing=0 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+            <table cellSpacing=0 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align=center border=0>
                <tr >
-                          <td width="10%" class="PrinterOraFieldText" >&nbsp;</td>
+                          <td width="<%=CDECompareJspUtils.getHeaderSize()%>" >&nbsp;</td>
                           <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                           <logic:empty name="currCDE" property="valueDomain.validValues">
-                            <td width="30%" class="PrinterOraFieldText" >&nbsp;</td>
+                            <td width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" >&nbsp;</td>
                           </logic:empty>
                           <logic:notEmpty name="currCDE" property="valueDomain.validValues">
                             <bean:size id="vvSize" name="currCDE" property="valueDomain.validValues"/> 
-                            <td width="30%" class="PrinterOraFieldText" ><%=vvSize%> Permissible values</td>
+                            <td width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" ><%=vvSize%> Permissible values</td>
                           </logic:notEmpty> 
                           </logic:iterate>
                 </tr>
             </table>
-            <table vAlign=top cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+            <table vAlign=top cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align=center border=0>
              	<tr>
-                   <TD vAlign=top width=10%>
+                   <TD vAlign=top width="<%=CDECompareJspUtils.getHeaderSize()%>">
                        &nbsp;
                     </TD>             	
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                    <logic:empty name="currCDE" property="valueDomain.validValues">
-                       <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                       <td vAlign=top width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" >
                           <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                             <TR class=OraTableColumnHeader>
                               <TH class=OraTableColumnHeader>Value</TH>
@@ -675,7 +675,7 @@ function done() {
                        </td>
                    </logic:empty>
                    <logic:notEmpty name="currCDE" property="valueDomain.validValues">
-                       <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                       <td vAlign=top width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" >
                           <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                             <TR class=OraTableColumnHeader>
                               <TH class=OraTableColumnHeader>Value</TH>
@@ -708,7 +708,7 @@ function done() {
             <br>
             <A NAME="referenceDocuments"></A>
             
-            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center">
               <tr>
                 <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
               </tr>
@@ -717,14 +717,14 @@ function done() {
               </tr>  
             </table>
 
-            <table  cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+            <table  cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align=center border=0>
              	<tr>
-                   <TD vAlign=top width=10%>
+                   <TD vAlign=top width="<%=CDECompareJspUtils.getHeaderSize()%>">
                        &nbsp;
                     </TD>             	
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                    <logic:empty name="currCDE" property="refereceDocs">
-                       <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                       <td vAlign=top width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" >
                           <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                             <TR class=OraTableColumnHeader>
                                <th class="OraTableColumnHeader">Document Name</th>
@@ -741,7 +741,7 @@ function done() {
                    </logic:empty>
                   
                    <logic:notEmpty name="currCDE" property="refereceDocs">
-                       <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                       <td vAlign=top width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" >
                           <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                             <TR class=OraTableColumnHeader>
                                <th class="OraTableColumnHeader">Document Name</th>
@@ -776,7 +776,7 @@ function done() {
             <br>
             <A NAME="classifications"></A>
             
-            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center">
               <tr>
                 <td class="OraHeaderSubSub" width="100%">Classifications</td>
               </tr>
@@ -785,14 +785,14 @@ function done() {
               </tr>  
             </table>
 
-            <table  cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+            <table  cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align=center border=0>
              	<tr>
-                   <TD vAlign=top width=10%>
+                   <TD vAlign=top width="<%=CDECompareJspUtils.getHeaderSize()%>">
                        &nbsp;
                     </TD>             	
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                    <logic:empty name="currCDE" property="classifications">
-                       <td width="30%" vAlign=top class="PrinterOraFieldText" >
+                       <td width="<%=CDECompareJspUtils.getColumnSize()%>" vAlign=top class="PrinterOraFieldText" >
                           <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                             <TR class=OraTableColumnHeader>
                               <TH class=OraTableColumnHeader>CS* Preferred Name</TH>
@@ -810,7 +810,7 @@ function done() {
                    </logic:empty>
                   
                    <logic:notEmpty name="currCDE" property="classifications">
-                       <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                       <td vAlign=top width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" >
                           <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                             <TR class=OraTableColumnHeader>
                               <TH class=OraTableColumnHeader>CS* Preferred Name</TH>
@@ -846,7 +846,7 @@ function done() {
             <br>
             <A NAME="data_element_derivation"></A>
             
-            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center">
               <tr>
                 <td class="OraHeaderSubSub" width="100%">Data Element Derivation</td>
               </tr>
@@ -855,15 +855,15 @@ function done() {
               </tr>  
             </table>             
              
-            <table cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+            <table cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align=center border=0>
                <tr >
-                  <td width="10%" class="PrinterOraFieldText" >&nbsp;</td>
+                  <td width="<%=CDECompareJspUtils.getHeaderSize()%>" class="PrinterOraFieldText" >&nbsp;</td>
                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                        <logic:notPresent name="currCDE" property="derivedDataElement">
-                           <td vAlign=top  width="30%" class="PrinterOraFieldText" >
+                           <td vAlign=top  width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" >
                               <table vAlign=top cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
                                  <TR >
-                                      <td width="30%" class="OraHeaderSubSub" >Derivation Details</td>                     
+                                      <td width="<%=CDECompareJspUtils.getColumnSize()%>" class="OraHeaderSubSub" >Derivation Details</td>                     
                                   </TR> 
                               </table>                           
                               <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
@@ -883,10 +883,10 @@ function done() {
                        </logic:notPresent>
                       
                        <logic:present name="currCDE" property="derivedDataElement">
-                           <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                           <td vAlign=top width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" >
                               <table vAlign=top cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
                                  <TR >
-                                      <td width="30%" class="OraHeaderSubSub" >Derivation Details</td>                     
+                                      <td width="<%=CDECompareJspUtils.getColumnSize()%>" class="OraHeaderSubSub" >Derivation Details</td>                     
                                   </TR> 
                               </table>                             
                               <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
@@ -925,15 +925,15 @@ function done() {
                 </tr>
              </table>
 
-            <table cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+            <table cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align=center border=0>
                <tr >
-                  <td width="10%" class="PrinterOraFieldText" >&nbsp;</td>
+                  <td width="<%=CDECompareJspUtils.getHeaderSize()%>" class="PrinterOraFieldText" >&nbsp;</td>
                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                        <logic:notPresent name="currCDE" property="derivedDataElement">
-                           <td vAlign=top  width="30%" class="PrinterOraFieldText" >
+                           <td vAlign=top  width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" >
                               <table cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
                                  <TR >
-                                      <td width="30%" class="OraHeaderSubSub" >Component Data Elements</td>                     
+                                      <td width="<%=CDECompareJspUtils.getColumnSize()%>" class="OraHeaderSubSub" >Component Data Elements</td>                     
                                   </TR> 
                               </table>                           
                               <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
@@ -953,10 +953,10 @@ function done() {
                        </logic:notPresent>
                       
                        <logic:present name="currCDE" property="derivedDataElement">
-                           <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                           <td vAlign=top width="<%=CDECompareJspUtils.getColumnSize()%>" class="PrinterOraFieldText" >
                               <table cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
                                  <TR >
-                                      <td width="30%" class="OraHeaderSubSub" >Component Data Elements</td>                     
+                                      <td width="<%=CDECompareJspUtils.getColumnSize()%>" class="OraHeaderSubSub" >Component Data Elements</td>                     
                                   </TR> 
                               </table>                             
                               <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
@@ -994,7 +994,7 @@ function done() {
         </tr> 
     </table>
     <br>
-            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center">
               <tr>
                 <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
               </tr>  
@@ -1002,7 +1002,7 @@ function done() {
             
     <%@ include file="compareCDEs_inc.jsp"%>
       <jsp:include page="../common/common_variable_length_bottom_border.jsp" flush="true">
-        <jsp:param name="width" value="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" />
+        <jsp:param name="width" value="100" />
       </jsp:include>       
     </html:form>
 
