@@ -35,92 +35,92 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
 
 
-    /**
-     * Prepares the Create Module page
-     *
-     * @param mapping The ActionMapping used to select this instance.
-     * @param form The optional ActionForm bean for this request.
-     * @param request The HTTP Request we are processing.
-     * @param response The HTTP Response we are processing.
-     *
-     * @return
-     *
-     * @throws IOException
-     * @throws ServletException
-     */
-    public ActionForward goToCreateModule(
-				  ActionMapping mapping,
-				  ActionForm form,
-				  HttpServletRequest request,
-				  HttpServletResponse response) throws IOException, ServletException {
+  /**
+   * Prepares the Create Module page
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward goToCreateModule(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
 
-	DynaActionForm dynaForm = (DynaActionForm)form;
+    DynaActionForm dynaForm = (DynaActionForm)form;
 
-	return mapping.findForward("toCreateModule");
+    return mapping.findForward("toCreateModule");
 
+  }
+
+
+  /**
+   * Create a module
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward createModule(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+
+    DynaActionForm dynaForm = (DynaActionForm)form;
+    Module newModule = new ModuleTransferObject();
+    ModuleInstruction newModInst = new ModuleInstructionTransferObject();
+
+    int displayOrder = ((Integer)dynaForm.get(DISPLAY_ORDER)).intValue();
+	
+    Form f = (Form)getSessionObject(request, CRF);
+
+    newModule.setForm(f);
+    newModule.setLongName((String)dynaForm.get(MODULE_LONG_NAME));
+    newModule.setPreferredDefinition(newModule.getLongName());
+    newModule.setAslName("DRAFT NEW");
+    newModule.setVersion(new Float(1.0));
+    newModule.setCreatedBy(request.getRemoteUser());
+    newModule.setDisplayOrder(displayOrder);
+    newModule.setQuestions(new ArrayList());
+	
+    newModInst.setLongName((String)dynaForm.get(MODULE_INSTRUCTION_LONG_NAME));
+    newModInst.setAslName("DRAFT NEW");
+    newModInst.setVersion(new Float(1.0));
+    newModInst.setCreatedBy(request.getRemoteUser());
+
+    Form crf = (Form) getSessionObject(request, CRF);
+	
+    List modules = crf.getModules();
+    if(modules == null) {
+      modules = new ArrayList();
+      crf.setModules(modules);
     }
 
-
-    /**
-     * Create a module
-     *
-     * @param mapping The ActionMapping used to select this instance.
-     * @param form The optional ActionForm bean for this request.
-     * @param request The HTTP Request we are processing.
-     * @param response The HTTP Response we are processing.
-     *
-     * @return
-     *
-     * @throws IOException
-     * @throws ServletException
-     */
-    public ActionForward createModule(
-				  ActionMapping mapping,
-				  ActionForm form,
-				  HttpServletRequest request,
-				  HttpServletResponse response) throws IOException, ServletException {
-
-	DynaActionForm dynaForm = (DynaActionForm)form;
-	Module newModule = new ModuleTransferObject();
-	ModuleInstruction newModInst = new ModuleInstructionTransferObject();
-
-	int displayOrder = ((Integer)dynaForm.get(DISPLAY_ORDER)).intValue();
-	
-	Form f = (Form)getSessionObject(request, CRF);
-
-	newModule.setForm(f);
-	newModule.setLongName((String)dynaForm.get(MODULE_LONG_NAME));
-  newModule.setPreferredDefinition(newModule.getLongName());
-	newModule.setAslName("DRAFT NEW");
-	newModule.setVersion(new Float(1.0));
-	newModule.setCreatedBy(request.getRemoteUser());
-	newModule.setDisplayOrder(displayOrder);
-	newModule.setQuestions(new ArrayList());
-	
-	newModInst.setLongName((String)dynaForm.get(MODULE_INSTRUCTION_LONG_NAME));
-	newModInst.setAslName("DRAFT NEW");
-	newModInst.setVersion(new Float(1.0));
-	newModInst.setCreatedBy(request.getRemoteUser());
-
-	Form crf = (Form) getSessionObject(request, CRF);
-	
-	List modules = crf.getModules();
-	if(modules == null) {
-	    modules = new ArrayList();
-	    crf.setModules(modules);
-	}
-
-	if(displayOrder < modules.size()) {
-	    modules.add(displayOrder, newModule);
-	    FormActionUtil.incrementDisplayOrder(modules, displayOrder + 1);
-	} else {
-	    modules.add(newModule);
-	}
-
-	saveMessage("cadsr.formbuilder.module.add.success", request);
-	return mapping.findForward("toFormEdit");
-
+    if(displayOrder < modules.size()) {
+      modules.add(displayOrder, newModule);
+      FormActionUtil.incrementDisplayOrder(modules, displayOrder + 1);
+    } else {
+      modules.add(newModule);
     }
+
+    saveMessage("cadsr.formbuilder.module.add.success", request);
+    return mapping.findForward("toFormEdit");
+
+  }
 
 }
   
