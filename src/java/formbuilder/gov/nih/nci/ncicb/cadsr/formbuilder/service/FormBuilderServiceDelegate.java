@@ -85,12 +85,8 @@ public interface FormBuilderServiceDelegate {
 
   public CDECart retrieveCDECart() throws FormBuilderException;
 
-  public int addToCDECart(CDECartItem item) throws FormBuilderException;
+  public int addToCDECart(Collection items) throws FormBuilderException;
 
-  public int removeFromCDECart(String itemId) throws FormBuilderException;
-
-  /**
-   * public Collection getContextsForUserAndRole( String username, String role)
-   * throws FormBuilderException;
-   */
+  public int removeFromCDECart(Collection items) throws FormBuilderException;
+  
 }
