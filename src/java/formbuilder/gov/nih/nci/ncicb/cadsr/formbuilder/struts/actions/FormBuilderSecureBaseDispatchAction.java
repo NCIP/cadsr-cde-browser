@@ -107,7 +107,7 @@ public class FormBuilderSecureBaseDispatchAction extends FormBuilderBaseDispatch
         {
           if(log.isFatalEnabled())
           {
-            log.fatal(user.getUsername(), throwable);
+            log.fatal("Null User", throwable);
           }
         }
       }
