@@ -47,11 +47,12 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
    * @return questions that belong to the specified module
    */
   public Collection getQuestionsInAModule(String moduleId) {
-    QuestionsInAModuleQuery query = new QuestionsInAModuleQuery();
-    query.setDataSource(getDataSource());
-    query.setSql();
+    QuestionsInAModuleQuery_STMT query = new QuestionsInAModuleQuery_STMT();
 
-    return query.execute(moduleId);
+    query.setDataSource(getDataSource());
+    query._setSql(moduleId);
+
+    return query.execute();
   }
 
   public int createModuleComponentStoredProc(Module sourceModule)
@@ -453,6 +454,28 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       
 	    int res = update(obj);
       return res;
+    }
+  }
+
+  /**
+   * Inner class that accesses database to get all the questions that belong to
+   * the specified module
+   */
+  class QuestionsInAModuleQuery_STMT extends MappingSqlQuery {
+    QuestionsInAModuleQuery_STMT() {
+      super();
+    }
+
+    public void _setSql(String idSeq) {
+      super.setSql(
+        "SELECT * FROM SBREXT.FB_QUESTIONS_VIEW where MODULE_IDSEQ = '" + idSeq + "'");
+//       declareParameter(new SqlParameter("MODULE_IDSEQ", Types.VARCHAR));
+    }
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      return new JDBCQuestionTransferObject(rs);
     }
   }
 

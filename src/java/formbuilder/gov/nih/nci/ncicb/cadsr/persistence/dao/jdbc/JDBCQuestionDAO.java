@@ -51,11 +51,12 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
    */
   public Collection getValidValues(String questionId) {
     Collection col = new ArrayList();
-    ValidValuesForAQuestionQuery query = new ValidValuesForAQuestionQuery();
+    ValidValuesForAQuestionQuery_STMT query = new ValidValuesForAQuestionQuery_STMT();
     query.setDataSource(getDataSource());
-    query.setSql();
+    query._setSql(questionId);
 
-    return query.execute(questionId);
+    return query.execute();
+
   }
 
   public Question addValidValues(
@@ -473,9 +474,35 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
    * Inner class that accesses database to get all the questions that belong to
    * the specified module
    */
-  class ValidValuesForAQuestionQuery extends MappingSqlQuery {
-    ValidValuesForAQuestionQuery() {
+  class ValidValuesForAQuestionQuery_STMT extends MappingSqlQuery {
+    ValidValuesForAQuestionQuery_STMT() {
       super();
+    }
+
+    public void _setSql(String idSeq) {
+      super.setSql(
+        "SELECT * FROM SBREXT.FB_VALID_VALUES_VIEW where QUES_IDSEQ = '" + idSeq + "'");
+//       declareParameter(new SqlParameter("QUESTION_IDSEQ", Types.VARCHAR));
+    }
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      return new JDBCFormValidValueTransferObject(rs);
+    }
+  }
+
+
+  /**
+   * Inner class that accesses database to get all the questions that belong to
+   * the specified module
+   */
+  class ValidValuesForAQuestionQuery extends MappingSqlQuery {
+    ValidValuesForAQuestionQuery(DataSource ds) {
+      super();
+      setDataSource(ds);
+      setSql();
+      compile();
     }
 
     public void setSql() {
