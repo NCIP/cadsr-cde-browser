@@ -36,7 +36,7 @@
       input="/formbuilder/formCopy.jsp"
       >
       <forward name="gotoEdit" path="/formToEditAction.do?method=getFormToEdit"/>
-      <forward name="gotoView" path="/formbuilder/formDetails.jsp"/>
+      <forward name="gotoView" path="/formDetailsAction.do?method=getFormDetails"/>
     </action>
   </action-mappings>
 
