@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 
@@ -107,4 +108,10 @@ public interface FormBuilderServiceDelegate {
     String username) throws FormBuilderException;
     
   public Map getValidValues(Collection vdIdSeqs) throws FormBuilderException;
+
+  public Form createForm(
+    Form form,
+    FormInstruction formHeaderInstruction,
+    FormInstruction formFooterInstruction);
+
 }

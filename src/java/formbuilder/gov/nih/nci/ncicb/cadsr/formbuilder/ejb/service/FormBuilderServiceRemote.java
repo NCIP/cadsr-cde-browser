@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 
@@ -121,4 +122,10 @@ public interface FormBuilderServiceRemote {
     String username) throws RemoteException;
 
   public Map getValidValues(Collection vdIdSeqs) throws RemoteException;
+
+  public Form createForm(
+    Form form,
+    FormInstruction formHeaderInstruction,
+    FormInstruction formFooterInstruction);
+  
 }

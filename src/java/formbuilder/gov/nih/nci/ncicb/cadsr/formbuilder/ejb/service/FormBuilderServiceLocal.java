@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service;
 
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
@@ -107,4 +108,9 @@ public interface FormBuilderServiceLocal  {
     String username);
     
   public Map getValidValues(Collection vdIdSeqs);
+
+  public Form createForm(
+    Form form,
+    FormInstruction formHeaderInstruction,
+    FormInstruction formFooterInstruction);
 }
