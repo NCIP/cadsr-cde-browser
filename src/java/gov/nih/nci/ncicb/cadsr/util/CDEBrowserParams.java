@@ -13,6 +13,8 @@ public class CDEBrowserParams
     String xmlPaginationFlag = "no";
     String xmlFileMaxRecord;
     String treeURL = "";
+    String evsUrlThesaurus = "";
+    
     static CDEBrowserParams instance;
     // constructor
     private CDEBrowserParams()
@@ -45,6 +47,8 @@ public class CDEBrowserParams
             xmlFileMaxRecord = b.getString("XML_FILE_MAX_RECORDS");
             index++;
             treeURL = b.getString("TREE_URL");
+            index++;
+            evsUrlThesaurus = b.getString("EVS_URL_THESAURUS");
             index++;
                         
         } 
@@ -85,5 +89,16 @@ public class CDEBrowserParams
     public String getXMLFileMaxRecords() {
       return xmlFileMaxRecord;
     }
+
+
+  public void setEvsUrlThesaurus(String evsUrlThesaurus)
+  {
+    this.evsUrlThesaurus = evsUrlThesaurus;
+  }
+
+  public String getEvsUrlThesaurus()
+  {
+    return evsUrlThesaurus;
+  }
            
 }
