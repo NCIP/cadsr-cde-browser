@@ -50,4 +50,15 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
   public void setDisplayOrder(int dispOrder) {
     this.dispOrder = dispOrder;
   }
+  
+  public String toString()
+  {
+    StringBuffer sb = new StringBuffer();
+    sb.append(OBJ_SEPARATOR_START);
+    sb.append(super.toString());
+    sb.append(ATTR_SEPARATOR+"valueIdseq="+getValueIdseq()); 
+    sb.append(ATTR_SEPARATOR+"displayOrder="+getDisplayOrder()); 
+    sb.append(OBJ_SEPARATOR_END);  
+    return sb.toString();  
+  }
 }

@@ -44,4 +44,9 @@ public class BaseTransferObject implements Serializable, Audit
   public void setDateModified(Date p0)
   {
   }
+  public String toString()
+  {
+    return " ";
+  }
+  
 }

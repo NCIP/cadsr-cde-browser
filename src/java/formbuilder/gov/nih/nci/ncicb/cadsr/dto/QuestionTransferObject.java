@@ -60,4 +60,23 @@ public class QuestionTransferObject extends AdminComponentTransferObject
   public void setDisplayOrder(int dispOrder) {
     this.dispOrder = dispOrder;
   }
+  public String toString()
+  {
+    StringBuffer sb = new StringBuffer();
+    sb.append(OBJ_SEPARATOR_START);
+    sb.append(super.toString());
+    sb.append(ATTR_SEPARATOR+"quesIdseq="+getQuesIdseq()); 
+    sb.append(ATTR_SEPARATOR+"displayOrder="+getDisplayOrder()); 
+    List validValues = getValidValues();
+    if(validValues!=null) 
+    {      
+      sb.append(ATTR_SEPARATOR+"ValidValues="+validValues);
+    } 
+    else
+    {
+      sb.append(ATTR_SEPARATOR+"ValidValues="+null);
+    }    
+    sb.append(OBJ_SEPARATOR_END);  
+    return sb.toString();
+  }    
 }

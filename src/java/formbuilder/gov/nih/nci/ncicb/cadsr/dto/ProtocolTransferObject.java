@@ -64,4 +64,14 @@ public class ProtocolTransferObject extends AdminComponentTransferObject impleme
   public void setEndDate(Date p0)
   {
   }
+  
+  public String toString()
+  {
+    StringBuffer sb = new StringBuffer();
+    sb.append(OBJ_SEPARATOR_START);
+    sb.append(super.toString());
+    sb.append(ATTR_SEPARATOR+"name="+name);  
+    sb.append(OBJ_SEPARATOR_END);  
+    return sb.toString();
+  }
 }

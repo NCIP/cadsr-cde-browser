@@ -128,5 +128,24 @@ public class AdminComponentTransferObject extends BaseTransferObject implements 
   public void setOrigin(String p0)
   {
   }
-
+  public String toString()
+  {
+    StringBuffer sb = new StringBuffer();
+    sb.append(super.toString());
+    sb.append(ATTR_SEPARATOR+"preferredName="+getPreferredName());
+    sb.append(ATTR_SEPARATOR+"longName="+getLongName());
+    sb.append(ATTR_SEPARATOR+"version="+getVersion());
+    sb.append(ATTR_SEPARATOR+"preferredDefinition="+getPreferredDefinition());
+    sb.append(ATTR_SEPARATOR+"aslName="+getAslName());
+    sb.append(ATTR_SEPARATOR+"latestVersionInd="+getLatestVersionInd()); 
+    sb.append(ATTR_SEPARATOR+"deletedInd="+getDeletedInd()); 
+    sb.append(ATTR_SEPARATOR+"publicId="+getPublicId()); 
+    sb.append(ATTR_SEPARATOR+"origin="+getOrigin()); 
+    Context context = getContext();
+    if(context!=null)
+      sb.append(ATTR_SEPARATOR+"Context="+context.toString()); 
+    else
+      sb.append(ATTR_SEPARATOR+"Context=null");
+    return sb.toString();
+  }
 }

@@ -108,7 +108,7 @@ public class FormAction extends FormBuilderBaseDispatchAction {
       }
     }
 
-    setSessionObject(request, FORM_ID_SEQ, crf);
+    setSessionObject(request, CRF, crf);
 
     return mapping.findForward(SUCCESS);
   }

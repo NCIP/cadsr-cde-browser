@@ -68,4 +68,15 @@ public class ContextTransferObject extends AdminComponentTransferObject implemen
   public void setLanguage(String p0)
   {
   }
+  public String toString()
+  {
+    StringBuffer sb = new StringBuffer();
+    sb.append(OBJ_SEPARATOR_START);
+    sb.append(super.toString());
+    sb.append(ATTR_SEPARATOR+"name="+getName());
+    sb.append(ATTR_SEPARATOR+"conteIdSeq="+getConteIdseq());   
+    sb.append(OBJ_SEPARATOR_END);
+    sb.toString();
+    return sb.toString();
+  }  
 }

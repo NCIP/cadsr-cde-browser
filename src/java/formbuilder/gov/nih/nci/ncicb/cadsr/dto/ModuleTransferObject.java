@@ -50,4 +50,24 @@ public class ModuleTransferObject extends AdminComponentTransferObject
   public void setDisplayOrder(int dispOrder) {
     this.dispOrder = dispOrder;
   }
+
+  public String toString()
+  {
+    StringBuffer sb = new StringBuffer();
+    sb.append(OBJ_SEPARATOR_START);
+    sb.append(super.toString());
+    sb.append(ATTR_SEPARATOR+"moduleIdseq="+getModuleIdseq()); 
+    sb.append(ATTR_SEPARATOR+"displayOrder="+getDisplayOrder()); 
+    List questions = getQuestions();
+    if(questions!=null) 
+    {      
+      sb.append(ATTR_SEPARATOR+"Questions="+questions);
+    } 
+    else
+    {
+      sb.append(ATTR_SEPARATOR+"Questions="+null);
+    }    
+    sb.append(OBJ_SEPARATOR_END);  
+    return sb.toString();
+  }  
 }
