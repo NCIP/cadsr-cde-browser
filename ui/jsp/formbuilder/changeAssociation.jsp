@@ -103,7 +103,8 @@ function details(linkParms ){
 %>
       <tr class="OraTabledata">
         <td class="OraFieldText">
-          <html:radio property="selectedText" value="<%= itemId + \",\" + de.getItem().getLongName() %>"/>
+          <% String s = StringUtils.strReplace(de.getItem().getLongName(),"\"","&quot;"); %> 
+          <html:radio property="selectedText" value="<%= itemId + \",\" + s %>"/>
             <a href="<%= detailsURL %>">
           <bean:write name="de" property="item.longName"/>
         </a>
