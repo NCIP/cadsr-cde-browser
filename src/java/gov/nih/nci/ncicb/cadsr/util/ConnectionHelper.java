@@ -1,11 +1,18 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
-import java.sql.*;
-import java.util.*;
-import javax.sql.*;
-import javax.naming.*;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
+import java.sql.Connection;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import javax.sql.DataSource;
+import javax.sql.PooledConnection;
 
 public class ConnectionHelper  {
+  private static Log log = LogFactory.getLog(ConnectionHelper.class.getName());
   private String dataSourceName = null;
   private Connection conn = null;
   private PooledConnection pooledConn = null;
@@ -19,16 +26,14 @@ public class ConnectionHelper  {
       DataSource ds = (DataSource)ic.lookup(dataSourceName);
       conn = ds.getConnection();
       //conn.setAutoCommit(true);
-      System.out.println
+      log.info
       ("Connected to the database successfully using datasource "+dataSourceName);
     }
     catch (NamingException ne) {
-      System.out.println("Failed to lookup JDBC datasource");
-      ne.printStackTrace();
+      log.error("Failed to lookup JDBC datasource", ne);
     }
     catch (Exception e) {
-			System.out.println("  Exception in ConnectionHelper.getConnection()");
-      e.printStackTrace();
+		log.error("Exception in getConnection()", e);
     }
     return conn;
   }
@@ -40,8 +45,7 @@ public class ConnectionHelper  {
     }
   } 
   catch (Exception ex) {
-    System.out.println("  Exception in ConnectionHelper.closeConnection()");
-    ex.printStackTrace();
+    log.error("Exception in ConnectionHelper.closeConnection()", ex);
   } 
   finally {
   }
