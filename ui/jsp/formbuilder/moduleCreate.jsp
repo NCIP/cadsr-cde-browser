@@ -47,6 +47,7 @@
             <html:text 
               property="<%= FormConstants.MODULE_LONG_NAME %>"
               size="50"
+              maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>"
               />
           </td>
         </tr>

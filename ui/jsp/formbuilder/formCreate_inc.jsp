@@ -66,6 +66,7 @@ function clearProtocol() {
         <html:text 
           size="100"
           property="<%= FormConstants.FORM_LONG_NAME %>"
+          maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>"
           />
       </td>
     </tr>
@@ -150,6 +151,7 @@ function clearProtocol() {
           property="<%= FormConstants.FORM_VERSION %>"
           size="10"
           value="1.0"
+          maxlength="<%= FormConstants.VERSION_MAX_LENGTH %>"
           />
       </td>
     </tr>

@@ -76,6 +76,7 @@ function submitForm() {
               property="<%= FormConstants.FORM_LONG_NAME %>"
               size="100"
               styleClass="OraFieldText"
+              maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>"
               />
           </td>
         </tr>
@@ -98,6 +99,7 @@ function submitForm() {
             <html:text 
               property="<%= FormConstants.FORM_VERSION %>"
               size="10"
+              maxlength="<%= FormConstants.VERSION_MAX_LENGTH %>"
               />
           </td>
         </tr>
