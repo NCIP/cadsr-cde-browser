@@ -29,7 +29,8 @@ public interface FormBuilderServiceLocal  {
     String formIdSeq,
     Form formHeader,
     Collection updatedModules,
-    Collection deletedModules) ;
+    Collection deletedModules,
+    Collection addedModules) ;
 
   public Module updateModule(
        String moduleIdSeq,

@@ -256,13 +256,22 @@ public class FormBuilderEJB extends SessionBeanAdapter
     String formIdSeq,
     Form formHeader,
     Collection updatedModules,
-    Collection deletedModules) {
+    Collection deletedModules,
+    Collection addedModules) {
     ModuleDAO dao = daoFactory.getModuleDAO();
     FormDAO formdao = daoFactory.getFormDAO();
    if(formHeader!=null)
    {
      formdao.updateFormComponent(formHeader);
    }
+    if ((addedModules != null) && !addedModules.isEmpty()) {
+      Iterator addedIt = addedModules.iterator();
+
+      while (addedIt.hasNext()) {
+        Module addedModule = (Module) addedIt.next();
+        dao.createModuleComponent(addedModule);
+      }
+    }   
     if ((updatedModules != null) && !updatedModules.isEmpty()) {
       Iterator updatedIt = updatedModules.iterator();
 

@@ -90,6 +90,7 @@ public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
 
 	newModule.setForm(f);
 	newModule.setLongName((String)dynaForm.get(MODULE_LONG_NAME));
+  newModule.setPreferredDefinition(newModule.getLongName());
 	newModule.setAslName("DRAFT NEW");
 	newModule.setVersion(new Float(1.0));
 	newModule.setCreatedBy(request.getRemoteUser());

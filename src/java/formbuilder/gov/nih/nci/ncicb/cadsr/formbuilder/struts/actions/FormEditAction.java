@@ -370,7 +370,8 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
           Form header = (Form)request.getAttribute("header");
           Collection updatedModules = (Collection)request.getAttribute("updatedModules");
           Collection deletedModules = (Collection)request.getAttribute("deletedModules");
-          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules);
+          Collection addedModules = (Collection)request.getAttribute("addedModules");
+          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules);
           setSessionObject(request,CRF, updatedCrf);
         }
         catch (FormBuilderException exp) {
@@ -546,14 +547,18 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     
    List updatedModules =
        getUpdatedModules(clonedCrf.getModules(), crf.getModules());
+   List addedModules = 
+       getAddedModules( crf.getModules());
+       
     if(!headerUpdate)
        header=null;
     if (
         header!=null || ((deletedModules != null) && !deletedModules.isEmpty()) ||
-          !updatedModules.isEmpty()) {
+          !updatedModules.isEmpty()||!addedModules.isEmpty()) {
         request.setAttribute("header",header);
         request.setAttribute("updatedModules",updatedModules);
         request.setAttribute("deletedModules",deletedModules);
+        request.setAttribute("addedModules",addedModules);
         return true;
       }
     else
@@ -613,6 +618,32 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     return null;
   }
 
+
+  /**
+   * Gets new modules added
+   *
+   * @param orgModules
+   * @param newModules
+   *
+   * @return a list containg the modules with changed display order and the
+   *         newly added modules. Returns empty list if "newModules" is null;
+   *         If no modules present returns empty list;
+   */
+  protected List getAddedModules(
+    List newModules) {
+    List addedModules = new ArrayList();
+
+    ListIterator newIterate = newModules.listIterator();
+
+    while (newIterate.hasNext()) {
+      Module newModule = (Module) newIterate.next();
+      if(newModule.getModuleIdseq()==null)
+      {
+        addedModules.add(newModule);
+      }
+    }
+    return addedModules;
+  }
 
   /**
    * Compares the display order of the modules from the original form and the

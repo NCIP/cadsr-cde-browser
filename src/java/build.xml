@@ -57,6 +57,7 @@
   <property name="java.lib.dir" value="${project.home}/lib/java"/>
  
   <property name="config.home" value="${project.home}/config"/>
+  <property name="config.test" value="${project.home}/config_test"/>
   <property name="ejb.descriptor.home" value="${project.home}/config/ejb"/>  
 
   <!-- =========== CLEAN BUILD AREA ======================= -->
@@ -215,26 +216,6 @@
            </patternset>
          </fileset>      
       </copy>   
-    </target>
-  <!-- =========== END DEV CONFIG ======================= -->
-  
-  <!-- =========== SECURE CONFIG ======================= -->
-    <target name="stage_config" depends="init">    
-     <copy todir="${classes.build.dir}/META-INF">      
-         <fileset dir="${config.home}/connections">
-           <patternset>
-             <include name="data-sources.xml"/>
-           </patternset>
-         </fileset>      
-      </copy>   
-    </target>  
-  <!-- =========== END STAGE CONFIG ======================= -->
-  
-  
-  
-  <!-- =========== START WAR PROCESS ======================= -->
-  
-   <target name="war_cdebrowser" depends="compile,jar_security">  
      <copy todir="${classes.build.dir}/WEB-INF/classes">
          <fileset dir="${config.home}/properties">
            <patternset>
@@ -259,7 +240,48 @@
              <include name="crfBuilder.xml"/>
            </patternset>
          </fileset>      
-      </copy>
+      </copy>      
+    </target>
+  <!-- =========== END DEV CONFIG ======================= -->
+  
+  <!-- =========== TEST CONFIG ======================= -->
+    <target name="test_config" depends="init,dev_config">    
+       <copy todir="${classes.build.dir}/META-INF">      
+           <fileset dir="${config.test}/connections">
+             <patternset>
+               <include name="data-sources.xml"/>
+             </patternset>
+           </fileset>      
+        </copy> 
+     <copy todir="${classes.build.dir}/WEB-INF/classes">    
+         <fileset dir="${config.home}/connections">
+           <patternset>
+             <include name="cdebrowser.properties"/>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>        
+    </target>
+  <!-- =========== END DEV CONFIG ======================= -->
+  
+  <!-- =========== SECURE CONFIG ======================= -->
+    <target name="stage_config" depends="init">    
+     <copy todir="${classes.build.dir}/META-INF">      
+         <fileset dir="${config.home}/connections">
+           <patternset>
+             <include name="data-sources.xml"/>
+           </patternset>
+         </fileset>      
+      </copy>   
+    </target>  
+  <!-- =========== END STAGE CONFIG ======================= -->
+  
+  
+  
+  <!-- =========== START WAR PROCESS ======================= -->
+  
+   <target name="war_cdebrowser" depends="compile,jar_security">  
+
      <copy todir="${classes.build.dir}/WEB-INF/classes">      
          <fileset dir="${formbuilder.java.src.dir}">
            <patternset>
@@ -638,6 +660,11 @@
        <target name="dist_stage" depends="clean,dev_config,ear_cdebrowser,dist_ear_copy">  
         </target>      
   <!-- =========== END STAGE DISTRIBUTION ======================= -->
+  
+  <!-- =========== PROD DISTRIBUTION============== -->
+        <target name="dist_test" depends="clean,test_config,ear_cdebrowser,dist_ear_copy">  
+        </target>      
+  <!-- =========== END QA DISTRIBUTION ======================= -->
   
   <!-- =========== PROD DISTRIBUTION============== -->
         <target name="dist_prod" depends="clean,dev_config,ear_cdebrowser,dist_ear_copy">  
