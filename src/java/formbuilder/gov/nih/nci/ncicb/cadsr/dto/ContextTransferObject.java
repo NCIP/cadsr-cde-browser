@@ -3,11 +3,11 @@ import gov.nih.nci.ncicb.cadsr.resource.Context;
 
 public class ContextTransferObject extends AdminComponentTransferObject implements Context 
 {
-  private String name;
+  private String name = null;
+  private String conteIdSeq = null;
   
-  public ContextTransferObject(String newName)
+  public ContextTransferObject()
   {
-    name=newName;
   }
 
   public String getName()
@@ -17,9 +17,17 @@ public class ContextTransferObject extends AdminComponentTransferObject implemen
 
   public void setName(String newName)
   {
-    name=newName;
+    name = newName;
   }
 
+  public String getConteIdseq() {
+    return conteIdSeq;
+  }
+  
+  public void setConteIdseq(String newConteIdseq) {
+    conteIdSeq = newConteIdseq;
+  }
+  
   public String getLlName()
   {
     return null;

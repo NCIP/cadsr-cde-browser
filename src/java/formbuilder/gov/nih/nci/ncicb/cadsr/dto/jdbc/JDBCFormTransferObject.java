@@ -13,7 +13,12 @@ public class JDBCFormTransferObject extends FormTransferObject
   {
     setLongName(rs.getString("long_name"));
     setPreferredName(rs.getString("preferred_Name"));
-    setContext(new ContextTransferObject(rs.getString("context_name")));
+    
+    //setContext(new ContextTransferObject(rs.getString("context_name")));
+    ContextTransferObject contextTransferObject = new ContextTransferObject();
+    contextTransferObject.setName(rs.getString("context_name"));
+    setContext(contextTransferObject);
+    
     setProtocol(new ProtocolTransferObject(rs.getString("PROTOCOL_LONG_NAME")));
     setFormType(rs.getString("type"));
     setAslName("workflow");
