@@ -69,7 +69,22 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceContants {
     String acType,
     String conteIdseq) {
     // TODO:  Implement this gov.nih.nci.ncicb.cadsr.persistence.dao.BaseDAO abstract method
-    return false;
+
+    int [] inputTypes = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
+    String sqlStmt = " SELECT cadsr_security_util.has_create_privilege(?,?,?) FROM DUAL ";
+    DataSource ds = this.getDataSource();
+    SqlFunction hasCreateFunc = new SqlFunction(this.getDataSource(),sqlStmt,inputTypes,Types.VARCHAR);
+    hasCreateFunc.compile();
+    Object [] inputValues = {username, acType, conteIdseq};
+    String retVal = (String)hasCreateFunc.runGeneric(inputValues);
+    try 
+    {
+      return StringUtils.toBoolean(retVal);
+    } 
+    catch (Exception e) 
+    {
+      return false; 
+    }
   }
 
   public boolean hasDelete(
@@ -83,25 +98,61 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceContants {
     hasDeleteFunc.compile();
     Object [] inputValues = {username,acIdseq};
     String retVal = (String)hasDeleteFunc.runGeneric(inputValues);
-    boolean b = false;
-    if (retVal.equals("Yes")) b =true;
-    else if (retVal.equals("No")) b = false;
-    return b;
+    try 
+    {
+      return StringUtils.toBoolean(retVal);
+    } 
+    catch (Exception e) 
+    {
+      return false; 
+    }
   }
 
   public boolean hasUpdate(
     String username,
     String acIdseq) {
     // TODO:  Implement this gov.nih.nci.ncicb.cadsr.persistence.dao.BaseDAO abstract method
-    return false;
+    int [] inputTypes = {Types.VARCHAR,Types.VARCHAR};
+    String sqlStmt = " SELECT cadsr_security_util.has_update_privilege(?,?) FROM DUAL ";
+    DataSource ds = this.getDataSource();
+    SqlFunction hasUpdateFunc = new SqlFunction(this.getDataSource(),sqlStmt,inputTypes,Types.VARCHAR);
+    hasUpdateFunc.compile();
+    Object [] inputValues = {username,acIdseq};
+    String retVal = (String)hasUpdateFunc.runGeneric(inputValues);
+    try 
+    {
+      return StringUtils.toBoolean(retVal);
+    } 
+    catch (Exception e) 
+    {
+      return false; 
+    }
   }
 
    public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
     //JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory(locator);
     JDBCBaseDAO test = new JDBCBaseDAO(locator);
-    boolean b = test.hasDelete("SBREXT","B046971C-6A89-5F47-E034-0003BA0B1A09");
-    System.out.println("Result: "+b);
-    
+
+    boolean res;
+    res = test.hasDelete("SBREX","B046971C-6A89-5F47-E034-0003BA0B1A09");
+    System.out.println("\n*****Delete Result 1: " + res);
+
+    res = test.hasDelete("SBREXT", "99BA9DC8-2099-4E69-E034-080020C9C0E0");
+    System.out.println("\n*****Delete Result 2: "  + res);
+
+    res = test.hasCreate("SBREX", "CONCEPTUALDOM",  "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+    System.out.println("\n*****Create Result 1: "+ res);
+
+    res = test.hasCreate("SBREXT", "CONCEPTUALDOMAIN",  "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+    System.out.println("\n*****Create Result 2: "+ res);
+
+    res = test.hasUpdate("SBREX", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+    System.out.println("\n*****Update Result 1: "+ res);
+
+    res = test.hasUpdate("SBREXT", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+    System.out.println("\n*****Update Result 2: "+ res);
+
+
   }  
 }
