@@ -126,8 +126,10 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     ServiceLocator locator = new SimpleServiceLocator();
     JDBCQuestionDAO test = new JDBCQuestionDAO(locator);
 
-    /*Collection result =
+    Collection result =
       test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
+    System.out.println(test);
+    /*
     Iterator iterator = result.iterator();
 
        try {
@@ -203,7 +205,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     catch (DMLException de) {
       de.printStackTrace();
     }*/
-
+    /*
     // test for updateLongNameDisplayOrderDeIdseq
     DataElementTransferObject deto = new DataElementTransferObject();
     deto.setDeIdseq("29A8FB2C-0AB1-11D6-A42F-0010A4C1E842");
@@ -219,6 +221,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     catch (DMLException de) {
       de.printStackTrace();
     }
+    */
   }
 
   /**
