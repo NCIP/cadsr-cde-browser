@@ -131,7 +131,7 @@
           <th scope="col">CS* Definition</th>
           <th scope="col">CSI* Name</th>
           <th scope="col">CSI* Type</th>
-          <th scope="col">DEL</th>
+          <th scope="col">DELETE</th>
         </tr>
 
         <logic:present name="<%= FormConstants.CLASSIFICATIONS %>">
