@@ -60,22 +60,28 @@ public class SessionUtils {
     }
   }
   */
-  public synchronized static void addToSessionCache(String key,Object object)
+  public  static void addToSessionCache(String key,Object object)
   {
+    synchronized(sessionObjectCache)
+    {
     clearStaleObject();
     Long currTime = new Long(new Date().getTime());
     sessionObjectCacheTimeout.put(key,currTime);
     sessionObjectCache.put(key,object);
+    }
   }
   
-  public synchronized static Object removeFromSessionCache(String key)
+  public static Object removeFromSessionCache(String key)
   {
+   synchronized(sessionObjectCache)
+    {
     Object cachedObject = sessionObjectCache.remove(key);
-    sessionObjectCacheTimeout.remove(key);
+    sessionObjectCacheTimeout.remove(key);    
     return cachedObject;
+    }
   }
   
-  private  static void clearStaleObject()
+  private static void clearStaleObject()
   {
     Set keys = sessionObjectCacheTimeout.keySet();
     if(keys!=null)

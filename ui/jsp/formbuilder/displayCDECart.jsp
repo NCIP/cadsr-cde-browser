@@ -108,7 +108,13 @@ function details(linkParms ){
   <jsp:param name="label" value="CDE&nbsp;Cart"/>
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
-
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.cart.secure"/>
+      </td>
+    </tr>  
+</table> 
 <%@ include file="showMessages.jsp" %>
 <html:form action="/formCDECartAction.do">
 <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>

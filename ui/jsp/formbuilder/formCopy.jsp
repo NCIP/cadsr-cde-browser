@@ -27,6 +27,13 @@
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
 
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.form.copy"/>
+      </td>
+    </tr>  
+</table> 
     <SCRIPT>
 <!--
 

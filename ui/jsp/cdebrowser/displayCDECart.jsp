@@ -85,6 +85,15 @@ function retrieveSavedItems() {
   <jsp:param name="label" value="CDE&nbsp;Cart"/>
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
+
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.cart"/>
+      </td>
+    </tr>  
+</table> 
+
 <%@ include file="formbuilder/showMessages.jsp" %>
 <html:form action="/cdeCartAction.do">
 <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>

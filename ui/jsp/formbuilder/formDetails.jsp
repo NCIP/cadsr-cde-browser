@@ -28,6 +28,15 @@
       <jsp:param name="label" value="View&nbsp;Form"/>
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
+
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.form.view"/>
+      </td>
+    </tr>  
+</table> 
+    
     <%@ include file="/formbuilder/viewButton_inc.jsp"%>
    
     <%@ include file="showMessages.jsp" %>
