@@ -1,42 +1,39 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.dto.AttachmentTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ReferenceDocumentTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.BaseDAO;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.ConnectionException;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.DAOCreateException;
+import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
-import gov.nih.nci.ncicb.cadsr.security.oc4j.BaseUserManager;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
-import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 
 import java.util.ArrayList;
-import org.apache.commons.logging.LogFactory; 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
+import javax.sql.DataSource;
+
+import oracle.sql.BLOB;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.object.SqlFunction;
 import org.springframework.jdbc.object.SqlUpdate;
 import org.springframework.jdbc.object.StoredProcedure;
-import org.springframework.dao.DataIntegrityViolationException;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
 
 public class JDBCAdminComponentDAO extends JDBCBaseDAO
   implements AdminComponentDAO {
@@ -96,9 +93,23 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
      ReferenceDocumentsQuery query = new ReferenceDocumentsQuery();
      query.setDataSource(getDataSource());
      query.setSql(adminComponentId,docType);
-     return query.execute();
+     col = query.execute();
+
+     Iterator iter = col.iterator();
+     while (iter.hasNext())
+     {
+       ReferenceDocument ref = (ReferenceDocument) iter.next();
+       ref.setAttachments(this.getAllReferenceDocumentAttachments(ref.getDocIDSeq()));
+     }
+     return col;
   }
-  
+
+  private List getAllReferenceDocumentAttachments(String refDocId)
+  {
+     ReferenceAttachmentsQuery query = new ReferenceAttachmentsQuery(getDataSource());
+     return query.execute(refDocId);
+
+  }
 
   private JDBCAdminComponentDAO.HasCreateQuery getHasCreateQry() {
     if (hasCreateQry == null) {
@@ -143,17 +154,17 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
   public int assignClassification(
     String acId,
     String csCsiId) {
-    
+
     try {
       InsertAcCsi insertAcCsi =
 	new InsertAcCsi(this.getDataSource());
       int res = insertAcCsi.insertOneAcCsiRecord(csCsiId, acId);
-      
+
     } catch (DataIntegrityViolationException e) {
 
         DMLException dmlExp = new DMLException("Did not succeed. Classification is already assigned.");
         dmlExp.setErrorCode(ERROR_DUPLICATE_CLASSIFICATION);
-         throw dmlExp;      
+         throw dmlExp;
     }
 
     return 1;
@@ -174,7 +185,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     if (res != 1) {
          DMLException dmlExp = new DMLException("Did not succeed removing classification for an AC.");
 	       dmlExp.setErrorCode(ERROR_REMOVEING_CLASSIFICATION);
-           throw dmlExp;        
+           throw dmlExp;
     }
 
     return 1;
@@ -196,11 +207,11 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     if (res != 1) {
          DMLException dmlExp = new DMLException("Did not succeed removing classification for an AC.");
 	       dmlExp.setErrorCode(ERROR_REMOVEING_CLASSIFICATION);
-           throw dmlExp;        
-    }    
+           throw dmlExp;
+    }
     return 1;
   }
-  
+
   /**
    * Retrieves all the assigned classifications for an admin component
    *
@@ -234,29 +245,29 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     else
      return false;
   }
-  
+
   // Publish ChangeOrder
   /**
    * Gets all CSI by funtion and admin Component type
    *
    * @param <b>acId</b> Idseq of an admin component
    *
-   * 
-   */  
+   *
+   */
   public Collection getCSIByType(String csType, String csiType, String contextIdseq)
     {
       CSCSIsByTypeQuery query = new CSCSIsByTypeQuery(getDataSource());
       return query.getCSCSIs(csType,csiType,contextIdseq);
     }
-    
+
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
-    JDBCAdminComponentDAO jdbcAdminComponentDAO = 
+    JDBCAdminComponentDAO jdbcAdminComponentDAO =
       new JDBCAdminComponentDAO(locator);
 
-    /*  
+    /*
     int res = jdbcAdminComponentDAO.assignClassification(
-      "99BA9DC8-2357-4E69-E034-080020C9C0E0", 
+      "99BA9DC8-2357-4E69-E034-080020C9C0E0",
       "29A8FB30-0AB1-11D6-A42F-0010A4C1E842"); // acId, csCsiId
     System.out.println ("res = " + res);
     */
@@ -269,7 +280,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       "29A8FB19-0AB1-11D6-A42F-0010A4C1E842");
     System.out.println (csito);
   }
-  
+
   /**
    * Inner class that checks if the user has a create privilege on the
    * administered component within the context
@@ -382,8 +393,8 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
   }
 
   /**
-   * Inner class that insert a record in the ac_csi table. 
-   * 
+   * Inner class that insert a record in the ac_csi table.
+   *
    */
   private class InsertAcCsi extends SqlUpdate {
     public InsertAcCsi(DataSource ds) {
@@ -419,8 +430,8 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
   }
 
   /**
-   * Inner class that delete a record in the ac_csi table. 
-   * 
+   * Inner class that delete a record in the ac_csi table.
+   *
    */
   private class DeleteAcCsi extends SqlUpdate {
     public DeleteAcCsi(DataSource ds) {
@@ -457,13 +468,13 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
     public void setSql() {
       super.setSql(
-        "SELECT csi.csi_name, csi.csitl_name, csi.csi_idseq, " + 
-        "       cscsi.cs_csi_idseq, cs.preferred_definition, cs.long_name, " + 
-        "        accsi.ac_csi_idseq, cs.cs_idseq " + 
-        " FROM ac_csi accsi, cs_csi cscsi, " + 
-        "      class_scheme_items csi, classification_schemes cs  " + 
-        " WHERE accsi.ac_idseq = ?  " + 
-        " AND   accsi.cs_csi_idseq = cscsi.cs_csi_idseq " + 
+        "SELECT csi.csi_name, csi.csitl_name, csi.csi_idseq, " +
+        "       cscsi.cs_csi_idseq, cs.preferred_definition, cs.long_name, " +
+        "        accsi.ac_csi_idseq, cs.cs_idseq " +
+        " FROM ac_csi accsi, cs_csi cscsi, " +
+        "      class_scheme_items csi, classification_schemes cs  " +
+        " WHERE accsi.ac_idseq = ?  " +
+        " AND   accsi.cs_csi_idseq = cscsi.cs_csi_idseq " +
         " AND   cscsi.csi_idseq = csi.csi_idseq " +
         " AND   cscsi.cs_idseq = cs.cs_idseq " );
 
@@ -475,7 +486,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       int rownum) throws SQLException {
       CSITransferObject csito = new CSITransferObject();
 
-      csito.setClassSchemeItemName(rs.getString(1)); 
+      csito.setClassSchemeItemName(rs.getString(1));
       csito.setClassSchemeItemType(rs.getString(2));
       csito.setCsiIdseq(rs.getString(3));
       csito.setCsCsiIdseq(rs.getString(4));
@@ -498,11 +509,14 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
     public void setSql(String adminCompId,String docType) {
       super.setSql(
-        "SELECT ref.name, ref.dctl_name, ref.ac_idseq, " + 
-        "       ref.rd_idseq, ref.url, ref.doc_text " + 
-        " FROM reference_documents ref" +
+        "SELECT ref.name, ref.dctl_name, ref.ac_idseq, " +
+        "       ref.rd_idseq, ref.url, ref.doc_text, " +
+        " ref.conte_idseq, con.name" +
+        " FROM reference_documents ref, contexts con" +
         " WHERE ref.ac_idseq = '" +adminCompId+"'"+
-        " AND   ref.DCTL_NAME = '"+ docType+"'");
+//        " AND   ref.DCTL_NAME = '"+ docType+"'" +
+        " AND ref.conte_idseq = con.conte_idseq "
+        );
     }
 
     protected Object mapRow(
@@ -515,9 +529,41 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       refDoc.setDocIDSeq(rs.getString(4));
       refDoc.setUrl(rs.getString(5));
       refDoc.setDocText(rs.getString(6));
+
+      ContextTransferObject contextTransferObject = new ContextTransferObject();
+      contextTransferObject.setConteIdseq(rs.getString(7)); //CONTE_IDSEQ
+      contextTransferObject.setName(rs.getString(8)); // CONTEXT_NAME
+      refDoc.setContext(contextTransferObject);
       return refDoc;
     }
   }
+  /**
+   * Inner class to get all ReferenceDocuments that belong to
+   * the specified Admin Component
+   */
+  class ReferenceAttachmentsQuery extends MappingSqlQuery {
+    ReferenceAttachmentsQuery(DataSource ds) {
+    super( ds,
+      "SELECT refb.name, refb.mime_type, refb.doc_size " +
+        " FROM reference_blobs refb" +
+        " WHERE refb.rd_idseq = ?");
+      declareParameter(new SqlParameter("refDocId", Types.VARCHAR));
+      compile();
+    }
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      Attachment attachment = new AttachmentTransferObject();
+
+      attachment.setName(rs.getString(1));
+      attachment.setMimeType(rs.getString(2));
+      attachment.setDocSize(rs.getLong(3));
+      return attachment;
+    }
+  }
+
+
   //Change Order
   class PublishClassificationQuery extends MappingSqlQuery {
     PublishClassificationQuery(DataSource ds) {
@@ -541,14 +587,14 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
       return findObject(obj);
     }
-    
+
     protected Object mapRow(
       ResultSet rs,
       int rownum) throws SQLException {
       return new Integer(rs.getInt(1));
     }
   }
-  
+
     //Publish Change Order
   class CSCSIsByTypeQuery extends MappingSqlQuery {
     CSCSIsByTypeQuery(DataSource ds) {
@@ -559,7 +605,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 	   			+" where cs.CSTL_NAME=? and i.CSITL_NAME=? "
 					+" and cscsi.CSI_IDSEQ=i.CSI_IDSEQ "
 					+" and cscsi.CS_IDSEQ=cs.CS_IDSEQ "
-          +" and cs.CONTE_IDSEQ=? ");     
+          +" and cs.CONTE_IDSEQ=? ");
 
       declareParameter(new SqlParameter("CSTL_NAME", Types.VARCHAR));
       declareParameter(new SqlParameter("CSITL_NAME", Types.VARCHAR));
@@ -572,7 +618,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       int rownum) throws SQLException {
       return rs.getString("CS_CSI_IDSEQ");
     }
-    
+
     protected Collection getCSCSIs(
       String csType,
       String csiType,
@@ -589,12 +635,12 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       return execute(obj);
     }
   }
-  
+
   //Publish Chnage Order
 
   /**
-   * Inner class that delete a record in the ac_csi table. 
-   * 
+   * Inner class that delete a record in the ac_csi table.
+   *
    */
   private class DeleteCSIForAdminComp extends SqlUpdate {
     public DeleteCSIForAdminComp(DataSource ds) {
@@ -605,7 +651,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       this.setSql(deleteSql);
       declareParameter(new SqlParameter("cs_csi_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("ac_idseq", Types.VARCHAR));
-      
+
       compile();
     }
 
@@ -620,5 +666,5 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
       return res;
     }
-  }   
+  }
 }
