@@ -120,7 +120,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     ServiceLocator locator = new SimpleServiceLocator();
     JDBCQuestionDAO test = new JDBCQuestionDAO(locator);
 
-    Collection result =
+    /*Collection result =
       test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
     Iterator iterator = result.iterator();
 
@@ -154,7 +154,18 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
          System.out.println("******Printing DMLException*******");
          de.printStackTrace();
          System.out.println("******Finishing printing DMLException*******");
+       }*/
+
+       try
+       {
+         int res = test.updateQuestionDEAssociation("A65D6B91-7ADE-4288-E034-0003BA0B1A09"
+                       ,"A67221F9-BDCF-4BFB-E034-0003BA0B1A09");
+      System.out.println("here");
+      System.out.println("\n*****Update DE Result 1: " + res);
        }
+    catch (DMLException de) {
+      de.printStackTrace();
+    }
     /*
     // test for deleteQuestion
     try {
@@ -167,13 +178,13 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     */
     
     // test for updateDisplayOrder
-    try {
+    /*try {
       int res = test.updateDisplayOrder("D458E178-32A5-7522-E034-0003BA0B1A09", 7);
       System.out.println("\n*****Update Display Order 1: " + res);
     }
     catch (DMLException de) {
       de.printStackTrace();
-    }
+    }*/
   }
 
   /**
@@ -225,7 +236,19 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
   public int updateQuestionDEAssociation(
     String questionId,
     String newDEId) throws DMLException {
-    return 0;
+    UpdateQuestionDEAssociation nQuestion = new UpdateQuestionDEAssociation(this.getDataSource());
+    System.out.println("Start");
+    Map out = nQuestion.execute(
+      questionId,
+      newDEId,
+      "Me");
+
+    if ((out.get("p_return_code")) == null) {
+      return 0;
+    }
+    else {
+      throw new DMLException((String) out.get("p_return_desc"));
+    }
   }
 
   public int updateQuestionDEAssociation(
@@ -369,5 +392,34 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       return out;
     }
   }
-  
+ /**
+   * Inner class that copies the source form to a new form
+   */
+  private class UpdateQuestionDEAssociation extends StoredProcedure {
+    public UpdateQuestionDEAssociation(DataSource ds) {
+      super(ds, "sbrext_form_builder_pkg.update_de");
+      declareParameter(new SqlParameter("p_prm_qc_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_de_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_created_by", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
+      compile();
+    }
+
+    public Map execute(
+      String p_prm_qc_idseq,
+      String p_de_idseq,
+      String p_created_by) {
+      Map in = new HashMap();
+
+      in.put("p_prm_qc_idseq", p_prm_qc_idseq);
+      in.put("p_de_idseq", p_de_idseq);
+      in.put("p_created_by", p_created_by);
+      
+     System.out.println("start in");
+      Map out = execute(in);
+     System.out.println("start out");
+      return out;
+    }
+  } 
 }
