@@ -416,7 +416,7 @@ function listChanged(urlInfo) {
   else {
 %>
        <tr class="OraTabledata">
-         <td colspan="4">There are no reference documents for the value domain.</td>
+         <td colspan="5">There are no reference documents for the value domain.</td>
        </tr>
 <%
   }
