@@ -16,6 +16,8 @@
       <form-property name="jspClassification" type="java.lang.String"/>
       <form-property name="protocolLongName" type="java.lang.String"/>
       <form-property name="formIdSeq" type="java.lang.String"/>
+      <form-property name="sortField" type="java.lang.String"/>
+      <form-property name="sortOrder" type="java.lang.Integer"/>
     </form-bean>
     <form-bean name="hrefCRFForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
@@ -131,7 +133,14 @@
       validate="false">
       <forward name="success" path="/formbuilder/formbuilder.jsp"
         redirect="false"/>
-    </action>     
+    </action>    
+    <action name="searchForm" path="/sortFormSearchAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction"
+      validate="false">
+      <forward name="success" path="/formbuilder/formbuilder.jsp"
+        redirect="false"/>
+    </action>      
     <action name="hrefCRFForm" path="/formDetailsAction" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction"

@@ -4,6 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 
+/**
+ * This Class allows to sorta List Objects. Uses String "CompareIgnoreCase" to Compare attributes so
+ * only string attributes of the Object should be used for sorting.
+ * A Primary and Secondary field can be set. The order set used for sorting both 
+ * primary and secondary level. If non String fields are used for Sorting, a RuntimeException will
+ * be thrown
+ */
 public class StringPropertyComparator implements Comparator,SortableColumnHeader
 {
   
@@ -18,6 +25,17 @@ public class StringPropertyComparator implements Comparator,SortableColumnHeader
   {
     comparingClass = newComparingClass;
   }
+  /**
+   * Depending on the order set compares both primary and secondary fields.
+   * For order=ASCENDING
+   * -ve,0, +ve int value is returned depending on the if Obj1 is greater, equal
+   * or lesser than obj2 respectively
+   * For order=DESCENDING
+   * -ve,0, +ve int value is returned depending on the if Obj1 is lesser, equal
+   * or greater than obj2 respectively
+   * If the order
+   * 
+   */
   public int compare(Object obj1, Object obj2)
   {
     Object[] args = null;
@@ -121,9 +139,13 @@ public class StringPropertyComparator implements Comparator,SortableColumnHeader
   public void setRelativePrimary(String primary)
   {
     
-    secondaryField=primaryField;
-    secondaryMethod = primaryMethod;
-    primaryField=primary;
+    if(primaryField!=null&& primary.equalsIgnoreCase(primaryField))
+     {
+       return;
+     }
+     secondaryField=primaryField;
+     secondaryMethod = primaryMethod;
+     primaryField=primary;
      try{
       Class[] args = null;
       primaryMethod = comparingClass.getMethod(getMethodName(primary),args);

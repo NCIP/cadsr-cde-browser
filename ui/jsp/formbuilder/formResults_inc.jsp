@@ -1,4 +1,4 @@
-</SCRIPT>
+
 
  <script LANGUAGE="Javascript">
 <!---
@@ -25,11 +25,36 @@ if(confirm(message)) location.href = url;
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTableColumnHeader">
           	<th class="OraTableColumnHeader" nowrap>Action</th>
-          	<th class="OraTableColumnHeader" nowrap>Long Name</th>
+          	<th class="OraTableColumnHeader" nowrap>
+		        <cde:sortableColumnHeader
+            sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
+            ascendingImageUrl="i/up.gif"
+            descendingImageUrl="i/down.gif" 
+		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
+		   	   	columnHeader="Long Name" 
+            orderParamId="sortOrder" 
+		   	   	sortFieldId="sortField"
+		   	   	sortFieldValue = "longName"
+		   	   	target="_parent"
+            />   
+            </th>             
             <th class="OraTableColumnHeader" nowrap>Context</th>
           	<th class="OraTableColumnHeader" nowrap>Type</th>
             <th class="OraTableColumnHeader" nowrap>Protocol</th>
-          	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	
+          	<th class="OraTableColumnHeader" nowrap>
+			          
+		        <cde:sortableColumnHeader
+            sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
+            ascendingImageUrl="i/up.gif"
+            descendingImageUrl="i/down.gif" 
+		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
+		   	   	columnHeader="Workflow Status" 
+            orderParamId="sortOrder" 
+		   	   	sortFieldId="sortField"
+		   	   	sortFieldValue = "aslName"
+		   	   	target="_parent"
+            />                 
+            </th>         	
           </tr>        
           <logic:iterate id="form" name="<%=FormConstants.FORM_SEARCH_RESULTS%>" 
           	type="gov.nih.nci.ncicb.cadsr.resource.Form"

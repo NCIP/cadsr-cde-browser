@@ -236,5 +236,76 @@
     <required>true</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute>        
+  </tag> 
+  <tag>
+    <name>sortableColumnHeader</name>
+    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.SortableColumnHeaderDisplay</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+       This Tag is used to display Columnn header which is displayed
+       as a hyper link. Example usage:
+ 	 cde:sortableColumnHeader
+           sortableColumnHeaderBeanId="FormConstants.FORM_SEARCH_RESULT_COMPARATOR" 
+           ascendingImageUrl="i/up.gif"
+           descendingImageUrl="i/down.gif" 
+  		   actionUrl="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult" 
+  	   	   columnHeader="Workflow Status" 
+                   orderParamId="sortOrder" 
+  	    	   sortFieldId="sortField"
+  	   	   sortFieldValue = "aslName"
+  		   target="_parent"
+          
+     
+      Property "sortableColumnHeaderBeanId" defines the Id of a bean in session context which should
+        should be an implementation of SortableColumnHeader interface
+      Property "orderParamId" defines the parameter used to set sorting order in the request
+      Property "sortFieldId" defines the parameter used to set field that need to sorted order in the request
+      Property "sortFieldValue" defines the property ofthe Object in the List that need to be sorted 
+    </info>  
+    <attribute>
+    <name>sortableColumnHeaderBeanId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>      
+    <attribute>
+    <name>ascendingImageUrl</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>     
+    <attribute>
+    <name>descendingImageUrl</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>        
+    <attribute>
+    <name>actionUrl</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>      
+    <attribute>
+    <name>columnHeader</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>orderParamId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>sortFieldId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>     
+    <attribute>
+    <name>sortFieldValue</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>target</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>      
   </tag>   
 </taglib>

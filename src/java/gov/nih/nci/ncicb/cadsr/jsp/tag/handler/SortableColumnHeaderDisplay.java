@@ -8,6 +8,27 @@ import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 import gov.nih.nci.ncicb.cadsr.util.SortableColumnHeader;
 
+/**
+ * This Tag is used to display Columnn header which is displayed
+ * as a hyper link. Example usage:
+ * 		 <cde:sortableColumnHeader
+ *         sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
+ *         ascendingImageUrl="i/up.gif"
+ *         descendingImageUrl="i/down.gif" 
+ *		     actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
+ *	   	   columnHeader="Workflow Status" 
+ *         orderParamId="sortOrder" 
+ *	   	   sortFieldId="sortField"
+ *	   	   sortFieldValue = "aslName"
+ *		   	 target="_parent"
+ *      />  
+ *   
+ *  Property "sortableColumnHeaderBeanId" defines the Id of a bean in session context which should
+ *  should be an implementation of SortableColumnHeader interface
+ *  Property "orderParamId" defines the parameter used to set sorting order in the request
+ *  Property "sortFieldId" defines the parameter used to set field that need to sorted order in the request
+ *  Property "sortFieldValue" defines the property ofthe Object in the List that need to be sorted 
+ */
 public class SortableColumnHeaderDisplay extends TagSupport
 {
   
@@ -40,12 +61,12 @@ public class SortableColumnHeaderDisplay extends TagSupport
     if(sortableTableHeader.getOrder()==-1&&sortFieldValue.equalsIgnoreCase(sortableTableHeader.getPrimary()))
     {
       newOrderValue=1;
-      imageUrl="<img src=\""+descendingImageUrl+"\" border=0 >";
+      imageUrl="&nbsp;<img src=\""+descendingImageUrl+"\" border=0 >";
     }
     else if(sortableTableHeader.getOrder()==1&&sortFieldValue.equalsIgnoreCase(sortableTableHeader.getPrimary()))
     {
       newOrderValue=-1;
-      imageUrl="<img src=\""+ascendingImageUrl+"\" border=0 >";
+      imageUrl="&nbsp;<img src=\""+ascendingImageUrl+"\" border=0 >";
     }
     StringBuffer sb = new StringBuffer(req.getContextPath()+actionUrl);
     if(actionUrl.indexOf("=")!=-1)
