@@ -208,7 +208,7 @@ function clearProtocol() {
                                       name="params"
                                       scope="page"
                                       >
-                                      <img src="<%=urlPrefix%>i/edit.gif" border="0" alt="Change DE Association"/>
+                                      <img src="<%=urlPrefix%>i/association.gif" border="0" alt="Change DE Association"/>
                                     </html:link>
                                   </td>                                  
                                   <td align="center">

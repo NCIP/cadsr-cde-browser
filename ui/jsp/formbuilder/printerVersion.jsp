@@ -55,7 +55,30 @@
           <td  class="PrinterOraTableColumnHeader">
             <bean:write name="<%=FormConstants.CRF%>" property="protocol.longName"/>
           </td>
-        </tr>   
+        </tr>  
+        <tr class="PrinterOraTableColumnHeader">
+          <td  width="20%">
+            <bean:message key="cadsr.formbuilder.form.workflow"/>
+          </td>                
+          <td  class="PrinterOraTableColumnHeader">
+            <bean:write name="<%=FormConstants.CRF%>" property="aslName"/>
+          </td>
+        </tr>  
+        <tr class="PrinterOraTableColumnHeader">
+          <td  width="20%">
+            <bean:message key="cadsr.formbuilder.form.category"/>
+          </td>                
+          <td  class="PrinterOraTableColumnHeader">
+            <bean:write name="<%=FormConstants.CRF%>" property="formCategory"/>
+          </td>
+        </tr>  
+        <tr class="PrinterOraTableColumnHeader">
+          <td  width="20%">
+            <bean:message key="cadsr.formbuilder.form.type"/>
+          </td>                
+          <td  class="PrinterOraTableColumnHeader">
+            <bean:write name="<%=FormConstants.CRF%>" property="formType"/>
+          </td>        
       </table>
       <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         <tr >

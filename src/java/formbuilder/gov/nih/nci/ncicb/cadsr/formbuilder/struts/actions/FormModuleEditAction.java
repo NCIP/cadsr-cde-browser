@@ -849,7 +849,11 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
         
         List newVVList = currQuestion.getValidValues();
         if(!newVVList.isEmpty())
+        {
+          if(validValuesChanges==null)
+            validValuesChanges = new HashMap();
           validValuesChanges.put(this.NEW_VV_LIST,newVVList);
+        }
       }
       if(validValuesChanges!=null&&!validValuesChanges.isEmpty())
       {        

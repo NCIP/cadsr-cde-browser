@@ -45,6 +45,7 @@ public interface NavigationConstants
   public static final String MOVE_MODULE_DOWN="moveModuleDown"; 
   public static final String DELETE_MODULE="deleteModule";
   public static final String ADD_FROM_DELETED_LIST="addFromDeletedList";
+  public static final String CHECK_FOR_UPDATE="checkForUpdate";
   public static final String SAVE_FORM="saveForm";
  
 

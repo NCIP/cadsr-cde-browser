@@ -17,6 +17,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -341,9 +342,9 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     return forward;
   }
 
+
   /**
-   * Save Form. Persists only if there are changes to the form header or
-   * display order of modules have been changed Deleted Modules are deleted;
+   * Save Changes
    *
    * @param mapping The ActionMapping used to select this instance.
    * @param form The optional ActionForm bean for this request.
@@ -360,6 +361,82 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
+    Form crf = (Form) getSessionObject(request, CRF);
+    boolean hasUpdate  = setValuesForUpdate(mapping,form,request);
+    if(hasUpdate)
+    {
+        try {
+          FormBuilderServiceDelegate service = getFormBuilderService();
+          Form header = (Form)request.getAttribute("header");
+          Collection updatedModules = (Collection)request.getAttribute("updatedModules");
+          Collection deletedModules = (Collection)request.getAttribute("deletedModules");
+          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules);
+          setSessionObject(request,CRF, updatedCrf);
+        }
+        catch (FormBuilderException exp) {
+          if (log.isDebugEnabled()) {
+            log.debug("Exception on service.updateForm=  " + exp);
+          }
+  
+          saveMessage(ERROR_FORM_SAVE_FAILED, request);
+          saveMessage(exp.getErrorCode(), request);
+          return mapping.findForward(FAILURE);
+        }
+        saveMessage("cadsr.formbuilder.form.edit.save.success", request);
+        removeSessionObject(request, DELETED_MODULES);
+        removeSessionObject(request, CLONED_CRF);
+        return mapping.findForward(SUCCESS); 
+       }
+    else
+    {
+      saveMessage("cadsr.formbuilder.form.edit.nochange", request);
+       return mapping.findForward(FORM_EDIT); 
+    }
+    }
+
+  /**
+   * Cancel Edit and back to Search results
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward cancelFormEdit(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    FormBuilderBaseDynaFormBean editForm = (FormBuilderBaseDynaFormBean) form;
+    removeSessionObject(request, DELETED_MODULES);
+    removeSessionObject(request, CLONED_CRF);
+    editForm.clear();
+    return mapping.findForward(SUCCESS);
+      
+    }
+
+  /**
+   * Check if there are updated to form and set the value in the request
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  private boolean setValuesForUpdate(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request)  {
     DynaActionForm editForm = (DynaActionForm) form;
     Form clonedCrf = (Form) getSessionObject(request, CLONED_CRF);
     Form crf = (Form) getSessionObject(request, CRF);
@@ -467,70 +544,25 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       headerUpdate = true;
     }
     
-    List updatedModules =
-      getUpdatedModules(clonedCrf.getModules(), crf.getModules());
-    FormBuilderServiceDelegate service = getFormBuilderService();
-    boolean formUpdated = false;
-
+   List updatedModules =
+       getUpdatedModules(clonedCrf.getModules(), crf.getModules());
+    if(!headerUpdate)
+       header=null;
     if (
-      headerUpdate || ((deletedModules != null) && !deletedModules.isEmpty()) ||
+        header!=null || ((deletedModules != null) && !deletedModules.isEmpty()) ||
           !updatedModules.isEmpty()) {
-
-      try {
-        if(!headerUpdate)
-          header=null;
-        Form updatedCrf = service.updateForm(header, updatedModules, deletedModules);
-        setSessionObject(request,CRF, updatedCrf);
-        formUpdated = true;
+        request.setAttribute("header",header);
+        request.setAttribute("updatedModules",updatedModules);
+        request.setAttribute("deletedModules",deletedModules);
+        return true;
       }
-      catch (FormBuilderException exp) {
-        if (log.isDebugEnabled()) {
-          log.debug("Exception on service.updateForm=  " + exp);
-        }
-
-        saveMessage(ERROR_FORM_SAVE_FAILED, request);
-        saveMessage(exp.getErrorCode(), request);
-        return mapping.findForward(FAILURE);
-      }
-    }
-
-    if (formUpdated) { // move to FormDetails Page
-      saveMessage("cadsr.formbuilder.form.edit.save.success", request);
-      removeSessionObject(request, DELETED_MODULES);
-      removeSessionObject(request, CLONED_CRF);
-      return mapping.findForward(SUCCESS);
-    }
-    else { // stay on the same Page
-      saveMessage("cadsr.formbuilder.form.edit.nochange", request);
-      return mapping.findForward(FORM_EDIT);
+    else
+    {
+      return false;      
     }
   }
-
-  /**
-   * Cancel Edit and back to Search results
-   *
-   * @param mapping The ActionMapping used to select this instance.
-   * @param form The optional ActionForm bean for this request.
-   * @param request The HTTP Request we are processing.
-   * @param response The HTTP Response we are processing.
-   *
-   * @return
-   *
-   * @throws IOException
-   * @throws ServletException
-   */
-  public ActionForward cancelFormEdit(
-    ActionMapping mapping,
-    ActionForm form,
-    HttpServletRequest request,
-    HttpServletResponse response) throws IOException, ServletException {
-    FormBuilderBaseDynaFormBean editForm = (FormBuilderBaseDynaFormBean) form;
-    removeSessionObject(request, DELETED_MODULES);
-    removeSessionObject(request, CLONED_CRF);
-    editForm.clear();
-    return mapping.findForward(SUCCESS);
-      
-    }
+    
+    
   /**
    * Removes the module given by "moduleIdSeq" from the module list
    *

@@ -81,6 +81,30 @@
             <bean:write name="<%=FormConstants.CRF%>" property="protocol.longName"/>
           </td>
         </tr>   
+        <tr class="OraTabledata">
+          <td class="TableRowPromptTextLeft"  width="20%">
+            <bean:message key="cadsr.formbuilder.form.workflow"/>
+          </td>                
+          <td  class="OraFieldText">
+            <bean:write name="<%=FormConstants.CRF%>" property="aslName"/>
+          </td>
+        </tr>  
+        <tr class="OraTabledata">
+          <td class="TableRowPromptTextLeft"  width="20%">
+            <bean:message key="cadsr.formbuilder.form.category"/>
+          </td>                
+          <td  class="OraFieldText">
+            <bean:write name="<%=FormConstants.CRF%>" property="formCategory"/>
+          </td>
+        </tr>  
+        <tr class="OraTabledata">
+          <td class="TableRowPromptTextLeft"  width="20%">
+            <bean:message key="cadsr.formbuilder.form.type"/>
+          </td>                
+          <td  class="OraFieldText">
+            <bean:write name="<%=FormConstants.CRF%>" property="formType"/>
+          </td>
+        </tr>          
       </table>
       <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         <tr >
