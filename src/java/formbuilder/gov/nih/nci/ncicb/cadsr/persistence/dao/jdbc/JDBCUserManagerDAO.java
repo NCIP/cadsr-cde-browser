@@ -11,6 +11,7 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl;
 
+import java.sql.Connection;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.RowCallbackHandler;
@@ -64,15 +65,24 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
     String userName,
     String password) {
     boolean validUser = false;
-
+    Connection conn = null;
     try {
-      this.getDataSource().getConnection(userName, password);
+      conn = getDataSource().getConnection(userName, password);
       validUser = true;
     }
     catch (SQLException e) {
       validUser = false;
     }
-
+    finally
+    {
+      try{
+       if(conn!=null)
+        conn.close();
+      }
+      catch(Exception exp)
+      {        
+      }
+    }
     return validUser;
   }
 
