@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
+
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 
@@ -13,10 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+
 
 public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
   public JDBCQuestionDAO(ServiceLocator locator) {
@@ -32,16 +34,11 @@ public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
    */
   public Collection getValidValues(String questionId) {
     Collection col = new ArrayList();
-    ValidValuesInAModuleQuery query = new ValidValuesInAModuleQuery();
+    ValidValuesForAQuestionQuery query = new ValidValuesForAQuestionQuery();
     query.setDataSource(getDataSource());
     query.setSql();
 
     return query.execute(questionId);
-  }
-
-  public Question createQuestionComponent(Question newQuestion)
-    throws DMLException {
-    return null;
   }
 
   public Question addValidValues(
@@ -68,29 +65,53 @@ public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
 
   /**
    * Test application
-   * 
    */
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
     JDBCQuestionDAO test = new JDBCQuestionDAO(locator);
-    
-    Collection result = test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
 
-    Iterator iterator = result.iterator(); 
+    Collection result =
+      test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
+
+    Iterator iterator = result.iterator();
+
     /*
-		while(iterator.hasNext()) {
-      System.out.println("Valid Value: " + 
-        ((JDBCFormValidValueTransferObject)iterator.next()).toString());
-    }
-    */
+       while(iterator.hasNext()) {
+       System.out.println("Valid Value: " +
+         ((JDBCFormValidValueTransferObject)iterator.next()).toString());
+       }
+     */
+  }
+
+  public int createQuestionComponent(Question newQuestion)
+    throws DMLException {
+    return 0;
+  }
+
+  public int updateQuestionDEAssociation(
+    String questionId,
+    String newDEId) throws DMLException {
+    return 0;
+  }
+
+  public int updateQuestionDEAssociation(
+    String questionId,
+    String newDEId,
+    String newLongName) throws DMLException {
+    return 0;
+  }
+
+  public int createQuestionComponents(Collection questions)
+    throws DMLException {
+    return 0;
   }
 
   /**
    * Inner class that accesses database to get all the questions that belong to
    * the specified module
    */
-  class ValidValuesInAModuleQuery extends MappingSqlQuery {
-    ValidValuesInAModuleQuery() {
+  class ValidValuesForAQuestionQuery extends MappingSqlQuery {
+    ValidValuesForAQuestionQuery() {
       super();
     }
 

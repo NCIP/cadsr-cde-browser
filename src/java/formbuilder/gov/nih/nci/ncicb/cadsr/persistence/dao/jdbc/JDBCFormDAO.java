@@ -5,6 +5,7 @@ import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
@@ -108,25 +109,42 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
+
     //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
     // type, classificationIdseq
+
     /*
-    System.out.println(formTest.getAllForms(
-      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "",
-      "99BA9DC8-A622-4E69-E034-080020C9C0E0"));
-    System.out.println(formTest.getAllForms(
-      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", null));
-    */
+       System.out.println(formTest.getAllForms(
+         "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "",
+         "99BA9DC8-A622-4E69-E034-080020C9C0E0"));
+       System.out.println(formTest.getAllForms(
+         "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", null));
+     */
     System.out.println(
       formTest.getModulesInAForm("99CD59C5-A9A0-3FA4-E034-080020C9C0E0"));
 
     String formId = "99CD59C5-A9A0-3FA4-E034-080020C9C0E0";
+
     try {
       System.out.println(formTest.findFormByPrimaryKey(formId));
     }
     catch (DMLException e) {
       System.out.println("Failed to get a form for " + formId);
     }
+  }
+
+  public Form addModule(
+    String formId,
+    Module module) throws DMLException {
+    return null;
+  }
+
+  public int updateFormComponent(Form newForm) throws DMLException {
+    return 0;
+  }
+
+  public int deleteForm(String formId) throws DMLException {
+    return 0;
   }
 
   /**
@@ -213,6 +231,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       String where = "";
       StringBuffer whereBuffer = new StringBuffer("");
       boolean hasWhere = false;
+
       if (StringUtils.doesValueExist(formName)) {
         String temp = StringUtils.strReplace(formName, "*", "%");
 

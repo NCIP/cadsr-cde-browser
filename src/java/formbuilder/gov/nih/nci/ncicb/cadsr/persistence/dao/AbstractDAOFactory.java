@@ -31,6 +31,14 @@ public abstract class AbstractDAOFactory implements PersistenceConstants {
 
   public abstract WorkFlowStatusDAO getWorkFlowStatusDAO();
 
+  public abstract FormInstructionDAO getFormInstructionDAO ();
+
+  public abstract ModuleInstructionDAO getModuleInstructionDAO ();
+
+  public abstract QuestionInstructionDAO getQuestionInstructionDAO ();
+
+  public abstract FormValidValueInstructionDAO getFormValidValueInstructionDAO ();
+
   public static AbstractDAOFactory getDAOFactory(ServiceLocator locator)
     throws DAOCreateException {
     AbstractDAOFactory factory = null;

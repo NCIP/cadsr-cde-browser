@@ -6,9 +6,13 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DAOCreateException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormCategoryDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.FormInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormValidValueDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.FormValidValueInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.WorkFlowStatusDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.*;
@@ -114,6 +118,54 @@ public class JDBCDAOFactory extends AbstractDAOFactory
     if (myDAO == null) {
       myDAO = new JDBCWorkFlowStatusDAO(serviceLocator);
       daoCache.put(JDBC_WK_FLOW_STATUS_DAO, myDAO);
+    }
+
+    return myDAO;
+  }
+
+  public FormInstructionDAO getFormInstructionDAO() {
+    FormInstructionDAO myDAO =
+      (JDBCFormInstructionDAO) daoCache.get(JDBC_FORM_INSTR_DAO);
+
+    if (myDAO == null) {
+      myDAO = new JDBCFormInstructionDAO(serviceLocator);
+      daoCache.put(JDBC_FORM_INSTR_DAO, myDAO);
+    }
+
+    return myDAO;
+  }
+
+  public FormValidValueInstructionDAO getFormValidValueInstructionDAO() {
+    FormValidValueInstructionDAO myDAO =
+      (JDBCFormValidValueInstructionDAO) daoCache.get(JDBC_VALUE_INSTR_DAO);
+
+    if (myDAO == null) {
+      myDAO = new JDBCFormValidValueInstructionDAO(serviceLocator);
+      daoCache.put(JDBC_VALUE_INSTR_DAO, myDAO);
+    }
+
+    return myDAO;
+  }
+
+  public ModuleInstructionDAO getModuleInstructionDAO() {
+    ModuleInstructionDAO myDAO =
+      (JDBCModuleInstructionDAO) daoCache.get(JDBC_MODULE_INSTR_DAO);
+
+    if (myDAO == null) {
+      myDAO = new JDBCModuleInstructionDAO(serviceLocator);
+      daoCache.put(JDBC_MODULE_INSTR_DAO, myDAO);
+    }
+
+    return myDAO;
+  }
+
+  public QuestionInstructionDAO getQuestionInstructionDAO() {
+    QuestionInstructionDAO myDAO =
+      (JDBCQuestionInstructionDAO) daoCache.get(JDBC_QUESTION_INSTR_DAO);
+
+    if (myDAO == null) {
+      myDAO = new JDBCQuestionInstructionDAO(serviceLocator);
+      daoCache.put(JDBC_QUESTION_INSTR_DAO, myDAO);
     }
 
     return myDAO;
