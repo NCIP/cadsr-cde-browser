@@ -90,7 +90,11 @@ public class ManageClassificationsAction extends FormBuilderSecureBaseDispatchAc
                 String id = ids[i];
 
                 if ((id != null) && (id.length() > 0)) {
+		  try {
                     service.assignFormClassification(crf.getFormIdseq(), id);
+		  } catch (FormBuilderException e){
+		    saveError("cadsr.formbuilder.classification.add.duplicateError", request);
+		  } // end of try-catch
                 }
             }
 
@@ -101,7 +105,7 @@ public class ManageClassificationsAction extends FormBuilderSecureBaseDispatchAc
             if (log.isDebugEnabled()) {
                 log.debug("Exception on getAssociations =  " + exp);
             }
-	    saveError("cadsr.formbuilder.classification.add.duplicateError", request);
+	    saveError("cadsr.formbuilder.classification.add.unexpected", request);
 	    return mapping.findForward("failure");
         }
 
