@@ -51,4 +51,14 @@ public class CancelAction extends FormBuilderBaseDispatchAction {
 
         return mapping.findForward("gotoSearch");
     }
+    
+    public ActionForward gotoManageClassifications(ActionMapping mapping, ActionForm form,
+        HttpServletRequest request, HttpServletResponse response)
+        throws IOException, ServletException {
+
+//         ((DynaActionForm]) form).set(METHOD_PARAM, GET_ALL_FORMS_METHOD);
+
+        return mapping.findForward("gotoManageClassifications");
+    }
+
 }

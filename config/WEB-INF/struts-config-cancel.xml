@@ -10,6 +10,7 @@
       <forward name="gotoModuleEdit" path="/formbuilder/moduleEdit.jsp"/>
       <forward name="gotoFormEdit" path="/formbuilder/formEdit.jsp"/>
       <forward name="gotoSearch" path="/formSearchAction.do?method=getAllForms"/>
+      <forward name="gotoManageClassifications" path="/formbuilder/manageClassifications.jsp"/>
     </action>
   </action-mappings>
 
