@@ -166,7 +166,7 @@ public class GetXMLDownload extends BasePersistingProcess {
                         ", \"ValueDomain\" " +
                         ", \"ReferenceDocumentsList\" " +
                         ", \"ClassificationsList\" " +
-                        ", \"DesignationsList\" " +
+                        ", \"AlternateNameList\" " +
                         ", \"DataElementDerivation\" " +
                    " FROM sbrext.DE_XML_GENERATOR_VIEW ";
 

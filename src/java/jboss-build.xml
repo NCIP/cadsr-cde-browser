@@ -18,12 +18,6 @@
   <property file="build.properties"/>
   
    <!-- Make sure these are correct for your instance -->
-   <property name="deploy.ormi" value="ormi://localhost" />
-   <property name="deploy.username" value="admin" />
-   <property name="deploy.password" value="oracle" /> 
-   <property name="oc4j.j2ee.home" value="D:/tools/oracle/oc4j/902_FB/j2ee/home" /> 
-   <property name="oc4j.start.script.name" value="debugoc4j.bat" />
-   <property name="oc4j.admin.jar.name" value="admin" /> 
   
    <property name="jboss.home" value="D:/tools/other/jboss-4.0.0" /> 
    <property name="jboss.start.script.name" value="run.bat" />
@@ -62,17 +56,16 @@
   
   <property name="app.docs.dir" value="${project.home}/docs" /> 
   <property name="app.docs.setup.dir" value="${project.home}/docs/setup" />  
-  <property name="app.setup.oc4j.install.name" value="Install_CDBrowser_9ias.txt" />
-  <property name="app.setup.9ias.install.name" value="Install_CDBrowser_on_OC4J.txt" />
+  <property name="app.setup.jboss.install.name" value="Install_CDBrowser_on_JBOSS.txt" />
+  <property name="app.setup.jboss.oracle.datasource.filename" value="oracle-ds.xml" />
 
   
    <!-- Open Source file names This need to updated by release-->
-  <property name="app.setup.oc4j.install.out.name" value="Install_CDBrowser_2.1.1_9ias.txt" />
-  <property name="app.setup.9ias.install.out.name" value="Install_CDBrowser_2.1.1_on_OC4J.txt" />  
-  <property name="download.file.name.unix" value="CDEBrowser_Unix_2.1.1" />
-  <property name="download.file.name.windows" value="CDEBrowser_Windows_2.1.1" />
-  <property name="open.source.file.name.windows" value="CDEBrowser_src_2.1.1(Windows)" />
-  <property name="open.source.file.name.unix" value="CDEBrowser_src_2.1.1(Unix)" />  
+  <property name="app.setup.jboss.install.out.name" value="Install_CDBrowser_3.0_on_Jboss.txt" />  
+  <property name="download.file.name.unix" value="CDEBrowser_Unix_3.0" />
+  <property name="download.file.name.windows" value="CDEBrowser_Windows_3.0" />
+  <property name="open.source.file.name.windows" value="CDEBrowser_src_3.0(Windows)" />
+  <property name="open.source.file.name.unix" value="CDEBrowser_src_3.0(Unix)" />  
   
   
     <!-- Open source directoris -->
@@ -86,7 +79,7 @@
   <property name="open.source.readme.name" value="source_readme" /> 
   
   <!-- base dir in the zip file -->
-  <property name="open.source.dir.base.name" value="cdebrowser2_1" />    
+  <property name="open.source.dir.base.name" value="cdebrowser3_0" />    
 
   <!-- =========== CLEAN BUILD AREA ======================= -->
     
@@ -229,25 +222,7 @@
         </jar>
       </target>
   <!-- =========== END COMMON JAR PROCESS ======================= -->
-
-  <!-- ============ CREATE SECURITY JAR FILE ================== -->
-    <target name="jar_security" depends="compile,jar_common,jar_persistence_form">
-        <jar jarfile="${classes.build.dir}/security.jar">
-          <fileset dir="${classes.build.dir}">
-            <patternset>
-              <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/BaseUserManager.class"/>
-              <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/DBUserManager.class"/>
-              <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/OC4JUserObject.class"/>
-            </patternset>
-          </fileset>  
-            <manifest>
-        	<attribute name="Built-By" value="${user.name}"/>
-               <attribute name="Class-Path" 
-                  value="common.jar persistence_form.jar spring.jar spring-jdbc.jar"/>
-            </manifest>           
-        </jar>
-      </target>
-  <!-- =========== END COMMON JAR PROCESS ======================= -->    
+  
   
   <!-- =========== DEV CONFIG ======================= -->
     <target name="dev_config" depends="init">          
@@ -369,9 +344,16 @@
   
     <!-- =========== Opensource CONFIG ======================= -->
     
-    <target name="opensource_config" depends="init,dev_config">    
-      <delete file="${classes.build.dir}/META-INF/data-sources.xml" failonerror="false"/>
-         
+    <target name="opensource_config" depends="init,dev_config"> 
+    
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.qa}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy> 
+        
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
          <fileset dir="${config.opensource}/connections">
            <patternset>
@@ -393,7 +375,7 @@
 
   <!-- =========== START WAR PROCESS ======================= -->
   
-   <target name="war_cdebrowser" depends="compile,jar_security">  
+   <target name="war_cdebrowser" depends="compile">  
 
      <copy todir="${classes.build.dir}/WEB-INF/classes">      
          <fileset dir="${java.src.dir}">
@@ -636,18 +618,6 @@
          <fileset dir="${java.src.dir}">
            <patternset>
              <include name="**/*.xml"/>
-             <include name="**/*.java"/>
-           </patternset>
-         </fileset>      
-         <fileset dir="${common.java.src.dir}">
-           <patternset>
-             <include name="**/*.xml"/>
-             <include name="**/*.java"/>
-           </patternset>
-         </fileset>   
-         <fileset dir="${java.src.dir}">
-           <patternset>
-             <include name="**/*.xml"/>
              <include name="**/*.properties"/>
              <include name="**/*.java"/>
            </patternset>
@@ -655,9 +625,9 @@
       </copy>    
     <!-- copy config -->
      <copy todir="${open.source.dir.raw.config}">      
-         <fileset dir="${config.home}">
+         <fileset dir="${config.opensource}">
            <patternset>
-             <include name="connections/*.*"/>
+             <include name="connections/${app.setup.jboss.oracle.datasource.filename}"/>
            </patternset>
          </fileset>               
       </copy>   
@@ -749,53 +719,7 @@
 
  <!-- =========== Deployment targets below ======================= -->
  
-   <target  name="ear_undeploy" depends="init">       
-     <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
-       <arg value="${deploy.ormi}" /> 
-       <arg value="${deploy.username}" /> 
-       <arg value="${deploy.password}" /> 
-       <arg value="-undeploy" /> 
-       <arg value="${app.name}" /> 
-       <arg value="-remove" /> 
-       <classpath> 
-         <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
-       </classpath> 
-     </java> 
-   </target>  
-   
-   <target  name="oc4j_stop" depends="init">       
-        <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
-          <arg value="${deploy.ormi}" /> 
-          <arg value="${deploy.username}" /> 
-          <arg value="${deploy.password}" /> 
-          <arg value="-shutdown" /> 
-          <classpath> 
-            <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
-          </classpath> 
-        </java> 
-   </target>    
-   
-   <target  name="clean_oc4j" depends="init">       
-	<delete dir="${oc4j.j2ee.home}/applications/${app.name}" failonerror="false"/>
-	<delete dir="${oc4j.j2ee.home}/application-deployments/${app.name}" failonerror="false"/>
-	<delete file="${oc4j.j2ee.home}/applications/${ear.name}.ear" failonerror="false"/>
-   </target>    
-   
-   <target  name="ear_deploy" depends="dev_config,ear_cdebrowser"> 
-        <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
-          <arg value="${deploy.ormi}" /> 
-          <arg value="${deploy.username}" /> 
-          <arg value="${deploy.password}" /> 
-          <arg value="-deploy" /> 
-          <arg value="-file" /> 
-          <arg value="${build.dir}/${ear.name}.ear" /> 
-          <arg value="-deploymentName" /> 
-          <arg value="${app.name}" /> 
-          <classpath> 
-            <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
-          </classpath> 
-        </java> 
-   </target> 
+
      
    <target name="jboss_stop">
            <exec executable="cmd.exe" spawn="true" os="Windows 2000">
@@ -914,15 +838,16 @@
               </copy> 
                               
                <native2ascii src="${app.docs.setup.dir}" dest="${build.dir}/download/"
-               includes="${app.setup.oc4j.install.name}"               
+               includes="${app.setup.jboss.install.name}"               
                />     
-               <move file="${build.dir}/download/${app.setup.oc4j.install.name}"
-                    tofile="${build.dir}/download/${app.setup.oc4j.install.out.name}"/>
-               <native2ascii src="${app.docs.setup.dir}" dest="${build.dir}/download/"
-               includes="${app.setup.9ias.install.name}"               
-               />    
-               <move file="${build.dir}/download/${app.setup.9ias.install.name}" 
-                    tofile="${build.dir}/download/${app.setup.9ias.install.out.name}"/>
+               <move file="${build.dir}/download/${app.setup.jboss.install.name}"
+                    tofile="${build.dir}/download/${app.setup.jboss.install.out.name}"/>
+                    
+               <native2ascii src="${config.opensource}/connections" dest="${build.dir}/download/"
+               includes="${app.setup.jboss.oracle.datasource.filename}"               
+               />     
+                    
+   
             <zip destfile="${dist.dir}/${download.file.name.windows}.zip"
                  basedir="${build.dir}/download"
                  update="true" />      
@@ -952,19 +877,11 @@
        jar_formbuilder_ejb    - Create formbuilder ejb
        jar_persistence_form   - Creates form builder persistence jar
        jar_common	      - Creates common jar
-       jar_security	      - Create security jar
-       oc4j_stop	      - Stop the oc4j instance
-       clean_oc4j	      - Clean oc4j application deployment directories
        ear_deploy	      - Deploy the application ear(Developement)
        bind_web_app	      - Binds the web app(Developement)
        deploy_cdebrowser      - Deploy the application and binds the web app(Developement)
        ear_undeploy	      - Undeploy the application(Developement)
-       copy_ear_oc4j	      - Copy application ear to oc4j(Developement)
-       oc4j_start	      - start oc4j(Developement)
-       clean_build_redeploy   - Does the following targets clean
-       				,dev_config,ear_cdebrowser,oc4j_stop
-       				,clean_oc4j, oc4j_copy_ear (Developement)
-       clean_build_redeploy_restart - clean_build_redeploy,oc4j_start(Developement)
+
        
        dist_dev		      - Creates Developement Clean distribution.
        dist_qa		      - Creates QA Clean distribution.

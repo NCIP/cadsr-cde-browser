@@ -4,7 +4,7 @@
 <!--  JBoss Server Configuration                                           -->
 <!--                                                                       -->
 <!-- ===================================================================== -->
-<!-- $Id: oracle-ds.xml,v 1.1 2005-03-08 21:46:15 kakkodis Exp $ -->
+<!-- $Id: oracle-ds.xml,v 1.2 2005-03-22 16:03:22 kakkodis Exp $ -->
 <!-- ==================================================================== -->
 <!--  Datasource config for Oracle originally from Steven Coy             -->
 <!-- ==================================================================== -->
@@ -14,23 +14,23 @@
 		<connection-url>jdbc:oracle:thin:@cbiodb10.nci.nih.gov:1521:cbprod</connection-url>
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<user-name>sbrext</user-name>
-		<password>rulive01</password>
+		<password>sbrext_passwd</password>
 		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
 	</local-tx-datasource>
 	<local-tx-datasource>
-		<jndi-name>jdbc/SBREXT_CBTESTDS</jndi-name>
+		<jndi-name>jdbc/SBREXT_CBPRODCoreDS</jndi-name>
 		<connection-url>jdbc:oracle:thin:@cbiodb10.nci.nih.gov:1521:cbprod</connection-url>
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<user-name>sbrext</user-name>
-		<password>rulive01</password>
+		<password>sbrext_passwd</password>
 		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
 	</local-tx-datasource>
 	<local-tx-datasource>
-		<jndi-name>jdbc/SBR_CBTESTDS</jndi-name>
+		<jndi-name>jdbc/SBR_CBPRODCoreDS</jndi-name>
 		<connection-url>jdbc:oracle:thin:@cbiodb10.nci.nih.gov:1521:cbprod</connection-url>
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<user-name>sbr</user-name>
-		<password>rulive01</password>
+		<password>sbr_passwd</password>
 		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
 	</local-tx-datasource>
 </datasources>
