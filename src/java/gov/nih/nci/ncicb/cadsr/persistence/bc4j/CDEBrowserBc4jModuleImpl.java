@@ -363,8 +363,9 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
       String where =
         "DCTL_NAME = '" + docType + "' AND AC_IDSEQ = '" + acIdseq + "'";
       rdVO.setWhereClause(where);
+      rdVO.setOrderByClause("DISPLAY_ORDER");
       rdVO.executeQuery();
-
+      
       ReferenceDocumentsViewRowImpl rdViewRowImpl;
       rdViewRowImpl = (ReferenceDocumentsViewRowImpl) rdVO.first();
 
@@ -376,6 +377,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
 
       ReferenceBlobsViewImpl rbVO = getReferenceBlobsView();
       rbVO.setWhereClause("RD_IDSEQ = '" + rdIdseq + "'");
+      rbVO.setOrderByClause("DATE_CREATED");
       rbVO.executeQuery();
 
       ReferenceBlobsViewRowImpl rbViewRowImpl;
