@@ -176,11 +176,29 @@ public class FormBuilderEJB extends SessionBeanAdapter
   }
 
   public Form createModule(
-    String formPK,
-    Module module)  {
-    return null;
+    Module module,
+    ModuleInstruction modInstruction
+    )  {
+
+      ModuleDAO mdao = daoFactory.getModuleDAO();
+      module.setContext(module.getForm().getContext());
+      //       module.setProtocol(module.getForm().getProtocol());
+      module.setPreferredDefinition(module.getLongName());
+      String modulePK = mdao.createModuleComponent(module);
+      module.setModuleIdseq(modulePK);
+
+      modInstruction.setModule(module);
+      modInstruction.setContext(module.getForm().getContext());
+      modInstruction.setPreferredDefinition(modInstruction.getLongName());
+
+      ModuleInstructionDAO midao = daoFactory.getModuleInstructionDAO();
+      midao.createModuleInstructionComponent(modInstruction);
+      
+      return null;
   }
 
+
+    
   public int removeModule(
     String formPK,
     String modulePK)  {
