@@ -1,29 +1,30 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
+//import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.DataElementTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
+import gov.nih.nci.ncicb.cadsr.exception.DMLException;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.DataElementTransferObject;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
+import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
+import gov.nih.nci.ncicb.cadsr.resource.impl.*;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
-import gov.nih.nci.ncicb.cadsr.exception.DMLException;
-import gov.nih.nci.ncicb.cadsr.dto.*;
-import gov.nih.nci.ncicb.cadsr.resource.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import javax.sql.DataSource;
-
-import java.util.List;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+
+import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
@@ -34,16 +35,21 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
   private DataElementsInCartQuery deCartQuery;
   private FormsInCartQuery frmCartQuery;
   private ValueDomainDAO vdDAO;
+  private DeleteCartItem  deleteItemQuery;
+  private InsertCartItem  insertItemQuery;
   
   public JDBCCDECartDAO(ServiceLocator locator) {
     super(locator);
     deCartQuery = new DataElementsInCartQuery(this.getDataSource());
     frmCartQuery = new FormsInCartQuery(this.getDataSource());
     vdDAO = this.getDAOFactory().getValueDomainDAO();
+    deleteItemQuery  = new DeleteCartItem (this.getDataSource());
+    insertItemQuery  = new InsertCartItem (this.getDataSource());
   }
 
   public CDECart findCDECart(String username) throws DMLException  {
-    CDECart cart = new CDECartTransferObject();
+    //CDECart cart = new CDECartTransferObject();
+    CDECart cart = new CDECartImpl();
     List deList = deCartQuery.execute(username.toUpperCase());
     cart.setDataElements(deList);
     //List formList = frmCartQuery.execute(username);
@@ -52,10 +58,8 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
   }
 
   public int insertCartItem(CDECartItem item) throws DMLException {
-     InsertCartItem  cartItem  = 
-      new InsertCartItem (this.getDataSource());
     String ccmIdseq = generateGUID(); 
-    int res = cartItem.createItem(item, ccmIdseq);
+    int res = insertItemQuery.createItem(item, ccmIdseq);
     if (res != 1) {
       throw new DMLException("Did not succeed creating item in the " + 
         " cde_cart_items table.");
@@ -63,9 +67,8 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
     return 1;
   }
 
-  public int deleteCartItem(String itemId) throws DMLException {
-  DeleteCartItem  cartItem  = new DeleteCartItem (this.getDataSource());
-    int res = cartItem.deleteItem(itemId);
+  public int deleteCartItem(String itemId, String username) throws DMLException {
+    int res = deleteItemQuery.deleteItem(itemId,username.toUpperCase());
     if (res != 1) {
       throw new DMLException("Did not succeed in deleting  the " + 
         " cde_cart_items table.");
@@ -81,7 +84,7 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
     try {
       CDECartItem newItem = new CDECartItemTransferObject();
 
-      int res = cTest.deleteCartItem("D5378537-60EA-2B2C-E034-0003BA0B1A09");
+      int res = cTest.deleteCartItem("D5378537-60EA-2B2C-E034-0003BA0B1A09","SBREXT");
       System.out.println("\n*****Create Item Result 1: " + res);
     }
     catch (DMLException de) {
@@ -209,19 +212,21 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
     public DeleteCartItem(DataSource ds) {
       String itemDeleteSql = 
       " DELETE FROM cde_cart_items " +
-      " WHERE ccm_idseq =  " +
-      " (?) ";
+      " WHERE ac_idseq = ? " +
+      " AND   ua_name = ? ";
 
       this.setDataSource(ds);
       this.setSql(itemDeleteSql);
-      declareParameter(new SqlParameter("p_ccm_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_ac_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_user", Types.VARCHAR));
       compile();
     }
-    protected int deleteItem (String ccmIdseq) 
+    protected int deleteItem (String ccmIdseq,String username) 
     {
       Object [] obj = 
         new Object[]
-          {ccmIdseq
+          {ccmIdseq,
+           username
           };
       
 	    int res = update(obj);

@@ -27,11 +27,11 @@ public interface CDECartDAO  {
   /**
    * Deletes an item from cart.
    * @param <b>itemId</b> Idseq of cart item.
-   * 
+   * @param <b>username</b> username
    * @return <b>int</b> 1 - success, 0 - failure.
    *
    * @throws <b>DMLException</b>
    */
-  public int deleteCartItem(String itemId) throws DMLException;
+  public int deleteCartItem(String itemId, String username) throws DMLException;
   
 }

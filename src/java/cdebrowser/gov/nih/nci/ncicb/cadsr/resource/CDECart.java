@@ -13,5 +13,10 @@ public interface CDECart  {
   public void setForm(CDECartItem form);
   public void setForms(Collection forms);
 
+  public void removeDataElement(String itemId);
+  public void removeDataElements(Collection items);
+
+  public CDECartItem findDataElement(String itemId);
+
   public void mergeCart(CDECart cart);
 }

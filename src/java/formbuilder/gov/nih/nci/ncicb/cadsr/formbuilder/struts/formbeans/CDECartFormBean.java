@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CDECartFormBean extends ActionForm  {
   private String [] selectedSaveItems;
   private String [] selectedDeleteItems;
+  private String [] selectedItems;
   
   public String[] getSelectedDeleteItems() {
     return selectedDeleteItems;
@@ -25,6 +26,14 @@ public class CDECartFormBean extends ActionForm  {
 
   public void setSelectedSaveItems(String[] newSelectedSaveItems) {
     selectedSaveItems = newSelectedSaveItems;
+  }
+
+  public String[] getSelectedItems() {
+    return selectedItems;
+  }
+
+  public void setSelectedItems(String[] newSelectedItems) {
+    selectedItems = newSelectedItems;
   }
   
   /**
@@ -52,5 +61,5 @@ public class CDECartFormBean extends ActionForm  {
     HttpServletRequest request) {
     return super.validate(mapping, request);
   }
- 
+
 }
