@@ -7,9 +7,10 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
+import java.io.Serializable;
 
 
-public class CDECartTransferObject implements CDECart {
+public class CDECartTransferObject implements CDECart, Serializable {
   protected Set dataElements;
   protected Set forms;
   

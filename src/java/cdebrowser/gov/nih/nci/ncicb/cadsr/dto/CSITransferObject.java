@@ -9,6 +9,7 @@ public class CSITransferObject implements ClassSchemeItem  {
   private String csIdseq = null;
   private String csDefinition = null;
   private String csLongName = null;
+  private String acCsiIdseq = null;
 
   public CSITransferObject() {
   }
@@ -67,5 +68,12 @@ public class CSITransferObject implements ClassSchemeItem  {
 
   public void setCsCsiIdseq(String csCsiIdseq) {
     this.csCsiIdseq = csCsiIdseq;
+  }
+
+  public String getAcCsiIdseq() {
+    return acCsiIdseq;
+  }
+  public void setAcCsiIdseq(String acCsiIdseq) {
+    this.acCsiIdseq = acCsiIdseq;
   }
 }

@@ -5,9 +5,10 @@ import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import java.sql.Timestamp;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
+import java.io.Serializable;
 
 
-public class CDECartItemTransferObject implements CDECartItem {
+public class CDECartItemTransferObject implements CDECartItem, Serializable {
   protected String id;
   protected String type;
   protected Timestamp createdDate;
