@@ -47,6 +47,7 @@
   
   
   <property name="build.dir" value="${project.home}/build"/>
+  <property name="dist.dir" value="${project.home}/dist"/>
   <property name="classes.build.dir" value="${build.dir}/classes"/>
   <property name="java.lib.dir" value="${project.home}/lib/java"/>
  
@@ -59,8 +60,10 @@
           <delete dir="${classes.build.dir}" quiet="false"/>
           <delete dir="${build.dir}" quiet="false"/>   
           <delete dir="${PROD_BUILD_DIR}" quiet="false"/>
+          <delete dir="${dist.dir}" quiet="false"/>          
     </target>
  <!-- =========== END CLEAN BUILD AREA ======================= -->
+ 
  
  <!-- =========== CONFIGURATION ======================= -->
    <!-- Initialize the system -->
@@ -72,6 +75,7 @@
      <tstamp/>
      <mkdir dir="${build.dir}"/>
      <mkdir dir="${classes.build.dir}"/>
+     <mkdir dir="${dist.dir}"/>
    </target>
    <!-- end init -->
  <!-- =========== END CONFIGURATION ======================= -->
@@ -164,6 +168,7 @@
               <include name="gov/nih/nci/ncicb/cadsr/exception/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/servicelocator/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/util/StringUtils.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/DebugStringBuffer.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/CaDSRConstants.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/persistence/PersistenceConstants.class"/>
             </patternset>
@@ -193,6 +198,32 @@
         </jar>
       </target>
   <!-- =========== END COMMON JAR PROCESS ======================= -->    
+  
+  <!-- =========== DEV CONFIG ======================= -->
+    <target name="dev_config" depends="init">    
+     <copy todir="${classes.build.dir}/META-INF">      
+         <fileset dir="${config.home}/connections">
+           <patternset>
+             <include name="data-sources.xml"/>
+           </patternset>
+         </fileset>      
+      </copy>   
+    </target>
+  <!-- =========== END DEV CONFIG ======================= -->
+  
+  <!-- =========== SECURE CONFIG ======================= -->
+    <target name="stage_config" depends="init">    
+     <copy todir="${classes.build.dir}/META-INF">      
+         <fileset dir="${config.home}/connections">
+           <patternset>
+             <include name="data-sources.xml"/>
+           </patternset>
+         </fileset>      
+      </copy>   
+    </target>  
+  <!-- =========== END STAGE CONFIG ======================= -->
+  
+  
   
   <!-- =========== START WAR PROCESS ======================= -->
   
@@ -391,17 +422,10 @@
          </jar>         
       </target>
   <!-- =========== END JAR PROCESS ======================= -->  
-  
+
   <!-- =========== CREATE EAR FILE ======================= -->
     <target name="ear_cdebrowser" depends="jar_ejb,war_cdebrowser">
-    
-     <copy todir="${classes.build.dir}/META-INF">      
-         <fileset dir="${config.home}/connections">
-           <patternset>
-             <include name="data-sources.xml"/>
-           </patternset>
-         </fileset>      
-      </copy>    
+       
      <copy todir="${classes.build.dir}/properties">      
          <fileset dir="${config.home}/properties">
            <patternset>
@@ -460,6 +484,7 @@
     </target>
   <!-- =========== END CREATE EAR FILE ======================= -->
 
+
  <!-- =========== Deployment targets below ======================= -->
  
    <target  name="ear_undeploy" depends="init">       
@@ -494,7 +519,7 @@
 	<delete file="${oc4j.j2ee.home}/applications/${ear.name}.ear" failonerror="false"/>
    </target>    
    
-   <target  name="ear_deploy" depends="init"> 
+   <target  name="ear_deploy" depends="dev_config,ear_cdebrowser"> 
         <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
           <arg value="${deploy.ormi}" /> 
           <arg value="${deploy.username}" /> 
@@ -510,7 +535,7 @@
         </java> 
    </target> 
    
-   <target name="bind_web_app" depends="init"> 
+   <target name="bind_web_app" depends="ear_deploy"> 
        <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
          <arg value="${deploy.ormi}" /> 
          <arg value="${deploy.username}" /> 
@@ -529,7 +554,7 @@
   <target  name="deploy_cdebrowser" depends="ear_deploy,bind_web_app"> 
   </target>   
    
-  <target  name="copy_ear_oc4j" depends="ear_cdebrowser"> 
+  <target  name="copy_ear_oc4j" depends="dev_config,ear_cdebrowser"> 
      <copy todir="${oc4j.j2ee.home}/applications">      
          <fileset dir="${build.dir}">
            <patternset>
@@ -539,10 +564,10 @@
       </copy>           
   </target>
   
-  <target  name="clean_build" depends="clean,ear_cdebrowser"> 
+  <target  name="clean_build" depends="clean,dev_config,ear_cdebrowser"> 
   </target>
   
-  <target  name="clean_build_redeploy" depends="clean,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j"> 
+  <target  name="clean_build_redeploy" depends="clean,dev_config,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j"> 
   </target>
   
   <target  name="clean_build_redeploy_restart" depends="clean_build_redeploy,oc4j_start"> 
@@ -556,6 +581,39 @@
         </exec>
   </target>
 
+<!-- =========== End Deployment targets  ======================= -->
+
+<!-- =========== Copy DISTRIBUTION EAR============== -->
+  <target name="dist_ear_copy" depends="dev_config,ear_cdebrowser">  
+     <copy todir="${dist.dir}">      
+         <fileset dir="${build.dir}">
+           <patternset>
+             <include name="${ear.name}.ear"/>
+           </patternset>
+         </fileset>    
+      </copy>          
+   </target>   
+  <!-- =========== DEV DISTRIBUTION============== -->
+  
+  <!-- =========== DEV DISTRIBUTION============== -->
+   <target name="dist_dev" depends="clean,dev_config,ear_cdebrowser,dist_ear_copy">      
+   </target>      
+  <!-- =========== END DEV DISTRIBUTION ======================= -->
+  
+  <!-- =========== QA DISTRIBUTION============== -->
+      <target name="dist_qa" depends="clean,dev_config,ear_cdebrowser,dist_ear_copy">  
+      </target>      
+  <!-- =========== END QA DISTRIBUTION ======================= -->
+  
+  <!-- =========== STAGE DISTRIBUTION============== -->
+       <target name="dist_stage" depends="clean,dev_config,ear_cdebrowser,dist_ear_copy">  
+        </target>      
+  <!-- =========== END STAGE DISTRIBUTION ======================= -->
+  
+  <!-- =========== PROD DISTRIBUTION============== -->
+        <target name="dist_prod" depends="clean,dev_config,ear_cdebrowser,dist_ear_copy">  
+        </target>      
+  <!-- =========== END QA DISTRIBUTION ======================= -->
   
  <!-- =========== BUILD HELPERS ======================= -->
    <target name="help" depends="init">
@@ -576,16 +634,21 @@
        jar_security	      - Create security jar
        oc4j_stop	      - Stop the oc4j instance
        clean_oc4j	      - Clean oc4j application deployment directories
-       ear_deploy	      - Deploy the application ear
-       bind_web_app	      - Binds the web app
-       deploy_cdebrowser      - Deploy the application and binds the web app
-       ear_undeploy	      - Undeploy the application
-       copy_ear_oc4j	      - Copy application ear to oc4j
-       oc4j_start	      - start oc4j
+       ear_deploy	      - Deploy the application ear(Developement)
+       bind_web_app	      - Binds the web app(Developement)
+       deploy_cdebrowser      - Deploy the application and binds the web app(Developement)
+       ear_undeploy	      - Undeploy the application(Developement)
+       copy_ear_oc4j	      - Copy application ear to oc4j(Developement)
+       oc4j_start	      - start oc4j(Developement)
        clean_build_redeploy   - Does the following targets clean
-       				,ear_cdebrowser,oc4j_stop
-       				,clean_oc4j, oc4j_copy_ear 
-      clean_build_redeploy_restart - clean_build_redeploy,oc4j_start
+       				,dev_config,ear_cdebrowser,oc4j_stop
+       				,clean_oc4j, oc4j_copy_ear (Developement)
+       clean_build_redeploy_restart - clean_build_redeploy,oc4j_start(Developement)
+       
+       dist_dev		      - Creates Developement Clean distribution.
+       dist_qa		      - Creates QA Clean distribution.
+       dist_stage	      - Creates Stage Clean distribution.
+       dist_prod	      - Creates Prod Clean distribution.
 
        help                   - This help screen.
  
