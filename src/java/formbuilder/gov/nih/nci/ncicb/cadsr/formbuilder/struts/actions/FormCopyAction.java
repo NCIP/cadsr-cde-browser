@@ -66,8 +66,7 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
 		dynaForm.set(FORM_VERSION, new Float(1.0));
 		dynaForm.set(PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
 		dynaForm.set(PROTOCOLS_LOV_ID_FIELD, crf.getProtocol().getProtoIdseq());
-		dynaForm.set(WORKFLOW, crf.getAslName());
-
+		dynaForm.set(WORKFLOW, "DRAFT NEW");
 	    }
 	catch (FormBuilderException exp)
 	    {
@@ -117,7 +116,7 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
 		newForm.setFormCategory((String)dynaForm.get(FORM_CATEGORY));
 		newForm.setFormType((String)dynaForm.get(FORM_TYPE));
 
-		newForm.setAslName("DRAFT NEW");
+// 		newForm.setAslName("DRAFT NEW");
       
 		newForm.setVersion((Float)dynaForm.get(FORM_VERSION));
 
