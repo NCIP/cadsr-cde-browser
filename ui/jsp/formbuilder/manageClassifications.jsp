@@ -26,23 +26,24 @@
       %>
     <%@ include file="/formbuilder/common_header_inc.jsp"%>
     <jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
-      <jsp:param name="label" value="Edit&nbsp;Form"/>
+      <jsp:param name="label" value="Maintain&nbsp;Classifications"/>
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
 
 
     <logic:present name="<%=FormConstants.CRF%>">
-      <table cellspacing="2" cellpadding="3" border="0" width="100%">
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
+      <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
               property="longName"
               />
           </td>
-
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -51,16 +52,17 @@
           </td>
         </tr>
 
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.version" />:</td>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.version" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
               property="version"
               />
           </td>
-
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -68,15 +70,17 @@
               />
           </td>      
         </tr>
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
               property="formType"
               />
           </td>        
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol" />:</td>
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocol" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -86,8 +90,8 @@
         </tr>
 
 
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -96,8 +100,8 @@
           </td>
         </tr>     
 
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -108,6 +112,11 @@
       </table>
 
       <table cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr >
+          <td >
+            &nbsp;
+          </td>
+        </tr>         
         <tr>
           <td class="OraHeaderSubSub" width="100%">Classifications</td>
         </tr>
@@ -172,5 +181,6 @@
 </logic:notEmpty>
 </logic:present>
 <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
+<%@ include file="../common/common_bottom_border.jsp"%>
 </BODY>
 </HTML>

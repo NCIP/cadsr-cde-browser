@@ -11,7 +11,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <html:html>
 <HEAD>
-<TITLE>Display CDE Cart</TITLE>
+<TITLE>Add Question</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
 <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
 <SCRIPT LANGUAGE="JavaScript">
@@ -69,7 +69,7 @@
 %>
 <%@ include file="common_header_inc.jsp"%>
 <jsp:include page="../common/tab_inc.jsp" flush="true">
-  <jsp:param name="label" value="CDE&nbsp;Cart"/>
+  <jsp:param name="label" value="Add&nbsp;Question"/>
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
 

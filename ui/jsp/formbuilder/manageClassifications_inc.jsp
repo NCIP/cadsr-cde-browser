@@ -1,12 +1,13 @@
 <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
   <tr >
     <td >
+      &nbsp;
+    </td>                          
+  </tr>         
+  <tr >
+    <td >
       <html:link action='<%= "/gotoAddClassifications?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GO_TO_ADD_CLASSIFICATIONS %>'>
-        <%--
-        <html:img src='<%=urlPrefix+"i/add.gif"%>' border="0" alt="Add"/>
-          --%>
-          -- Add --
-
+        <html:img src='<%=urlPrefix+"i/add_button.gif"%>' border="0" alt="Add"/>
       </html:link>
     </td>           
     <td >

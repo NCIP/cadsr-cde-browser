@@ -11,7 +11,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <HTML>
   <HEAD>
-    <TITLE>Welcome to Form Builder..</TITLE>
+    <TITLE>Add Classifications</TITLE>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
   </HEAD>
@@ -28,7 +28,7 @@
       %>
     <%@ include file="/formbuilder/common_header_inc.jsp"%>
     <jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
-      <jsp:param name="label" value="Edit&nbsp;Form"/>
+      <jsp:param name="label" value="Add&nbsp;Classifications"/>
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
 
@@ -70,6 +70,8 @@
     </logic:present>
 
     <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
+
+    <%@ include file="../common/common_bottom_border.jsp"%>
 
   </BODY>
 </HTML>

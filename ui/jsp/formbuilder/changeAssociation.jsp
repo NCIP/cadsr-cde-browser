@@ -11,7 +11,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <html:html>
 <HEAD>
-<TITLE>Display CDE Cart</TITLE>
+<TITLE>Change Associations</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
 <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
 <SCRIPT LANGUAGE="JavaScript">
@@ -24,7 +24,7 @@
 %>
 <%@ include file="common_header_inc.jsp"%>
 <jsp:include page="../common/tab_inc.jsp" flush="true">
-  <jsp:param name="label" value="CDE&nbsp;Cart"/>
+  <jsp:param name="label" value="Change&nbsp;Association"/>
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
 
@@ -102,8 +102,8 @@
       <%@ include file="changeAssociation_inc.jsp" %>
     <table width="50%" align="center" cellpadding="1" cellspacing="1" border="0" >
       <tr >
-        <td >
-          <html:link href="">Add More Data Elements to Cart</html:link>
+        <td>
+          <a href='<%= "/cdebrowser/?moduleIndex=" +  request.getParameter("moduleIndex") + "&amp;questionIndex=" + request.getParameter("questionIndex") %>'>Add More Data Elements to Cart</a>
         </td>
       </tr>
     </table>    
