@@ -4,6 +4,14 @@ import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 
 public class ProtocolTransferObject extends AdminComponentTransferObject implements Protocol 
 {
+  String protocolIdseq = null;
+  String longName = null;
+  String leadOrg = null;
+  String protocolType = null;
+  String protocolPhase = null;
+  Date endDate = null;
+  Date beginDate = null;
+  
   
   public ProtocolTransferObject(String longName)
   {
@@ -12,56 +20,62 @@ public class ProtocolTransferObject extends AdminComponentTransferObject impleme
 
   public String getProtoIdseq()
   {
-    return null;
+    return protocolIdseq;
   }
 
-  public void setProtoIdseq(String p0)
+  public void setProtoIdseq(String protocolIdseq)
   {
+    this.protocolIdseq = protocolIdseq;
   }
 
   public String getLeadOrg()
   {
-    return null;
+    return leadOrg;
   }
 
-  public void setLeadOrg(String p0)
+  public void setLeadOrg(String leadOrg)
   {
+    this.leadOrg = leadOrg;
   }
 
   public String getType()
   {
-    return null;
+    return protocolType;
   }
 
-  public void setType(String p0)
+  public void setType(String protocolType)
   {
+    this.protocolType = protocolType;
   }
 
   public String getPhase()
   {
-    return null;
+    return protocolPhase;
   }
 
-  public void setPhase(String p0)
+  public void setPhase(String protocolPhase)
   {
+    this.protocolPhase = protocolPhase;
   }
 
   public Date getBeginDate()
   {
-    return null;
+    return beginDate;
   }
 
-  public void setBeginDate(Date p0)
+  public void setBeginDate(Date beginDate)
   {
+    this.beginDate = beginDate;
   }
 
   public Date getEndDate()
   {
-    return null;
+    return endDate;
   }
 
-  public void setEndDate(Date p0)
+  public void setEndDate(Date endDate)
   {
+    this.endDate = endDate;
   }
   
   public String toString()

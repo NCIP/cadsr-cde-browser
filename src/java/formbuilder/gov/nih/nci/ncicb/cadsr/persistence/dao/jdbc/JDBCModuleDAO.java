@@ -85,7 +85,8 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
     String qcIdseq = generateGUID(); 
     int res = insertQuestContent.createContent(sourceModule, qcIdseq);
     if (res != 1) {
-      throw new DMLException("Did not succeed creating question.");
+      throw new DMLException("Did not succeed creating module record in the " + 
+        " quest_contents_ext table.");
     }
     
     InsertQuestRec  insertQuestRec  = 
@@ -96,7 +97,8 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       return 1;
     }
     else {
-      throw new DMLException("Did not succeed creating form question relationship record.");
+      throw new DMLException("Did not succeed creating form module relationship " +  
+        "record in the quest_recs_ext table.");
     }
   }
 
@@ -112,12 +114,10 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
 
     String returnCode = (String) out.get("p_return_code");
     String returnDesc = (String) out.get("p_return_desc");
-
-    if (returnCode.equals("OK")) {
+    if (!StringUtils.doesValueExist(returnCode)) {
       return 1;
     }
     else{
-      // for p_return_code is not OK
       throw new DMLException(returnDesc);
     }
   }
@@ -190,20 +190,21 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
     */
 
     try {
-      // for each test, change preferred name and qcIdseq
+      // test createModuleComponent method.
+      // for each test, change long name(preferred name generated from long name)
       Module module = new ModuleTransferObject();
       Form form = new FormTransferObject();
       form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
       module.setForm(form);
-      module.setVersion(new Float(2.32));
-      module.setPreferredName("test_mod_pref_name_new 999");
-      module.setLongName("Test Mod Long Name new new 99");
+      module.setVersion(new Float(2.31));
+      //module.setPreferredName("test_mod_pref_name_new 022704");
+      module.setLongName("Test Mod Long Name 022704 1");
       module.setPreferredDefinition("Test Mod pref def");
       module.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
       form.setProtocol(new ProtocolTransferObject(""));
       module.setAslName("DRAFT NEW");
       module.setCreatedBy("Hyun Kim");
-      module.setDisplayOrder(4);
+      module.setDisplayOrder(7);
 
       res = test.createModuleComponent(module);
       System.out.println("\n*****Create Module Result 1: " + res);
@@ -292,7 +293,7 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       " (qc_idseq, version, preferred_name, long_name, preferred_definition, " + 
       "  conte_idseq, proto_idseq, asl_name, created_by, qtl_name ) " +
       " VALUES " +
-      " (?, ?, ?, ?, ?, ?, ?, ?, ?, 'MODULE') ";
+      " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
       this.setDataSource(ds);
       this.setSql(contentInsertSql);
@@ -306,6 +307,7 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       declareParameter(new SqlParameter("p_proto_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("p_asl_name", Types.VARCHAR));
       declareParameter(new SqlParameter("p_created_by", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_qtl_name", Types.VARCHAR));
       compile();
     }
     protected int createContent (Module sm, String qcIdseq) 
@@ -320,17 +322,17 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
            sm.getConteIdseq(),
            sm.getForm().getProtoIdseq(),
            sm.getAslName(),
-           sm.getCreatedBy()
+           sm.getCreatedBy(),
+           "MODULE"
           };
       
 	    int res = update(obj);
       return res;
-		  //return update(new Object[] {new Integer(custid)} ); 
     }
   }
 
   /**
-   * Inner class that accesses database to create a relationship
+   * Inner class that accesses database to create a form and module relationship
    * record in the qc_recs_ext table.
    */
  private class InsertQuestRec extends SqlUpdate {

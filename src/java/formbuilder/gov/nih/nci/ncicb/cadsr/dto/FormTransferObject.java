@@ -17,6 +17,7 @@ public class FormTransferObject extends AdminComponentTransferObject
   private String formType = null;
   private List modules;
   private String formIdseq = null;
+  private String formCategory = null;
 
   public FormTransferObject() {
   }
@@ -60,6 +61,14 @@ public class FormTransferObject extends AdminComponentTransferObject
     modules = p0;
   }
   
+  public String getFormCategory() {
+    return formCategory;
+  }
+
+  public void setFormCategory(String newFormCategory) {
+    formCategory = newFormCategory;
+  }
+
   public String toString()
   {
     StringBuffer sb = new StringBuffer();

@@ -18,4 +18,7 @@ public interface Form extends AdminComponent  {
   public List getModules();
   public void setModules(List blocks);
   
+  public String getFormCategory();
+  public void setFormCategory (String formCategory);
+
 }

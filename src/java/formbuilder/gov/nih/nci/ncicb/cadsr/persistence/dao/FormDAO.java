@@ -50,7 +50,7 @@ public interface FormDAO {
    *
    * @throws <b>DMLException</b>
    */
-  public Form createFormComponent(Form sourceForm) throws DMLException;
+  public int createFormComponent(Form sourceForm) throws DMLException;
 
   /**
    * Adds new modules to a form. 

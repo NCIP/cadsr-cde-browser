@@ -10,4 +10,6 @@ public interface FormValidValue extends AdminComponent {
   public String getVpIdseq();
   public void setVpIdseq(String vpIdseq);
   
+  public int getDisplayOrder();
+  public void setDisplayOrder(int dispOrder);
 }
