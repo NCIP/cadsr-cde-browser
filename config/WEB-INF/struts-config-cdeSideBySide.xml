@@ -15,7 +15,27 @@
       validate="false">
       <forward name="success" path="/cdebrowser/compareCDEs.jsp"/>
     </action>
-  
+    
+    <action name="compareCDEForm" path="/cdebrowser/CDECompareExcelDownload" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CompareCDEAction"
+      validate="false">
+    </action>
+    
+    <action name="compareCDEForm" path="/cdebrowser/changeCompareOrder" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CompareCDEAction"
+      validate="false">      
+      <forward name="success" path="/cdebrowser/compareCDEs.jsp"/>
+    </action>
+    
+    <action name="compareCDEForm" path="/cdebrowser/addToCompareList" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CompareCDEAction"
+      validate="false">      
+      <forward name="success" path="/cdebrowser/compareCDEs.jsp"/>
+    </action>
+    
    </action-mappings>
 
 </struts-config>

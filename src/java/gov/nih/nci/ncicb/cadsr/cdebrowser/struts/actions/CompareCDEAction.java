@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.2 2004-10-11 21:18:26 kakkodis Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.3 2004-10-15 21:00:44 kakkodis Exp $
  */
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
@@ -72,13 +72,13 @@ public class CompareCDEAction extends FormBuilderBaseDispatchAction {
    * @throws IOException
    * @throws ServletException
    */
-  public ActionForward gotoChangeCompareOrder(
+  public ActionForward changeCompareOrder(
     ActionMapping mapping,
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
 
-    return mapping.findForward("gotoChangeCompareOrder");
+    return mapping.findForward(SUCCESS);
   }  
   public ActionForward downloadToExcel(ActionMapping mapping,
         ActionForm form, HttpServletRequest request,

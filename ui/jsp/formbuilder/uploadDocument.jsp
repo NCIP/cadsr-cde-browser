@@ -68,11 +68,25 @@
           </td>
         </tr>        
         <tr >
-          <td >
+
+      <td>
+      <table width="20%" align="left" cellpadding="1" cellspacing="1" border="0" >
+        <tr >
+         <td>
             <a href="javascript:submitForm('<%="uploadDocuments"%>')">
                <html:img src='<%="i/save.gif"%>' border="0" alt="Upload Document"/>
             </a>
-          </td>
+          </td>          
+              
+          <td > 
+		<html:img src='<%=urlPrefix+"i/back.gif"%>' border="0" alt="Done"/>           
+          </td>                    
+             
+        </tr> 
+                
+      </table>
+      </td>
+           
         </tr>          
       </table>      
      </html:form>         

@@ -449,8 +449,10 @@ public class DESearchQueryBuilder extends Object {
 
       //release 3.0, sort search result by column
       sortColumnHeader = new SimpleSortableColumnHeader();
-      sortColumnHeader.setPrimary("long_name");
-      sortColumnHeader.setSecondary("de_version");
+      sortColumnHeader.setPrimary("registration_status");
+      sortColumnHeader.setSecondary("asl_name");
+      sortColumnHeader.setTertiary("long_name");
+      sortColumnHeader.setDefaultOrder(true);
       sortColumnHeader.setOrder(SimpleSortableColumnHeader.ASCENDING);
 
   }
@@ -499,9 +501,13 @@ public class DESearchQueryBuilder extends Object {
     String sortOrder = "";
     if (sortColumnHeader.getOrder() == SortableColumnHeader.DESCENDING)
        sortOrder = " DESC";
-    
-    return sortColumnHeader.getPrimary() +  sortOrder + ", " 
-    + sortColumnHeader.getSecondary() + sortOrder;
+    StringBuffer sb = new StringBuffer();
+    sb = sb.append(sortColumnHeader.getPrimary() +  sortOrder);
+    if(sortColumnHeader.getSecondary()!=null&&!sortColumnHeader.getSecondary().equalsIgnoreCase(""))
+      sb.append("," + sortColumnHeader.getSecondary()+ sortOrder);
+    if(sortColumnHeader.getTertiary()!=null&&!sortColumnHeader.getTertiary().equalsIgnoreCase(""))
+      sb.append("," + sortColumnHeader.getTertiary()+ sortOrder);
+    return sb.toString();
   }
 
   private String getUsageWhereClause() {

@@ -10,6 +10,23 @@ if(confirm(message)) location.href = url;
 <%@ include file="showMessages.jsp" %>
    
    <logic:notEmpty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
+   
+         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
+               <tr>
+                 <td align="left" class="OraTableColumnHeaderNoBG" width="10%" nowrap>Sort order :</td>
+                 <td align="left" class="CDEBrowserPageContext">
+                  <cde:sorableColumnHeaderBreadcrumb
+                          sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
+                          separator=">>" 
+                          showDefault="Y"
+                          labelMapping="longName,Long Name,aslName,Workflow Status"
+                          defaultText=" (Default) "
+                   />           
+                 </td> 
+           
+               </tr>
+        </table>     
+        
         <bean:define id="pageBean" name="<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
         	type="gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean"/>
         <cde:pagination name="top" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
@@ -21,15 +38,13 @@ if(confirm(message)) location.href = url;
         	     nextOffImage="i/next_off.gif"
         	     urlPrefix="<%=urlPrefix%>"
         	     /> 
-                     
+                
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTableColumnHeader">
           	<th class="OraTableColumnHeader" nowrap>Action</th>
           	<th class="OraTableColumnHeader" nowrap>
 		        <cde:sortableColumnHeader
             sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
-            ascendingImageUrl="i/sort_up.gif"
-            descendingImageUrl="i/sort_down.gif" 
 		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
 		   	   	columnHeader="Long Name" 
             orderParamId="sortOrder" 
@@ -45,8 +60,6 @@ if(confirm(message)) location.href = url;
 			          
 		        <cde:sortableColumnHeader
             sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
-            ascendingImageUrl="i/sort_up.gif"
-            descendingImageUrl="i/sort_down.gif" 
 		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
 		   	   	columnHeader="Workflow Status" 
             orderParamId="sortOrder" 
@@ -60,7 +73,7 @@ if(confirm(message)) location.href = url;
           	type="gov.nih.nci.ncicb.cadsr.resource.Form"
                 offset="<%=Integer.toString(pageBean.getOffset())%>"
                 length="<%=Integer.toString(pageBean.getPageSize())%>">
-            <tr class="OraTabledata">
+            <tr class="OraTabledata">  
              <td width="100">
               <table  >
                <tr>               
@@ -70,7 +83,7 @@ if(confirm(message)) location.href = url;
                 paramId = "<%=FormConstants.FORM_ID_SEQ%>"
                 paramName="form" paramProperty="formIdseq"
                 target="_parent" >
-               <html:img src='<%=urlPrefix+"i/excel-icon.jpg"%>' border="0" alt="Excel Version"/>
+               <html:img src='<%=urlPrefix+"i/excel-icon.jpg"%>' border="0" alt="Excel Download"/>
               </html:link>                 
               
               </td>

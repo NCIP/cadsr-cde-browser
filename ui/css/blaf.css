@@ -157,3 +157,4 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .OraHeaderBlack {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt;  background-color:#cccc99; color:#000000; text-indent:1}
 .OraFieldTextInstruction {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-style:italic; color:#000000}
 .OraTableColumnHeaderInstruction {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; font-style:italic; text-align:left; background-color:#cccc99; color:#336699; text-indent:1}
+.OraTableColumnHeaderNoBG {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; color:#336699; text-indent:1}

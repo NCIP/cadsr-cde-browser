@@ -269,12 +269,12 @@
     </attribute>      
     <attribute>
     <name>ascendingImageUrl</name>
-    <required>true</required>
+    <required>false</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute>     
     <attribute>
     <name>descendingImageUrl</name>
-    <required>true</required>
+    <required>false</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute>        
     <attribute>
@@ -343,5 +343,51 @@
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute>        
-  </tag>   
+  </tag>  
+  <tag>
+    <name>sorableColumnHeaderBreadcrumb</name>
+    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.SorableColumnHeaderBreadcrumb</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+       This Tag is used to display Columnn header which is displayed
+       as a hyper link. Example usage:
+ 	 cde:sorableColumnHeaderBreadcrumb
+           sortableColumnHeaderBeanId="FormConstants.FORM_SEARCH_RESULT_COMPARATOR" 
+           separator=">>" 
+           showDefault="Y"
+           labelMapping="long_name,Long Name,registration_status,Registration Status,asl_name,Workflow Status"
+           defaultText="Default"
+
+    </info>  
+    <attribute>
+    <name>sortableColumnHeaderBeanId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>      
+    <attribute>
+    <name>prefix</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>     
+    <attribute>
+    <name>separator</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>        
+    <attribute>
+    <name>showDefault</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>      
+    <attribute>
+    <name>defaultText</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>    
+    <attribute>
+    <name>labelMapping</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>     
+  </tag>  
 </taglib>

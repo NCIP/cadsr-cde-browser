@@ -226,11 +226,9 @@ function updateCart() {
 }
 
 function compareCDEs() {
-  var numberSelected = validateMultiSelection('selectDE','Please select at least two data elements to compare');
-  if (numberSelected > 1) {
+  
   var urlString="<%=request.getContextPath()%>/cdebrowser/compareCDEAction.do?method=compareCDEs&numberSelected=" + numberSelected;
   top.location.href=urlString;
-  }
 }
 
 function done() {
@@ -426,13 +424,13 @@ function newSearch(){
   if (!queryFlag.equals("")) {
     if (deList!=null&&deList.size()!=0) {
 %>
-<table cellpadding="0" cellspacing="0" width="100%" align="center">
+<table cellpadding="0" cellspacing="0" width="100%" align="center" border="0">
   <tr>
     <td nowrap>
       <b><a href="<%=downloadExcelURL%>" >[Download Data Elements to Excel]</a></b> &nbsp;&nbsp;
       <b><a href="<%=downloadXMLURL%>" >[Download Data Elements as XML]</a></b> &nbsp;&nbsp;
 <%
-      if (paramType.equals("TEMPLATE")){
+      if ((paramType!=null)&&(paramType.equals("CRF")||paramType.equals("TEMPLATE"))){
 %>
       <b><a href="<%=templateURL%>" target="_blank">[Download Template]</a></b>&nbsp;&nbsp;
       
@@ -441,28 +439,54 @@ function newSearch(){
 %>
     </td>
   </tr>
-  <tr>
-    <td width="100%" nowrap><html:img height="2" page="/i/beigedot.gif" width="99%" align="top" border="0" /> </td>
+
+</table>
+
+<table width="100%"  height=1 align="center" cellpadding="0" cellspacing="0" border="0">
+  <tr >
+    <td width="100%" nowrap ><html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" /> </td>
   </tr>
+</table>
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
+    <tr>
+      <td align="left" class="OraTableColumnHeaderNoBG" width="10%" nowrap>Sort order :</td>
+      <td align="left" class="CDEBrowserPageContext">
+       <cde:sorableColumnHeaderBreadcrumb
+               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
+               separator=">>" 
+               showDefault="Y"
+               labelMapping="doc_text,Document Text,long_name,Long Name,registration_status,Registration Status,asl_name,Workflow Status"
+               defaultText=" (Default) "
+        />           
+      </td>
+      
+    <logic:notPresent name="<%=SortableColumnHeader.DEFAULT_SORT_ORDER%>">
+        <td align="right" width="20%" nowrap>
+           <a href="javascript:submitForm()" >Reset to default sort order</a>
+        </td>
+     </logic:notPresent>     
+
+    </tr>
 </table>
 
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
     <tr>
-      <td align="left"><a href="javascript:updateCart()"><html:img page="/i/AddToCDECart.gif" border="0" /></a></td>
-      <td align="left"><a href=" "><html:img page="/i/addToCDECompareList.gif" border="0" /></a></td>
-      <td align="left"><a href="javascript:compareCDEs()"><html:img page="/i/compareCDEs.gif" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="javascript:updateCart()"><html:img page="/i/AddToCDECart.gif" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="/cdebrowser/cdeBrowse.jsp?PageId=DataElementsGroup"><html:img page="/i/addToCDECompareList.gif" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="javascript:compareCDEs()"><html:img page="/i/compareCDEs.gif" border="0" /></a></td>
       <td align="right"><%=topScroller.getScrollerHTML()%></td>
     </tr>
 </table>
 
+
+
+           
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader"><input type="checkbox" name="deList" value="yes" onClick="ToggleAll(this)"/></th>
   	 <th class="OraTableColumnHeader" nowrap>
  		        <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-              ascendingImageUrl='<%=request.getContextPath()+ "/i/sort_up.gif"%>'
-              descendingImageUrl='<%=request.getContextPath()+ "/i/sort_down.gif"%>' 
  	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
      	   	  columnHeader="Long Name" 
               orderParamId="sortOrder" 
@@ -470,14 +494,22 @@ function newSearch(){
        	     sortFieldValue = "long_name"
             />   
     </th>
-    <th class="OraTableColumnHeader">Document Text</th>
+    <th class="OraTableColumnHeader">
+ 	      <cde:sortableColumnHeader
+              sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+     	   	  columnHeader="Document Text" 
+              orderParamId="sortOrder" 
+     	   	  sortFieldId="sortField"
+       	     sortFieldValue = "doc_text"
+            />       
+    
+    </th>
     <th class="OraTableColumnHeader">Owned By</th>
     <th class="OraTableColumnHeader">Used By Context</th>
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-              ascendingImageUrl='<%=request.getContextPath()+ "/i/sort_up.gif"%>'
-              descendingImageUrl='<%=request.getContextPath()+ "/i/sort_down.gif"%>'  
  	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
      	   	  columnHeader="Registration Status" 
               orderParamId="sortOrder" 
@@ -488,8 +520,6 @@ function newSearch(){
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-              ascendingImageUrl='<%=request.getContextPath()+ "/i/sort_up.gif"%>'
-              descendingImageUrl='<%=request.getContextPath()+ "/i/sort_down.gif"%>'
  	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
      	   	  columnHeader="Workflow Status" 
               orderParamId="sortOrder" 

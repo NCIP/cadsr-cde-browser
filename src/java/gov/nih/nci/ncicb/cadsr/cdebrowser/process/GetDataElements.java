@@ -50,7 +50,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.4 2004-08-25 18:21:30 jiangja Exp $
+ * @version: $Id: GetDataElements.java,v 1.5 2004-10-15 21:00:43 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -400,9 +400,27 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         
         SortableColumnHeader sortColumnHeader = queryBuilder.getSortColumnHeader();
         
-        if ( !sortField.equalsIgnoreCase(sortColumnHeader.getPrimary())) {
-           sortColumnHeader.setSecondary(sortColumnHeader.getPrimary());
-           sortColumnHeader.setPrimary(sortField);
+        if ( !sortField.equalsIgnoreCase(sortColumnHeader.getPrimary())||sortColumnHeader.isDefaultOrder()) {
+           
+           if(!sortField.equalsIgnoreCase(sortColumnHeader.getPrimary()))
+           {
+             String secondary = sortColumnHeader.getSecondary();
+             sortColumnHeader.setSecondary(sortColumnHeader.getPrimary());
+             sortColumnHeader.setPrimary(sortField);
+             sortColumnHeader.setTertiary(secondary);
+           }
+           if(sortColumnHeader.getPrimary().equalsIgnoreCase(sortColumnHeader.getSecondary()))
+           {
+             sortColumnHeader.setSecondary(sortColumnHeader.getTertiary());
+           }
+           if (sortColumnHeader.getPrimary().equalsIgnoreCase(sortColumnHeader.getTertiary())) {
+             sortColumnHeader.setTertiary(null);
+           }
+           else if (sortColumnHeader.getSecondary().equalsIgnoreCase(sortColumnHeader.getTertiary()))
+           {
+             sortColumnHeader.setTertiary(null);
+           }
+           sortColumnHeader.setDefaultOrder(false);
         }
         sortColumnHeader.setOrder(sortOrder);
        

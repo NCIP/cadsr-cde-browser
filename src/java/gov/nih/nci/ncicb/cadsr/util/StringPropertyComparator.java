@@ -18,8 +18,11 @@ public class StringPropertyComparator implements Comparator,SortableColumnHeader
   private String primaryField;
   private String secondaryField;
   private Method secondaryMethod;
+  private String tertiaryField;
+  private Method tertiaryMethod;
   private Class comparingClass;
   private int order=ASCENDING;
+  private boolean defaultOrder;
   
   public StringPropertyComparator(Class newComparingClass)
   {
@@ -135,7 +138,24 @@ public class StringPropertyComparator implements Comparator,SortableColumnHeader
               +comparingClass.getName()+"."+secondary);
      }
   }
-
+  
+  public String getTertiary()
+  {
+    return tertiaryField;
+  }
+  public void setTertiary(String tertiary)
+  {
+    tertiaryField=tertiary;
+     try{
+      Class[] args = null;
+      tertiaryMethod = comparingClass.getMethod(getMethodName(tertiary),args);
+     }
+     catch(Exception exp)
+     {
+       throw new RuntimeException("Invalid property : "
+              +comparingClass.getName()+"."+tertiary);
+     }    
+  }
   public void setRelativePrimary(String primary)
   {
     
@@ -143,9 +163,21 @@ public class StringPropertyComparator implements Comparator,SortableColumnHeader
      {
        return;
      }
+     tertiaryField=secondaryField;
+     tertiaryMethod=secondaryMethod;
      secondaryField=primaryField;
      secondaryMethod = primaryMethod;
      primaryField=primary;
+     if(primaryField.equalsIgnoreCase(tertiaryField))
+     {
+       tertiaryField=null;
+       tertiaryMethod=null;
+     }
+     if(primaryField.equalsIgnoreCase(tertiaryField))
+      {
+       tertiaryField=null;
+       tertiaryMethod=null;
+      }
      try{
       Class[] args = null;
       primaryMethod = comparingClass.getMethod(getMethodName(primary),args);
@@ -177,4 +209,13 @@ public class StringPropertyComparator implements Comparator,SortableColumnHeader
     return "get"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1); 
   }
 
+  public boolean isDefaultOrder()
+  {
+    return defaultOrder;
+  }
+
+  public void setDefaultOrder(boolean defaultOrder)
+  {
+    this.defaultOrder = defaultOrder;
+  }
 }

@@ -131,9 +131,16 @@ function details(linkParms ){
 </TABLE>
 
 
-<table align="center" width=15% Cellpadding=0 Cellspacing=0 border=0>
+<table align="center" width=15% Cellpadding=0 Cellspacing=4 border=0>
     <tr>
         <TD valign="TOP" align="CENTER"  colspan=1><A HREF="<%="/cdebrowser/cdeBrowse.jsp?PageId=DataElementsGroup"%>" TARGET="_top"><img src="/cdebrowser/i/backButton.gif" border=0></A></TD>
+       <td align="left">
+          <img  src="/cdebrowser/i/remove_from_cde_comparelist.gif" >
+        </td> 
+       <td align="left">
+          <img  src="/cdebrowser/i/changeCompareOrder.gif" >
+        </td>         
+        
         <TD valign="TOP" align="CENTER"  colspan=1>
               <html:link action='<%="/cdebrowser/CDECompareExcelDownload.do?"+NavigationConstants.METHOD_PARAM+"=downloadToExcel"%>' 
                  >
@@ -171,37 +178,69 @@ function details(linkParms ){
 <br>
 <A NAME="dataElement"></A> 
 
-<table cellpadding="0" cellspacing="0" width="140%" align="center" border="0">
-  <tr>
-    <td class="OraHeaderSubSub" width="10%">Data Element</td>     
-    <td><input type="checkbox"  width="30%" onClick="ToggleAll(this)"/></td>
-    <td><input type="checkbox"  width="30%" onClick="ToggleAll(this)"/></td>
-    <td><input type="checkbox"  width="30%" onClick="ToggleAll(this)"/></td>
-  </tr> 
-</table>
 
-<table cellpadding="0" cellspacing="0" align="center" width="100%"  border="0">
+<table cellpadding="0" cellspacing="0" width="140%" align="center" border=0>
   <tr>
-    <td width="8%" ><a href=" ">Check All</a></td>
-    <td width="8%" ><a href=" ">Clear All</a></td>
-     <td align="left">
-          <img  src="/cdebrowser/i/remove_from_cde_comparelist.gif" >
-      </td> 
-     <td align="left">
-              <html:link action='<%="/cdebrowser/CDECompareExcelDownload.do?"+NavigationConstants.METHOD_PARAM+"=gotoChangeCompareOrder"%>' 
-                 >
-                <img src="/cdebrowser/i/changeCompareOrder.gi" border=0>
-              </html:link>            
-      </td>          
+    <td class="OraHeaderSubSub" width="100%">Data Element</td>
   </tr>
-</table>
-
-<table cellpadding="0" cellspacing="0" width="140%" align="center">
-  <tr>
-    <td width="140%"><img height=2 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+  <tr height='2' >
+    <td width="140%" ><img height=2 src="i/beigedot.gif" width="99%" align=top border=1> </td>
   </tr>  
 </table>
-
+<table cellpadding="0" cellspacing="0" width="140%" align="center" valign="top" border="0">
+  <tr>
+    <td class="OraHeaderSubSub" width="10%">&nbsp;
+      <table cellpadding="0" cellspacing="0" align="center" valign="top" width="100%"  border="0">
+       <tr>
+         <td width="8%" ><a href=" ">Check All</a></td>
+         <td width="8%" ><a href=" ">Clear All</a></td>
+       </tr>
+     </table>    
+    </td>     
+    <td width="30%">
+      <table cellpadding="0" cellspacing="0" align="left" valign="top" width="10%"  border="0">
+       <tr>
+         <td width="8%" ><input type="checkbox"   onClick="ToggleAll(this)"/></td>
+         <td width="8%" >
+          <select name="contextIdSeq" class="Dropdown">
+	   <option value="" selected="selected">1</option> 
+	   <option value="2">2</option>
+	   <option value="3">3</option>
+           </select> 
+         </td>
+       </tr>
+      </table>     
+    </td>
+    <td width="30%" >
+      <table cellpadding="0" cellspacing="0" align="left" valign="top" width="10%"  border="0">
+       <tr>
+         <td width="8%" ><input type="checkbox"   onClick="ToggleAll(this)"/></td>
+         <td width="8%" >
+          <select name="contextIdSeq" class="Dropdown">
+	   <option value="" >1</option> 
+	   <option value="2" selected="selected" >2</option>
+	   <option value="3">3</option>
+           </select> 
+         </td>
+       </tr>
+      </table>     
+    </td>
+    <td width="30%" >
+      <table cellpadding="0" cellspacing="4" align="left" valign="top" width="10%"  border="0">
+       <tr>
+         <td width="8%" ><input type="checkbox"   onClick="ToggleAll(this)"/></td>
+         <td width="8%" >
+          <select name="contextIdSeq" class="Dropdown">
+	   <option value="">1</option> 
+	   <option value="2">2</option>
+	   <option value="3"  selected="selected" >3</option>
+           </select> 
+         </td>
+       </tr>
+      </table>     
+    </td>
+  </tr> 
+</table>
 <table width="140%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
 
  <tr class="OraTabledata">

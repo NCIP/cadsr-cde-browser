@@ -61,12 +61,14 @@ public class SortableColumnHeaderDisplay extends TagSupport
     if(sortableTableHeader.getOrder()==-1&&sortFieldValue.equalsIgnoreCase(sortableTableHeader.getPrimary()))
     {
       newOrderValue=1;
-      imageUrl="&nbsp;<img src=\""+descendingImageUrl+"\" border=0 >";
+      if(descendingImageUrl!=null&&!descendingImageUrl.equalsIgnoreCase(""))
+        imageUrl="&nbsp;<img src=\""+descendingImageUrl+"\" border=0 >";
     }
     else if(sortableTableHeader.getOrder()==1&&sortFieldValue.equalsIgnoreCase(sortableTableHeader.getPrimary()))
     {
       newOrderValue=-1;
-      imageUrl="&nbsp;<img src=\""+ascendingImageUrl+"\" border=0 >";
+      if(ascendingImageUrl!=null&&!ascendingImageUrl.equalsIgnoreCase(""))
+        imageUrl="&nbsp;<img src=\""+ascendingImageUrl+"\" border=0 >";
     }
     StringBuffer sb = new StringBuffer(req.getContextPath()+actionUrl);
     if(actionUrl.indexOf("=")!=-1)

@@ -80,8 +80,8 @@
            /WEB-INF/struts-config-addQuestion.xml,/WEB-INF/struts-config-cancel.xml,
            /WEB-INF/struts-config-manageClassifications.xml,/WEB-INF/struts-config-module.xml,
            /WEB-INF/struts-config-formCreate.xml, /WEB-INF/struts-config-cdeSideBySide.xml,
-           /WEB-INF/struts-config-manageReferenceDocs.xml
-      </param-value>
+           /WEB-INF/struts-config-manageReferenceDocs.xml,/WEB-INF/struts-config-downloadFormToExcel.xml
+       </param-value>
     </init-param>
     <init-param>
       <param-name>debug</param-name>
@@ -123,15 +123,15 @@
     </init-param>  
     <init-param>
       <param-name>debugUsername</param-name>
-      <param-value>sbrext</param-value>
+      <param-value>jasur</param-value>
     </init-param>   
     <init-param>
       <param-name>debugPassword</param-name>
-      <param-value>jjuser</param-value>
+      <param-value>jasur</param-value>
     </init-param> 
     <init-param>
       <param-name>debugLogin</param-name>
-      <param-value>Y</param-value>
+      <param-value>N</param-value>
     </init-param>         	
    </filter>   
   <servlet-mapping>
