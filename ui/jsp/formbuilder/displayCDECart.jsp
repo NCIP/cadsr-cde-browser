@@ -90,9 +90,20 @@ function details(linkParms ){
     doneURL="cdeBrowse.jsp?PageId=DataElementsGroup";
   }
 %>
+<%  
+  if ((src != null) && (!"".equals(src))) {
+%>
+  <%@ include file="../common/in_process_common_header_inc.jsp"%>
+<%
+  }
+  else {
+%>
 <jsp:include page="../common/common_header_jsp_inc.jsp" flush="true">
   <jsp:param name="loginDestination" value="formCDECartAction.do?method=displayCDECart"/>
 </jsp:include>
+<%
+  }
+%>
 <jsp:include page="../common/tab_inc.jsp" flush="true">
   <jsp:param name="label" value="CDE&nbsp;Cart"/>
   <jsp:param name="urlPrefix" value=""/>
