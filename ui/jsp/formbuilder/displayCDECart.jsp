@@ -24,13 +24,18 @@ function submitForm() {
 }
 
 function saveItems() {
-  document.forms[0].method.value = 'addItems'
-  submitForm();
+  if (validateSelection('selectedSaveItems','Please select atleast one data element to save to your CDE Cart.')) {
+   document.forms[0].method.value = 'addItems'
+   submitForm();
+   return true;
+  }
 }
 
 function deleteItems() {
-  document.forms[0].method.value = 'removeItems'
-  submitForm();
+  if (validateSelection('selectedDeleteItems','Please select atleast one data element to delete from your CDE Cart.')) {
+    document.forms[0].method.value = 'removeItems'
+    submitForm();
+  }
 }
 
 function ToggleSaveAll(e){
