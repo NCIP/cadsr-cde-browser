@@ -92,9 +92,9 @@ public class FormBuilderEJB extends SessionBeanAdapter
         String classificationIdSeq,NCIUser user) {
         FormDAO dao = daoFactory.getFormDAO();
         ContextDAO contextDao = daoFactory.getContextDAO();
-        
+
         Collection forms = null;
-        
+
         try {
             Context ctep = contextDao.getContextByName(Context.CTEP);
             String contextRestriction =null;
@@ -113,7 +113,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
         return forms;
     }
 
-    
+
     /**
      * Get all forms that have been classified by this classification
      */
@@ -130,9 +130,9 @@ public class FormBuilderEJB extends SessionBeanAdapter
             throw new DMLException("Cannot get Forms", ex);
         }
 
-        return forms;      
+        return forms;
     }
-    
+
     /**
      * Get all published forms for a protocol
      */
@@ -149,41 +149,41 @@ public class FormBuilderEJB extends SessionBeanAdapter
             throw new DMLException("Cannot get Forms", ex);
         }
 
-        return forms;      
-    }    
-    
+        return forms;
+    }
+
     /**
      * Uses get complete form
      * Change Order : isPublished check
      * @param formPK
      *
      * @return form that match the formPK.
-     */    
+     */
     public Form getFormDetails(String formPK) {
         Form myForm = null;
         FormDAO fdao = daoFactory.getFormDAO();
         FormInstructionDAO fInstrdao = daoFactory.getFormInstructionDAO();
-        
+
         ModuleDAO mdao = daoFactory.getModuleDAO();
         ModuleInstructionDAO mInstrdao = daoFactory.getModuleInstructionDAO();
-        
+
         QuestionDAO qdao = daoFactory.getQuestionDAO();
         QuestionInstructionDAO qInstrdao = daoFactory.getQuestionInstructionDAO();
-        
+
         FormValidValueDAO vdao = daoFactory.getFormValidValueDAO();
         FormValidValueInstructionDAO vvInstrdao = daoFactory.getFormValidValueInstructionDAO();
         ContextDAO cdao = daoFactory.getContextDAO();
-        
+
         myForm = getFormRow(formPK);
         List refDocs = fdao.getAllReferenceDocuments(formPK,myForm.REF_DOC_TYPE_IMAGE);
         myForm.setReferenceDocs(refDocs);
-        
+
         List instructions = fInstrdao.getInstructions(formPK);
         myForm.setInstructions(instructions);
 
         List footerInstructions = fInstrdao.getFooterInstructions(formPK);
         myForm.setFooterInstructions(footerInstructions);
-        
+
         List modules = (List) fdao.getModulesInAForm(formPK);
         Iterator mIter = modules.iterator();
         List questions;
@@ -198,31 +198,31 @@ public class FormBuilderEJB extends SessionBeanAdapter
             block = (Module) mIter.next();
 
             String moduleId = block.getModuleIdseq();
-            
+
             List mInstructions = mInstrdao.getInstructions(moduleId);
             block.setInstructions(mInstructions);
-        
-            questions = (List) mdao.getQuestionsInAModule(moduleId);            
+
+            questions = (List) mdao.getQuestionsInAModule(moduleId);
             qIter = questions.iterator();
 
             while (qIter.hasNext()) {
                 term = (Question) qIter.next();
 
                 String termId = term.getQuesIdseq();
-                
+
                 List qInstructions = qInstrdao.getInstructions(termId);
-                term.setInstructions(qInstructions);   
-                
+                term.setInstructions(qInstructions);
+
                 values = (List) qdao.getValidValues(termId);
                 term.setValidValues(values);
-                
+
                 vIter = values.iterator();
                 while(vIter.hasNext())
                 {
                   FormValidValue vv = (FormValidValue)vIter.next();
                   String vvId = vv.getIdseq();
                   List vvInstructions = vvInstrdao.getInstructions(vvId);
-                  vv.setInstructions(vvInstructions);                     
+                  vv.setInstructions(vvInstructions);
                 }
             }
 
@@ -244,7 +244,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     ModuleInstructionDAO moduleInstrDao = daoFactory.getModuleInstructionDAO();
     QuestionInstructionDAO questionInstrDao = daoFactory.getQuestionInstructionDAO();
     FormValidValueInstructionDAO valueValueInstrDao = daoFactory.getFormValidValueInstructionDAO();
-    
+
     Module module = mdao.findModuleByPrimaryKey(modulePK);
     module.setInstructions(moduleInstrDao.getInstructions(modulePK));
     List questions = (List) mdao.getQuestionsInAModule(modulePK);
@@ -253,12 +253,12 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
     while (qIter.hasNext()) {
         term = (Question) qIter.next();
-        String termId = term.getQuesIdseq();        
+        String termId = term.getQuesIdseq();
         term.setInstructions(questionInstrDao.getInstructions(termId));
         List values = (List) qdao.getValidValues(termId);
         term.setValidValues(values);
         Iterator vvIter = values.iterator();
-        while (vvIter.hasNext()) {      
+        while (vvIter.hasNext()) {
           FormValidValue vv = (FormValidValue) vvIter.next();
           vv.setInstructions(valueValueInstrDao.getInstructions(vv.getValueIdseq()));
         }
@@ -319,8 +319,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
                {
                  makeInstructionChanges(validValueInstrDao,changesMap);
                }
-             }             
-             
+             }
+
          if(updatedQuestions!=null&&!updatedQuestions.isEmpty())
          {
            Iterator updatedIt = updatedQuestions.iterator();
@@ -347,13 +347,25 @@ public class FormBuilderEJB extends SessionBeanAdapter
            {
              Question currQuestion = (Question)newIt.next();
              currQuestion.setCreatedBy(getUserName());
-             questionDao.createQuestionComponent(currQuestion);
+             Question newQusetion = questionDao.createQuestionComponent(currQuestion);
+               //instructions
+               Instruction qInstr = currQuestion.getInstruction();
+               if(qInstr!=null)
+               {
+                  questionInstrDao.createInstruction(qInstr,newQusetion.getQuesIdseq());
+               }
              List currQuestionValidValues = currQuestion.getValidValues();
              ListIterator currQuestionValidValuesIt = currQuestionValidValues.listIterator();
              while(currQuestionValidValuesIt!=null&&currQuestionValidValuesIt.hasNext())
              {
                FormValidValue fvv = (FormValidValue)currQuestionValidValuesIt.next();
-               formValidValueDao.createFormValidValueComponent(fvv);
+               String newFVVIdseq = formValidValueDao.createFormValidValueComponent(fvv);
+               //instructions
+               Instruction vvInstr = fvv.getInstruction();
+               if(vvInstr!=null)
+               {
+                  validValueInstrDao.createInstruction(vvInstr,newFVVIdseq);
+               }
              }
            }
          }
@@ -387,7 +399,14 @@ public class FormBuilderEJB extends SessionBeanAdapter
              {
                FormValidValue fvv = (FormValidValue)vvListIt.next();
                fvv.setCreatedBy(getUserName());
-               formValidValueDao.createFormValidValueComponent(fvv);
+               String newFVVIdseq = formValidValueDao.createFormValidValueComponent(fvv);
+               //instructions
+               Instruction vvInstr = fvv.getInstruction();
+               if(vvInstr!=null)
+               {
+                  validValueInstrDao.createInstruction(vvInstr,newFVVIdseq);
+               }
+
              }
            }
          }
@@ -421,7 +440,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     FormDAO formdao = daoFactory.getFormDAO();
     FormInstructionDAO formInstrdao = daoFactory.getFormInstructionDAO();
     ModuleInstructionDAO moduleInstrdao = daoFactory.getModuleInstructionDAO();
-    
+
    if(formHeader!=null)
    {
      formdao.updateFormComponent(formHeader);
@@ -436,7 +455,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
         if(instr!=null)
           moduleInstrdao.createInstruction(instr,newModIdseq);
       }
-    }   
+    }
     if ((updatedModules != null) && !updatedModules.isEmpty()) {
       Iterator updatedIt = updatedModules.iterator();
 
@@ -457,10 +476,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
       }
     }
     //Update Instructions
-    
-    makeInstructionChanges(formInstrdao,instructionChanges.getFormHeaderInstructionChanges());  
+
+    makeInstructionChanges(formInstrdao,instructionChanges.getFormHeaderInstructionChanges());
     makeFooterInstructionChanges(formInstrdao,instructionChanges.getFormFooterInstructionChanges());
-    
+
     return getFormDetails(formIdSeq);
   }
 
@@ -632,7 +651,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
         return myDAO.assignClassification(acId, csCsiId);
     }
-    
+
     /**
      *
      * @inheritDoc
@@ -642,7 +661,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
         return myDAO.removeClassification(cscsiIdseq,acId);
     }
-    
+
     /**
      *
      * @inheritDoc
@@ -667,7 +686,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
         Instruction formFooterInstruction) {
         FormDAO fdao = daoFactory.getFormDAO();
         String newFormIdseq = fdao.createFormComponent(form);
-        
+
 
         if (formHeaderInstruction != null)
         {
@@ -688,7 +707,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     //Publish Change Order
     /**
      * Publishes the form by assigning publishing classifications to the form
-     * 
+     *
      * @inheritDoc
      */
     public void publishForm(String formIdSeq, String formType,String contextIdSeq) {
@@ -699,7 +718,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
         if(formType.equals(PersistenceConstants.FORM_TYPE_TEMPLATE))
           schemeItems = myDAO.getPublishingCSCSIsForTemplate(contextIdSeq);
-          
+
         if(schemeItems==null) return;
         Iterator it = schemeItems.iterator();
 
@@ -707,8 +726,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
         {
           String  cscsi = (String)it.next();
           try{
-            myDAO.assignClassification(formIdSeq,cscsi);   
-          
+            myDAO.assignClassification(formIdSeq,cscsi);
+
           }
         catch(DMLException exp)
           {
@@ -716,7 +735,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
              if(!exp.getErrorCode().equals(ErrorCodeConstants.ERROR_DUPLICATE_CLASSIFICATION))
              {
                throw exp;
-             }            
+             }
           }
         }
     }
@@ -733,13 +752,13 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
         if(formType.equals(PersistenceConstants.FORM_TYPE_TEMPLATE))
           schemeItems = myDAO.getPublishingCSCSIsForTemplate(contextIdSeq);
-          
+
         if(schemeItems==null) return;
         Iterator it = schemeItems.iterator();
         while(it.hasNext())
         {
           String  cscsi = (String)it.next();
-          myDAO.removeClassification(cscsi,formIdSeq);        
+          myDAO.removeClassification(cscsi,formIdSeq);
         }
     }
   private void makeInstructionChanges(InstructionDAO dao, Map changesMap)
@@ -756,7 +775,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
              Instruction instr = (Instruction)newInstrs.get(parentIdSeq);
              instr.setCreatedBy(getUserName());
              dao.createInstruction(instr,parentIdSeq);
-           }      
+           }
     }
     //update
     List updatedInstrs = (List)changesMap.get(InstructionChanges.UPDATED_INSTRUCTIONS);
@@ -767,7 +786,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
            {
              Instruction instr = (Instruction)updatedInstrIt.next();
              dao.updateInstruction(instr);
-           }      
+           }
     }
     //delete
     List deleteInstrs = (List)changesMap.get(InstructionChanges.DELETED_INSTRUCTIONS);
@@ -778,10 +797,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
            {
              Instruction instr = (Instruction)deleteInstrIt.next();
              dao.deleteInstruction(instr.getIdseq());
-           }        
-    }    
+           }
+    }
   }
-  
+
   private void makeFooterInstructionChanges(FormInstructionDAO dao, Map changesMap)
   {
     //Create new ones
@@ -796,7 +815,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
              Instruction instr = (Instruction)newInstrs.get(parentIdSeq);
              instr.setCreatedBy(getUserName());
              dao.createFooterInstruction(instr,parentIdSeq);
-           }      
+           }
     }
     //update
     List updatedInstrs = (List)changesMap.get(InstructionChanges.UPDATED_INSTRUCTIONS);
@@ -807,7 +826,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
            {
              Instruction instr = (Instruction)updatedInstrIt.next();
              dao.updateInstruction(instr);
-           }      
+           }
     }
     //delete
     List deleteInstrs = (List)changesMap.get(InstructionChanges.DELETED_INSTRUCTIONS);
@@ -818,7 +837,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
            {
              Instruction instr = (Instruction)deleteInstrIt.next();
              dao.deleteInstruction(instr.getIdseq());
-           }        
-    }    
-  }  
+           }
+    }
+  }
 }

@@ -12,11 +12,11 @@ public interface FormValidValueDAO {
    *
    * @param <b>newValidValue</b> FormValidValue object
    *
-   * @return <b>int</b> 1 - success, 0 - failure.
+   * @return Id of the new Form Valid Value.
    *
    * @throws <b>DMLException</b>
    */
-  public int createFormValidValueComponent(FormValidValue newValidValue)
+  public String createFormValidValueComponent(FormValidValue newValidValue)
     throws DMLException;
 
   /**
@@ -49,7 +49,7 @@ public interface FormValidValueDAO {
 
   /**
    * Deletes the specified form valid value and all its associated components.
-   * 
+   *
    * @param <b>validValueId</b> Idseq of the form valid value component.
    *
    * @return <b>int</b> 1 - success, 0 - failure.

@@ -1537,6 +1537,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     Module module,
     String[] questionInstructionArr) {
     List questions = module.getQuestions();
+    if(questions==null) 
+    {
+      questions = new ArrayList();
+    }
+    
 
     for (int i = 0; i < questionInstructionArr.length; i++) {
       String instrStr = questionInstructionArr[i];
@@ -1604,10 +1609,18 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     Module module,
     String[] validValueInstructionArr) {
     List questions = module.getQuestions();
+    if(questions==null) 
+    {
+      questions = new ArrayList();
+    }    
     int index=0;
     for (int i = 0; i < questions.size(); i++) {
         Question currQuestion = (Question) questions.get(i);  
         List vvList = currQuestion.getValidValues();
+        if(vvList==null) 
+        {
+          vvList = new ArrayList();
+        }            
        for (int j = 0; j < vvList.size(); j++) {  
             String instrStr = validValueInstructionArr[index];
             FormValidValue currVV = (FormValidValue) vvList.get(j); 

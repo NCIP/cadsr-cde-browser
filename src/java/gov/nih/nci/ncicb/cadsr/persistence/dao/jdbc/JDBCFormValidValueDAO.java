@@ -50,7 +50,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
    *
    * @throws <b>DMLException</b>
    */
-  public int createFormValidValueComponent(FormValidValue newValidValue)
+  public String createFormValidValueComponent(FormValidValue newValidValue)
     throws DMLException {
 
     // check if the user has the privilege to create valid value
@@ -81,7 +81,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     String qrIdseq = generateGUID();
     int resRec = insertQuestRec.createContent(newValidValue, qcIdseq, qrIdseq);
     if (resRec == 1) {
-      return 1;
+      return qcIdseq;
     }
     else {
       DMLException dml =  new DMLException("Did not succeed creating question value relationship " +  
