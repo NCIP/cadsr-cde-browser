@@ -34,7 +34,6 @@ import javax.ejb.SessionContext;
 
 import javax.sql.DataSource;
 
-
 public class FormBuilderEJB extends SessionBeanAdapter
     implements FormBuilderServiceRemote {
     ServiceLocator locator;
@@ -475,12 +474,20 @@ public class FormBuilderEJB extends SessionBeanAdapter
         FormDAO fdao = daoFactory.getFormDAO();
         Form newForm = fdao.createFormComponent(form);
 
-        FormInstructionDAO fidao1 = daoFactory.getFormInstructionDAO();
-        fidao1.createFormInstructionComponent(formHeaderInstruction);
+        if (formHeaderInstruction != null)
+        {
+          FormInstructionDAO fidao1 = daoFactory.getFormInstructionDAO();
+          formHeaderInstruction.setForm(newForm);
+          fidao1.createFormInstructionComponent(formHeaderInstruction);
+        }
+        
+        if (formHeaderInstruction != null)
+        {
+          FormInstructionDAO fidao2 = daoFactory.getFormInstructionDAO();
+          formFooterInstruction.setForm(newForm);
+          fidao2.createFormInstructionComponent(formFooterInstruction);
+        }
 
-        FormInstructionDAO fidao2 = daoFactory.getFormInstructionDAO();
-        fidao2.createFormInstructionComponent(formFooterInstruction);
-
-        return form;
+        return newForm;
     }
 }

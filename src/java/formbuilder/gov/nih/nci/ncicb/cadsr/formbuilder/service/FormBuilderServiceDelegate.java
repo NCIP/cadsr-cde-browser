@@ -93,5 +93,6 @@ public interface FormBuilderServiceDelegate {
         throws FormBuilderException;
 
     public Form createForm(Form form, FormInstruction formHeaderInstruction,
-        FormInstruction formFooterInstruction);
+        FormInstruction formFooterInstruction)
+        throws FormBuilderException;
 }

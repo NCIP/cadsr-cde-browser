@@ -4,11 +4,17 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
 
 public interface FormConstants extends FormBuilderConstants
 {
+    public static final String FORM_PREFERRED_NAME = "formPreferredName";
     public static final String FORM_LONG_NAME = "formLongName";
+    public static final String FORM_PREFERRED_DEFITION = "preferredDefinition";
     public static final String CRF_CONTEXT_ID_SEQ = "conteIdseq";
     public static final String CRF_CONTEXT = "context";
     public static final String CONTEXT_ID_SEQ = "contextIdSeq";
     public static final String WORKFLOW = "workflow";
+    public static final String FORM_HEADER = "formHeader";
+    public static final String FORM_FOOTER = "formFooter";
+    public static final String FORM_PROTOCOL_ID_SEQ = "formProtocolIdseq";
+    public static final String FORM_PROTOCOL_NAME = "formProtocolName";
 
     public static final String LONG_NAME = "longName";
     public static final String COMMENTS = "comments";
