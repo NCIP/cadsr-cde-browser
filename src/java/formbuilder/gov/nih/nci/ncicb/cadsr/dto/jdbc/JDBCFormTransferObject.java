@@ -11,6 +11,8 @@ public class JDBCFormTransferObject extends FormTransferObject
 {
   public JDBCFormTransferObject(ResultSet rs) throws SQLException
   {
+
+
     setFormIdseq(rs.getString(1));      // QC_IDSEQ
     setLongName(rs.getString(9));       //LONG_NAME
     setPreferredName(rs.getString(7));  // PREFERRED_NAME
@@ -24,5 +26,8 @@ public class JDBCFormTransferObject extends FormTransferObject
     setProtocol(new ProtocolTransferObject(rs.getString(11))); //PROTOCOL_LONG_NAME
     setFormType(rs.getString(3)); // TYPE
     setAslName(rs.getString(6)); // WORKFLOW
+    setVersion(new Float(rs.getString(2))); // VERSION
+    setPreferredDefinition(rs.getString(8)); // PREFERRED_DEFINITION
+    setCreatedBy(rs.getString(13)); // CREATED_BY
   }
 }

@@ -130,6 +130,15 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
+
+    String formId1 = "9E343E83-5FEB-119F-E034-080020C9C0E0";
+    try {
+      System.out.println(formTest.findFormByPrimaryKey(formId1).getVersion().toString());
+    }
+    catch (DMLException e) {
+      System.out.println("Failed to get a form for " + formId1);
+    }
+
     //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
     // type, classificationIdseq
     /*
