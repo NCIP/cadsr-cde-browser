@@ -24,19 +24,37 @@
 %>
     <%@ include file="/formbuilder/common_header_inc.jsp"%>
     <jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
-      <jsp:param name="label" value="View&nbsp;Form"/>
+      <jsp:param name="label" value="Edit&nbsp;Form"/>
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
-    <%@ include file="/formbuilder/viewButton_inc.jsp"%>
+    <%@ include file="/formbuilder/editButton_inc.jsp"%>    
     <logic:present name="<%=FormConstants.CRF%>">
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
         <tr class="OraTableColumnHeader">
           <td  width="20%">
             <bean:message key="cadsr.formbuilder.form.name" />
           </td>                
-          <td  class="OraTableColumnHeader">
-            <bean:write name="<%=FormConstants.CRF%>" property="longName"/>
-          </td>
+          <td class="OraTableColumnHeader">
+              <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                  <tr class="OraTableColumnHeader" >
+                    <td>
+                       <bean:write name="<%=FormConstants.CRF%>" property="longName"/>
+                    </td>
+                    <td align="right">
+ 			<html:link action='<%="/formEditAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+ 				paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">			
+				<html:img src='<%=urlPrefix+"i/add.gif"%>' border="0" alt="Add Module"/>
+			</html:link>                    
+			 &nbsp;
+ 			<html:link action='<%="/formEditAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+ 				paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">			
+				<html:img src='<%=urlPrefix+"i/edit.gif"%>' border="0" alt="Edit"/>
+			</html:link>                    
+			 &nbsp;			 		                         
+                     </td>
+                   </tr>
+		</table>
+	  </td>
         </tr>
         <tr class="OraTableColumnHeader">
           <td  width="20%">
@@ -71,13 +89,52 @@
         </tr>
       </table>      
             <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
-              <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
+              <logic:iterate id="module" indexId="moduleIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
+                <bean:size id="moduleSize" name="<%=FormConstants.CRF%>" property="modules"  />
                 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
-                 <tr class="OraTableColumnHeader">                 
+                 <tr class="OraTableColumnHeader">
                     <td class="OraTableColumnHeader">
-                      <bean:write name="module" property="longName"/>
-                    </td>
-                  </tr>
+                      <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                       <tr class="OraTableColumnHeader" >
+                         <td>
+                           <bean:write name="module" property="longName"/>
+                         </td>
+                         <td align="right">
+                            <logic:notEqual value="<%= String.valueOf(moduleSize.intValue()-1) %>" name="moduleIndex">
+ 			       <html:link action='<%="/moveDownModuleAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+ 				     paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">			
+				  <html:img src='<%=urlPrefix+"i/down.gif"%>' border="0" alt="Down"/>
+			       </html:link> 		            	
+		            	&nbsp;
+		            </logic:notEqual>
+		            <logic:notEqual value="<%= String.valueOf(0) %>" name="moduleIndex"> 
+ 			       <html:link action='<%="/moveUpModuleAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+ 				     paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">			
+				  <html:img src='<%=urlPrefix+"i/up.gif"%>' border="0" alt="Up"/>
+			       </html:link> 		            		            	
+		            	&nbsp;
+		            </logic:notEqual> 		            
+                             &nbsp;
+ 			    <html:link action='<%="/addModuleAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+ 				   paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">			
+				<html:img src='<%=urlPrefix+"i/add.gif"%>' border="0" alt="Add"/>
+			    </html:link> 			    
+			    &nbsp;                             
+ 			    <html:link action='<%="/editModuleAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+ 				   paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">			
+				<html:img src='<%=urlPrefix+"i/edit.gif"%>' border="0" alt="Edit"/>
+			    </html:link> 			    
+			    &nbsp;
+ 			    <html:link action='<%="/deleteModuleAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+ 				   paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">			
+				<html:img src='<%=urlPrefix+"i/delete.gif"%>' border="0" alt="Delete"/>
+			    </html:link> 			    			    
+			    &nbsp;
+                         </td>
+                       </tr>
+		      </table>
+		     </td>
+		  </tr>
                   <logic:present name="module">
                   <logic:notEmpty name="module" property = "questions">
                     <tr class="OraTabledata">
@@ -88,8 +145,7 @@
                               <td class="OraFieldText" width="50">&nbsp;</td>
                               <td height="1"  bgcolor="#F7F7E7" bordercolor="#C0C087">                               
                               </td>
-                            </tr>                             
-                            <tr class="OraTabledata">
+                            </tr>                             <tr class="OraTabledata">
                               <td class="OraFieldText" width="50">&nbsp;</td>
                               <td class="UnderlineOraFieldText">
                                 <bean:write name="question" property="longName"/>
@@ -134,6 +190,6 @@
             </logic:notEmpty>
     </logic:present>
     <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
-    <%@ include file="/formbuilder/viewButton_inc.jsp"%>
+    <%@ include file="/formbuilder/editButton_inc.jsp"%> 
   </BODY>
 </HTML>
