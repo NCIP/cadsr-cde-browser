@@ -1,0 +1,15 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ page contentType="text/html;charset=windows-1252"%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>untitled</title>
+</head>
+<body>
+  <P>CDE Browser Functions</P>
+  <html:link page="/formbuilder/form_search.jsp">
+    <bean:message key="link.form_search"/>
+  </html:link>
+</body>
+</html>
