@@ -38,6 +38,10 @@ function submitForm() {
 function resetForm() {
      document.forms[0].reset();
 }
+function clearProtocol() {
+  document.forms[0].protocolIdSeq.value = "";
+  document.forms[0].protocolLongName.value = "";
+}
 
 -->
 </SCRIPT>
