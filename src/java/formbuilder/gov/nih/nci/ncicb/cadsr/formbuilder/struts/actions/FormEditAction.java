@@ -819,9 +819,9 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
           updatedModules.add(newModule);
         }
       }
-      else {
-        updatedModules.add(newModule);
-      }
+    //  else {
+    //    updatedModules.add(newModule);
+    //  }
     }
 
     return updatedModules;
