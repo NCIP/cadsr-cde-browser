@@ -734,10 +734,10 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       
       if (StringUtils.doesValueExist(contextRestriction)) {  
         if (hasWhere) {
-          whereBuffer.append(" AND CONTE_IDSEQ !='" + contextRestriction + "'");
+          whereBuffer.append(" AND (CONTE_IDSEQ !=' " + contextRestriction + "' or type in ('TEMPLATE'))");
         }
         else {
-          whereBuffer.append(" WHERE CONTE_IDSEQ !='" + contextRestriction + "'");
+          whereBuffer.append(" WHERE (CONTE_IDSEQ !='" + contextRestriction + "' or type in ('TEMPLATE'))");
           hasWhere = true;
         }
       }
