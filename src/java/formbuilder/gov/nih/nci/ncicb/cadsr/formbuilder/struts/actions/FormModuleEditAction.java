@@ -1,19 +1,16 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
+import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
-import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
-import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
-
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.ListIterator;
-import java.util.Map;
-import javax.servlet.jsp.PageContext;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -21,11 +18,16 @@ import org.apache.struts.action.DynaActionForm;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 
 public class FormModuleEditAction extends FormEditAction {
@@ -51,33 +53,34 @@ public class FormModuleEditAction extends FormEditAction {
     DynaActionForm moduleEditForm = (DynaActionForm) editForm;
     Integer moduleIndex = (Integer) moduleEditForm.get(MODULE_INDEX);
     crf = (Form) getSessionObject(request, CRF);
+
     List modules = crf.getModules();
-    Module selectedModule = (Module)modules.get(moduleIndex.intValue());
+    Module selectedModule = (Module) modules.get(moduleIndex.intValue());
     String[] questionArr = getQuestionsAsArray(selectedModule.getQuestions());
-    moduleEditForm.set(MODULE_LONG_NAME,selectedModule.getLongName());
-    moduleEditForm.set(MODULE_INSTRUCTION_LONG_NAME,selectedModule.getLongName());
-    moduleEditForm.set(MODULE_QUESTIONS,questionArr);
-    setSessionObject(request, MODULE,selectedModule);
+    moduleEditForm.set(MODULE_LONG_NAME, selectedModule.getLongName());
+    moduleEditForm.set(
+      MODULE_INSTRUCTION_LONG_NAME, selectedModule.getLongName());
+    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    setSessionObject(request, MODULE, selectedModule);
+
     FormBuilderServiceDelegate service = getFormBuilderService();
     Collection allVdIds = getAllVDsForQuestions(selectedModule.getQuestions());
-    Map validValueMap = null; 
-    try
-    {
+    Map validValueMap = null;
+
+    try {
       validValueMap = service.getValidValues(allVdIds);
     }
-    catch(FormBuilderException exp)
-    {
-       if (log.isDebugEnabled()) {
-        log.debug("Exp while getting validValue"+exp);
+    catch (FormBuilderException exp) {
+      if (log.isDebugEnabled()) {
+        log.debug("Exp while getting validValue" + exp);
       }
     }
-    
-    setSessionObject(request, VALUE_DOMAIN_VALID_VALUES_MAP,validValueMap);
-    
+
+    setSessionObject(request, VALUE_DOMAIN_VALID_VALUES_MAP, validValueMap);
+
     return mapping.findForward(SUCCESS);
-    
   }
-  
+
   /**
    * Swap the display order of the Question with the previous Question.
    *
@@ -101,7 +104,8 @@ public class FormModuleEditAction extends FormEditAction {
     int currQuestionIndex = questionIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
-    setQuestionsFromArray(module,questionArr);
+    setQuestionsFromArray(module, questionArr);
+
     List questions = module.getQuestions();
 
     if ((questions != null) && (questions.size() > 1)) {
@@ -113,8 +117,10 @@ public class FormModuleEditAction extends FormEditAction {
       questions.remove(currQuestionIndex);
       questions.add(currQuestionIndex - 1, currQuestion);
     }
+
     questionArr = getQuestionsAsArray(module.getQuestions());
-    moduleEditForm.set(MODULE_QUESTIONS,questionArr);
+    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+
     if (log.isDebugEnabled()) {
       log.info("Move up Question ");
     }
@@ -145,7 +151,8 @@ public class FormModuleEditAction extends FormEditAction {
     int currQuestionIndex = questionIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
-    setQuestionsFromArray(module,questionArr);
+    setQuestionsFromArray(module, questionArr);
+
     List questions = module.getQuestions();
 
     if ((questions != null) && (questions.size() > 1)) {
@@ -157,17 +164,20 @@ public class FormModuleEditAction extends FormEditAction {
       questions.remove(currQuestionIndex);
       questions.add(currQuestionIndex + 1, currQuestion);
     }
+
     questionArr = getQuestionsAsArray(module.getQuestions());
-    moduleEditForm.set(MODULE_QUESTIONS,questionArr);
+    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+
     if (log.isDebugEnabled()) {
       log.info("Move Down Question ");
     }
 
     return mapping.findForward(MODULE_EDIT);
-  }  
+  }
 
   /**
-   * Deletes the Question of specified index and adds the Module to deleted list.
+   * Deletes the Question of specified index and adds the Module to deleted
+   * list.
    *
    * @param mapping The ActionMapping used to select this instance.
    * @param form The optional ActionForm bean for this request.
@@ -189,10 +199,10 @@ public class FormModuleEditAction extends FormEditAction {
 
     Module module = (Module) getSessionObject(request, MODULE);
     List deletedQuestions = (List) getSessionObject(request, DELETED_QUESTIONS);
-    
+
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
-    setQuestionsFromArray(module,questionArr);
-    
+    setQuestionsFromArray(module, questionArr);
+
     if (deletedQuestions == null) {
       deletedQuestions = new ArrayList();
     }
@@ -200,19 +210,19 @@ public class FormModuleEditAction extends FormEditAction {
     List questions = module.getQuestions();
 
     if ((questions != null) && (questions.size() > 0)) {
-
-      Question deletedQuestion = (Question) questions.remove(questionIndex.intValue());
+      Question deletedQuestion =
+        (Question) questions.remove(questionIndex.intValue());
       decrementDisplayOrder(questions, questionIndex.intValue());
       deletedQuestions.add(deletedQuestion);
     }
 
     setSessionObject(request, DELETED_QUESTIONS, deletedQuestions);
     questionArr = getQuestionsAsArray(module.getQuestions());
-    moduleEditForm.set(MODULE_QUESTIONS,questionArr);    
+    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
 
     return mapping.findForward(MODULE_EDIT);
-  }  
-  
+  }
+
   /**
    * Add Question from deleted list.
    *
@@ -240,15 +250,21 @@ public class FormModuleEditAction extends FormEditAction {
     Module module = (Module) getSessionObject(request, MODULE);
     List deletedQuestions = (List) getSessionObject(request, DELETED_QUESTIONS);
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
-    setQuestionsFromArray(module,questionArr);
+    setQuestionsFromArray(module, questionArr);
+
     List questions = module.getQuestions();
 
-    if ((questions != null) && (questionIndex != null) && (deletedQuestions != null)) {
+    if (
+      (questions != null) && (questionIndex != null) &&
+          (deletedQuestions != null)) {
       Question questionToAdd =
         removeQuestionFromList(addDeletedQuestionIdSeq, deletedQuestions);
 
-      if ((questionIndex.intValue() < questions.size()) && (questionToAdd != null)) {
-        Question currQuestion = (Question) questions.get(questionIndex.intValue());
+      if (
+        (questionIndex.intValue() < questions.size()) &&
+            (questionToAdd != null)) {
+        Question currQuestion =
+          (Question) questions.get(questionIndex.intValue());
         int displayOrder = currQuestion.getDisplayOrder();
         incrementDisplayOrder(questions, questionIndex.intValue());
         questionToAdd.setDisplayOrder(displayOrder);
@@ -258,7 +274,8 @@ public class FormModuleEditAction extends FormEditAction {
         int newDisplayOrder = 0;
 
         if (questionIndex.intValue() != 0) {
-          Question lastQuestion = (Question) questions.get(questions.size() - 1);
+          Question lastQuestion =
+            (Question) questions.get(questions.size() - 1);
           newDisplayOrder = lastQuestion.getDisplayOrder() + 1;
         }
 
@@ -266,13 +283,14 @@ public class FormModuleEditAction extends FormEditAction {
         questions.add(questionToAdd);
       }
     }
+
     setSessionObject(request, DELETED_QUESTIONS, deletedQuestions);
     questionArr = getQuestionsAsArray(module.getQuestions());
-    moduleEditForm.set(MODULE_QUESTIONS,questionArr);  
+    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+
     return mapping.findForward(MODULE_EDIT);
-  }  
-  
-  
+  }
+
   /**
    * Swap the display order of the ValidValue with the previous VV.
    *
@@ -297,23 +315,28 @@ public class FormModuleEditAction extends FormEditAction {
     int currQuestionIndex = questionIndex.intValue();
     int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
-    String[] questionArr = (String[])moduleEditForm.get(MODULE_QUESTIONS);
-    setQuestionsFromArray(module,questionArr);
+    String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
+    setQuestionsFromArray(module, questionArr);
+
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
-    List validValues =  currQuestion.getValidValues();
+    List validValues = currQuestion.getValidValues();
 
     if ((validValues != null) && (validValues.size() > 1)) {
-      FormValidValue currValidValue = (FormValidValue) validValues.get(currValidValueIndex);
-      FormValidValue prvValidValue = (FormValidValue) validValues.get(currValidValueIndex - 1);
+      FormValidValue currValidValue =
+        (FormValidValue) validValues.get(currValidValueIndex);
+      FormValidValue prvValidValue =
+        (FormValidValue) validValues.get(currValidValueIndex - 1);
       int currValidValueDisplayOrder = currValidValue.getDisplayOrder();
       currValidValue.setDisplayOrder(prvValidValue.getDisplayOrder());
       prvValidValue.setDisplayOrder(currValidValueDisplayOrder);
       validValues.remove(currValidValueIndex);
       validValues.add(currValidValueIndex - 1, currValidValue);
     }
+
     questionArr = getQuestionsAsArray(module.getQuestions());
-    moduleEditForm.set(MODULE_QUESTIONS,questionArr);
+    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+
     if (log.isDebugEnabled()) {
       log.info("Move up Question ");
     }
@@ -346,30 +369,34 @@ public class FormModuleEditAction extends FormEditAction {
     int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
-    setQuestionsFromArray(module,questionArr);
+    setQuestionsFromArray(module, questionArr);
+
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
-    List validValues =  currQuestion.getValidValues();
+    List validValues = currQuestion.getValidValues();
 
     if ((validValues != null) && (validValues.size() > 1)) {
-      FormValidValue currValidValue = (FormValidValue) validValues.get(currValidValueIndex);
-      FormValidValue nextValidValue = (FormValidValue) validValues.get(currValidValueIndex + 1);
+      FormValidValue currValidValue =
+        (FormValidValue) validValues.get(currValidValueIndex);
+      FormValidValue nextValidValue =
+        (FormValidValue) validValues.get(currValidValueIndex + 1);
       int currValidValueDisplayOrder = currValidValue.getDisplayOrder();
       currValidValue.setDisplayOrder(nextValidValue.getDisplayOrder());
       nextValidValue.setDisplayOrder(currValidValueDisplayOrder);
       validValues.remove(currValidValueIndex);
       validValues.add(currValidValueIndex + 1, currValidValue);
     }
+
     questionArr = getQuestionsAsArray(module.getQuestions());
-    moduleEditForm.set(MODULE_QUESTIONS,questionArr);
+    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+
     if (log.isDebugEnabled()) {
       log.info("Move Down Question ");
     }
 
     return mapping.findForward(MODULE_EDIT);
-  }  
-  
-  
+  }
+
   /**
    * Deletes the ValidValue of specified index.
    *
@@ -389,31 +416,32 @@ public class FormModuleEditAction extends FormEditAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     DynaActionForm moduleEditForm = (DynaActionForm) form;
-        
+
     Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
     Integer validValueIndex = (Integer) moduleEditForm.get(VALID_VALUE_INDEX);
     int currQuestionIndex = questionIndex.intValue();
-    int currValidValueIndex = validValueIndex.intValue();    
+    int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
-        
+
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
-    setQuestionsFromArray(module,questionArr);
+    setQuestionsFromArray(module, questionArr);
 
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
-    List validValues =  currQuestion.getValidValues();
-    if ((validValues != null) && (validValues.size() > 0)) {
+    List validValues = currQuestion.getValidValues();
 
-      FormValidValue deletedValidValue = (FormValidValue) validValues.remove(currValidValueIndex);
+    if ((validValues != null) && (validValues.size() > 0)) {
+      FormValidValue deletedValidValue =
+        (FormValidValue) validValues.remove(currValidValueIndex);
       decrementDisplayOrder(validValues, currValidValueIndex);
     }
 
     questionArr = getQuestionsAsArray(module.getQuestions());
-    moduleEditForm.set(MODULE_QUESTIONS,questionArr);    
+    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
 
     return mapping.findForward(MODULE_EDIT);
-  }  
-  
+  }
+
   /**
    * Add ValidValue from deleted list.
    *
@@ -436,38 +464,46 @@ public class FormModuleEditAction extends FormEditAction {
     Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
     Integer validValueIndex = (Integer) moduleEditForm.get(VALID_VALUE_INDEX);
     int currQuestionIndex = questionIndex.intValue();
-    int currValidValueIndex = validValueIndex.intValue();    
+    int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
 
-    String addAvailableValidValueIdSeq =
-      (String) moduleEditForm.get(ADD_AVAILABLE_VALID_VALUE);
+    String addAvailableValidValueVPIdSeq =
+      (String) moduleEditForm.get(ADD_AVAILABLE_VALID_VALUE_VP_ID_SEQ);
 
-    Map availbleValidValues = (Map) getSessionObject(request, AVAILABLE_VALID_VALUES);
-    
+    Map availbleValidValuesMap =
+      (Map) getSessionObject(request, VALUE_DOMAIN_VALID_VALUES_MAP);
+
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
-    setQuestionsFromArray(module,questionArr);
-    
+    setQuestionsFromArray(module, questionArr);
+
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     DataElement de = currQuestion.getDataElement();
     String currDEValueDomainIdSeq = null;
-    if(de!=null)
-    {
+
+    if (de != null) {
       ValueDomain vd = de.getValueDomain();
-      if(vd!=null)
-        currDEValueDomainIdSeq=vd.getVdIdseq();
+
+      if (vd != null) {
+        currDEValueDomainIdSeq = vd.getVdIdseq();
+      }
     }
-    
-    List validValues =  currQuestion.getValidValues();
 
-    if ((currDEValueDomainIdSeq != null) && 
-         (validValueIndex != null) &&
-             (availbleValidValues != null)) {
+    List validValues = currQuestion.getValidValues();
+
+    if ((currDEValueDomainIdSeq != null) 
+         && (validValueIndex != null) 
+         &&(availbleValidValuesMap != null)) {
       FormValidValue formValidValueToAdd =
-        removeValidValueFromMap(addAvailableValidValueIdSeq,currDEValueDomainIdSeq, availbleValidValues);
-
-      if ((currValidValueIndex < validValues.size()) && (formValidValueToAdd != null)) {
-        FormValidValue currValidValue = (FormValidValue) validValues.get(currValidValueIndex);
+        getValidValueFromMap(
+          addAvailableValidValueVPIdSeq, currDEValueDomainIdSeq,
+          availbleValidValuesMap);
+     if(formValidValueToAdd==null)
+      return mapping.findForward(MODULE_EDIT);
+      if ((currValidValueIndex < validValues.size()) &&
+            (formValidValueToAdd != null)) {
+        FormValidValue currValidValue =
+          (FormValidValue) validValues.get(currValidValueIndex);
         int displayOrder = currValidValue.getDisplayOrder();
         incrementDisplayOrder(validValues, currValidValueIndex);
         formValidValueToAdd.setDisplayOrder(displayOrder);
@@ -477,18 +513,21 @@ public class FormModuleEditAction extends FormEditAction {
         int newDisplayOrder = 0;
 
         if (currValidValueIndex != 0) {
-          FormValidValue lastValidValue = (FormValidValue) validValues.get(validValues.size() - 1);
+          FormValidValue lastValidValue =
+            (FormValidValue) validValues.get(validValues.size() - 1);
           newDisplayOrder = lastValidValue.getDisplayOrder() + 1;
         }
+
         formValidValueToAdd.setDisplayOrder(newDisplayOrder);
         validValues.add(formValidValueToAdd);
       }
     }
+
     questionArr = getQuestionsAsArray(module.getQuestions());
-    moduleEditForm.set(MODULE_QUESTIONS,questionArr);  
+    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+
     return mapping.findForward(MODULE_EDIT);
-  }  
-    
+  }
 
   /**
    * Removes the ValidValue given by "validValueIdSeq" from the question list
@@ -498,26 +537,27 @@ public class FormModuleEditAction extends FormEditAction {
    *
    * @return the removed module
    */
-  protected FormValidValue removeValidValueFromMap(
-    String validValueIdSeq,String valueDomainIdSeq,
-    Map availableValidValues) {
-    
-    List validValues = (List)availableValidValues.get(valueDomainIdSeq);
-    
+  protected FormValidValue getValidValueFromMap(
+    String validValueVpIdSeq,
+    String valueDomainIdSeq,
+    Map availableValidValuesMap) {
+    List validValues = (List) availableValidValuesMap.get(valueDomainIdSeq);
+
     ListIterator iterate = validValues.listIterator();
 
     while (iterate.hasNext()) {
-      FormValidValue validValue = (FormValidValue) iterate.next();
-      if (validValue.getValueIdseq().equals(validValueIdSeq)) {
-        iterate.remove();
-        return validValue;
+      ValidValue validValue = (ValidValue) iterate.next();
+      if(validValue.getVpIdseq().equals(validValueVpIdSeq)){
+        FormValidValue formValidValue = new FormValidValueTransferObject();
+        formValidValue.setVpIdseq(validValueVpIdSeq);
+        formValidValue.setLongName(validValue.getShortMeaningValue());
+        return formValidValue;
       }
     }
 
     return null;
-  }  
+  }
 
-  
   /**
    * Removes the Question given by "quesIdSeq" from the question list
    *
@@ -536,12 +576,14 @@ public class FormModuleEditAction extends FormEditAction {
 
       if (question.getQuesIdseq().equals(questionIdSeq)) {
         iterate.remove();
+
         return question;
       }
     }
 
     return null;
-  }  
+  }
+
   /**
    * Gets the module given by "moduleIdSeq" from the module list
    *
@@ -564,48 +606,56 @@ public class FormModuleEditAction extends FormEditAction {
     }
 
     return null;
-  }  
-  private String[] getQuestionsAsArray(List questions)
-  {
-    if(questions==null)
+  }
+
+  private String[] getQuestionsAsArray(List questions) {
+    if (questions == null) {
       return null;
+    }
+
     ListIterator iterate = questions.listIterator();
     String[] questionArr = new String[questions.size()];
+
     while (iterate.hasNext()) {
-      int index= iterate.nextIndex();
+      int index = iterate.nextIndex();
       Question question = (Question) iterate.next();
-      questionArr[index]=question.getLongName();
-    }    
+      questionArr[index] = question.getLongName();
+    }
+
     return questionArr;
   }
-  
-  private void setQuestionsFromArray(Module module, String[] questionArr)
-  {
+
+  private void setQuestionsFromArray(
+    Module module,
+    String[] questionArr) {
     List questions = module.getQuestions();
-    for(int i=0;i<questionArr.length;i++)
-    {
+
+    for (int i = 0; i < questionArr.length; i++) {
       String questionStr = questionArr[i];
-      Question currQuestion = (Question)questions.get(i);
+      Question currQuestion = (Question) questions.get(i);
       currQuestion.setLongName(questionStr);
-    } 
-  }  
-  private Collection getAllVDsForQuestions(List questions)
-  {
+    }
+  }
+
+  private Collection getAllVDsForQuestions(List questions) {
     ListIterator iterate = questions.listIterator();
     Collection vdIds = new ArrayList();
+
     while (iterate.hasNext()) {
       Question question = (Question) iterate.next();
       DataElement de = question.getDataElement();
-      if(de!=null)
-      {
+
+      if (de != null) {
         ValueDomain vd = de.getValueDomain();
-        if(vd!=null)
-        {
-          if(!vdIds.contains(vd.getVdIdseq()))
+
+        if (vd != null) {
+          if (!vdIds.contains(vd.getVdIdseq())) {
             vdIds.add(vd.getVdIdseq());
-        }          
+          }
+        }
       }
     }
+
     return vdIds;
   }
 }

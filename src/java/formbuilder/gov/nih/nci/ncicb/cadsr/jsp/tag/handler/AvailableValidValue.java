@@ -26,6 +26,7 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
   private String valueDomainMapId;
   private String selectClassName;
   private String selectName;
+  public static final String AVAILABLE_VALID_VALUE_PRESENT="availableValidValuePresent";
 
   public AvailableValidValue(){}
 
@@ -35,6 +36,7 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
      try {
         req = ( HttpServletRequest )pageContext.getRequest();
         out = pageContext.getOut();
+        pageContext.setAttribute(AVAILABLE_VALID_VALUE_PRESENT,null);
         Question currQuestion = (Question)pageContext.getAttribute(questionBeanId);
         Map vdMap = (Map)pageContext.getSession().getAttribute(valueDomainMapId);
         List questionVVList = currQuestion.getValidValues();
@@ -47,13 +49,27 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
         if(questionVdIdSeq!=null)
         {
            vdVVList = (List)vdMap.get(questionVdIdSeq);
-           List avalilableVVs = getAvailableValidValues(questionVVList,vdVVList);
-           if(!avalilableVVs.isEmpty())
+           if((vdVVList!=null)&&!vdVVList.isEmpty())
            {
-             String html = generateHtml(avalilableVVs);
-             out.print(html);         
-           }           
+               List avalilableVVs = getAvailableValidValues(questionVVList,vdVVList);
+                 if(!avalilableVVs.isEmpty())
+                 {
+                   String html = generateHtml(avalilableVVs);
+                   out.print(html); 
+                   pageContext.setAttribute(AVAILABLE_VALID_VALUE_PRESENT,"Yes");
+                 }
+                 else
+                 {
+                   out.print("&nbsp;"); 
+                   pageContext.removeAttribute(AVAILABLE_VALID_VALUE_PRESENT);
+                 }
+           }
+           else
+           {
+             out.print("&nbsp;"); 
+           }
         }
+        
       } catch(Exception ioe ) {
           throw new JspException( "I/O Error : " + ioe.getMessage() );
       }//end try/catch
@@ -87,7 +103,7 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
     ListIterator avalilableVVsListIterate = avalilableVVs.listIterator();
      while (avalilableVVsListIterate.hasNext()) {
       ValidValue vv = (ValidValue) avalilableVVsListIterate.next();
-      sb.append("<option value=\""+vv.getShortMeaningValue()+"\">"+vv.getShortMeaningValue()+"</option> \n" );
+      sb.append("<option value=\""+vv.getVpIdseq()+"\">"+vv.getShortMeaningValue()+"</option> \n" );
      }
     sb.append("</select>");
     return sb.toString();

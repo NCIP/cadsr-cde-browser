@@ -69,7 +69,7 @@ public interface FormConstants extends FormBuilderConstants
     public static final String ADD_DELETED_QUESTION_IDSEQ="addDeletedQuestionIdSeq";
     public static final String VALID_VALUE_INDEX = "validValueIndex";
     public static final String AVAILABLE_VALID_VALUES ="AvailableValidValue";
-    public static final String ADD_AVAILABLE_VALID_VALUE="addAvailableValidValue";
+    public static final String ADD_AVAILABLE_VALID_VALUE_VP_ID_SEQ="addAvailableValidValueVPIdSeq";
     public static final String  VALUE_DOMAIN_VALID_VALUES_MAP ="valueDomainValidValueMap";
 
     public static final String SELECTED_ITEMS = "selectedItems";

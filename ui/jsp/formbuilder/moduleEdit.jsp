@@ -9,6 +9,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.jsp.tag.handler.AvailableValidValue"%>
 <HTML>
   <HEAD>
     <TITLE>Welcome to Form Builder..</TITLE>
@@ -284,27 +285,34 @@ function clearProtocol() {
                       <logic:present name="question">
                       <logic:empty name="question" property="validValues">                           
                           <tr class="OraTabledata">
-                            <td class="OraFieldText" width="50">&nbsp;</td>
-                            <td>
-                              <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">                                                                
-                                  <tr class="OraTabledata">
-                                    <td class="OraTabledata" width="50">&nbsp;</td>
-                                    <td class="OraTabledata" align="right" width="90%">                                                                        
-                                        <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                                          <tr class="OraTabledata" >
-                                           <td width="95%">&nbsp;</td>
-                                            <td align="center"><a href="javascript:submitFormEdit('<%=NavigationConstants.DELETE_MODULE%>','<%=NavigationConstants.DELETE_MODULE%>')">
-                                              <a href="javascript:submitFormEdit('<%=NavigationConstants.MOVE_MODULE_DOWN%>','<%=NavigationConstants.DELETE_MODULE%>')">
-                                               <img src="<%=urlPrefix%>i/add.gif" border="0" alt="Add"/>
-                                              </a>
+                            <td class="OraTabledata" width="50">&nbsp;</td>
+                            <td class="OraTabledata" align="right" width="90%">                                                                        
+                                <table width="79%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                                  <tr class="OraTabledata" >
+                                   <td >&nbsp;</td>
+                                    <td align="center">
+                                       <!-- Adding from available vv list -->
+                                          <td align="right"   class="OraFieldText" nowrap width="90%">    
+                                            <cde:availableValidValues
+                                              questionBeanId="question"
+                                              valueDomainMapId="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>"
+                                              selectClassName="FreeDropdown"
+                                              selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_VP_ID_SEQ%>"/>
+                                          </td>
+                                          <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
+                                           <td align="left" width="4%">
+                                              <a href="javascript:submitModuleEdit('<%=NavigationConstants.ADD_FROM_AVAILABLE_VALID_VALUE_LIST%>','<%=questionIndex%>')">
+                                                 <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
+                                              </a>                          
                                             </td>
-                                          </tr>
-                                        </table>                                                                                                            
+                                          </logic:present>
+                                          <td class="OraTabledata" width="10">&nbsp;</td>
+                                          <!-- Adding from available vv list end -->                                         
                                     </td>
-                                  </tr>                                   
-                              </table>
+                                  </tr>
+                                </table>                                                                                                            
                             </td>
-                          </tr>
+                          </tr> 
                         </logic:empty>
                       <logic:notEmpty name="question" property="validValues">                           
                           <tr class="OraTabledata">
@@ -314,33 +322,27 @@ function clearProtocol() {
                                 <logic:iterate id="validValue" name="question" indexId="validValueIndex" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
                                 <bean:size id="validValueSize" name="question" property="validValues"/>                                  
                                   <tr class="OraTabledata">
-                                    <td class="OraTabledata" width="50">&nbsp;</td>
+                                    <td class="OraTabledata" >&nbsp;</td>
                                     <td class="OraTabledata" align="right" width="90%">                                                                        
-                                        <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                                        <table width="79%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                           <tr class="OraTabledata" >
-                                           <td width="95%">&nbsp;</td>
-                                            <td align="center">
-                                                <logic:notEmpty name="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>">
+                                           <td >&nbsp;</td>
+                                               <!-- Adding from available vv list -->
                                                   <td align="right"   class="OraFieldText" nowrap width="90%">    
                                                     <cde:availableValidValues
                                                       questionBeanId="question"
                                                       valueDomainMapId="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>"
                                                       selectClassName="FreeDropdown"
-                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE%>"/>
+                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_VP_ID_SEQ%>"/>
                                                   </td>
-                                                  <td align="left" width="3%">
+                                                  <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
+                                                    <td align="left" width="4%">
                                                       <a href="javascript:submitModuleEdit('<%=NavigationConstants.ADD_FROM_AVAILABLE_VALID_VALUE_LIST%>','<%=questionIndex%>')">
                                                          <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
                                                       </a>                          
-                                                  </td>   
-                                                  </logic:notEmpty>
-                                                  <logic:empty name="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>">
-                                                  <td width="93%">
-                                                    &nbsp;
-                                                  </td>  
-                                                </logic:empty>                                              
-                                              </a>
-                                            </td>
+                                                    </td>   
+                                                  </logic:present>
+                                                  <!-- Adding from available vv list end -->
                                           </tr>
                                         </table>                                                                                                            
                                     </td>
@@ -371,16 +373,53 @@ function clearProtocol() {
 						                                     &nbsp;&nbsp;&nbsp;
                                               </logic:equal>                                              
                                             </td>
-                                            <td align="center"><a href="javascript:submitValidValueEdit('<%=NavigationConstants.DELETE_VALID_VALUE%>','<%=validValueIndex%>')">
-                                              <a href="javascript:submitFormEdit('<%=NavigationConstants.MOVE_MODULE_DOWN%>','<%=validValueIndex%>')">
+                                            <td align="center">
+                                              <a href="javascript:submitValidValueEdit('<%=NavigationConstants.DELETE_VALID_VALUE%>','<%=questionIndex%>','<%=validValueIndex%>')">                                              
                                                <img src="<%=urlPrefix%>i/delete.gif" border="0" alt="Delete"/>
                                               </a>
                                             </td>
                                           </tr>
                                         </table>                                                                                                            
                                     </td>
-                                  </tr>                                  
-                                </logic:iterate>                                
+                                  </tr> 
+                                  
+                                <logic:equal value="<%= String.valueOf(validValueSize.intValue()-1) %>" name="validValueIndex">
+                                  <tr class="OraTabledata">
+                                    <td class="OraTabledata" >&nbsp;</td>
+                                    <td class="OraTabledata" align="right" >                                                                        
+                                        <table width="79%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                                          <tr class="OraTabledata" >
+                                           <td >&nbsp;</td>
+                                               <!-- Adding from available vv list -->                            
+                                                  <td align="right"   class="OraFieldText" nowrap width="90%">    
+                                                    <cde:availableValidValues
+                                                      questionBeanId="question"
+                                                      valueDomainMapId="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>"
+                                                      selectClassName="FreeDropdown"
+                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_VP_ID_SEQ%>"/>
+                                                  </td>
+                                                  <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
+                                                    <td align="left" width="4%">
+                                                      <a href="javascript:submitValidValueEdit('<%=NavigationConstants.ADD_FROM_AVAILABLE_VALID_VALUE_LIST%>','<%=questionIndex%>','<%=validValueSize%>')">
+                                                         <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
+                                                      </a>                          
+                                                    </td>   
+                                                  </logic:present>
+                                                  <!-- Adding from available vv list end -->
+                                          </tr>
+                                         </table>                                                                                                            
+                                    </td>
+                                  </tr>
+                                  <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
+                                  <tr class="OraTabledata">
+                                    <td class="OraTabledata" >&nbsp;</td>
+                                    <td class="OraTabledata" >&nbsp;</td>                                                                                                                                                                            
+                                    </td>
+                                  </tr>  
+                                  </logic:present>                                                                    
+                                 </logic:equal>                                  
+                                </logic:iterate> 
+
                               </table>
                             </td>
                           </tr>
@@ -425,7 +464,7 @@ function clearProtocol() {
             </logic:iterate>          
         </logic:notEmpty>
       </logic:present>
-      <%@ include file="/formbuilder/editButton_inc.jsp"%>
+      <%@ include file="/formbuilder/moduleEditButton_inc.jsp"%>
     </html:form>
   </BODY>
 </HTML>
