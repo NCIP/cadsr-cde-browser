@@ -189,8 +189,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     HttpServletResponse response) throws IOException, ServletException {
     //CDECart cart = new CDECartTransferObject();
     CDECart cart = null;
-
+     
     try {
+      String userName = getLoggedInUsername(request);
       FormBuilderServiceDelegate service = getFormBuilderService();
       NCIUser user =
         (NCIUser) this.getSessionObject(request, CaDSRConstants.USER_KEY);
@@ -199,7 +200,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       CDECart sessionCart =
         (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 
-      cart = service.retrieveCDECart();
+      cart = service.retrieveCDECart(userName);
 
       //Merge two carts
       //sessionCart.mergeCart(cart);
@@ -239,6 +240,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     try {
+      String userName = getLoggedInUsername(request);
       FormBuilderServiceDelegate service = getFormBuilderService();
       CDECartFormBean myForm = (CDECartFormBean) form;
       String[] selectedSaveItems = myForm.getSelectedSaveItems();
@@ -251,7 +253,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
         items.add(cartItem);
       }
 
-      service.addToCDECart(items);
+      service.addToCDECart(items,userName);
 
       CDECart cart =
         (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
@@ -286,6 +288,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     try {
+      String userName = getLoggedInUsername(request);
       FormBuilderServiceDelegate service = getFormBuilderService();
       CDECartFormBean myForm = (CDECartFormBean) form;
       String[] selectedDeleteItems = myForm.getSelectedDeleteItems();
@@ -308,8 +311,8 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
         items.add(selectedDeleteItems[i]);
       }
-
-      service.removeFromCDECart(savedItems);
+      
+      service.removeFromCDECart(savedItems,userName);
       sessionCart.removeDataElements(items);
       saveMessage("cadsr.cdecart.delete.success",request);
     }

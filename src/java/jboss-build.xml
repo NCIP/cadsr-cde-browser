@@ -306,13 +306,6 @@
   <!-- =========== TEST CONFIG ======================= -->
     <target name="qa_config" depends="init,dev_config">    
        <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
-           <fileset dir="${config.qa}/connections">
-             <patternset>
-               <include name="data-sources.xml"/>
-             </patternset>
-           </fileset>      
-        </copy> 
-       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
            <fileset dir="${config.qa}/META-INF">
              <patternset>
                <include name="application.xml"/>
@@ -339,13 +332,6 @@
   
   <!-- =========== Stage CONFIG ======================= -->
     <target name="stage_config" depends="init,dev_config">    
-       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
-           <fileset dir="${config.stage}/connections">
-             <patternset>
-               <include name="data-sources.xml"/>
-             </patternset>
-           </fileset>      
-        </copy> 
        <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
            <fileset dir="${config.stage}/META-INF">
              <patternset>
@@ -374,13 +360,6 @@
   <!-- =========== PROD CONFIG ======================= -->
     <target name="prod_config" depends="init,dev_config">    
        <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
-           <fileset dir="${config.prod}/connections">
-             <patternset>
-               <include name="data-sources.xml"/>
-             </patternset>
-           </fileset>      
-        </copy> 
-       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
            <fileset dir="${config.prod}/META-INF">
              <patternset>
                <include name="application.xml"/>
@@ -395,7 +374,7 @@
          </fileset>
       </copy>   
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.prod}/properties">
+         <fileset dir="${config.prod}/properties/jboss">
            <patternset>
              <include name="cdebrowser.properties"/>
            </patternset>

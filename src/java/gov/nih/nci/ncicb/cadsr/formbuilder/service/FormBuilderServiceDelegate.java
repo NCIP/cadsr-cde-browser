@@ -79,11 +79,11 @@ public interface FormBuilderServiceDelegate {
     public boolean validateUser(String username, String password)
         throws FormBuilderException;
 
-    public CDECart retrieveCDECart() throws FormBuilderException;
+    public CDECart retrieveCDECart(String userName) throws FormBuilderException;
 
-    public int addToCDECart(Collection items) throws FormBuilderException;
+    public int addToCDECart(Collection items,String userName) throws FormBuilderException;
 
-    public int removeFromCDECart(Collection items) throws FormBuilderException;
+    public int removeFromCDECart(Collection items,String userName) throws FormBuilderException;
 
     public int updateDEAssociation(String questionId, String deId,
         String newLongName, String username) throws FormBuilderException;

@@ -455,16 +455,16 @@ public class FormBuilderEJB extends SessionBeanAdapter
         return false;
     }
 
-    public CDECart retrieveCDECart() {
-        String user = getUserName();
+    public CDECart retrieveCDECart(String user) {
+        //String user = getUserName();
         CDECartDAO myDAO = daoFactory.getCDECartDAO();
         CDECart cart = myDAO.findCDECart(user);
 
         return cart;
     }
 
-    public int addToCDECart(Collection items) {
-        String user = context.getCallerPrincipal().getName();
+    public int addToCDECart(Collection items,String user) {
+        //String user = context.getCallerPrincipal().getName();
         Iterator it = items.iterator();
         CDECartItem item = null;
         CDECartDAO myDAO = daoFactory.getCDECartDAO();
@@ -480,7 +480,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
         return count;
     }
 
-    public int removeFromCDECart(Collection items) {
+    public int removeFromCDECart(Collection items, String user) {
         Iterator it = items.iterator();
         String itemId = null;
         CDECartDAO myDAO = daoFactory.getCDECartDAO();
@@ -489,7 +489,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
         while (it.hasNext()) {
             itemId = (String) it.next();
 
-            myDAO.deleteCartItem(itemId,getUserName());
+            myDAO.deleteCartItem(itemId,user);
             count++;
         }
 

@@ -97,11 +97,11 @@ public interface FormBuilderServiceLocal  {
     String username,
     String password) throws DMLException;
 
-  public CDECart retrieveCDECart();
+  public CDECart retrieveCDECart(String userName);
 
-  public int addToCDECart(Collection items);
+  public int addToCDECart(Collection items,String userName);
 
-  public int removeFromCDECart(Collection items);
+  public int removeFromCDECart(Collection items,String userName);
 
   public int updateDEAssociation(
     String questionId,

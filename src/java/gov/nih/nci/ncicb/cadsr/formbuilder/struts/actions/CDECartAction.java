@@ -49,7 +49,7 @@ public class CDECartAction extends FormBuilderBaseDispatchAction {
     HttpServletResponse response) throws IOException, ServletException {
     //CDECart cart = new CDECartTransferObject();
     CDECart cart = null;
-
+    
     try {
       FormBuilderServiceDelegate service = getFormBuilderService();
       NCIUser user =
@@ -60,7 +60,7 @@ public class CDECartAction extends FormBuilderBaseDispatchAction {
         (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 
       if (user != null) {
-        cart = service.retrieveCDECart();
+        cart = service.retrieveCDECart(user.getUsername());
 
         //Merge two carts
         sessionCart.mergeCart(cart);

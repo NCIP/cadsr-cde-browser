@@ -88,11 +88,11 @@ public interface FormBuilderServiceRemote {
     public boolean validateUser(String username, String password)
         throws RemoteException;
 
-    public CDECart retrieveCDECart() throws RemoteException;
+    public CDECart retrieveCDECart(String userName) throws RemoteException;
 
-    public int addToCDECart(Collection items) throws RemoteException;
+    public int addToCDECart(Collection items,String userName) throws RemoteException;
 
-    public int removeFromCDECart(Collection items) throws RemoteException;
+    public int removeFromCDECart(Collection items,String userName) throws RemoteException;
 
     public int updateDEAssociation(String questionId, String deId,
         String newLongName, String username) throws RemoteException;
