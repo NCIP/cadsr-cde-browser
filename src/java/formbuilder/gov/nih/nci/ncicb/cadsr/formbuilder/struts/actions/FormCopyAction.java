@@ -116,7 +116,7 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
 		newForm.setFormCategory((String)dynaForm.get(FORM_CATEGORY));
 		newForm.setFormType((String)dynaForm.get(FORM_TYPE));
 
-// 		newForm.setAslName("DRAFT NEW");
+ 		newForm.setAslName((String)dynaForm.get(WORKFLOW));
       
 		newForm.setVersion((Float)dynaForm.get(FORM_VERSION));
 
