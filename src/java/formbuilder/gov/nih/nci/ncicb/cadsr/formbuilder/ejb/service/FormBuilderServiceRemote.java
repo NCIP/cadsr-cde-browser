@@ -19,67 +19,74 @@ public interface FormBuilderServiceRemote {
     String workflow,
     String categoryName,
     String type,
-    String classificationIdSeq) throws DMLException, RemoteException;
+    String classificationIdSeq) throws  RemoteException;
 
   public Form getFormDetails(String formPK)
-    throws DMLException, RemoteException;
+    throws  RemoteException;
 
-  public Form getFormRow(String formPK) throws DMLException, RemoteException;
+  public Form updateForm(
+    Form formHeader,
+    Collection updatedModules,
+    Collection deletedModules) throws  RemoteException;
+
+
+  public Form getFormRow(String formPK) throws  RemoteException;
 
   public Form copyForm(
     String sourceFormPK,
     Form newForm) throws DMLException, RemoteException;
 
-  public Form editFormRow(String formPK) throws DMLException, RemoteException;
+  public Form editFormRow(String formPK) throws  RemoteException;
 
-  public int deleteForm(String formPK) throws DMLException, RemoteException;
+  public int deleteForm(String formPK) throws  RemoteException;
 
   public Form createModule(
     String formPK,
-    Module module) throws DMLException, RemoteException;
+    Module module) throws  RemoteException;
 
   public int removeModule(
     String formPK,
-    String modulePK) throws DMLException, RemoteException;
+    String modulePK) throws  RemoteException;
 
   public Form copyModules(
     String formPK,
-    Collection modules) throws DMLException, RemoteException;
+    Collection modules) throws  RemoteException;
 
   public Form createQuestions(
     String modulePK,
-    Collection questions) throws DMLException, RemoteException;
+    Collection questions) throws  RemoteException;
 
   public Form removeQuestions(
     String modulePK,
-    Collection questions) throws DMLException, RemoteException;
+    Collection questions) throws  RemoteException;
 
   public Form copyQuestions(
     String modulePK,
-    Collection questions) throws DMLException, RemoteException;
+    Collection questions) throws  RemoteException;
 
   public Form createValidValues(
     String modulePK,
-    Collection validValues) throws DMLException, RemoteException;
+    Collection validValues) throws  RemoteException;
 
   public Form removeValidValues(
     String modulePK,
-    Collection validValues) throws DMLException, RemoteException;
+    Collection validValues) throws  RemoteException;
 
   public Form copyValidValues(
     String modulePK,
-    Collection validValues) throws DMLException, RemoteException;
+    Collection validValues) throws  RemoteException;
 
-  public Collection getAllContexts() throws DMLException, RemoteException;
+  public Collection getAllContexts() throws  RemoteException;
 
-  public Collection getAllFormCategories() throws DMLException, RemoteException;
+  public Collection getAllFormCategories() throws  RemoteException;
 
   public Collection getStatusesForACType(String acType)
-    throws DMLException, RemoteException;
+    throws  RemoteException;
 
   public boolean validateUser(
     String username,
-    String password) throws DMLException, RemoteException;
+    String password) throws  RemoteException;
+
 
   public CDECart retrieveCDECart(String username)
     throws DMLException, RemoteException;
@@ -94,4 +101,5 @@ public interface FormBuilderServiceRemote {
    * public Collection getContextsForUserAndRole( String username, String role)
    * throws DMLException, RemoteException;
    */
+
 }

@@ -21,7 +21,13 @@ public interface FormBuilderServiceLocal  {
 
   public Form getFormDetails(String formPK) throws DMLException;
 
-  public Form getFormRow(String formPK) throws DMLException;
+  public Form getFormRow(String formPK) ;
+
+  public Form updateForm(
+    Form formHeader,
+    Collection updatedModules,
+    Collection deletedModules) ;
+
 
   public Form copyForm(
     String sourceFormPK,
