@@ -15,7 +15,7 @@
             </a>
           </td>                
           <td >
- 	    <html:link action='<%="/formAction"%>'>				
+ 	    <html:link action='<%="/formSearchAction"%>'>				
 		<html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Edit"/>
 	    </html:link>             
           </td>                
