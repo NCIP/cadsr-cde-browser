@@ -160,6 +160,9 @@
       <pathelement location="${java.lib.dir}/ejb.jar"/>
       <pathelement location="${java.lib.dir}/jms.jar"/>
 
+      <!--JBoss JAAS lib -->
+      <pathelement location="${java.lib.dir}/jbosssx.jar"/>
+      
       <!-- Apache POI  libs -->
       <pathelement location="${java.lib.dir}/poi-2.5.1-final-20040804.jar"/>
       
@@ -910,6 +913,9 @@
   </target>
   
   <target  name="clean_build_redeploy" depends="clean,dev_config,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j"> 
+  </target>
+  
+  <target  name="clean_build_redeploy_qa" depends="clean,qa_config,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j"> 
   </target>
   
   <target  name="clean_build_redeploy_restart" depends="clean_build_redeploy,oc4j_start"> 

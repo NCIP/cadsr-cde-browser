@@ -28,9 +28,13 @@ public class ReferenceDocumentsImpl extends EntityImpl
   public static final int URL = 13;
   public static final int LAENAME = 14;
   public static final int DISPLAYORDER = 15;
-  public static final int ADMINISTEREDCOMPONENTS = 16;
-  public static final int ACREGISTRATIONS = 17;
-  public static final int REFERENCEBLOBS = 18;
+  public static final int CONTEIDSEQ = 16;
+  public static final int ADMINISTEREDCOMPONENTS = 17;
+  public static final int ACREGISTRATIONS = 18;
+  public static final int CONTEXTS = 19;
+  public static final int REFERENCEBLOBS = 20;
+
+
 
 
 
@@ -56,6 +60,8 @@ public class ReferenceDocumentsImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
+
 
 
 
@@ -385,12 +391,16 @@ public class ReferenceDocumentsImpl extends EntityImpl
         return getLaeName();
       case DISPLAYORDER:
         return getDisplayOrder();
+      case CONTEIDSEQ:
+        return getConteIdseq();
       case REFERENCEBLOBS:
         return getReferenceBlobs();
       case ADMINISTEREDCOMPONENTS:
         return getAdministeredComponents();
       case ACREGISTRATIONS:
         return getAcRegistrations();
+      case CONTEXTS:
+        return getContexts();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -449,6 +459,9 @@ public class ReferenceDocumentsImpl extends EntityImpl
       case DISPLAYORDER:
         setDisplayOrder((Number)value);
         return;
+      case CONTEIDSEQ:
+        setConteIdseq((String)value);
+        return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);
         return;
@@ -496,6 +509,43 @@ public class ReferenceDocumentsImpl extends EntityImpl
     return (RowIterator)getAttributeInternal(REFERENCEBLOBS);
   }
 
+
+  /**
+   * 
+   *  Gets the attribute value for ConteIdseq, using the alias name ConteIdseq
+   */
+  public String getConteIdseq()
+  {
+    return (String)getAttributeInternal(CONTEIDSEQ);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the attribute value for ConteIdseq
+   */
+  public void setConteIdseq(String value)
+  {
+    setAttributeInternal(CONTEIDSEQ, value);
+  }
+
+  /**
+   * 
+   *  Gets the associated entity ContextsImpl
+   */
+  public ContextsImpl getContexts()
+  {
+    return (ContextsImpl)getAttributeInternal(CONTEXTS);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the associated entity ContextsImpl
+   */
+  public void setContexts(ContextsImpl value)
+  {
+    setAttributeInternal(CONTEXTS, value);
+  }
+
   /**
    * 
    *  Creates a Key object based on given key constituents
@@ -504,6 +554,7 @@ public class ReferenceDocumentsImpl extends EntityImpl
   {
     return new Key(new Object[] {rdIdseq});
   }
+
 
 
 

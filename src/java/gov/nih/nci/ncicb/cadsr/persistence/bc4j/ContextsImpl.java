@@ -37,6 +37,8 @@ public class ContextsImpl extends EntityImpl
   public static final int PROTOCOL = 22;
   public static final int REPRESENTATION = 23;
   public static final int CONCEPTSEXT = 24;
+  public static final int REFERENCEDOCUMENTS = 25;
+
 
 
 
@@ -76,6 +78,7 @@ public class ContextsImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -347,6 +350,8 @@ public class ContextsImpl extends EntityImpl
         return getRepresentation();
       case CONCEPTSEXT:
         return getConceptsExt();
+      case REFERENCEDOCUMENTS:
+        return getReferenceDocuments();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -518,6 +523,16 @@ public class ContextsImpl extends EntityImpl
   public RowIterator getConceptsExt()
   {
     return (RowIterator)getAttributeInternal(CONCEPTSEXT);
+  }
+
+
+  /**
+   * 
+   *  Gets the associated entity oracle.jbo.RowIterator
+   */
+  public RowIterator getReferenceDocuments()
+  {
+    return (RowIterator)getAttributeInternal(REFERENCEDOCUMENTS);
   }
 
   /**

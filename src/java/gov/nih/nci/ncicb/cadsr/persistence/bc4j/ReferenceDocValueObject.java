@@ -30,6 +30,7 @@ public class ReferenceDocValueObject extends BaseValueObject
     docText = checkForNull(refDoc.getDocText());
     lang = refDoc.getLaeName();
     url = checkForNull(refDoc.getUrl());
+    context=refDoc.getContext();
   }
   public String getDocName(){
     return docName;

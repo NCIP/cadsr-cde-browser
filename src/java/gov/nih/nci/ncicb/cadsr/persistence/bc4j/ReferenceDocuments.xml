@@ -217,6 +217,20 @@
       SQLType="NUMERIC"
       TableName="REFERENCE_DOCUMENTS" >
    </Attribute>
+   <Attribute
+      Name="ConteIdseq"
+      Precision="36"
+      ColumnName="CONTE_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="REFERENCE_DOCUMENTS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
    <AccessorAttribute
       Name="AdministeredComponents"
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc"
@@ -230,6 +244,13 @@
       AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc.AcRegistrations"
       AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc.ReferenceDocuments"
       Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Contexts"
+      Association="RdConteFkAssoc"
+      AssociationEnd="RdConteFkAssoc.Contexts"
+      AssociationOtherEnd="RdConteFkAssoc.ReferenceDocuments"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsImpl" >
    </AccessorAttribute>
    <AccessorAttribute
       Name="ReferenceBlobs"
@@ -359,6 +380,17 @@
       <DesignTime>
          <Attr Name="_DBObjectName" Value="RD_AR_FK" />
          <Attr Name="_referencedKey" Value="CRA_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="RdConteFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="RD_CONTE_FK" />
+         <Attr Name="_referencedKey" Value="CONTE_PK" />
          <Attr Name="_isForeign" Value="true" />
       </DesignTime>
    </Key>

@@ -784,4 +784,9 @@
       FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc"
       ObjectType="Association" >
    </Containee>
+   <Containee
+      Name="RdConteFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdConteFkAssoc"
+      ObjectType="Association" >
+   </Containee>
 </JboPackage>

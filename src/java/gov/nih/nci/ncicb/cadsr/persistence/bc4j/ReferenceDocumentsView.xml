@@ -25,7 +25,9 @@
        ReferenceDocuments.URL, 
 
        ReferenceDocuments.LAE_NAME, 
-       ReferenceDocuments.DISPLAY_ORDER"
+       ReferenceDocuments.DISPLAY_ORDER, 
+
+       ReferenceDocuments.CONTE_IDSEQ"
    FromList="REFERENCE_DOCUMENTS ReferenceDocuments"
    BindingStyle="Oracle"
    CustomQuery="false"
@@ -166,6 +168,13 @@
       EntityAttrName="DisplayOrder"
       EntityUsage="ReferenceDocuments"
       AliasName="DISPLAY_ORDER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      PrecisionRule="true"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="ReferenceDocuments"
+      AliasName="CONTE_IDSEQ" >
    </ViewAttribute>
    <ViewLinkAccessor
       Name="ReferenceBlobsView"

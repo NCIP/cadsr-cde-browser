@@ -263,6 +263,14 @@
       Type="oracle.jbo.RowIterator"
       IsUpdateable="false" >
    </AccessorAttribute>
+   <AccessorAttribute
+      Name="ReferenceDocuments"
+      Association="RdConteFkAssoc"
+      AssociationEnd="RdConteFkAssoc.ReferenceDocuments"
+      AssociationOtherEnd="RdConteFkAssoc.Contexts"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
    <Key
       Name="ContePk" >
       <AttrArray Name="Attributes">
