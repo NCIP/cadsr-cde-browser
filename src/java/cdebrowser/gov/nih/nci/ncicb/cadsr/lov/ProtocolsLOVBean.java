@@ -55,7 +55,8 @@ public class ProtocolsLOVBean extends Object {
                             "proto_conte.name","Context",
                             "proto.asl_name","Workflow Status",
                             "proto.preferred_definition","Definition",
-                            "proto.lead_org","Lead Organization"};
+                            "proto.lead_org","Lead Organization",
+                            "proto.protocol_id","Protocol ID"};
       String[] sqlStmtParm = new String[2];
       sqlStmtParm[0] = " from sbrext.protocols_ext proto,sbr.contexts proto_conte " +
                            " where proto.conte_idseq = proto_conte.conte_idseq " +
