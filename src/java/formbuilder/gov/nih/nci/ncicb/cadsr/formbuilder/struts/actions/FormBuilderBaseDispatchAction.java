@@ -199,26 +199,7 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
       setSessionObject(req, USER_CONTEXTS, contexts);
     }
 
-    obj = getSessionObject(req, EDITABLE_WORKFLOW_STATUS_LIST);
 
-    if (obj == null) {
-      Collection workflows = Arrays.asList(EDITABLE_WORKFLOW_STATUSES);
-      setSessionObject(req, EDITABLE_WORKFLOW_STATUS_LIST, workflows);
-    }
-
-    obj = getSessionObject(req, this.COPYABLE_WORKFLOW_STATUS_LIST);
-
-    if (obj == null) {
-      Collection workflows = Arrays.asList(COPYABLE_WORKFLOW_STATUSES);
-      setSessionObject(req, COPYABLE_WORKFLOW_STATUS_LIST, workflows);
-    }
-
-    obj = getSessionObject(req, DELETABLE_WORKFLOW_STATUS_LIST);
-
-    if (obj == null) {
-      Collection workflows = Arrays.asList(DELETABLE_WORKFLOW_STATUSES);
-      setSessionObject(req, DELETABLE_WORKFLOW_STATUS_LIST, workflows);
-    }
   }
 
   /**

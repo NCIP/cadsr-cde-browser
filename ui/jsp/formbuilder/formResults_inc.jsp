@@ -39,14 +39,14 @@
             formScope="<%=CaDSRConstants.PAGE_SCOPE%>"
             activeImageSource="i/copy.gif" 
 		       	activeUrl='<%="/formToCopyAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_COPY%>' 
-		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		   	   	formType="TEMPLATE" 
 		   	   	urlPrefix="<%=urlPrefix%>"
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
             inactiveImageSource="i/copy_inactive.gif"
 		   	   	altMessage="Select for Copy"
 		   	   	target="_parent"
-            workflowRestrictionListId="<%=FormBuilderConstants.COPYABLE_WORKFLOW_STATUS_LIST%>"/>            
+            />            
 		 </td>                  
 		  <td width="25" class="OraTabledata" align=center>
 		       <cde:secureIcon  formId="form" 
@@ -60,7 +60,6 @@
             inactiveImageSource="i/edit_inactive.gif"
 		   	   	altMessage="Edit"
 		   	   	target="_parent"
-            workflowRestrictionListId="<%=FormBuilderConstants.EDITABLE_WORKFLOW_STATUS_LIST%>"
             />		            
 		  </td>
 		 <td width="25"  class="OraTabledata" align=center>
@@ -75,7 +74,6 @@
 		   	   	paramProperty="formIdseq"
             inactiveImageSource="i/delete_inactive.gif"
 		   	   	altMessage="Delete"
-            workflowRestrictionListId="<%=FormBuilderConstants.DELETABLE_WORKFLOW_STATUS_LIST%>"
 		   	   	/>		           	
 		</td> 
 	       </tr>
@@ -110,8 +108,14 @@
         </logic:notEmpty>
         <logic:empty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
 	<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  	  <tr class="OraTabledata">
-         	<td ><bean:message key="cadsr.formbuilder.empty.search.results"/></td>
+  	      <tr class="OraTableColumnHeader">
+          	<th class="OraTableColumnHeader" nowrap>Action</th>
+          	<th class="OraTableColumnHeader" nowrap>Long Name</th>
+          	<th class="OraTableColumnHeader" nowrap>Type</th>
+          	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	
+          </tr>
+      <tr class="OraTabledata" >
+         	<td colspan="4" ><bean:message key="cadsr.formbuilder.empty.search.results"/></td>
   	  </tr>
   	</table>        
                  

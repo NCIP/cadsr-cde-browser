@@ -323,7 +323,10 @@ function done() {
     <td class="OraFieldText"><%=desb.getSearchInList()%></td>
  </tr>
  
-  <tr></tr>
+  <tr>
+  
+  </tr>
+    <td colspan="4" nowrap align="left" class="AbbreviatedText">Please enter/select search criteria and click Data Elements Search button to initiate search.</td>
   <tr>
     <td colspan="4" nowrap align="left" class="AbbreviatedText">Wildcard character for search is *</td>
  </tr>

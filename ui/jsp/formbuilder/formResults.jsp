@@ -39,14 +39,6 @@
 <logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
   <%@ include  file="/formbuilder/formResults_inc.jsp" %>
 </logic:present> 
-<logic:notPresent name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
-	<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  	  <tr class="OraTabledata">
-         	<td ><bean:message key="cadsr.formbuilder.search.message"/></td>
-  	  </tr>
-  	</table>   
-</logic:notPresent>
-   </P>
    
 </html:form>
 <%@ include file="/common/common_bottom_border.jsp"%>

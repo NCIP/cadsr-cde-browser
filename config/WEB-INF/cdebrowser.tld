@@ -71,7 +71,7 @@
     <rtexprvalue>true</rtexprvalue>
     </attribute>      
     <attribute>
-    <name>workflowRestrictionListId</name>
+    <name>formType</name>
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute>      

@@ -14,12 +14,12 @@
             formScope="<%=CaDSRConstants.SESSION_SCOPE%>"
             activeImageSource="i/selectForCopyButton.gif" 
 		       	activeUrl='<%="/formToCopyAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_COPY%>' 
-		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		   	   	formType="TEMPLATE"  
 		   	   	urlPrefix="<%=urlPrefix%>"
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
 		   	   	altMessage="Select for Copy" 
-            workflowRestrictionListId="<%=FormBuilderConstants.COPYABLE_WORKFLOW_STATUS_LIST%>"/>    
+				/>   
           </td> 
           <td >
 		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
@@ -31,8 +31,7 @@
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
 		   	   	altMessage="Edit"
-		   	   	target="_parent"
-            workflowRestrictionListId="<%=FormBuilderConstants.EDITABLE_WORKFLOW_STATUS_LIST%>"
+		   	   	target="_parent"            
             />		             
           </td>           
           <td >
@@ -45,8 +44,7 @@
 		   	   	urlPrefix="<%=urlPrefix%>"
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
-		   	   	altMessage="Delete"
-            workflowRestrictionListId="<%=FormBuilderConstants.DELETABLE_WORKFLOW_STATUS_LIST%>"
+		   	   	altMessage="Delete"            
 		   	   	/>		                
           </td>  
           <td width="40%" align="right">

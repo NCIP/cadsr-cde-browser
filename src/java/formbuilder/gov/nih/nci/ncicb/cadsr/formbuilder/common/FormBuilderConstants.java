@@ -15,16 +15,6 @@ public interface FormBuilderConstants {
   public static final String SIGNON_KEY = "Login";
   public static final String LOGIN_TOKEN_KEY = "Loginkey";
   public static final String CLEAR_SESSION_KEYS="clearSessionKeys";
-  //This provides the Workflows that can edited,deleted, and copied by cdemanager
-  public static final String EDITABLE_WORKFLOW_STATUS_LIST="editableWorkflowStatusList";
-  public static final String[] EDITABLE_WORKFLOW_STATUSES=
-                       {"RELEASED"};
-  public static final String DELETABLE_WORKFLOW_STATUS_LIST="deletableWorkflowStatusList";
-  public static final String[] DELETABLE_WORKFLOW_STATUSES=
-                         {"RELEASED"};;
-  public static final String COPYABLE_WORKFLOW_STATUS_LIST="copyableWorkflowStatusList";
-  public static final String[] COPYABLE_WORKFLOW_STATUSES=
-                         {"RELEASED"};;
                        
   public static final String ERROR_FORM_SAVE_FAILED="FB001";
   public static final String ERROR_FORM_SAVE_RETRIEVE="FB002";

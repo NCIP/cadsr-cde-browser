@@ -23,10 +23,12 @@ import org.apache.commons.beanutils.PropertyUtils;
  * This TagHandler is used to display icons by role
  * The icon active image is displayed if the user-in-session
  * has the role for the CRF defined by "formId"
+ * displays the active image only if the type of the form is equal to value of formType 
  * Ex.
  * <cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" 
  *		            role="aRole" altMessage="Edit"
- *                paramId="Id" paramProperty="formIdseq"/>
+ *                paramId="Id" paramProperty="formIdseq"
+ *                formType="CRF"/>
  *             
  */
 public class SecureIconDisplay extends TagSupport implements CaDSRConstants
@@ -44,7 +46,7 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
   private String paramProperty;
   private String target;
   private String formScope;
-  private String workflowRestrictionListId;
+  private String formType;
 
   public SecureIconDisplay()
   {
@@ -102,7 +104,7 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
       String targetStr = "";
       if(target!=null)
         targetStr="target=\""+target+"\" ";        
-       if(hasPrivilege(role,nciUser,form))
+       if(hasPrivilege(role,formType,nciUser,form))
         {
           out.print("<a href='"+getHrefUrl(req,form)+"'"+targetStr+"/><img src=\""+urlPrefix+activeImageSource+"\" border=0 alt='"+altMessage+"'></a>");
         }
@@ -118,30 +120,27 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
 
     }//end doStartTag()
  
-  protected boolean hasPrivilege(String userRole,NCIUser user,Form form) throws JspException
+  protected boolean hasPrivilege(String userRole,String currFormType, NCIUser user,Form form) throws JspException
   {
     Context userContext = form.getContext();
-    Collection workflowList = null;
-    if(workflowRestrictionListId!=null)
-      workflowList=(Collection)pageContext.getSession().getAttribute(workflowRestrictionListId);
-    if(workflowList==null)
-     throw new JspException( "No bean with name workflowRestriction found in session" );
-     
-    if(!workflowList.isEmpty())
+    
+    if(userRole!=null&&currFormType!=null)
     {
-      if(user.hasRoleAccess(userRole,userContext)&&!workflowList.contains(form.getAslName()))
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+     if(form.getFormType().equalsIgnoreCase(currFormType)
+        && user.hasRoleAccess(role,userContext))
+     {
+       return true;
+     }
     }
-    else
+    else if(currFormType==null)
     {
       return user.hasRoleAccess(role,userContext);
     }
+    else
+    {
+      return form.getFormType().equalsIgnoreCase(currFormType);
+    }
+    return false;
   }
   public String getRole()
   {
@@ -252,16 +251,13 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
     formScope = newFormScope;
   }
 
-  public String getWorkflowRestrictionListId()
+  public String getFormType()
   {
-    return workflowRestrictionListId;
+    return formType;
   }
 
-  public void setWorkflowRestrictionListId(String newWorkflowRestrictionListId)
+  public void setFormType(String newFormType)
   {
-    workflowRestrictionListId = newWorkflowRestrictionListId;
+    formType = newFormType;
   }
-
-
-
 }

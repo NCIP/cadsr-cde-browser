@@ -104,6 +104,11 @@ function clearForm() {
     </tr>     
     <tr>    
       <td>
+        <bean:message key="cadsr.formbuilder.search.message"/>
+      </td>
+    </tr>    
+    <tr>    
+      <td>
         <html:hidden value="<%=NavigationConstants.GET_ALL_FORMS_METHOD%>" property="<%=NavigationConstants.METHOD_PARAM%>"/>
       </td>
     </tr>
