@@ -13,35 +13,49 @@
   
   <!-- Project Settings -->
   
-  <property name="PROJECT_HOME" value="${basedir}/../.."/>
+   <!-- Make sure these are correct for your instance -->
+   <property name="deploy.ormi" value="ormi://localhost" />
+   <property name="deploy.username" value="admin" />
+   <property name="deploy.password" value="oracle" /> 
+   <property name="oc4j.j2ee.home" value="D:/tools/oracle/oc4j/902_FB/j2ee/home" /> 
+   <property name="oc4j.admin.jar.name" value="admin" /> 
+  
+  
+  
+  <property name="project.home" value="${basedir}/../.."/>
+  
+  <property name="app.name" value="cdebrowser" />
+  <property name="ear.name" value="${app.name}" />
+  <property name="war.name" value="${app.name}-web" />
+  <property name="ejb.name" value="formbuilder-ejb" />
   
   <!-- Java Source Directories -->
-  <property name="CDEBROWSER_JAVA_SRC_DIR" value="${PROJECT_HOME}/src/java/cdebrowser"/>
-  <property name="FORMBUILDER_JAVA_SRC_DIR" value="${PROJECT_HOME}/src/java/formbuilder"/>
-  <property name="COMMON_JAVA_SRC_DIR" value="${PROJECT_HOME}/src/java/common"/>  
+  <property name="cdebrowser.java.src.dir" value="${project.home}/src/java/cdebrowser"/>
+  <property name="formbuilder.java.src.dir" value="${project.home}/src/java/formbuilder"/>
+  <property name="common.java.src.dir" value="${project.home}/src/java/common"/>  
   
   <!-- ui Directories -->
-  <property name="UI_DIR" value="${PROJECT_HOME}/ui"/>  
-  <property name="JSP_DIR" value="${UI_DIR}/jsp"/>  
-  <property name="HTML_DIR" value="${UI_DIR}/html"/>   
-  <property name="FORMBUILDER_JSP_DIR" value="${JSP_DIR}/formbuilder"/>  
-  <property name="CDEBROWSER_JSP_DIR" value="${JSP_DIR}/cdebrowser"/>
-  <property name="CDEBROWSER_HTML_DIR" value="${HTML_DIR}/cdebrowser"/>  
+  <property name="ui.dir" value="${project.home}/ui"/>  
+  <property name="jsp.dir" value="${ui.dir}/jsp"/>  
+  <property name="html.dir" value="${ui.dir}/html"/>   
+  <property name="formbuilder.jsp.dir" value="${jsp.dir}/formbuilder"/>  
+  <property name="cdebrowser.jsp.dir" value="${jsp.dir}/cdebrowser"/>
+  <property name="cdebrowser.html.dir" value="${html.dir}/cdebrowser"/>  
    
   
   
-  <property name="BUILD_DIR" value="${PROJECT_HOME}/build"/>
-  <property name="CLASSES_BUILD_DIR" value="${BUILD_DIR}/classes"/>
-  <property name="JAVA_LIB_DIR" value="${PROJECT_HOME}/lib/java"/>
+  <property name="build.dir" value="${project.home}/build"/>
+  <property name="classes.build.dir" value="${build.dir}/classes"/>
+  <property name="java.lib.dir" value="${project.home}/lib/java"/>
  
-  <property name="CONFIG_HOME" value="${PROJECT_HOME}/config"/>
-  <property name="EJB_DESCRIPTOR_HOME" value="${PROJECT_HOME}/config/ejb"/>  
+  <property name="config.home" value="${project.home}/config"/>
+  <property name="ejb.descriptor.home" value="${project.home}/config/ejb"/>  
 
   <!-- =========== CLEAN BUILD AREA ======================= -->
     
     <target name="clean">
-          <delete dir="${CLASSES_BUILD_DIR}" quiet="false"/>
-          <delete dir="${BUILD_DIR}" quiet="false"/>   
+          <delete dir="${classes.build.dir}" quiet="false"/>
+          <delete dir="${build.dir}" quiet="false"/>   
           <delete dir="${PROD_BUILD_DIR}" quiet="false"/>
     </target>
  <!-- =========== END CLEAN BUILD AREA ======================= -->
@@ -54,8 +68,8 @@
      <!-- Create build dir -->
      <!-- Create time stamp -->
      <tstamp/>
-     <mkdir dir="${BUILD_DIR}"/>
-     <mkdir dir="${CLASSES_BUILD_DIR}"/>
+     <mkdir dir="${build.dir}"/>
+     <mkdir dir="${classes.build.dir}"/>
    </target>
    <!-- end init -->
  <!-- =========== END CONFIGURATION ======================= -->
@@ -65,58 +79,58 @@
    <path id="classpath">
       <!--browser libs -->
 
-      <pathelement location="${JAVA_LIB_DIR}/classes12.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/cle20.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/collections.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/healthtoolkit.zip"/>
-      <pathelement location="${JAVA_LIB_DIR}/jdev-cm.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/jdev-rt.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/nls_charset12.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/ssosdk307.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/xmlcomp.jar"/>      
-      <pathelement location="${JAVA_LIB_DIR}/xmlparserv2.jar"/>    
-      <pathelement location="${JAVA_LIB_DIR}/xsu12.jar"/> 
+      <pathelement location="${java.lib.dir}/classes12.jar"/>
+      <pathelement location="${java.lib.dir}/cle20.jar"/>
+      <pathelement location="${java.lib.dir}/collections.jar"/>
+      <pathelement location="${java.lib.dir}/healthtoolkit.zip"/>
+      <pathelement location="${java.lib.dir}/jdev-cm.jar"/>
+      <pathelement location="${java.lib.dir}/jdev-rt.jar"/>
+      <pathelement location="${java.lib.dir}/nls_charset12.jar"/>
+      <pathelement location="${java.lib.dir}/ssosdk307.jar"/>
+      <pathelement location="${java.lib.dir}/xmlcomp.jar"/>      
+      <pathelement location="${java.lib.dir}/xmlparserv2.jar"/>    
+      <pathelement location="${java.lib.dir}/xsu12.jar"/> 
       
       <!--BC4J libs -->
-      <pathelement location="${JAVA_LIB_DIR}/bc4jct.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/bc4jdatum.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/bc4jdomorcl.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/bc4jmt.jar"/>   
+      <pathelement location="${java.lib.dir}/bc4jct.jar"/>
+      <pathelement location="${java.lib.dir}/bc4jdatum.jar"/>
+      <pathelement location="${java.lib.dir}/bc4jdomorcl.jar"/>
+      <pathelement location="${java.lib.dir}/bc4jmt.jar"/>   
       
       <!-- Struts libs -->
-      <pathelement location="${JAVA_LIB_DIR}/struts-1.1.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/commons-beanutils.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/commons-collections.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/commons-fileupload.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/commons-digester.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/commons-lang.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/commons-logging.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/commons-validator.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/jakarta-oro.jar"/> 
+      <pathelement location="${java.lib.dir}/struts-1.1.jar"/>
+      <pathelement location="${java.lib.dir}/commons-beanutils.jar"/>
+      <pathelement location="${java.lib.dir}/commons-collections.jar"/>
+      <pathelement location="${java.lib.dir}/commons-fileupload.jar"/>
+      <pathelement location="${java.lib.dir}/commons-digester.jar"/>
+      <pathelement location="${java.lib.dir}/commons-lang.jar"/>
+      <pathelement location="${java.lib.dir}/commons-logging.jar"/>
+      <pathelement location="${java.lib.dir}/commons-validator.jar"/>
+      <pathelement location="${java.lib.dir}/jakarta-oro.jar"/> 
       
       <!-- Springframework libs -->
-      <pathelement location="${JAVA_LIB_DIR}/spring.jar"/> 
-      <pathelement location="${JAVA_LIB_DIR}/spring-jdbc.jar"/> 
+      <pathelement location="${java.lib.dir}/spring.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-jdbc.jar"/> 
             
       <!--J2EE  libs -->
-      <pathelement location="${JAVA_LIB_DIR}/servlet.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/jndi.jar"/>   
-      <pathelement location="${JAVA_LIB_DIR}/jta.jar"/>  
-      <pathelement location="${JAVA_LIB_DIR}/jdbc.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/oc4j.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/ejb.jar"/>
-      <pathelement location="${JAVA_LIB_DIR}/jms.jar"/>
+      <pathelement location="${java.lib.dir}/servlet.jar"/>
+      <pathelement location="${java.lib.dir}/jndi.jar"/>   
+      <pathelement location="${java.lib.dir}/jta.jar"/>  
+      <pathelement location="${java.lib.dir}/jdbc.jar"/>
+      <pathelement location="${java.lib.dir}/oc4j.jar"/>
+      <pathelement location="${java.lib.dir}/ejb.jar"/>
+      <pathelement location="${java.lib.dir}/jms.jar"/>
       
    </path>
    
    <path id="srcpath">
-         <pathelement location="${COMMON_JAVA_SRC_DIR}"/>
-	 <pathelement location="${CDEBROWSER_JAVA_SRC_DIR}"/>
-	 <pathelement location="${FORMBUILDER_JAVA_SRC_DIR}"/>
+         <pathelement location="${common.java.src.dir}"/>
+	 <pathelement location="${cdebrowser.java.src.dir}"/>
+	 <pathelement location="${formbuilder.java.src.dir}"/>
    </path>
    
    <target name="compile" depends="init">
-      <javac destdir="${CLASSES_BUILD_DIR}" debug="on" >
+      <javac destdir="${classes.build.dir}" debug="on" >
          <classpath refid="classpath"/>
          <src refid="srcpath"/>
       </javac>  
@@ -125,8 +139,8 @@
 
   <!-- ============ CREATE FORM PERSISTENCE JAR FILE ================== -->
     <target name="jar_persistence_form" depends="compile">
-        <jar jarfile="${CLASSES_BUILD_DIR}/persistence_form.jar">
-          <fileset dir="${CLASSES_BUILD_DIR}">
+        <jar jarfile="${classes.build.dir}/persistence_form.jar">
+          <fileset dir="${classes.build.dir}">
             <patternset>
               <include name="gov/nih/nci/ncicb/cadsr/persistence/base/**"/> 
               <include name="gov/nih/nci/ncicb/cadsr/persistence/dao/**"/> 
@@ -138,8 +152,8 @@
   
   <!-- ============ CREATE COMMON JAR FILE ================== -->
     <target name="jar_common" depends="compile">
-        <jar jarfile="${CLASSES_BUILD_DIR}/common.jar">
-          <fileset dir="${CLASSES_BUILD_DIR}">
+        <jar jarfile="${classes.build.dir}/common.jar">
+          <fileset dir="${classes.build.dir}">
             <patternset>
               <include name="gov/nih/nci/ncicb/cadsr/resource/*"/>
               <include name="gov/nih/nci/ncicb/cadsr/dto/*"/>
@@ -158,8 +172,8 @@
 
   <!-- ============ CREATE SECURITY JAR FILE ================== -->
     <target name="jar_security" depends="compile,jar_common,jar_persistence_form">
-        <jar jarfile="${CLASSES_BUILD_DIR}/security.jar">
-          <fileset dir="${CLASSES_BUILD_DIR}">
+        <jar jarfile="${classes.build.dir}/security.jar">
+          <fileset dir="${classes.build.dir}">
             <patternset>
               <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/BaseUserManager.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/DBUserManager.class"/>
@@ -181,16 +195,16 @@
   <!-- =========== START WAR PROCESS ======================= -->
   
    <target name="war_cdebrowser" depends="compile,jar_security">  
-     <copy todir="${CLASSES_BUILD_DIR}/WEB-INF/classes">
-         <fileset dir="${CONFIG_HOME}/properties">
+     <copy todir="${classes.build.dir}/WEB-INF/classes">
+         <fileset dir="${config.home}/properties">
            <patternset>
              <include name="*.properties"/>
            </patternset>
          </fileset>
        </copy>
    
-     <copy todir="${CLASSES_BUILD_DIR}/WEB-INF/classes">    
-         <fileset dir="${CONFIG_HOME}/connections">
+     <copy todir="${classes.build.dir}/WEB-INF/classes">    
+         <fileset dir="${config.home}/connections">
            <patternset>
              <include name="*.properties"/>
              <include name="cle-providers.xml"/>
@@ -198,31 +212,31 @@
          </fileset>
       </copy>
         
-     <copy todir="${CLASSES_BUILD_DIR}/WEB-INF/classes">      
-         <fileset dir="${CONFIG_HOME}/services">
+     <copy todir="${classes.build.dir}/WEB-INF/classes">      
+         <fileset dir="${config.home}/services">
            <patternset>
              <include name="cdeBrowser.xml"/>
              <include name="crfBuilder.xml"/>
            </patternset>
          </fileset>      
       </copy>
-     <copy todir="${CLASSES_BUILD_DIR}/WEB-INF/classes">      
-         <fileset dir="${FORMBUILDER_JAVA_SRC_DIR}">
+     <copy todir="${classes.build.dir}/WEB-INF/classes">      
+         <fileset dir="${formbuilder.java.src.dir}">
            <patternset>
              <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/common/*.properties"/>
            </patternset>
          </fileset>      
       </copy>
-     <copy todir="${CLASSES_BUILD_DIR}/WEB-INF/classes">      
-         <fileset dir="${CDEBROWSER_JAVA_SRC_DIR}">
+     <copy todir="${classes.build.dir}/WEB-INF/classes">      
+         <fileset dir="${cdebrowser.java.src.dir}">
            <patternset>
              <include name="gov/nih/nci/ncicb/cadsr/persistence/**/*.xml"/>
            </patternset>
          </fileset>      
       </copy>      
       <!-- copy application classes -->
-      <copy todir="${CLASSES_BUILD_DIR}/WEB-INF/classes">
-        <fileset dir="${CLASSES_BUILD_DIR}">
+      <copy todir="${classes.build.dir}/WEB-INF/classes">
+        <fileset dir="${classes.build.dir}">
            <patternset>
              <include name="gov/nih/nci/ncicb/cadsr/base/process/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/cdebrowser/**"/>
@@ -231,14 +245,14 @@
              <include name="gov/nih/nci/ncicb/cadsr/database/**"/>                        
            </patternset>
        </fileset>
-       <fileset dir="${CLASSES_BUILD_DIR}">
+       <fileset dir="${classes.build.dir}">
             <patternset>
               <include name="gov/nih/nci/ncicb/cadsr/common/bc4j/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/persistence/bc4j/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/dto/bc4j/**"/>
             </patternset>
         </fileset>
- 	<fileset dir="${CLASSES_BUILD_DIR}">
+ 	<fileset dir="${classes.build.dir}">
             <patternset>
               <include name="gov/nih/nci/ncicb/cadsr/html/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/lov/**"/>
@@ -249,7 +263,7 @@
               <include name="gov/nih/nci/ncicb/webtree/**"/>
             </patternset>
         </fileset>                   
-        <fileset dir="${CLASSES_BUILD_DIR}">
+        <fileset dir="${classes.build.dir}">
               <patternset>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/common/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/**"/>
@@ -259,9 +273,9 @@
         </fileset>       
      </copy>
      
-    <war warfile="${BUILD_DIR}/cdebrowser-web.war" webxml="${CONFIG_HOME}/WEB-INF/web.xml">
+    <war warfile="${build.dir}/${war.name}.war" webxml="${config.home}/WEB-INF/web.xml">
        
-      <fileset dir="${CONFIG_HOME}">
+      <fileset dir="${config.home}">
         <patternset>
           <include name="WEB-INF/*.tld"/>
           <include name="WEB-INF/struts-config.xml"/>
@@ -269,44 +283,44 @@
         </patternset>
       </fileset>    
         
-      <fileset dir="${CLASSES_BUILD_DIR}">
+      <fileset dir="${classes.build.dir}">
         <patternset>
           <include name="WEB-INF/classes/**/*.*"/>
         </patternset>
       </fileset>        
  
-      <fileset dir="${JSP_DIR}/">
+      <fileset dir="${jsp.dir}/">
         <patternset>
           <include name="formbuilder/**/*.*"/>  
           <include name="*.jsp"/>
         </patternset>
       </fileset>
         
-      <fileset dir="${CDEBROWSER_JSP_DIR}/">        
+      <fileset dir="${cdebrowser.jsp.dir}/">        
         <patternset>
           <include name="**/*.*"/>   
         </patternset> 
       </fileset>
 
-      <fileset dir="${CDEBROWSER_HTML_DIR}/">
+      <fileset dir="${cdebrowser.html.dir}/">
         <patternset>
           <include name="**/*.*"/>   
         </patternset>         
       </fileset>
 
-      <fileset dir="${UI_DIR}/">
+      <fileset dir="${ui.dir}/">
         <patternset>
           <include name="i/**/*.*"/>   
         </patternset>
       </fileset>
 
-      <fileset dir="${UI_DIR}/">
+      <fileset dir="${ui.dir}/">
         <patternset>
           <include name="jsLib/**/*.*"/>   
         </patternset>      
       </fileset>
 
-      <lib dir="${JAVA_LIB_DIR}">
+      <lib dir="${java.lib.dir}">
        	<include name="classes12.jar"/>
       	<include name="cle20.jar"/>
       	<include name="collections.jar"/>
@@ -348,8 +362,8 @@
   
   <!-- =========== CREATE EJB JAR ======================= -->
       <target name="jar_ejb" depends="compile,jar_persistence_form,jar_common">
-        <copy todir="${CLASSES_BUILD_DIR}/ejb/META-INF/">      
-         <fileset dir="${CONFIG_HOME}/ejb">
+        <copy todir="${classes.build.dir}/ejb/META-INF/">      
+         <fileset dir="${config.home}/ejb">
            <patternset>
             <include name="ejb-jar.xml"/> 
             <include name="orion-ejb-jar.xml"/>
@@ -357,15 +371,15 @@
          </fileset>      
        </copy>  
       
-       <jar jarfile="${BUILD_DIR}/formbuilder-ejb.jar">
-           <fileset dir="${CLASSES_BUILD_DIR}">
+       <jar jarfile="${build.dir}/${ejb.name}.jar">
+           <fileset dir="${classes.build.dir}">
               <patternset>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/ejb/**/*.*"/>
                 <include name="gov/nih/nci/ncicb/cadsr/ejb/common/**/*.*"/>
               </patternset>
             </fileset>          
-	    <fileset dir="${CLASSES_BUILD_DIR}/ejb" includes="META-INF/ejb-jar.xml"/>
-	    <fileset dir="${CLASSES_BUILD_DIR}/ejb" includes="META-INF/orion-ejb-jar.xml"/>
+	    <fileset dir="${classes.build.dir}/ejb" includes="META-INF/ejb-jar.xml"/>
+	    <fileset dir="${classes.build.dir}/ejb" includes="META-INF/orion-ejb-jar.xml"/>
             <manifest>
                <attribute name="Built-By" value="${user.name}"/>
                <attribute name="Class-Path" 
@@ -379,36 +393,36 @@
   <!-- =========== CREATE EAR FILE ======================= -->
     <target name="ear_cdebrowser" depends="jar_ejb,war_cdebrowser">
     
-     <copy todir="${CLASSES_BUILD_DIR}/META-INF">      
-         <fileset dir="${CONFIG_HOME}/connections">
+     <copy todir="${classes.build.dir}/META-INF">      
+         <fileset dir="${config.home}/connections">
            <patternset>
              <include name="data-sources.xml"/>
            </patternset>
          </fileset>      
       </copy>    
-     <copy todir="${CLASSES_BUILD_DIR}/properties">      
-         <fileset dir="${CONFIG_HOME}/properties">
+     <copy todir="${classes.build.dir}/properties">      
+         <fileset dir="${config.home}/properties">
            <patternset>
              <include name="data-sources.xml"/>
            </patternset>
          </fileset>      
       </copy>        
       <!-- Create ear file -->      
-      <ear earfile="${BUILD_DIR}/cdebrowser.ear" appxml="${CONFIG_HOME}/META-INF/application.xml">
-        <fileset dir="${BUILD_DIR}">
+      <ear earfile="${build.dir}/${ear.name}.ear" appxml="${config.home}/META-INF/application.xml">
+        <fileset dir="${build.dir}">
           <patternset>
             <include name="*.war"/>
             <include name="*.jar"/>
           </patternset>
         </fileset>
 
-        <fileset dir="${CONFIG_HOME}">
+        <fileset dir="${config.home}">
           <patternset>
             <include name="properties/log4j.properties"/>
           </patternset>
         </fileset>
         
-        <fileset dir="${CLASSES_BUILD_DIR}">
+        <fileset dir="${classes.build.dir}">
           <patternset>
             <include name="persistence_form.jar"/>
             <include name="common.jar"/>
@@ -416,7 +430,7 @@
           </patternset>
         </fileset>
         
-        <fileset dir="${JAVA_LIB_DIR}">
+        <fileset dir="${java.lib.dir}">
           <patternset>
             <include name="spring.jar"/>
             <include name="spring-jdbc.jar"/>
@@ -425,13 +439,13 @@
           </patternset>
         </fileset>
         
-        <fileset dir="${CLASSES_BUILD_DIR}">
+        <fileset dir="${classes.build.dir}">
           <patternset>
              <include name="META-INF/data-sources.xml"/>
           </patternset>
         </fileset>
         
-        <fileset dir="${CONFIG_HOME}">
+        <fileset dir="${config.home}">
           <patternset>
              <include name="META-INF/orion-application.xml"/>
              <include name="META-INF/principals.xml"/>
@@ -443,6 +457,73 @@
       </ear>
     </target>
   <!-- =========== END CREATE EAR FILE ======================= -->
+
+ <!-- =========== Deployment targets below ======================= -->
+ 
+   <target  name="ear_undeploy" depends="init">       
+     <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
+       <arg value="${deploy.ormi}" /> 
+       <arg value="${deploy.username}" /> 
+       <arg value="${deploy.password}" /> 
+       <arg value="-undeploy" /> 
+       <arg value="${app.name}" /> 
+       <arg value="-remove" /> 
+       <classpath> 
+         <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
+       </classpath> 
+     </java> 
+   </target>  
+   
+   <target  name="oc4j_stop" depends="init">       
+        <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
+          <arg value="${deploy.ormi}" /> 
+          <arg value="${deploy.username}" /> 
+          <arg value="${deploy.password}" /> 
+          <arg value="-shutdown" /> 
+          <classpath> 
+            <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
+          </classpath> 
+        </java> 
+   </target>    
+   
+   <target  name="clean_oc4j" depends="init">       
+	<delete dir="${oc4j.j2ee.home}/applications/${app.name}" failonerror="false"/>
+	<delete dir="${oc4j.j2ee.home}/application-deployments/${app.name}" failonerror="false"/>
+	<delete file="${oc4j.j2ee.home}/applications/${ear.name}.ear" failonerror="false"/>
+   </target>    
+   
+   <target  name="ear_deploy" depends="init"> 
+        <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
+          <arg value="${deploy.ormi}" /> 
+          <arg value="${deploy.username}" /> 
+          <arg value="${deploy.password}" /> 
+          <arg value="-deploy" /> 
+          <arg value="-file" /> 
+          <arg value="${build.dir}/${ear.name}.ear" /> 
+          <arg value="-deploymentName" /> 
+          <arg value="${app.name}" /> 
+          <classpath> 
+            <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
+          </classpath> 
+        </java> 
+   </target> 
+   
+  
+  <target  name="copy_ear_oc4j" depends="ear_cdebrowser"> 
+     <copy todir="${oc4j.j2ee.home}/applications">      
+         <fileset dir="${build.dir}">
+           <patternset>
+             <include name="${ear.name}.ear"/>
+           </patternset>
+         </fileset>    
+      </copy>           
+  </target>
+  
+  <target  name="clean_build" depends="clean,ear_cdebrowser"> 
+  </target>
+  
+  <target  name="clean_build_redeploy" depends="clean,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j"> 
+  </target>
   
  <!-- =========== BUILD HELPERS ======================= -->
    <target name="help" depends="init">
@@ -461,11 +542,19 @@
        jar_persistence_form   - Creates form builder persistence jar
        jar_common	      - Creates common jar
        jar_security	      - Create security jar
+       oc4j_stop	      - Stop the oc4j instance
+       clean_oc4j	      - Clean oc4j application deployment directories
+       ear_deploy	      - Deploy the application
+       ear_undeploy	      - Undeploy the application
+       copy_ear_oc4j	      - Copy application ear to oc4j
+       clean_build_redeploy   - Does the following targets clean
+       				,ear_cdebrowser,oc4j_stop
+       				,clean_oc4j, oc4j_copy_ear 
 
        help                   - This help screen.
  
        Settings:
-           Project Home:    ${PROJECT_HOME}
+           Project Home:    ${project.home}
  
        ===================================================================
  
