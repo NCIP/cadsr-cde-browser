@@ -134,7 +134,7 @@ function clearProtocol() {
                 size="19"
                 styleClass="LOVField"/>
                   <a href="<%=protoLOVUrl%>">
-                <img src="<%=urlPrefix%>i/blankSearchLight.gif" border="0" alt="Search for Classification Scheme Items"/>
+                <img src="<%=urlPrefix%>i/blankSearchLight.gif" border="0" alt="Search for Protocol Items"/>
               </a> <a href="javascript:clearProtocol()"><i>Clear</i></a> 
               <html:hidden property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
             </td>
