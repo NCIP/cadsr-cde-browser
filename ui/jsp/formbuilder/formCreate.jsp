@@ -17,7 +17,7 @@
 
 %>
 <HEAD>
-<TITLE>Welcome to Form Builder..</TITLE>
+<TITLE>Formbuilder: Create Form</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
 

@@ -11,7 +11,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <HTML>
   <HEAD>
-    <TITLE>Welcome to Form Builder..</TITLE>
+    <TITLE>Formbuilder: Printer friendly form</TITLE>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
     <SCRIPT LANGUAGE="JavaScript">

@@ -12,7 +12,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.jsp.tag.handler.AvailableValidValue"%>
 <HTML>
   <HEAD>
-    <TITLE>Welcome to Form Builder..</TITLE>
+    <TITLE>Formbuilder: Edit Module</TITLE>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
     <SCRIPT LANGUAGE="JavaScript">

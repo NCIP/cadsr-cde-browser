@@ -864,7 +864,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       {
 
         List newVVList = currQuestion.getValidValues();
-        if(currQuestion.getDataElement()==null)
+        if(currQuestion.getDataElement()==null||newVVList.isEmpty())
         {
          validValuesChanges =
             getNewDeletedUpdatedValidValues(currQuestion,orgQuestion.getValidValues(),

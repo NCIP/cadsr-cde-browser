@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
@@ -368,6 +369,28 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         try {
           FormBuilderServiceDelegate service = getFormBuilderService();
           Form header = (Form)getSessionObject(request,FORM_EDIT_HEADER);
+
+          if(header!=null)
+          {
+            String type = header.getFormType();
+            if(type.equalsIgnoreCase(PersistenceConstants.FORM_TYPE_CRF))
+            {
+              if(header.getProtocol()==null)
+                {
+                   saveError("cadsr.formbuilder.form.edit.form.noProtocol", request);
+                   return mapping.findForward(FAILURE);
+                }
+            }
+            else
+            {
+              if(header.getProtocol()!=null)
+                {
+                   saveError("cadsr.formbuilder.form.edit.form.template.protocol", request);
+                   return mapping.findForward(FAILURE);
+                }              
+            }
+          }
+          
           Collection updatedModules = (Collection)getSessionObject(request,FORM_EDIT_UPDATED_MODULES);
           Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
           Collection addedModules = (Collection)getSessionObject(request,FORM_EDIT_ADDED_MODULES);
@@ -484,6 +507,26 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         try {
           FormBuilderServiceDelegate service = getFormBuilderService();
           Form header = (Form)getSessionObject(request,FORM_EDIT_HEADER);
+          if(header!=null)
+          {
+            String type = header.getFormType();
+            if(type.equalsIgnoreCase(PersistenceConstants.FORM_TYPE_CRF))
+            {
+              if(header.getProtocol()==null)
+                {
+                   saveError("cadsr.formbuilder.form.edit.form.noProtocol", request);
+                   return mapping.findForward(FAILURE);
+                }
+            }
+            else
+            {
+              if(header.getProtocol()!=null)
+                {
+                   saveError("cadsr.formbuilder.form.edit.form.template.protocol", request);
+                   return mapping.findForward(FAILURE);
+                }              
+            }
+          }
           Collection updatedModules = (Collection)getSessionObject(request,FORM_EDIT_UPDATED_MODULES);
           Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
           Collection addedModules = (Collection)getSessionObject(request,FORM_EDIT_ADDED_MODULES);
@@ -595,13 +638,17 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     header.setPreferredName(clonedCrf.getPreferredName());
     String longName = (String) editForm.get(FORM_LONG_NAME);
 
-    if ((longName != null) && (clonedCrf.getLongName() != null)) {
+    if (hasValue(longName) ) {
        header.setLongName(longName);
-      if (!longName.equals(clonedCrf.getLongName())) {
+      if (hasValue(clonedCrf.getLongName())&&!longName.equals(clonedCrf.getLongName())) {
         headerUpdate = true;
       }
+      else if (!hasValue(clonedCrf.getLongName()))
+      {
+        headerUpdate = true;
+      }      
     }
-    else if(longName==null)
+    else
     {
        header.setLongName(null);
        headerUpdate = true;
@@ -614,13 +661,17 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       orgContextIdSeq = clonedCrf.getContext().getConteIdseq();
     }
 
-    if ((contextIdSeq != null) && (orgContextIdSeq != null)) {
+    if (hasValue(contextIdSeq) ) {
       Context context = new ContextTransferObject();
       context.setConteIdseq(contextIdSeq);
       header.setContext(context);
-      if (!contextIdSeq.equals(orgContextIdSeq)) {
+      if (hasValue(orgContextIdSeq)&&!contextIdSeq.equals(orgContextIdSeq)) {
         headerUpdate = true;
       }
+      else if (!hasValue(orgContextIdSeq))
+      {
+        headerUpdate = true;
+      }        
     }
 
     String protocolIdSeq = (String) editForm.get(PROTOCOL_ID_SEQ);
@@ -630,15 +681,19 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       orgProtocolIdSeq = clonedCrf.getProtocol().getProtoIdseq();
     }
 
-    if ((protocolIdSeq != null) && (orgProtocolIdSeq != null)) {
+    if (hasValue(protocolIdSeq)) {
      Protocol protocol = new ProtocolTransferObject();
      protocol.setProtoIdseq(protocolIdSeq);
       header.setProtocol(protocol);
-      if (!orgProtocolIdSeq.equals(protocolIdSeq)) {
+      if (hasValue(orgProtocolIdSeq)&&!orgProtocolIdSeq.equals(protocolIdSeq)) {
+        headerUpdate = true;
+      }
+      else if (!hasValue(orgProtocolIdSeq))
+      {
         headerUpdate = true;
       }
     }
-    else if(protocolIdSeq==null)
+    else
     {
       header.setProtocol(null);
       headerUpdate = true;
@@ -646,22 +701,35 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
 
     String workflow = (String) editForm.get(WORKFLOW);
     String orgWorkflow = clonedCrf.getAslName();
-   if ((workflow != null) && orgWorkflow!=null) {
+   if (hasValue(workflow) ) {
       header.setAslName(workflow);
-      if (!workflow.equals(orgWorkflow)) {
+      if (hasValue(orgWorkflow)&&!workflow.equals(orgWorkflow)) {
         headerUpdate = true;
       }
+      else if (!hasValue(orgWorkflow))
+      {
+        headerUpdate = true;
+      }       
+    }
+    else 
+    {
+      header.setAslName(null);
+      headerUpdate = true;
     }
 
     String categoryName = (String) editForm.get(CATEGORY_NAME);
     String orgCategoryName = clonedCrf.getFormCategory();
-   if ((categoryName != null) && orgCategoryName!=null) {
+   if (hasValue(categoryName) ) {
       header.setFormCategory(categoryName);
-      if (!categoryName.equals(orgCategoryName)) {
+      if (hasValue(orgCategoryName)&&!categoryName.equals(orgCategoryName)) {
         headerUpdate = true;
       }
+      else if (!hasValue(orgCategoryName))
+      {
+        headerUpdate = true;
+      }         
     }
-   else if(categoryName==null)
+   else
    {
      header.setFormCategory(null);
      headerUpdate = true;
@@ -669,22 +737,35 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
 
     String formType = (String) editForm.get(this.FORM_TYPE);
     String orgFormType = clonedCrf.getFormType();
-   if ((formType != null) && orgFormType!=null) {
+   if (hasValue(formType) ) {
       header.setFormType(formType);
-      if (!formType.equals(orgFormType)) {
+      if (hasValue(orgFormType)&&!formType.equals(orgFormType)) {
         headerUpdate = true;
       }
+      else if (!hasValue(orgFormType))
+      {
+        headerUpdate = true;
+      }       
     }
+   else 
+   {
+     header.setFormType(null);
+     headerUpdate = true;
+   }    
 
     String preferredDef = (String) editForm.get(PREFERRED_DEFINITION);
     String orgPreferredDef = clonedCrf.getPreferredDefinition();
-    if ((preferredDef != null) && orgPreferredDef != null) {
+    if (hasValue(preferredDef) ) {
       header.setPreferredDefinition(preferredDef);
-      if (!preferredDef.equals(clonedCrf.getPreferredDefinition())) {
+      if (hasValue(orgPreferredDef)&&!preferredDef.equals(clonedCrf.getPreferredDefinition())) {
         headerUpdate = true;
       }
+      else if (!hasValue(orgPreferredDef))
+      {
+        headerUpdate = true;
+      }          
     }
-    else if(preferredDef != null)
+    else 
     {
       header.setPreferredDefinition(null);
       headerUpdate = true;

@@ -27,7 +27,11 @@ public interface PersistenceConstants {
 
   public static final String FORM_ADMIN_COMPONENT_TYPE="QUEST_CONTENT";
   
+  public static final String FORM_TYPE_CRF="CRF";
+  public static final String FORM_TYPE_TEMPLATE="TEMPLATE";
   public static final String[] FORM_TYPE_VALUES={"CRF","TEMPLATE"};
+  
+  
 
   public static final String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
 }

@@ -336,4 +336,17 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
       throw new FatalException(throwable);
     }
   }
+  /**
+   * Used by the action to check if a input form field has a value
+   * @param str
+   * @return 
+   */
+  protected boolean hasValue(String str)
+  {
+    if(str==null)
+      return false;
+    if(str.equals(""))
+      return false;
+    return true;
+  }
 }

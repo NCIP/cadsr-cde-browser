@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Untitled Document</title>
+<title>Login</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
 <SCRIPT LANGUAGE="JavaScript">
@@ -68,7 +68,7 @@ function clearForm()
   <table align=center cellspacing="2" cellpadding="3" border="0">
     <% if(request.getAttribute("msg") != null) { %>
     <tr>
-      <b>><td colspan=2 class="OraErrorText"><%= request.getAttribute("msg") %></td></b
+      <b><td colspan=2 class="OraErrorText"><%= request.getAttribute("msg") %></td></b>
     </tr>
     <% } %>
     <tr>
