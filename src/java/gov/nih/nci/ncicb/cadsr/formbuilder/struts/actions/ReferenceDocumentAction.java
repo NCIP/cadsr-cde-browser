@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -300,9 +301,12 @@ public class ReferenceDocumentAction
 
   FormFile file = refForm.getUploadedFile();
   //retrieve the file representation
+  // append a random number at the end to be unique
   String name = file.getFileName();
+  name = name + "__" + (new Random()).nextInt();
   Attachment attachment = new AttachmentTransferObject();
   attachment.setName(name);
+  
   attachment.setMimeType(file.getContentType());
   attachment.setDocSize(file.getFileSize());
 
