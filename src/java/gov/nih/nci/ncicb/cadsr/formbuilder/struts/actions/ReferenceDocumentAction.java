@@ -341,8 +341,6 @@ public class ReferenceDocumentAction
 
     if (refDoc.getDocIDSeq() == null) {
      //create new reference document in the database
-     refDoc.setDocType(AdminComponent.REF_DOC_TYPE_IMAGE);
-
      ReferenceDocument newRefDoc = service.createReferenceDocument(refDoc, crf.getIdseq());
 
      for (int j = 0; j < refDoc.getAttachments().size(); j++) {
@@ -505,6 +503,7 @@ public class ReferenceDocumentAction
   String contextIdSeq = (String)createForm.get("contextIdSeq");
   String docText = (String)createForm.get("docText");
   String url = (String)createForm.get("url");
+  String docType = (String)createForm.get("docType");
 
   ReferenceDocument ref = new ReferenceDocumentTransferObject();
 
@@ -514,6 +513,7 @@ public class ReferenceDocumentAction
   ref.setContext(context);
   ref.setUrl(url);
   ref.setDocText(docText);
+  ref.setDocType(docType);
   List attachments = new ArrayList();
   ref.setAttachments(attachments);
   Form crf = (Form)getSessionObject(request, CRF);
@@ -784,6 +784,7 @@ public class ReferenceDocumentAction
   ReferenceDocument refDoc = (ReferenceDocument)refDocs.get(displayOrder);
   dynaForm.set("docName", refDoc.getDocName());
   dynaForm.set("docText", refDoc.getDocText());
+  dynaForm.set("docType", refDoc.getDocType());
   dynaForm.set("url", refDoc.getUrl());
   dynaForm.set("selectedRefDocId", String.valueOf(displayOrder));
   dynaForm.set("contextIdSeq", refDoc.getContext().getConteIdseq());
@@ -837,6 +838,7 @@ public class ReferenceDocumentAction
   refDoc.setDocText((String)dynaForm.get("docText"));
   refDoc.setUrl((String)dynaForm.get("url"));
   refDoc.getContext().setConteIdseq((String)dynaForm.get("contextIdSeq"));
+  refDoc.setDocType((String)dynaForm.get("docType"));
 
   dynaForm.clear();
 
@@ -872,6 +874,12 @@ public class ReferenceDocumentAction
    return true;
 
   if (origRefDoc.getDocName() == null && (refDoc.getDocName() != null))
+   return true;
+
+  if (origRefDoc.getDocType() != null && !origRefDoc.getDocType().equals(refDoc.getDocType()))
+   return true;
+
+  if (origRefDoc.getDocType() == null && (refDoc.getDocType() != null))
    return true;
 
   if (!origRefDoc.getContext().getConteIdseq().equals(refDoc.getContext().getConteIdseq()))

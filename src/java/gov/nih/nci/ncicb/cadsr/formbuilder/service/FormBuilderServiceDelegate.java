@@ -117,4 +117,7 @@ public interface FormBuilderServiceDelegate {
     public void updateReferenceDocument (ReferenceDocument refDoc) throws FormBuilderException;
 
     public void deleteAttachment (String name) throws FormBuilderException;
+    
+    public Collection getAllDocumentTypes() ;
+
 }

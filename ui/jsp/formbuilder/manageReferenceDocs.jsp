@@ -262,6 +262,17 @@
                   </td>
                       
                </tr>
+                <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="20%" nowrap>
+                    Type 
+                  </td>
+                  <td class="OraFieldText" nowrap>
+		       <html:select styleClass="Dropdown" name="refDoc" property="docType" disabled="true">               
+             <html:options name="<%=FormConstants.ALL_REFDOC_TYPES%>" /> 
+		       </html:select>
+                  </td>
+               </tr>  
+              
                <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="20%" nowrap>
                     <bean:message key="cadsr.formbuilder.form.context"/> 

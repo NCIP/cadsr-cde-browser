@@ -20,6 +20,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.WorkFlowStatusDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ReferenceDocumentTypeDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.*;
 
 import java.util.Collection;
@@ -235,6 +236,19 @@ public class JDBCDAOFactory extends AbstractDAOFactory
 
     return refDocDAO;
   }
+
+  public ReferenceDocumentTypeDAO getReferenceDocumentTypeDAO () {
+    ReferenceDocumentTypeDAO refDocTypeDAO =
+      (ReferenceDocumentTypeDAO) daoCache.get(JDBC_REFERENCE_DOCUMENT_TYPE_DAO);
+
+    if (refDocTypeDAO == null) {
+      refDocTypeDAO = new JDBCReferenceDocumentTypeDAO(serviceLocator);
+      daoCache.put(JDBC_CONCEPT_DAO, refDocTypeDAO);
+    }
+
+    return refDocTypeDAO;
+  }
+
 
   public static void main(String[] args) {
     /**

@@ -180,6 +180,7 @@ public ReferenceDocument createReferenceDoc(ReferenceDocument newRefDoc, String 
       String updateRefDocSql =
         " UPDATE reference_documents SET " +
         " name = ? ," + 
+        " dctl_name = ? ," + 
         " doc_text = ? ," + 
         " url = ? ," + 
         " display_order = ? ," + 
@@ -189,6 +190,7 @@ public ReferenceDocument createReferenceDoc(ReferenceDocument newRefDoc, String 
       this.setDataSource(ds);
       this.setSql(updateRefDocSql);
       declareParameter(new SqlParameter("p_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("dctl_name", Types.VARCHAR));
       declareParameter(new SqlParameter("p_doc_text", Types.VARCHAR));
       declareParameter(new SqlParameter("p_url", Types.VARCHAR));
       declareParameter(new SqlParameter("p_display_order", Types.INTEGER));
@@ -202,6 +204,7 @@ public ReferenceDocument createReferenceDoc(ReferenceDocument newRefDoc, String 
       Object[] obj =
         new Object[] {
            refDoc.getDocName(),
+           refDoc.getDocType(),
            refDoc.getDocText(),
            refDoc.getUrl(),
            new Integer(refDoc.getDisplayOrder()),

@@ -13,6 +13,7 @@
       <form-property name="docName" type="java.lang.String"/>
       <form-property name="contextIdSeq" type="java.lang.String"/>
       <form-property name="docText" type="java.lang.String"/>
+      <form-property name="docType" type="java.lang.String"/>
       <form-property name="url" type="java.lang.String"/>
       <form-property name="selectedRefDocId" type="java.lang.String"/>
        

@@ -19,7 +19,7 @@
  function submitForm(methodName) {
        var f = document.forms[0];
        document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
-        if(document.forms[0].docName.value == ""){
+        if(methodName =="saveEditReferenceDoc" && document.forms[0].docName.value == ""){
           alert('Reference Document Name is required.');
        return;
   }
@@ -73,6 +73,16 @@
                     </html:text>
                   </td>
                </tr>    
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="20%" nowrap>
+                    Type
+                  </td>
+                  <td class="OraFieldText" nowrap>
+                    <html:select styleClass="Dropdown" property="docType">               
+                    <html:options name="<%=FormConstants.ALL_REFDOC_TYPES%>" /> 
+                    </html:select>
+                  </td>
+               </tr>  
                
                <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="20%" nowrap>

@@ -9,6 +9,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.resource.AdminComponent "%>
 <HTML>
   <HEAD>
     <TITLE>Welcome to Form Builder..</TITLE>
@@ -19,7 +20,7 @@
  function submitForm(methodName) {
        var f = document.forms[0];
        document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
-        if(document.forms[0].docName.value == ""){
+        if (methodName =="saveNewReferenceDoc" && document.forms[0].docName.value == ""){
           alert('Reference Document Name is required.');
        return;
   }
@@ -73,6 +74,19 @@
                     </html:text>
                   </td>
                </tr>    
+
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="20%" nowrap>
+                    Type 
+                  </td>
+                  <td class="OraFieldText" nowrap>
+                    <html:select styleClass="Dropdown" property="docType">               
+                    <html:option value="<%=AdminComponent.REF_DOC_TYPE_IMAGE%>"/>
+                    <html:options name="<%=FormConstants.ALL_REFDOC_TYPES%>" /> 
+                    </html:select>
+                  </td>
+               </tr>    
+ 
                
                <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="20%" nowrap>

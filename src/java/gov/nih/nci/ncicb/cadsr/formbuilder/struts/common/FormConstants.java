@@ -57,6 +57,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String ALL_PROTOCOLS = "allProtocols";
   public static final String ALL_FORM_CATEGORIES = "allFormCategories";
   public static final String ALL_FORM_TYPES = "allFormTypes";
+  public static final String ALL_REFDOC_TYPES = "allReferenceDocumentTypes";
   public static final String PROTOCOLS_LOV_ID_FIELD = "protocolIdSeq";
   public static final String PROTOCOLS_LOV_NAME_FIELD = "protocolLongName";
   public static final String PERFORM_QUERY_FIELD = "performQuery";
