@@ -116,7 +116,8 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
     Question q = (Question) questions.get(questionIndex);
 
-    if ((selectedText == null) | (selectedText.length() == 0)) {
+    if ((selectedText == null) | (selectedText.indexOf(",") == -1)) {
+      // this is the remove association case
     }
     else {
       int ind = selectedText.indexOf(',');
