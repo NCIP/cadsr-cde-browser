@@ -123,15 +123,11 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
 
 		newForm.setCreatedBy(request.getRemoteUser());
 
-		System.out.println("###### Will create");
-		System.out.println("###### created by: " + newForm.getCreatedBy());
-		System.out.println("###### longName: " + newForm.getLongName());
-
-
 		Form crf = (Form)getSessionObject(request, CRF);
       
 		FormBuilderServiceDelegate service = getFormBuilderService();
 		newForm = service.copyForm(crf.getFormIdseq(), newForm);
+// 		newForm = service.getFormDetails(newFormPK);
 
 	    }
 	catch (FormBuilderException exp)
@@ -142,6 +138,7 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
 	    }
 
 	setSessionObject(request, CRF, newForm);  
+	request.setAttribute(FORM_ID_SEQ, newForm.getFormIdseq());
 	if (dynaForm.get(FORM_GOTO_EDIT) == null) {
 	    return mapping.findForward("gotoView");
 	} else if (((Boolean)dynaForm.get(FORM_GOTO_EDIT)).booleanValue()) {
