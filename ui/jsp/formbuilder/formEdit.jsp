@@ -231,8 +231,8 @@ function clearProtocol() {
                                 </logic:notEqual> 
                               </td>
                               <td align="center">
-                                  <html:link action='<%="/editModuleAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>'
-                                    paramId="<%=FormConstants.FORM_ID_SEQ%>" paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">
+                                  <html:link action='<%="/moduleToEditAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_MODULE_TO_EDIT%>'
+                                    paramId="<%=FormConstants.MODULE_INDEX%>" paramName="moduleIndex" >
                                     <html:img src='<%=urlPrefix+"i/edit.gif"%>' border="0" alt="Edit"/>
                                   </html:link>
                                 </td>
