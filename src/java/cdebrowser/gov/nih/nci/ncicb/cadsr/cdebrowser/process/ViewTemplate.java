@@ -112,8 +112,8 @@ public class ViewTemplate extends BasePersistingProcess
         tib.setMainTabNum(0);
         }
         uem = new UserErrorMessage();
-        uem.setMsgOverview("Database Error");
-        uem.setMsgText("Document could not be located in the database");
+        uem.setMsgOverview("Document not found");
+        uem.setMsgText("Selected form/template does not have an associated document.");
         setResult("tib",tib);
         setResult("uem",uem);
         setCondition(FAILURE);
