@@ -204,10 +204,12 @@
                       <logic:iterate id="attachment" indexId="attachmentIndex" name="refDoc" type="gov.nih.nci.ncicb.cadsr.resource.Attachment" property="attachments">
                         <tr class="OraTabledata">                       
                           <td class="OraFieldText" align="left">
-                            <a href=" " target="_blank"
-                              alt="View Document" >
-                              <bean:write name="attachment" property="name"/>
-                            </a>	 
+              <html:link action='<%="/viewReferenceDocAttchment.do?"+NavigationConstants.METHOD_PARAM+"=viewReferenceDocAttchment"%>' 
+                paramId = "<%=FormConstants.REFERENCE_DOC_ATTACHMENT_NAME%>"
+                paramName="attachment" paramProperty="name"
+                target="_parent" >
+                <bean:write name="attachment" property="name"/>
+              </html:link>                 
                           </td>
                         </tr>
                       </logic:iterate>                    
