@@ -20,8 +20,8 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
 <table width="100%" >
  
  <tr align="left">
-    <td class="OraHeaderSubSub" width="60%" align="left" nowrap>Search for Data Elements</td>
-     <td align="right" class="MessageText"  width="20%" nowrap><b>
+    <td class="OraHeaderSubSub" width="50%" align="left" nowrap>Search for Data Elements</td>
+     <td align="right" class="MessageText"  width="10%" nowrap><b>
    <%
    if (deList!=null&&deList.size()==0)
    {
@@ -42,14 +42,17 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
    %>
    </b></td>
   <td align="right" width="20%" nowrap>
+        <a href="javascript:gotoCDESearchPrefs()">
+          Search Preferences</a>
+   </td>
+  <td align="right" width="20%" nowrap>
         <a href="javascript:changeScreenType(<%="'"+BrowserFormConstants.BROWSER_SCREEN_TYPE_ADVANCED+"'"%>)">
           Advanced search</a>
    </td>
-
    
  </tr>   
  <tr>
-   <td  align="center" colspan="3"><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+   <td  align="center" colspan="4"><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
   </tr> 
  </table>
  

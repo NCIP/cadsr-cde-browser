@@ -12,4 +12,5 @@ public interface TreeConstants  {
   public static final String FORM_DETAILS_FUNCTION = "formDetailsAction";
   public static final String CTEP_USER_FLAG = "ctepUser";
   
+  public static final String BR_CONTEXT_EXCLUDE_LIST_STR = "brContextExcludeListStr";
 }

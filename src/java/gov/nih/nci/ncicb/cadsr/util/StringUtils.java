@@ -5,6 +5,7 @@ import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
 import java.sql.Date;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -61,7 +62,21 @@ public class StringUtils {
 
     return retVal;
   }
-
+  
+  public static boolean isArrayWithEmptyStrings(String[] values) {
+    
+    if(values==null)
+      return true;
+    boolean result = true;
+    for(int i=0;i<values.length;++i)
+    {
+      if(values[i]!=null&&!values[i].equalsIgnoreCase(""))
+      {
+        result = false;
+      }
+    }
+    return result;
+   }
   public static String getValidJSString(String sourceStr) {
     String newStr = strReplace(sourceStr, "'", "\\'");
     newStr = strReplace(newStr, "\"", "&quot;");
@@ -123,10 +138,27 @@ public class StringUtils {
     if (keys == null) {
       return false;
     }
+    /**
+   for(int i=0; i<keys.length;i++)
+   {
+     String val = keys[i];
+     if(val!=null)
+     {
+       if(val.equals(key))
+       {
+         return true;
+       }
+     }
+   }
+    return false;
+    **/
 
     Arrays.sort(keys);
 
     int retValue = Arrays.binarySearch(keys, key);
+    
+    ArrayList list = new ArrayList();
+    
 
     if (retValue >= 0) {
       return true;
@@ -134,6 +166,7 @@ public class StringUtils {
     else {
       return false;
     }
+
   }
 
   public static java.sql.Date getCurDateDbFormat() {

@@ -9,7 +9,7 @@
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-
+<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
 <!--Publish ChangeOrder_-->
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.Context"%>
 
@@ -28,12 +28,13 @@
 
   //Publish Change Order
   String ctepUser = (String)pageContext.getAttribute("accessValue");
-  
+
   String performQuery = request.getParameter("performQuery");
   SessionUtils.setPreviousSessionValues(request);
   List cachedDeList = null;
   Boolean showCached = null;
   try{
+    
   	cachedDeList = (List)currInfoBean.getInfo(ProcessConstants.ALL_DATA_ELEMENTS);
   	showCached = (Boolean)session.getAttribute("showCached");
   	if(showCached!=null)
@@ -45,15 +46,44 @@
   	
   }
   catch(Exception ex){}
-    
+  
+  //Preferences
+  String brContextExcludeTestStr = null;
   CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  DataElementSearchBean searchBean = null;
+  try{
+  
+    searchBean = (DataElementSearchBean)currInfoBean.getInfo("desb");
+  }
+  catch(Exception ex){}
+  
+  //Search Pref
+  boolean excludeTestContext = false;
+  if(searchBean==null)
+  {
+    excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
+  }
+  else
+  {
+    excludeTestContext = searchBean.isExcludeTestContext();
+    
+  }
+  
+  String brContextExcludeListParamStr = "";
+  if(excludeTestContext)
+  {
+     brContextExcludeListParamStr =  TreeConstants.BR_CONTEXT_EXCLUDE_LIST_STR+":" 
+                     + "'TEST' ;" ;
+  }
+
+
   String pageId = request.getParameter("PageId");
   String treeURL;
   String browserURL;
   String extraURLParams = "";
   String treeParams = "";
   String src = request.getParameter("src");
-  if (src != null) {
+  if (src != null&&!src.equals("")) {
     String modIndex = request.getParameter("moduleIndex");
     String quesIndex = request.getParameter("questionIndex");
     extraURLParams += "&src="+src+"&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
@@ -65,10 +95,12 @@
       "&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" + 
       TreeConstants.DE_SEARCH_TREE + ";" +
       TreeConstants.CTEP_USER_FLAG + ":" +
-      ctepUser +  ";"+            
+      ctepUser +  ";"+
+      brContextExcludeListParamStr +
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
       TreeConstants.DE_SEARCH_FUNCTION + treeParams +
       "&skin=CDEBrowser1";
+
 
   if (performQuery != null ) {
     extraURLParams += "&performQuery="+performQuery; 

@@ -17,6 +17,9 @@ public class CDEBrowserParams
     String treeURL = "";
     String evsSources = "";
     String showFormsAlphebetical ="no";    
+    String excludeTestContext = "no";
+    String excludeWorkFlowStatuses = "";
+    String excludeRegistrationStatuses = "";
     Map evsUrlMap = new HashMap();
     
     static CDEBrowserParams instance;
@@ -57,7 +60,13 @@ public class CDEBrowserParams
             setEvsUrlMap(b,evsSources);
             showFormsAlphebetical = b.getString("SHOW_FORMS_ALPHEBETICAL");
             index++;            
-            
+            excludeTestContext = b.getString("EXCLUDE_TEST_CONTEXT_BY_DEFAULT");
+            index++;
+            excludeWorkFlowStatuses = b.getString("EXCLUDE_WORKFLOW_BY_DEFAULT");
+            index++;
+            excludeRegistrationStatuses = b.getString("EXCLUDE_REGISTRATION_BY_DEFAULT");
+            index++;            
+
                         
         } 
         catch (java.util.MissingResourceException mre) 
@@ -144,6 +153,38 @@ public class CDEBrowserParams
   public String getShowFormsAlphebetical()
   {
     return showFormsAlphebetical;
+  }
+  
+  
+  public void setExcludeTestContext(String excludeTestContext)
+  {
+    this.excludeTestContext = excludeTestContext;
+  }
+
+
+  public String getExcludeTestContext()
+  {
+    return excludeTestContext;
+  }
+
+  public String getExcludeWorkFlowStatuses()
+  {
+    return excludeWorkFlowStatuses;
+  }
+
+  public void setExcludeWorkFlowStatuses(String excludeWorkFlowStatuses)
+  {
+    this.excludeWorkFlowStatuses = excludeWorkFlowStatuses;
+  }
+
+  public String getExcludeRegistrationStatuses()
+  {
+    return excludeRegistrationStatuses;
+  }
+
+  public void setExcludeRegistrationStatuses(String excludeRegistrationStatuses)
+  {
+    this.excludeRegistrationStatuses = excludeRegistrationStatuses;
   }
            
 }

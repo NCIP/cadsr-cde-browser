@@ -4,6 +4,7 @@
 <%@ page import="java.io.*"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.TreeUtils " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 
 <%
   	// get parameters
@@ -71,7 +72,13 @@
 
     // get current web tree from session 
     if (userSession != null) {
-      webTree = (BDWebTree) userSession.getAttribute(treeName);  
+      webTree = (BDWebTree) userSession.getAttribute(treeName); 
+      
+  	//Change Order Publish
+  	String refreshIndicator = (String)session.getAttribute(CaDSRConstants.TREE_REFRESH_INDICATOR);
+    session.removeAttribute(CaDSRConstants.TREE_REFRESH_INDICATOR);
+  	if(refreshIndicator!=null&&refreshIndicator.equals(CaDSRConstants.YES))
+  		 treeAction="refresh";      
 }
 
     //  if no treeAction specified, build a new tree 

@@ -296,6 +296,14 @@ function done() {
 function newSearch(){
   top.location.href= "<%=newSearchURL%>";
 }
+
+
+function gotoCDESearchPrefs() {
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.GOTO_CDE_SEARCH_PREF%>";
+  document.forms[0].action='<%=request.getContextPath()%>/cdebrowser/cdeSearchPrefAction.do';        
+  document.forms[0].target="_parent";
+  document.forms[0].submit();
+}
 //-->
 </SCRIPT>
 

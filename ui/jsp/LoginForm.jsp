@@ -22,6 +22,7 @@ function clearForm()
 </head>
 
 <body text="#000000" topmargin="0">
+
 <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
   <tr>
 
@@ -66,7 +67,8 @@ function clearForm()
   <table>
     <tr>    
       <td align="left" class="OraTipText">
-        <bean:message key="cadsr.formbuilder.helpText.login"/>
+        Guest users can login using username "guest" and password "guest".
+   <br> If you require an account with curator privileges to a specific context other than Test, please contact NCICB Application Support Email: <a href='mailto:ncicb@pop.nci.nih.gov'>ncicb@pop.nci.nih.gov</a>
       </td>
     </tr>  
   </table>  

@@ -3,8 +3,8 @@
 <table width="100%" >
  
  <tr valign="bottom" align="left">
-    <td class="OraHeaderSubSub" width="60%" align="left" nowrap>Search by Name</td>
-     <td align="right" class="MessageText"  width="20%" nowrap><b>
+    <td class="OraHeaderSubSub" width="50%" align="left" nowrap>Search by Name</td>
+     <td align="right" class="MessageText"  width="10%" nowrap><b>
    <%
    if (deList!=null&&deList.size()==0)
    {
@@ -24,6 +24,10 @@
    }
    %>
    </b></td>
+   <td align="right" width="20%" nowrap>
+        <a href="javascript:gotoCDESearchPrefs()">
+          Search Preferences</a>
+   </td>
   <td align="right" width="20%" nowrap>
         <a href="javascript:changeScreenType(<%="'"+BrowserFormConstants.BROWSER_SCREEN_TYPE_SIMPLE+"'"%>)">
           Basic search</a>
@@ -32,7 +36,7 @@
    
  </tr>   
  <tr valign="top" >
-   <td  align="center" colspan="3"><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+   <td  align="center" colspan="4"><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
   </tr> 
  </table>
  
