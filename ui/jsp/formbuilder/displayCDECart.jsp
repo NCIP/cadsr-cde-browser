@@ -80,7 +80,7 @@ function details(linkParms ){
   String quesIndex = "";
   String urlParams = "";
     
-  if ((src != null) || ("".equals(src))) {
+  if ((src != null) && (!"".equals(src))) {
     modIndex = request.getParameter("moduleIndex");
     quesIndex = request.getParameter("questionIndex");
     doneURL= src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
