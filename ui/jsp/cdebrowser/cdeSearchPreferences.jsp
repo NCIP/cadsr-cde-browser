@@ -69,8 +69,7 @@ function cancel() {
 
  <table width="100%">
   <tr align="left">
-     <td class="OraHeaderSubSub" width="80%" align="left" nowrap>CDE Search preferences for this session</td>
-   
+     <td class="OraHeaderSubSub" width="80%" align="left" nowrap>CDE search preferences for this session</td>
   </tr>  
   <tr>
     <td align="center" ><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
@@ -114,7 +113,7 @@ function cancel() {
           <td width="100%" >
           <table width="100%" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark" >
              <tr>
-              <td width="50%" align="center" class="OraTableColumnHeaderNoBG" nowrap>Exclude Registration Status(s)</td>
+              <td width="50%" align="center" class="OraTableColumnHeaderNoBG" nowrap>Exclude Registration Status(es)</td>
               <td width="50%"  class="OraTabledata"><%=desb.getRegStatusFullList()%></td>
             </tr>
           </table>

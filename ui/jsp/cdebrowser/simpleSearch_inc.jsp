@@ -43,7 +43,7 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
    </b></td>
   <td align="right" width="20%" nowrap>
         <a href="javascript:gotoCDESearchPrefs()">
-          Search Preferences</a>
+          Search preferences</a>
    </td>
   <td align="right" width="20%" nowrap>
         <a href="javascript:changeScreenType(<%="'"+BrowserFormConstants.BROWSER_SCREEN_TYPE_ADVANCED+"'"%>)">

@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.7 2005-02-17 23:37:24 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.8 2005-02-18 19:42:46 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -249,24 +249,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
         dePageIterator = new BC4JPageIterator(40);
-         CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-        // Initialize Search Preference Values
-          boolean excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
-          desb.setExcludeTestContext(excludeTestContext);
-          String regVals = params.getExcludeRegistrationStatuses();
-          if(regVals!=null&&regVals!="")
-          {
-            String [] regStatusExcludeList = StringUtils.tokenizeCSVList(regVals);
-            desb.setRegStatusExcludeList(regStatusExcludeList);
-          }
-
-          String wfVals = params.getExcludeWorkFlowStatuses();
-          if(wfVals!=null&&wfVals!="")
-          {
-            String []  aslNameExcludeList = StringUtils.tokenizeCSVList(wfVals);
-            desb.setAslNameExcludeList(aslNameExcludeList);
-          }      
-          desb.setLOVLists(dbUtil);
+         initSearchPreferences(desb,dbUtil);
       }
       else if (performQuery.equals("yes")) {
         DataElementSearchBean oldDesb = (DataElementSearchBean) getInfoObject("desb");
@@ -398,6 +381,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         queryResults = null;
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
+        initSearchPreferences(desb,dbUtil);
 
       }
       else if (performQuery.equals("sortResults")) {
@@ -631,4 +615,26 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
     return cart;
   }
+  
+   private void initSearchPreferences( DataElementSearchBean desb,DBUtil dbUtil) throws Exception
+   {
+          CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+      // Initialize Search Preference Values
+        boolean excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
+        desb.setExcludeTestContext(excludeTestContext);
+        String regVals = params.getExcludeRegistrationStatuses();
+        if(regVals!=null&&regVals!="")
+        {
+          String [] regStatusExcludeList = StringUtils.tokenizeCSVList(regVals);
+          desb.setRegStatusExcludeList(regStatusExcludeList);
+        }
+  
+        String wfVals = params.getExcludeWorkFlowStatuses();
+        if(wfVals!=null&&wfVals!="")
+        {
+          String []  aslNameExcludeList = StringUtils.tokenizeCSVList(wfVals);
+          desb.setAslNameExcludeList(aslNameExcludeList);
+        }      
+        desb.setLOVLists(dbUtil);
+   }
 }
