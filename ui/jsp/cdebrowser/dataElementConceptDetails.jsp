@@ -260,7 +260,7 @@ function goPage(pageInfo) {
                    <br>
                   <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                         <tr  valign="bottom" >
-                          <td class="OraHeaderSubSubSub" width="100%">Object Class Component Concepts</td>
+                          <td class="OraHeaderSubSubSub" width="100%">Object Class Concepts</td>
                         </tr>
                      </table>
                     <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
@@ -290,12 +290,12 @@ function goPage(pageInfo) {
                        <br>
                        <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                         <tr  valign="bottom" >
-                         <td class="OraHeaderSubSubSub" width="100%">Object Class Component Concepts</td>
+                         <td class="OraHeaderSubSubSub" width="100%">Object Class Concepts</td>
                         </tr>
                        </table>
                        <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                          <tr class="OraTabledata">
-                            <td  width="20%" >Object Class does not have any Component Concepts.</td>
+                            <td  width="20%" >Object Class does not have any Concepts.</td>
                          </tr>
                          </tr>                 
                        </table>    
@@ -305,12 +305,12 @@ function goPage(pageInfo) {
                <br>
                <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                 <tr  valign="bottom" >
-                 <td class="OraHeaderSubSubSub" width="100%">Object Class Component Concepts</td>
+                 <td class="OraHeaderSubSubSub" width="100%">Object Class Concepts</td>
                 </tr>
                </table>
                <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                  <tr class="OraTabledata">
-                    <td  width="20%" >Object Class does not have any Component Concepts.</td>
+                    <td  width="20%" >Object Class does not have any Concepts.</td>
                  </tr>
                  </tr>                 
                </table>    
@@ -402,7 +402,7 @@ function goPage(pageInfo) {
                     <br>
                    <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                          <tr  valign="bottom" >
-                           <td class="OraHeaderSubSubSub" width="100%">Property Component Concepts</td>
+                           <td class="OraHeaderSubSubSub" width="100%">Property Concepts</td>
                          </tr>
                       </table>
                      <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
@@ -432,12 +432,12 @@ function goPage(pageInfo) {
                        <br>
                        <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                         <tr  valign="bottom" >
-                         <td class="OraHeaderSubSubSub" width="100%">Property Component Concepts</td>
+                         <td class="OraHeaderSubSubSub" width="100%">Property Concepts</td>
                         </tr>
                        </table>
                        <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                          <tr class="OraTabledata">
-                            <td  width="20%" >Property does not have any Component Concepts.</td>
+                            <td  width="20%" >Property does not have any Concepts.</td>
                          </tr>
                          </tr>                 
                        </table>    
@@ -447,12 +447,12 @@ function goPage(pageInfo) {
                <br>
                <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                 <tr  valign="bottom" >
-                 <td class="OraHeaderSubSubSub" width="100%">Property Component Concepts</td>
+                 <td class="OraHeaderSubSubSub" width="100%">Property Concepts</td>
                 </tr>
                </table>
                <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                  <tr class="OraTabledata">
-                    <td  width="20%" >Property does not have any Component Concepts.</td>
+                    <td  width="20%" >Property does not have any Concepts.</td>
                  </tr>
                  </tr>                 
                </table>    

@@ -246,7 +246,7 @@ function listChanged(urlInfo) {
                    <br>
                   <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                         <tr  valign="bottom" >
-                          <td class="OraHeaderSubSubSub" width="100%">Value Domain Component Concepts</td>
+                          <td class="OraHeaderSubSubSub" width="100%">Value Domain Concepts</td>
                         </tr>
                      </table>
                     <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
@@ -276,12 +276,12 @@ function listChanged(urlInfo) {
                     <br>
                       <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                         <tr  valign="bottom" >
-                          <td class="OraHeaderSubSubSub" width="100%">Value Domain Component Concepts</td>
+                          <td class="OraHeaderSubSubSub" width="100%">Value Domain Concepts</td>
                         </tr>
                      </table>
                      <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                        <tr class="OraTabledata">
-                          <td   width="20%" >Value Domain does have any Component Concepts.</td>
+                          <td   width="20%" >Value Domain does have any Concepts.</td>
                        </tr>
                        </tr>                 
                      </table>      
@@ -291,12 +291,12 @@ function listChanged(urlInfo) {
             <br>
               <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                 <tr  valign="bottom" >
-                  <td class="OraHeaderSubSubSub" width="100%">Value Domain Component Concepts</td>
+                  <td class="OraHeaderSubSubSub" width="100%">Value Domain Concepts</td>
                 </tr>
              </table>
              <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                <tr class="OraTabledata">
-                  <td   width="20%" >Value Domain does have any Component Concepts.</td>
+                  <td   width="20%" >Value Domain does have any Concepts.</td>
                </tr>
                </tr>                 
              </table>      
