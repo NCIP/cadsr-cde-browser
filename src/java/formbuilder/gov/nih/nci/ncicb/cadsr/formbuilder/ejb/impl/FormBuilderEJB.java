@@ -253,6 +253,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
        }
 
   public Form updateForm(
+    String formIdSeq,
     Form formHeader,
     Collection updatedModules,
     Collection deletedModules) {
@@ -282,7 +283,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
       }
     }
 
-    return getFormDetails(formHeader.getFormIdseq());
+    return getFormDetails(formIdSeq);
   }
 
 
