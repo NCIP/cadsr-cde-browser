@@ -652,11 +652,6 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         headerUpdate = true;
       }      
     }
-    else
-    {
-       header.setLongName(null);
-       headerUpdate = true;
-    }
 
     String contextIdSeq = (String) editForm.get(CONTEXT_ID_SEQ);
     String orgContextIdSeq = null;
@@ -700,7 +695,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     else
     {
       header.setProtocol(null);
-      headerUpdate = true;
+      if(hasValue(orgProtocolIdSeq))
+          headerUpdate = true;
     }
 
     String workflow = (String) editForm.get(WORKFLOW);
@@ -718,7 +714,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     else 
     {
       header.setAslName(null);
-      headerUpdate = true;
+      if(hasValue(orgWorkflow))
+        headerUpdate = true;
     }
 
     String categoryName = (String) editForm.get(CATEGORY_NAME);
@@ -736,7 +733,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
    else
    {
      header.setFormCategory(null);
-     headerUpdate = true;
+     if(hasValue(orgCategoryName))
+      headerUpdate = true;
    }
 
     String formType = (String) editForm.get(this.FORM_TYPE);
@@ -754,7 +752,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
    else 
    {
      header.setFormType(null);
-     headerUpdate = true;
+     if(hasValue(orgFormType))
+        headerUpdate = true;
    }    
 
     String preferredDef = (String) editForm.get(PREFERRED_DEFINITION);
@@ -772,7 +771,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     else 
     {
       header.setPreferredDefinition(null);
-      headerUpdate = true;
+      if(hasValue(orgPreferredDef))
+        headerUpdate = true;
     }
 
    List updatedModules =

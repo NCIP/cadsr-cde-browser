@@ -206,4 +206,12 @@ public class StringUtils {
       return true;
     }
   }
+
+   public static void main(String[] args) {
+   String str = "\"test\"";
+   String newStr="\\\"";
+   System.out.println(str);
+   String result = StringUtils.strReplace(str,"\"","\\\"");
+   System.out.println(result);
+  }
 }

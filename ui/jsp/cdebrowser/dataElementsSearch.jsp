@@ -344,7 +344,11 @@ function newSearch(){
     <td class="OraFieldText"><%=desb.getSearchInList()%></td>
  </tr>
  
-
+ <TR>
+   <td colspan="4" align="center" nowrap> 
+     &nbsp;
+    </td>
+ </TR>
 <%
   if ("".equals(src)) {
 %>
