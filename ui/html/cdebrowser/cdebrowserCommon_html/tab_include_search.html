@@ -30,12 +30,12 @@ function subTabClicked(tabNum,urlParams) {
 <%
 	if (session.getAttribute("nciUser") == null) {
 %>
-          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= "cdeCartAction.do?method=displayCDECart"%>" TARGET="_top"><IMG SRC="i/Icon_cde_cart.gif" alt="CDE Cart" border=0 ></A><br><font color=brown face=verdana size=1></font></TD>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= "cdeCartAction.do?method=displayCDECart"%>" TARGET="_top"><IMG SRC="i/cde_cart.gif" alt="CDE Cart" border=0 ></A><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
 <%
 	}
 	else {
 %>
-		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= "formCDECartAction.do?method=displayCDECart"%>" TARGET="_top"><IMG SRC="i/Icon_cde_cart.gif" alt="CDE Cart" border=0 ></A><br><font color=brown face=verdana size=1></font></TD>
+		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= "formCDECartAction.do?method=displayCDECart"%>" TARGET="_top"><IMG SRC="i/cde_cart.gif" alt="CDE Cart" border=0 ></A><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
 <%
 	}
 %>
