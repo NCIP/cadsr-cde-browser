@@ -135,7 +135,7 @@ public class DataElementSearchBean extends Object {
       usageList.append(
         "<option selected value=\"owned_by\">Owned By</option> ");
       usageList.append("<option value=\"used_by\">Used By</option> ");
-      usageList.append("<option value=\"both\">Owned &amp; Used By</option> ");
+      usageList.append("<option value=\"both\">Owned By/Used By</option> ");
       usageList.append("</select> ");
     }
     else if ("used_by".equals(contextUse)) {
@@ -143,7 +143,7 @@ public class DataElementSearchBean extends Object {
         "<select name=\"contextUse\" size=\"1\" class=\"LOVField\"> ");
       usageList.append("<option value=\"owned_by\">Owned By</option> ");
       usageList.append("<option selected value=\"used_by\">Used By</option> ");
-      usageList.append("<option value=\"both\">Owned &amp; Used By</option> ");
+      usageList.append("<option value=\"both\">Owned By/Used By</option> ");
       usageList.append("</select> ");
     }
     else if ("".equals(contextUse) || "both".equals(contextUse)) {
@@ -152,7 +152,7 @@ public class DataElementSearchBean extends Object {
       usageList.append("<option value=\"owned_by\">Owned By</option> ");
       usageList.append("<option value=\"used_by\">Used By</option> ");
       usageList.append(
-        "<option selected value=\"both\">Owned &amp; Used By</option> ");
+        "<option selected value=\"both\">Owned By/Used By</option> ");
       usageList.append("</select> ");
     }
   }
