@@ -4,9 +4,9 @@
             <html:image src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
           </td>           
           <td >
- 	    <html:link action='<%="/formSearchAction"%>'>				
-		<html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
-	    </html:link>             
+            <html:link action='<%= "/cancelAction?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_FORM_TO_EDIT %>'>
+              <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+            </html:link>             
           </td>                
         </tr> 
         <tr >

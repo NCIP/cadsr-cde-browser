@@ -15,7 +15,6 @@
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
 <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
 <SCRIPT LANGUAGE="JavaScript">
-
 </SCRIPT>
 </HEAD>
 <BODY bgcolor="#ffffff" topmargin="0">
@@ -74,7 +73,7 @@
           <bean:write name="de" property="item.contextName"/>
         </td>
         <td class="OraFieldText">
-          <bean:write name="de" property="item.contextName"/>
+          <bean:write name="de" property="item.usingContexts"/>
         </td>
         <td class="OraFieldText">
           <bean:write name="de" property="item.aslName"/>

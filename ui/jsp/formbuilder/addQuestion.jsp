@@ -117,7 +117,7 @@
           <bean:write name="de" property="item.contextName"/>
         </td>
         <td class="OraFieldText">
-          <bean:write name="de" property="item.contextName"/>
+          <bean:write name="de" property="item.usingContexts"/>
         </td>
         <td class="OraFieldText">
           <bean:write name="de" property="item.aslName"/>
@@ -133,7 +133,7 @@
     </table>
     <br>
 
-      <%@ include file="changeAssociation_inc.jsp" %>
+      <%@ include file="addQuestion_inc.jsp" %>
     <table width="50%" align="center" cellpadding="1" cellspacing="1" border="0" >
       <tr >
         <td >
