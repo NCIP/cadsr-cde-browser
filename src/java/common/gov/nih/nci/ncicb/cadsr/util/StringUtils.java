@@ -8,22 +8,21 @@ import java.util.Arrays;
 
 
 public class StringUtils {
-  public static boolean toBoolean(String inString) throws Exception {
+  public static boolean toBoolean(String inString) {
+    boolean retVal = false;
     if (
       inString.toUpperCase().equals("Y") ||
           inString.toUpperCase().equals("TRUE") ||
           inString.equalsIgnoreCase("Yes")) {
-      return true;
+      retVal = true;
     }
     else if (
       inString.toUpperCase().equals("N") ||
           inString.toUpperCase().equals("FALSE") ||
           inString.equalsIgnoreCase("No")) {
-      return false;
+      retVal = false;
     }
-    else {
-      throw new Exception();
-    }
+    return retVal;
   }
 
   public static String booleanToStr(boolean bool) {
