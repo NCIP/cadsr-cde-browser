@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.8 2005-01-20 05:39:07 jiangja Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.9 2005-01-21 20:46:15 jiangja Exp $
  */
 
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
@@ -352,72 +352,20 @@ public class CompareCDEAction
   addNewRow(sheet, rowNumber++, "Workflow Status", boldCellStyle, cdeColl, "valueDomain.aslName");
   addNewRow(sheet, rowNumber++, "Version", boldCellStyle, cdeColl, "valueDomain.version");
 
-  row = sheet.createRow(rowNumber++);
-  row = sheet.createRow(rowNumber++);
-  cell = row.createCell((short)0);
-  cell.setCellValue("Permissible Values");
-  cell.setCellStyle(boldCellStyle);
+ 
+  List pvTitles = new ArrayList();
+  pvTitles.add(0, "Value");
+  pvTitles.add(1, "Value Meaning");
+  pvTitles.add(2, "Description");
+  List pvProperties = new ArrayList();
+  pvProperties.add(0, "shortMeaningValue");
+  pvProperties.add(1, "shortMeaning");
+  pvProperties.add(2, "shortMeaningDescription");
 
-  //this row contains the number of valid values for each data element value domain
-  row = sheet.createRow(rowNumber++);
-  colNumber = 1;
-  int maxValidValue = 0;
+  rowNumber += this.exportObjects(sheet, rowNumber, "Permissible Values", 
+  "valueDomain.validValues", boldCellStyle,
+             cdeColl, pvProperties, pvTitles);
 
-  for (int i = 0; i < cdeColl.size(); i++) {
-   cell = row.createCell(colNumber);
-
-   int validValueSize = ((DataElement)cdeColl.get(i)).getValueDomain().getValidValues().size();
-
-   if (validValueSize > maxValidValue)
-    maxValidValue = validValueSize;
-
-   cell.setCellValue(validValueSize + " Permissible values");
-   colNumber += COLUMN_PER_CDE;
-  }
-
-  //this row contains valid value properties
-  row = sheet.createRow(rowNumber++);
-  colNumber = 1;
-
-  for (int i = 0; i < cdeColl.size(); i++) {
-   cell = row.createCell(colNumber++);
-
-   cell.setCellValue("Value");
-   cell.setCellStyle(boldCellStyle);
-   cell = row.createCell(colNumber++);
-   cell.setCellValue("value meaning");
-   cell.setCellStyle(boldCellStyle);
-   cell = row.createCell(colNumber++);
-   cell.setCellValue("Description");
-   cell.setCellStyle(boldCellStyle);
-   colNumber++;
-  }
-
-  for (int i = 0; i < maxValidValue; i++) {
-   colNumber = 1;
-
-   row = sheet.createRow(rowNumber++);
-
-   for (int j = 0; j < cdeColl.size(); i++) {
-    List vvList = ((DataElement)cdeColl.get(j)).getValueDomain().getValidValues();
-
-    if (vvList.size() > i) {
-     ValidValue validValue = (ValidValue)vvList.get(i);
-
-     cell = row.createCell(colNumber++);
-     cell.setCellValue(validValue.getShortMeaningValue());
-     cell.setCellStyle(boldCellStyle);
-     cell = row.createCell(colNumber++);
-     cell.setCellValue(validValue.getShortMeaning());
-     cell.setCellStyle(boldCellStyle);
-     cell = row.createCell(colNumber++);
-     cell.setCellValue(validValue.getShortMeaningDescription());
-     cell.setCellStyle(boldCellStyle);
-     colNumber++;
-    } else
-     colNumber += COLUMN_PER_CDE;
-   }
-  }
 
   List refDocPropertyTitles = new ArrayList();
   refDocPropertyTitles.add(0, "Document Name");
