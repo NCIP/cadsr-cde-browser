@@ -181,7 +181,7 @@ function clearProtocol() {
                   </td>  
                 </logic:empty>                        
                 <td align="right" width="25">
-                  <html:link action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
+                  <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
                   </html:link>&nbsp;
@@ -225,7 +225,7 @@ function clearProtocol() {
                   </td>  
                 </logic:empty>                        
                 <td align="right" width="25">
-                  <html:link action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
+                  <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleIndex" >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
                   </html:link>&nbsp;
@@ -361,7 +361,7 @@ function clearProtocol() {
                 </td>  
                 </logic:empty>                        
                 <td align="right" width="25">
-                  <html:link action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
+                  <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
                   </html:link>&nbsp;
