@@ -20,14 +20,14 @@ function subTabClicked(tabNum,urlParams) {
   <tr>
     <td align="left" nowrap>
 
-      <img src=i/details_banner.gif border=0>
+      <html:img page="/i/details_banner.gif" border="0" />
     </td>
 
     <td align=right valign=top colspan=2 nowrap>
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>
-          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= tib.getLogoutURL() %>" TARGET="_top"><IMG SRC="i/icon_return.gif" alt="Back" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Back&nbsp;</font></TD>
-          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('cdebrowserCommon_html/cdeBrowserHelp.html','helpWin',700,600)"><IMG SRC="i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= tib.getLogoutURL() %>" TARGET="_top"><html:img page="/i/icon_return.gif" alt="Back" border="0"  width="32" height="32" /> </A><br><font color=brown face=verdana size=1>&nbsp;Back&nbsp;</font></TD>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('cdebrowserCommon_html/cdeBrowserHelp.html','helpWin',700,600)"><html:img page="/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
         </TR>
       </TABLE>
     </td>
@@ -50,14 +50,14 @@ function subTabClicked(tabNum,urlParams) {
   for (int i = 0; i < tib.getMainTabCount(); i++) {
     if (tib.getMainTabNum() == i) { %>
 
-<TD bgcolor="#336699" width="1%" align=LEFT valign=TOP><IMG SRC="i/ctab_open.gif" height=21 width=18 border=0></TD>
+<TD bgcolor="#336699" width="1%" align=LEFT valign=TOP><html:img page="/i/ctab_open.gif" height="21" width="18" border="0" /></TD>
 <TD width=1% bgcolor="#336699"><b><font size="-1" face="Arial" color="#FFFFFF"><%= tib.getMainTabLabel(i) %></font></b></TD>
-<TD bgcolor="#336699" width="1%" align=RIGHT valign=TOP><IMG SRC="i/ctab_close.gif" height=21 width=12 border=0></TD>
+<TD bgcolor="#336699" width="1%" align=RIGHT valign=TOP><html:img page="/i/ctab_close.gif" height="21" width="12" border="0" /></TD>
 <%  }
     else { %>
-<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><IMG SRC="i/tab_open.gif" height=21 width=13 border=0></TD>
+<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><html:img page="/i/tab_open.gif" height="21" width="13" border="0" /></TD>
 <TD width=1% bgcolor="#B6B687"><A HREF="javascript:tabClicked(<%= i %>, '<%= tib.getMainTabURLParams(i) %>')"><font size="-1" face="Arial" color="#000000"><%= tib.getMainTabLabel(i) %></font></A></TD>
-<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><IMG SRC="i/tab_close.gif" height=21 width=10 border=0></TD>
+<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="/i/tab_close.gif" height="21" width="10" border="0" /></TD>
 
 <%
     }
@@ -70,7 +70,7 @@ function subTabClicked(tabNum,urlParams) {
 </TABLE>
 <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
 <TR>
-<td align=left valign=top width="1%" bgcolor="#336699"><img src="i/top_left.gif" width=4 height="25"></td>
+<td align=left valign=top width="1%" bgcolor="#336699"><html:img page="/i/top_left.gif" width="4" height="25" /></td>
 <td align=left valign=top width="5%" bgcolor="#336699">&nbsp;</td>
 
 
@@ -89,7 +89,7 @@ function subTabClicked(tabNum,urlParams) {
 <%
     }
 %>
-    <td width=1% bgcolor="#336699"><img src="i/subtab.gif"></TD>
+    <td width=1% bgcolor="#336699"><html:img page="/i/subtab.gif" /></TD>
 <%
   }
 %>
@@ -100,8 +100,8 @@ function subTabClicked(tabNum,urlParams) {
 
 <table  width=100% Cellpadding=0 Cellspacing=0 border=0>
 <tr>
-<td align=right valign=top width=49 height=21 bgcolor="#336699"><img src="i/left_end_bottom.gif" height=21 width=49></td>
-<TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><img src="i/bottom_middle.gif" height=6 width=100%></TD>
-<td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><img src="i/right_end_bottom.gif" height=7 width=5></td>
+<td align=right valign=top width=49 height=21 bgcolor="#336699"><html:img page="/i/left_end_bottom.gif" height="21" width="49" /></td>
+<TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><html:img page="/i/bottom_middle.gif" height="6" width="100%" /></TD>
+<td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><html:img page="/i/right_end_bottom.gif" height="7" width="5" /></td>
 </TR>
 </TABLE>
