@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ReferenceDocumentTypeDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 
 import java.util.Collections;
@@ -48,6 +49,8 @@ public abstract class AbstractDAOFactory implements PersistenceConstants {
   public abstract ConceptDAO getConceptDAO ();
    
   public abstract ReferenceDocumentDAO getReferenceDocumentDAO ();
+
+  public abstract ReferenceDocumentTypeDAO getReferenceDocumentTypeDAO ();
    
   public static AbstractDAOFactory getDAOFactory(ServiceLocator locator)
     throws DAOCreateException {
