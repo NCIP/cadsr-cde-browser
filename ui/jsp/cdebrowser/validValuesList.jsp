@@ -380,8 +380,9 @@ function listChanged(urlInfo) {
 <%
   ReferenceDocument rd;
   List refDocs = de.getValueDomain().getRefereceDocs();
-  int numberOfDocs = refDocs.size();
-  if (numberOfDocs > 0) {
+  int numberOfDocs;
+  if ((refDocs != null)&& (refDocs.size() > 0)) {
+    numberOfDocs = refDocs.size();
     for (int i=0;i<numberOfDocs; i++) {
       rd = (ReferenceDocument)refDocs.get(i);
 %>
