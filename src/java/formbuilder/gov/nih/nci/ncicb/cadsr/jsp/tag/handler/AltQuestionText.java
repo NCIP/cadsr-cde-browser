@@ -11,7 +11,17 @@ import javax.servlet.jsp.tagext.TagSupport;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import org.apache.commons.beanutils.PropertyUtils;
 
-
+/**
+ * This Handler is used to display Alternate Question text from a Dataelement property
+ * The text is displayed as hyper link if it not equal to Questions longName.
+ * Example Usage
+ *   <cde:questionAltText questionBeanId= "question" 
+ *                 htmlObjectRef="questionInputText"
+ *                 deProperty = "longName"
+ *                 formIndex="0"
+ *                 questionIndex="2" /> 
+ *                             
+ */
 public class AltQuestionText extends TagSupport implements CaDSRConstants,FormConstants
 {
   private String questionBeanId;
@@ -69,7 +79,6 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
     script.append("\n {");
     script.append("\n var objForm"+questionIndex+" = document.forms["+formIndex+"];");
     script.append("\n var objQuestion"+questionIndex+" = objForm"+questionIndex+"['"+htmlObjectRef+"'];");
-    script.append("\n alert(objQuestion"+questionIndex+".value);");
     script.append("\n objQuestion"+questionIndex+".value = \""+propValue+"\";");
     script.append("\n}"); 
     script.append("\n--> </SCRIPT>\n");

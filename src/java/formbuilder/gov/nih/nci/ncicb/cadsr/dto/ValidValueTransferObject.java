@@ -56,6 +56,19 @@ public class ValidValueTransferObject implements ValidValue {
   public Object clone() throws CloneNotSupportedException {
     return null;
   }
-
+  
+ public boolean equals(Object obj)
+ {
+   if(obj == null)
+    return false;
+   if(!(obj instanceof ValidValue))
+    return false;
+   ValidValue vv = (ValidValue)obj;
+   if(getShortMeaningValue().equals(vv.getShortMeaningValue()))
+   {
+     return true;
+   }
+   return false;
+ }
   
 }

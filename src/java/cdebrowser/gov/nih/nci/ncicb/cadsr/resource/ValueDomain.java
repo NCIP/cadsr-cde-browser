@@ -1,7 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.resource;
+import java.io.Serializable;
 import java.util.List;
 
-public interface ValueDomain extends AdminComponent 
+public interface ValueDomain extends AdminComponent , Serializable
 {
    public String getVdIdseq();
    public void setVdIdseq(String aVdIdseq);

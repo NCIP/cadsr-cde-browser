@@ -440,7 +440,7 @@ public class FormModuleEditAction extends FormEditAction {
     Module module = (Module) getSessionObject(request, MODULE);
 
     String addAvailableValidValueIdSeq =
-      (String) moduleEditForm.get(ADD_AVAILABLE_VALID_VALUE_IDSEQ);
+      (String) moduleEditForm.get(ADD_AVAILABLE_VALID_VALUE);
 
     Map availbleValidValues = (Map) getSessionObject(request, AVAILABLE_VALID_VALUES);
     
