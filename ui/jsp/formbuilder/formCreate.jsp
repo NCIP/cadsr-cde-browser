@@ -34,8 +34,7 @@
 <html:form action='<%="/formCreate?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_FORM%>'>
   <%@ include  file="/formbuilder/formCreate_inc.jsp" %>
 </html:form>
-<P>&nbsp;</P>
-<P>&nbsp;</P>
+<%@ include file="/common/common_bottom_border.jsp"%>
 
 </BODY>
 </HTML>

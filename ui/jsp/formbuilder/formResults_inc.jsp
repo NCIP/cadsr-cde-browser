@@ -48,8 +48,10 @@
 			</html:link>  			
                   </td>
 		  <td align=center>
-		       <cde:secureIcon  formId="form" activeImageSource="i/copy.gif" 
-		       		activeUrl='<%="/formToCopyAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_COPY%>' 
+		       <cde:secureIcon  formId="form" 
+            formScope="<%=CaDSRConstants.PAGE_SCOPE%>"
+            activeImageSource="i/copy.gif" 
+		       	activeUrl='<%="/formToCopyAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_COPY%>' 
 		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
 		   	   	urlPrefix="<%=urlPrefix%>"
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
@@ -59,7 +61,9 @@
 		   	   	target="_parent"/>
 		 </td>                  
 		  <td align=center>
-		       <cde:secureIcon  formId="form" activeImageSource="i/edit.gif" 
+		       <cde:secureIcon  formId="form" 
+            formScope="<%=CaDSRConstants.PAGE_SCOPE%>" 
+            activeImageSource="i/edit.gif" 
 		       		activeUrl='<%="/formToEditAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_EDIT%>' 
 		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
 		   	   	urlPrefix="<%=urlPrefix%>"
@@ -70,7 +74,9 @@
 		   	   	target="_parent"/>		            
 		  </td>
 		 <td align=center>
-		       <cde:secureIcon  formId="form" activeImageSource="i/delete.gif" 
+		       <cde:secureIcon  formId="form" 
+           formScope="<%=CaDSRConstants.PAGE_SCOPE%>" 
+           activeImageSource="i/delete.gif" 
 		       		activeUrl='<%="/formHrefDeleteAction.do?"
                          +NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>'
 		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 

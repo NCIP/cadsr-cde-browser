@@ -38,6 +38,7 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
   private String paramId;
   private String paramProperty;
   private String target;
+  private String formScope;
 
   public SecureIconDisplay()
   {
@@ -77,7 +78,17 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
     HttpServletRequest  req;
     JspWriter out;
      try {
-        Form form = (Form)pageContext.getAttribute(formId);
+        Form form = null;
+        if(formScope.equals(CaDSRConstants.SESSION_SCOPE))
+        {
+          form = (Form)pageContext.getSession().getAttribute(formId);
+        }
+        else if(formScope.equals(CaDSRConstants.PAGE_SCOPE))
+        {
+          form = (Form)pageContext.getAttribute(formId);
+        }
+        if(form==null)
+          throw new JspException( "Secure icon: no form object in any scope ");
         String contextId = form.getContext().getConteIdseq();
         NCIUser  nciUser =  (NCIUser)pageContext.getSession().getAttribute(USER_KEY);
         req = ( HttpServletRequest )pageContext.getRequest();
@@ -199,4 +210,17 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
   {
     target = newTarget;
   }
+
+  public String getFormScope()
+  {
+    return formScope;
+  }
+
+  public void setFormScope(String newFormScope)
+  {
+    formScope = newFormScope;
+  }
+
+
+
 }

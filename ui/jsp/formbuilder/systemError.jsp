@@ -61,6 +61,6 @@
         </td>
       </tr>
     </table>
-
+<%@ include file="/common/common_bottom_border.jsp"%>
   </BODY>
 </HTML>

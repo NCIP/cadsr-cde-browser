@@ -66,5 +66,6 @@
       </html:form>
 </logic:present>
 <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
+<%@ include file="/common/common_bottom_border.jsp"%>
 </BODY>
 </HTML>

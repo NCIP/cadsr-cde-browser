@@ -21,6 +21,11 @@
     <rtexprvalue>true</rtexprvalue>
     </attribute>
     <attribute>
+    <name>formScope</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>       
+    <attribute>
     <name>activeImageSource</name>
     <required>true</required>
     <rtexprvalue>true</rtexprvalue>

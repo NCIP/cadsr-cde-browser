@@ -200,5 +200,6 @@
     </logic:present>
     <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
     <%@ include file="/formbuilder/viewButton_inc.jsp"%>
+    <%@ include file="/common/common_bottom_border.jsp"%>
   </BODY>
 </HTML>

@@ -502,5 +502,6 @@ function clearProtocol() {
       </logic:present>
       <%@ include file="/formbuilder/moduleEditButton_inc.jsp"%>
     </html:form>
+    <%@ include file="/common/common_bottom_border.jsp"%>
   </BODY>
 </HTML>

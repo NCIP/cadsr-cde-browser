@@ -44,8 +44,7 @@
    </P>
    
 </html:form>
-<P>&nbsp;</P>
-<P>&nbsp;</P>
+<%@ include file="/common/common_bottom_border.jsp"%>
 
 </BODY>
 </HTML>

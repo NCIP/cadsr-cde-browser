@@ -24,7 +24,7 @@
     </td>
   </tr>
   <tr>
-    <td align="left" class="fieldtitleleft" nowrap>
+    <td align="left" class="OraInlineInfoText" nowrap>
        <logic:present name="nciUser">
         <bean:message key="user.greet" />
     	<bean:write name="nciUser" property="username"  scope="session"/>

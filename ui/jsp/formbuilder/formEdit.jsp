@@ -41,6 +41,7 @@ function clearProtocol() {
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff">
     <% String urlPrefix = "";
+    String startIndex="0";
   String contextPath = request.getContextPath();
   String pageUrl = "&PageId=DataElementsGroup";
   // HSK
@@ -180,7 +181,7 @@ function clearProtocol() {
                 </logic:empty>                        
                 <td align="right" width="25">
                   <html:link action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
-                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="0" >
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
                   </html:link>&nbsp;
                 </td>
@@ -374,5 +375,6 @@ function clearProtocol() {
       </logic:present>
      <%@ include file="/formbuilder/editButton_inc.jsp"%>
     </html:form>
+    <%@ include file="/common/common_bottom_border.jsp"%>
   </BODY>
 </HTML>
