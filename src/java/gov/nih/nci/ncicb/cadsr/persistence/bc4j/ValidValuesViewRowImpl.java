@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.persistence.bc4j;
+import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import oracle.jbo.server.ViewRowImpl;
 import oracle.jbo.server.AttributeDefImpl;
 import oracle.jbo.RowIterator;
@@ -17,6 +18,7 @@ public class ValidValuesViewRowImpl extends ViewRowImpl
   public static final int VDIDSEQ = 4;
   public static final int MEANINGDESCRIPTION = 5;
   public static final int VPIDSEQ = 6;
+  public static final int CONDRIDSEQ = 7;
   /**
    * 
    * This is the default constructor (do not remove)
@@ -117,6 +119,8 @@ public class ValidValuesViewRowImpl extends ViewRowImpl
         return getMeaningDescription();
       case VPIDSEQ:
         return getVpIdseq();
+      case CONDRIDSEQ:
+        return getCondrIdseq();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -129,6 +133,9 @@ public class ValidValuesViewRowImpl extends ViewRowImpl
       {
       case VPIDSEQ:
         setVpIdseq((String)value);
+        return;
+      case CONDRIDSEQ:
+        setCondrIdseq((String)value);
         return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);
@@ -172,5 +179,29 @@ public class ValidValuesViewRowImpl extends ViewRowImpl
     setAttributeInternal(VPIDSEQ, value);
   }
 
+  /**
+   * 
+   *  Gets the attribute value for CONDR_IDSEQ using the alias name CondrIdseq
+   */
+  public String getCondrIdseq()
+  {
+    return (String)getAttributeInternal(CONDRIDSEQ);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as attribute value for CONDR_IDSEQ using the alias name CondrIdseq
+   */
+  public void setCondrIdseq(String value)
+  {
+    setAttributeInternal(CONDRIDSEQ, value);
+  }
+
+  //Custom Method to get Concepts
+  
+  public ConceptDerivationRule getConceptDerivationRule(String cdrIdseq)
+  {
+    return null;
+  }
 
 }

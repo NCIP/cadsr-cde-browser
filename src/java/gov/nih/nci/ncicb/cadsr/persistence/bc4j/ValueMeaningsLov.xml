@@ -112,6 +112,27 @@
          <Attr Name="_DisplaySize" Value="30" />
       </DesignTime>
    </Attribute>
+   <Attribute
+      Name="CondrIdseq"
+      Precision="36"
+      ColumnName="CONDR_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="VALUE_MEANINGS_LOV"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="ConDerivationRulesExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc.ConDerivationRulesExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc.ValueMeaningsLov"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExtImpl" >
+   </AccessorAttribute>
    <AccessorAttribute
       Name="PermissibleValues"
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PvVmvFkAssoc"
@@ -161,6 +182,17 @@
       <DesignTime>
          <Attr Name="_DBObjectName" Value="VMV_PK" />
          <Attr Name="_isPrimary" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VmCondrFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov.CondrIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VM_CONDR_FK" />
+         <Attr Name="_referencedKey" Value="CONDR_PK" />
+         <Attr Name="_isForeign" Value="true" />
       </DesignTime>
    </Key>
 </Entity>

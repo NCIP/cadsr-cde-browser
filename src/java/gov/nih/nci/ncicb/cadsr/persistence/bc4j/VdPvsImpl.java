@@ -19,10 +19,15 @@ public class VdPvsImpl extends EntityImpl
   public static final int CREATEDBY = 5;
   public static final int DATEMODIFIED = 6;
   public static final int MODIFIEDBY = 7;
-  public static final int CONTEXTS = 8;
-  public static final int PERMISSIBLEVALUES = 9;
-  public static final int VALUEDOMAINS = 10;
-  public static final int QUESTCONTENTSEXT = 11;
+  public static final int ORIGIN = 8;
+  public static final int BEGINDATE = 9;
+  public static final int ENDDATE = 10;
+  public static final int CONIDSEQ = 11;
+  public static final int CONTEXTS = 12;
+  public static final int PERMISSIBLEVALUES = 13;
+  public static final int VALUEDOMAINS = 14;
+  public static final int QUESTCONTENTSEXT = 15;
+
 
 
 
@@ -53,6 +58,7 @@ public class VdPvsImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -227,6 +233,14 @@ public class VdPvsImpl extends EntityImpl
         return getDateModified();
       case MODIFIEDBY:
         return getModifiedBy();
+      case ORIGIN:
+        return getOrigin();
+      case BEGINDATE:
+        return getBeginDate();
+      case ENDDATE:
+        return getEndDate();
+      case CONIDSEQ:
+        return getConIdseq();
       case QUESTCONTENTSEXT:
         return getQuestContentsExt();
       case CONTEXTS:
@@ -268,6 +282,18 @@ public class VdPvsImpl extends EntityImpl
         return;
       case MODIFIEDBY:
         setModifiedBy((String)value);
+        return;
+      case ORIGIN:
+        setOrigin((String)value);
+        return;
+      case BEGINDATE:
+        setBeginDate((Date)value);
+        return;
+      case ENDDATE:
+        setEndDate((Date)value);
+        return;
+      case CONIDSEQ:
+        setConIdseq((String)value);
         return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);
@@ -339,6 +365,79 @@ public class VdPvsImpl extends EntityImpl
   public RowIterator getQuestContentsExt()
   {
     return (RowIterator)getAttributeInternal(QUESTCONTENTSEXT);
+  }
+
+
+  /**
+   * 
+   *  Gets the attribute value for Origin, using the alias name Origin
+   */
+  public String getOrigin()
+  {
+    return (String)getAttributeInternal(ORIGIN);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the attribute value for Origin
+   */
+  public void setOrigin(String value)
+  {
+    setAttributeInternal(ORIGIN, value);
+  }
+
+  /**
+   * 
+   *  Gets the attribute value for BeginDate, using the alias name BeginDate
+   */
+  public Date getBeginDate()
+  {
+    return (Date)getAttributeInternal(BEGINDATE);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the attribute value for BeginDate
+   */
+  public void setBeginDate(Date value)
+  {
+    setAttributeInternal(BEGINDATE, value);
+  }
+
+  /**
+   * 
+   *  Gets the attribute value for EndDate, using the alias name EndDate
+   */
+  public Date getEndDate()
+  {
+    return (Date)getAttributeInternal(ENDDATE);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the attribute value for EndDate
+   */
+  public void setEndDate(Date value)
+  {
+    setAttributeInternal(ENDDATE, value);
+  }
+
+  /**
+   * 
+   *  Gets the attribute value for ConIdseq, using the alias name ConIdseq
+   */
+  public String getConIdseq()
+  {
+    return (String)getAttributeInternal(CONIDSEQ);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the attribute value for ConIdseq
+   */
+  public void setConIdseq(String value)
+  {
+    setAttributeInternal(CONIDSEQ, value);
   }
 
   /**

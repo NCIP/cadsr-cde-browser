@@ -17,20 +17,29 @@
 
 <%
   DataElement de = (DataElement)infoBean.getInfo("de");
+  pageContext.setAttribute("de",de);
   DataElementConcept dec = de.getDataElementConcept();
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
   String pageId = infoBean.getPageId();
   String pageName = PageConstants.PAGEID;
   String pageUrl = "&"+pageName+"="+pageId;
-  Float ocVersion = dec.getObjClassVersion();
-  String socVersion;
-  if (ocVersion.floatValue() == 0.00f) socVersion = "";
-  else socVersion = ocVersion.toString();
-
-  Float ptVersion = dec.getPropertyVersion();
-  String sptVersion;
-  if (ptVersion.floatValue() == 0.00f) sptVersion = "";
-  else sptVersion = ptVersion.toString();
+  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  String evsUrlThesaurus = params.getEvsUrlThesaurus();
+  String socVersion="";
+  if(dec.getObjectClass()!=null)
+  {
+    Float ocVersion = dec.getObjectClass().getVersion();
+    if (ocVersion.floatValue() == 0.00f) socVersion = "";
+    else socVersion = ocVersion.toString();
+  }
+  
+  String sptVersion ="";  
+  if(dec.getProperty()!=null)
+  {
+    Float ptVersion = dec.getProperty().getVersion();
+    if (ptVersion.floatValue() == 0.00f) sptVersion = "";
+    else sptVersion = ptVersion.toString();
+  }
 %>
 
 <HTML>
@@ -170,73 +179,203 @@ function goPage(pageInfo) {
     <td class="TableRowPromptText">Conceptual Domain Version:</td>
     <td class="OraFieldText"><%=dec.getCDVersion()%> </td>
  </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Conceptual Domain Concept ID:</td>
-    <td class="OraFieldText">
-    <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
-    </td>
- </tr> 
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Property Public ID:</td>
-    <td class="OraFieldText"><%=dec.getPropertyPublicId()%></td>
- </tr>
- <tr class="OraTabledata"> 
-    <td class="TableRowPromptText">Object Class Preferred Name:</td>
-    <td class="OraFieldText"><%=dec.getObjClassPrefName()%> </td>
- </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Object Class Context:</td>
-    <td class="OraFieldText"><%=dec.getObjClassContextName()%> </td>
- </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Object Class Version:</td>
-    <td class="OraFieldText"><%=socVersion%> </td>
- </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Object Class Concept ID:</td>
-    <td class="OraFieldText">
  
- <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
-    </td>
- </tr> 
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Object Class Qualifier:</td>
-    <td class="OraFieldText"><%=dec.getObjClassQualifier()%> </td>
- </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Property Public ID:</td>
-    <td class="OraFieldText"><%=dec.getPropertyPublicId()%></td>
- </tr>
- <tr class="OraTabledata"> 
-    <td class="TableRowPromptText">Property Preferred Name:</td>
-    <td class="OraFieldText"><%=dec.getPropertyPrefName()%> </td>
- </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Property Context:</td>
-    <td class="OraFieldText"><%=dec.getPropertyContextName()%> </td>
- </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Property Version:</td>
-    <td class="OraFieldText"><%=sptVersion%> </td>
- </tr>
- 
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Property Qualifier:</td>
-    <td class="OraFieldText"><%=dec.getPropertyQualifier()%> </td>
- </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Property Concept ID:</td>
-    <td class="OraFieldText">
-    <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
-    </td>
- </tr>
- 
- <tr class="OraTabledata">
+  <tr class="OraTabledata">
     <td class="TableRowPromptText">Origin:</td>
     <td class="OraFieldText"><%=dec.getOrigin()%> </td>
  </tr>
- 
-</table>
+ </table>
+
+<logic:present name="de" property = "dataElementConcept.objectClass">    
+    <% ObjectClass objClass = dec.getObjectClass(); %>
+
+         <br>
+         <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+          <tr  valign="bottom" >
+           <td class="OraHeaderSubSubSub" width="100%">Object Class</td>
+          </tr>
+         </table>
+         <table valign="top"  width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+         <tr class="OraTabledata">
+            <td class="TableRowPromptText"  width="20%" >Public ID:</td>
+            <td class="OraFieldText"><%=objClass.getPublicId()%></td>
+         </tr>
+         <tr class="OraTabledata"> 
+            <td class="TableRowPromptText"  width="20%" >Preferred Name:</td>
+            <td class="OraFieldText"><%=objClass.getPreferredName()%> </td>
+         </tr>
+         <tr class="OraTabledata">
+            <td class="TableRowPromptText"  width="20%" >Context:</td>
+            <td class="OraFieldText"><%=objClass.getContext().getName()%> </td>
+         </tr>
+         <tr class="OraTabledata">
+            <td class="TableRowPromptText"  width="20%" >Version:</td>
+            <td class="OraFieldText"><%=socVersion%> </td>
+         </tr>
+         <tr class="OraTabledata">
+            <td class="TableRowPromptText"  width="20%" >Qualifier:</td>
+            <td class="OraFieldText"><%=objClass.getQualifier()%> </td>
+         </tr>
+         </table>
+         
+        <logic:present name="de" property = "dataElementConcept.objectClass.conceptDerivationRule">         
+            <% ConceptDerivationRule ocdr = objClass.getConceptDerivationRule(); %>
+               <br>
+              <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                <tr  valign="bottom" >
+                  <td class="OraHeaderSubSubSub" width="100%">Object Class Concept Derivation Rule</td>
+                </tr>
+             </table>
+             <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+               <tr class="OraTabledata">
+                  <td class="TableRowPromptText"  width="20%" >Name:</td>
+                  <td class="OraFieldText"><%=ocdr.getName()%> </td>
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="TableRowPromptText"  width="20%" >Type:</td>
+                  <td class="OraFieldText"><%=ocdr.getType()%> </td>
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="TableRowPromptText"  width="20%">Rule:</td>
+                  <td class="OraFieldText"><%=ocdr.getRule()%> </td>
+               </tr>  
+               <tr class="OraTabledata">
+                  <td class="TableRowPromptText"  width="20%" >Methods:</td>
+                  <td class="OraFieldText"><%=ocdr.getMethods()%> </td>
+               </tr>  
+               <tr class="OraTabledata">
+                  <td class="TableRowPromptText"  width="20%" >Concatenation Character:</td>
+                  <td class="OraFieldText"><%=ocdr.getConcatenationChar()%> </td>
+               </tr>                 
+             </table>
+             
+              <logic:present name="de" property = "dataElementConcept.objectClass.conceptDerivationRule.componentConcepts">                    
+                   <br>
+                  <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                        <tr  valign="bottom" >
+                          <td class="OraHeaderSubSubSub" width="100%">Object Class Component Concepts</td>
+                        </tr>
+                     </table>
+                    <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                        <tr class="OraTabledata">
+                          <td class="OraTableColumnHeader">Concept Name</td>
+                          <td class="OraTableColumnHeader">Concept Code</td>
+                          <td class="OraTableColumnHeader">Public ID</td>                          
+                          <td class="OraTableColumnHeader">Definition Source</td>
+                          <td class="OraTableColumnHeader">EVS Source</td>                      
+                        </tr>   
+                       <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.resource.ComponentConcept" property="dataElementConcept.objectClass.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
+                        <tr class="OraTabledata">
+                           <td class="OraFieldText"><%=comp.getConcept().getLongName()%> </td>
+                           <td class="OraFieldText">
+                                <a class="link" TARGET="_blank"  href="<%=evsUrlThesaurus+"code="+comp.getConcept().getCode()%>">
+                                   <%=comp.getConcept().getCode()%>
+                                 </a>
+                           </td>
+                           <td class="OraFieldText"><%=comp.getConcept().getPublicId()%> </td> 
+                           <td class="OraFieldText"><%=comp.getConcept().getDefinitionSource()%> </td> 
+                           <td class="OraFieldText"><%=comp.getConcept().getEvsSource()%> </td>
+                        </tr>
+                       </logic:iterate>
+                    </table>                      
+             </logic:present>
+      </logic:present>
+ </logic:present>
+
+ <logic:present name="de" property = "dataElementConcept.property">    
+     <% Property prop = dec.getProperty(); %>
+         <br>
+         <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+          <tr  valign="bottom" >
+           <td class="OraHeaderSubSubSub" width="100%">Property</td>
+          </tr>
+         </table>
+          <table valign="top"  width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+             <td class="TableRowPromptText"  width="20%" >Public ID:</td>
+             <td class="OraFieldText"><%=prop.getPublicId()%></td>
+          </tr>
+          <tr class="OraTabledata"> 
+             <td class="TableRowPromptText"  width="20%" >Preferred Name:</td>
+             <td class="OraFieldText"><%=prop.getPreferredName()%> </td>
+          </tr>
+          <tr class="OraTabledata">
+             <td class="TableRowPromptText"  width="20%" >Context:</td>
+             <td class="OraFieldText"><%=prop.getContext().getName()%> </td>
+          </tr>
+          <tr class="OraTabledata">
+             <td class="TableRowPromptText"  width="20%" >Version:</td>
+             <td class="OraFieldText"><%=sptVersion%> </td>
+          </tr>
+          <tr class="OraTabledata">
+             <td class="TableRowPromptText"  width="20%" >Qualifier:</td>
+             <td class="OraFieldText"><%=prop.getQualifier()%> </td>
+          </tr>
+          </table>
+          
+         <logic:present name="de" property = "dataElementConcept.property.conceptDerivationRule">         
+             <% ConceptDerivationRule ocdr = prop.getConceptDerivationRule(); %>
+                <br>
+               <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                 <tr  valign="bottom" >
+                   <td class="OraHeaderSubSubSub" width="100%">Property Concept Derivation Rule</td>
+                 </tr>
+              </table>
+              <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                <tr class="OraTabledata">
+                   <td class="TableRowPromptText"  width="20%" >Name:</td>
+                   <td class="OraFieldText"><%=ocdr.getName()%> </td>
+                </tr>
+                <tr class="OraTabledata">
+                   <td class="TableRowPromptText"  width="20%" >Type:</td>
+                   <td class="OraFieldText"><%=ocdr.getType()%> </td>
+                </tr>
+                <tr class="OraTabledata">
+                   <td class="TableRowPromptText"  width="20%">Rule:</td>
+                   <td class="OraFieldText"><%=ocdr.getRule()%> </td>
+                </tr>  
+                <tr class="OraTabledata">
+                   <td class="TableRowPromptText"  width="20%" >Methods:</td>
+                   <td class="OraFieldText"><%=ocdr.getMethods()%> </td>
+                </tr>  
+                <tr class="OraTabledata">
+                   <td class="TableRowPromptText"  width="20%" >Concatenation Character:</td>
+                   <td class="OraFieldText"><%=ocdr.getConcatenationChar()%> </td>
+                </tr>                 
+              </table>
+              
+               <logic:present name="de" property = "dataElementConcept.property.conceptDerivationRule.componentConcepts">                    
+                    <br>
+                   <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                         <tr  valign="bottom" >
+                           <td class="OraHeaderSubSubSub" width="100%">Property Component Concepts</td>
+                         </tr>
+                      </table>
+                     <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                         <tr class="OraTabledata">
+                           <td class="OraTableColumnHeader">Concept Name</td>
+                           <td class="OraTableColumnHeader">Concept Code</td>
+                           <td class="OraTableColumnHeader">Public ID</td>                          
+                           <td class="OraTableColumnHeader">Definition Source</td>
+                           <td class="OraTableColumnHeader">EVS Source</td>                      
+                         </tr>   
+                        <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.resource.ComponentConcept" property="dataElementConcept.objectClass.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
+                         <tr class="OraTabledata">
+                            <td class="OraFieldText"><%=comp.getConcept().getLongName()%> </td>
+                            <td class="OraFieldText">
+                                 <a class="link" TARGET="_blank"  href="<%=evsUrlThesaurus+"code="+comp.getConcept().getCode()%>">
+                                    <%=comp.getConcept().getCode()%>
+                                  </a>
+                            </td>
+                            <td class="OraFieldText"><%=comp.getConcept().getPublicId()%> </td> 
+                            <td class="OraFieldText"><%=comp.getConcept().getDefinitionSource()%> </td> 
+                            <td class="OraFieldText"><%=comp.getConcept().getEvsSource()%> </td>
+                         </tr>
+                        </logic:iterate>
+                     </table>                      
+              </logic:present>
+       </logic:present>
+ </logic:present>
 </form>
 
 <%@ include file="../common/common_bottom_border.jsp"%>

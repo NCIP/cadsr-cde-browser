@@ -729,4 +729,59 @@
       FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VDRepViewLink"
       ObjectType="ViewLink" >
    </Containee>
+   <Containee
+      Name="ConceptsExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConceptsExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="RepCetFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCetFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ConCotFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConCotFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ComponentConceptsExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ComponentConceptsExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="CctCetFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CctCetFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="CompConceptsViewObj"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CompConceptsViewObj"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ConDerivationRulesExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="CctCondrFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CctCondrFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="VmCondrFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="RepCondrFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCondrFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="VdCondrFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc"
+      ObjectType="Association" >
+   </Containee>
 </JboPackage>

@@ -24,6 +24,7 @@ public interface PersistenceConstants {
   public static final String JDBC_CDE_CART_DAO = "jdbcCDECartDAO";
   public static final String JDBC_VALUE_DOMAIN_DAO = "jdbcValueDomainDAO";
   public static final String JDBC_DERIVED_DATA_ELEMENT_DAO = "jdbcDerivedDataElementDAO";
+  public static final String JDBC_CONCEPT_DAO = "jdbcConceptDAO";  
 
   public static final String FORM_ADMIN_COMPONENT_TYPE="QUEST_CONTENT";
   

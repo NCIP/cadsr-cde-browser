@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DAOCreateException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DerivedDataElementDAO;
@@ -185,7 +186,7 @@ public class JDBCDAOFactory extends AbstractDAOFactory
 
     return myDAO;
   }
-  
+
   public ValueDomainDAO getValueDomainDAO () {
     ValueDomainDAO myDAO =
       (JDBCValueDomainDAO) daoCache.get(JDBC_VALUE_DOMAIN_DAO);
@@ -197,7 +198,7 @@ public class JDBCDAOFactory extends AbstractDAOFactory
 
     return myDAO;
   }
-  
+
   public DerivedDataElementDAO getDerivedDataElementDAO () {
     DerivedDataElementDAO myDAO =
       (DerivedDataElementDAO) daoCache.get(JDBC_DERIVED_DATA_ELEMENT_DAO);
@@ -206,10 +207,22 @@ public class JDBCDAOFactory extends AbstractDAOFactory
       myDAO = new JDBCDerivedDataElementDAO(serviceLocator);
       daoCache.put(JDBC_DERIVED_DATA_ELEMENT_DAO, myDAO);
     }
+    
+    return myDAO;
+  }
+
+  public ConceptDAO getConceptDAO () {
+    ConceptDAO myDAO =
+      (ConceptDAO) daoCache.get(JDBC_CONCEPT_DAO);
+
+    if (myDAO == null) {
+      myDAO = new JDBCConceptDAO(serviceLocator);
+      daoCache.put(JDBC_CONCEPT_DAO, myDAO);
+    }
 
     return myDAO;
   }
-  
+
   public static void main(String[] args) {
     /**
      * JDBCDAOFactory factory = (JDBCDAOFactory)new

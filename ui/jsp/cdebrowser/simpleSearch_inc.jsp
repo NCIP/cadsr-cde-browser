@@ -1,5 +1,14 @@
 
+<%
+String  basicSearchType = desb.getBasicSearchType();
+String  basicSearchTypeName ="selected";
+String  basicSearchTypePublicId="";
+if(basicSearchType.equalsIgnoreCase("publicId"))
+{
+  basicSearchTypePublicId="selected";
+}
 
+%>
 <INPUT TYPE="HIDDEN" NAME="jspSearchIn" VALUE="ALL">
 <INPUT TYPE="HIDDEN" NAME="jspLatestVersion" VALUE="Yes">
 <INPUT TYPE="HIDDEN" NAME="contextUse" VALUE="both">
@@ -11,7 +20,7 @@
 <table width="100%" >
  
  <tr align="left">
-    <td class="OraHeaderSubSub" width="60%" align="left" nowrap>Search for DataElements</td>
+    <td class="OraHeaderSubSub" width="60%" align="left" nowrap>Search for Data Elements</td>
      <td align="right" class="MessageText"  width="20%" nowrap><b>
    <%
    if (deList!=null&&deList.size()==0)
@@ -52,26 +61,36 @@
   </tr>
 </table>
 
- <table align="center" width="60%" border="0" cellpadding="0" cellspacing="1" class="OraBGAccentVeryDark" border="0" >
+ <table align="center" width="80%" border="0" cellpadding="0" cellspacing="1"  border="0" >
  <tr>
-    <td class="OraTabledata"  align="center" nowrap >
+    <td   width="60%" align="center" nowrap >
       <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" size ="65"> 
     </td>
-
- </tr>
- <tr>
-    <td class="OraTabledata"  align="left" nowrap >
-      <table width="30%" border="0" >
-       <tr>
-         <td  nowrap>&nbsp;</td>
-         <td class="OraTableColumnHeaderNoBG" nowrap>Search by public ID </td>
-         <td class="OraTabledata"  nowrap>
-            <input type="checkbox" name="jspPublicIdInd" value="checked" <%=desb.getPublicIdInd()%> size ="60"> 
-         </td>
-       </tr>
-      </table>
+    <td   width="20%" align="left" nowrap >
+      <select  name="jspBasicSearchType" class="Dropdown" name="contextIdSeq" >
+        <option value="name" <%=basicSearchTypeName%> >Name</option> 
+        <option value="publicId" <%=basicSearchTypePublicId%> >Public ID</option> 
+      </select>
     </td>
- </tr> 
+ </tr>
+ </table>
+ 
+ 
+ <table align="center" valign="top"  width="78%" >
+    <tr valign="top"  >
+      <td width="60%" valign="top" align="left" class="AbbreviatedText">Tip: The wildcard character is *.</td>
+      <td  width="20%" nowrap>&nbsp;</td>
+     </tr>
+    
+    <tr>
+      <td  align="left" nowrap >
+        <table  border="0" >
+         <tr>
+           <td  colspan=2 nowrap>&nbsp;</td>
+         </tr>
+        </table>
+      </td>
+    </tr> 
  </table>
  
 <br>

@@ -12,6 +12,8 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants " %>
 <%@page import="java.util.List " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils" %>
+
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 
@@ -19,14 +21,17 @@
 
 <%
   DataElement de = (DataElement)infoBean.getInfo("de");
+  pageContext.setAttribute("de",de);  
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
   ValueDomain vd = de.getValueDomain();
+ 
   String pageId = infoBean.getPageId();
   String pageName = PageConstants.PAGEID;
   String pageUrl = "&"+pageName+"="+pageId;
   HTMLPageScroller scroller = (HTMLPageScroller)
                 infoBean.getInfo(ProcessConstants.VALID_VALUES_PAGE_SCROLLER);
-  
+  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  String evsUrlThesaurus = params.getEvsUrlThesaurus();
 %>
 
 <HTML>
@@ -146,11 +151,6 @@ function listChanged(urlInfo) {
     <td class="OraFieldText"><%=vd.getVersion()%> </td>
  </tr>
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Concept ID:</td>
-    <td class="OraFieldText"><a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
-    </td>
- </tr> 
- <tr class="OraTabledata">
     <td class="TableRowPromptText">Datatype:</td>
     <td class="OraFieldText"><%=vd.getDatatype()%></td>
  </tr>
@@ -187,6 +187,10 @@ function listChanged(urlInfo) {
     <td class="OraFieldText"><%=vd.getVDType()%></td>
  </tr>
  
+  <tr class="OraTabledata">
+    <td class="TableRowPromptText">Conceptual Domain Public ID:</td>
+    <td class="OraFieldText"><%=vd.getCDPublicId()%> </td>
+ </tr>
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Conceptual Domain Preferred Name:</td>
     <td class="OraFieldText"><%=vd.getCDPrefName()%> </td>
@@ -199,19 +203,77 @@ function listChanged(urlInfo) {
     <td class="TableRowPromptText">Conceptual Domain Version:</td>
     <td class="OraFieldText"><%=vd.getCDVersion()%> </td>
  </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Conceptual Domain Concept ID:</td>
-    <td class="OraFieldText">
-    <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
-    </td>
- </tr>  
+ 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Origin:</td>
     <td class="OraFieldText"><%=vd.getOrigin()%> </td>
  </tr>
-  
 </table>
+        <logic:present name="de" property = "valueDomain.conceptDerivationRule"> 
 
+            <% ConceptDerivationRule ocdr = vd.getConceptDerivationRule(); %>
+               <br>
+              <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                <tr  valign="bottom" >
+                  <td class="OraHeaderSubSubSub" width="100%">Value Domain Concept Derivation Rule</td>
+                </tr>
+             </table>
+             <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+               <tr class="OraTabledata">
+                  <td class="TableRowPromptText"  width="20%" >Name:</td>
+                  <td class="OraFieldText"><%=ocdr.getName()%> </td>
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="TableRowPromptText"  width="20%" >Type:</td>
+                  <td class="OraFieldText"><%=ocdr.getType()%> </td>
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="TableRowPromptText"  width="20%">Rule:</td>
+                  <td class="OraFieldText"><%=ocdr.getRule()%> </td>
+               </tr>  
+               <tr class="OraTabledata">
+                  <td class="TableRowPromptText"  width="20%" >Methods:</td>
+                  <td class="OraFieldText"><%=ocdr.getMethods()%> </td>
+               </tr>  
+               <tr class="OraTabledata">
+                  <td class="TableRowPromptText"  width="20%" >Concatenation Character:</td>
+                  <td class="OraFieldText"><%=ocdr.getConcatenationChar()%> </td>
+               </tr>                 
+             </table>
+             
+              <logic:present name="de" property = "valueDomain.conceptDerivationRule.componentConcepts">                    
+                   <br>
+                  <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                        <tr  valign="bottom" >
+                          <td class="OraHeaderSubSubSub" width="100%">Value Domain Component Concepts</td>
+                        </tr>
+                     </table>
+                    <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                        <tr class="OraTabledata">
+                          <td class="OraTableColumnHeader">Concept Name</td>
+                          <td class="OraTableColumnHeader">Concept Code</td>
+                          <td class="OraTableColumnHeader">Public ID</td>                          
+                          <td class="OraTableColumnHeader">Definition Source</td>
+                          <td class="OraTableColumnHeader">EVS Source</td>                      
+                        </tr>   
+                       <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.resource.ComponentConcept" property="valueDomain.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
+                        <tr class="OraTabledata">
+                           <td class="OraFieldText"><%=comp.getConcept().getLongName()%> </td>
+                           <td class="OraFieldText">
+                                <a class="link" TARGET="_blank"  href="<%=evsUrlThesaurus+"code="+comp.getConcept().getCode()%>">
+                                   <%=comp.getConcept().getCode()%>
+                                 </a>
+                           </td>
+                           <td class="OraFieldText"><%=comp.getConcept().getPublicId()%> </td> 
+                           <td class="OraFieldText"><%=comp.getConcept().getDefinitionSource()%> </td> 
+                           <td class="OraFieldText"><%=comp.getConcept().getEvsSource()%> </td>
+                        </tr>
+                       </logic:iterate>
+                    </table>                      
+             </logic:present>
+      </logic:present>
+
+ 
 <br>
 <table cellpadding="0" cellspacing="0" width="80%" align="center" >
   <tr>
@@ -242,7 +304,7 @@ function listChanged(urlInfo) {
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader">Value</th>
     <th class="OraTableColumnHeader">Value Meaning</th>
-    <th class="OraTableColumnHeader">Value Meaning Concept ID</th>
+    <th class="OraTableColumnHeader">Value Meaning Concept Codes</th>
     <th class="OraTableColumnHeader">Value Meaning Description</th>
   </tr>
 <%
@@ -254,9 +316,9 @@ function listChanged(urlInfo) {
       <tr class="OraTabledata">
         <td class="OraFieldText"><%=validValue.getShortMeaningValue()%> </td>
         <td class="OraFieldText"><%=validValue.getShortMeaning()%> </td>
-        <td class="OraFieldText">
-          <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
-        </td> 
+       <td class="OraFieldText">
+          <%=CDEDetailsUtils.getConceptCodes(validValue.getConceptDerivationRule(),evsUrlThesaurus,"link",",")%>
+       </td>
         <td class="OraFieldText"><%=validValue.getDescription()%> </td>        
       </tr>
 <%
@@ -265,7 +327,7 @@ function listChanged(urlInfo) {
   else {
 %>
        <tr class="OraTabledata">
-         <td colspan="3">There are no permissible values for the selected CDE.</td>
+         <td colspan="4">There are no permissible values for the selected CDE.</td>
        </tr>
 <%
   }

@@ -1,6 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.resource.DataElementConcept;
+import gov.nih.nci.ncicb.cadsr.resource.ObjectClass;
+import gov.nih.nci.ncicb.cadsr.resource.Property;
 
 
 public class DataElementConceptTransferObject
@@ -24,9 +26,11 @@ public class DataElementConceptTransferObject
 	protected String cdPrefName;
 	protected String cdContextName;
 	protected Float cdVersion;
-  protected String cDPublicId;
+  protected int cdPublicId;
   protected String objClassPublicId;
   protected String propertyPublicId;
+  protected Property property;
+  protected ObjectClass objectClass;
   
   
   public DataElementConceptTransferObject() {
@@ -122,15 +126,15 @@ public class DataElementConceptTransferObject
 		return cdVersion;
 	}
 
-  public void setCDPublicId(String cDPublicID)
+  public void setCDPublicId(int cDPublicID)
   {
-    this.cDPublicId = cDPublicID;
+    this.cdPublicId = cDPublicID;
   }
 
 
-  public String getCDPublicId()
+  public int getCDPublicId()
   {
-    return cDPublicId;
+    return cdPublicId;
   }
 
 
@@ -157,5 +161,21 @@ public class DataElementConceptTransferObject
     return propertyPublicId;
   }
 
-
+   public Property getProperty()
+   {
+     return property;
+   }
+   public void setProperty(Property newProperty)
+   {
+     property=newProperty;
+   }
+   
+   public ObjectClass getObjectClass()
+   {
+     return objectClass;
+   }
+   public void setObjectClass(ObjectClass newObjectClass)
+   {
+     objectClass= newObjectClass;
+   }
 }

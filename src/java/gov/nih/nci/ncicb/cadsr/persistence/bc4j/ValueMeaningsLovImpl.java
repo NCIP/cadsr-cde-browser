@@ -20,7 +20,12 @@ public class ValueMeaningsLovImpl extends EntityImpl
   public static final int CREATEDBY = 6;
   public static final int DATEMODIFIED = 7;
   public static final int MODIFIEDBY = 8;
-  public static final int PERMISSIBLEVALUES = 9;
+  public static final int CONDRIDSEQ = 9;
+  public static final int CONDERIVATIONRULESEXT = 10;
+  public static final int PERMISSIBLEVALUES = 11;
+
+
+
 
 
 
@@ -47,6 +52,9 @@ public class ValueMeaningsLovImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
+
+
 
 
 
@@ -237,8 +245,12 @@ public class ValueMeaningsLovImpl extends EntityImpl
         return getDateModified();
       case MODIFIEDBY:
         return getModifiedBy();
+      case CONDRIDSEQ:
+        return getCondrIdseq();
       case PERMISSIBLEVALUES:
         return getPermissibleValues();
+      case CONDERIVATIONRULESEXT:
+        return getConDerivationRulesExt();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -276,6 +288,9 @@ public class ValueMeaningsLovImpl extends EntityImpl
       case MODIFIEDBY:
         setModifiedBy((String)value);
         return;
+      case CONDRIDSEQ:
+        setCondrIdseq((String)value);
+        return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);
         return;
@@ -293,6 +308,44 @@ public class ValueMeaningsLovImpl extends EntityImpl
     return (RowIterator)getAttributeInternal(PERMISSIBLEVALUES);
   }
 
+
+  /**
+   * 
+   *  Gets the attribute value for CondrIdseq, using the alias name CondrIdseq
+   */
+  public String getCondrIdseq()
+  {
+    return (String)getAttributeInternal(CONDRIDSEQ);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the attribute value for CondrIdseq
+   */
+  public void setCondrIdseq(String value)
+  {
+    setAttributeInternal(CONDRIDSEQ, value);
+  }
+
+
+  /**
+   * 
+   *  Gets the associated entity ConDerivationRulesExtImpl
+   */
+  public ConDerivationRulesExtImpl getConDerivationRulesExt()
+  {
+    return (ConDerivationRulesExtImpl)getAttributeInternal(CONDERIVATIONRULESEXT);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the associated entity ConDerivationRulesExtImpl
+   */
+  public void setConDerivationRulesExt(ConDerivationRulesExtImpl value)
+  {
+    setAttributeInternal(CONDERIVATIONRULESEXT, value);
+  }
+
   /**
    * 
    *  Creates a Key object based on given key constituents
@@ -301,6 +354,7 @@ public class ValueMeaningsLovImpl extends EntityImpl
   {
     return new Key(new Object[] {shortMeaning});
   }
+
 
 
 

@@ -48,7 +48,8 @@ ValueDomains.PREFERRED_NAME,
        ValueDomains.ORIGIN, 
        ValueDomains.VD_ID, 
    
-    ValueDomains.REP_IDSEQ"
+    ValueDomains.REP_IDSEQ, 
+       ValueDomains.CONDR_IDSEQ"
    FromList="VALUE_DOMAINS ValueDomains"
    BindingStyle="Oracle"
    CustomQuery="false"
@@ -300,6 +301,13 @@ ValueDomains.PREFERRED_NAME,
       EntityAttrName="RepIdseq"
       EntityUsage="ValueDomains"
       AliasName="REP_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CondrIdseq"
+      PrecisionRule="true"
+      EntityAttrName="CondrIdseq"
+      EntityUsage="ValueDomains"
+      AliasName="CONDR_IDSEQ" >
    </ViewAttribute>
    <ViewLinkAccessor
       Name="ConceptualDomainsRow"

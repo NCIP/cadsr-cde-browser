@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.base.process.*;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DerivedDataElementDAO;
@@ -77,7 +78,7 @@ public class GetDataElementDerivation extends BasePersistingProcess {
       dde = (DerivedDataElement)getInfoObject ("derivedDe");
       if (dde == null) {
          ServiceLocator locator = 
-         ServiceLocatorFactory.getLocator("gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl");
+         ServiceLocatorFactory.getLocator(CaDSRConstants.CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
          AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
          DerivedDataElementDAO ddeDAO = daoFactory.getDerivedDataElementDAO();
          dde = ddeDAO.findDerivedDataElement(de.getIdseq());

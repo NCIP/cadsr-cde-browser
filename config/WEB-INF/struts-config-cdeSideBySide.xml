@@ -16,8 +16,8 @@
       type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CompareCDEAction"
       validate="false">
       <forward name="success" path="/cdebrowser/compareCDEs.jsp"/>
-      <forward name="failure" path="/cdebrowser/dataElementsSearch.jsp"/>    
-      <forward name="lessThanTwo" path="/cdeBrowse.jsp?PageId=DataElementsGroup"/>    
+      <forward name="search" path="/cdebrowser/dataElementsSearch.jsp"/>    
+      <forward name="failure" path="/cdebrowser/cdeCompareFailure.jsp"/> 
     </action>
     
     <action name="compareCDEForm" path="/cdebrowser/CDECompareExcelDownload" parameter="method"
@@ -48,7 +48,7 @@
       validate="false">      
       <forward name="success" path="/cdebrowser/compareCDEs.jsp"/>
       <forward name="failure" path="/cdebrowser/compareCDEs.jsp"/> 
-      <forward name="lessThanTwo" path="/cdebrowser/cdeCompareInsufficientCount.jsp"/> 
+      <forward name="lessThanTwo" path="/cdebrowser/cdeCompareFailure.jsp"/> 
     </action>    
  
      <action name="compareCDEForm" path="/cdebrowser/doneCompareListAction" parameter="method"

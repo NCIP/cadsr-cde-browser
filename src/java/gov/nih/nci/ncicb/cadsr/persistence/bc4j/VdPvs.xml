@@ -121,6 +121,54 @@
          <Attr Name="_DisplaySize" Value="30" />
       </DesignTime>
    </Attribute>
+   <Attribute
+      Name="Origin"
+      Precision="240"
+      ColumnName="ORIGIN"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VD_PVS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="BeginDate"
+      ColumnName="BEGIN_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="TIMESTAMP"
+      TableName="VD_PVS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="EndDate"
+      ColumnName="END_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="TIMESTAMP"
+      TableName="VD_PVS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ConIdseq"
+      Precision="36"
+      ColumnName="CON_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="VD_PVS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
    <AccessorAttribute
       Name="Contexts"
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpConteFkAssoc"

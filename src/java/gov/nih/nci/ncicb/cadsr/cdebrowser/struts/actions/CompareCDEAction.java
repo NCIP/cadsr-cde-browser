@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.5 2004-12-10 03:53:21 kakkodis Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.6 2004-12-18 06:41:19 kakkodis Exp $
  */
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
@@ -15,12 +15,16 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserNavigationConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormBuilderBaseDispatchAction;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DerivedDataElementDAO;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 
 import gov.nih.nci.ncicb.cadsr.resource.Classification;
+import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.DerivedDataElement;
+import gov.nih.nci.ncicb.cadsr.resource.ObjectClass;
+import gov.nih.nci.ncicb.cadsr.resource.Property;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.handler.ClassificationHandler;
 import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
@@ -83,24 +87,19 @@ public class CompareCDEAction extends BrowserBaseDispatchAction {
     }
     if(cdeIdseqArr!=null)
     {
-      if(!cdeList.add(cdeIdseqArr))
-      {
-        //saveError("cadsr.cdebrowser.cdecompare.list.lessthantwo", request);
-        if(cdeList.getCdeList().size()<2)
-          return mapping.findForward("lessThanTwo");  
-      }
+      cdeList.add(cdeIdseqArr);
     }
     if(cdeList.getCdeList().size()==0)
     {
 
       saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
-      return mapping.findForward(FAILURE);  
+      return mapping.findForward("search");  
     }      
     if(cdeList.getCdeList().size()<2)
     {
 
       saveError("cadsr.cdebrowser.cdecompare.list.oneelement", request);
-      return mapping.findForward(FAILURE);  
+      return mapping.findForward("search");  
     }    
 
     ListIterator it = cdeList.listIterator();
@@ -333,14 +332,40 @@ public class CompareCDEAction extends BrowserBaseDispatchAction {
  {
        DataElementHandler dh = (DataElementHandler) HandlerFactory.getHandler(DataElement.class);
        de = (DataElement) dh.findObject(de.getDeIdseq(), sessionId);
+      ServiceLocator locator = 
+      ServiceLocatorFactory.getLocator(CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
+      AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
+      ConceptDAO conDAO = daoFactory.getConceptDAO();
        if(de!=null)
        {
+
+      Property prop = de.getDataElementConcept().getProperty();
+      if(prop!=null)
+      {
+        ConceptDerivationRule propRule = conDAO.getPropertyConceptDerivationRuleForDEC(de.getDataElementConcept().getDecIdseq());
+        de.getDataElementConcept().getProperty().setConceptDerivationRule(propRule);
+      }
+
+      ObjectClass objClass = de.getDataElementConcept().getObjectClass();
+      if(objClass!=null)
+      {
+        ConceptDerivationRule classRule = conDAO.getObjectClassConceptDerivationRuleForDEC(de.getDataElementConcept().getDecIdseq());
+        de.getDataElementConcept().getObjectClass().setConceptDerivationRule(classRule);
+      }  
+      
         ValidValueHandler validValueHandler =
             (ValidValueHandler)HandlerFactory.getHandler(ValidValue.class);
         List vvList = validValueHandler.getValidValues(de.getVdIdseq()
                                                    ,sessionId);
+        
+        if(vvList!=null&&!vvList.isEmpty())
+        {
+          vvList = conDAO.populateConceptsForValidValues(vvList);
+        }
         de.getValueDomain().setValidValues(vvList);   
+        
        }
+       
        
 
       ClassificationHandler classificationHandler =
@@ -349,9 +374,7 @@ public class CompareCDEAction extends BrowserBaseDispatchAction {
                               de.getDeIdseq(),sessionId);
       de.setClassifications(classificationSchemes);
        
-      ServiceLocator locator = 
-      ServiceLocatorFactory.getLocator("gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl");
-      AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
+
       DerivedDataElementDAO ddeDAO = daoFactory.getDerivedDataElementDAO();
       DerivedDataElement dde = ddeDAO.findDerivedDataElement(de.getDeIdseq());
       de.setDerivedDataElement(dde);

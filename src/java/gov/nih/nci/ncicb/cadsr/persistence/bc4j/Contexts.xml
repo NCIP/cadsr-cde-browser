@@ -247,6 +247,22 @@
       Type="oracle.jbo.RowIterator"
       IsUpdateable="false" >
    </AccessorAttribute>
+   <AccessorAttribute
+      Name="Representation"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCotFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCotFkAssoc.Representation"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCotFkAssoc.Contexts"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ConceptsExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConCotFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConCotFkAssoc.ConceptsExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConCotFkAssoc.Contexts"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
    <Key
       Name="ContePk" >
       <AttrArray Name="Attributes">

@@ -1,7 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.dto.bc4j;
 
+import gov.nih.nci.ncicb.cadsr.dto.ConceptDerivationRuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.RepresentationTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepresentationViewObjRowImpl;
+import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.resource.Representation;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import java.util.List;
@@ -28,9 +30,13 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 	protected String cdPrefName;
 	protected String cdContextName;
 	protected Float cdVersion;
+  protected int cdPublicId;
 	protected String vdType;
   protected List validValues;
   protected Representation representation;
+  protected ConceptDerivationRule conceptDerivationRule;
+  
+  
 
 	public BC4JValueDomainTransferObject() {
     idseq = vdIdseq;
@@ -64,6 +70,15 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 		cdPrefName = vdViewRowImpl.getCDPrefName();
 		cdContextName = vdViewRowImpl.getCDContextName();
 		cdVersion = new Float(vdViewRowImpl.getCDVersion().floatValue());
+    cdPublicId = vdViewRowImpl.getCDPublicId().intValue();
+    
+    String cdrIdseq = vdViewRowImpl.getCondrIdseq();
+    if(cdrIdseq!=null)
+    {
+      conceptDerivationRule  = new ConceptDerivationRuleTransferObject();
+      conceptDerivationRule.setIdseq(cdrIdseq);
+    }
+    
     if (vdViewRowImpl.getVdId() != null)
       publicId = vdViewRowImpl.getVdId().intValue();
     origin = checkForNull(vdViewRowImpl.getOrigin());
@@ -190,5 +205,25 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
    {
      representation=newRepresentation;
    }
-   
+ 
+   public ConceptDerivationRule getConceptDerivationRule()
+   {
+     return conceptDerivationRule;
+   }
+   public void setConceptDerivationRule(ConceptDerivationRule rule)
+   {
+     conceptDerivationRule = rule;
+   }
+
+
+  public void setCDPublicId(int cdPublicId)
+  {
+    this.cdPublicId = cdPublicId;
+  }
+
+
+  public int getCDPublicId()
+  {
+    return cdPublicId;
+  }
 }

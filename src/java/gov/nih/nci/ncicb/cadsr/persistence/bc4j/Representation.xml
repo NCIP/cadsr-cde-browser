@@ -290,6 +290,20 @@
       Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsImpl" >
    </AccessorAttribute>
    <AccessorAttribute
+      Name="ConceptsExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCetFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCetFkAssoc.ConceptsExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCetFkAssoc.Representation"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConceptsExtImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ConDerivationRulesExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCondrFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCondrFkAssoc.ConDerivationRulesExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCondrFkAssoc.Representation"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExtImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
       Name="ValueDomains"
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc"
       AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc.ValueDomains"

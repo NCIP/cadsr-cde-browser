@@ -36,6 +36,7 @@ public interface ValueDomain extends AdminComponent , Serializable
 
    public String getCDContextName();
    public String getCDPrefName();
+   public int getCDPublicId();
    public Float getCDVersion();
 
    public String getVDType();
@@ -46,5 +47,8 @@ public interface ValueDomain extends AdminComponent , Serializable
    
    public Representation getRepresentation();
    public void setRepresentation(Representation rep);
+   
+   public ConceptDerivationRule getConceptDerivationRule();
+   public void setConceptDerivationRule(ConceptDerivationRule rule);
    
 }

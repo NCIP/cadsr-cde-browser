@@ -1,10 +1,17 @@
 package gov.nih.nci.ncicb.cadsr.dto.bc4j;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ObjectClassTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.PropertyTransferObject;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.DataElementConcept;
+import gov.nih.nci.ncicb.cadsr.resource.ObjectClass;
+import gov.nih.nci.ncicb.cadsr.resource.Property;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.io.Serializable;
 import gov.nih.nci.ncicb.cadsr.dto.base.AdminComponentTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementConceptsViewRowImpl;
+import oracle.jbo.domain.Number;
 
 public class BC4JDataElementConceptTransferObject extends AdminComponentTransferObject
 	                    implements DataElementConcept,Serializable {
@@ -29,9 +36,10 @@ public class BC4JDataElementConceptTransferObject extends AdminComponentTransfer
   protected int cdPublicId;
   protected int ocPublicId;
   protected int propPublicId;
-  protected String cDPublicId;
   protected String objClassPublicId;
   protected String propertyPublicId;
+  protected Property property;
+  protected ObjectClass objectClass;
 
 
 	public BC4JDataElementConceptTransferObject() {
@@ -45,12 +53,8 @@ public class BC4JDataElementConceptTransferObject extends AdminComponentTransfer
 		decIdseq = dataElementConceptsViewRowImpl.getDecIdseq();
     idseq = decIdseq;
 		cdIdseq = dataElementConceptsViewRowImpl.getCdIdseq();
-		proplName = checkForNull(dataElementConceptsViewRowImpl.getProplName());
-		oclName = checkForNull(dataElementConceptsViewRowImpl.getOclName());
-		objClassQualifier =
-			checkForNull(dataElementConceptsViewRowImpl.getObjClassQualifier());
-		propertyQualifier =
-			checkForNull(dataElementConceptsViewRowImpl.getPropertyQualifier());
+
+
 		changeNote = checkForNull(dataElementConceptsViewRowImpl.getChangeNote());
 		preferredDefinition =
 			dataElementConceptsViewRowImpl.getPreferredDefinition();
@@ -65,33 +69,80 @@ public class BC4JDataElementConceptTransferObject extends AdminComponentTransfer
 			new Float(dataElementConceptsViewRowImpl.getVersion().floatValue());
 		deletedInd = dataElementConceptsViewRowImpl.getDeletedInd();
 		latestVerInd = dataElementConceptsViewRowImpl.getLatestVersionInd();
-		objClassPrefName =
+    
+    //ObjectClass Info
+    ObjectClass objClass = new ObjectClassTransferObject();
+		String objClassPrefName =
 			checkForNull(dataElementConceptsViewRowImpl.getObjectClassPrefName());
-		objClassContextName =
+    objClass.setPreferredName(objClassPrefName);
+		Number objClassPublicId = dataElementConceptsViewRowImpl.getObjectClassPublicId();
+    if (objClassPublicId != null)
+    {
+      objClass.setPublicId(objClassPublicId.intValue());
+    }    
+    
+		String objClassContextName =
 			checkForNull(dataElementConceptsViewRowImpl.getObjectClassContext());
-		propertyPrefName =
-			checkForNull(dataElementConceptsViewRowImpl.getPropertyPrefName());
-		propertyContextName =
-			checkForNull(dataElementConceptsViewRowImpl.getPropertyContextName());
-		if (dataElementConceptsViewRowImpl.getPropertyVersion() != null)
-			propertyVersion =
-				new Float(
-					dataElementConceptsViewRowImpl.getPropertyVersion().floatValue());
-		else
-			propertyVersion = new Float(0.00f);
+    Context objContext = new ContextTransferObject();
+    objContext.setName(objClassContextName);
+    objClass.setContext(objContext);
+    Float objClassVersion = null;
 		if (dataElementConceptsViewRowImpl.getObjectClassVersion() != null)
 			objClassVersion =
 				new Float(
 					dataElementConceptsViewRowImpl.getObjectClassVersion().floatValue());
 		else
 			objClassVersion = new Float(0.00f);
+    objClass.setVersion(objClassVersion);
+		String oclName = checkForNull(dataElementConceptsViewRowImpl.getOclName());    
+    objClass.setName(oclName);
+		String objClassQualifier =
+			checkForNull(dataElementConceptsViewRowImpl.getObjClassQualifier());
+    objClass.setQualifier(objClassQualifier);
+    setObjectClass(objClass);
+  
+    //Property Info
+    Property prop = new PropertyTransferObject();
+		String propertyPrefName =
+			checkForNull(dataElementConceptsViewRowImpl.getPropertyPrefName());
+    prop.setPreferredName(propertyPrefName);
+    Number propPublicId = dataElementConceptsViewRowImpl.getPropertyPublicId();
+    if(propPublicId!=null)
+    {
+      prop.setPublicId(propPublicId.intValue());
+    }
+    
+		String propertyContextName =
+			checkForNull(dataElementConceptsViewRowImpl.getPropertyContextName()); 
+    Context propContext = new ContextTransferObject();
+    propContext.setName(propertyContextName);
+    prop.setContext(propContext);
+		String proplName = checkForNull(dataElementConceptsViewRowImpl.getProplName());
+    prop.setName(proplName);
+    Float propertyVersion = null;
+		if (dataElementConceptsViewRowImpl.getPropertyVersion() != null)
+			propertyVersion =
+				new Float(
+					dataElementConceptsViewRowImpl.getPropertyVersion().floatValue());
+		else
+			propertyVersion = new Float(0.00f);
+    prop.setVersion(propertyVersion);
+		String propertyQualifier =
+			checkForNull(dataElementConceptsViewRowImpl.getPropertyQualifier());  
+    prop.setQualifier(propertyQualifier);
+    setProperty(prop);
+
 		conteName = dataElementConceptsViewRowImpl.getContextName();
 		cdPrefName = dataElementConceptsViewRowImpl.getCDPrefName();
 		cdContextName = dataElementConceptsViewRowImpl.getCDContextName();
+    cdPublicId = dataElementConceptsViewRowImpl.getCDPublicId().intValue();
 		cdVersion =
 			new Float(dataElementConceptsViewRowImpl.getCDVersion().floatValue());
     if (dataElementConceptsViewRowImpl.getDecId() != null)
+    {
       publicId = dataElementConceptsViewRowImpl.getDecId().intValue();
+    }
+    
     origin = checkForNull(dataElementConceptsViewRowImpl.getOrigin());
 	}
 
@@ -182,15 +233,15 @@ public class BC4JDataElementConceptTransferObject extends AdminComponentTransfer
 	public Float getCDVersion() {
 		return cdVersion;
 	}
-  public void setCDPublicId(String cDPublicID)
+  public void setCDPublicId(int cDPublicID)
   {
-    this.cDPublicId = cDPublicID;
+    this.cdPublicId = cDPublicID;
   }
 
 
-  public String getCDPublicId()
+  public int getCDPublicId()
   {
-    return cDPublicId;
+    return cdPublicId;
   }
 
 
@@ -216,4 +267,22 @@ public class BC4JDataElementConceptTransferObject extends AdminComponentTransfer
   {
     return propertyPublicId;
   }
+  
+   public Property getProperty()
+   {
+     return property;
+   }
+   public void setProperty(Property newProperty)
+   {
+     property=newProperty;
+   }
+   
+   public ObjectClass getObjectClass()
+   {
+     return objectClass;
+   }
+   public void setObjectClass(ObjectClass newObjectClass)
+   {
+     objectClass= newObjectClass;
+   }  
 }

@@ -97,9 +97,11 @@
 //  }
 
   String submitFunction ="submitForm()";
-  Object advancedSearch = (pageContext.getSession().getAttribute("BROWSER_SCREEN_TYPE_ADVANCED"));
-  if(advancedSearch!=null)
+  Object advancedSearch = (pageContext.getSession().getAttribute(BrowserFormConstants.BROWSER_SCREEN_TYPE_ADVANCED));
+  if(advancedSearch==null)
+    { 
   	submitFunction = "submitSimpleForm()";
+    }
   
     
   
@@ -157,7 +159,7 @@ function submitForm() {
 }
 
 function submitSimpleForm() {
-     if(document.forms[0].jspPublicIdInd.checked==1)
+     if(document.forms[0].jspBasicSearchType.selectedIndex==1)
      {
         document.forms[0].jspCdeId.value=document.forms[0].jspSimpleKeyword.value;
         document.forms[0].jspKeyword.value="";
@@ -175,7 +177,7 @@ function submitSimpleForm() {
 
 function clearSimpleForm() {
   document.forms[0].jspSimpleKeyword.value = "";
-  document.forms[0].jspPublicIdInd.checked=0;
+  document.forms[0].jspBasicSearchType.selectedIndex=0;
 }
 
 function clearForm() {
@@ -340,11 +342,6 @@ function newSearch(){
 %>
 </logic:present>
 
-<table width="100%" align="center">
-  <tr>
-    <td colspan="4" align="left" class="AbbreviatedText">Note: Enter/select search criteria and click search button to initiate search. The wildcard character is *. Click the Help button above for more information on CDEBrowser.</td>
- </tr>
-</table>
 <logic:present name="<%=BrowserFormConstants.BROWSER_SCREEN_TYPE_ADVANCED%>">
       <%@ include file="advancedSearch_inc.jsp"%>
 </logic:present>
@@ -354,12 +351,29 @@ function newSearch(){
 </logic:notPresent>
 <br>
 <A NAME="results"></A>
+
+
 <%
   if (!queryFlag.equals("")) {
     if (deList!=null&&deList.size()!=0) {
 %>
+<table width="100%"   border="0">
+   <tr>
+           <td  nowrap>&nbsp;</td>
+   </tr>
+  <tr valign="bottom">
+     <td  valign="bottom" class="OraHeaderSubSub" width="100%" align="left" nowrap>Search Results</td>
+  </tr>
+  <tr valign="top">
+    <td valign="top" width="100%" nowrap >
+      <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
+    </td>
+  </tr>
+</table>
+
 <table cellpadding="0" cellspacing="0" width="100%" align="center" border="0">
-  <tr>
+
+  <tr valign="top">
     <td nowrap>
       <b><a href="<%=downloadExcelURL%>" >[Download Data Elements to Excel]</a></b> &nbsp;&nbsp;
       <b><a href="<%=downloadXMLURL%>" >[Download Data Elements as XML]</a></b> &nbsp;&nbsp;
@@ -373,14 +387,11 @@ function newSearch(){
 %>
     </td>
   </tr>
-
+   <tr>
+           <td  colspan=2 nowrap>&nbsp;</td>
+   </tr>
 </table>
 
-<table width="100%"  height=1 align="center" cellpadding="0" cellspacing="0" border="0">
-  <tr >
-    <td width="100%" nowrap ><html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" /> </td>
-  </tr>
-</table>
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
     <tr>
       <td align="left" class="OraTableColumnHeaderNoBG" width="10%" nowrap>Sort order :</td>
@@ -495,11 +506,21 @@ function newSearch(){
     else if(deList!=null&&deList.size()==0) {
     pageContext.getSession().setAttribute("showCached",new Boolean("true"));
 %>
-<table cellpadding="0" cellspacing="0" width="100%" align="center">
-  <tr>
-    <td width="100%"><html:img height="2" page="/i/beigedot.gif" width="99%" align="top" border="0" /> </td>
+
+<table width="100%"   border="0">
+   <tr>
+           <td  nowrap>&nbsp;</td>
+   </tr>
+  <tr valign="bottom">
+     <td  valign="bottom" class="OraHeaderSubSub" width="100%" align="left" nowrap>Search Results</td>
+  </tr>
+  <tr valign="top">
+    <td valign="top" width="100%" nowrap >
+      <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
+    </td>
   </tr>
 </table>
+
 
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">

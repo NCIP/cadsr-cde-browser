@@ -11,16 +11,17 @@ public class ClassificationsRowImpl extends ViewRowImpl
 {
 
 
-  protected static final int ACIDSEQ = 0;
-  protected static final int ACTLNAME = 1;
-  protected static final int VERSION = 2;
-  protected static final int CONTEIDSEQ = 3;
-  protected static final int CSIIDSEQ = 4;
-  protected static final int CSINAME = 5;
-  protected static final int CSITLNAME = 6;
-  protected static final int CSIDSEQ = 7;
-  protected static final int PREFERREDNAME = 8;
-  protected static final int PREFERREDDEFINITION = 9;
+  public static final int ACIDSEQ = 0;
+  public static final int ACTLNAME = 1;
+  public static final int VERSION = 2;
+  public static final int CONTEIDSEQ = 3;
+  public static final int CSIIDSEQ = 4;
+  public static final int CSINAME = 5;
+  public static final int CSITLNAME = 6;
+  public static final int CSIDSEQ = 7;
+  public static final int PREFERREDNAME = 8;
+  public static final int PREFERREDDEFINITION = 9;
+  public static final int CSID = 10;
   /**
    * 
    * This is the default constructor (do not remove)
@@ -135,6 +136,8 @@ public class ClassificationsRowImpl extends ViewRowImpl
         return getPreferredName();
       case PREFERREDDEFINITION:
         return getPreferredDefinition();
+      case CSID:
+        return getCsId();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -145,6 +148,9 @@ public class ClassificationsRowImpl extends ViewRowImpl
   {
     switch (index)
       {
+      case CSID:
+        setCsId((Number)value);
+        return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);
         return;
@@ -212,6 +218,24 @@ public class ClassificationsRowImpl extends ViewRowImpl
   public String getPreferredDefinition()
   {
     return (String)getAttributeInternal(PREFERREDDEFINITION);
+  }
+
+  /**
+   * 
+   *  Gets the attribute value for CS_ID using the alias name CsId
+   */
+  public Number getCsId()
+  {
+    return (Number)getAttributeInternal(CSID);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as attribute value for CS_ID using the alias name CsId
+   */
+  public void setCsId(Number value)
+  {
+    setAttributeInternal(CSID, value);
   }
 
 

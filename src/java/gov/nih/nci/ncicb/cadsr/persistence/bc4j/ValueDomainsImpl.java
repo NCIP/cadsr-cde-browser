@@ -43,12 +43,16 @@ public class ValueDomainsImpl extends EntityImpl
   public static final int QUALIFIERNAME = 28;
   public static final int ORIGIN = 29;
   public static final int VDID = 30;
-  public static final int CONTEXTS = 31;
-  public static final int CONCEPTUALDOMAINS = 32;
-  public static final int REPRESENTATION = 33;
-  public static final int DATAELEMENTS = 34;
-  public static final int VDPVS = 35;
-  public static final int REPRESENTATIONVIEWOBJ = 36;
+  public static final int CONDRIDSEQ = 31;
+  public static final int CONTEXTS = 32;
+  public static final int CONCEPTUALDOMAINS = 33;
+  public static final int REPRESENTATION = 34;
+  public static final int CONDERIVATIONRULESEXT = 35;
+  public static final int DATAELEMENTS = 36;
+  public static final int VDPVS = 37;
+  public static final int REPRESENTATIONVIEWOBJ = 38;
+
+
 
 
 
@@ -77,6 +81,8 @@ public class ValueDomainsImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
+
 
 
 
@@ -643,6 +649,8 @@ public class ValueDomainsImpl extends EntityImpl
         return getOrigin();
       case VDID:
         return getVdId();
+      case CONDRIDSEQ:
+        return getCondrIdseq();
       case DATAELEMENTS:
         return getDataElements();
       case VDPVS:
@@ -653,6 +661,8 @@ public class ValueDomainsImpl extends EntityImpl
         return getConceptualDomains();
       case REPRESENTATION:
         return getRepresentation();
+      case CONDERIVATIONRULESEXT:
+        return getConDerivationRulesExt();
       case REPRESENTATIONVIEWOBJ:
         return getRepresentationViewObj();
       default:
@@ -757,6 +767,9 @@ public class ValueDomainsImpl extends EntityImpl
         return;
       case VDID:
         setVdId((Number)value);
+        return;
+      case CONDRIDSEQ:
+        setCondrIdseq((String)value);
         return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);
@@ -913,6 +926,44 @@ public class ValueDomainsImpl extends EntityImpl
   public RepresentationViewObjRowImpl getRepresentationViewObj()
   {
     return (RepresentationViewObjRowImpl)getAttributeInternal(REPRESENTATIONVIEWOBJ);
+  }
+
+
+  /**
+   * 
+   *  Gets the attribute value for CondrIdseq, using the alias name CondrIdseq
+   */
+  public String getCondrIdseq()
+  {
+    return (String)getAttributeInternal(CONDRIDSEQ);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the attribute value for CondrIdseq
+   */
+  public void setCondrIdseq(String value)
+  {
+    setAttributeInternal(CONDRIDSEQ, value);
+  }
+
+
+  /**
+   * 
+   *  Gets the associated entity ConDerivationRulesExtImpl
+   */
+  public ConDerivationRulesExtImpl getConDerivationRulesExt()
+  {
+    return (ConDerivationRulesExtImpl)getAttributeInternal(CONDERIVATIONRULESEXT);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the associated entity ConDerivationRulesExtImpl
+   */
+  public void setConDerivationRulesExt(ConDerivationRulesExtImpl value)
+  {
+    setAttributeInternal(CONDERIVATIONRULESEXT, value);
   }
 
   /**

@@ -31,9 +31,7 @@
        Representation.MODIFIED_BY, 
 
        Representation.REP_ID, 
-       Representation.CONDR_IDSEQ, 
-
-       Representation.CON_IDSEQ"
+       Representation.CONDR_IDSEQ"
    FromList="REPRESENTATIONS_EXT Representation"
    BindingStyle="Oracle"
    CustomQuery="false"
@@ -203,13 +201,6 @@
       EntityAttrName="CondrIdseq"
       EntityUsage="Representation"
       AliasName="CONDR_IDSEQ" >
-   </ViewAttribute>
-   <ViewAttribute
-      Name="ConIdseq"
-      PrecisionRule="true"
-      EntityAttrName="ConIdseq"
-      EntityUsage="Representation"
-      AliasName="CON_IDSEQ" >
    </ViewAttribute>
    <ViewLinkAccessor
       Name="ValueDomainsView"

@@ -1,9 +1,14 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.base.process.*;
 
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
 import gov.nih.nci.ncicb.cadsr.resource.*;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import gov.nih.nci.ncicb.cadsr.util.*;
 
 import oracle.cle.persistence.HandlerFactory;
@@ -50,6 +55,7 @@ public class GetDataElementConceptDetails extends BasePersistingProcess {
   public void registerInfo() {
     try {
       registerResultObject("tib");
+      //registerParameterObject("de");
     }
     catch (ProcessInfoException pie) {
       reportException(pie, true);
@@ -77,7 +83,24 @@ public class GetDataElementConceptDetails extends BasePersistingProcess {
       if (tabNum != 1) {
         tib.setMainTabNum(1);
       }
-     
+      DataElement de = (DataElement) getInfoObject("de");
+      ServiceLocator locator = 
+      ServiceLocatorFactory.getLocator(CaDSRConstants.CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
+      AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
+      ConceptDAO conDAO = daoFactory.getConceptDAO();
+      Property prop = de.getDataElementConcept().getProperty();
+      if(prop!=null)
+      {
+        ConceptDerivationRule propRule = conDAO.getPropertyConceptDerivationRuleForDEC(de.getDataElementConcept().getDecIdseq());
+        de.getDataElementConcept().getProperty().setConceptDerivationRule(propRule);
+      }
+
+      ObjectClass objClass = de.getDataElementConcept().getObjectClass();
+      if(objClass!=null)
+      {
+        ConceptDerivationRule classRule = conDAO.getObjectClassConceptDerivationRuleForDEC(de.getDataElementConcept().getDecIdseq());
+        de.getDataElementConcept().getObjectClass().setConceptDerivationRule(classRule);
+      }      
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -93,4 +116,6 @@ public class GetDataElementConceptDetails extends BasePersistingProcess {
   protected TransitionCondition getPersistFailureCondition() {
     return getCondition(FAILURE);
   }
+  
+
 }

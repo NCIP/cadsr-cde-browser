@@ -27,4 +27,8 @@ public interface ValidValue extends Serializable {
   public void setVpIdseq(String aVpIdseq);
   
   public Object clone() throws CloneNotSupportedException ;
+  
+  public ConceptDerivationRule getConceptDerivationRule();
+  
+  public void setConceptDerivationRule(ConceptDerivationRule rule);  
 }

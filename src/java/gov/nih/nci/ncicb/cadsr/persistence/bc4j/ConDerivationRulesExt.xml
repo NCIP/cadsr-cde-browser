@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
+<Entity
+   Name="ConDerivationRulesExt"
+   DBObjectType="table"
+   DBObjectName="CON_DERIVATION_RULES_EXT"
+   AliasName="ConDerivationRulesExt"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExtImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <AttrArray Name="_publishEvents">
+      </AttrArray>
+   </DesignTime>
+   <Attribute
+      Name="CondrIdseq"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="CONDR_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="CON_DERIVATION_RULES_EXT"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Methods"
+      Precision="4000"
+      ColumnName="METHODS"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="CON_DERIVATION_RULES_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Rule"
+      Precision="4000"
+      ColumnName="RULE"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="CON_DERIVATION_RULES_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ConcatChar"
+      Precision="1"
+      ColumnName="CONCAT_CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="CON_DERIVATION_RULES_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CrtlName"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="CRTL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="CON_DERIVATION_RULES_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateCreated"
+      IsNotNull="true"
+      ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="TIMESTAMP"
+      TableName="CON_DERIVATION_RULES_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateModified"
+      ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="TIMESTAMP"
+      TableName="CON_DERIVATION_RULES_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ModifiedBy"
+      Precision="30"
+      ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="CON_DERIVATION_RULES_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="CREATED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="CON_DERIVATION_RULES_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Name"
+      IsNotNull="true"
+      Precision="255"
+      ColumnName="NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="CON_DERIVATION_RULES_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="ComponentConceptsExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CctCondrFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CctCondrFkAssoc.ComponentConceptsExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CctCondrFkAssoc.ConDerivationRulesExt"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ValueMeaningsLov"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc.ValueMeaningsLov"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc.ConDerivationRulesExt"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Representation"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCondrFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCondrFkAssoc.Representation"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCondrFkAssoc.ConDerivationRulesExt"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ValueDomains"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc.ValueDomains"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc.ConDerivationRulesExt"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="CondrPk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExt.CondrIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="CONDR_PK" />
+         <Attr Name="_isPrimary" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00142857" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExt.CondrIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C00142857" />
+         <Attr Name="_checkCondition" Value="&#34;CONDR_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00142858" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExt.CrtlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C00142858" />
+         <Attr Name="_checkCondition" Value="&#34;CRTL_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00142859" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExt.DateCreated" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C00142859" />
+         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00142860" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExt.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C00142860" />
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC00144270" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExt.Name" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C00144270" />
+         <Attr Name="_checkCondition" Value="&#34;NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="CondrCrvFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExt.CrtlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="CONDR_CRV_FK" />
+         <Attr Name="_referencedKey" Value="CRV_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+</Entity>

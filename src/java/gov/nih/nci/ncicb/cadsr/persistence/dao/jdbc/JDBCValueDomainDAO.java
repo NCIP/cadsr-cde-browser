@@ -2,6 +2,8 @@ package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.dto.ValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
+import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
+import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import java.sql.ResultSet;
@@ -70,6 +72,7 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
     Map records = query.getValidValueMap();
     return records;
   }
+
 
   /**
    * Inner class to get all valid values for each value domain

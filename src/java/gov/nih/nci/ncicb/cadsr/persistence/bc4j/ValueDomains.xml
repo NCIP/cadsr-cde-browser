@@ -386,6 +386,20 @@
          <Attr Name="_DisplaySize" Value="22" />
       </DesignTime>
    </Attribute>
+   <Attribute
+      Name="CondrIdseq"
+      Precision="36"
+      ColumnName="CONDR_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="VALUE_DOMAINS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
    <AccessorAttribute
       Name="Contexts"
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdConteFkAssoc"
@@ -406,6 +420,13 @@
       AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc.Representation"
       AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc.ValueDomains"
       Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepresentationImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ConDerivationRulesExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc.ConDerivationRulesExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc.ValueDomains"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExtImpl" >
    </AccessorAttribute>
    <AccessorAttribute
       Name="DataElements"
@@ -431,39 +452,6 @@
       Type="oracle.jbo.RowIterator"
       IsUpdateable="false" >
    </ViewLinkAccessor>
-   <Key
-      Name="Avcon985893623Delet006" >
-      <AttrArray Name="Attributes">
-         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.DeletedInd" />
-      </AttrArray>
-      <DesignTime>
-         <Attr Name="_DBObjectName" Value="AVCON_985893623_DELET_006" />
-         <Attr Name="_checkCondition" Value="DELETED_IND IN (&#39;Yes&#39;, &#39;No&#39;)" />
-         <Attr Name="_isCheck" Value="true" />
-      </DesignTime>
-   </Key>
-   <Key
-      Name="Avcon985893623Lates004" >
-      <AttrArray Name="Attributes">
-         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.LatestVersionInd" />
-      </AttrArray>
-      <DesignTime>
-         <Attr Name="_DBObjectName" Value="AVCON_985893623_LATES_004" />
-         <Attr Name="_checkCondition" Value="LATEST_VERSION_IND IN (&#39;Yes&#39;, &#39;No&#39;)" />
-         <Attr Name="_isCheck" Value="true" />
-      </DesignTime>
-   </Key>
-   <Key
-      Name="Avcon985893623VdTy000" >
-      <AttrArray Name="Attributes">
-         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.VdTypeFlag" />
-      </AttrArray>
-      <DesignTime>
-         <Attr Name="_DBObjectName" Value="AVCON_985893623_VD_TY_000" />
-         <Attr Name="_checkCondition" Value="VD_TYPE_FLAG IN (&#39;E&#39;, &#39;N&#39;)" />
-         <Attr Name="_isCheck" Value="true" />
-      </DesignTime>
-   </Key>
    <Key
       Name="SysC0062859" >
       <AttrArray Name="Attributes">
@@ -626,6 +614,17 @@
       <DesignTime>
          <Attr Name="_DBObjectName" Value="VD_CD_FK" />
          <Attr Name="_referencedKey" Value="CD_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdCondrFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.CondrIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_CONDR_FK" />
+         <Attr Name="_referencedKey" Value="CONDR_PK" />
          <Attr Name="_isForeign" Value="true" />
       </DesignTime>
    </Key>

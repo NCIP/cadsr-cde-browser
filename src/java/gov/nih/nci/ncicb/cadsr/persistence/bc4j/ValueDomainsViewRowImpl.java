@@ -43,10 +43,11 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
   public static final int ORIGIN = 28;
   public static final int VDID = 29;
   public static final int REPIDSEQ = 30;
-  public static final int CONCEPTUALDOMAINSROW = 31;
-  public static final int DATAELEMENTSVIEW = 32;
-  public static final int VDPVSVIEW = 33;
-  public static final int REPRESENTATIONVIEWOBJ = 34;
+  public static final int CONDRIDSEQ = 31;
+  public static final int CONCEPTUALDOMAINSROW = 32;
+  public static final int DATAELEMENTSVIEW = 33;
+  public static final int VDPVSVIEW = 34;
+  public static final int REPRESENTATIONVIEWOBJ = 35;
   private static Log log = LogFactory.getLog(ValueDomainsViewRowImpl.class.getName());
 
   /**
@@ -578,6 +579,8 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
         return getVdId();
       case REPIDSEQ:
         return getRepIdseq();
+      case CONDRIDSEQ:
+        return getCondrIdseq();
       case DATAELEMENTSVIEW:
         return getDataElementsView();
       case VDPVSVIEW:
@@ -688,6 +691,9 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
       case REPIDSEQ:
         setRepIdseq((String)value);
         return;
+      case CONDRIDSEQ:
+        setCondrIdseq((String)value);
+        return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);
         return;
@@ -723,6 +729,11 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
     return ((ConceptualDomainsViewRowImpl)getConceptualDomain())
              .getContextName();
   }
+  
+  public Number getCDPublicId(){
+    return ((ConceptualDomainsViewRowImpl)getConceptualDomain()).getCdId();
+  }
+  
 
   public oracle.jbo.Row getConceptualDomain()
   {
@@ -816,6 +827,24 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
   public oracle.jbo.Row getRepresentationViewObj()
   {
     return (oracle.jbo.Row)getAttributeInternal(REPRESENTATIONVIEWOBJ);
+  }
+
+  /**
+   * 
+   *  Gets the attribute value for CONDR_IDSEQ using the alias name CondrIdseq
+   */
+  public String getCondrIdseq()
+  {
+    return (String)getAttributeInternal(CONDRIDSEQ);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as attribute value for CONDR_IDSEQ using the alias name CondrIdseq
+   */
+  public void setCondrIdseq(String value)
+  {
+    setAttributeInternal(CONDRIDSEQ, value);
   }
 
 

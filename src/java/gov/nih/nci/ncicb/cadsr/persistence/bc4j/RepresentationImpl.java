@@ -35,8 +35,12 @@ public class RepresentationImpl extends EntityImpl
   public static final int CONDRIDSEQ = 19;
   public static final int CONIDSEQ = 20;
   public static final int CONTEXTS = 21;
-  public static final int VALUEDOMAINS = 22;
-  public static final int VALUEDOMAINSVIEW = 23;
+  public static final int CONCEPTSEXT = 22;
+  public static final int CONDERIVATIONRULESEXT = 23;
+  public static final int VALUEDOMAINS = 24;
+  public static final int VALUEDOMAINSVIEW = 25;
+
+
 
 
 
@@ -63,6 +67,8 @@ public class RepresentationImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
+
 
 
 
@@ -497,6 +503,10 @@ public class RepresentationImpl extends EntityImpl
         return getValueDomains();
       case CONTEXTS:
         return getContexts();
+      case CONCEPTSEXT:
+        return getConceptsExt();
+      case CONDERIVATIONRULESEXT:
+        return getConDerivationRulesExt();
       case VALUEDOMAINSVIEW:
         return getValueDomainsView();
       default:
@@ -615,6 +625,44 @@ public class RepresentationImpl extends EntityImpl
   public RowIterator getValueDomainsView()
   {
     return (RowIterator)getAttributeInternal(VALUEDOMAINSVIEW);
+  }
+
+
+  /**
+   * 
+   *  Gets the associated entity ConceptsExtImpl
+   */
+  public ConceptsExtImpl getConceptsExt()
+  {
+    return (ConceptsExtImpl)getAttributeInternal(CONCEPTSEXT);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the associated entity ConceptsExtImpl
+   */
+  public void setConceptsExt(ConceptsExtImpl value)
+  {
+    setAttributeInternal(CONCEPTSEXT, value);
+  }
+
+
+  /**
+   * 
+   *  Gets the associated entity ConDerivationRulesExtImpl
+   */
+  public ConDerivationRulesExtImpl getConDerivationRulesExt()
+  {
+    return (ConDerivationRulesExtImpl)getAttributeInternal(CONDERIVATIONRULESEXT);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the associated entity ConDerivationRulesExtImpl
+   */
+  public void setConDerivationRulesExt(ConDerivationRulesExtImpl value)
+  {
+    setAttributeInternal(CONDERIVATIONRULESEXT, value);
   }
 
   /**

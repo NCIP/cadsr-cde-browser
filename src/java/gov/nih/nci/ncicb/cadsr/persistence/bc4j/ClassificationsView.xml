@@ -19,7 +19,8 @@ SELECT AdministeredComponents.AC_IDSEQ,
        ClassSchemeItems.CSITL_NAME, 
        ClassificationSchemes.CS_IDSEQ,
        ClassificationSchemes.PREFERRED_NAME, 
-       ClassificationSchemes.PREFERRED_DEFINITION
+       ClassificationSchemes.PREFERRED_DEFINITION,
+ClassificationSchemes.CS_ID
 FROM AC_CSI AcCsi, ADMINISTERED_COMPONENTS AdministeredComponents, 
 CLASSIFICATION_SCHEMES ClassificationSchemes, CLASS_SCHEME_ITEMS ClassSchemeItems, CS_CSI CsCsi
 WHERE 
@@ -202,5 +203,12 @@ WHERE
       EntityAttrName="PreferredDefinition"
       EntityUsage="ClassificationSchemes"
       AliasName="PreferredDefinition" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsId"
+      PrecisionRule="true"
+      EntityAttrName="CsId"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CS_ID" >
    </ViewAttribute>
 </ViewObject>

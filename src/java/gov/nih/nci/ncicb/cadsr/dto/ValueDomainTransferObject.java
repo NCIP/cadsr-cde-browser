@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.dto;
+import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.resource.Representation;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,10 +22,12 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   String decimalPlace;
   String cdContextName;
   String cdPrefName;
-  Float cdVersion;
+  Float cdVersion; 
+  int cdPublicId;
   String vdType;
   List validValues;
   Representation representation;
+  ConceptDerivationRule conceptDerivationRule;
   
   public ValueDomainTransferObject() {
   }
@@ -150,6 +153,16 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
    {
      representation=newRepresentation;
    }
-   
-
+    public ConceptDerivationRule getConceptDerivationRule()
+   {
+     return conceptDerivationRule;
+   }
+   public void setConceptDerivationRule(ConceptDerivationRule rule)
+   {
+     conceptDerivationRule = rule;
+   }  
+   public int getCDPublicId()
+   {
+     return cdPublicId;
+   }
 }

@@ -14,6 +14,8 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants" %>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDECompareJspUtils" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <HTML>
 <HEAD>
 <TITLE>CDEBrowser  Compare CDEs</TITLE>
@@ -23,7 +25,11 @@
 
 <SCRIPT LANGUAGE="JavaScript">
 <!--
+<%
+  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  String evsUrlThesaurus = params.getEvsUrlThesaurus();
 
+%>
 function removeFromCompareList() {
   if (validateSelection('<%=BrowserFormConstants.CDE_TO_REMOVE%>','Please select at least one data element to remove from the list')) {
     document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.REMOVE_FROM_CDE_COMPARE_LIST%>";    
@@ -333,19 +339,80 @@ function done() {
                <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="10%"  >Object Class Preferred Name</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                          <logic:present name="currCDE" property = "dataElementConcept.objectClass">                             
                             <td class="OraFieldText" width='30%'  >
-                             <bean:write name="currCDE" property="dataElementConcept.objClassPrefName"/>                           
+                             <bean:write name="currCDE" property="dataElementConcept.objectClass.preferredName"/>                           
                             </td>
+                          </logic:present>
+                          <logic:notPresent name="currCDE" property = "dataElementConcept.objectClass"> 
+                            <td class="OraFieldText" width='30%'  >
+                             &nbsp;              
+                            </td>                            
+                          </logic:notPresent>
                      </logic:iterate> 
-               </tr>
+               </tr>             
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%"  >Object Class Concept Codes</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                          <logic:present name="currCDE" property = "dataElementConcept.objectClass">                         
+                              <logic:present name="currCDE" property = "dataElementConcept.objectClass.conceptDerivationRule">                             
+                                <td class="OraFieldText" width='30%'  >
+                                    <%=CDEDetailsUtils.getConceptCodes(currCDE.getDataElementConcept().getObjectClass().getConceptDerivationRule(),evsUrlThesaurus,"link",",")%>                                                            
+                                </td>
+                              </logic:present>
+                              <logic:notPresent name="currCDE" property = "dataElementConcept.objectClass.conceptDerivationRule"> 
+                                <td class="OraFieldText" width='30%'  >
+                                 &nbsp;                   
+                                </td>                            
+                              </logic:notPresent>
+                          </logic:present>
+                          <logic:notPresent name="currCDE" property = "dataElementConcept.objectClass"> 
+                            <td class="OraFieldText" width='30%'  >
+                             &nbsp;                   
+                            </td>                            
+                          </logic:notPresent>
+                     </logic:iterate> 
+               </tr>    
+               
                <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="10%">Property Preferred Name</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
-                              <bean:write name="currCDE" property="dataElementConcept.propertyPrefName"/> 
+                          <logic:present name="currCDE" property = "dataElementConcept.property"> 
+                            <td class="OraFieldText" width='30%'  >
+                             <bean:write name="currCDE" property="dataElementConcept.property.preferredName"/>                           
                             </td>
+                          </logic:present>
+                          <logic:notPresent name="currCDE" property = "dataElementConcept.property"> 
+                            <td class="OraFieldText" width='30%'  >
+                             &nbsp;                   
+                            </td>  
+                          </logic:notPresent>
                      </logic:iterate> 
-               </tr> 
+               </tr>       
+               
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%"  >Property Concept Codes</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                          <logic:present name="currCDE" property = "dataElementConcept.property">                         
+                              <logic:present name="currCDE" property = "dataElementConcept.property.conceptDerivationRule">                             
+                                <td class="OraFieldText" width='30%'  >
+                                    <%=CDEDetailsUtils.getConceptCodes(currCDE.getDataElementConcept().getProperty().getConceptDerivationRule(),evsUrlThesaurus,"link",",")%>                                                            
+                                </td>
+                              </logic:present>
+                              <logic:notPresent name="currCDE" property = "dataElementConcept.property.conceptDerivationRule"> 
+                                <td class="OraFieldText" width='30%'  >
+                                 &nbsp;                   
+                                </td>                            
+                              </logic:notPresent>
+                          </logic:present>
+                          <logic:notPresent name="currCDE" property = "dataElementConcept.property"> 
+                            <td class="OraFieldText" width='30%'  >
+                             &nbsp;                   
+                            </td>                            
+                          </logic:notPresent>
+                     </logic:iterate> 
+               </tr>    
+    
                <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="10%" >Origin</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
@@ -494,12 +561,40 @@ function done() {
                <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="10%">Representation</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
-                            <td class="OraFieldText" width='30%'>
-                             Need to be Fixed
-                              <!--bean:write name="currCDE" property="valueDomain.propertyPrefName"/ --> 
-                            </td>
+                      <logic:present name="currCDE" property="valueDomain.representation">
+                        <td class="OraFieldText" width='30%'>
+                          <bean:write name="currCDE" property="valueDomain.representation.longName"/>
+                        </TD>
+                      </logic:present>    
+                      <logic:notPresent name="currCDE" property="valueDomain.representation">
+                        <td class="OraFieldText" width='30%'>
+                          &nbsp;
+                        </TD>
+                      </logic:notPresent>                         
                      </logic:iterate> 
-               </tr>             
+               </tr>    
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%"  >Concept Codes</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                          <logic:present name="currCDE" property = "valueDomain">                         
+                              <logic:present name="currCDE" property = "valueDomain.conceptDerivationRule">                             
+                                <td class="OraFieldText" width='30%'  >
+                                    <%=CDEDetailsUtils.getConceptCodes(currCDE.getValueDomain().getConceptDerivationRule(),evsUrlThesaurus,"link",",")%>                                                            
+                                </td>
+                              </logic:present>
+                              <logic:notPresent name="currCDE" property = "valueDomain.conceptDerivationRule"> 
+                                <td class="OraFieldText" width='30%'  >
+                                 &nbsp;                   
+                                </td>                            
+                              </logic:notPresent>
+                          </logic:present>
+                          <logic:notPresent name="currCDE" property = "valueDomain"> 
+                            <td class="OraFieldText" width='30%'  >
+                             &nbsp;                   
+                            </td>                            
+                          </logic:notPresent>
+                     </logic:iterate> 
+               </tr>                   
                <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="10%" >Origin</td>
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 

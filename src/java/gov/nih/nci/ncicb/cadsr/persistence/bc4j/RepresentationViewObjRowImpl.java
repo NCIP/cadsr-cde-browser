@@ -32,8 +32,7 @@ public class RepresentationViewObjRowImpl extends ViewRowImpl
   public static final int MODIFIEDBY = 17;
   public static final int REPID = 18;
   public static final int CONDRIDSEQ = 19;
-  public static final int CONIDSEQ = 20;
-  public static final int VALUEDOMAINSVIEW = 21;
+  public static final int VALUEDOMAINSVIEW = 20;
   /**
    * 
    *  This is the default constructor (do not remove)
@@ -411,23 +410,7 @@ public class RepresentationViewObjRowImpl extends ViewRowImpl
     setAttributeInternal(CONDRIDSEQ, value);
   }
 
-  /**
-   * 
-   *  Gets the attribute value for CON_IDSEQ using the alias name ConIdseq
-   */
-  public String getConIdseq()
-  {
-    return (String)getAttributeInternal(CONIDSEQ);
-  }
 
-  /**
-   * 
-   *  Sets <code>value</code> as attribute value for CON_IDSEQ using the alias name ConIdseq
-   */
-  public void setConIdseq(String value)
-  {
-    setAttributeInternal(CONIDSEQ, value);
-  }
   //  Generated method. Do not modify.
 
   protected Object getAttrInvokeAccessor(int index, AttributeDefImpl attrDef) throws Exception
@@ -474,8 +457,6 @@ public class RepresentationViewObjRowImpl extends ViewRowImpl
         return getRepId();
       case CONDRIDSEQ:
         return getCondrIdseq();
-      case CONIDSEQ:
-        return getConIdseq();
       case VALUEDOMAINSVIEW:
         return getValueDomainsView();
       default:
@@ -547,9 +528,6 @@ public class RepresentationViewObjRowImpl extends ViewRowImpl
         return;
       case CONDRIDSEQ:
         setCondrIdseq((String)value);
-        return;
-      case CONIDSEQ:
-        setConIdseq((String)value);
         return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);

@@ -40,6 +40,13 @@ public interface DataElementConcept extends AdminComponent
    public String getCDContextName();
    public String getCDPrefName();
    public Float getCDVersion();
-   public String getCDPublicId();
-   public void setCDPublicId(String publicId);
+   public int getCDPublicId();
+   public void setCDPublicId(int publicId);
+   
+   public Property getProperty();
+   public void setProperty(Property newProperty);
+   
+   public ObjectClass getObjectClass();
+   public void setObjectClass(ObjectClass newObjectClass);   
+   
 }

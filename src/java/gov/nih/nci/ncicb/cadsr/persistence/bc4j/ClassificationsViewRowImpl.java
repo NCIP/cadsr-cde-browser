@@ -21,6 +21,7 @@ public class ClassificationsViewRowImpl extends ViewRowImpl
   public static final int CSIDSEQ = 7;
   public static final int PREFERREDNAME = 8;
   public static final int PREFERREDDEFINITION = 9;
+  public static final int CSID = 10;
   /**
    * 
    * This is the default constructor (do not remove)
@@ -135,6 +136,8 @@ public class ClassificationsViewRowImpl extends ViewRowImpl
         return getPreferredName();
       case PREFERREDDEFINITION:
         return getPreferredDefinition();
+      case CSID:
+        return getCsId();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -145,6 +148,9 @@ public class ClassificationsViewRowImpl extends ViewRowImpl
   {
     switch (index)
       {
+      case CSID:
+        setCsId((Number)value);
+        return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);
         return;
@@ -212,6 +218,24 @@ public class ClassificationsViewRowImpl extends ViewRowImpl
   public String getPreferredDefinition()
   {
     return (String)getAttributeInternal(PREFERREDDEFINITION);
+  }
+
+  /**
+   * 
+   *  Gets the attribute value for CS_ID using the alias name CsId
+   */
+  public Number getCsId()
+  {
+    return (Number)getAttributeInternal(CSID);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as attribute value for CS_ID using the alias name CsId
+   */
+  public void setCsId(Number value)
+  {
+    setAttributeInternal(CSID, value);
   }
 
 

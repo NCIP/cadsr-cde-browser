@@ -16,4 +16,5 @@ public interface CaDSRConstants {
   public static final String PREVIOUS_SESSION_ID="previousSessionId";
   public static final String YES="Yes";
   public static final String NO="No";
+  public static final String CDEBROWSER_SERVICE_LOCATOR_CLASSNAME = "gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl";
 }

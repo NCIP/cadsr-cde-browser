@@ -35,6 +35,9 @@ public class ContextsImpl extends EntityImpl
   public static final int CONCEPTUALDOMAINS = 20;
   public static final int DESIGNATIONS = 21;
   public static final int PROTOCOL = 22;
+  public static final int REPRESENTATION = 23;
+  public static final int CONCEPTSEXT = 24;
+
 
 
 
@@ -73,6 +76,7 @@ public class ContextsImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -339,6 +343,10 @@ public class ContextsImpl extends EntityImpl
         return getDesignations();
       case PROTOCOL:
         return getProtocol();
+      case REPRESENTATION:
+        return getRepresentation();
+      case CONCEPTSEXT:
+        return getConceptsExt();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -491,6 +499,25 @@ public class ContextsImpl extends EntityImpl
    */
   public RowIterator getProtocol() {
     return (RowIterator)getAttributeInternal(PROTOCOL);
+  }
+
+
+  /**
+   * 
+   *  Gets the associated entity oracle.jbo.RowIterator
+   */
+  public RowIterator getRepresentation()
+  {
+    return (RowIterator)getAttributeInternal(REPRESENTATION);
+  }
+
+  /**
+   * 
+   *  Gets the associated entity oracle.jbo.RowIterator
+   */
+  public RowIterator getConceptsExt()
+  {
+    return (RowIterator)getAttributeInternal(CONCEPTSEXT);
   }
 
   /**

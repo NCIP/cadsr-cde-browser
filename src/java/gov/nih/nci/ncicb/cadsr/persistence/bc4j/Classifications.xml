@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
 
 <ViewObject
    Name="Classifications"
-   TimeStamp="1028905558043"
    BindingStyle="Oracle"
    CustomQuery="true"
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationsRowImpl"
    ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationsImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
    UseGlueCode="false" >
    <SQLQuery><![CDATA[
 SELECT AdministeredComponents.AC_IDSEQ,
@@ -19,7 +19,8 @@ SELECT AdministeredComponents.AC_IDSEQ,
        ClassSchemeItems.CSITL_NAME, 
        ClassificationSchemes.CS_IDSEQ,
        ClassificationSchemes.PREFERRED_NAME, 
-       ClassificationSchemes.PREFERRED_DEFINITION
+       ClassificationSchemes.PREFERRED_DEFINITION,
+       ClassificationSchemes.CS_ID
 FROM AC_CSI AcCsi, ADMINISTERED_COMPONENTS AdministeredComponents, 
 CLASSIFICATION_SCHEMES ClassificationSchemes, CLASS_SCHEME_ITEMS ClassSchemeItems, CS_CSI CsCsi
 WHERE 
@@ -28,14 +29,14 @@ WHERE
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.2.7.99" />
-      <Attr Name="_CodeGenFlagNew" Value="36" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
    </DesignTime>
    <EntityUsage
       Name="AcCsi"
       Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsi" >
       <DesignTime>
-         <Attr Name="_ReadOnly" Value="false" />
          <Attr Name="_EntireObjectTable" Value="false" />
          <Attr Name="_queryClause" Value="false" />
       </DesignTime>
@@ -46,9 +47,9 @@ WHERE
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc"
       AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc.AdministeredComponents"
       SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Classifications.AcCsi"
+      ReadOnly="true"
       Reference="true" >
       <DesignTime>
-         <Attr Name="_ReadOnly" Value="true" />
          <Attr Name="_EntireObjectTable" Value="false" />
          <Attr Name="_queryClause" Value="false" />
          <AttrArray Name="_srcAttributes">
@@ -65,9 +66,9 @@ WHERE
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFkAssoc"
       AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFkAssoc.ClassificationSchemes"
       SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Classifications.CsCsi"
+      ReadOnly="true"
       Reference="true" >
       <DesignTime>
-         <Attr Name="_ReadOnly" Value="true" />
          <Attr Name="_EntireObjectTable" Value="false" />
          <Attr Name="_queryClause" Value="false" />
          <AttrArray Name="_srcAttributes">
@@ -84,9 +85,9 @@ WHERE
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsiFkAssoc"
       AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsiFkAssoc.ClassSchemeItems"
       SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Classifications.CsCsi"
+      ReadOnly="true"
       Reference="true" >
       <DesignTime>
-         <Attr Name="_ReadOnly" Value="true" />
          <Attr Name="_EntireObjectTable" Value="false" />
          <Attr Name="_queryClause" Value="false" />
          <AttrArray Name="_srcAttributes">
@@ -103,9 +104,9 @@ WHERE
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiCsCsiFkAssoc"
       AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiCsCsiFkAssoc.CsCsi"
       SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Classifications.AcCsi"
+      ReadOnly="true"
       Reference="true" >
       <DesignTime>
-         <Attr Name="_ReadOnly" Value="true" />
          <Attr Name="_EntireObjectTable" Value="false" />
          <Attr Name="_queryClause" Value="false" />
          <AttrArray Name="_srcAttributes">
@@ -120,107 +121,94 @@ WHERE
       Name="AcIdseq"
       IsUpdateable="false"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="AcIdseq"
       EntityUsage="AdministeredComponents"
       AliasName="AC_IDSEQ" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="ActlName"
       IsUpdateable="false"
+      PrecisionRule="false"
       EntityAttrName="ActlName"
       EntityUsage="AdministeredComponents"
       AliasName="ActlName" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="Version"
       IsUpdateable="false"
+      PrecisionRule="false"
       EntityAttrName="Version"
       EntityUsage="AdministeredComponents"
       AliasName="Version" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="ConteIdseq"
       IsUpdateable="false"
+      PrecisionRule="false"
       EntityAttrName="ConteIdseq"
       EntityUsage="AdministeredComponents"
       AliasName="ConteIdseq" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="CsiIdseq"
       IsUpdateable="false"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="CsiIdseq"
       EntityUsage="ClassSchemeItems"
       AliasName="CSI_IDSEQ" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="CsiName"
       IsUpdateable="false"
       IsUnique="true"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="CsiName"
       EntityUsage="ClassSchemeItems"
       AliasName="CSI_NAME" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="CsitlName"
       IsUpdateable="false"
       IsUnique="true"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="CsitlName"
       EntityUsage="ClassSchemeItems"
       AliasName="CSITL_NAME" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="CsIdseq"
       IsUpdateable="false"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="CsIdseq"
       EntityUsage="ClassificationSchemes"
       AliasName="CS_IDSEQ" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="PreferredName"
       IsUpdateable="false"
+      PrecisionRule="false"
       EntityAttrName="PreferredName"
       EntityUsage="ClassificationSchemes"
       AliasName="PreferredName" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="PreferredDefinition"
       IsUpdateable="false"
+      PrecisionRule="false"
       EntityAttrName="PreferredDefinition"
       EntityUsage="ClassificationSchemes"
       AliasName="PreferredDefinition" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsId"
+      PrecisionRule="true"
+      EntityAttrName="CsId"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CS_ID" >
    </ViewAttribute>
 </ViewObject>

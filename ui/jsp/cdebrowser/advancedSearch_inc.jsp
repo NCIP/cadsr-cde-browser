@@ -2,8 +2,8 @@
 
 <table width="100%" >
  
- <tr align="left">
-    <td class="OraHeaderSubSub" width="60%" align="left" nowrap>Search for DataElements</td>
+ <tr valign="bottom" align="left">
+    <td class="OraHeaderSubSub" width="60%" align="left" nowrap>Search by Name</td>
      <td align="right" class="MessageText"  width="20%" nowrap><b>
    <%
    if (deList!=null&&deList.size()==0)
@@ -31,7 +31,7 @@
 
    
  </tr>   
- <tr>
+ <tr valign="top" >
    <td  align="center" colspan="3"><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
   </tr> 
  </table>
@@ -42,7 +42,19 @@
   <table width="100%" cellpadding="0" cellspacing="1" class="OraBGAccentVeryDark" border="0" >
   <tr>
      <td width="65%" class="OraTabledata"  align="center" nowrap >
-       <input type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="60"> 
+       <table border="0" width="100%" cellpadding="0" cellspacing="0" class="OraTabledata" >
+         <tr>
+          <td colspan=2" align="center">
+           <input type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="60"> 
+          </td>
+         </tr>
+         <tr vlign="top">
+            <td nowrap>&nbsp;</td>
+            <td width="90%" valign="top" align="center" class="AbbreviatedText">Tip: The wildcard character is *.</td>
+          </td>
+         </tr>
+     	</table>     
+       
      </td>
      <td width="35%">
      	<table border="0" width="100%" cellpadding="0" cellspacing="0" class="OraTabledata" >
@@ -52,16 +64,63 @@
      	 <tr>
      	    <td width="80%"  class="OraTabledata" align="right" ><%=desb.getSearchInList()%></td> 
      	 </tr>
+     	 <tr>
+     	    <td width="80%"  class="AbbreviatedText" align="right" >Tip: Use Shift or Ctrl to select multiple fields.</td> 
+     	 </tr>       
+       
      	</table>
      </td>
  </tr>
+   
  </table>
+ 
  <table width="100%">
- <tr align="left">
-    <td class="OraHeaderSubSub" width="80%" align="left" nowrap>Search using other attributes</td>
+   <tr>
+         <td nowrap>&nbsp;</td>
+   </tr>  
+  <tr align="left">
+     <td class="OraHeaderSubSub" width="80%" align="left" nowrap>Search by Concept</td>
+   
+  </tr>  
+  <tr>
+    <td align="center" ><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+   </tr> 
+ </table> 
+ 
+ 
+   <table  width="100%"  border="0">
+     <tr>
+          <td width="50%" >
+            <table  width="100%" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">  
+             <tr >
+               <td width="40%" class="OraTableColumnHeaderNoBG" nowrap>Concept Name</td>
+               <td width="60%" class="OraTabledata"><input type="text"  value=""  size="30" ></td>
+             </tr>               
+            </table>           
+           </td>
+           <td valign="top" width="50%" >
+            <table  width="100%" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
+             <tr >
+              <td width="40%" class="OraTableColumnHeaderNoBG" nowrap>Concept Code </td>
+              <td  width="60%" class="OraTabledata" nowrap>
+               <input type="text"  value=""  size="20"> 
+              </td>
+             </tr>                
+            </table>  
+          </td>
+      </tr>         
+  </table> 
+  
+ 
+ <table valign="bottom" width="100%">
+  <tr>
+        <td nowrap>&nbsp;</td>
+  </tr> 
+ <tr valign="bottom" align="left">
+    <td class="OraHeaderSubSub" width="80%" align="left" nowrap>Search by Attributes</td>
   
  </tr>  
- <tr>
+ <tr valign="top" >
    <td align="center" ><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
   </tr> 
  </table> 
@@ -144,31 +203,17 @@
                     </td>
                 </tr>
 
-                 <tr>
-                     <td align="center" height="2" >    &nbsp;</td>
-                 </tr> 
-                <tr>
-                    <td width="100%" >
-                        <table  width="100%" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
-                        <tr >
-                         <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Concept ID </td>
-                         <td  width="70%" class="OraTabledata" nowrap>
-                           <input type="text"  value="" > 
-                         </td>
-                        </tr>    
-                        <tr >
-                          <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Concept Name</td>
-                          <td width="70%" class="OraTabledata"><input type="text"  value="" ></td>
-                        </tr>               
-                        </table>            
-                    </td>
-                 </tr>
               </table>
          </td>
    </tr>
  </table>
- 
+
+         
+                 
  <table width="100%">
+   <tr>
+         <td nowrap>&nbsp;</td>
+  </tr>  
  <tr align="left">
     <td class="OraHeaderSubSub" width="80%" align="left" nowrap>Limit search results using filters</td>
   

@@ -1,12 +1,16 @@
 package gov.nih.nci.ncicb.cadsr.persistence.bc4j.handler;
 
+import gov.nih.nci.ncicb.cadsr.dto.ConceptDerivationRuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModuleImpl;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValidValuesValueObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValidValuesViewRowImpl;
+import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.handler.ValidValueHandler;
 import gov.nih.nci.ncicb.cadsr.util.PageIterator;
 
+import java.util.HashMap;
+import java.util.Map;
 import oracle.cle.persistence.Handler;
 import oracle.cle.persistence.HandlerFactory;
 
@@ -57,15 +61,21 @@ public class ValidValueHandlerImpl extends Handler implements ValidValueHandler 
       CDEBrowserBc4jModuleImpl module =
         (CDEBrowserBc4jModuleImpl) getConnection(sessionId);
       vw = module.getMyValidValuesView(aVdIdseq);
-
       //vw.setMaxFetchSize(20);
       vvIterator.setScrollableObject(vw);
-
       vvRows = (Row[]) vvIterator.getRowsInRange();
-
+      
       for (int i = 0; i < vvRows.length; i++) {
-        vvList.add(new ValidValuesValueObject(
-            (ValidValuesViewRowImpl) vvRows[i]));
+        ValidValuesViewRowImpl rowImpl = (ValidValuesViewRowImpl) vvRows[i];
+        ValidValuesValueObject validValue = new ValidValuesValueObject(rowImpl);
+        String ruleId = rowImpl.getCondrIdseq();
+        if(ruleId!=null)
+        {
+          ConceptDerivationRule rule = new ConceptDerivationRuleTransferObject();
+          rule.setIdseq(ruleId);
+          validValue.setConceptDerivationRule(rule);
+        }
+        vvList.add(validValue);
       }
     } catch (Exception e) {
       throw e;

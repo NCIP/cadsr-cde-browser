@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.bc4j;
 
+import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 
@@ -15,6 +16,7 @@ public class ValidValuesValueObject implements ValidValue {
   protected String shortMeaningValue;
   protected String vmDescription;
   protected String vpIdseq;
+  ConceptDerivationRule conceptDerivationRule =null;
 
   public ValidValuesValueObject() {
     super();
@@ -84,4 +86,12 @@ public class ValidValuesValueObject implements ValidValue {
   public void setVpIdseq(String aVpIdseq) {
     this.vpIdseq = aVpIdseq;
   }
+    public ConceptDerivationRule getConceptDerivationRule()
+   {
+     return conceptDerivationRule;
+   }
+   public void setConceptDerivationRule(ConceptDerivationRule rule)
+   {
+     conceptDerivationRule = rule;
+   }   
 }
