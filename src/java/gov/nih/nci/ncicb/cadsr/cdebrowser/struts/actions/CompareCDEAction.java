@@ -6,8 +6,9 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.6 2004-12-18 06:41:19 kakkodis Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.7 2005-01-18 19:19:41 jiangja Exp $
  */
+
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.cdebrowser.CDECompareList;
@@ -53,331 +54,303 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+public class CompareCDEAction
+ extends BrowserBaseDispatchAction {
+ /**
+  * Displays CDE Cart.
+  *
+  * @param mapping The ActionMapping used to select this instance.
+  * @param form The optional ActionForm bean for this request.
+  * @param request The HTTP Request we are processing.
+  * @param response The HTTP Response we are processing.
+  *
+  * @return
+  *
+  * @throws IOException
+  * @throws ServletException
+  */
+ public ActionForward compareCDEs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                  HttpServletResponse response) throws IOException, ServletException {
+  //CDECart cart = new CDECartTransferObject();
+  CDECart cart = null;
 
-public class CompareCDEAction extends BrowserBaseDispatchAction {
-  /**
-   * Displays CDE Cart.
-   *
-   * @param mapping The ActionMapping used to select this instance.
-   * @param form The optional ActionForm bean for this request.
-   * @param request The HTTP Request we are processing.
-   * @param response The HTTP Response we are processing.
-   *
-   * @return
-   *
-   * @throws IOException
-   * @throws ServletException
-   */
-  public ActionForward compareCDEs(
-    ActionMapping mapping,
-    ActionForm form,
-    HttpServletRequest request,
-    HttpServletResponse response) throws IOException, ServletException {
-    //CDECart cart = new CDECartTransferObject();
-    CDECart cart = null;
+  DynaActionForm compareForm = (DynaActionForm)form;
 
-    DynaActionForm compareForm = (DynaActionForm) form;
+  String [] cdeIdseqArr = (String [])compareForm.get(ProcessConstants.SELECT_DE);
+  CDECompareList cdeList = (CDECompareList)this.getSessionObject(request, CDE_COMPARE_LIST);
 
-    String[] cdeIdseqArr = (String[]) compareForm.get(ProcessConstants.SELECT_DE);        
-    CDECompareList cdeList = (CDECompareList)this.getSessionObject(request,CDE_COMPARE_LIST);
-    if(cdeList==null)
-    {     
-        cdeList = new CDECompareList();
-        setSessionObject(request,CDE_COMPARE_LIST,cdeList,true);
-    }
-    if(cdeIdseqArr!=null)
-    {
-      cdeList.add(cdeIdseqArr);
-    }
-    if(cdeList.getCdeList().size()==0)
-    {
+  if (cdeList == null) {
+   cdeList = new CDECompareList();
 
-      saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
-      return mapping.findForward("search");  
-    }      
-    if(cdeList.getCdeList().size()<2)
-    {
-
-      saveError("cadsr.cdebrowser.cdecompare.list.oneelement", request);
-      return mapping.findForward("search");  
-    }    
-
-    ListIterator it = cdeList.listIterator();
-    List cdeDetailList = new ArrayList();
-    
-    try
-    {
-      while(it.hasNext())
-      {
-        DataElement de = (DataElement)it.next();
-        cdeDetailList.add(getDataElementDetails(de,request.getSession().getId()));
-        
-      }
-      cdeList.setDetailCDEList(cdeDetailList);
-    }
-    catch (Exception e)
-    {     
-      Exception ex = e;
-      saveError("cadsr.cdebrowser.cdecompare.compare.failed", request);
-      return mapping.findForward(FAILURE);
-    }
-    return mapping.findForward(SUCCESS);
+   setSessionObject(request, CDE_COMPARE_LIST, cdeList, true);
   }
-   /**
-   * 
-   *
-   * @param mapping The ActionMapping used to select this instance.
-   * @param form The optional ActionForm bean for this request.
-   * @param request The HTTP Request we are processing.
-   * @param response The HTTP Response we are processing.
-   *
-   * @return
-   *
-   * @throws IOException
-   * @throws ServletException
-   */
-  public ActionForward addToCDECompareList(
-    ActionMapping mapping,
-    ActionForm form,
-    HttpServletRequest request,
-    HttpServletResponse response) throws IOException, ServletException {
-    
-    DynaActionForm compareForm = (DynaActionForm) form;
-    String[] cdeIdseqArr = (String[]) compareForm.get(ProcessConstants.SELECT_DE);
-    CDECompareList cdeList = (CDECompareList)this.getSessionObject(request,CDE_COMPARE_LIST);
 
-    if(cdeList==null)
-      {
-        cdeList = new CDECompareList();
-        setSessionObject(request,CDE_COMPARE_LIST,cdeList,true);
-      }
-      
-    if(cdeIdseqArr!=null&&cdeList!=null)
-      {
-        if(cdeList.add(cdeIdseqArr))
-        {
-          saveMessage("cadsr.cdebrowser.cdecompare.list.add.success", request);                      
-        }
-        else
-        {
-          saveMessage("cadsr.cdebrowser.cdecompare.list.add.duplicate", request);
-        }
-      }
-    else
-    {
-      saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
-    }
-    return mapping.findForward(SUCCESS);
-  }   
-  
-  /**
-   * 
-   *
-   * @param mapping The ActionMapping used to select this instance.
-   * @param form The optional ActionForm bean for this request.
-   * @param request The HTTP Request we are processing.
-   * @param response The HTTP Response we are processing.
-   *
-   * @return
-   *
-   * @throws IOException
-   * @throws ServletException
-   */
-  public ActionForward removeFromCDECompareList(
-    ActionMapping mapping,
-    ActionForm form,
-    HttpServletRequest request,
-    HttpServletResponse response) throws IOException, ServletException {
-    
-    DynaActionForm compareForm = (DynaActionForm) form;
-    String[] cdeIndexs = (String[]) compareForm.get(CDE_TO_REMOVE);
-    CDECompareList cdeList = (CDECompareList)this.getSessionObject(request,CDE_COMPARE_LIST);
+  if (cdeIdseqArr != null) {
+   cdeList.add(cdeIdseqArr);
+  }
 
-      
-    if(cdeIndexs!=null&&cdeList!=null)
-      {
-       
-       if(cdeList.remove(cdeIndexs))
-        {
-         if(!cdeList.isEmpty()&&cdeList.getCdeList().size()>1)
-          saveMessage("cadsr.cdebrowser.cdecompare.list.remove.success", request);                      
-        }
-        else
-        {
-          saveError("cadsr.cdebrowser.cdecompare.list.remove.failed", request);
-        }
-      }
-    else
-    {
-      //go back to homepage
-      saveError("cadsr.cdebrowser.cdecompare.list.empty", request); 
-      return mapping.findForward(FAILURE);      
-    }
-    if(cdeList!=null&&cdeList.isEmpty())
-    {
-      //go back to homepage
-      saveMessage("cadsr.cdebrowser.cdecompare.list.empty", request); 
-      return mapping.findForward("lessThanTwo");
-    }
-    if(cdeList.getCdeList().size()<2)
-    {
-      //go back to homepage
-      saveMessage("cadsr.cdebrowser.cdecompare.list.oneelement", request); 
-      return mapping.findForward("lessThanTwo");
-    }    
-    return mapping.findForward(SUCCESS);
-  }   
-  
-    /**
-   * 
-   *
-   * @param mapping The ActionMapping used to select this instance.
-   * @param form The optional ActionForm bean for this request.
-   * @param request The HTTP Request we are processing.
-   * @param response The HTTP Response we are processing.
-   *
-   * @return
-   *
-   * @throws IOException
-   * @throws ServletException
-   */
-  public ActionForward doneCDECompare(
-    ActionMapping mapping,
-    ActionForm form,
-    HttpServletRequest request,
-    HttpServletResponse response) throws IOException, ServletException {
-    
-    return mapping.findForward(SUCCESS);
-  }   
-  
-  /**
-   * 
-   *
-   * @param mapping The ActionMapping used to select this instance.
-   * @param form The optional ActionForm bean for this request.
-   * @param request The HTTP Request we are processing.
-   * @param response The HTTP Response we are processing.
-   *
-   * @return
-   *
-   * @throws IOException
-   * @throws ServletException
-   */
-  public ActionForward changeCompareOrder(
-    ActionMapping mapping,
-    ActionForm form,
-    HttpServletRequest request,
-    HttpServletResponse response) throws IOException, ServletException {
-    
-    
-    DynaActionForm compareForm = (DynaActionForm) form;
-    String[] newDisplayOrderArr = (String[]) compareForm.get(CDE_COMPARE_DISPAY_ORDER); 
-    CDECompareList cdeList = (CDECompareList)this.getSessionObject(request,CDE_COMPARE_LIST);
-    
-    if(newDisplayOrderArr!=null&&cdeList!=null)
-      {
-        cdeList.setItemOrder(newDisplayOrderArr);
-      }    
-    
-    return mapping.findForward(SUCCESS);
-  }  
-  public ActionForward downloadToExcel(ActionMapping mapping,
-        ActionForm form, HttpServletRequest request,
-        HttpServletResponse response) throws IOException, ServletException {
-        
-        DynaActionForm hrefCRFForm = (DynaActionForm) form;
+  if (cdeList.getCdeList().size() == 0) {
+   saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
 
-        
-        File f = new File("D:\\projects\\NCI3\\cdebrowser_other\\excel_template\\exceldownloadCDECompare.xls");
-        String ctype = ContentTypeHelper.getContentType(f.getName());
+   return mapping.findForward("search");
+  }
 
-			  response.setContentType(ctype);			
-        response.setContentLength((int)f.length());			
-        response.addHeader("Content-Disposition", "attachment; filename=" + f.getName());
-        response.addHeader("Pragma", "No-cache");
-        response.addHeader("Cache-Control", "no-cache");
-        response.addHeader("Expires", "0");    
-     try{
-			// create buffer			
-        byte[] buffer = new byte[1024];			
-        int r = 0;			
-        // write out file			
-        FileInputStream fin = new FileInputStream(f);			
-        OutputStream out = response.getOutputStream();			
-        while((r = fin.read(buffer, 0, buffer.length)) != -1) 
-          {				
-           out.write(buffer, 0, r);			
-          }			
-        try {				
-          fin.close();				
-          out.flush();				
-          out.close();			
-          } catch(Exception e) {}			
-        out = null;			
-        fin = null;			
-        buffer = null;		
-      } catch(Exception ex) 
-       {		
-          String msg = ex.getMessage();			
-          response.setContentType("text/html");			
-          response.setContentLength(msg.length());			
-          PrintWriter out = response.getWriter();			
-          out.println("Unexpected error");			
-          out.flush();			
-          out.close();		
-        }        
-        return null;
-    }  
- private DataElement getDataElementDetails(DataElement de,String sessionId) throws Exception
- {
-       DataElementHandler dh = (DataElementHandler) HandlerFactory.getHandler(DataElement.class);
-       de = (DataElement) dh.findObject(de.getDeIdseq(), sessionId);
-      ServiceLocator locator = 
-      ServiceLocatorFactory.getLocator(CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
-      AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
-      ConceptDAO conDAO = daoFactory.getConceptDAO();
-       if(de!=null)
-       {
+  if (cdeList.getCdeList().size() < 2) {
+   saveError("cadsr.cdebrowser.cdecompare.list.oneelement", request);
 
-      Property prop = de.getDataElementConcept().getProperty();
-      if(prop!=null)
-      {
-        ConceptDerivationRule propRule = conDAO.getPropertyConceptDerivationRuleForDEC(de.getDataElementConcept().getDecIdseq());
-        de.getDataElementConcept().getProperty().setConceptDerivationRule(propRule);
-      }
+   return mapping.findForward("search");
+  }
 
-      ObjectClass objClass = de.getDataElementConcept().getObjectClass();
-      if(objClass!=null)
-      {
-        ConceptDerivationRule classRule = conDAO.getObjectClassConceptDerivationRuleForDEC(de.getDataElementConcept().getDecIdseq());
-        de.getDataElementConcept().getObjectClass().setConceptDerivationRule(classRule);
-      }  
-      
-        ValidValueHandler validValueHandler =
-            (ValidValueHandler)HandlerFactory.getHandler(ValidValue.class);
-        List vvList = validValueHandler.getValidValues(de.getVdIdseq()
-                                                   ,sessionId);
-        
-        if(vvList!=null&&!vvList.isEmpty())
-        {
-          vvList = conDAO.populateConceptsForValidValues(vvList);
-        }
-        de.getValueDomain().setValidValues(vvList);   
-        
-       }
-       
-       
+  ListIterator it = cdeList.listIterator();
+  List cdeDetailList = new ArrayList();
 
-      ClassificationHandler classificationHandler =
-          (ClassificationHandler)HandlerFactory.getHandler(Classification.class);
-      List classificationSchemes = classificationHandler.getClassificationSchemes(
-                              de.getDeIdseq(),sessionId);
-      de.setClassifications(classificationSchemes);
-       
+  try {
+   while (it.hasNext()) {
+    DataElement de = (DataElement)it.next();
 
-      DerivedDataElementDAO ddeDAO = daoFactory.getDerivedDataElementDAO();
-      DerivedDataElement dde = ddeDAO.findDerivedDataElement(de.getDeIdseq());
-      de.setDerivedDataElement(dde);
-    return de;      
+    cdeDetailList.add(getDataElementDetails(de, request.getSession().getId()));
+   }
+
+   cdeList.setDetailCDEList(cdeDetailList);
+  } catch (Exception e) {
+   Exception ex = e;
+
+   saveError("cadsr.cdebrowser.cdecompare.compare.failed", request);
+   return mapping.findForward(FAILURE);
+  }
+
+  return mapping.findForward(SUCCESS);
+ }
+ /**
+ * 
+ *
+ * @param mapping The ActionMapping used to select this instance.
+ * @param form The optional ActionForm bean for this request.
+ * @param request The HTTP Request we are processing.
+ * @param response The HTTP Response we are processing.
+ *
+ * @return
+ *
+ * @throws IOException
+ * @throws ServletException
+ */
+ public ActionForward addToCDECompareList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                          HttpServletResponse response) throws IOException, ServletException {
+  DynaActionForm compareForm = (DynaActionForm)form;
+
+  String [] cdeIdseqArr = (String [])compareForm.get(ProcessConstants.SELECT_DE);
+  CDECompareList cdeList = (CDECompareList)this.getSessionObject(request, CDE_COMPARE_LIST);
+
+  if (cdeList == null) {
+   cdeList = new CDECompareList();
+
+   setSessionObject(request, CDE_COMPARE_LIST, cdeList, true);
+  }
+
+  if (cdeIdseqArr != null && cdeList != null) {
+   if (cdeList.add(cdeIdseqArr)) {
+    saveMessage("cadsr.cdebrowser.cdecompare.list.add.success", request);
+   } else {
+    saveMessage("cadsr.cdebrowser.cdecompare.list.add.duplicate", request);
+   }
+  } else {
+   saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
+  }
+
+  return mapping.findForward(SUCCESS);
+ }
+
+ /**
+  * 
+  *
+  * @param mapping The ActionMapping used to select this instance.
+  * @param form The optional ActionForm bean for this request.
+  * @param request The HTTP Request we are processing.
+  * @param response The HTTP Response we are processing.
+  *
+  * @return
+  *
+  * @throws IOException
+  * @throws ServletException
+  */
+ public ActionForward removeFromCDECompareList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                               HttpServletResponse response) throws IOException, ServletException {
+  DynaActionForm compareForm = (DynaActionForm)form;
+
+  String [] cdeIndexs = (String [])compareForm.get(CDE_TO_REMOVE);
+  CDECompareList cdeList = (CDECompareList)this.getSessionObject(request, CDE_COMPARE_LIST);
+
+  if (cdeIndexs != null && cdeList != null) {
+   if (cdeList.remove(cdeIndexs)) {
+    if (!cdeList.isEmpty() && cdeList.getCdeList().size() > 1)
+     saveMessage("cadsr.cdebrowser.cdecompare.list.remove.success", request);
+   } else {
+    saveError("cadsr.cdebrowser.cdecompare.list.remove.failed", request);
+   }
+  } else {
+   //go back to homepage
+   saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
+
+   return mapping.findForward(FAILURE);
+  }
+
+  if (cdeList != null && cdeList.isEmpty()) {
+   //go back to homepage
+   saveMessage("cadsr.cdebrowser.cdecompare.list.empty", request);
+
+   return mapping.findForward("lessThanTwo");
+  }
+
+  if (cdeList.getCdeList().size() < 2) {
+   //go back to homepage
+   saveMessage("cadsr.cdebrowser.cdecompare.list.oneelement", request);
+
+   return mapping.findForward("lessThanTwo");
+  }
+
+  return mapping.findForward(SUCCESS);
+ }
+
+ /**
+* 
+*
+* @param mapping The ActionMapping used to select this instance.
+* @param form The optional ActionForm bean for this request.
+* @param request The HTTP Request we are processing.
+* @param response The HTTP Response we are processing.
+*
+* @return
+*
+* @throws IOException
+* @throws ServletException
+*/
+ public ActionForward doneCDECompare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                     HttpServletResponse response) throws IOException, ServletException {
+  return mapping.findForward(SUCCESS);
+ }
+
+ /**
+  * 
+  *
+  * @param mapping The ActionMapping used to select this instance.
+  * @param form The optional ActionForm bean for this request.
+  * @param request The HTTP Request we are processing.
+  * @param response The HTTP Response we are processing.
+  *
+  * @return
+  *
+  * @throws IOException
+  * @throws ServletException
+  */
+ public ActionForward changeCompareOrder(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                         HttpServletResponse response) throws IOException, ServletException {
+  DynaActionForm compareForm = (DynaActionForm)form;
+
+  String [] newDisplayOrderArr = (String [])compareForm.get(CDE_COMPARE_DISPAY_ORDER);
+  CDECompareList cdeList = (CDECompareList)this.getSessionObject(request, CDE_COMPARE_LIST);
+
+  if (newDisplayOrderArr != null && cdeList != null) {
+   cdeList.setItemOrder(newDisplayOrderArr);
+  }
+
+  return mapping.findForward(SUCCESS);
+ }
+
+ public ActionForward downloadToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                      HttpServletResponse response) throws IOException, ServletException {
+  DynaActionForm hrefCRFForm = (DynaActionForm)form;
+
+  File f = new File("D:\\projects\\NCI3\\cdebrowser_other\\excel_template\\exceldownloadCDECompare.xls");
+  String ctype = ContentTypeHelper.getContentType(f.getName());
+
+  response.setContentType(ctype);
+  response.setContentLength((int)f.length());
+  response.addHeader("Content-Disposition", "attachment; filename=" + f.getName());
+  response.addHeader("Pragma", "No-cache");
+  response.addHeader("Cache-Control", "no-cache");
+  response.addHeader("Expires", "0");
+
+  try {
+   // create buffer			
+   byte [] buffer = new byte[1024];
+
+   int r = 0;
+   // write out file			
+   FileInputStream fin = new FileInputStream(f);
+   OutputStream out = response.getOutputStream();
+
+   while ((r = fin.read(buffer, 0, buffer.length)) != -1) {
+    out.write(buffer, 0, r);
+   }
+
+   try {
+    fin.close();
+
+    out.flush();
+    out.close();
+   } catch (Exception e) { }
+
+   out = null;
+   fin = null;
+   buffer = null;
+  } catch (Exception ex) {
+   String msg = ex.getMessage();
+
+   response.setContentType("text/html");
+   response.setContentLength(msg.length());
+   PrintWriter out = response.getWriter();
+   out.println("Unexpected error");
+   out.flush();
+   out.close();
+  }
+
+  return null;
+ }
+
+ private DataElement getDataElementDetails(DataElement de, String sessionId) throws Exception {
+  DataElementHandler dh = (DataElementHandler)HandlerFactory.getHandler(DataElement.class);
+
+  de = (DataElement)dh.findObject(de.getDeIdseq(), sessionId);
+  ServiceLocator locator = ServiceLocatorFactory.getLocator(CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
+  AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
+  ConceptDAO conDAO = daoFactory.getConceptDAO();
+
+  if (de != null) {
+   Property prop = de.getDataElementConcept().getProperty();
+
+   if (prop != null) {
+    ConceptDerivationRule
+       propRule = conDAO.getPropertyConceptDerivationRuleForDEC(de.getDataElementConcept().getDecIdseq());
+
+    de.getDataElementConcept().getProperty().setConceptDerivationRule(propRule);
+   }
+
+   ObjectClass objClass = de.getDataElementConcept().getObjectClass();
+
+   if (objClass != null) {
+    ConceptDerivationRule
+       classRule = conDAO.getObjectClassConceptDerivationRuleForDEC(de.getDataElementConcept().getDecIdseq());
+
+    de.getDataElementConcept().getObjectClass().setConceptDerivationRule(classRule);
+   }
+
+   ValidValueHandler validValueHandler = (ValidValueHandler)HandlerFactory.getHandler(ValidValue.class);
+   List vvList = validValueHandler.getValidValues(de.getVdIdseq(), sessionId);
+
+   if (vvList != null && !vvList.isEmpty()) {
+    vvList = conDAO.populateConceptsForValidValues(vvList);
+   }
+
+   de.getValueDomain().setValidValues(vvList);
+  }
+
+  ClassificationHandler classificationHandler = (ClassificationHandler)HandlerFactory.getHandler(Classification.class);
+  List classificationSchemes = classificationHandler.getClassificationSchemes(de.getDeIdseq(), sessionId);
+  de.setClassifications(classificationSchemes);
+
+  DerivedDataElementDAO ddeDAO = daoFactory.getDerivedDataElementDAO();
+  DerivedDataElement dde = ddeDAO.findDerivedDataElement(de.getDeIdseq());
+  de.setDerivedDataElement(dde);
+  return de;
  }
 }
