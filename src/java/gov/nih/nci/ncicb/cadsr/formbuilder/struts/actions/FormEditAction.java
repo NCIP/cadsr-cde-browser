@@ -154,7 +154,10 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     Form crf = (Form) getSessionObject(request, CRF);
 
     List modules = crf.getModules();
-
+    //FormActionUtil.setInitDisplayOrders(modules); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
+                                      
     if ((modules != null) && (modules.size() > 1)) {
       Module currModule = (Module) modules.get(currModuleIndex);
       Module prvModule = (Module) modules.get(currModuleIndex - 1);
@@ -197,7 +200,10 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     Form crf = (Form) getSessionObject(request, CRF);
 
     List modules = crf.getModules();
-
+    //FormActionUtil.setInitDisplayOrders(modules); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
+                                      
     if ((modules != null) && (modules.size() > 1)) {
       Module currModule = (Module) modules.get(currModuleIndex);
       Module nextModule = (Module) modules.get(currModuleIndex + 1);
@@ -290,6 +296,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
 
     List modules = crf.getModules();
 
+                                      
     if ((modules != null) && (moduleIndex != null) && (deletedModules != null)) {
       Module moduleToAdd =
         removeModuleFromList(addDeletedModuleIdSeq, deletedModules);

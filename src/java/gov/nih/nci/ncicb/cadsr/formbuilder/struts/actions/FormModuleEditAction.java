@@ -17,6 +17,7 @@ import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.Orderable;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
@@ -164,7 +165,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     setValidValueInstructionsFromArray(module,vvInstructionsArr);    
 
     List questions = module.getQuestions();
-
+    //FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
+                                      
     if ((questions != null) && (questions.size() > 1)) {
       Question currQuestion = (Question) questions.get(currQuestionIndex);
       Question prvQuestion = (Question) questions.get(currQuestionIndex - 1);
@@ -214,7 +218,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     setValidValueInstructionsFromArray(module,vvInstructionsArr);
     
     List questions = module.getQuestions();
-
+    //FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
+                                      
     if ((questions != null) && (questions.size() > 1)) {
       Question currQuestion = (Question) questions.get(currQuestionIndex);
       Question nextQuestion = (Question) questions.get(currQuestionIndex + 1);
@@ -323,7 +330,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     setValidValueInstructionsFromArray(module,vvInstructionsArr);    
 
     List questions = module.getQuestions();
-
+    //FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
     if (
       (questions != null) && (questionIndex != null) &&
           (deletedQuestions != null)) {
@@ -398,7 +407,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
-
+    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
     if ((validValues != null) && (validValues.size() > 1)) {
       FormValidValue currValidValue =
         (FormValidValue) validValues.get(currValidValueIndex);
@@ -454,7 +465,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
-
+    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
+                                      
     if ((validValues != null) && (validValues.size() > 1)) {
       FormValidValue currValidValue =
         (FormValidValue) validValues.get(currValidValueIndex);
@@ -635,6 +649,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     List validValues = currQuestion.getValidValues();
 
+                                      
     if (currValidValueIndex < validValues.size()) {
       FormValidValue currValidValue =
         (FormValidValue) validValues.get(currValidValueIndex);
@@ -1693,4 +1708,6 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       }    
     return maxSize;
   }
+  
+
 }

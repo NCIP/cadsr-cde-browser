@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.common;
 import gov.nih.nci.ncicb.cadsr.resource.Orderable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -50,5 +51,14 @@ public class FormActionUtil
       orderable.setDisplayOrder(--displayOrder);
     }
   }
-  
+
+  public static void setInitDisplayOrders(List orderables)
+  {
+    int displayOrder = 0;
+    for (Iterator it = orderables.iterator(); it.hasNext();) {
+        Orderable element = (Orderable)it.next();
+        element.setDisplayOrder(displayOrder);
+        displayOrder++;
+    }
+  }  
 }
