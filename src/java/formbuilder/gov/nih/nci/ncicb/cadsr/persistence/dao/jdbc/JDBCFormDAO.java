@@ -79,11 +79,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    * @return modules that belong to the specified form
    */
   public Collection getModulesInAForm(String formId) {
-    ModulesInAFormQuery query = new ModulesInAFormQuery();
+    ModulesInAFormQuery_STMT query = new ModulesInAFormQuery_STMT();
     query.setDataSource(getDataSource());
-    query.setSql();
+    query._setSql(formId);
 
-    return query.execute(formId);
+    return query.execute();
   }
 
   public String copyForm(
@@ -393,14 +393,14 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    * Inner class that accesses database to get all the modules that belong to
    * the specified form
    */
-  class ModulesInAFormQuery extends MappingSqlQuery {
-    ModulesInAFormQuery() {
+  class ModulesInAFormQuery_STMT extends MappingSqlQuery {
+    ModulesInAFormQuery_STMT() {
       super();
     }
 
-    public void setSql() {
-      super.setSql("SELECT * FROM FB_MODULES_VIEW where CRF_IDSEQ = ? ");
-      declareParameter(new SqlParameter("CRF_IDSEQ", Types.VARCHAR));
+    public void _setSql(String id) {
+      super.setSql("SELECT * FROM FB_MODULES_VIEW where CRF_IDSEQ = '" + id + "'");
+//       declareParameter(new SqlParameter("CRF_IDSEQ", Types.VARCHAR));
     }
 
     protected Object mapRow(
@@ -663,6 +663,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       return out;
     }
   }
+
 
   /**
    * Inner class that copies the source form to a new form

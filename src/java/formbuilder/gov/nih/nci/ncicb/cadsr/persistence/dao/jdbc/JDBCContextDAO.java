@@ -42,21 +42,21 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
    * @return <b>Collection</b> Collection of ContextTransferObjects
    */
   public Context getContextByName(String contextName) {   
-     ContextByNameQuery query = new ContextByNameQuery();
+     ContextByNameQuery_STMT query = new ContextByNameQuery_STMT();
      query.setDataSource(getDataSource());
-     query.setSql();
-    List result = (List) query.execute(contextName);
-    Context theContext = null;
-    if (result.size() != 0) {
-      theContext = (Context) (query.execute(contextName).get(0));
-    }
-    else
-    {
+     query._setSql(contextName);
+     List result = (List) query.execute();
+     Context theContext = null;
+     if (result.size() != 0) {
+       theContext = (Context) (query.execute().get(0));
+     }
+     else
+       {
          DMLException dmlExp = new DMLException("No matching record found.");
-	       dmlExp.setErrorCode(NO_MATCH_FOUND);
-           throw dmlExp;         
-    }
-    return theContext;
+	 dmlExp.setErrorCode(NO_MATCH_FOUND);
+	 throw dmlExp;         
+       }
+     return theContext;
   }
   /**
    * Inner class that accesses database to get all the contexts in caDSR
@@ -77,11 +77,31 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
     }
   }
   
+  /**
+   * Inner class that accesses database to get all the contexts in caDSR
+   * 
+   */
+  class ContextByNameQuery_STMT extends MappingSqlQuery {
+
+    public ContextByNameQuery_STMT(){
+      super();
+    }
+    
+    public void _setSql(String name){
+      super.setSql("select conte_idseq, name from contexts where name = '" + name + "'");
+    }
+          
+    protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
+      return new JDBCContextTransferObject(rs);
+    }
+  }
+
+
     /**
    * Inner class that accesses database to get all the contexts in caDSR
    * 
    */
-	class ContextByNameQuery extends MappingSqlQuery {
+  class ContextByNameQuery extends MappingSqlQuery {
 
     public ContextByNameQuery(){
       super();
