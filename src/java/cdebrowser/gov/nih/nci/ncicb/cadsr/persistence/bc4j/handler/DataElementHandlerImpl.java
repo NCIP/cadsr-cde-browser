@@ -167,6 +167,8 @@ public class DataElementHandlerImpl extends Handler
         conte.setConteIdseq((String)deRows[i].getAttribute(11));
         de.setContext(conte);
         de.setPreferredDefinition((String)deRows[i].getAttribute(12));
+        //System.out.println("Registration Status "+);
+        de.setRegistrationStatus((String)checkForNull(deRows[i].getAttribute(13)));
 
         /*de.setContextName((String) deRows[i].getAttribute(3));
         de.setAslName((String) deRows[i].getAttribute(4));

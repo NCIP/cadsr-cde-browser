@@ -112,7 +112,8 @@ public class ContextNode extends BaseTreeNode  {
                                     +"WHERE conte_idseq = ? "
                                     +"AND    deleted_ind = 'No' "
                                     +"AND    latest_version_ind = 'Yes' "
-                                    +"AND    asl_name = 'RELEASED' ";
+                                    +"AND    asl_name = 'RELEASED' "
+                                    +"ORDER BY long_name ";
 
     try {
       pstmt =  

@@ -220,7 +220,11 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
 
     if (hrefCRFForm != null) {
       String formIdSeq = (String) hrefCRFForm.get(FORM_ID_SEQ);
-
+      //Added to support tree
+      if ("".equals(formIdSeq)) {
+        formIdSeq = request.getParameter("P_IDSEQ");
+        hrefCRFForm.set(FORM_ID_SEQ,formIdSeq);
+      }
       if ((formIdSeq != null) && (formIdSeq.length() > 0)) {
         crf = service.getFormDetails(formIdSeq);
         setSessionObject(request, CRF, crf);

@@ -32,7 +32,6 @@ public class ClassificationNode extends BaseTreeNode  {
                            ,Hashtable params) {
     super(dbUtil,params);
     myCsVO = cs;
-    //myDbUtil = dbUtil;
     csTreeNode = new DefaultMutableTreeNode(
       new WebNode(myCsVO.getCsIdseq()
         ,myCsVO.getLongName()
@@ -84,10 +83,11 @@ public class ClassificationNode extends BaseTreeNode  {
             ,rs.getString(2)
             ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CSI&P_IDSEQ="+
             rs.getString(5)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()
+            +"&csiName="+URLEncoder.encode(rs.getString(2))
             +getExtraURLParameters()+"')"
             ,rs.getString(4)));
         List tempNodes;
-        if ("CTEP".equals(contextName)){
+        if ("CTEP".equals(contextName) && getTreeType().equals(DE_SEARCH_TREE)){
           //Getting Core and Non-Core Nodes for Disease Nodes
           if ("DISEASE_TYPE".equals(rs.getString(3)) && 
               "DISEASE".equals(myCsVO.getPreferredName())){

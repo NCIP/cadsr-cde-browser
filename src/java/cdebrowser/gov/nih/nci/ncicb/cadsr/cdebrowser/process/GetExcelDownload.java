@@ -37,7 +37,7 @@ import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
  */
 public class GetExcelDownload extends BasePersistingProcess{
 	private static final String EMPTY_STRING = "";
-  private static final int NUMBER_OF_DE_COLUMNS = 30;
+  private static final int NUMBER_OF_DE_COLUMNS = 32;
     
 	public GetExcelDownload(){
 		this(null);
@@ -281,6 +281,8 @@ public class GetExcelDownload extends BasePersistingProcess{
         deList.add(rs.getString("FORML_NAME")); //27
         deList.add(rs.getString("VD_LONG_NAME")); //28
         deList.add(rs.getString("DEC_LONG_NAME")); //29
+        deList.add(rs.getString("DE_WK_FLOW_STATUS")); //30
+        deList.add(rs.getString("REGISTRATION_STATUS")); //31
         
         deStr= getDataElementStr(deList);
 
@@ -460,6 +462,8 @@ public class GetExcelDownload extends BasePersistingProcess{
                   +"Data Element Concept Context Name,"
                   +"Data Element Concept Context Version,"
                   +"Public ID,"
+                  +"Workflow Status,"
+                  +"Registration Status,"
                   +"Begin Date,"
                   +"Source,"
                   +"Valid Values,"
@@ -514,8 +518,10 @@ public class GetExcelDownload extends BasePersistingProcess{
                "\""+checkForNull((String)l.get(13))+"\"" +"," +
                "\""+checkForNull((String)l.get(14))+"\"" +"," +
                "\""+checkForNull((String)l.get(15))+"\"" +"," +
-               "\""+checkForNull((String)l.get(16))+"\"" +"," +
-               "\""+checkForNull((String)l.get(17))+"\"" +"," +               
+               "\""+checkForNull((String)l.get(30))+"\"" +"," +   //Workflow Status
+               "\""+checkForNull((String)l.get(31))+"\"" +"," +   //Registration Status
+               "\""+checkForNull((String)l.get(16))+"\"" +"," +   //Begin Date
+               "\""+checkForNull((String)l.get(17))+"\"" +"," +   //Source            
                "\""+EMPTY_STRING+"\"";
     return excelRow;
   }

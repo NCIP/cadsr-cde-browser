@@ -295,20 +295,29 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     HttpServletResponse response) throws IOException, ServletException {
     String protocolIdSeq = "";
     String formIdSeq = "";
+    String csCsiIdSeq = "";
     String nodeType = request.getParameter("P_PARAM_TYPE");
     String nodeIdSeq = request.getParameter("P_IDSEQ");
     String contextIdSeq = request.getParameter("P_CONTE_IDSEQ");
+    if (contextIdSeq == null) contextIdSeq = "";
+    String csiName = "";
 
     if ("PROTOCOL".equals(nodeType))
       protocolIdSeq = nodeIdSeq;
     else if ("CRF".equals(nodeType) || "TEMPLATE".equals(nodeType))
       formIdSeq = nodeIdSeq;
+    else if ("CSI".equals(nodeType)) {
+      csCsiIdSeq = nodeIdSeq;
+      csiName = request.getParameter("csiName");
+    }
 
     FormBuilderBaseDynaFormBean searchForm = (FormBuilderBaseDynaFormBean) form;
     searchForm.clear();
     searchForm.set(this.PROTOCOL_ID_SEQ, protocolIdSeq);
     searchForm.set(this.CONTEXT_ID_SEQ, contextIdSeq);
     searchForm.set(this.FORM_ID_SEQ,formIdSeq);
+    searchForm.set("jspClassification",csCsiIdSeq);
+    searchForm.set("txtClassSchemeItem",csiName);
 
     if ("CRF".equals(nodeType) || "TEMPLATE".equals(nodeType))
       return this.getFormDetails(mapping, form, request, response);

@@ -51,6 +51,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
     Connection conn = null;
     Context ctx = null;
     DefaultMutableTreeNode tree = null;
+    BaseTreeNode baseNode = null; 
 
     try {
       CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
@@ -61,12 +62,14 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
       } else {
         throw new Exception("Unable to connect to the database");
       }
-
+      baseNode = new BaseTreeNode(dbHelper,treeParams);
       WebNode contexts =
         new WebNode(
-          dbHelper.getUniqueId(IDSEQ_GENERATOR), "caDSR Contexts",
-          "javascript:performAction('P_PARAM_TYPE=P_PARAM_TYPE&P_IDSEQ=P_IDSEQ&"+
-          "PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')");
+          dbHelper.getUniqueId(IDSEQ_GENERATOR)
+          , "caDSR Contexts",
+          "javascript:"+baseNode.getJsFunctionName()
+          +"('P_PARAM_TYPE=P_PARAM_TYPE&P_IDSEQ=P_IDSEQ&"
+          +baseNode.getExtraURLParameters()+"')");
       tree = new DefaultMutableTreeNode(contexts);
       pstmt = (OraclePreparedStatement) conn.prepareStatement(contextQueryStmt);
       pstmt.defineColumnType(1, Types.VARCHAR);
