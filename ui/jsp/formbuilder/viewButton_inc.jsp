@@ -15,6 +15,7 @@
             activeImageSource="i/selectForCopyButton.gif" 
 		       	activeUrl='<%="/formToCopyAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_COPY%>' 
 		   	   	formType="TEMPLATE"  
+            role="<%=CaDSRConstants.CDE_MANAGER%>" 
 		   	   	urlPrefix="<%=urlPrefix%>"
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"

@@ -101,17 +101,17 @@ function clearForm() {
 		<html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
 	</html:select> 
         </td>        
-    </tr>     
-    <tr>    
-      <td>
-        <bean:message key="cadsr.formbuilder.search.message"/>
-      </td>
-    </tr>    
+    </tr>        
     <tr>    
       <td>
         <html:hidden value="<%=NavigationConstants.GET_ALL_FORMS_METHOD%>" property="<%=NavigationConstants.METHOD_PARAM%>"/>
       </td>
     </tr>
+    <tr>    
+      <td colspan="4" nowrap align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.search.message"/>
+      </td>
+    </tr>     
   <tr>
     <td colspan="4" nowrap align="left" class="AbbreviatedText">Wildcard character for search is *</td>
  </tr>
