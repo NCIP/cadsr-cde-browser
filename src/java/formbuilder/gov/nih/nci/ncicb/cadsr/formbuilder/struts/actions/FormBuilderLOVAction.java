@@ -52,8 +52,11 @@ public class FormBuilderLOVAction extends FormBuilderBaseDispatchAction {
     String protocolLongName =
       (String) searchForm.get(this.PROTOCOLS_LOV_PROTO_LONG_NAME);
 
-    String contextIdSeq = (String) searchForm.get(this.CONTEXT_ID_SEQ);
+    String contextIdSeq = request.getParameter(CONTEXT_ID_SEQ);
+
     String performQuery = request.getParameter(this.PERFORM_QUERY_FIELD);
+
+    request.setAttribute(CONTEXT_ID_SEQ, contextIdSeq);
 
     String chk = (String)searchForm.get(PROTOCOLS_LOV_CONTEXT_CHECK);
 

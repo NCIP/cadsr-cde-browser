@@ -26,26 +26,21 @@ function clearForm() {
   String pageUrl = "&PageId=DataElementsGroup";
   // HSK
   String contextPath = request.getContextPath();
-  //    String csLOVUrl= "javascript:newWin('"+contextPath+"/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
 
   String csLOVUrl= contextPath + 
        "/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem" + pageUrl;
 
-
-  //  String csLOVUrl= "javascript:newWin('" + 
-  //          contextPath + 
-  //          "/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem" 
-  //          + pageUrl + 
-  //          "&P_CONTE_IDSEQ=' + document.forms[0]." + 
-  //          FormConstants.CONTEXT_ID_SEQ + 
-  //          ",'csLOV',700,600)";
-
-  String protoLOVUrl= 
-    "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
+  String protoLOVUrl = contextPath +
+       "/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl;
 
 %>
 <SCRIPT>
 <!--
+function gotoProtocolsLOV() {
+     var dest = '<%= protoLOVUrl %>' + '&contextIdSeq=' + document.forms[0].<%= FormConstants.CONTEXT_ID_SEQ %>.value;
+;
+     newWin(dest, 'ProtocolsLOV', 700, 600);
+}
 function gotoClassificationsLOV() {
      var dest = '<%= csLOVUrl %>' + '&P_CONTE_IDSEQ=' + document.forms[0].<%= FormConstants.CONTEXT_ID_SEQ %>.value;
      newWin(dest, 'ClassificationLOV', 700, 600);
@@ -67,7 +62,7 @@ function gotoClassificationsLOV() {
                  size="19"
                  styleClass="LOVField"
                  />
-          &nbsp;<a href="<%=protoLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Protocol Items"></a>&nbsp;
+          &nbsp;<a href="javascript:gotoProtocolsLOV()"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Protocol Items"></a>&nbsp;
           <a href="javascript:clearProtocol()"><i>Clear</i></a>
           <html:hidden  property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
         </td>

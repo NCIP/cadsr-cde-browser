@@ -66,6 +66,7 @@ function goPage(pageInfo) {
 <INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= clb.getJsId() %>">
 <INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= clb.getJsName() %>">
 <INPUT TYPE="HIDDEN" NAME="method" VALUE="getProtocolsLOV">
+<INPUT TYPE="HIDDEN" NAME="contextIdSeq" value="<%= request.getAttribute("contextIdSeq") %>">
 
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">
