@@ -74,4 +74,5 @@ public interface ProcessConstants extends oracle.cle.process.ProcessConstants {
 
   static final String DE_USAGES_LIST = "deUsagesList";
   static final String SELECT_DE = "selectDE";
+  public static final String CDE_CART_ADD_SUCCESS = "cdecart.add.success";
 }

@@ -216,7 +216,7 @@ function done() {
 }
 
 function newSearch(){
-  top.location.href= "<%=newSearchURL%>";
+  document.location.href= "<%=newSearchURL%>";
 }
 //-->
 </SCRIPT>
@@ -225,6 +225,15 @@ function newSearch(){
 <center>
   <h3 class="CDEBrowserPageContext"><%=pageContextInfo%></h3>
 </center>
+<%
+  if (request.getAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS) != null) {
+%>
+<p class="MessageText">
+  <b><%=request.getAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS)%></b>
+</p>
+<%
+  }
+%>
 <form action="<%= infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm">
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">

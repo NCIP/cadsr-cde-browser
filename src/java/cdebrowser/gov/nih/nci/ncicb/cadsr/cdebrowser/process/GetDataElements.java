@@ -374,11 +374,9 @@ public class GetDataElements extends BasePersistingProcess {
           cart.setDataElement(cdeItem);
         }
 
-        /*Collection coll = cart.getDataElements();
-        Iterator it = coll.iterator();
-        while (it.hasNext()) {
-          System.out.println("DE Id: "+((CDECartItem)it.next()).getId());
-        }*/
+       myRequest.setAttribute (
+        ProcessConstants.CDE_CART_ADD_SUCCESS
+       ,"Data Element(s) added to your CDE Cart Successfully.");
 
       }
 
