@@ -31,6 +31,7 @@ public interface FormConstants extends FormBuilderConstants
     public static final String MODULE_INSTRUCTION_LONG_NAME = "comments";
 
     public static final String CLONED_CRF = "clonedCrf";
+    public static final String MODULE = "eModule";
     public static final String DELETED_MODULES = "deletedModules";
     public static final String FORM_ID_SEQ = "formIdSeq";
     public static final String PREFERRED_DEFINITION = "preferredDefinition";
@@ -59,6 +60,18 @@ public interface FormConstants extends FormBuilderConstants
 
     public static final String CSI_NAME = "txtClassSchemeItem";
     public static final String CS_CSI_ID = "jspClassification";
+    
+    public static final String MODULE_LONG_NAME = "moduleLongName";
+    public static final String MODULE_COMMENTS = "moduleComments";
+    public static final String QUESTION_LONG_NAME = "questionLongName";
+    public static final String QUESTION_ID_SEQ = "questionIdSeq";
+    public static final String QUESTION_INDEX = "questionIndex";
+    public static final String MODULE_QUESTIONS = "moduleQuestions";
+    public static final String DELETED_QUESTIONS ="deletedQuestions";
+    public static final String ADD_DELETED_QUESTION_IDSEQ="addDeletedQuestionIdSeq";
+    public static final String VALID_VALUE_INDEX = "validValueIndex";
+    public static final String AVAILABLE_VALID_VALUES ="AvailableValidValue";
+    public static final String ADD_AVAILABLE_VALID_VALUE_IDSEQ="addAvailableValidValueIdSeq";
 
 
 }
