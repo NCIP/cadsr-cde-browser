@@ -60,7 +60,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
   public boolean hasUpdate(
     String username,
     String acIdseq) {
-    String retValue = this.getHasUpdateQry().execute(username, acIdseq);
+    String retValue = this.getHasUpdateQry().execute(username.toUpperCase(), acIdseq);
 
     return StringUtils.toBoolean(retValue);
   }
@@ -68,7 +68,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
   public boolean hasDelete(
     String username,
     String acIdseq) {
-    String retValue = this.getHasDeleteQry().execute(username, acIdseq);
+    String retValue = this.getHasDeleteQry().execute(username.toUpperCase(), acIdseq);
 
     return StringUtils.toBoolean(retValue);
   }
@@ -78,7 +78,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     String acType,
     String conteIdseq) {
     String retValue =
-      this.getHasCreateQry().execute(username, acType, conteIdseq);
+      this.getHasCreateQry().execute(username.toUpperCase(), acType, conteIdseq);
 
     return StringUtils.toBoolean(retValue);
   }
@@ -226,6 +226,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       in.put("p_conte_idseq", conteIdseq);
 
       Map out = execute(in);
+
       String retValue = (String) out.get("returnValue");
 
       return retValue;
