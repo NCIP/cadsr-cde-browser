@@ -147,3 +147,5 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .PrinterUnderlineOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; border-bottom:1px solid #000000;}
 .TableRowPromptTextLeft {FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #cccc99; text-align: left; }
 .ErrorText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#cc0000}
+.OraTableColumnHeaderVV {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; background-color:#CCCCCC; color:#336699; text-indent:1}
+.OraTableColumnHeaderModule {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; background-color:#CCCC99; color:#336699; text-indent:1}
