@@ -65,10 +65,9 @@
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
     <tr class="OraTableColumnHeader">
       <th scope="col"><bean:message key="cadsr.formbuilder.question.longName"/></th>
-      <th scope="col"><bean:message key="cadsr.formbuilder.question.preferredName"/></th>
       <th scope="col"><bean:message key="cadsr.formbuilder.question.comments"/></th>
       <th scope="col"><bean:message key="cadsr.formbuilder.question.context"/></th>
-      <th scope="col"><bean:message key="cadsr.formbuilder.question.usedByContext"/></th>
+      <th scope="col"><bean:message key="cadsr.formbuilder.question.registration"/></th>
       <th scope="col"><bean:message key="cadsr.formbuilder.question.workflow"/></th>
       <th scope="col"><bean:message key="cadsr.formbuilder.question.publicID"/></th>
       <th scope="col"><bean:message key="cadsr.formbuilder.question.version"/></th>
@@ -89,12 +88,6 @@
           <bean:write name="de" property="item.longName"/>
         </td>
         <td class="OraFieldText">
-          <%--
-          <html:radio property="selectedText" value="<%= itemId + \",\" + de.getItem().getPreferredName() %>"/>
-            --%>
-          <bean:write name="de" property="item.preferredName"/>
-        </td>
-        <td class="OraFieldText">
           <bean:write name="de" property="item.longCDEName"/>
           <%--
           <logic:notEmpty name="de" property="item.longCDEName">
@@ -107,7 +100,7 @@
           <bean:write name="de" property="item.contextName"/>
         </td>
         <td class="OraFieldText">
-          <bean:write name="de" property="item.usingContexts"/>
+	  <bean:write name="de" property="item.registrationStatus"/>
         </td>
         <td class="OraFieldText">
           <bean:write name="de" property="item.aslName"/>
