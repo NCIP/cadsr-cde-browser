@@ -169,7 +169,7 @@
     </web-resource-collection>
     <web-resource-collection>
       <web-resource-name>Secure Services</web-resource-name>
-      <url-pattern>*.do</url-pattern>
+      <url-pattern>form*.do</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <description>Authorized Users Group</description>
