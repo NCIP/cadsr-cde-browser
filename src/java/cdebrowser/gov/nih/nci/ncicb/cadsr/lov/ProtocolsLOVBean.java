@@ -54,7 +54,8 @@ public class ProtocolsLOVBean extends Object {
                             "proto.long_name","Long Name",
                             "proto_conte.name","Context",
                             "proto.asl_name","Workflow Status",
-                            "proto.preferred_definition","Definition"};
+                            "proto.preferred_definition","Definition",
+                            "proto.lead_org","Lead Organization"};
       String[] sqlStmtParm = new String[2];
       sqlStmtParm[0] = " from sbrext.protocols_ext proto,sbr.contexts proto_conte " +
                            " where proto.conte_idseq = proto_conte.conte_idseq " +
@@ -77,7 +78,7 @@ public class ProtocolsLOVBean extends Object {
       clb.setCompressFlag(false); // set compress flag
       clb.setLinkCol(0);          // set detail page link column, 0-> first; 1->second
       clb.setDetailReq_Type("protocols_ext"); //set req_type for detail page
-      clb.setShowRowNum(5);
+      clb.setShowRowNum(40);
       clb.setJsId(request.getParameter("idVar"));
       clb.setJsName(request.getParameter("nameVar"));
       if (isContextSpecific) 

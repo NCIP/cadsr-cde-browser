@@ -2,7 +2,9 @@
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
   <form-beans>
-    <form-bean name="searchForm" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean" dynamic="true">
+    <form-bean name="searchForm"
+               type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+               dynamic="true">
       <form-property name="formLongName" type="java.lang.String"/>
       <form-property name="protocolIdSeq" type="java.lang.String"/>
       <form-property name="contextIdSeq" type="java.lang.String"/>
@@ -10,22 +12,46 @@
       <form-property name="categoryName" type="java.lang.String"/>
       <form-property name="formType" type="java.lang.String"/>
       <form-property name="txtClassSchemeItem" type="java.lang.String"/>
-      <form-property name="jspClassification" type="java.lang.String"/>      
+      <form-property name="jspClassification" type="java.lang.String"/>
+      <form-property name="protocolLongName" type="java.lang.String"/>
+    </form-bean>
+    <form-bean name="protocolLOVForm"
+               type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+               dynamic="true">
+      <form-property name="protocolLongName" type="java.lang.String"/>
+      <form-property name="contextIdSeq" type="java.lang.String"/>
+      <form-property name="chkContext" type="java.lang.String"/>
+      <form-property name="idFieldName" type="java.lang.String"/>
+      <form-property name="valueFieldName" type="java.lang.String"/>
+      <form-property name="SEARCH" type="java.lang.String"/>
     </form-bean>
   </form-beans>
   <global-forwards>
     <forward name="cdebrowserHome" path="/cdebrowser" redirect="true"/>
   </global-forwards>
   <action-mappings>
-    <action name="searchForm" path="/formAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction" validate="false">
+    <action name="searchForm" path="/formAction" parameter="method"
+            scope="session"
+            type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction"
+            validate="false">
       <forward name="success" path="/formbuilder/formResults.jsp"/>
-      <forward name="defaultHome" path="/formbuilder/formbuilder.jsp" />
+      <forward name="defaultHome" path="/formbuilder/formbuilder.jsp"/>
     </action>
-  <action  path="/pageAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.PaginationAction" validate="false">
+    <action path="/pageAction" parameter="method" scope="session"
+            type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.PaginationAction"
+            validate="false">
       <forward name="success" path="/formbuilder/formResults.jsp"/>
-    </action>    
-  </action-mappings>  
-  <controller debug="3" nocache="true" processorClass="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureRequestProcessor" contentType="text/html;charset=UTF-8" locale="true"/>
+    </action>
+    <action name="protocolLOVForm" path="/formLOVAction" parameter="method"
+            scope="request"
+            type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormBuilderLOVAction"
+            validate="false">
+      <forward name="success" path="/protocolsLOV.jsp"/>
+    </action>
+  </action-mappings>
+  <controller debug="3" nocache="true"
+              processorClass="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureRequestProcessor"
+              contentType="text/html;charset=UTF-8" locale="true"/>
   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
   <plug-in className="gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory"/>
 </struts-config>
