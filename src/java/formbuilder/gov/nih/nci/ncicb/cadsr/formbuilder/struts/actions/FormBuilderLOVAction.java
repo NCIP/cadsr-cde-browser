@@ -15,10 +15,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,25 +43,54 @@ public class FormBuilderLOVAction extends FormBuilderBaseDispatchAction {
    * @throws ServletException
    */
   public ActionForward getProtocolsLOV(
-    ActionMapping mapping,
-    ActionForm form,
+				       ActionMapping mapping,
+				       ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     FormBuilderServiceDelegate service = getFormBuilderService();
     DynaActionForm searchForm = (DynaActionForm) form;
     String protocolLongName =
       (String) searchForm.get(this.PROTOCOLS_LOV_PROTO_LONG_NAME);
+
     String contextIdSeq = (String) searchForm.get(this.CONTEXT_ID_SEQ);
     String performQuery = request.getParameter(this.PERFORM_QUERY_FIELD);
 
-    if (contextIdSeq == null) {
-      contextIdSeq = "";
+    String chk = (String)searchForm.get(PROTOCOLS_LOV_CONTEXT_CHECK);
+
+    String[] contexts = null;
+
+
+    if(chk.equals("true")) {
+      Collection coll = (Collection)getSessionObject(request, USER_CONTEXTS);
+      contexts = new String[coll.size()];
+      int i=0;
+      for(Iterator it = coll.iterator(); it.hasNext(); i++)
+	contexts[i] = ((Context)it.next()).getConteIdseq();
+      request.setAttribute(PROTOCOLS_LOV_CONTEXT_CHECK, chk);
+    } else {
+      if ((contextIdSeq != null) && (contextIdSeq.length() > 0)) {
+	contexts = new String[1];
+	contexts[0] = contextIdSeq;
+      } else 
+	contexts = new String[0];
     }
+    
 
-    String additionalWhere =
-      " and upper(nvl(proto_conte.conte_idseq,'%')) like upper ( '%" +
-      contextIdSeq + "%') ";
+    // build additional query filters
+    String additionalWhere = "";
+    if(contexts.length > 0) 
+	additionalWhere +=
+	    " and (upper(nvl(proto_conte.conte_idseq,'%')) like upper ( '%" +
+	    contexts[0] + "%') ";
 
+    for(int i=1; i<contexts.length; i++) {
+      additionalWhere +=
+	" or upper(nvl(proto_conte.conte_idseq,'%')) like upper ( '%" +
+	contexts[i] + "%') ";
+    }
+    if(contexts.length > 0)
+	additionalWhere += ")";
+      
     DBUtil dbUtil = new DBUtil();
     ProtocolsLOVBean plb;
 
@@ -99,6 +131,7 @@ public class FormBuilderLOVAction extends FormBuilderBaseDispatchAction {
     return mapping.findForward(SUCCESS);
   }
 
+  
   /**
    * This Action forwards to the default formbuilder home.
    *
