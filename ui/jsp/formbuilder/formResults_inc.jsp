@@ -26,10 +26,7 @@
                      
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTableColumnHeader">
-          	<th class="OraTableColumnHeader" nowrap>Download</th>
-          	<th class="OraTableColumnHeader" >Select for Copy</th>
-          	<th class="OraTableColumnHeader" nowrap>Edit</th>
-          	<th class="OraTableColumnHeader" nowrap>Delete</th>
+          	<th class="OraTableColumnHeader" nowrap>Action</th>
           	<th class="OraTableColumnHeader" nowrap>Long Name</th>
           	<th class="OraTableColumnHeader" nowrap>Type</th>
           	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	
@@ -39,13 +36,16 @@
                 offset="<%=pageBean.getOffset()%>"
                 length="<%=pageBean.getPageSize()%>">
             <tr class="OraTabledata">
-                   
-              <td align=center>
+             <td width="100">
+              <table  >
+               <tr>
+               
+              <td width="25" class="OraTabledata" align=center>
                 <a href="search?viewTemplate=9&templateIdseq=<%= form.getFormIdseq() %>&PageId=DataElementsGroup" target="_blank">
                   <html:img src='<%=urlPrefix+"i/dload-sm.gif"%>' border="0" alt="Download"/>
 		            </a>			
               </td>
-		  <td align=center>
+		  <td width="25" class="OraTabledata" align=center>
 		       <cde:secureIcon  formId="form" 
             formScope="<%=CaDSRConstants.PAGE_SCOPE%>"
             activeImageSource="i/copy.gif" 
@@ -59,7 +59,7 @@
 		   	   	target="_parent"
             workflowRestrictionListId="<%=FormBuilderConstants.COPYABLE_WORKFLOW_STATUS_LIST%>"/>            
 		 </td>                  
-		  <td align=center>
+		  <td width="25" class="OraTabledata" align=center>
 		       <cde:secureIcon  formId="form" 
             formScope="<%=CaDSRConstants.PAGE_SCOPE%>" 
             activeImageSource="i/edit.gif" 
@@ -74,7 +74,7 @@
             workflowRestrictionListId="<%=FormBuilderConstants.EDITABLE_WORKFLOW_STATUS_LIST%>"
             />		            
 		  </td>
-		 <td align=center>
+		 <td width="25"  class="OraTabledata" align=center>
 		       <cde:secureIcon  formId="form" 
            formScope="<%=CaDSRConstants.PAGE_SCOPE%>" 
            activeImageSource="i/delete.gif" 
@@ -88,7 +88,10 @@
 		   	   	altMessage="Delete"
             workflowRestrictionListId="<%=FormBuilderConstants.DELETABLE_WORKFLOW_STATUS_LIST%>"
 		   	   	/>		           	
-		</td>                
+		</td> 
+	       </tr>
+	      </table>
+	      </td>
           	<td class="OraFieldText">
  			<html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
  				paramName="form" paramProperty="formIdseq"
