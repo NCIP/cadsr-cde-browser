@@ -1,10 +1,18 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceStartupException;
 
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -19,8 +27,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-public abstract class FormBuilderBaseAction extends Action {
+
+public abstract class FormBuilderBaseAction extends Action 
+  implements FormConstants, NavigationConstants, PersistenceConstants,
+    FormBuilderConstants, CaDSRConstants {
+  
+  protected static Log log = LogFactory.getLog(FormAction.class.getName());
+  
   /**
    * This is the main action called from the Struts framework.
    *
@@ -118,6 +134,14 @@ public abstract class FormBuilderBaseAction extends Action {
     svcDelegate = svcFactory.createService();
 
     return svcDelegate;
+  }
+  
+  protected ServiceLocator getServiceLocator() {
+    String locatorClassName =
+      servlet.getInitParameter(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
+    ServiceLocator locator = ServiceLocatorFactory.getLocator(locatorClassName);
+            
+    return locator;
   }
 
 }
