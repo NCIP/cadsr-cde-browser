@@ -6,6 +6,8 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.ConnectionException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DAOCreateException;
 import gov.nih.nci.ncicb.cadsr.security.oc4j.BaseUserManager;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
+import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
 import org.apache.commons.logging.LogFactory;
 
@@ -17,6 +19,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.object.SqlFunction;
+import java.sql.Types;
 
 public class JDBCBaseDAO extends BaseDAO implements PersistenceContants {
   public JDBCBaseDAO(ServiceLocator locator) {
@@ -72,7 +76,17 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceContants {
     String username,
     String acIdseq) {
     // TODO:  Implement this gov.nih.nci.ncicb.cadsr.persistence.dao.BaseDAO abstract method
-    return false;
+    int [] inputTypes = {Types.VARCHAR,Types.VARCHAR};
+    String sqlStmt = " SELECT cadsr_security_util.has_delete_privilege(?,?) FROM DUAL ";
+    DataSource ds = this.getDataSource();
+    SqlFunction hasDeleteFunc = new SqlFunction(this.getDataSource(),sqlStmt,inputTypes,Types.VARCHAR);
+    hasDeleteFunc.compile();
+    Object [] inputValues = {username,acIdseq};
+    String retVal = (String)hasDeleteFunc.runGeneric(inputValues);
+    boolean b = false;
+    if (retVal.equals("Yes")) b =true;
+    else if (retVal.equals("No")) b = false;
+    return b;
   }
 
   public boolean hasUpdate(
@@ -81,4 +95,13 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceContants {
     // TODO:  Implement this gov.nih.nci.ncicb.cadsr.persistence.dao.BaseDAO abstract method
     return false;
   }
+
+   public static void main(String[] args) {
+    ServiceLocator locator = new SimpleServiceLocator();
+    //JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory(locator);
+    JDBCBaseDAO test = new JDBCBaseDAO(locator);
+    boolean b = test.hasDelete("SBREXT","B046971C-6A89-5F47-E034-0003BA0B1A09");
+    System.out.println("Result: "+b);
+    
+  }  
 }

@@ -37,6 +37,7 @@ public class SimpleServiceLocator extends ServiceLocatorAdapter implements Persi
        envEntrys.put(CONNECTION_STRING,"jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbdev");
        envEntrys.put(USERNAME,"sbrext");
        envEntrys.put(PASSWORD,"jjuser");
+       envEntrys.put(DATASOURCE_KEY,"FormBuilderDS");
 
        
        
