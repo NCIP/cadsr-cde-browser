@@ -11,12 +11,14 @@ public class StringUtils {
   public static boolean toBoolean(String inString) throws Exception {
     if (
       inString.toUpperCase().equals("Y") ||
-          inString.toUpperCase().equals("TRUE")) {
+          inString.toUpperCase().equals("TRUE") ||
+          inString.equalsIgnoreCase("Yes")) {
       return true;
     }
     else if (
       inString.toUpperCase().equals("N") ||
-          inString.toUpperCase().equals("FALSE")) {
+          inString.toUpperCase().equals("FALSE") ||
+          inString.equalsIgnoreCase("No")) {
       return false;
     }
     else {
