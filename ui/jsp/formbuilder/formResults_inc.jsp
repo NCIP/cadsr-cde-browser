@@ -65,7 +65,7 @@
             </tr>
           </logic:iterate>
         </table>
-        <cde:pagination name="top" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
+        <cde:pagination name="bottom" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
                      beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
                      actionURL="/cdebrowser/pageAction.do"
         	     previousOnImage="i/prev_on.gif"
