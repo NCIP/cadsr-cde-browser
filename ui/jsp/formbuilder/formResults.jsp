@@ -39,12 +39,17 @@
 <html:form action="/formSearchAction.do">
  <%@ include  file="/formbuilder/formSearch_inc.jsp" %> 
 <logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
-       <table cellpadding="0" cellspacing="0" width="100%" align="center">   
+    <A NAME="results"></A>
+       <table cellpadding="0" cellspacing="0" width="100%" align="center">  
+      <tr>
+           <td  nowrap>&nbsp;</td>
+      </tr>
+     <td  valign="bottom" class="OraHeaderSubSub" width="100%" align="left" nowrap>Search Results</td>
+     </tr>       
         <tr>
           <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
         </tr>
       </table>   
-  <A NAME="results"></A>
   <%@ include  file="/formbuilder/formResults_inc.jsp" %>
 </logic:present> 
    

@@ -6,12 +6,14 @@ import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.ConnectionHelper;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.util.TimeUtils;
 import gov.nih.nci.ncicb.webtree.WebNode;
 import gov.nih.nci.ncicb.webtree.WebTree;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,7 +68,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
     DefaultMutableTreeNode tree = null;
     BaseTreeNode baseNode = null;
 
-
+    TimeUtils.recordStartTime("Tree");
     try {
       CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
       String datasourceName = params.getSbrDSN();
@@ -192,19 +194,24 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                 List protoNodes = ctxNode.getProtocolNodes();
 
                 List formNodes = new ArrayList();
+                formNodes = ctxNode.getFormsWithNoProtocolNodes();
+               /**
                 if(showFormsAlphebetically)
                   formNodes=ctxNode.getFormNodes();
+              **/
 
                 DefaultMutableTreeNode protocolFormsLabelNode =null;
                 DefaultMutableTreeNode protocolLabelNode =null;
                 DefaultMutableTreeNode formsLabelNode =null;
 
-                if (!protoNodes.isEmpty()|| !formNodes.isEmpty()) {
+                if (!protoNodes.isEmpty()|| !formNodes.isEmpty())
+                {                
                   protocolFormsLabelNode =
                     new DefaultMutableTreeNode(
                       new WebNode(
                         dbHelper.getUniqueId(IDSEQ_GENERATOR), "Protocol Forms"));
-
+              
+                /** Will be added directlt to Proto col forms Node
                   if(!formNodes.isEmpty()&&showFormsAlphebetically)
                   {
                    formsLabelNode =
@@ -217,7 +224,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                       }
                     protocolFormsLabelNode.add(formsLabelNode);
                   }
-
+                  
                   if(!protoNodes.isEmpty())
                   {
                    protocolLabelNode =
@@ -232,7 +239,23 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                    protocolFormsLabelNode.add(protocolLabelNode);
 
                   }
-
+                 **/
+                 // Add form with no protocol
+                  if(!formNodes.isEmpty()&&showFormsAlphebetically)
+                  {
+                    Iterator tmpIter = formNodes.iterator();
+                    while (tmpIter.hasNext()) {
+                      protocolFormsLabelNode.add((DefaultMutableTreeNode) tmpIter.next());
+                      }
+                  }   
+                  // Add form with no protocol
+                  if(!protoNodes.isEmpty())
+                  {
+                   Iterator tmpIter = protoNodes.iterator();
+                    while (tmpIter.hasNext()) {
+                      protocolFormsLabelNode.add((DefaultMutableTreeNode) tmpIter.next());
+                      }
+                  }              
               ctxTreeNode.add(protocolFormsLabelNode);
             }
          }
@@ -354,7 +377,9 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
         ex.printStackTrace();
       }
     }
-
+    TimeUtils.recordEndTime("Tree");
+    System.out.println("Time to build tree in Milli  :  "+TimeUtils.getLapsedTime("Tree"));
+    System.out.println("Time to build tree in Minute  :  "+TimeUtils.getLapsedTimeInMinutes("Tree"));
     return tree;
   }
 

@@ -136,6 +136,18 @@ public class ContextNode extends BaseTreeNode  {
                                 +"AND   latest_version_ind = 'Yes' "
                                 +"ORDER BY upper(long_name) ";
                                 
+ final String crfQueryNoProtocolStmt =  "SELECT qc_idseq "
+                                +"      ,long_name "
+                                +"      ,preferred_name "
+                                +"      ,preferred_definition "
+                                +"FROM  sbrext.quest_contents_ext "
+                                +"WHERE conte_idseq = ? "
+                                +"AND   qtl_name = 'CRF' "
+                                +"AND   deleted_ind = 'No' "
+                                +"AND   latest_version_ind = 'Yes' "
+                                +"AND   nvl(quest_contents_ext.PROTO_IDSEQ,'-1') = '-1' "
+                                +"ORDER BY upper(long_name) ";                                
+                                
   Context myContext = null;
   DefaultMutableTreeNode myContextNode = null;
   List templateTypes;
@@ -521,7 +533,9 @@ public class ContextNode extends BaseTreeNode  {
   }
   
 
-
+  /**
+   * Get form in Aphabetical order
+   */
   public List getFormNodes() throws SQLException {
     PreparedStatement pstmt = null;
     ResultSet rs = null;
@@ -565,7 +579,52 @@ public class ContextNode extends BaseTreeNode  {
     return _crfNodes;
     
   }
-  
+  /**
+   * Get form not associated with a protocol
+   */
+  public List getFormsWithNoProtocolNodes() throws SQLException {
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    List _crfNodes = new ArrayList(7);
+
+    try {
+      pstmt =  
+         (PreparedStatement)myConn.prepareStatement(crfQueryNoProtocolStmt);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
+      
+      pstmt.setString(1,myContext.getConteIdseq());
+      rs = pstmt.executeQuery();
+      
+      while (rs.next()){
+        DefaultMutableTreeNode crfNode = new DefaultMutableTreeNode(
+          new WebNode(rs.getString(1)
+                     ,rs.getString(2)
+                     ,"javascript:"+getFormJsFunctionName()+"('P_PARAM_TYPE=CRF&P_IDSEQ="+
+                       rs.getString(1)+"&P_CONTE_IDSEQ="+" "+
+                       "&P_PROTO_IDSEQ="+""+
+                       getExtraURLParameters()+"')"
+                     ,rs.getString(4)));
+        _crfNodes.add(crfNode);
+      }
+    } 
+    catch (Exception ex) {
+      ex.printStackTrace();
+    } 
+    finally {
+      try {
+        if (rs != null) rs.close();
+        if (pstmt != null) pstmt.close();  
+      } 
+      catch (Exception ex) {
+        ex.printStackTrace();
+      } 
+    }
+    return _crfNodes;
+    
+  }  
 //Publish Change order
   /**
    * This method returns a list of DefaultMutableTreeNode objects. Each
