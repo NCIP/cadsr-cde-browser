@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.resource.DataElementDerivation;
 import gov.nih.nci.ncicb.cadsr.resource.DerivedDataElement;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
+import java.util.List;
 
 
 public class DataElementTransferObject extends AdminComponentTransferObject
@@ -23,6 +24,7 @@ public class DataElementTransferObject extends AdminComponentTransferObject
   //private String conteName;
   private String usingContexts;
   private DerivedDataElement derivedDataElement;
+  private List classifications;
 
   public DataElementTransferObject() {
   }
@@ -170,5 +172,14 @@ public class DataElementTransferObject extends AdminComponentTransferObject
 
    public DerivedDataElement getDerivedDataElement() {
       return derivedDataElement;
+   }
+   
+   public List getClassifications()
+   {
+     return classifications;
+   }
+   public void setClassifications(List newClassifications)
+   {
+     classifications=newClassifications;
    }
 }

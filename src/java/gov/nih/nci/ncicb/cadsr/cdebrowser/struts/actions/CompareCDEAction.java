@@ -6,13 +6,27 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.3 2004-10-15 21:00:44 kakkodis Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.4 2004-12-08 02:02:26 kakkodis Exp $
  */
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.CDECompareList;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserNavigationConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormBuilderBaseDispatchAction;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.DerivedDataElementDAO;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 
+import gov.nih.nci.ncicb.cadsr.resource.Classification;
+import gov.nih.nci.ncicb.cadsr.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.resource.DerivedDataElement;
+import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.handler.ClassificationHandler;
+import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
+import gov.nih.nci.ncicb.cadsr.resource.handler.ValidValueHandler;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import gov.nih.nci.ncicb.cadsr.util.ContentTypeHelper;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,17 +34,24 @@ import java.io.IOException;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.ListIterator;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import oracle.cle.persistence.HandlerFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 
-public class CompareCDEAction extends FormBuilderBaseDispatchAction {
+public class CompareCDEAction extends FormBuilderBaseDispatchAction implements BrowserFormConstants 
+              ,BrowserNavigationConstants{
   /**
    * Displays CDE Cart.
    *
@@ -52,12 +73,184 @@ public class CompareCDEAction extends FormBuilderBaseDispatchAction {
     //CDECart cart = new CDECartTransferObject();
     CDECart cart = null;
 
-    DynaActionForm searchForm = (DynaActionForm) form;
-    Integer numberSelected = Integer.valueOf(request.getParameter("numberSelected"));
-    this.setSessionObject(request, "compareCDESize", numberSelected);
+    DynaActionForm compareForm = (DynaActionForm) form;
+
+    String[] cdeIdseqArr = (String[]) compareForm.get(ProcessConstants.SELECT_DE);        
+    CDECompareList cdeList = (CDECompareList)this.getSessionObject(request,CDE_COMPARE_LIST);
+    if(cdeList==null)
+    {     
+        cdeList = new CDECompareList();
+        setSessionObject(request,CDE_COMPARE_LIST,cdeList,true);
+    }
+    if(cdeIdseqArr!=null)
+    {
+      if(!cdeList.add(cdeIdseqArr))
+      {
+        //saveError("cadsr.cdebrowser.cdecompare.list.lessthantwo", request);
+        if(cdeList.getCdeList().size()<2)
+          return mapping.findForward("lessThanTwo");  
+      }
+    }
+    if(cdeList.getCdeList().size()==0)
+    {
+
+      saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
+      return mapping.findForward(FAILURE);  
+    }      
+    if(cdeList.getCdeList().size()<2)
+    {
+
+      saveError("cadsr.cdebrowser.cdecompare.list.oneelement", request);
+      return mapping.findForward(FAILURE);  
+    }    
+
+    ListIterator it = cdeList.listIterator();
+    List cdeDetailList = new ArrayList();
+    
+    try
+    {
+      while(it.hasNext())
+      {
+        DataElement de = (DataElement)it.next();
+        cdeDetailList.add(getDataElementDetails(de,request.getSession().getId()));
+        
+      }
+      cdeList.setDetailCDEList(cdeDetailList);
+    }
+    catch (Exception e)
+    {     
+      Exception ex = e;
+      saveError("cadsr.cdebrowser.cdecompare.compare.failed", request);
+      return mapping.findForward(FAILURE);
+    }
     return mapping.findForward(SUCCESS);
   }
+   /**
+   * 
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward addToCDECompareList(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    
+    DynaActionForm compareForm = (DynaActionForm) form;
+    String[] cdeIdseqArr = (String[]) compareForm.get(ProcessConstants.SELECT_DE);
+    CDECompareList cdeList = (CDECompareList)this.getSessionObject(request,CDE_COMPARE_LIST);
+
+    if(cdeList==null)
+      {
+        cdeList = new CDECompareList();
+        setSessionObject(request,CDE_COMPARE_LIST,cdeList,true);
+      }
+      
+    if(cdeIdseqArr!=null&&cdeList!=null)
+      {
+        if(cdeList.add(cdeIdseqArr))
+        {
+          saveMessage("cadsr.cdebrowser.cdecompare.list.add.success", request);                      
+        }
+        else
+        {
+          saveMessage("cadsr.cdebrowser.cdecompare.list.add.duplicate", request);
+        }
+      }
+    else
+    {
+      saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
+    }
+    return mapping.findForward(SUCCESS);
+  }   
   
+  /**
+   * 
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward removeFromCDECompareList(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    
+    DynaActionForm compareForm = (DynaActionForm) form;
+    String[] cdeIndexs = (String[]) compareForm.get(CDE_TO_REMOVE);
+    CDECompareList cdeList = (CDECompareList)this.getSessionObject(request,CDE_COMPARE_LIST);
+
+      
+    if(cdeIndexs!=null&&cdeList!=null)
+      {
+       
+       if(cdeList.remove(cdeIndexs))
+        {
+         if(!cdeList.isEmpty()&&cdeList.getCdeList().size()>1)
+          saveMessage("cadsr.cdebrowser.cdecompare.list.remove.success", request);                      
+        }
+        else
+        {
+          saveError("cadsr.cdebrowser.cdecompare.list.remove.failed", request);
+        }
+      }
+    else
+    {
+      //go back to homepage
+      saveError("cadsr.cdebrowser.cdecompare.list.empty", request); 
+      return mapping.findForward(FAILURE);      
+    }
+    if(cdeList!=null&&cdeList.isEmpty())
+    {
+      //go back to homepage
+      saveMessage("cadsr.cdebrowser.cdecompare.list.empty", request); 
+      return mapping.findForward("lessThanTwo");
+    }
+    if(cdeList.getCdeList().size()<2)
+    {
+      //go back to homepage
+      saveMessage("cadsr.cdebrowser.cdecompare.list.oneelement", request); 
+      return mapping.findForward("lessThanTwo");
+    }    
+    return mapping.findForward(SUCCESS);
+  }   
+  
+    /**
+   * 
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward doneCDECompare(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    
+    return mapping.findForward(SUCCESS);
+  }   
   
   /**
    * 
@@ -77,7 +270,17 @@ public class CompareCDEAction extends FormBuilderBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-
+    
+    
+    DynaActionForm compareForm = (DynaActionForm) form;
+    String[] newDisplayOrderArr = (String[]) compareForm.get(CDE_COMPARE_DISPAY_ORDER); 
+    CDECompareList cdeList = (CDECompareList)this.getSessionObject(request,CDE_COMPARE_LIST);
+    
+    if(newDisplayOrderArr!=null&&cdeList!=null)
+      {
+        cdeList.setItemOrder(newDisplayOrderArr);
+      }    
+    
     return mapping.findForward(SUCCESS);
   }  
   public ActionForward downloadToExcel(ActionMapping mapping,
@@ -127,5 +330,32 @@ public class CompareCDEAction extends FormBuilderBaseDispatchAction {
         }        
         return null;
     }  
+ private DataElement getDataElementDetails(DataElement de,String sessionId) throws Exception
+ {
+       DataElementHandler dh = (DataElementHandler) HandlerFactory.getHandler(DataElement.class);
+       de = (DataElement) dh.findObject(de.getDeIdseq(), sessionId);
+       if(de!=null)
+       {
+        ValidValueHandler validValueHandler =
+            (ValidValueHandler)HandlerFactory.getHandler(ValidValue.class);
+        List vvList = validValueHandler.getValidValues(de.getVdIdseq()
+                                                   ,sessionId);
+        de.getValueDomain().setValidValues(vvList);   
+       }
+       
 
+      ClassificationHandler classificationHandler =
+          (ClassificationHandler)HandlerFactory.getHandler(Classification.class);
+      List classificationSchemes = classificationHandler.getClassificationSchemes(
+                              de.getDeIdseq(),sessionId);
+      de.setClassifications(classificationSchemes);
+       
+      ServiceLocator locator = 
+      ServiceLocatorFactory.getLocator("gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl");
+      AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
+      DerivedDataElementDAO ddeDAO = daoFactory.getDerivedDataElementDAO();
+      DerivedDataElement dde = ddeDAO.findDerivedDataElement(de.getDeIdseq());
+      de.setDerivedDataElement(dde);
+    return de;      
+ }
 }

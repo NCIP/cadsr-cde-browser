@@ -143,7 +143,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
 
           ctxTreeNode.add(csLabelNode);
         }
-
+    /** 
         //Adding protocols nodes
         //Filtering CTEP context in data element search tree
         if ((!ctx.getName().equals("CTEP")
@@ -174,7 +174,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
           }
         }
         }
-
+      Takeout after dev **/ 
         tree.add(ctxTreeNode);
       }
     } catch (Exception ex) {

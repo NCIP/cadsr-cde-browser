@@ -1,4 +1,7 @@
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@ page contentType="text/html;charset=windows-1252"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
@@ -8,7 +11,7 @@
 
 <%@ page import="java.util.List" %>
 
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+
 
 <jsp:useBean id="currInfoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="currInfoBean" property="session" value="<%=session %>"/>

@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.CollectionUtil;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
@@ -50,7 +51,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.5 2004-10-15 21:00:43 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.6 2004-12-08 02:02:25 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -349,7 +350,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
         for (int i = 0; i < itemsList.length; i++) {
           cdeItem = new CDECartItemTransferObject();
-          de = locateDataElement(queryResults, itemsList[i]);
+          de = CollectionUtil.locateDataElement(queryResults, itemsList[i]);
           vd = de.getValueDomain();
           vd.setValidValues(
             valueHandler.getValidValues(vd.getVdIdseq(), getSessionId()));
@@ -589,22 +590,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
     return ts;
   }
 
-  private DataElement locateDataElement(
-    List results,
-    String deId) {
-    Iterator it = results.iterator();
-    DataElement de = null;
 
-    while (it.hasNext()) {
-      de = (DataElement) it.next();
-
-      if (de.getDeIdseq().equals(deId)) {
-        return DTOTransformer.toDataElement((BC4JDataElementTransferObject) de);
-      }
-    }
-
-    return de;
-  }
 
   private CDECart findCart(HttpSession mySession) {
     CDECart cart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);

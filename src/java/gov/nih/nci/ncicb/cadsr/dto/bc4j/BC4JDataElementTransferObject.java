@@ -28,6 +28,7 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
   protected String contextName;
   protected String usingContexts = "";
   protected DerivedDataElement dde;
+  protected List classifications;
 
   public BC4JDataElementTransferObject() {
   }
@@ -172,4 +173,12 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
    public DerivedDataElement getDerivedDataElement() {
       return dde;
    }
+   public List getClassifications()
+   {
+     return classifications;
+   }
+   public void setClassifications(List newClassifications)
+   {
+     classifications=newClassifications;
+   }   
 }

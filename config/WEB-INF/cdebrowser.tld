@@ -400,4 +400,30 @@
     <rtexprvalue>true</rtexprvalue>
     </attribute>       
   </tag>  
+  <tag>
+    <name>displayOrderSelection</name>
+    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.DisplayOrderSelection</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>Dropdown for display order</info>  
+    <attribute>
+    <name>selectName</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>selectClassName</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>collectionSize</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>     
+    <attribute>
+    <name>currentIndex</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>      
+  </tag>   
 </taglib>

@@ -78,7 +78,7 @@
   </form-beans>
   <global-exceptions>
     <exception type="gov.nih.nci.ncicb.cadsr.exception.FatalException"
-      scope="request" path="/formbuilder/systemError.jsp"
+      scope="request" path="/common/systemError.jsp"
       key="error.system.message"/>
     <exception type="gov.nih.nci.ncicb.cadsr.exception.InvalidUserException"
       scope="request" path="/LoginError.jsp"

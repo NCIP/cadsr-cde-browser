@@ -53,7 +53,7 @@ public class NCIUserTransferObject implements NCIUser,CaDSRConstants {
   }
   
    public Collection getContextsByRoleAccess(String role) {
-        Collection roleContexts = (Collection) contexts.get(CDE_MANAGER);
+        Collection roleContexts = (Collection) contexts.get(role);
         
         Collection adminContexts  =(Collection) contexts.get(CONTEXT_ADMIN);
         if(roleContexts==null)

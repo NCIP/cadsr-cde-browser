@@ -1,3 +1,4 @@
+
 <%@page import="javax.servlet.http.* " %>
 <%@page import="javax.servlet.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
@@ -9,7 +10,10 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.html.* " %>
 <%@page import="java.util.List "%>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserNavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.CDECompareList"%>
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 
@@ -81,8 +85,21 @@
     urlParams = "&src="+src+"&method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
     newSearchURL += urlParams;
   }
+  
+  String cdeCompareSizeStr="0";
+  
+  CDECompareList compareList = (CDECompareList)(pageContext.getSession().getAttribute("CDE_COMPARE_LIST"));
+  
+//  if(compareList!=null)
+//  {
+//  	List list = compareList.getCdeList();
+//        cdeCompareSizeStr = (new Integer(list.size())).toString();
+//  }
     
+  
 %>
+
+
 
 <HTML>
 <HEAD>
@@ -96,6 +113,7 @@ Data Elements Search - Data Elements
 </HEAD>
 <BODY onLoad="turnOff()" topmargin="0">
 
+ 
 
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/checkbox.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
@@ -182,31 +200,6 @@ function findFrame(doc, strName) {
  return top;
 }
 
-function listChanged(urlInfo) {
-  var pgNum = document.forms[0].dePages.options[document.forms[0].dePages.selectedIndex].value
-  document.location.href= "search?searchDataElements=9&performQuery=no&deSearchPageNum="+pgNum+"<%= pageUrl %>"+urlInfo;
-}
-
-function topListChanged(urlInfo) {
-  var pgNum = document.forms[0].dePagesTop.options[document.forms[0].dePagesTop.selectedIndex].value
-  document.location.href= "search?searchDataElements=9&performQuery=no&deSearchPageNum="+pgNum+"<%= pageUrl %>"+urlInfo;
-}
-
-function crfBuilder() {
-  urlString = "search?copyTemplateForm=9&PageId=DataElementsGroup&srcFormIdseq="+"<%= paramIdseq %>";
-  top.location.href = urlString;
-  
-}
-
-function copyForm() {
-  urlString = "search?copyTemplateForm=9&PageId=DataElementsGroup&srcFormIdseq="+"<%= paramIdseq %>";
-  top.location.href = urlString;
-}
-
-function modifyForm() {
-  urlString = "search?displayCRFForEdit=9&PageId=DataElementsGroup&formIdseq="+"<%= paramIdseq %>";
-  top.location.href = urlString;
-}
 
 function ToggleAll(e){
 	if (e.checked) {
@@ -218,17 +211,46 @@ function ToggleAll(e){
 }
 
 function updateCart() {
-  if (validateSelection('selectDE','Please select atleast one data element to add to the CDE Cart')) {
+  if (validateSelection('selectDE','Please select at least one data element to add to the CDE Cart')) {
     document.forms[0].performQuery.value = "addToCart";
     document.forms[0].submit();
     return true;
   }
 }
 
-function compareCDEs() {
-  
-  var urlString="<%=request.getContextPath()%>/cdebrowser/compareCDEAction.do?method=compareCDEs&numberSelected=1";
-  top.location.href=urlString;
+function updateCompareList() {
+  if (validateSelection('selectDE','Please select at least one data element to add to the Compare Cart')) {
+    document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.ADD_TO_CDE_COMPARE_LIST%>";    
+    document.forms[0].action='<%=request.getContextPath()%>/cdebrowser/addToCompareListAction.do';    
+    document.forms[0].submit();
+    return true;
+  }
+}
+
+
+
+function compareCDEs(size) {
+
+    document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.COMPARE_CDE%>";    
+    document.forms[0].action='<%=request.getContextPath()%>/cdebrowser/compareCDEAction.do';      
+    document.forms[0].target="_self";
+    var cdeCompareSizeStr = size;
+    var selected = getNumberOfSelectedItems("selectDE");
+    if(cdeCompareSizeStr>1)
+    {
+      document.forms[0].target="_parent"
+    }
+    if(selected>1)
+    {
+      document.forms[0].target="_parent"
+    }
+    if((cdeCompareSizeStr+selected)>1)
+    {
+      document.forms[0].target="_parent"
+    } 
+
+    document.forms[0].submit();
+    
 }
 
 function done() {
@@ -254,7 +276,11 @@ function newSearch(){
 <%
   }
 %>
+
+<%@ include file="../formbuilder/showMessages.jsp" %>
+
 <form action="<%= infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(window.event.keyCode==13){submitForm()};">
+<INPUT TYPE="HIDDEN" NAME="<%=NavigationConstants.METHOD_PARAM%>" > 
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
@@ -263,6 +289,13 @@ function newSearch(){
 <INPUT TYPE="HIDDEN" NAME="moduleIndex" VALUE="<%=modIndex%>">
 <INPUT TYPE="HIDDEN" NAME="questionIndex" VALUE="<%=quesIndex%>">
 <input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+
+<logic:present name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>">
+    <bean:size id="listSize" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" property="cdeList"/>
+<%
+    cdeCompareSizeStr = listSize.toString();
+%>
+</logic:present>
 
 <table width="100%" align="center">
   <tr>
@@ -474,8 +507,8 @@ function newSearch(){
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
     <tr>
       <td align="left" width="20%" ><a href="javascript:updateCart()"><html:img page="/i/AddToCDECart.gif" border="0" /></a></td>
-      <td align="left" width="20%" ><a href="/cdebrowser/cdeBrowse.jsp?PageId=DataElementsGroup"><html:img page="/i/addToCDECompareList.gif" border="0" /></a></td>
-      <td align="left" width="20%" ><a href="javascript:compareCDEs()"><html:img page="/i/compareCDEs.gif" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="javascript:updateCompareList()"><html:img page="/i/addToCDECompareList.gif" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="javascript:compareCDEs(<%=cdeCompareSizeStr%>)"><html:img page="/i/compareCDEs.gif" border="0" /></a></td>
       <td align="right"><%=topScroller.getScrollerHTML()%></td>
     </tr>
 </table>
@@ -587,6 +620,8 @@ function newSearch(){
   }
 %>
 </FORM>
+
+
 <%@ include file="../common/common_bottom_border.jsp"%>
 
 </BODY>

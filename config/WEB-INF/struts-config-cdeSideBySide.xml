@@ -3,9 +3,11 @@
 <struts-config>
   <form-beans>
     <form-bean name="compareCDEForm"
-      type="org.apache.struts.validator.DynaValidatorForm"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
-      <form-property name="dataElementDetails" type="java.util.Collection"/>
+      <form-property name="selectDE" type="java.lang.String[]"/>
+      <form-property name="cdeCompareDisplayOrder" type="java.lang.String[]"/>
+      <form-property name="cdeToRemove" type="java.lang.String[]"/> 
     </form-bean>
 </form-beans>
   <action-mappings>
@@ -14,6 +16,8 @@
       type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CompareCDEAction"
       validate="false">
       <forward name="success" path="/cdebrowser/compareCDEs.jsp"/>
+      <forward name="failure" path="/cdebrowser/dataElementsSearch.jsp"/>    
+      <forward name="lessThanTwo" path="/cdeBrowse.jsp?PageId=DataElementsGroup"/>    
     </action>
     
     <action name="compareCDEForm" path="/cdebrowser/CDECompareExcelDownload" parameter="method"
@@ -27,14 +31,33 @@
       type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CompareCDEAction"
       validate="false">      
       <forward name="success" path="/cdebrowser/compareCDEs.jsp"/>
+      <forward name="failure" path="/cdebrowser/compareCDEs.jsp"/> 
     </action>
     
-    <action name="compareCDEForm" path="/cdebrowser/addToCompareList" parameter="method"
+    <action name="compareCDEForm" path="/cdebrowser/addToCompareListAction" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CompareCDEAction"
+      validate="false">      
+      <forward name="success" path="/cdebrowser/dataElementsSearch.jsp"/>
+      <forward name="failure" path="/cdebrowser/dataElementsSearch.jsp"/> 
+    </action>
+
+    <action name="compareCDEForm" path="/cdebrowser/removeFromCompareListAction" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CompareCDEAction"
       validate="false">      
       <forward name="success" path="/cdebrowser/compareCDEs.jsp"/>
-    </action>
+      <forward name="failure" path="/cdebrowser/compareCDEs.jsp"/> 
+      <forward name="lessThanTwo" path="/cdebrowser/cdeCompareInsufficientCount.jsp"/> 
+    </action>    
+ 
+     <action name="compareCDEForm" path="/cdebrowser/doneCompareListAction" parameter="method"
+       scope="request"
+       type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CompareCDEAction"
+       validate="false">      
+       <forward name="success" path="/cdeBrowse.jsp?PageId=DataElementsGroup"/>
+       <forward name="failure" path="/cdeBrowse.jsp?PageId=DataElementsGroup"/> 
+    </action>  
     
    </action-mappings>
 

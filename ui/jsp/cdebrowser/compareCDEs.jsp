@@ -1,7 +1,5 @@
 
 
-
-
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -10,1694 +8,905 @@
 
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserNavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants" %>
-
-
-
-
-
-
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants" %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDECompareJspUtils" %>
 <HTML>
 <HEAD>
-<TITLE>Display CDE Cart</TITLE>
+<TITLE>CDEBrowser  Compare CDEs</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
-<LINK REL=STYLESHEET TYPE="text/css" HREF="/cdebrowser/css/blaf.css">
-<SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/checkbox.js"></SCRIPT>
-
-
+<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
+<SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/checkbox.js"></SCRIPT>
 
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 
-function redirect1(detailReqType, linkParms )
-{
-  var urlString ="/cdebrowser/search?dataElementDetails=9" + linkParms + "&PageId=DataElementsGroup"+"&queryDE=yes";
-  newBrowserWin(urlString,'deDetails',800,600)
+function removeFromCompareList() {
+  if (validateSelection('<%=BrowserFormConstants.CDE_TO_REMOVE%>','Please select at least one data element to remove from the list')) {
+    document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.REMOVE_FROM_CDE_COMPARE_LIST%>";    
+    document.forms[0].action='<%=request.getContextPath()%>/cdebrowser/removeFromCompareListAction.do';      
+    alert(document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value);
+    document.forms[0].submit();
+    return true;
+  }
+}
+function changeDisplayOrder() {
+    document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.CHANGE_COMPARE_ORDER%>";    
+    document.forms[0].action='<%=request.getContextPath()%>/cdebrowser/changeCompareOrder.do';  
+    document.forms[0].submit();
+    return true;
+}
+function done() {
+    document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.DONE_CDE_COMPARE%>";    
+    document.forms[0].submit();
+    return true;
+}
+
+  function switchAll(e)
+  {
+	if (e.checked) {
+	    CheckAll();
+	}
+	else {
+	    ClearAll();
+	}
+  }
+  function Check(e)
+    {
+	e.checked = true;
+    }
+
+  function Clear(e)
+    {
+	e.checked = false;
+    }  
+
+  function CheckAll()
+    {
+	var fo = document.forms[0];
+	var len = fo.elements.length;
+	for (var i = 0; i < len; i++) {
+	    var e = fo.elements[i];
+	    if (e.name == "<%=BrowserFormConstants.CDE_TO_REMOVE%>") {
+		Check(e);
+	    }
+	}
+    }
   
-}
+  function ClearAll()
+    {
+	var fo = document.forms[0];
+	var len = fo.elements.length;
+	for (var i = 0; i < len; i++) {
+	    var e = fo.elements[i];
+            if (e.name == "<%=BrowserFormConstants.CDE_TO_REMOVE%>") {
+		Clear(e);
+	    }
+	}
+    }
 
-function details(linkParms ){
-  var urlString="search?dataElementDetails=9" + linkParms + "&PageId=DataElementsGroup"+"&queryDE=yes";
-  newBrowserWin(urlString,'deDetails',800,600)
-
-}
 
 -->
 
 </SCRIPT>
 </HEAD>
 <BODY bgcolor="#ffffff" topmargin="0">
+    <html:form action="/cdebrowser/doneCompareListAction">
+      <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
 
-
-
-
-
-<SCRIPT LANGUAGE="JavaScript1.1" SRC='/cdebrowser/jsLib/newWinJS.js'></SCRIPT>
-<SCRIPT LANGUAGE="JavaScript1.1" SRC='/cdebrowser/jsLib/helpWinJS.js'></SCRIPT>
-
-<TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
-  <tr>
-
-    <td align="left" nowrap>
-
-    <img src="/cdebrowser/i/graphic6.gif" border="0">
-    </td>
-    <td align=right valign=top colspan=1 nowrap>
-      <TABLE Cellpadding=0 Cellspacing=0 border=0 width=20% >
-        <TR>          
-          <TD valign="TOP" align="CENTER"  colspan=1><A HREF="<%="/cdebrowser/cdeBrowse.jsp?PageId=DataElementsGroup"%>" TARGET="_top"><IMG SRC="/cdebrowser/i/icon_home.gif" alt="Home" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font></TD>
-          <TD valign="TOP" align="CENTER"  colspan=1><A HREF="javascript:newBrowserWin('/cdebrowser/common/help/cdeBrowserHelp.html','helpWin',700,600)">
-          <img src="/cdebrowser/i/icon_help.gif" height="32" width="32" border="0" alt="Task Help"></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
-         <logic:present name="nciUser">
-            <TD valign="TOP" align="CENTER"  colspan=1><A HREF="<%="logout?FirstTimer=0"%>" TARGET="_top"><IMG SRC="/cdebrowser/i/logout.gif" alt="Logout" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Logout&nbsp;</font></TD>
-          </logic:present>        
-        
+      <TABLE Cellpadding=0 Cellspacing=0 border=0 >
+        <TR>
+          <TD valign="TOP" align="right" width="1%" colspan=1><A HREF="javascript:newBrowserWin('<%=request.getContextPath()%>/common/help/cdeBrowserHelp.html','helpWin',700,600)"><IMG SRC="<%=request.getContextPath()%>/i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>         
         </TR>
       </TABLE>
-    </td>
-  </tr>
-  <tr>
-    <td align="left" class="OraInlineInfoText" nowrap>
-       <logic:present name="nciUser">
-        <bean:message key="user.greet" />
-    	<bean:write name="nciUser" property="username"  scope="session"/>
-       </logic:present>
-    </td>
-  </tr>
-</TABLE>
-
-
-
-<TABLE width=140% Cellpadding=0 Cellspacing=0 border=0>
-  <tr>
-    <td width=98%>&nbsp;</td>
-    <td valign=bottom align=right>
-      <table border=0 cellpadding=0 cellspacing=0>
-        <tr>
-
-
-<TD bgcolor="#336699" width="1%" align=LEFT valign=TOP><IMG SRC="/cdebrowser/i/ctab_open.gif" height=21 width=18 border=0></TD>
-<TD width=1% bgcolor="#336699"><b><font size="-1" face="Arial" color="#FFFFFF">Compare&nbsp;CDEs</font></b></TD>
-<TD bgcolor="#336699" width="1%" align=RIGHT valign=TOP><IMG SRC="/cdebrowser/i/ctab_close.gif" height=21 width=12 border=0></TD>
-
-
-</table>
-</td>
-</TR>
-</TABLE>
-
-<TABLE width=140% Cellpadding=0 Cellspacing=0 border=0>
-<TR>
-<td align=left valign=top width="1%" bgcolor="#336699"><img src="/cdebrowser/i/top_left.gif" width=4 height="25"></td>
-<td align=left valign=top width="5%" bgcolor="#336699">&nbsp;</td>
-
-
-<td align=left valign=top width="5%" bgcolor="#336699">&nbsp;</td>
-
-<!-- add here --->
-
-<TD align=left valign=center bgcolor="#336699" height=25 width="94%">&nbsp;</TD>
-</tr>
-</table>
-
-<table  width=140% Cellpadding=0 Cellspacing=0 border=0>
-<tr>
-<td align=right valign=top width=49 height=21 bgcolor="#336699"><img src="/cdebrowser/i/left_end_bottom.gif" height=21 width=49></td>
-<TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><img src="/cdebrowser/i/bottom_middle.gif" height=6 width=100%></TD>
-<td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><img src="/cdebrowser/i/right_end_bottom.gif" height=7 width=5></td>
-</TR>
-</TABLE>
-
-
-<table align="center" width=15% Cellpadding=0 Cellspacing=4 border=0>
-    <tr>
-        <TD valign="TOP" align="CENTER"  colspan=1><A HREF="<%="/cdebrowser/cdeBrowse.jsp?PageId=DataElementsGroup"%>" TARGET="_top"><img src="/cdebrowser/i/backButton.gif" border=0></A></TD>
-       <td align="left">
-          <img  src="/cdebrowser/i/remove_from_cde_comparelist.gif" >
-        </td> 
-       <td align="left">
-          <img  src="/cdebrowser/i/changeCompareOrder.gif" >
-        </td>         
-        
-        <TD valign="TOP" align="CENTER"  colspan=1>
-              <html:link action='<%="/cdebrowser/CDECompareExcelDownload.do?"+NavigationConstants.METHOD_PARAM+"=downloadToExcel"%>' 
-                 >
-                <img src="/cdebrowser/i/excelDownload.gif" border=0>
-              </html:link>          
-        </TD>
-    </tr>
-</table>
-<table>
-    <tr>
-      <td align="left" class="AbbreviatedText">
-        
-      </td>
-    </tr>
-</table>
-<table cellpadding="0" cellspacing="0" width="90%" align="center" border=0>
- <tr class="OraTabledata">
-    <td class="OraFieldText" ><a class="link" href="#dataElement">Data Element</a></td>
-    <td class="OraFieldText" ><a class="link" href="#dataElementConcept">Data Element Concept</a></td>
-    <td class="OraFieldText" ><a class="link" href="#valueDomain">Value Domain</a></td>
-    <td class="OraFieldText" ><a class="link" href="#permissibleValues">Permissible Values</a></td>
-    <td class="OraFieldText" ><a class="link" href="#referenceDocuments">Reference Documents</a></td>  
-    <td class="OraFieldText" ><a class="link" href="#classifications">Classifications</a></td>
-    <td class="OraFieldText" ><a class="link" href="#data_element_derivation">Data Element Derivation</a></td>
-    
- </tr>
- </table>
-<table>
-    <tr>
-      <td align="left" class="AbbreviatedText">
-
-      </td>
-    </tr>
-</table>
-
-
-<br>
-<A NAME="dataElement"></A> 
-
-
-<table cellpadding="0" cellspacing="0" width="140%" align="center" border=0>
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Data Element</td>
-  </tr>
-  <tr height='2' >
-    <td width="140%" ><img height=2 src="i/beigedot.gif" width="99%" align=top border=1> </td>
-  </tr>  
-</table>
-<table cellpadding="0" cellspacing="0" width="140%" align="center" valign="top" border="0">
-  <tr>
-    <td class="OraHeaderSubSub" width="10%">&nbsp;
-      <table cellpadding="0" cellspacing="0" align="center" valign="top" width="100%"  border="0">
-       <tr>
-         <td width="8%" ><a href=" ">Check All</a></td>
-         <td width="8%" ><a href=" ">Clear All</a></td>
-       </tr>
-     </table>    
-    </td>     
-    <td width="30%">
-      <table cellpadding="0" cellspacing="0" align="left" valign="top" width="10%"  border="0">
-       <tr>
-         <td width="8%" ><input type="checkbox"   onClick="ToggleAll(this)"/></td>
-         <td width="8%" >
-          <select name="contextIdSeq" class="Dropdown">
-	   <option value="" selected="selected">1</option> 
-	   <option value="2">2</option>
-	   <option value="3">3</option>
-           </select> 
-         </td>
-       </tr>
-      </table>     
-    </td>
-    <td width="30%" >
-      <table cellpadding="0" cellspacing="0" align="left" valign="top" width="10%"  border="0">
-       <tr>
-         <td width="8%" ><input type="checkbox"   onClick="ToggleAll(this)"/></td>
-         <td width="8%" >
-          <select name="contextIdSeq" class="Dropdown">
-	   <option value="" >1</option> 
-	   <option value="2" selected="selected" >2</option>
-	   <option value="3">3</option>
-           </select> 
-         </td>
-       </tr>
-      </table>     
-    </td>
-    <td width="30%" >
-      <table cellpadding="0" cellspacing="4" align="left" valign="top" width="10%"  border="0">
-       <tr>
-         <td width="8%" ><input type="checkbox"   onClick="ToggleAll(this)"/></td>
-         <td width="8%" >
-          <select name="contextIdSeq" class="Dropdown">
-	   <option value="">1</option> 
-	   <option value="2">2</option>
-	   <option value="3"  selected="selected" >3</option>
-           </select> 
-         </td>
-       </tr>
-      </table>     
-    </td>
-  </tr> 
-</table>
-<table width="140%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
-
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Public ID</td>
-
-    <td class="OraFieldText" width='30%'><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=99BA9DC8-39FE-4E69-E034-080020C9C0E0')">61250</a></td>
-
-    <td class="OraFieldText" width='30%'><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=B30B0B01-3AF0-1194-E034-0003BA12F5E7')">2093</a></td>
-
-   <td class="OraFieldText" width='30%'><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=B30B0B01-3AF0-1194-E034-0003BA12F5E7')">2093</a></td>
- 
- </tr>
- 
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Long Name</td>
-
-    <td class="OraFieldText" width='30%'>Agent Dose Units</td>
-
-    <td class="OraFieldText" width='30%'>Agent Dose UOM</td>
-    
-    <td class="OraFieldText" width='30%'>Agent Dose UOM</td>
-
- </tr>
-
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Preferred Name</td>
-
-    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS(GYN)</td>
-
-    <td class="OraFieldText" width='30%'>AGT_DOSE_UOM</td>
-    
-    <td class="OraFieldText" width='30%'>AGT_DOSE_UOM</td>
-    
- </tr>
- 
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Document Text</td>
-
-    <td class="OraFieldText" width='30%'>Units</td>
-
-    <td class="OraFieldText" width='30%'>Units</td>
-    
-    <td class="OraFieldText" width='30%'>Units</td>
-
- </tr>
- 
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Definition</td>
-
-    <td class="OraFieldText" width='30%'>Measurement units for each treatment agent (i.e., drug, antibody, etc.) </td>
-
-    <td class="OraFieldText" width='30%'>the measurement units for each treatment agent (i.e., drug, antibody, etc.). </td>
-    
-    <td class="OraFieldText" width='30%'>the measurement units for each treatment agent (i.e., drug, antibody, etc.). </td>
-
- </tr>
-
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Owned by Context</td>
-
-    <td class="OraFieldText" width='30%'>CTEP</td>
-
-    <td class="OraFieldText" width='30%'>CTEP</td>
-    
-    <td class="OraFieldText" width='30%'>CTEP</td>
-
- </tr>
- 
-  <tr class="OraTabledata">
-     <td class="OraTableColumnHeader" width="10%">Used by Context</td>
- 
-     <td class="OraFieldText" width='30%'>CCR</td>
- 
-     <td class="OraFieldText" width='30%'>CCR</td>
+      <bean:size id="listSize" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" property="cdeList"/> 
+      
+      <jsp:include page="../common/tab_variable_length_inc.jsp" flush="true">
+        <jsp:param name="label" value="Compare&nbsp;CDEs"/>
+        <jsp:param name="width" value="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" />
+      </jsp:include>
      
-     <td class="OraFieldText" width='30%'>CCR</td>
- 
- </tr>
-
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Origin</td>
-
-    <td class="OraFieldText" width='30%'></td>
-
-    <td class="OraFieldText" width='30%'>Data element and all values comply with Clinical Data Update System (CDUS) v3.0 Release 2</td>
-
-    <td class="OraFieldText" width='30%'>Data element and all values comply with Clinical Data Update System (CDUS) v3.0 Release 2</td>
- </tr>
-
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Workflow Status</td>
-
-    <td class="OraFieldText" width='30%'>RETIRED ARCHIVED</td>
-
-    <td class="OraFieldText" width='30%'>RELEASED</td>
-    
-    <td class="OraFieldText" width='30%'>RELEASED</td>
-
- </tr>
- 
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Registration Status</td>
-
-    <td class="OraFieldText" width='30%'></td>
-
-    <td class="OraFieldText" width='30%'>Qualified </td>
-    
-    <td class="OraFieldText" width='30%'>Qualified </td>
-
- </tr>
-  
-
-
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Version</td>
-
-    <td class="OraFieldText" width='30%'>2.31</td>
-
-    <td class="OraFieldText" width='30%'>3.0</td>
-    
-    <td class="OraFieldText" width='30%'>3.0</td>
-
- </tr>
-
-</table>
-
-<br>
-<A NAME="dataElementConcept"></A>
-
-<table cellpadding="0" cellspacing="0" width="140%" align="center">
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Data Element Concept</td>
-  </tr>
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
-  </tr>  
-</table>
-
-<table width="140%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
-
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Public ID</td>
-
-    <td class="OraFieldText" width='30%'>2008656</td>
-
-    <td class="OraFieldText" width='30%'>2014029</td>
-    
-    <td class="OraFieldText" width='30%'>2014029</td>
-
- </tr>
-
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Long Name</td>
-
-    <td class="OraFieldText" width='30%'>AGENT DOSE UNITS</td>
-
-    <td class="OraFieldText" width='30%'>Agent Quantity</td>
-    
-    <td class="OraFieldText" width='30%'>Agent Quantity</td>
-
- </tr>
- 
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Preferred Name</td>
-
-    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS</td>
-
-    <td class="OraFieldText" width='30%'>AGT_QTY</td>
-    
-    <td class="OraFieldText" width='30%'>AGT_QTY</td>
-
-  </tr>
-  
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Definition</td>
-
-    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS</td>
-
-    <td class="OraFieldText" width='30%'>the amount of the agent or drug.</td>
-    
-    <td class="OraFieldText" width='30%'>the amount of the agent or drug.</td>
-
-  </tr>
-  
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader">Context</td>
-
-    <td class="OraFieldText" width='30%'>CTEP</td>
-
-    <td class="OraFieldText" width='30%'>CTEP</td>
-    
-    <td class="OraFieldText" width='30%'>CTEP</td>
-
- </tr>
-
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader">Conceptual Domain Preferred Name</td>
-
-    <td class="OraFieldText" width='30%'>CTEP</td>
-
-    <td class="OraFieldText" width='30%'>TX_DOSES</td>
-    
-    <td class="OraFieldText" width='30%'>TX_DOSES</td>
-
- </tr>
-
- <tr class="OraTabledata">
-     <td class="OraTableColumnHeader">Object Class Preferred Name</td>
- 
-     <td class="OraFieldText" width='30%'>&nbsp;</td>
- 
-     <td class="OraFieldText" width='30%'>Agent</td>
+      <%@ include file="compareCDEs_inc.jsp"%>
+      <%@ include file="../formbuilder/showMessages.jsp" %>     
      
-     <td class="OraFieldText" width='30%'>Agent</td>
  
- </tr> 
+      <table cellpadding="0" cellspacing="0" width="90%" align="center" border=0>
+         <tr >
+           <td>&nbsp;</td>
+         </tr>
+         <tr >
+            <td  ><a class="link" href="#dataElement">Data Element</a></td>
+            <td  ><a class="link" href="#dataElementConcept">Data Element Concept</a></td>
+            <td  ><a class="link" href="#valueDomain">Value Domain</a></td>
+            <td  ><a class="link" href="#permissibleValues">Permissible Values</a></td>
+            <td  ><a class="link" href="#referenceDocuments">Reference Documents</a></td>  
+            <td  ><a class="link" href="#classifications">Classifications</a></td>
+            <td  ><a class="link" href="#data_element_derivation">Data Element Derivation</a></td>    
+         </tr>
+         <tr >
+           <td>&nbsp;</td>
+         </tr>         
+      </table>
 
-  <tr class="OraTabledata">
-        <td class="OraTableColumnHeader">Property Preferred Name</td>
-    
-        <td class="OraFieldText" width='30%'>Quantity</td>
-    
-        <td class="OraFieldText" width='30%'> </td>
-        
-        <td class="OraFieldText" width='30%'> </td>
-    
- </tr> 
-
- <tr class="OraTabledata">
-            <td class="OraTableColumnHeader">Origin</td>
-        
-            <td class="OraFieldText" width='30%'> </td>
-        
-            <td class="OraFieldText" width='30%'> </td>
+      <A NAME="dataElement"></A> 
             
-            <td class="OraFieldText" width='30%'> </td>
-        
- </tr> 
 
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader">Workflow Status</td>
+      <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center" border=0>
+        <tr>
+          <td class="OraHeaderSubSub" width="100%">Data Element</td>
+        </tr>
+        <tr height='2' >
+           <td width="100%" ><img height=2 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+        </tr>  
+      </table>   
 
-    <td class="OraFieldText" width='30%'>DRAFT NEW</td>
 
-    <td class="OraFieldText" width='30%'>RELEASED</td>
-    
-    <td class="OraFieldText" width='30%'>RELEASED</td>
+     <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center" valign="top" border="0">
+        <tr>
+          <td class="OraHeaderSubSub" width="10%">&nbsp;
+            <table cellpadding="0" cellspacing="0" align="center" valign="top" width="100%"  border="0">
+             <tr>
+               <td width="8%" ><a href="javascript:CheckAll()">Check All</a></td>
+               <td width="8%" ><a href="javascript:ClearAll()">Clear All</a></td>
+             </tr>
+           </table>    
+          </td> 
+          <!-- For each CDE display the Checkbox and the Display order drop down -->
+          <logic:notEmpty name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" property = "cdeList">
+           <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+              <td width="30%">
+                <table cellpadding="0" cellspacing="0" align="left" valign="top" width="10%"  border="0">
+                 <tr>
+                   <td width="8%" ><input type="checkbox"  value="<%=cdeIndex%>" name="<%=BrowserFormConstants.CDE_TO_REMOVE%>"  /></td>
+                   <td width="8%" >
+                   <cde:displayOrderSelection
+                          collectionSize="<%=listSize%>" 
+                          currentIndex="<%=cdeIndex%>" 
+                          selectName="<%=BrowserFormConstants.CDE_COMPARE_DISPAY_ORDER%>"
+                          selectClassName="Dropdown"                         
+                   />                     
+                   </td>
+                 </tr>
+                </table>     
+              </td>
+             </logic:iterate>
+            <!--DataElement details Start-->
+           <table width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
+             <tr class="OraTabledata">
+                <td class="OraTableColumnHeader" width="10%" nowrap >Public ID</td>
+                 <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                         <td class="OraFieldText" width='30%' >
+                              <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
+                                                paramId = "p_de_idseq"
+                                                paramName="currCDE"
+                                                paramProperty="deIdseq"
+                                                target="_blank">
+                                <bean:write name="currCDE" property="CDEId"/>
+                              </html:link>
+                          </td>
+                   </logic:iterate>             
+             </tr> 
+              <tr class="OraTabledata">
+                <td class="OraTableColumnHeader" width="10%" nowrap >Long Name</td>
+                 <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                         <td class="OraFieldText" width='30%' >
+                           <bean:write name="currCDE" property="longName"/>
+                         </td>
+                   </logic:iterate>    
+              </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Preferred Name</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%' >
+                             <bean:write name="currCDE" property="preferredName"/>
+                            </td>
+                    </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Document Text</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                           <td class="OraFieldText" width='30%'  >
+                             <bean:write name="currCDE" property="longCDEName"/>
+                           </td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Definition</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                          <td class="OraFieldText" width='30%'  >
+                           <bean:write name="currCDE" property="preferredDefinition"/>               
+                          </td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Owned by Context</td>
+                     <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                             <td class="OraFieldText" width='30%'  >
+                              <bean:write name="currCDE" property="contextName"/> 
+                             </td>
+                     </logic:iterate> 
+               </tr> 
+                <tr class="OraTabledata">
+                   <td class="OraTableColumnHeader" width="10%" nowrap >Used by Context</td>
+                     <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                             <td class="OraFieldText" width='30%'  >Need to be Fixed</td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Origin</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'  >
+                             <bean:write name="currCDE" property="origin"/>                           
+                            </td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">Workflow Status</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                              <bean:write name="currCDE" property="aslName"/> 
+                            </td>
+                     </logic:iterate> 
+               </tr> 
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap>Registration Status</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                           <td class="OraFieldText" width='30%'  >
+                            <bean:write name="currCDE" property="registrationStatus"/> 
+                           </td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Version</td>
+                     <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                              <td class="OraFieldText" width='30%'  >
+                              <bean:write name="currCDE" property="version"/>
+                              </td>
+                      </logic:iterate> 
+               </tr>
+            </table>    
+            <!--DataElement details End-->
+            <!--DEC details Start-->
+             <br>
+            <A NAME="dataElementConcept"></A>
+            
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+              <tr>
+                <td class="OraHeaderSubSub" width="100%">Data Element Concept</td>
+              </tr>
+              <tr>
+                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+              </tr>  
+            </table> 
+            
+           <table width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
+             <tr class="OraTabledata">
+                <td class="OraTableColumnHeader" width="10%" nowrap >Public ID</td>
+                 <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                         <td class="OraFieldText" width='30%' >
+                                <bean:write name="currCDE" property="dataElementConcept.publicId"/>
+                          </td>
+                   </logic:iterate>             
+             </tr> 
+              <tr class="OraTabledata">
+                <td class="OraTableColumnHeader" width="10%" nowrap >Long Name</td>
+                 <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                         <td class="OraFieldText" width='30%' >
+                           <bean:write name="currCDE" property="dataElementConcept.longName"/>
+                         </td>
+                   </logic:iterate>    
+              </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Preferred Name</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%' >
+                             <bean:write name="currCDE" property="dataElementConcept.preferredName"/>
+                            </td>
+                    </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Definition</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                          <td class="OraFieldText" width='30%'  >
+                           <bean:write name="currCDE" property="dataElementConcept.preferredDefinition"/>               
+                          </td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Context</td>
+                     <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                             <td class="OraFieldText" width='30%'  >
+                              <bean:write name="currCDE" property="dataElementConcept.contextName"/> 
+                             </td>
+                     </logic:iterate> 
+               </tr> 
+                <tr class="OraTabledata">
+                   <td class="OraTableColumnHeader" width="10%" >Conceptual Domain Preferred Name</td>
+                     <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                             <td class="OraFieldText" width='30%'  >
+                              <bean:write name="currCDE" property="dataElementConcept.CDPrefName"/> 
+                             </td>                            
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%"  >Object Class Preferred Name</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'  >
+                             <bean:write name="currCDE" property="dataElementConcept.objClassPrefName"/>                           
+                            </td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">Property Preferred Name</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                              <bean:write name="currCDE" property="dataElementConcept.propertyPrefName"/> 
+                            </td>
+                     </logic:iterate> 
+               </tr> 
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" >Origin</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                           <td class="OraFieldText" width='30%'  >
+                            <bean:write name="currCDE" property="dataElementConcept.origin"/> 
+                           </td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%"  >Workflow Status</td>
+                     <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                              <td class="OraFieldText" width='30%'  >
+                              <bean:write name="currCDE" property="dataElementConcept.aslName"/>
+                              </td>
+                      </logic:iterate> 
+               </tr>
+            </table>    
+            
+            <!--DEC details End -->
+            
+             <!--ValueDomain details Start -->
+            <br>
+            <A NAME="valueDomain"></A>
+            
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+              <tr>
+                <td class="OraHeaderSubSub" width="100%">Value Domain</td>
+              </tr>
+              <tr>
+                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+              </tr>  
+            </table>
+           <table width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
+             <tr class="OraTabledata">
+                <td class="OraTableColumnHeader" width="10%" nowrap >Public ID</td>
+                 <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                         <td class="OraFieldText" width='30%' >
+                                <bean:write name="currCDE" property="valueDomain.publicId"/>
+                          </td>
+                   </logic:iterate>             
+             </tr> 
+              <tr class="OraTabledata">
+                <td class="OraTableColumnHeader" width="10%" nowrap >Long Name</td>
+                 <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                         <td class="OraFieldText" width='30%' >
+                           <bean:write name="currCDE" property="valueDomain.longName"/>
+                         </td>
+                   </logic:iterate>    
+              </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Preferred Name</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%' >
+                             <bean:write name="currCDE" property="valueDomain.preferredName"/>
+                            </td>
+                    </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Definition</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                          <td class="OraFieldText" width='30%'  >
+                           <bean:write name="currCDE" property="valueDomain.preferredDefinition"/>               
+                          </td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" nowrap >Data Type</td>
+                     <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                             <td class="OraFieldText" width='30%'  >
+                              <bean:write name="currCDE" property="valueDomain.datatype"/> 
+                             </td>
+                     </logic:iterate> 
+               </tr> 
+                <tr class="OraTabledata">
+                   <td class="OraTableColumnHeader" width="10%" >Unit of Measure</td>
+                     <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                             <td class="OraFieldText" width='30%'  >
+                              <bean:write name="currCDE" property="valueDomain.unitOfMeasure"/> 
+                             </td>                            
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%"  >Display Format</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'  >
+                             <bean:write name="currCDE" property="valueDomain.displayFormat"/>                           
+                            </td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">Maximum Length</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                              <bean:write name="currCDE" property="valueDomain.maxLength"/> 
+                            </td>
+                     </logic:iterate> 
+               </tr> 
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">Minimum Length</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                              <bean:write name="currCDE" property="valueDomain.minLength"/> 
+                            </td>
+                     </logic:iterate> 
+               </tr> 
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">Decimal Place</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                              <bean:write name="currCDE" property="valueDomain.decimalPlace"/> 
+                            </td>
+                     </logic:iterate> 
+               </tr> 
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">High Value</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                              <bean:write name="currCDE" property="valueDomain.highValue"/> 
+                            </td>
+                     </logic:iterate> 
+               </tr> 
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">Low Value</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                              <bean:write name="currCDE" property="valueDomain.lowValue"/> 
+                            </td>
+                     </logic:iterate> 
+               </tr> 
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">Value Domain Type</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                              <bean:write name="currCDE" property="valueDomain.VDType"/> 
+                            </td>
+                     </logic:iterate> 
+               </tr> 
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">Conceptual Domain Preferred Name</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                              <bean:write name="currCDE" property="valueDomain.CDPrefName"/> 
+                            </td>
+                     </logic:iterate> 
+               </tr> 
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">Representation</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                             Need to be Fixed
+                              <!--bean:write name="currCDE" property="valueDomain.propertyPrefName"/ --> 
+                            </td>
+                     </logic:iterate> 
+               </tr>             
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%" >Origin</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                           <td class="OraFieldText" width='30%'  >
+                            <bean:write name="currCDE" property="valueDomain.origin"/> 
+                           </td>
+                     </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%"  >Workflow Status</td>
+                     <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                              <td class="OraFieldText" width='30%'  >
+                              <bean:write name="currCDE" property="valueDomain.aslName"/>
+                              </td>
+                      </logic:iterate> 
+               </tr>
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="10%">Version</td>
+                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                            <td class="OraFieldText" width='30%'>
+                              <bean:write name="currCDE" property="valueDomain.version"/> 
+                            </td>
+                     </logic:iterate> 
+               </tr>                   
+            </table>             
+              <!--ValueDomain details End -->
+              <!--Permissible Values Start-->
+            <br>
+            <A NAME="permissibleValues"></A>
+            
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+              <tr>
+                <td class="OraHeaderSubSub" width="100%">Permissible Values</td>
+              </tr>
+              <tr>
+                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+              </tr>  
+            </table>
 
- </tr>
+            <table cellSpacing=0 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+               <tr >
+                          <td width="10%" class="PrinterOraFieldText" >&nbsp;</td>
+                          <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                          <logic:empty name="currCDE" property="valueDomain.validValues">
+                            <td width="30%" class="PrinterOraFieldText" >&nbsp;</td>
+                          </logic:empty>
+                          <logic:notEmpty name="currCDE" property="valueDomain.validValues">
+                            <bean:size id="vvSize" name="currCDE" property="valueDomain.validValues"/> 
+                            <td width="30%" class="PrinterOraFieldText" ><%=vvSize%> Permissible values</td>
+                          </logic:notEmpty> 
+                          </logic:iterate>
+                </tr>
+            </table>
+            <table cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+             	<tr>
+                   <TD vAlign=top width=10%>
+                       &nbsp;
+                    </TD>             	
+                 <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                   <logic:empty name="currCDE" property="valueDomain.validValues">
+                       <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                          <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                            <TR class=OraTableColumnHeader>
+                              <TH class=OraTableColumnHeader>Value</TH>
+                              <TH class=OraTableColumnHeader>Value meaning</TH>
+                              <TH class=OraTableColumnHeader>Description</TH>
+                             </TR>
+                             <TR class=OraTabledata>
+                                <TD colspan=3>
+                                  CDE does not Permissible Values
+                                </TD>                         
+                              </TR> 
+                          </table>
+                       </td>
+                   </logic:empty>
+                   <logic:notEmpty name="currCDE" property="valueDomain.validValues">
+                       <td width="30%" class="PrinterOraFieldText" >
+                          <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                            <TR class=OraTableColumnHeader>
+                              <TH class=OraTableColumnHeader>Value</TH>
+                              <TH class=OraTableColumnHeader>Value meaning</TH>
+                              <TH class=OraTableColumnHeader>Description</TH>
+                             </TR>
+                             <logic:iterate id="currVV" name="currCDE" type="gov.nih.nci.ncicb.cadsr.resource.ValidValue" property="valueDomain.validValues" indexId="vvIndex" >                                                              
+                             <TR class=OraTabledata>
+                                <TD class=OraFieldText>
+                                	<bean:write name="currVV" property="shortMeaningValue"/>
+                                </TD>
+                                <TD class=OraFieldText>
+                                	<bean:write name="currVV" property="shortMeaning"/>
+                                </TD>
+                                <TD class=OraFieldText>
+                                	<bean:write name="currVV" property="description"/>
+                                </TD>                              
+                              </TR> 
+                              </logic:iterate>
+                          </table>
+                       </td>
+                   </logic:notEmpty>                   
+                 </logic:iterate>
+             	</tr>
+            </table>
+              <!--Permissible Values End -->
  
+               <!--Reference Doc Start-->
+               
+            <br>
+            <A NAME="referenceDocuments"></A>
+            
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+              <tr>
+                <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
+              </tr>
+              <tr>
+                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+              </tr>  
+            </table>
 
-
-</table>
-
-<br>
-<A NAME="valueDomain"></A>
-
-<table cellpadding="0" cellspacing="0" width="140%" align="center">
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Value Domain</td>
-  </tr>
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
-  </tr>  
-</table>
-
-<table width="140%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width='10%'>Public ID</td>
-
-    <td class="OraFieldText" width='30%'>2015315</td>
-
-    <td class="OraFieldText" width='30%'>2015211</td>
-    
-    <td class="OraFieldText" width='30%'>2015211</td>
-
- </tr>
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader">Long Name</td>
-
-    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS(GYN)_VD </td>
-
-    <td class="OraFieldText" width='30%'>Agent Dose UOM</td>
-    
-    <td class="OraFieldText" width='30%'>Agent Dose UOM</td>
-
- </tr>
-
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader">Preferred Name</td>
-
-    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS(GYN)_VD </td>
-
-    <td class="OraFieldText" width='30%'>AGT_UOM</td>
-    
-    <td class="OraFieldText" width='30%'>AGT_UOM</td>
-
- </tr>
+            <table  cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+             	<tr>
+                   <TD vAlign=top width=10%>
+                       &nbsp;
+                    </TD>             	
+                 <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                   <logic:empty name="currCDE" property="refereceDocs">
+                       <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                          <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                            <TR class=OraTableColumnHeader>
+                               <th class="OraTableColumnHeader">Document Name</th>
+                               <th class="OraTableColumnHeader">Document Type</th>
+                               <th class="OraTableColumnHeader">Document Text</th>
+                             </TR>
+                             <TR class=OraTabledata>
+                                <TD colspan=3>
+                                  CDE does not have Reference Document
+                                </TD>                         
+                              </TR> 
+                          </table>
+                       </td>
+                   </logic:empty>
+                  
+                   <logic:notEmpty name="currCDE" property="refereceDocs">
+                       <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                          <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                            <TR class=OraTableColumnHeader>
+                               <th class="OraTableColumnHeader">Document Name</th>
+                               <th class="OraTableColumnHeader">Document Type</th>
+                               <th class="OraTableColumnHeader">Document Text</th>
+                             </TR>
+                             <logic:iterate id="currRefDoc" name="currCDE" type="gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument" property="refereceDocs" indexId="rdIndex" >                                                              
+                             <TR class=OraTabledata>
+                                <TD class=OraFieldText>
+                                	<bean:write name="currRefDoc" property="docName"/>
+                                </TD>
+                                <TD class=OraFieldText>
+                                	<bean:write name="currRefDoc" property="docType"/>
+                                </TD>
+                                <TD class=OraFieldText>
+                                	<bean:write name="currRefDoc" property="docText"/>
+                                </TD>                                
+                              </TR> 
+                              </logic:iterate>
+                          </table>
+                       </td>
+                   </logic:notEmpty>                   
+                 </logic:iterate>
+             	</tr>
+            </table>               
+               
+               
+               
+              <!--Reference Doc Start-->               
  
-  <tr class="OraTabledata">
-     <td class="OraTableColumnHeader">Definition</td>
+              <!--classifications Start-->
+            <br>
+            <A NAME="classifications"></A>
+            
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+              <tr>
+                <td class="OraHeaderSubSub" width="100%">Classifications</td>
+              </tr>
+              <tr>
+                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+              </tr>  
+            </table>
+
+            <table  cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+             	<tr>
+                   <TD vAlign=top width=10%>
+                       &nbsp;
+                    </TD>             	
+                 <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                   <logic:empty name="currCDE" property="classifications">
+                       <td width="30%" class="PrinterOraFieldText" >
+                          <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                            <TR class=OraTableColumnHeader>
+                              <TH class=OraTableColumnHeader>CS* Preferred Name</TH>
+                              <TH class=OraTableColumnHeader>CS* Definition</TH>
+                              <TH class=OraTableColumnHeader>CSI* Name</TH>
+                              <TH class=OraTableColumnHeader>CSI* Type</TH>
+                             </TR>
+                             <TR class=OraTabledata>
+                                <TD colspan=4>
+                                  No Classifications exists for this CDE
+                                </TD>                         
+                              </TR> 
+                          </table>
+                       </td>
+                   </logic:empty>
+                  
+                   <logic:notEmpty name="currCDE" property="classifications">
+                       <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                          <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                            <TR class=OraTableColumnHeader>
+                              <TH class=OraTableColumnHeader>CS* Preferred Name</TH>
+                              <TH class=OraTableColumnHeader>CS* Definition</TH>
+                              <TH class=OraTableColumnHeader>CSI* Name</TH>
+                              <TH class=OraTableColumnHeader>CSI* Type</TH>
+                             </TR>
+                             <logic:iterate id="currCS" name="currCDE" type="gov.nih.nci.ncicb.cadsr.resource.Classification" property="classifications" indexId="csIndex" >                                                              
+                             <TR class=OraTabledata>
+                                <TD class=OraFieldText>
+                                	<bean:write name="currCS" property="classSchemeName"/>
+                                </TD>
+                                <TD class=OraFieldText>
+                                	<bean:write name="currCS" property="classSchemeDefinition"/>
+                                </TD>
+                                <TD class=OraFieldText>
+                                	<bean:write name="currCS" property="classSchemeItemName"/>
+                                </TD>  
+                                <TD class=OraFieldText>
+                                	<bean:write name="currCS" property="classSchemeItemType"/>
+                                </TD>                                 
+                              </TR> 
+                              </logic:iterate>
+                          </table>
+                       </td>
+                   </logic:notEmpty>                   
+                 </logic:iterate>
+             	</tr>
+            </table>
+              <!--classifications End -->      
+              
+             <!--Derivation details Start --> 
+            <br>
+            <A NAME="data_element_derivation"></A>
+            
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+              <tr>
+                <td class="OraHeaderSubSub" width="100%">Data Element Derivation</td>
+              </tr>
+              <tr>
+                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+              </tr>  
+            </table>             
+             
+            <table cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+               <tr >
+                  <td width="10%" class="PrinterOraFieldText" >&nbsp;</td>
+                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                       <logic:notPresent name="currCDE" property="derivedDataElement">
+                           <td vAlign=top  width="30%" class="PrinterOraFieldText" >
+                              <table cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
+                                 <TR >
+                                      <td width="30%" class="OraHeaderSubSub" >Derivation Details</td>                     
+                                  </TR> 
+                              </table>                           
+                              <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                                <TR class=OraTableColumnHeader>
+                                    <th class="OraTableColumnHeader">Derivation Type</th>
+                                    <th class="OraTableColumnHeader">Rule</th>
+                                    <th class="OraTableColumnHeader">Method</th>
+                                    <th class="OraTableColumnHeader">Concatenation Character</th>  
+                                 </TR>
+                                 <TR class=OraTabledata>
+                                    <TD colspan=4>
+                                      CDE is not a derived data element
+                                    </TD>                         
+                                  </TR> 
+                              </table>
+                           </td>
+                       </logic:notPresent>
+                      
+                       <logic:present name="currCDE" property="derivedDataElement">
+                           <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                              <table cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
+                                 <TR >
+                                      <td width="30%" class="OraHeaderSubSub" >Derivation Details</td>                     
+                                  </TR> 
+                              </table>                             
+                              <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                                <TR class=OraTableColumnHeader>
+                                    <th class="OraTableColumnHeader">Derivation Type</th>
+                                    <th class="OraTableColumnHeader">Rule</th>
+                                    <th class="OraTableColumnHeader">Method</th>
+                                    <th class="OraTableColumnHeader">Concatenation Character</th>  
+                                 </TR>
+                                 <TR class=OraTabledata>
+                                    <logic:present name="currCDE" property="derivedDataElement.type">
+                                    <TD class=OraFieldText>
+                                      <bean:write name="currCDE" property="derivedDataElement.type.name"/>
+                                    </TD>
+                                    </logic:present>
+                                    <logic:present name="currCDE" property="derivedDataElement.rule">
+                                    <TD class=OraFieldText>
+                                      <bean:write name="currCDE" property="derivedDataElement.rule"/>
+                                    </TD>
+                                    </logic:present>
+                                    <logic:present name="currCDE" property="derivedDataElement.methods">
+                                    <TD class=OraFieldText>
+                                      <bean:write name="currCDE" property="derivedDataElement.methods"/>
+                                    </TD>  
+                                    </logic:present>
+                                    <logic:present name="currCDE" property="derivedDataElement.concatenationCharacter">
+                                    <TD class=OraFieldText>
+                                      <bean:write name="currCDE" property="derivedDataElement.concatenationCharacter"/>
+                                    </TD> 
+                                    </logic:present>
+                                  </TR> 
+                              </table>
+                           </td>
+                       </logic:present>                    
+                  </logic:iterate>
+                </tr>
+             </table>
+
+            <table cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+               <tr >
+                  <td width="10%" class="PrinterOraFieldText" >&nbsp;</td>
+                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
+                       <logic:notPresent name="currCDE" property="derivedDataElement">
+                           <td vAlign=top  width="30%" class="PrinterOraFieldText" >
+                              <table cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
+                                 <TR >
+                                      <td width="30%" class="OraHeaderSubSub" >Component Data Elements</td>                     
+                                  </TR> 
+                              </table>                           
+                              <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                                <TR class=OraTableColumnHeader>
+                                    <th class="OraTableColumnHeader">Derivation Type</th>
+                                    <th class="OraTableColumnHeader">Rule</th>
+                                    <th class="OraTableColumnHeader">Method</th>
+                                    <th class="OraTableColumnHeader">Concatenation Character</th>  
+                                 </TR>
+                                 <TR class=OraTabledata>
+                                    <TD colspan=4>
+                                      CDE is not a derived data element
+                                    </TD>                         
+                                  </TR> 
+                              </table>
+                           </td>
+                       </logic:notPresent>
+                      
+                       <logic:present name="currCDE" property="derivedDataElement">
+                           <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                              <table cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
+                                 <TR >
+                                      <td width="30%" class="OraHeaderSubSub" >Component Data Elements</td>                     
+                                  </TR> 
+                              </table>                             
+                              <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                                <TR class=OraTableColumnHeader>
+                                   <th class="OraTableColumnHeader">Long Name</th>
+                                   <th class="OraTableColumnHeader">Context</th>
+                                   <th class="OraTableColumnHeader">Public ID</th>   
+                                   <th class="OraTableColumnHeader">Version</th>
+                                 </TR>
+                                <logic:iterate id="derivation" name="currCDE" type="gov.nih.nci.ncicb.cadsr.resource.DataElementDerivation" property="derivedDataElement.dataElementDerivation" indexId="dedIndex" >                                                                                               
+                                 <TR class=OraTabledata>                                 
+                                    <TD class=OraFieldText>
+                                      <bean:write name="derivation" property="derivedDataElement.longName"/>
+                                    </TD>
+                                    <TD class=OraFieldText>
+                                      <bean:write name="derivation" property="derivedDataElement.contextName"/>
+                                    </TD>
+                                    <TD class=OraFieldText>
+                                      <bean:write name="derivation" property="derivedDataElement.CDEId"/>
+                                    </TD>  
+                                    <TD class=OraFieldText>
+                                      <bean:write name="derivation" property="derivedDataElement.version"/>
+                                    </TD> 
+                                  </TR> 
+                                 </logic:iterate>
+                              </table>
+                           </td>
+                       </logic:present>                    
+                  </logic:iterate>
+                </tr>
+             </table>              
+             <!--Derivation details End -->  
+          </logic:notEmpty>  
+          </td>
+        </tr> 
+    </table>
+    <br>
+            <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align="center">
+              <tr>
+                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+              </tr>  
+            </table>   
+            
+    <%@ include file="compareCDEs_inc.jsp"%>
+      <jsp:include page="../common/common_variable_length_bottom_border.jsp" flush="true">
+        <jsp:param name="width" value="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" />
+      </jsp:include>       
+    </html:form>
 
-     <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS(GYN)_VD</td>
-
-     <td class="OraFieldText" width='30%'>the units in which the agent or drug is measured.</td>
-     
-     <td class="OraFieldText" width='30%'>the units in which the agent or drug is measured.</td>
-
- </tr>
-
-  <tr class="OraTabledata">
-     <td class="OraTableColumnHeader">Datatype</td>
-
-     <td class="OraFieldText" width='30%'>Character</td>
-
-     <td class="OraFieldText" width='30%'>Character</td>
-     
-     <td class="OraFieldText" width='30%'>Character</td>
-
- </tr>
-
-  <tr class="OraTabledata">
-     <td class="OraTableColumnHeader">Unit of Measure</td>
-
-     <td class="OraFieldText" width='30%'></td>
-
-     <td class="OraFieldText" width='30%'></td>
-     
-     <td class="OraFieldText" width='30%'></td>
-
- </tr>
-
-  <tr class="OraTabledata">
-     <td class="OraTableColumnHeader">Display Format</td>
-
-     <td class="OraFieldText" width='30%'></td>
-
-     <td class="OraFieldText" width='30%'></td>
-     
-     <td class="OraFieldText" width='30%'></td>
-
- </tr>
-
-  <tr class="OraTabledata">
-     <td class="OraTableColumnHeader">Maximum Length</td>
-
-     <td class="OraFieldText" width='30%'>10</td>
-
-     <td class="OraFieldText" width='30%'>15</td>
-     
-     <td class="OraFieldText" width='30%'>15</td>
-
- </tr>
-  <tr class="OraTabledata">
-     <td class="OraTableColumnHeader">Minimum Length</td>
-
-     <td class="OraFieldText" width='30%'></td>
-
-     <td class="OraFieldText" width='30%'></td>
-     
-     <td class="OraFieldText" width='30%'></td>
-
- </tr>
-
-   <tr class="OraTabledata">
-      <td class="OraTableColumnHeader">Decimal Place</td>
-
-      <td class="OraFieldText" width='30%'></td>
-
-      <td class="OraFieldText" width='30%'></td>
-      
-      <td class="OraFieldText" width='30%'></td>
-
-  </tr>
-   <tr class="OraTabledata">
-      <td class="OraTableColumnHeader">High Value</td>
-
-      <td class="OraFieldText" width='30%'></td>
-
-      <td class="OraFieldText" width='30%'></td>
-      
-      <td class="OraFieldText" width='30%'></td>
-
-  </tr>
-   <tr class="OraTabledata">
-      <td class="OraTableColumnHeader">Low Value</td>
-
-      <td class="OraFieldText" width='30%'>Character</td>
-
-      <td class="OraFieldText" width='30%'>Character</td>
-      
-      <td class="OraFieldText" width='30%'>Character</td>
-
-  </tr>
-   <tr class="OraTabledata">
-      <td class="OraTableColumnHeader">Value Domain Type</td>
-
-      <td class="OraFieldText" width='30%'>Enumerated</td>
-
-      <td class="OraFieldText" width='30%'>Enumerated</td>
-      
-      <td class="OraFieldText" width='30%'>Enumerated</td>
-
-  </tr>
-   <tr class="OraTabledata">
-      <td class="OraTableColumnHeader">Conceptual Domain Preferred Name</td>
-
-      <td class="OraFieldText" width='30%'>CTEP</td>
-
-      <td class="OraFieldText" width='30%'>UOM</td>
-      
-      <td class="OraFieldText" width='30%'>UOM</td>
-
-  </tr>
-
-   <tr class="OraTabledata">
-      <td class="OraTableColumnHeader">Representation</td>
-
-      <td class="OraFieldText" width='30%'>&nbsp;</td>
-
-      <td class="OraFieldText" width='30%'>&nbsp;</td>
-      
-      <td class="OraFieldText" width='30%'>&nbsp;</td>
-
-  </tr>  
-
- <tr class="OraTabledata">
-      <td class="OraTableColumnHeader">Origin</td>
-
-      <td class="OraFieldText" width='30%'></td>
-
-      <td class="OraFieldText" width='30%'></td>
-      
-      <td class="OraFieldText" width='30%'></td>
-
- </tr>
- 
-  <tr class="OraTabledata">
-     <td class="OraTableColumnHeader">Workflow Status</td>
-
-     <td class="OraFieldText" width='30%'>Draft New</td>
-
-     <td class="OraFieldText" width='30%'>RELEASED</td>
-
-    <td class="OraFieldText" width='30%'>RELEASED</td>
-
- </tr>
-
-
- 
-  <tr class="OraTabledata">
-     <td class="OraTableColumnHeader">Version</td>
-
-     <td class="OraFieldText" width='30%'>2.31</td>
-
-     <td class="OraFieldText" width='30%'>3.0</td>
-     
-     <td class="OraFieldText" width='30%'>3.0</td>
-
- </tr>
-
-
-</table>
-
-<br>
-<A NAME="permissibleValues"></A>
-
-<table cellpadding="0" cellspacing="0" width="140%" align="center">
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Permissible Values</td>
-  </tr>
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
-  </tr>  
-</table>
-
-<TABLE cellSpacing=0 cellPadding=0 width="140%" align=center border=0>
-   <TR >
-          <TD width="10%" class="PrinterOraFieldText" >&nbsp;</TD>
-          <TD width="30%" class="PrinterOraFieldText" >20 Permissible values</TD>
-          <TD width="30%" class="PrinterOraFieldText" >20 Permissible values</TD>
-          <TD width="30%" class="PrinterOraFieldText" >20 Permissible values</TD>
-         
-   </TR>
-</TABLE>
-
-<TABLE cellSpacing=1 cellPadding=1 width="140%" align=center border=0>
-  <TBODY>
-  <TR>
-    <TD vAlign=top width=10%>
-      &nbsp;
-    </TD>
-    <TD vAlign=top width=30%>
-      <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
-      align=center border=0>
-        <TBODY>
-        <TR class=OraTableColumnHeader>
-          <TH class=OraTableColumnHeader>value</TH>
-          <TH class=OraTableColumnHeader>value meaning</TH>
-          <TH class=OraTableColumnHeader>Description</TH>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Ci</TD>
-          <TD class=OraFieldText>CURIE</TD>
-          <TD class=OraFieldText>CURIE</TD>
-        </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Eq</TD>
-          <TD class=OraFieldText>GRAM-EQUIVALENT WEIGHT</TD>
-          <TD class=OraFieldText>GRAM-EQUIVALENT WEIGHT</TD>
-       </TR>    
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Gy</TD>
-          <TD class=OraFieldText>GRAYS</TD>
-          <TD class=OraFieldText>GRAYS</TD>
-       </TR>  
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Hz</TD>
-          <TD class=OraFieldText>HERTZ</TD>
-          <TD class=OraFieldText>HERTZ</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>IU</TD>
-          <TD class=OraFieldText>INTERNATIONAL UNIT</TD>
-          <TD class=OraFieldText>INTERNATIONAL UNIT</TD>
-         </TR>
-         <TR class=OraTabledata>
-          <TD class=OraFieldText>JCM2</TD>
-          <TD class=OraFieldText>IJOULES PER CENTIMETER SQUARE </TD>
-          <TD class=OraFieldText>JOULES PER CENTIMETER SQUARE </TD>
-         </TR> 
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>L</TD>
-          <TD class=OraFieldText>LITER</TD>
-          <TD class=OraFieldText>LITER</TD>
-         </TR>   
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>MHz</TD>
-          <TD class=OraFieldText>MEGAHERTZ</TD>
-          <TD class=OraFieldText>MEGAHERTZ</TD>
-         </TR>   
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>MMM</TD>
-          <TD class=OraFieldText>MILLIGRAMS PER MILLILITER PER MINUTE </TD>
-          <TD class=OraFieldText>MILLIGRAMS PER MILLILITER PER MINUTE </TD>
-         </TR>   
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>MeV</TD>
-          <TD class=OraFieldText>MILLION ELECTRON VOLTS</TD>
-          <TD class=OraFieldText>MILLION ELECTRON VOLTS</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Mrad</TD>
-          <TD class=OraFieldText>MEGARAD</TD>
-          <TD class=OraFieldText>MEGARAD</TD>
-         </TR>  
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>N/A</TD>
-          <TD class=OraFieldText>NOT APPLICABLE</TD>
-          <TD class=OraFieldText>NOT APPLICABLE</TD>
-         </TR>  
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Osmol</TD>
-          <TD class=OraFieldText>OSMOLE</TD>
-          <TD class=OraFieldText>OSMOLE</TD>
-         </TR>   
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Pa</TD>
-          <TD class=OraFieldText>PASCAL</TD>
-          <TD class=OraFieldText>PASCAL</TD>
-         </TR>  
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>VP</TD>
-          <TD class=OraFieldText>VIRAL PARTICLES</TD>
-          <TD class=OraFieldText>VIRAL PARTICLES</TD>
-         </TR>    
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>cGy</TD>
-          <TD class=OraFieldText>CENTIGRAYS</TD>
-          <TD class=OraFieldText>CENTIGRAYS</TD>
-         </TR>   
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>cm</TD>
-          <TD class=OraFieldText>CENTIMETER</TD>
-          <TD class=OraFieldText>CENTIMETER</TD>
-         </TR>   
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>dL</TD>
-          <TD class=OraFieldText>DECILITER</TD>
-          <TD class=OraFieldText>DECILITER</TD>
-         </TR> 
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>dm</TD>
-          <TD class=OraFieldText>DECIMETER</TD>
-          <TD class=OraFieldText>DECIMETER</TD>
-         </TR>   
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>g</TD>
-          <TD class=OraFieldText>GRAM</TD>
-          <TD class=OraFieldText>GRAM</TD>
-         </TR>          
-    </TBODY></TABLE>
-    </TD>
-    <TD vAlign=top width="30%">
-      <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
-      align=center border=0>
-        <TBODY>
-        <TR class=OraTableColumnHeader>
-          <TH class=OraTableColumnHeader>value</TH>
-          <TH class=OraTableColumnHeader>value meaning</TH>
-          <TH class=OraTableColumnHeader>Description</TH>
-         </TR>
-
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>J/cm^2</TD>
-          <TD class=OraFieldText>JOULES PER CENTIMETER SQUARE</TD>
-          <TD class=OraFieldText>JOULES PER CENTIMETER SQUARE</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Ci</TD>
-          <TD class=OraFieldText>CURIE</TD>
-          <TD class=OraFieldText>CURIE</TD>
-        </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Eq</TD>
-          <TD class=OraFieldText>GRAM-EQUIVALENT WEIGHT</TD>
-          <TD class=OraFieldText>GRAM-EQUIVALENT WEIGHT</TD>
-       </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Hz</TD>
-          <TD class=OraFieldText>HERTZ</TD>
-          <TD class=OraFieldText>HERTZ</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>IU</TD>
-          <TD class=OraFieldText>INTERNATIONAL UNIT</TD>
-          <TD class=OraFieldText>INTERNATIONAL UNIT</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>L</TD>
-          <TD class=OraFieldText>LITER</TD>
-          <TD class=OraFieldText>LITER</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>MeV</TD>
-          <TD class=OraFieldText>MILLION ELECTRON VOLTS</TD>
-          <TD class=OraFieldText>MILLION ELECTRON VOLTS</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Mrad</TD>
-          <TD class=OraFieldText>MEGARAD </TD>
-          <TD class=OraFieldText>MEGARAD</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>N/A</TD>
-          <TD class=OraFieldText>NOT APPLICABLE</TD>
-          <TD class=OraFieldText>NOT APPLICABLE </TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Osmol</TD>
-          <TD class=OraFieldText>OSMOLE</TD>
-          <TD class=OraFieldText>OSMOLE</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Pa</TD>
-          <TD class=OraFieldText>PASCAL</TD>
-          <TD class=OraFieldText>PASCAL</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>VP</TD>
-          <TD class=OraFieldText>VIRAL PARTICLES</TD>
-          <TD class=OraFieldText>VIRAL PARTICLES </TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>cm</TD>
-          <TD class=OraFieldText>CENTIMETER</TD>
-          <TD class=OraFieldText>CENTIMETER</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>dL</TD>
-          <TD class=OraFieldText>DECILITER</TD>
-          <TD class=OraFieldText>DECILITER</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>dm</TD>
-          <TD class=OraFieldText>DECIMETER</TD>
-          <TD class=OraFieldText>DECIMETER</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>g</TD>
-          <TD class=OraFieldText>GRAM</TD>
-          <TD class=OraFieldText>GRAM</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>gravity</TD>
-          <TD class=OraFieldText>GRAVITY (IN CENTRIFUGATION) </TD>
-          <TD class=OraFieldText>GRAVITY (IN CENTRIFUGATION) </TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>kHz</TD>
-          <TD class=OraFieldText>KILOHERTZ</TD>
-          <TD class=OraFieldText>KILOHERTZ </TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>kPa</TD>
-          <TD class=OraFieldText>KILOPASCAL</TD>
-          <TD class=OraFieldText>KILOPASCAL</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>keV</TD>
-          <TD class=OraFieldText>KILO-ELECTRON VOLT </TD>
-          <TD class=OraFieldText>KILO-ELECTRON VOLT </TD>
-         </TR>
-       </TBODY></TABLE></TD>
-
-    <TD vAlign=top width="30%">
-      <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
-      align=center border=0>
-        <TBODY>
-        <TR class=OraTableColumnHeader>
-          <TH class=OraTableColumnHeader>value</TH>
-          <TH class=OraTableColumnHeader>value meaning</TH>
-          <TH class=OraTableColumnHeader>Description</TH>
-         </TR>
-
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>J/cm^2</TD>
-          <TD class=OraFieldText>JOULES PER CENTIMETER SQUARE</TD>
-          <TD class=OraFieldText>JOULES PER CENTIMETER SQUARE</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Ci</TD>
-          <TD class=OraFieldText>CURIE</TD>
-          <TD class=OraFieldText>CURIE</TD>
-        </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Eq</TD>
-          <TD class=OraFieldText>GRAM-EQUIVALENT WEIGHT</TD>
-          <TD class=OraFieldText>GRAM-EQUIVALENT WEIGHT</TD>
-       </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Hz</TD>
-          <TD class=OraFieldText>HERTZ</TD>
-          <TD class=OraFieldText>HERTZ</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>IU</TD>
-          <TD class=OraFieldText>INTERNATIONAL UNIT</TD>
-          <TD class=OraFieldText>INTERNATIONAL UNIT</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>L</TD>
-          <TD class=OraFieldText>LITER</TD>
-          <TD class=OraFieldText>LITER</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>MeV</TD>
-          <TD class=OraFieldText>MILLION ELECTRON VOLTS</TD>
-          <TD class=OraFieldText>MILLION ELECTRON VOLTS</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Mrad</TD>
-          <TD class=OraFieldText>MEGARAD </TD>
-          <TD class=OraFieldText>MEGARAD</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>N/A</TD>
-          <TD class=OraFieldText>NOT APPLICABLE</TD>
-          <TD class=OraFieldText>NOT APPLICABLE </TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Osmol</TD>
-          <TD class=OraFieldText>OSMOLE</TD>
-          <TD class=OraFieldText>OSMOLE</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>Pa</TD>
-          <TD class=OraFieldText>PASCAL</TD>
-          <TD class=OraFieldText>PASCAL</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>VP</TD>
-          <TD class=OraFieldText>VIRAL PARTICLES</TD>
-          <TD class=OraFieldText>VIRAL PARTICLES </TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>cm</TD>
-          <TD class=OraFieldText>CENTIMETER</TD>
-          <TD class=OraFieldText>CENTIMETER</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>dL</TD>
-          <TD class=OraFieldText>DECILITER</TD>
-          <TD class=OraFieldText>DECILITER</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>dm</TD>
-          <TD class=OraFieldText>DECIMETER</TD>
-          <TD class=OraFieldText>DECIMETER</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>g</TD>
-          <TD class=OraFieldText>GRAM</TD>
-          <TD class=OraFieldText>GRAM</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>gravity</TD>
-          <TD class=OraFieldText>GRAVITY (IN CENTRIFUGATION) </TD>
-          <TD class=OraFieldText>GRAVITY (IN CENTRIFUGATION) </TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>kHz</TD>
-          <TD class=OraFieldText>KILOHERTZ</TD>
-          <TD class=OraFieldText>KILOHERTZ </TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>kPa</TD>
-          <TD class=OraFieldText>KILOPASCAL</TD>
-          <TD class=OraFieldText>KILOPASCAL</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>keV</TD>
-          <TD class=OraFieldText>KILO-ELECTRON VOLT </TD>
-          <TD class=OraFieldText>KILO-ELECTRON VOLT </TD>
-         </TR>
-       </TBODY></TABLE></TD>       
-       
-       </TR></TBODY></TABLE>
-       
-
-<A NAME="referenceDocuments"></A> 
-<br>
-<table cellpadding="0" cellspacing="0" width="140%" align="center" >
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
-  </tr>
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
-  </tr>
-</table>
-
-<TABLE cellSpacing=1 cellPadding=1 width="140%" align=center border=0>
-  <TBODY>
-  <TR>
-    <TD vAlign=top width=10%>
-      &nbsp;
-    </TD>
-
-    <TD vAlign=top width="30%">
-
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Document Name</th>
-    <th class="OraTableColumnHeader">Document Type</th>
-    <th class="OraTableColumnHeader">Document Text</th>
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CRF Text </td>
-        <td class="OraFieldText">LONG_NAME </td>
-        <td class="OraFieldText">Units </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CRF Text </td>
-        <td class="OraFieldText">HISTORIC SHORT CDE NAME </td>
-        <td class="OraFieldText">Agent Dose Units </td>
-      </tr>
-
-</table>
-
-    </TD>
-    
-    <TD vAlign=top width="30%">
-    
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Document Name</th>
-    <th class="OraTableColumnHeader">Document Type</th>
-    <th class="OraTableColumnHeader">Document Text</th>
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CRF Text </td>
-        <td class="OraFieldText">HISTORIC SHORT CDE NAME </td>
-        <td class="OraFieldText">Agent Dose Units </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CRF Text </td>
-        <td class="OraFieldText">LONG_NAME </td>
-        <td class="OraFieldText">Units </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">Source </td>
-        <td class="OraFieldText">DATA_ELEMENT_SOURCE </td>
-        <td class="OraFieldText">Data element and all values comply with Clinical Data Update System (CDUS) v3.0 Release 2 </td>
-      </tr>
-
-</table>
-    
-    </TD>
-    
-    <TD vAlign=top width="30%">
-
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Document Name</th>
-    <th class="OraTableColumnHeader">Document Type</th>
-    <th class="OraTableColumnHeader">Document Text</th>
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CRF Text </td>
-        <td class="OraFieldText">LONG_NAME </td>
-        <td class="OraFieldText">Units </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CRF Text </td>
-        <td class="OraFieldText">HISTORIC SHORT CDE NAME </td>
-        <td class="OraFieldText">Agent Dose Units </td>
-      </tr>
-
-</table>
-
-    </TD>
-    
-    </TR></TBODY></TABLE>
-
-<br> 
-<A NAME="classifications"></A>
-
-<table cellpadding="0" cellspacing="0" width="140%" align="center">
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Classifications</td>
-  </tr>
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
-  </tr>  
-</table>
-<TABLE cellSpacing=1 cellPadding=1 width="140%" align=center border=0>
-  <TBODY>
-  <TR>
-      <TD vAlign=top width=10%>
-        &nbsp;
-    </TD>
-    
-    <TD vAlign=top width="30%">
-      <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
-      align=center border=0>
-        <TBODY>
-        
-        <TR class=OraTableColumnHeader>
-          <TH class=OraTableColumnHeader>CS* Preferred Name</TH>
-          <TH class=OraTableColumnHeader>CS* Definition</TH>
-          <TH class=OraTableColumnHeader>CSI* Name</TH>
-          <TH class=OraTableColumnHeader>CSI* Type</TH>
-         </TR>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CATEGORY </td>
-        <td class="OraFieldText">Type of Category </td>
-        <td class="OraFieldText">Treatment </td>
-        <td class="OraFieldText">CATEGORY_TYPE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">DISEASE </td>
-        <td class="OraFieldText">Type of Disease </td>
-        <td class="OraFieldText">Gynecologic </td>
-        <td class="OraFieldText">DISEASE_TYPE </td>
-      </tr>
-      
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Primary Cervical </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Primary Endometrial </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Primary Ovarian </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Recurrent Gyn </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-      <tr class="OraTabledata">
-        <td class="OraFieldText">USAGE </td>
-        <td class="OraFieldText">Type of Usage </td>
-        <td class="OraFieldText">CLINICAL TRIALS </td>
-        <td class="OraFieldText">USAGE_TYPE </td>
-      </tr>
-      
-    </TBODY></TABLE>
-    </TD>
-    <TD vAlign=top width="30%" >
-      <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
-      align=center border=0>
-        <TBODY>
-        <TR class=OraTableColumnHeader>
-          <TH class=OraTableColumnHeader>CS* Preferred Name</TH>
-          <TH class=OraTableColumnHeader>CS* Definition</TH>
-          <TH class=OraTableColumnHeader>CSI* Name</TH>
-          <TH class=OraTableColumnHeader>CSI* Type</TH>
-         </TR>
-
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CATEGORY </td>
-        <td class="OraFieldText">Type of Category </td>
-        <td class="OraFieldText">Protocol/Admin. </td>
-        <td class="OraFieldText">CATEGORY_TYPE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CATEGORY </td>
-        <td class="OraFieldText">Type of Category </td>
-        <td class="OraFieldText">Treatment </td>
-        <td class="OraFieldText">CATEGORY_TYPE </td>
-      </tr>
-
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CRF_DISEASE </td>
-        <td class="OraFieldText">this scheme is used to classify by disease case report forms and their associated data elements.  Assignments to this scheme should not be made manually but occur through use of the CRF Loader and the CRT. </td>
-        <td class="OraFieldText">Colorectal </td>
-        <td class="OraFieldText">DISEASE_TYPE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">ALL Prev Untreated </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">AML Prev Untreated </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">APL Prev Untreated </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Adjuvant Esophageal </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Adjuvant Gastric </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Advanced Esophageal </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Advanced Gastric </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">CLL Prev Untreated </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">CML Prev Untreated </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">HCL Prev Untreated </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">MDS Prev Untreated </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">NSCLC 2nd Line </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Primary Cervical </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Primary Endometrial </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Primary Ovarian </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">SCLC 2nd Line </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">USAGE </td>
-        <td class="OraFieldText">Type of Usage </td>
-        <td class="OraFieldText">CLINICAL TRIALS </td>
-        <td class="OraFieldText">USAGE_TYPE </td>
-      </tr>    
-    
-    </TBODY></TABLE>
-    </TD>
-    
-    <TD vAlign=top width="30%">
-      <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
-      align=center border=0>
-        <TBODY>
-        
-        <TR class=OraTableColumnHeader>
-          <TH class=OraTableColumnHeader>CS* Preferred Name</TH>
-          <TH class=OraTableColumnHeader>CS* Definition</TH>
-          <TH class=OraTableColumnHeader>CSI* Name</TH>
-          <TH class=OraTableColumnHeader>CSI* Type</TH>
-         </TR>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">CATEGORY </td>
-        <td class="OraFieldText">Type of Category </td>
-        <td class="OraFieldText">Treatment </td>
-        <td class="OraFieldText">CATEGORY_TYPE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">DISEASE </td>
-        <td class="OraFieldText">Type of Disease </td>
-        <td class="OraFieldText">Gynecologic </td>
-        <td class="OraFieldText">DISEASE_TYPE </td>
-      </tr>
-      
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Primary Cervical </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Primary Endometrial </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Primary Ovarian </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">TTU </td>
-        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
-        <td class="OraFieldText">Recurrent Gyn </td>
-        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
-      </tr>
-      <tr class="OraTabledata">
-        <td class="OraFieldText">USAGE </td>
-        <td class="OraFieldText">Type of Usage </td>
-        <td class="OraFieldText">CLINICAL TRIALS </td>
-        <td class="OraFieldText">USAGE_TYPE </td>
-      </tr>
-      
-    </TBODY></TABLE>
-    </TD>
-    
-    </TR>
-    
-    </TBODY></TABLE>
-    
-<A NAME="data_element_derivation"></A> 
-<br>
-<table cellpadding="0" cellspacing="0" width="140%" align="center" >
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Data Element Derivation</td>
-  </tr>
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
-  </tr>
-</table>
-
-<TABLE cellSpacing=1 cellPadding=1 width="140%" align=center border=0>
-  <TBODY>
-     <TR class="OraHeaderSubSub">
-       <TD vAlign=top width=10%>
-         &nbsp;
-       </TD>
-   
-     <TD vAlign=top width="30%">
-        Derivation Details
-     </td>
-     <TD vAlign=top width="30%">
-        Derivation Details
-     </td>
-     <TD vAlign=top width="30%">
-        Derivation Details
-     </td>
-   </tr>
- 
- <TR>
-    <TD vAlign=top width=10%>
-      &nbsp;
-    </TD>
-
-    <TD vAlign=top width="30%">
-
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Derivation Type</th>
-    <th class="OraTableColumnHeader">Rule</th>
-    <th class="OraTableColumnHeader">Method</th>
-    <th class="OraTableColumnHeader">Concatenation Character</th>   
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">COMPOUND</td>
-        <td class="OraFieldText">&nbsp;</td>
-        <td class="OraFieldText">&nbsp;</td>
-        <td class="OraFieldText">&nbsp;</td>        
-      </tr>
-
-
-</table>
-
-    </TD>
-    
-    <TD vAlign=top width="30%">
-    
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Derivation Type</th>
-    <th class="OraTableColumnHeader">Rule</th>
-    <th class="OraTableColumnHeader">Method</th>
-    <th class="OraTableColumnHeader">Concatenation Character</th>   
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText" colspan=4>CDE is not a derived data element</td>
-      </tr>
-
-
-</table>
-    
-    </TD>
-    
-    <TD vAlign=top width="30%">
-
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Derivation Type</th>
-    <th class="OraTableColumnHeader">Rule</th>
-    <th class="OraTableColumnHeader">Method</th>
-    <th class="OraTableColumnHeader">Concatenation Character</th>   
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText" colspan=4>CDE is not a derived data element</td>
-      </tr>
-</table>
-
-    </TD>
-    
-    </TR></TBODY></TABLE>    
-<br>
-<TABLE cellSpacing=1 cellPadding=1 width="140%" align=center border=0>
-  <TBODY>
-    <TR class="OraHeaderSubSub">
-      <TD vAlign=top width=10%>
-        &nbsp;
-      </TD>
-  
-    <TD vAlign=top width="30%">
-       Component Data Elements
-    </td>
-    <TD vAlign=top width="30%">
-       Component Data Elements
-    </td>
-    <TD vAlign=top width="30%">
-       Component Data Elements
-    </td>
-   </tr>
-    
-  <TR>
-    <TD vAlign=top width=10%>
-      &nbsp;
-    </TD>
-
-    <TD vAlign=top width="30%">
-
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Long Name</th>
-    <th class="OraTableColumnHeader">Context</th>
-    <th class="OraTableColumnHeader">Public ID</th>   
-    <th class="OraTableColumnHeader">Version</th>
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText">Zip Code</td>
-        <td class="OraFieldText">CTEP</td>
-        <td class="OraFieldText">78325</td>  
-        <td class="OraFieldText">3.0</td> 
-      </tr>
-
-
-</table>
-
-    </TD>
-    
-    <TD vAlign=top width="30%">
-    
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Long Name</th>
-    <th class="OraTableColumnHeader">Context</th>
-    <th class="OraTableColumnHeader">Public ID</th>   
-    <th class="OraTableColumnHeader">Version</th>
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText" colspan=4>CDE is not a derived data element</td>
-      </tr>
-
-
-</table>
-    
-    </TD>
-    
-    <TD vAlign=top width="30%">
-
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Long Name</th>
-    <th class="OraTableColumnHeader">Context</th>
-    <th class="OraTableColumnHeader">Public ID</th>   
-    <th class="OraTableColumnHeader">Version</th>
-  </tr>
-
-      <tr class="OraTabledata">
-        <td class="OraFieldText" colspan=4>CDE is not a derived data element</td>
-      </tr>
-
-</table>
-
-    </TD>
-    
-    </TR></TBODY></TABLE>  
-<br>
-<table cellpadding="0" cellspacing="0" width="140%" align="center">
-
-  <tr>
-    <td width="100%"><img height=2 src="i/beigedot.gif" width="99%" align=top border=1> </td>
-  </tr>  
-</table> 
-<table width=100% Cellpadding=0 Cellspacing=0 border=0>
-    <tr>
-      <td align="center" >
-        <img src="/cdebrowser/i/backButton.gif" >
-      </td>
-    </tr>
-</table>
-
-
-<TABLE width=140% cellspacing=0 cellpadding=0 border=0>
-<TR>
-<TD valign=bottom width=99%><img src="/cdebrowser/i/bottom_shade.gif" height="6" width="100%"></TD>
-<TD valign=bottom width="1%" align=right><img src="/cdebrowser/i/bottomblueright.gif"></TD>
-</TR>
-</TABLE>
-<TABLE width=140% cellspacing=0 cellpadding=0 bgcolor="#336699" border=0>
-<TR>
-<TD width="60%" align="LEFT">
-<FONT face="Arial" color="WHITE" size="-2">User: </FONT>
-<FONT face="Arial" size="-1" color="#CCCC99">
-
-
-    Public User
-
-</FONT>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<FONT color="white" size=-2 face=arial>Version 2.1.1</FONT>
-</TD>
-
-</TR>
-<TR>
-<TD colspan=2><img src="/cdebrowser/i/bottom_middle.gif" height="6" width="100%"></TD>
-</TR>
-</TABLE>
 </body>
 </html>

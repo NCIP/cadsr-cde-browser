@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.resource;
+import java.util.List;
 
 
 public interface DataElement extends AdminComponent{
@@ -33,4 +34,6 @@ public interface DataElement extends AdminComponent{
    public DerivedDataElement getDerivedDataElement();
    public void setDerivedDataElement(DerivedDataElement dataElementDerivation);
 
+   public List getClassifications();
+   public void setClassifications(List classifications);
 }
