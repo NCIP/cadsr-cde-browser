@@ -54,9 +54,7 @@
     <tr>
       <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.classification"/>:</td>
       <td class="OraFieldText" nowrap>
-      <input type="text" 
-        name="<%= FormConstants.CSI_NAME + i%>" 
-        disabled="true"
+      <input type=text name="<%= FormConstants.CSI_NAME + i%>" 
         readonly="true" 
         size="19"
         styleClass="LOVField"
