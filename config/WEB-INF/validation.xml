@@ -104,6 +104,7 @@
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
       </field>
 
+      <!--
       <field   property="formComments"
         depends="required, maxlength">
         <arg0 key="cadsr.formbuilder.form.comments"/>
@@ -113,6 +114,7 @@
           <var-value>255</var-value>
         </var>
       </field>
+      -->
 
     </form>
 
