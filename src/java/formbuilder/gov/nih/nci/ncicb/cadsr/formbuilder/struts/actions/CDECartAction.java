@@ -67,8 +67,8 @@ public class CDECartAction extends FormBuilderBaseDispatchAction {
       }
     }
     catch (FormBuilderException exp) {
-      if (log.isDebugEnabled()) {
-        log.error("Exception on displayCDECart =  " + exp);
+      if (log.isErrorEnabled()) {
+        log.error("Exception on displayCDECart ", exp);
       }
       saveError(exp.getErrorCode(), request);
     }

@@ -128,6 +128,3 @@ function clearForm() {
  </TR>    
 
   </table>
-  <P>
-    
-  </P>

@@ -189,8 +189,8 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
       setFormForAction(form, request);
     }
     catch (FormBuilderException exp) {
-      if (log.isDebugEnabled()) {
-        log.debug("Exception on getFormBy Id =  " + exp);
+      if (log.isErrorEnabled()) {
+        log.error("Exception on getForm Details ", exp);
       }
 
       saveError(exp.getErrorCode(), request);
@@ -227,8 +227,8 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     catch (FormBuilderException exp) {
       saveError(exp.getErrorCode(), request);
 
-      if (log.isDebugEnabled()) {
-        log.debug("Exception on getFormForEdit =  " + exp);
+      if (log.isErrorEnabled()) {
+        log.error("Exception on getFormForEdit ", exp);
       }
     }
 

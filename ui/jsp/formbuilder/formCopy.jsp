@@ -38,13 +38,7 @@ function submitForm() {
 -->
 </SCRIPT>
 
-    <logic:messagesPresent>
-      <ul>
-        <html:messages id="error">
-          <li><bean:write name="error"/></li>
-        </html:messages>
-      </ul><hr>
-    </logic:messagesPresent>
+
 
     <logic:present name="<%=FormConstants.CRF%>">
       <html:form 
@@ -52,7 +46,7 @@ function submitForm() {
         onsubmit="validateCopyForm(this)"
         >
       <%@ include file="/formbuilder/copyButton_inc.jsp"%>    
-
+      <%@ include file="showMessages.jsp" %>
       <table cellpadding="0" cellspacing="0" width="80%" align="center">
         <tr >
           <td >

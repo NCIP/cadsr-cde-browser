@@ -186,8 +186,8 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       this.setSessionObject(request, CaDSRConstants.CDE_CART, cart);
     }
     catch (FormBuilderException exp) {
-      if (log.isDebugEnabled()) {
-        log.error("Exception on displayCDECart =  " + exp);
+      if (log.isErrorEnabled()) {
+        log.error("Exception on displayCDECart", exp);
       }
       saveError(exp.getErrorCode(), request);
     }
@@ -232,8 +232,8 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
         (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
     }
     catch (FormBuilderException exp) {
-      if (log.isDebugEnabled()) {
-        log.error("Exception on addItems =  " + exp);
+      if (log.isErrorEnabled()) {
+        log.error("Exception on addItems " , exp);
       }
       saveError(exp.getErrorCode(), request);
     }
@@ -287,8 +287,8 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       sessionCart.removeDataElements(items);
     }
     catch (FormBuilderException exp) {
-      if (log.isDebugEnabled()) {
-        log.error("Exception on removeItems =  " + exp);
+      if (log.isErrorEnabled()) {
+        log.error("Exception on removeItems " , exp);
       }
       saveError(exp.getErrorCode(), request);
     }

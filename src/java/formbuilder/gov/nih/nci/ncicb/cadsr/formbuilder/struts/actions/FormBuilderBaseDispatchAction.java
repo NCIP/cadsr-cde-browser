@@ -18,6 +18,8 @@ import java.util.Iterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.apache.struts.Globals;
+import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -236,9 +238,13 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
       String key,
        HttpServletRequest request) {
     if (key != null) {
-      ActionMessage errorMessage = new ActionMessage(key);
-      ActionErrors errorMessages = new ActionErrors();
-      errorMessages.add(errorMessages.GLOBAL_MESSAGE, errorMessage);
+      ActionError errorMessage = new ActionError(key);
+      ActionErrors errorMessages = null;
+      errorMessages = (ActionErrors)request.getAttribute(Globals.ERROR_KEY);
+      if(errorMessages==null)
+        errorMessages = new ActionErrors();
+      
+      errorMessages.add(errorMessages.GLOBAL_ERROR, errorMessage);
       saveErrors(request,errorMessages);
     }
   }
@@ -247,7 +253,12 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     HttpServletRequest request) {
     if (key != null) {
       ActionMessage message = new ActionMessage(key);
-      ActionMessages messages = new ActionMessages();
+      
+      ActionMessages messages = null;
+      messages = (ActionMessages)request.getAttribute(Globals.MESSAGE_KEY);
+      if(messages==null)
+        messages = new ActionMessages();            
+
       messages.add(messages.GLOBAL_MESSAGE, message);
       saveMessages(request, messages);
     }
@@ -306,6 +317,10 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
         {
           session.removeAttribute((String)it.next());
         }
+      }
+      if(log.isFatalEnabled())
+      {
+        log.fatal("Exception in dispatchMethod in method "+name,throwable);
       }
       saveError(ERROR_FATAL, request);
       throw new FatalException(throwable);

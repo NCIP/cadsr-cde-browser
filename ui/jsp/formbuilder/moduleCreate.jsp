@@ -37,7 +37,7 @@
         onsubmit="validateCreateModuleForm(this)">
 
       <%@ include file="/formbuilder/createModule_inc.jsp"%>    
-
+      <%@ include file="showMessages.jsp" %>
       <html:hidden property="<%= FormConstants.DISPLAY_ORDER %>"/>
 
       <table cellspacing="2" cellpadding="3" border="0" width="100%">

@@ -79,7 +79,7 @@ function retrieveSavedItems() {
   <jsp:param name="label" value="CDE&nbsp;Cart"/>
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
-
+<%@ include file="showMessages.jsp" %>
 <html:form action="/cdeCartAction.do">
 <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
 <logic:present name="<%=CaDSRConstants.CDE_CART%>">

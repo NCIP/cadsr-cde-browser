@@ -244,7 +244,7 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureCDECartAction"
       validate="false">
       <forward name="success" path="/moduleToEditAction.do?method=getModuleToEdit"/>
-    </action>
+    </action> 
   </action-mappings>
  
   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>

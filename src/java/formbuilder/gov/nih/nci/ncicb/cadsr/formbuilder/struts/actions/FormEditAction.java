@@ -67,16 +67,17 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     }
     catch (FormBuilderException exp) {
       saveError(exp.getErrorCode(),request);
-      if (log.isDebugEnabled()) {
-        log.debug("Exception on getFormForEdit =  " + exp);
+      if (log.isErrorEnabled()) {
+        log.error("Exception on getFormForEdit form " + crf,exp);
       }
       return mapping.findForward(FAILURE);
     }
     catch (CloneNotSupportedException clexp) {
-      if (log.isDebugEnabled()) {
-        log.debug("Exception on Clone =  " + clexp);
+      if (log.isErrorEnabled()) {
+        log.error("Exception while colneing crf " + crf,clexp);
       }
-      throw new FatalException(clexp);
+      saveError(this.ERROR_FORM_RETRIEVE,request);
+      return mapping.findForward(FAILURE);
     }
 
     if ((crf != null) && (formEditForm != null)) {
@@ -97,11 +98,6 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         this.FORM_TYPE, crf.getFormType());
       dynaFormEditForm.set(CATEGORY_NAME, crf.getFormCategory());
       dynaFormEditForm.set(this.WORKFLOW, crf.getAslName());
-    }
-
-    if (log.isDebugEnabled()) {
-      log.debug("crf =  " + crf);
-      log.debug("Cloned crf =  " + clonedCrf);
     }
 
     removeSessionObject(request, DELETED_MODULES);
@@ -145,7 +141,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     }
 
     if (log.isDebugEnabled()) {
-      log.info("Move up Module ");
+      log.debug("Move up Module ");
     }
 
     return mapping.findForward(FORM_EDIT);
@@ -188,7 +184,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     }
 
     if (log.isDebugEnabled()) {
-      log.info("Move Down Module ");
+      log.debug("Move Down Module ");
     }
 
     return mapping.findForward(FORM_EDIT);
@@ -236,9 +232,6 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
 
     setSessionObject(request, DELETED_MODULES, deletedModules,true);
 
-    if (log.isDebugEnabled()) {
-      printDisplayOrder(modules);
-    }
 
     return mapping.findForward(FORM_EDIT);
   }
@@ -298,10 +291,6 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         moduleToAdd.setDisplayOrder(newDisplayOrder);
         modules.add(moduleToAdd);
       }
-    }
-
-    if (log.isDebugEnabled()) {
-      printDisplayOrder(modules);
     }
 
     return mapping.findForward(FORM_EDIT);
@@ -386,19 +375,19 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           setSessionObject(request, CLONED_CRF, clonedCrf,true);
         }
         catch (FormBuilderException exp) {
-          if (log.isDebugEnabled()) {
-            log.debug("Exception on service.updateForm=  " + exp);
+          if (log.isErrorEnabled()) {
+            log.error("Exception While saving the form " + crf,exp);
           }
-
           saveError(ERROR_FORM_SAVE_FAILED, request);
           saveError(exp.getErrorCode(), request);
           return mapping.findForward(FAILURE);
         }
         catch (CloneNotSupportedException exp) {
-          if (log.isDebugEnabled()) {
-            log.debug("Exception on save =  " + exp);
+          saveError(ERROR_FORM_SAVE_FAILED, request);
+          if (log.isErrorEnabled()) {
+            log.error("On save, Exception on cloneing crf " + crf,exp);
           }
-          throw new FatalException(exp);
+          return mapping.findForward(FAILURE);
         }
         removeSessionObject(request, DELETED_MODULES);
         saveMessage("cadsr.formbuilder.form.edit.save.success", request);
@@ -472,19 +461,19 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           setSessionObject(request, CLONED_CRF, clonedCrf);
         }
         catch (FormBuilderException exp) {
-          if (log.isDebugEnabled()) {
-            log.debug("Exception on service.updateForm=  " + exp);
+          if (log.isErrorEnabled()) {
+            log.error("Exception while saveing form =  " + crf,exp);
           }
-
           saveError(ERROR_FORM_SAVE_FAILED, request);
           saveError(exp.getErrorCode(), request);
           return mapping.findForward(FORM_EDIT);
         }
         catch (CloneNotSupportedException exp) {
-          if (log.isDebugEnabled()) {
-            log.debug("Exception on save =  " + exp);
+          saveError(ERROR_FORM_SAVE_FAILED, request);
+          if (log.isErrorEnabled()) {
+            log.error("On save, Exception on cloneing crf " + crf,exp);
           }
-          throw new FatalException(exp);
+          return mapping.findForward(FORM_EDIT);
         }
         saveMessage("cadsr.formbuilder.form.edit.save.success", request);
         removeSessionObject(request, DELETED_MODULES);

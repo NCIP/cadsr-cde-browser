@@ -72,7 +72,6 @@ function clearProtocol() {
       </jsp:include>
       <%@ include file="/formbuilder/moduleEditButton_inc.jsp"%>
         <%@ include file="showMessages.jsp" %>
-        <%@ include file="showValidationErrors.jsp" %>
     
       <logic:present name="<%=FormConstants.MODULE%>">
       <table  width="80%">

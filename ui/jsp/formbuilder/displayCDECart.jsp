@@ -92,7 +92,7 @@ function details(linkParms ){
   <jsp:param name="label" value="CDE&nbsp;Cart"/>
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
-
+<%@ include file="showMessages.jsp" %>
 <html:form action="/formCDECartAction.do">
 <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
 <html:hidden property="<%= FormConstants.QUESTION_INDEX %>"/>

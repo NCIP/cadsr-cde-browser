@@ -87,6 +87,10 @@ public class FormBuilderSecureBaseDispatchAction extends FormBuilderBaseDispatch
     catch(InvalidUserException userExp)
     {
       request.getSession().invalidate();
+      if(log.isErrorEnabled())
+      {
+        log.error("Inconsistant user",userExp);
+      }
       throw userExp;
     }
     catch (Throwable throwable) {
@@ -94,11 +98,17 @@ public class FormBuilderSecureBaseDispatchAction extends FormBuilderBaseDispatch
         NCIUser user = (NCIUser) getSessionObject(request, USER_KEY);
 
         if (user != null) {
-          log.fatal(user.getUsername(), throwable);
+          if(log.isFatalEnabled())
+          {
+            log.fatal(user.getUsername(), throwable);
+          }          
         }
         else
         {
-          log.fatal(throwable);
+          if(log.isFatalEnabled())
+          {
+            log.fatal(user.getUsername(), throwable);
+          }
         }
       }
       saveError(ERROR_FATAL, request);

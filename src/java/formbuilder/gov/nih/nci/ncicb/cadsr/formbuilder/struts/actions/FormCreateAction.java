@@ -146,10 +146,10 @@ public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
       FormBuilderServiceDelegate service = getFormBuilderService();
       createdForm = service.createForm(newForm, newFormHdrInst, newFormFtrInst);
     } catch (FormBuilderException exp) {
-        if (log.isDebugEnabled()) {
-          log.error("Exception on creating Form and its header and footer " +
-            "instructions =  " + exp);
+        if (log.isErrorEnabled()) {
+          log.error("Exception on creating Form  "+newForm , exp);
         }
+  saveError(ERROR_FORM_CREATE, request);
 	saveError(exp.getErrorCode(), request);
 	return mapping.findForward("failure");
 	  

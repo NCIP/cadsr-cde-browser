@@ -99,8 +99,8 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     catch (FormBuilderException exp) {
       saveError(ERROR_MODULE_RETRIEVE, request);
       saveError(exp.getErrorCode(),request);
-      if (log.isDebugEnabled()) {
-        log.debug("Exp while getting validValue" + exp);
+      if (log.isErrorEnabled()) {
+        log.error("Exp while getting validValue", exp);
       }
       mapping.findForward(FAILURE);
     }
@@ -152,10 +152,6 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     questionArr = getQuestionsAsArray(module.getQuestions());
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
 
-    if (log.isDebugEnabled()) {
-      log.info("Move up Question ");
-    }
-
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -198,10 +194,6 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     questionArr = getQuestionsAsArray(module.getQuestions());
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
-
-    if (log.isDebugEnabled()) {
-      log.info("Move Down Question ");
-    }
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -368,10 +360,6 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     questionArr = getQuestionsAsArray(module.getQuestions());
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
 
-    if (log.isDebugEnabled()) {
-      log.info("Move up Question ");
-    }
-
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -420,10 +408,6 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     questionArr = getQuestionsAsArray(module.getQuestions());
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
-
-    if (log.isDebugEnabled()) {
-      log.info("Move Down Question ");
-    }
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -605,8 +589,8 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
     catch(FormBuilderException exp)
     {
-        if (log.isDebugEnabled()) {
-          log.debug("Exception on service.updateModule=  " + exp);
+        if (log.isErrorEnabled()) {
+          log.error("Exception on saving module  "+module,exp);
         }
 
         saveError(ERROR_MODULE_SAVE_FAILED, request);
@@ -623,10 +607,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
      orgCrf.getModules().add(index.intValue(),newClonedModule);
      }
     catch (CloneNotSupportedException clexp) {
-      if (log.isDebugEnabled()) {
-        log.debug("Exception on Clone =  " + clexp);
+     saveError(ERROR_MODULE_SAVE_FAILED, request);
+      if (log.isErrorEnabled()) {
+        log.error("Exception while cloning module  " + updatedModule,clexp);
       }
-      throw new FatalException(clexp);
+      return mapping.findForward(FAILURE);
     }
     FormBuilderBaseDynaFormBean clearForm = (FormBuilderBaseDynaFormBean) form;
     clearForm.clear();
@@ -669,10 +654,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     {
       orgModuleClone = (Module)orgModule.clone();
     }
-    catch(Exception ex)
-    {
-      throw new FatalException("Could not clone Module",ex);
-    }
+    catch (CloneNotSupportedException clexp) {
+      if (log.isErrorEnabled()) {
+        log.error("Exception while cloning module  " + orgModule,clexp);
+      }
+    }    
     int index = modules.indexOf(module);
     crf.getModules().remove(index);
     crf.getModules().add(index,orgModuleClone);
@@ -761,8 +747,8 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
             copyVV = (FormValidValue)fvv.clone();
          }
         catch (CloneNotSupportedException clexp) {
-          if (log.isDebugEnabled()) {
-            log.debug("Exception on Clone =  " + clexp);
+          if (log.isErrorEnabled()) {
+            log.error("Exception while clonning validvalue  " + fvv,clexp);
           }
         }
         if(copyVVList==null)

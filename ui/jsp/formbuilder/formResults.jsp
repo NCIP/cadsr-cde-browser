@@ -30,13 +30,13 @@
 </jsp:include>
 
 <html:form action="/formSearchAction.do">
- <%@ include  file="/formbuilder/formSearch_inc.jsp" %>
+ <%@ include  file="/formbuilder/formSearch_inc.jsp" %> 
+<logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
        <table cellpadding="0" cellspacing="0" width="100%" align="center">   
         <tr>
           <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
         </tr>
-      </table>    
-<logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
+      </table>   
   <%@ include  file="/formbuilder/formResults_inc.jsp" %>
 </logic:present> 
    

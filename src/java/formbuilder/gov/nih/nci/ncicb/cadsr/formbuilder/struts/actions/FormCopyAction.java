@@ -59,11 +59,12 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
+  	Form crf = (Form)getSessionObject(request, CRF);
     try
       {
 	setFormForAction(form,request);
 	DynaActionForm dynaForm = (DynaActionForm)form;
-	Form crf = (Form)getSessionObject(request, CRF);
+
 	dynaForm.set(FORM_LONG_NAME, crf.getLongName());
 	dynaForm.set(FORM_VERSION, new Float(1.0));
 	dynaForm.set(PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
@@ -77,8 +78,8 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
       }
     catch (FormBuilderException exp)
       {
-	if (log.isDebugEnabled()) {
-	  log.error("Exception on getFormToCopy =  " + exp);
+	if (log.isErrorEnabled()) {
+	  log.error("Exception on getFormToCopy for form" + crf,exp);
 	}
 	saveError(exp.getErrorCode(), request);
 	return mapping.findForward("failure");
@@ -107,7 +108,7 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
 
     DynaActionForm dynaForm = (DynaActionForm)form;
     Form newForm = new FormTransferObject();
-
+    Form crf = (Form)getSessionObject(request, CRF);
     try
       {
 	newForm.setLongName((String)dynaForm.get(FORM_LONG_NAME));
@@ -132,7 +133,7 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
 
 	newForm.setCreatedBy(request.getRemoteUser());
 
-	Form crf = (Form)getSessionObject(request, CRF);
+	
 
 	FormBuilderServiceDelegate service = getFormBuilderService();
 	newForm = service.copyForm(crf.getFormIdseq(), newForm);
@@ -141,8 +142,8 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
       }
     catch (FormBuilderException exp)
       {
-	if (log.isDebugEnabled()) {
-	  log.debug("Exception on copyForm =  " + exp);
+	if (log.isErrorEnabled()) {
+	  log.error("Exception on copying Form  " + crf,exp);
 	}
 	saveError(exp.getErrorCode(), request);
 	return mapping.findForward("failure");

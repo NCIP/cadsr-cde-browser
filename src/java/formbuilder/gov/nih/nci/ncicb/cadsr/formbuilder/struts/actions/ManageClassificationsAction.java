@@ -27,121 +27,147 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class ManageClassificationsAction extends FormBuilderSecureBaseDispatchAction {
-    /**
-     * Returns Complete form given an Id for Copy.
-     *
-     * @param mapping The ActionMapping used to select this instance.
-     * @param form The optional ActionForm bean for this request.
-     * @param request The HTTP Request we are processing.
-     * @param response The HTTP Response we are processing.
-     *
-     * @return
-     *
-     * @throws IOException
-     * @throws ServletException
-     */
-    public ActionForward getClassifications(ActionMapping mapping,
-        ActionForm form, HttpServletRequest request,
-        HttpServletResponse response) throws IOException, ServletException {
-        try {
-            DynaActionForm dynaForm = (DynaActionForm) form;
+public class ManageClassificationsAction
+  extends FormBuilderSecureBaseDispatchAction {
+  /**
+   * Returns Complete form given an Id for Copy.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward getClassifications(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    try {
+      DynaActionForm dynaForm = (DynaActionForm) form;
 
-            String formId = (String) dynaForm.get(FORM_ID_SEQ);
+      String formId = (String) dynaForm.get(FORM_ID_SEQ);
 
-            Form crf = (Form) getSessionObject(request, CRF);
+      Form crf = (Form) getSessionObject(request, CRF);
 
-            if ((crf == null) || !crf.getFormIdseq().equals(formId)) {
-                setFormForAction(form, request);
+      if ((crf == null) || !crf.getFormIdseq().equals(formId)) {
+        setFormForAction(form, request);
+      }
+
+      FormBuilderServiceDelegate service = getFormBuilderService();
+
+      Collection classifications = service.retrieveFormClassifications(formId);
+
+      setSessionObject(request, CLASSIFICATIONS, classifications);
+    }
+    catch (FormBuilderException exp) {
+      if (log.isErrorEnabled()) {
+        log.error("Exception on getClassifications ", exp);
+      }
+
+      saveError(exp.getErrorCode(), request);
+    }
+
+    return mapping.findForward("success");
+  }
+
+  public ActionForward gotoAddClassifications(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    return mapping.findForward("success");
+  }
+
+  public ActionForward addClassifications(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    DynaActionForm dynaForm = (DynaActionForm) form;
+
+    String[] ids = (String[]) dynaForm.get(CS_CSI_ID);
+
+    try {
+      Form crf = (Form) getSessionObject(request, CRF);
+      FormBuilderServiceDelegate service = getFormBuilderService();
+
+      for (int i = 0; i < ids.length; i++) {
+        String id = ids[i];
+
+        if ((id != null) && (id.length() > 0)) {
+          try {
+            service.assignFormClassification(crf.getFormIdseq(), id);
+          }
+          catch (FormBuilderException exp) {
+            if (log.isErrorEnabled()) {
+              log.error("Exception on addClassification ", exp);
             }
 
-            FormBuilderServiceDelegate service = getFormBuilderService();
-
-            Collection classifications = service.retrieveFormClassifications(formId);
-
-            setSessionObject(request, CLASSIFICATIONS, classifications);
-        } catch (FormBuilderException exp) {
-            if (log.isDebugEnabled()) {
-                log.error("Exception on getClassifications =  " + exp);
-            }
-	    saveError(exp.getErrorCode(), request);
+            saveError(exp.getErrorCode(), request);
+          }
+           // end of try-catch
         }
+      }
 
-        return mapping.findForward("success");
+      Collection classifications =
+        service.retrieveFormClassifications(crf.getFormIdseq());
+
+      setSessionObject(request, CLASSIFICATIONS, classifications);
+    }
+    catch (FormBuilderException exp) {
+      if (log.isErrorEnabled()) {
+        log.error("Exception on addClassification ", exp);
+      }
+
+      saveError(exp.getErrorCode(), request);
+      saveError("cadsr.formbuilder.classification.add.failure", request);
+
+      return mapping.findForward("failure");
     }
 
-    public ActionForward gotoAddClassifications(ActionMapping mapping,
-        ActionForm form, HttpServletRequest request,
-        HttpServletResponse response) throws IOException, ServletException {
-        return mapping.findForward("success");
+    saveMessage("cadsr.formbuilder.classification.add.success", request);
+
+    return mapping.findForward("success");
+  }
+
+  public ActionForward removeClassification(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    DynaActionForm dynaForm = (DynaActionForm) form;
+
+    String[] ids = (String[]) dynaForm.get(CS_CSI_ID);
+    String id = ids[0];
+
+    try {
+      Form crf = (Form) getSessionObject(request, CRF);
+
+      FormBuilderServiceDelegate service = getFormBuilderService();
+      service.removeFormClassification(id);
+
+      Collection classifications =
+        service.retrieveFormClassifications(crf.getFormIdseq());
+
+      setSessionObject(request, CLASSIFICATIONS, classifications);
+    }
+    catch (FormBuilderException exp) {
+      if (log.isErrorEnabled()) {
+        log.error("Exception on removeClassification ", exp);
+      }
+
+      saveError(exp.getErrorCode(), request);
+
+      return mapping.findForward("failure");
     }
 
-    public ActionForward addClassifications(ActionMapping mapping,
-        ActionForm form, HttpServletRequest request,
-        HttpServletResponse response) throws IOException, ServletException {
-        DynaActionForm dynaForm = (DynaActionForm) form;
+    saveMessage("cadsr.formbuilder.classification.delete.success", request);
 
-        String[] ids = (String[]) dynaForm.get(CS_CSI_ID);
-
-        try {
-            Form crf = (Form) getSessionObject(request, CRF);
-            FormBuilderServiceDelegate service = getFormBuilderService();
-
-            for (int i = 0; i < ids.length; i++) {
-                String id = ids[i];
-
-                if ((id != null) && (id.length() > 0)) {
-		  try {
-                    service.assignFormClassification(crf.getFormIdseq(), id);
-		  } catch (FormBuilderException exp){
-		    saveError(exp.getErrorCode(), request);
-		  } // end of try-catch
-                }
-            }
-
-            Collection classifications = service.retrieveFormClassifications(crf.getFormIdseq());
-
-            setSessionObject(request, CLASSIFICATIONS, classifications);
-        } catch (FormBuilderException exp) {
-            if (log.isDebugEnabled()) {
-                log.debug("Exception on addClassification =  " + exp);
-            }
-	    saveError(exp.getErrorCode(), request);
-	    saveError("cadsr.formbuilder.classification.add.failure", request);
-	    return mapping.findForward("failure");
-        }
-
-	saveMessage("cadsr.formbuilder.classification.add.success", request);
-        return mapping.findForward("success");
-    }
-
-    public ActionForward removeClassification(ActionMapping mapping,
-        ActionForm form, HttpServletRequest request,
-        HttpServletResponse response) throws IOException, ServletException {
-
-        DynaActionForm dynaForm = (DynaActionForm) form;
-
-        String[] ids = (String[]) dynaForm.get(CS_CSI_ID);
-        String id = ids[0];
-
-        try {
-            Form crf = (Form) getSessionObject(request, CRF);
-
-            FormBuilderServiceDelegate service = getFormBuilderService();
-            service.removeFormClassification(id);
-
-            Collection classifications = service.retrieveFormClassifications(crf.getFormIdseq());
-
-            setSessionObject(request, CLASSIFICATIONS, classifications);
-        } catch (FormBuilderException exp) {
-            if (log.isDebugEnabled()) {
-                log.error("Exception on removeClassification =  " + exp);
-            }
-	    saveError(exp.getErrorCode(), request);
-	    return mapping.findForward("failure");
-        }
-
-	saveMessage("cadsr.formbuilder.classification.delete.success", request);
-        return mapping.findForward("success");
-    }
+    return mapping.findForward("success");
+  }
 }
