@@ -43,7 +43,7 @@
   if (paramIdseq == null) paramIdseq = "";
   String paramType = (String)infoBean.getInfo("P_PARAM_TYPE");
   if (paramType == null) paramType = "";
-  String templateURL = "search?viewTemplate=9&templateIdseq="+paramIdseq+pageUrl;
+  String templateURL = "/"+request.getContextPath()+"/search?viewTemplate=9&templateIdseq="+paramIdseq+pageUrl;
   //String downloadXMLURL = "javascript:newDownloadWin('search?xmlDownload=9"+pageUrl+"','downloadWin',10,10)";
   String downloadXMLURL = "javascript:fileDownloadWin('" + contextPath + "/downloadXMLPage.jsp?src=deSearch','xmlWin',500,200)";
   //String downloadExcelURL = "javascript:newDownloadWin('search?excelDownload=9"+pageUrl+"','downloadWin',10,10)";
