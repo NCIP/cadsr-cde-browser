@@ -1,0 +1,1397 @@
+                          Release Notes
+    
+                             caCORE
+                          Version 2.1
+                         May 28, 2004
+
+       National Cancer Institute Center for Bioinformatics
+
+
+================================================================
+                            Contents
+================================================================
+    
+    1.0 caCORE Introduction and History
+    2.0 caBIO
+          2.1 Release History
+          2.2 New Features and Updates
+          2.3 Bugs Fixed Since Last Release
+          2.4 Known Issues
+    3.0 caDSR
+          3.1 Release History
+          3.2 New Features and Updates
+          3.3 Bugs Fixed Since Last Release
+          3.4 Known Issues
+    4.0 EVS
+          4.1 Release History
+          4.2 New Features and Updates
+	  4.3 Bugs Fixed Since Last Release
+ 	  4.4 Known Issues
+    5.0 Bug Reports and Support
+    6.0 Documentation
+    7.0 NCICB Web Pages
+
+
+================================================================
+                1.0 caCORE Introduction and History
+================================================================
+
+    caCORE 2.1
+
+    --	28 May 2004
+
+    caCORE 2.0.1
+
+    --	19 December 2003 
+
+    caCORE 2.0
+
+    --	31 October 2003
+
+    caCORE 1.2
+
+    --	13 June 2003
+
+    caCORE 1.1
+
+    --	7 February 2003
+
+    caCORE 1.0
+
+    --	29 August 2002 
+
+    caCORE consists of three main components: Cancer
+    Bioinformatics Infrastructure Objects (caBIO), Cancer Data
+    Standards Repository (caDSR), and Enterprise Vocabulary
+    Services (EVS).  Each component has both standalone
+    functionality as well as integration points with the rest
+    of caCORE.
+
+    caCORE is a product of the NCI Center for Bioinformatics
+    and its partners. Visit the caCORE web site for more
+    information:
+
+    --	http://ncicb.nci.nih.gov/core.
+
+
+================================================================
+                           2.0 caBIO
+================================================================
+
+
+----------------------------------------------------------------
+    2.1 Release History
+----------------------------------------------------------------
+
+    caBIO 2.1
+
+    --	28 May 2004
+    
+    caBIO 2.0.2
+
+    --	18 March 2004
+    
+    caBIO 2.0.1
+
+    --	15 December 2004
+    
+    caBIO 2.0:
+
+    --	31 October 2003
+    
+    caBIO 1.2.1
+
+    --	27 June 2003
+    
+    caBIO 1.2
+
+    --	13 June 2003
+    
+    caBIO 1.1.1
+
+    --	11 April 2003
+    
+    caBIO 1.1
+
+    --	7 February 2003
+    
+    caBIO 1.0
+
+    --	29 August 2002
+    
+    caBIO .91
+
+    --	April 2002
+    
+    caBIO .90
+
+    --	October 2001
+
+
+----------------------------------------------------------------
+    2.2 New Features and Updates
+----------------------------------------------------------------
+
+    +------------------------------------+
+    | Code Generation		 	 |
+    +------------------------------------+
+
+    The java source files for the following packages were
+    created by automated code generation employing XMI exported
+    from RationalRose, NetBeans MDR, and the FreeMaker template
+    scripting language. We plan to publish a tutorial describing
+    how the process works in an upcoming release.
+
+    --  gov.nih.nci.caBIO.bean
+
+    --  gov.nih.nci.caMOD.bean
+
+    --  gov.nih.nci.caMOD.search
+
+    --  gov.nih.nci.caDSR.bean
+
+    --  gov.nih.nci.caDSR.search packages
+
+    +------------------------------------+
+    | caMOD			 	 |
+    +------------------------------------+
+
+    caBIO 2.0 via the caMOD Application Programming Interface
+    (API) has been enhanced to provide access to the NCI Yeast
+    and Xenograft Anticancer Drug Screen Data.  The NCI Yeast
+    Anticancer Drug Screen has screened tens of thousands of
+    compounds for their ability to inhibit the growth of
+    selected yeast strains altered in DNA damage repair or
+    cell cycle control. Compounds are initially screened against
+    a panel of 6 yeast strains at a single concentration
+    (Stage0). Compounds with activity in Stage0 are rescreened
+    against the same panel at 2 concentrations (Stage1).
+    Selected compounds with activity in Stage1 that also show
+    selectivity are rescreened against a panel of 13 yeast
+    strains at 5 concentrations (Stage2). The Invivo/Invitro
+    Anticancer Drug Screen utilizes 60 different human tumor
+    cell lines, representing leukemia, melanoma and cancers of
+    the lung, colon, brain, ovary, breast, prostate, and kidney.
+    Available in this release of the caMOD API are screening
+    results for compounds that are not covered by a
+    confidentiality agreement.
+
+    +------------------------------------+
+    | EVS			 	 |
+    +------------------------------------+
+
+    New Functionalities include:
+
+    --  Source specific search on Metathesaurus
+
+    --  Source and property specific search at NCI Thesaurus
+
+    --  Browsing capability from a root node in Description
+	Logic Concept
+
+    --  Get all the available sources from NCI and Meta
+	Thesaurus.
+
+    --  Search by Concept Code.
+  
+
+----------------------------------------------------------------
+    2.3 Bugs Fixed Since Last Release
+----------------------------------------------------------------
+    
+    +------------------------------------+
+    | caBIO 2.1			 	 |
+    +------------------------------------+
+
+    --	The result count at the bottom of HTTP queries displayed
+	in the browser were not accurate. This problem also
+	existed when using the SOAP API and has been fixed.
+
+    --	SOAP queries only supported exact matches for search
+	criteria values. We added a TOUPPER() method in the SQL
+	generation to make queries case insensitive.
+
+    --	The AdministeredComponentSearchCriteria attribute
+	'deleted indicator' now works when searching for any
+	object that extends from AdministeredComponent.
+
+    --	The SequenceSearchCriteria attribute
+	'expressionMeasurementId' now works correctly when used
+	with the getSequences() method of the SOAP API. 
+
+    --	The PathwaySearchCriteria attribute 'pathwayDescription'
+	was removed from the PathwaySearchCriteria object. The
+	PathwayDescription column in the database is a CLOB
+	datatype and is not searchable.
+
+    --	The PathwaySearchCriteia attribute 'bioProcessId' was
+	removed from the PathwaySearchCriteria object. This
+	attribute was never a valid search criteria.
+
+    --	The 'diseaseId', 'organId' and 'geneId' attributes have
+	been removed from the Ontology related search criterias.
+
+    --	The HistopathologySearchCriteria attributes 'id',
+	'dataType' and 'tumorType' now work for Histopathology
+	object.
+
+    --	The LibrarySearchCriteria attribute 'libraryProtocol'
+	now works correctly when used with the getLibrarys()
+	method of the SOAP API.
+
+    --	The CMAPOntologySearchCriteria 'name' attribute now
+	works correctly when used with the getChildren() and
+	getParents() methods of the SOAP API.
+
+    --	CMAPOntologySearchCriteria attributes 'cmapontologyId',
+	'cmapparentId', and 'cmapchildId' now work correctly
+	when used with the getChildren() method of the SOAP API.
+
+    --	The TargetSearchCriteria 'id' attribute now works when
+	used with the getTargets() and getAgents() methods of
+	the SOAP API.
+
+    --	The GeneSearchCriteria 'organismAbbreviation' now works
+	correctly when searching for Genes.
+
+    --	You can now limit your search result by setting the
+	setMaxResultSet or (returnCount in HTTP) and the
+	‘hasMore()’ method now returns true if there are more
+	records.
+
+    --	In the downloadable version of the db the
+	pathway_diagram has been updated to reflect
+	the latest number of available svgs.
+
+    --	The TraceFile and Contig objects are currently
+	unsupported. We will be connecting them to a reliable
+	datasource in an upcoming release.
+
+    NOTE: After the 2.0 release a large number of bugs came up
+    during internal testing that have since been fixed. The
+    majority of those bugs pertained to search criteria
+    attributes not working as expected resulting from errors
+    in the object relational mapping configuration. We have
+    corrected almost all (230+) and will continue to fix any
+    remaining mapping issues as they come up.
+
+
+----------------------------------------------------------------
+    2.4 Known Issues
+----------------------------------------------------------------
+    
+    --	When using the HTTP API, if you enter multiple search
+	parameters in a single query, they are handled together
+	with a boolean AND i.e. only results for which ALL the
+	parameter criteria are met are returned. We plan to add
+	the functionality that would give the option to treat
+	multiple parameters with a boolean OR, returning results
+	that match ANY of the parameters.
+
+    --	The constuctor for caBIO beans which takes a Long value
+	as a parameter eventually calls a copy method which
+	creates all the related object associations (a heavy
+	bean) when it should only create a light weight bean
+	with non-association attributes filled.  For example
+	if you create a Taxon object where id=5 using the
+	Taxon(Long.valueOf("5"))  constructor a call is made
+	to the copy() method resulting in all the taxon’s
+	associated genes (which could be as many as 1000) being
+	populated.  The temporary workaround for this in the
+	Java API is to avoid using the constructor which takes
+	an id as a parameter, but instead create a bean with the
+	default constructor, ie. Taxon(), then use the setId()
+	method to set the value of the object id.
+
+    --	The XenograftSearchCriteria attributes 'organ' and
+	'originTaxon' do not work correctly in the SOAP and
+	HTTP APIs. 
+
+    --	The caDSR UML Model has an error in the relationship
+	between the ClassifcationSchemeItem class and the
+	AdministeredComponent class. The current relationship
+	between these two objects should not exist. The
+	AdministeredComponent object should instead have a
+	relationship with ClassSchemeClassSchemeItem. The Java
+	API reflects this error. Additionally, the DataElement
+	object is missing an attribute ‘registration status’
+	and the PermissibleValue object is missing an attribute
+	‘origin’. 
+
+    --	The ConditionalitySearchCriteria attributes
+	'description' and 'conditionalityId’ do not work
+	correctly in the SOAP or HTTP APIs.
+
+    --	The QuestionSearchCriteria 'displayOrder' attribute has
+	no affect on the SQL generated by OJB.
+
+    --	The SequenceSearchCriteria attribute 'unigeneClusterId'
+	does not work correctly in the SOAP or HTTP APIs.
+
+    --	The HistopathologySearchCriteria attribute
+	'metastasisOf' does not work correctly in the SOAP or
+	HTTP APIs.
+  
+    --	The LibrarySearchCriteria attribute 'libraryProtocol'
+	does not work correctly in the SOAP or HTTP APIs.
+
+    --	The CellLineSearchCriteria attribute 'organId' does not
+	work correctly in the SOAP or HTTP APIs.
+
+    --	The NonenumeratedValueDomainSearchCriteria attributes
+	‘decimalPlace’, ‘minimumLengthNumber’, and ‘VD_ID’ do
+	not work correctly in the SOAP or HTTP APIs. 
+
+
+================================================================
+                           3.0 caDSR
+================================================================
+
+
+----------------------------------------------------------------
+    3.1 Release History
+----------------------------------------------------------------
+
+    caDSR 2.1
+
+    --  28 May 2004
+
+    caDSR 2.0.1
+
+    --  19 December 2003 
+    
+    caDSR 2.0
+
+    --  31 October 2003 
+    
+    caDSR 1.2
+
+    --  13 June 2003    
+    
+    caDSR 1.1
+
+    --  7 February 2003
+    
+    caDSR 1.0
+
+    --  29 August 2002
+
+
+----------------------------------------------------------------
+    3.2 New Features and Updates
+----------------------------------------------------------------
+    
+    +------------------------------------+
+    | All caDSR Tools                    |
+    +------------------------------------+
+
+    Registration Status
+    -------------------
+    A new attribute has been added to Data Elements,
+    Registration Status. Registration status is used to denote
+    Data Element have entered the caDSR harmonization process.
+    Registration Status will be displayed in the search results
+    of the Administration Tool, Curation Tool and CDE Browser.
+    It can be edited in the Administration and Curation Tools.
+
+    +------------------------------------+
+    | CDE Browser                        |
+    +------------------------------------+
+    
+    Form Builder
+    ------------
+    A major new module, Form Builder, has been added to the CDE
+    Browser. Form Builder is designed to be used by curators to
+    create, update, and maintain forms and templates. It
+    supports the following use cases:
+
+    Creating a case report form (from scratch)
+    Creating a template (from scratch)
+    Searching for an existing form or template
+    Viewing an existing form or template
+    Creating a case report form (from form or template)
+    Editing a component in an existing form or template
+    Adding a component to an existing form or template
+    Deleting a component in an existing form or template
+    Exporting a form or template to Excel or XML
+    Deleting a form or template
+    Viewing CDE usage  
+    
+    CDE Cart
+    --------
+    The CDE Cart is a significant addition to the CDE Browser.
+    It is analogous to the Shopping Cart feature used at many
+    online stores. Data Elements can be saved to the CDE Cart
+    from the CDE Browser search results page. The elements in
+    the Cart can be downloaded in Excel or XML format or used
+    with Form Builder to create or update forms and templates.
+    The CDE Cart is available in secure and non-secure modes.
+    When used in the secure mode, the items in the Cart persist
+    in the database. When used in the non-secure mode, the items
+    persist in the Cart only for the duration of the active
+    session.
+
+    Screen Navigation
+    -----------------
+    Two new icons have been added to the upper right hand corner
+    of the CDE Browser web page to improve navigation within the
+    application.
+
+    CDE CART - Clicking this icon opens the CDE CART.
+    FORM BUILDER - Clicking this icon brings you to the Form
+                   Builder module.
+     
+    Value Domain
+    ------------
+    The Value Domain Type field (Enumerated or Non-enumerated)
+    has been added to the Permissible Values page.
+    
+    Search Enhancements
+    -------------------
+    Historical CDE ID has been added as a new search criteria
+    on the DE search page.
+
+    Changes to DE Search Results Display
+    ------------------------------------
+    The default name type has been changed from Preferred Name
+    to Long Name. Registration Status has been added to the Data
+    Elements search results display.
+
+    Excel and XML Formatted Download
+    --------------------------------
+    The Excel download file format has been updated to include
+    VD, DEC Public ID, Version, Workflow Status, and
+    Registration Status metatdata. Additional columns,
+    including Alternate Name, were added to the download
+    to allow for exchange of data between the caDSR and C3D.
+   
+    Open Source Download
+    --------------------
+    The public version of the CDE Browser is now available for
+    download at the NCICB web site using the following url:
+ 
+    --  http://ncicb.nih.gov/core/caDSR/
+
+    Instructions on how to download open source tools are
+    provided on the web site under the "Download" tab.
+
+    +------------------------------------+
+    | caDSR Administration Tool          |
+    +------------------------------------+
+   
+    Registration Status
+    -------------------
+    Curators can now assign to Data Elements one of the
+    following Registration Statuses:
+  
+    Standard
+    Candidate
+    Qualified
+    Standardized Elsewhere
+    Superseded
+    Retired
+    Suspended
+    Application
+    
+    Workflow Status
+    ---------------
+    In the Workflow Status LOV, Under Development has been
+    replaced by DRAFT NEW. All existing Data Elements in the
+    caDSR with a status of Under Development have been updated
+    to DRAFT NEW.
+
+    Enhanced Search Features
+    ------------------------
+    The following new search criteria have been added to the DE
+    Search Page:
+
+    Document Text
+    Document Text Type
+    Value Meaning
+    Registration Status
+    Permissible Value
+    Date Created
+    Date Modified
+    Created By
+    Modified By
+   
+    The following new search criteria have been added to the DEC
+    Search Page:
+
+    Object Class
+    Property
+    Date Created
+    Date Modified
+    Created By
+    Modified By
+    
+    The following new search criteria have been added to the
+    Value Domain Search Page:
+    
+    Value Meaning
+    Permissible Value
+    Date Created
+    Date Modified
+    Created By
+    Modified By
+ 
+    Search Results Table Redesign
+    -----------------------------
+    The Data Element search results table has been updated and
+    reformatted to make it easier for users to find items of
+    interest. The following changes have been made to the
+    results list:
+    
+    Browse Icon - Opens new window displaying details of the
+                  selected DE
+    Modify Icon - Opens new window displaying editable details
+                  of the DE
+    Data Element Long Name - Replaces Preferred Name as the
+                             default
+    Registration Status - New with release 2.1
+    Value Domain Type - Mew wotj
+   
+    EVS Concept Link
+    ----------------
+    The EVS Concept Link allows a user to search for a term in
+    EVS when creating an Object Class, Property, or
+    Representation Term. To improve the results set returned
+    from the EVS system, the code for the EVS Concept Link
+    has been modified so that the Administration Tool searches
+    in the SYNONYM field in the NCI Thesaurus rather than in
+    the CONCEPT_NAME field.
+     
+    Hierarchical Classification Schemes
+    -----------------------------------
+    Hierarchical Classification Schemes can now be assigned to
+    all Administered Components (including Value Domains and
+    Conceptual Domains).
+
+    Two new UI changes make it easier for users to find and
+    select Classification Scheme Items:
+
+    --  Child CS Items are indented and listed below their
+        parent concepts.
+    --  Context and Used By columns have been added to the
+        the CSI LOV list.
+
+    Alternate Names
+    ---------------
+    It is no longer possible to add or delete Alternate Name
+    Type = "Used by" in maintenance screens for all AC types.
+    The following additional changes were made to Alternate
+    Name Types:
+    
+    --  A new Alternate Name Type, DICOM_TAG, has been added.
+    --  The Alternate Name Type Oracle Clinical was changed to
+        C3D Name.
+    --  The Alternate Name Type TEMP_CUI was changed to
+        NCI_META_CUI.
+   
+    Designations
+    ------------
+    The Designate functionality has been expanded to allow
+    a Using context to assign an Alternate Name to an
+    Administered Component.
+
+    Permissible Values
+    ------------------
+    Origin has been added as a new field to the Permissible
+    Values screen. The High and Low Value fields have been
+    removed from this screen.
+ 
+    +------------------------------------+
+    | caDSR Database                     |
+    +------------------------------------+
+       
+    Excel Loader
+    ------------
+    The Excel Loader has been enhanced to support bulk loading
+    for Object Class, Property, and Representation Term metadata
+    - in addition to CD, VD, DEC, DE, CS, and CSI metadata.
+    Users are provided with a template spreadsheet, instructions
+    and one-on-one training (upon request) to define the data to
+    be loaded.  caDSR administrators work closely with users to
+    load the data and validate it in the caDSR after loading.
+    CDE Browser downloaded Excel files (DE) are also uploadable
+    using this tool.
+    
+    Open Source Download
+    --------------------
+    The caDSR metadata repository (without data) and
+    Administration Tool source code will be available for
+    download from the NCICB web site using the following url:
+
+    --  http://ncicb.nci.nih.gov/
+
+    Instructions on how to download open source tools are
+    provided on the web site under the "Download" tab.
+
+    +------------------------------------+
+    | CRF Loader                         |
+    +------------------------------------+
+    
+    Bulk Loading/Updating of Disease Templates
+    ------------------------------------------
+    The CRF Loader has been updated and can be used now to load
+    templates as well as CRFs. The CRF Loader also supports bulk
+    updating of existing templates. When loading a template that
+    already exists, the CRF tool replaces the old template with
+    the new one.
+
+    +------------------------------------+
+    | CDE Curation Tool                  |
+    +------------------------------------+
+    
+    Version 2.1 of the Curation Tool incorporates enhancements
+    to Search, EVS Search Functionality, and UI Design on
+    Create/Edit/Validation Screens, Create/Edit Administered
+    Components, and Block Edit Administered Components.
+
+    Search:
+
+    --  Expanded Search capability to include Object Class and
+        Property from the main search screen.
+
+    --  'Search In' capability has been expanded to include:
+        Search In:                            For all:
+        Reference Document Text               Data Elements
+        Reference Document Type                When Reference
+                                               Document Text is
+                                               selected for
+                                               Data Elements
+        Historical CDE ID                     Data Elements
+        Permissible Value                     Data Elements and
+        Protocol ID/CRF name                   Value Domains
+                                               With wildcard
+                                               functionality
+                                               for Data
+                                               Elements 
+        Origin                                Data Elements,
+                                               Data Element
+                                               Concepts, Value
+                                               Domains, and
+                                               Conceptual
+                                               Domains
+
+    --  Simple and Advanced search filters are now available
+        to find desired Administered Components.
+        Simple Filter Components:               Advanced Filter
+                                                 Components:
+        Context                                 Date Created
+        Version (radio buttons)                 Creator
+        Workflow Status                         Date Modified
+        Registration Status (Data Elements)     Modifier
+        Value Domain Type (Value Domain)        Reference
+                                                Document Types
+                                                (when Reference
+                                                Document Text is
+                                                searched in Data
+                                                Elements)
+        Conceptual Domain (Permissible Value)
+        Context Use (Owned By, Used By, Owned/Used By) for Data
+	Elements
+
+    --  Improved Search Result Functionality to assist user in
+        finding well-formed Administered Components.
+        Select/Unselect - All Search Results may be selected
+                          or unselected by clicking on the
+                          checkmark column heading on the
+                          Search Results screen.
+
+        Display - Long Name is displayed as default for all
+                  Administered Components. Initial display sort
+                  order is alphabetical by Long Name.
+
+        Sorting - Blank records are sorted to the bottom of
+                  search results. (Those records with blank Long
+                  Name fields will be displayed at the bottom of
+                  the search results.)
+
+    --  Added the ability to search against Reference Document
+        Types, Historical CDE ID, and Permissible Value for Data
+        Elements. This functionality includes the ability to
+        view multiple instances of associated Reference Document
+        or Historical CDE ID along with all associated
+        Permissible Values for a Data Element.
+
+    --  The ability to designate Data Element Concepts and Value
+        Domains has been eliminated in the 2.1 release.
+
+    --  The CDE Curation Tool now searches for Object Class and
+        Property. The user also now has the ability to get
+        Associated Data Element Concepts from the selected
+        Object Class or Property.
+
+    Expanded EVS Search Functionality:
+
+    --  Searches can be filtered by a Source in EVS. This
+        restricts the search results to a specific EVS source.
+        For example user can filter results to just LOINC.
+
+    --  When searching for an EVS Concept, the results include
+        matches to synonyms for EVS terms and well as the EVS
+        terms themselves.
+
+    --  Users can now search EVS by a Code, such as a LOINC
+        code, as well as by a String.
+
+    --  User can now Set Metathesaurus Return Limit from
+        100-1000 Records in EVS searches.
+
+    --  User is now able to Search EVS when creating a new Value
+        Meaning.
+
+    --  Preferred Name is displayed for all Concepts searched
+        from EVS.
+
+    UI Design on Create/Edit/Validation Screens:
+
+    --  New design for Mandatory and Optional Attributes.
+        Mandatory and Optional sections on the Create, Edit and
+        Validation screens have been removed.  Mandatory
+        attributes are represented with a red asterisk (*) on
+        the Create and Edit screens.
+
+    Create/Edit Administered Components:
+
+    --  Create a Comment/Change Note. The user has the ability
+        to enter a Comment or Change Note when Creating, Editing
+        or Block Editing Administered Components.
+
+    --  Create and Edit Derived Data Elements (for Data Element
+	only). A Derived Data Element can be created in the
+	bottom section of the Create and Edit Data Element
+	screen. A derived data element is the combination of two
+	or more data elements, with a representation type and a
+	derivation rule.
+
+    --  Select a Registration Status (for Data Element only). A
+        Registration Status can be selected from a drop down
+        list when creating or editing a single Data Element.
+        Registration Status is also an attribute to filter by on
+        the Search screen for a Data Element.
+
+    --  View Alternate Names (Data Element, Data Element Concept
+        and Value Domain). The user has the ability to view
+        Alternate Names of Data Elements, Data Element Concepts
+        and Value Domains on the Edit Existing and Version
+        screens.
+
+    --  Ability to Assign Classification Scheme and
+        Classification Scheme Items. The user has the ability
+        to assign Classification Scheme and Classification
+        Scheme Items within the selected Context for Data
+	Elements, Data Element Concepts, and Value Domains. This
+        functionality is new for Data Element Concepts and Value
+        Domains.
+
+    --  Classification Scheme Item Hierarchy. The parent/child
+        Classification Scheme Item relationship is displayed in
+        a hierarchical manner on the Create, Edit and Block Edit
+        screens.
+
+    --  Search for a Conceptual Domain. Users can now search for
+        a Conceptual Domain when creating, editing or block
+        editing a Data Element Concept or Value Domain.
+
+    --  Search for Permissible Value on Create and Edit
+	Enumerated Value Domain screens no longer exists. In
+	version 2.1, the user searches for or creates a Value
+	Meaning. User may select Value Meanings from Conceptual
+	Domains in a Context that is different from the Value
+	Domain's Context. While creating a new Value Meaning,
+	the user may search EVS for a name and definition. The
+	user names the Permissible Value, but uses the selected
+	Value Meaning. If the user creates a Permissible Value
+	that already exists in the Conceptual Domain, the tool
+	uses the existing Permissible Value.
+
+    --  Create and Edit Value Domain screens are different for
+	Enumerated and Non-Enumerated types. The screen
+	refreshes with an are for Permissible Values when
+	Enumerated is selected. This area is not present on a
+	Non-Enumerated screen.
+
+    Block Edit Administered Components
+
+    --  Enter a Comment/Change Note. The user has the ability to
+        enter a Comment or Change Note when Block Editing
+        Administered Components.
+
+    --  Administered Components List.  The CDE Curation Tool now
+        has the ability to display the details of the
+        Administered Components being edited while in the Block
+        Edit screens.
+
+    --  Ability to Assign Classification Scheme and
+        Classification Scheme Items while block editing
+        Administered Components.
+
+    --  Ability to Assign Registration Status during block edit
+	of Data Elements.
+
+    +------------------------------------+
+    | CRT                                |
+    +------------------------------------+
+
+    Stage, Comparative Template, Reviewed and Approved have been
+    removed from lines 3-6 of CRT spreadsheet. 
+
+    Origin and Disease are no longer used as a search field or
+    optional filters to a search by. Matched terms do not
+    display Origin and Disease columns in CRT search results.
+    This change reduces the number of duplicate results in a
+    CCRT search.
+
+    When performing an Auto-match, API now always searches
+    against Historic Short CDE Name.
+
+    When the CRF workflow status is set to CRF Review Complete
+    matching Data Elements with a Reviewer Action of Draft
+    Modified continue to be edited in CRT version 2.1. However
+    the method of versioning Data Elements has changed. The Data
+    Element's version number is incremented by a point release
+    instead of a whole point. For example: 2.0 to 2.1 instead of
+    2.0 to 3.0. A notation of Point version by CRT [date] is
+    added to the Change Note field of the Data Element. The Data
+    Element's Definition and Document Text fields are no longer
+    changed.
+
+    "Version" column has been added to the Match and Search
+    Results.
+
+
+----------------------------------------------------------------
+    3.3 Bugs Fixed Since Last Release
+----------------------------------------------------------------
+
+    +------------------------------------+
+    | caDSR Administration Tool          |
+    +------------------------------------+
+    
+    Incorrect Version Number Display
+    --------------------------------
+    In the previous release, an Administered Component's version
+    number incorrectly displays as 99.D (one decimal place
+    only). In release 2.1, version number has been corrected to
+    display as 99.DD (two decimal places).
+
+    Default Workflow Status changed to 'Draft New' for all
+    Administered Components.
+    ------------------------------------------------------
+
+    Problem with Copying during Versioning
+    --------------------------------------
+    Release 2.1 fixes a problem that was occuring during
+    versioning. The code has been changed so that the new
+    version retains copy of previous language and URL
+    information for Alternate Name and Document Text.
+
+    Missing Origin Column
+    ---------------------
+    The Origin column has been added to the Modify Permissible
+    Values screen.
+
+    Used By = Owned By
+    ------------------
+    The previous version allowed users to set the Used By
+    context to the same value as the Owning context. Release 2.1
+    prevents this type of designation.
+
+    Mixed Case
+    ----------
+    The Classification Scheme Maintenance page now accepts mixed
+    case.
+
+    caDSR Home Icon
+    ---------------
+    The caDSR Home icon now correctly links to the caDSR Home
+    page rather than the caCore Home page.
+
+    +------------------------------------+
+    |  CDE Curation Tool                 |
+    +------------------------------------+
+
+    --  A newly created Data Element's public ID is displayed on
+        the Search CRF Questions screen.
+
+    --  The tool no longer allows the selection of duplicate
+        Permissible Values while creating or editing Value
+        Domains.
+
+    --  The tool no longer looses the Back button under certain
+        scenarios.
+
+    --  The message box "You did not press the Append button so
+        these results will not be appended." no longer displays
+        after a search is initiated from a second window.
+
+    --  The Enter key now initiates searches for CRF Questions
+        and for Data Elements in Protocol ID/ CRF Name.
+    
+    +------------------------------------+
+    | CRT                                |
+    +------------------------------------+
+
+    --  Reviewer Comments to Submitter and Internal Comments no
+        longer have leading spaces in CRT Details window or in
+        the spreadsheet.
+
+    --  "Search / Match MSG", "Internal Comments" and "Reviewer
+        Comments" columns of spreadsheet are now cleared
+        after user clears the term match.
+
+    --  Code has been altered to accept character combinations
+        that formally were interpreted by MS Excel as indicating
+        a time or date. For instance, a list of submitted valid
+        values containing 1A was interpreted as 1 AM. Version
+        2.1 of the CDE Compliance Review Tool accepts the text
+        exactly as it was loaded into the database
+
+
+----------------------------------------------------------------
+    3.4 Known Issues
+----------------------------------------------------------------
+
+    GENERAL: Occasionally searches for terminology to construct
+    the CDEs using vocabularies served by the DTS Server (NCI
+    Thesaurus, GO, LOINC, VA-NDF and UWD Visual Anatomist) fail
+    to return results.
+
+    --  Report problems to NCI Application Support
+	ncicb@pop.nci.nih.gov
+
+    +------------------------------------+
+    | caDSR  Admin Tool                  |
+    +------------------------------------+
+    
+    Permissible Values Detail Screen
+    --------------------------------
+    If a user clicks Apply on the Permissible Value details
+    screen without making any changes, the entire list of
+    permissible value is displayed.
+
+    Conceptual Domain preferred name does not accept mixed case.
+    ------------------------------------------------------------
+    This will be fixed in a change order after 2.1 is released.
+
+    The Newly approved Protocol Workflow Statuses do not show
+    up on the LOV when editing a Protocol.
+    ---------------------------------------------------------
+    This will be fixed in a change order after 2.1 is release.
+
+    Error when entering name for "Parent CSI" in "Admin"
+    function for maintaining Classification Schemes.
+    ----------------------------------------------------
+    You must pick a CSI from the "List" lov.
+    
+    +------------------------------------+
+    | CDE Browser                        |
+    +------------------------------------+
+
+    View Protocol Forms
+    -------------------
+    If a user clicks on the "Protocol Forms" tab in a Context,
+    Protocols entered without a Long Name will display as
+    "null".  
+
+    --  Use Admin Tool to add a Long Name attribute for the
+        protocol.     
+     
+    +------------------------------------+
+    | Form Builder                       |
+    +------------------------------------+
+    
+    Standard Browser Navigation Buttons Not Supported
+    -------------------------------------------------
+    The browser's Back, Forward, and Refresh buttons are not
+    fully supported within Form Builder. Use of these buttons
+    could lead to unexpected results. Users are instructed to
+    use the navigation tools provided by the Form Builder
+    application.
+
+    Netscape Navigator Not Supported
+    --------------------------------
+    Form Builder is not fully functional when used with Netscape
+    Navigator. Internet Explorer (v.6 or higher) is recommended.
+
+    Classifications Not Copied During Copy Form
+    -------------------------------------------
+    Classifications assigned to an existing form or template are
+    not automatically copied during the Copy Form process to the
+    new form or template.  To assign classifications to a newly
+    created copy, open the new form or template in the Edit Form
+    page and click the Classifications button. Manually assign
+    the desired classifications.
+
+    Preferred Name Not Displayed in Form Builder
+    --------------------------------------------
+    In Form Builder, forms and templates are identified at the
+    UI level by Long Name. A form or template's Preferred Name
+    is automatically generated by the system and cannot be
+    viewed by users from within the application.
+
+    Concurrent Editing of Forms
+    ---------------------------
+    Currently, Form Builder does not prevent multiple users from
+    opening and editing the same form and overwriting each
+    other's changes. This will be addressed in a future release.
+    
+    Clicking on Copy or Save Buttons More than Once
+    -----------------------------------------------
+    Form Builder does not currently prevent double submissions.
+    For example, if you click Copy and then click Copy again
+    before the first action is completed, Form Builder may
+    create two records. In a future release, Form Builder will
+    disable the second submit and respond with an error message.
+
+    +------------------------------------+
+    | CDE Curation Tool                  |
+    +------------------------------------+
+
+    Using only a wildcard by itself during an EVS search will
+    prevent EVS results from being returned.
+
+    --  Avoid using a * by itself in the search term field.
+
+    Users may see intermittent and random EVS search results
+    in terms of the number of terms returned including whether
+    a term is returned from one search to another search.
+    Performance times may also vary. This can occur with
+    Synonyms and Identifier Code searches as well as
+    MetaThesaurus searches filtered by Source.
+
+    --  Conduct the search again. This occurs when two or more
+        searches are being handled at the same time by the RMI
+        server that processes EVS searched from the Curation
+	Tool.
+
+    Names and Definition searches against the EVS vocabulary
+    UWD Visual Anatomist are returning matches from Synonyms. A
+    search using a term known to exist in UWD Visual Anatomist
+    will not return a match, but a search for its Synonym will
+    return a match. For example, the Concept Name Blood
+    capillary is contained in the UWD Visual Anatomist
+    vocabulary. It has a synonym of Vas capillare. A search for
+    Blood capillary will not return the term (or the Synonym).
+    However, a search for Vas capillare, its synonym, will
+    return the term Blood capillary.
+    
+    --  If a particular term is desired from the UWD Visual
+	Anatomist vocabulary, identify the term’s Identifier
+	Code by searching for it on the DTS web site
+	(http://nciterms.nci.nih.gov/NCIBrowser/Startup.do).
+	Enter this code into the Curation Tool’s EVS search
+	window with UWD Visual Anatomist selected as the EVS
+	Vocabulary along with Identifier Code selected from the
+	Search In EVS drop down list.
+
+    The Set Meta Returns Limit filter resets to 100 after a
+    search is conducted.
+
+    --  Select the desired Meta Thesaurus returns limit before
+        conducting another search.
+
+    After Classification Scheme Items are added to a Data Element
+    designated as Used By in the user’s Context, the tool returns
+    to the original search results screen from which the edit was
+    launched without displaying a success message.
+    
+    --  No workaround. The edits are retained.
+
+    If a user initiates a second search while previous search
+    results are still displayed, the user can click More >> link
+    in the previous search results. However, this action
+    terminates the second search while leaving the "Searching,
+    please wait" message and hourglass-cursor displayed.
+
+    --  Avoid clicking a More >> link after initiating any
+        search. If the link is inadvertently clicked, click the
+        main menu Search button to begin another search.
+
+    If a user  has selected a Value Meaning from EVS on a Create
+    Value Meaning screen and then clears the screen by selecting
+    the Clear button at the top of the screen, the Create Value
+    Meaning and Verify Description fields are not editable as
+    they should be.
+
+    --  Click one of the Clear links next to the Create Value
+        Meaning and Verify Description fields. The fields then
+        become editable.
+
+    An "Error on page" message displays if a search is initiated
+    before the screen fully refreshes. For example, if CRF
+    Questions is selected as the Search For and the screen is
+    still refreshing, and the user clicks the Enter button, the
+    error will be displayed.
+
+    --  Avoid initiating a search before the screen has
+        refreshed completely. If the error is displayed (will
+        either be a pop-up message or just text in the lower
+        left corner of the IE window), click the main menu
+        Search button and start again.
+
+    The Data Element Concept and Value Domain Validation screens
+    will allow the user to paste text into the name component
+    attributes on the create/ edit screen. However, the tool
+    will not be able to submit the Data Element Concept/ Value
+    Domain.
+
+    --  Name components (Object Class, Property, etc.) must be
+        selected from search results.
+
+    Date picker calendars can display too large inside the
+    default display window size if the IE Browser Text Size is
+    set higher than Medium. 
+
+    --  Expand the Date Picker window to make it large enough to
+        see all the dates or change the Text Size through the IE
+        View/ Text Size menu. Select Medium to Smallest to
+        ensure the entire calendar displays inside the default
+        display window size.
+
+    When searching for a DE in Protocol ID/ CRF Name the Used By
+    Context column is not populated in the search results.
+
+    --  Search for the Data Element individually in Names and 
+        Definitions to see its Used By Context results.
+
+    If a session timeout occurs (30 minutes without any
+    activity) while a secondary window is open, the logon screen
+    will be displayed in the secondary window. If the user logon
+    onto this window,  numerous errors will occur.
+
+    --  Close all open IE windows related to the Curation Tool
+	and start another session.
+
+    The "." acts as a wildcard during the NCI Metathesaurus
+    portion of an EVS search.  Since the standard wildcard for
+    searches in the Curation Tool is *, this can inadvertently
+    cause the search string to be truncated. (E.g., 123.4* would
+    be searched as 123. for the Metathesaurus portion of a
+    search.)
+
+    --  Do not include "." in search terms.
+
+    +------------------------------------+
+    | CRT                                |
+    +------------------------------------+
+
+    In the 'Match' and 'Search results' windows, Data Elements
+    with multiple 'Long Name Document Text' entries appear
+    multiple times. The Data Element appears once for each
+    instance of 'Long Name Document Text.' The 'Long Name
+    Document Text' field that is originally displayed may not
+    be the same one that is shown once the entry is selected.
+
+    --  In cases where a Data Element has multiple Long Name
+        Document Texts the user should note that the Long Name
+        Document Text ultimately displayed on the spreadsheet
+        display of the CRF may not be the same as the one
+        displayed to the user. The Data Element and all the
+        'Long Name Document Text' entries are not affected.
+
+
+================================================================
+                            4.0 EVS
+================================================================
+
+
+----------------------------------------------------------------
+    4.1 Release History
+----------------------------------------------------------------
+
+    NCI Thesaurus V 04.03n (monthly, concurrent with caCORE 2.1)
+
+    --	28 May 2004
+
+    NCI Metathesaurus V P040517 (monthly, concurrent with
+	caCORE 2.1)
+
+    --	28 May 2004
+
+    NCI Thesaurus V 2.0 (released in caCORE 2.0)
+
+    --	31 October 2003
+
+    NCI Thesaurus V 1.1 (released in caCORE 1.1)
+
+    --	7 February 2003
+    
+    NCI Thesaurus V 1.0 (released in caCORE 1.0)
+
+    --	29 August 2002
+    
+    CTRM V 6.5 (released in caCORE 1.0)
+
+    --	29 August 2002
+
+
+----------------------------------------------------------------
+    4.2 New Features and Updates
+----------------------------------------------------------------
+    
+    The caCORE 2.1 release includes the following changes in EVS
+    products and services.
+
+    --	Release of the NCI Metathesaurus in the NLM's Rich
+	Release Format (RRF) will commence on a monthly cycle
+
+    --	NCI Thesaurus concept names changed to be compliant with
+	XML NCNAME rules
+
+    --	DTSRPC client/server V 1.3.4
+
+    --	DTSRPCRT regression tester V 1.0
+
+    --	Metaphrase server update
+
+    File distribution of the NCI Metathesaurus in Rich Release
+    Format
+    ----------------------------------------------------------
+    The monthly NCI Metathesaurus will be made available as a
+    set of files in the NLM's rich release format used by the
+    UMLS Metathesaurus.  Some of the fields in the tables are
+    empty (due to differences between the UMLS Metathesaurus
+    and the NCI Metathesaurus).  These differences are detailed
+    in the documentation accompanying the release (accessible
+    also from the ftp site/download page).
+
+    Note:  because of the difference between the caCORE release
+    schedule and the EVS production cycle, this first release of
+    the NCI Metathesaurus in RRF will precede our data load in
+    http://ncimeta.nci.nih.gov by a week.
+
+    NCI Thesaurus concept names in XML NCNAME
+    -----------------------------------------
+    One of the formats that we publish the Thesaurus in is OWL,
+    which raised several issues related to name synchronization
+    between the OWL and the native Ontylog formats because the
+    concept name is used as the rdf:ID in OWL.  To simplify the
+    OWL publishing process, concept names have been modified to
+    conform to xml ncname rules
+    (http://www.w3.org/TR/REC-xml-names/#NT-NCName).
+
+    DTSRPC Client/Server V 1.3.4
+    ----------------------------
+    This version of the DTSRPC includes some minor enhancements
+    as well as a major addition to its functionality.  A
+    convenience method has been added providing the ability to
+    Ping the server and obtain operational status on the a)
+    DTSRPC Server, b) a particular instance of the DTS server,
+    or c) the database backend.  A number of methods that return
+    concept history dates have been modified to return the unix
+    "time zero" date for invalid dates.  A major item added to
+    the DTSRPC is the tree construction/caching functionality.
+    It will return a tree from a parent node as a java
+    DefaultMutableTreeNode (a client will need to recurse the
+    tree locally to obtain all the nodes), either descending or
+    ascending to the root node.  Once constructed, trees will
+    also be cached in the server.  This functionality will be
+    supported only for the NCI Thesaurus. The DTSRPC is only
+    available to caBIO or other internal NCI applications by
+    agreement.  The public access will remain through caBIO.
+
+    Metaphrase server update
+    ------------------------
+    The number of concepts returned from a vocabulary search
+    limit has been increased from 100 to 1000. This higher limit
+    on searches will be available only through the API (native
+    or caBIO); it is not being offered as an option in the
+    NCI Metathesaurus browser (http://ncimeta.nci.nih.gov).
+
+    DTSRPCRT V 1.0 regression tester for the DTSRPC client
+    ------------------------------------------------------
+    The software is available internally to EVS staff.  It will
+    allow EVS to expedite validation of DTSRPC updates.
+
+
+----------------------------------------------------------------
+    4.3 Bugs Fixed Since Last Release
+----------------------------------------------------------------
+    
+    Inappropriate processing of NCI Thesaurus concept history
+    exceptions by the DTSRPC software.
+
+
+----------------------------------------------------------------
+    4.4 Known Issues
+----------------------------------------------------------------
+    
+    No known issues.
+
+
+================================================================
+                  5.0 Bug Reports and Support
+================================================================
+    
+    Send email to ncicb@pop.nci.nih.gov to request support or
+    report a bug.  
+
+    In addition, mailing lists are used by the caCORE developer
+    and user community to exchange ideas and make announcements.
+    You can subscribe at these addresses:
+
+    caBIO users
+
+    --  http://list.nih.gov/archives/cabio_users.html
+    
+    caBIO developers
+
+    --  http://list.nih.gov/archives/cabio_devel.html
+
+    caDSR users
+
+    --  http://list.nih.gov/archives/sbr_users.html
+
+    EVS users
+
+    --  http://list.nih.gov/archives/ncievs-l.html
+
+
+================================================================
+                        6.0 Documentation
+================================================================
+    
+    The caCORE 2.0 Technical Guide can be downloaded
+    via FTP:
+
+    --  ftp://ftp1.nci.nih.gov/pub/cacore/
+	caCORE2.0_Tech_Guide.pdf
+
+
+================================================================
+                        7.0 NCICB Web Pages
+================================================================
+    
+    The NCI Center for Bioinformatics
+
+    --  http://ncicb.nci.nih.gov/
+    
+    NCICB Application Support
+     
+    --  http://ncicbsupport.nci.nih.gov/sw/
+
+    NCICB Download Center
+
+    --  http://ncicb.nci.nih.gov/download/
+
+    caCORE
+
+    --  http://ncicb.nci.nih.gov/core
+    
+    caBIO
+
+    --  http://ncicb.nci.nih.gov/core/caBIO
+    
+    caDSR
+
+    --  http://ncicb.nci.nih.gov/core/caDSR 
+    --  http://ncicb.nci.nih.gov/xml 
+    
+    EVS
+
+    --  http://ncicb.nci.nih.gov/core/EVS
+
+//end
