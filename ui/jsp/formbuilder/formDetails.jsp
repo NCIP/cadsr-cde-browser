@@ -120,7 +120,28 @@
           <td  class="OraFieldTextInstruction">
             Complete and submit this form as required by the protocol.  Information in the upper right box must be completed for this form to be accepted.  Do not leave any entries blank.  Enter -1 to indicate that an answer in unknown, unobtainable, no
           </td>
-        </tr>         
+        </tr> 
+        <logic:notEmpty name="<%=FormConstants.CRF%>" property = "refereceDocs">
+            <tr class="OraTabledata">
+              <td class="TableRowPromptTextLeft"  width="20%">
+                <bean:message key="cadsr.formbuilder.form.attachedDocs"/>
+              </td>                
+              <td  class="OraFieldText" >
+                   <table align="left" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark" >
+                    <logic:iterate id="refDocument" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument" property="refereceDocs" indexId="refIndex" >
+                      <tr class="OraTabledata">
+                         <td class="OraFieldText" nowrap>
+                          <a href="search?viewTemplate=9&documentIdseq=<%= refDocument.getDocIDSeq() %>&PageId=DataElementsGroup" target="_blank"
+                            alt="View/Download Attached Document" >
+                            <bean:write name="refDocument" property="docName"/> 
+                          </a>	
+                         </td>
+                      </tr>
+                    </logic:iterate>
+                   </table>
+              </td>
+            </tr>
+        </logic:notEmpty>
       </table>
       <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         <tr >

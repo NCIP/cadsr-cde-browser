@@ -41,6 +41,7 @@ public interface ProcessConstants extends oracle.cle.process.ProcessConstants {
 
   //Related to templates
   static final String TEMPLATE_IDSEQ = "templateIdseq";
+  static final String DOCUMNET_IDSEQ = "documentIdseq";
   static final String REFERENCE_BLOB_VO = "rbVO";
 
   //Related to XML Downloads

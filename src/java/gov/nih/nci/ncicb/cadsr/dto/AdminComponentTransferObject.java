@@ -156,7 +156,7 @@ public class AdminComponentTransferObject extends BaseTransferObject
       {
         Context contextCopy = getContext();
         copy.setContext((Context)contextCopy.clone());
-        refDocs=null;
+        //refDocs=null;
         designations=null;
       }
       return copy;

@@ -62,6 +62,7 @@ public class ViewTemplate extends BasePersistingProcess
 	{
 		try{
 			registerStringParameter(ProcessConstants.TEMPLATE_IDSEQ);
+      registerStringParameter(ProcessConstants.DOCUMNET_IDSEQ);
       registerResultObject(ProcessConstants.REFERENCE_BLOB_VO);
       registerResultObject("tib");
       registerResultObject("uem");
@@ -92,10 +93,21 @@ public class ViewTemplate extends BasePersistingProcess
 		try
 		{
       String crfIdseq = getStringInfo("templateIdseq");
-      ReferenceBlobHandler rh = (ReferenceBlobHandler)HandlerFactory.getHandler(ReferenceBlob.class);
-      ReferenceBlob rb = (ReferenceBlob)rh.findObjectForAdminComponent(crfIdseq
+      String docIdseq = getStringInfo("documentIdseq");
+      ReferenceBlobHandler rh = null;
+      ReferenceBlob rb = null;
+      if(docIdseq!=null)
+      {
+        rh = (ReferenceBlobHandler)HandlerFactory.getHandler(ReferenceBlob.class);
+        rb = (ReferenceBlob)rh.refDocForAdminComponent(docIdseq,sessionId);        
+      }
+     else
+     {
+        rh = (ReferenceBlobHandler)HandlerFactory.getHandler(ReferenceBlob.class);
+        rb = (ReferenceBlob)rh.findObjectForAdminComponent(crfIdseq
                                                                       ,"IMAGE_FILE"
-                                                                      ,sessionId);
+                                                                      ,sessionId);               
+     }
 
       setResult(ProcessConstants.REFERENCE_BLOB_VO,rb);
       setResult("tib",null);

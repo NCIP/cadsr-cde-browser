@@ -16,7 +16,13 @@ if(confirm(message)) location.href = url;
             <html:link action='<%="/formSearchAction"%>' >				
             <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Done"/>
             </html:link>             
-          </td>                
+          </td> 
+         <td>
+           <html:link action='<%="/viewReferenceDocs.do?"+NavigationConstants.METHOD_PARAM+"="+"viewReferenceDocs"%>'
+             >
+             <html:img src='<%=urlPrefix+"i/refdocs.gif"%>' border="0" alt="Reference Documents"/>
+           </html:link>
+          </td>           
           <td >
 		       <cde:secureIcon  formId="<%=FormConstants.CRF%>"
             formScope="<%=CaDSRConstants.SESSION_SCOPE%>"

@@ -8,4 +8,8 @@ public interface ReferenceBlobHandler extends HandlerDefinition{
   public Object findObjectForAdminComponent(Object adminComponentIdseq
                                             ,String docType
                                             ,Object sessionId) throws Exception;
+                                            
+  public Object refDocForAdminComponent(Object refDocIdseq
+                                            ,Object sessionId) throws Exception;
+                                            
 }

@@ -65,13 +65,13 @@ function clearProtocol() {
         <jsp:param name="label" value="Edit&nbsp;Form"/>
         <jsp:param name="urlPrefix" value=""/>
       </jsp:include>
-<table>
-    <tr>    
-      <td align="left" class="AbbreviatedText">
-        <bean:message key="cadsr.formbuilder.helpText.form.edit"/>
-      </td>
-    </tr>  
-</table> 
+    <table>
+        <tr>    
+          <td align="left" class="AbbreviatedText">
+            <bean:message key="cadsr.formbuilder.helpText.form.edit"/>
+          </td>
+        </tr>  
+    </table> 
 
       <%@ include file="/formbuilder/editButton_inc.jsp"%>
     <%@ include file="showMessages.jsp" %>
@@ -180,7 +180,7 @@ function clearProtocol() {
               <bean:message key="cadsr.formbuilder.form.header.instruction"/>
             </td>
             <td  class="OraFieldTextInstruction" width="80%" nowrap>
-		<TEXTAREA NAME="comments" COLS=79 ROWS=2></TEXTAREA>
+		          <TEXTAREA NAME="comments" COLS=79 ROWS=2></TEXTAREA>
             </td>
           </tr>          
           <tr class="OraTabledata">
@@ -190,7 +190,8 @@ function clearProtocol() {
             <td  class="OraFieldTextInstruction" width="80%" nowrap>
              <TEXTAREA NAME="comments" COLS=79 ROWS=2></TEXTAREA>
             </td>
-          </tr>                    
+          </tr> 
+                    
         </table>
       <table cellpadding="0" cellspacing="0" width="80%" align="center">
         <tr >

@@ -1,4 +1,3 @@
-  <script LANGUAGE="Javascript">
 <!---
 function actionConfirm(message, url){
 if(confirm(message)) location.href = url;
@@ -20,7 +19,13 @@ if(confirm(message)) location.href = url;
              >
              <html:img src='<%=urlPrefix+"i/classifications.gif"%>' border="0" alt="Manage Classifications"/>
            </html:link>
-          </td>      
+          </td>    
+         <td>
+           <html:link action='<%="/manageReferenceDocs.do?"+NavigationConstants.METHOD_PARAM+"="+"manageReferenceDocs"%>'
+             >
+             <html:img src='<%=urlPrefix+"i/refdocs.gif"%>' border="0" alt="Manage Reference Documents"/>
+           </html:link>
+          </td>              
           <td > 
             <a href="javascript:submitFormToSave('<%=NavigationConstants.CHECK_CHANGES_DONE%>')">
                <img src=<%=urlPrefix%>i/backButton.gif border=0 alt="Done">

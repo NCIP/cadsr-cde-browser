@@ -366,6 +366,27 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
     }
   }
 
+  public BC4JReferenceBlobTransferObject getRefBlobsForAdminComponent(
+    Object refDocIdseq) throws  Exception {
+    try {
+      
+      ReferenceBlobsViewImpl rbVO = getReferenceBlobsView();
+      rbVO.setWhereClause("RD_IDSEQ = '" + refDocIdseq + "'");
+      rbVO.executeQuery();
+
+      ReferenceBlobsViewRowImpl rbViewRowImpl;
+      rbViewRowImpl = (ReferenceBlobsViewRowImpl) rbVO.first();
+
+
+      return new BC4JReferenceBlobTransferObject(rbViewRowImpl);
+    }
+    catch (Exception ex) {
+      log.error("Exception caught", ex);
+      throw ex;
+    }
+    finally {
+    }
+  }
   public PageContextValueObject getPageContextInfo(
     String nodeType,
     String nodeIdseq) throws Exception {

@@ -1,6 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.persistence.bc4j;
 import gov.nih.nci.ncicb.cadsr.persistence.base.BaseValueObject;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
+import java.util.List;
 
 public class ReferenceDocValueObject extends BaseValueObject
                         implements ReferenceDocument, java.io.Serializable{
@@ -12,7 +14,10 @@ public class ReferenceDocValueObject extends BaseValueObject
   String url = null;
   String docIdSeq;
   String language;
+  List attachments;
+  Context context;  
   //Integer displayOrder 
+  
   public ReferenceDocValueObject(ReferenceDocumentsViewRowImpl refDoc) {
     docName = checkForNull(refDoc.getName());
     docType = refDoc.getDctlName();
@@ -66,5 +71,21 @@ public class ReferenceDocValueObject extends BaseValueObject
   public void setUrl(String url)
   {
     this.url = url;
+  } 
+  public Context getContext()
+  {
+    return context;
+  }
+  public void setContext(Context newContext)
+  {
+    context=newContext;
+  }
+  public List getAttachments()
+  {
+    return attachments;
+  }  
+  public void setAttachments(List newAttachements)
+  {
+    attachments=newAttachements;
   }  
 }

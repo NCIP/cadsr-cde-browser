@@ -138,6 +138,17 @@ public class FormBuilderSecureBaseDispatchAction extends FormBuilderBaseDispatch
   }
 
   protected String getLoggedInUsername(HttpServletRequest request) {
-    return request.getRemoteUser();
+    
+    String debugLogin = servlet.getInitParameter("debugLogin");
+      if(debugLogin!=null&&debugLogin.equalsIgnoreCase("Y"))
+      {
+        String username =  servlet.getInitParameter("debugUsername");
+        log.info("debugUser=" + username);
+        return username;
+      }
+      else
+      {
+        return request.getRemoteUser();
+      }  
   }  
 }

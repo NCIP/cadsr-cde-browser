@@ -44,6 +44,30 @@ public class ReferenceBlobHandlerImpl extends Handler
 
     return rb;
   }
+  public Object refDocForAdminComponent(
+    Object refDocIdseq,
+    Object sessionId) throws DocumentNotFoundException, Exception {
+    ReferenceBlob rb = null;
+
+    try {
+      CDEBrowserBc4jModuleImpl module =
+        (CDEBrowserBc4jModuleImpl) getConnection(sessionId);
+      rb = module.getRefBlobsForAdminComponent(refDocIdseq);
+      releaseConnection(sessionId);
+    }
+    catch (DocumentNotFoundException e) {
+      throw e;
+    }
+    catch (Exception e) {
+      throw e;
+    }
+    finally {
+      releaseConnection(sessionId);
+    }
+
+    return rb;
+  }
+  
 
   public static void main(String[] args) {
     Integer sessionId = new Integer(1);
