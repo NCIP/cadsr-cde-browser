@@ -130,6 +130,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
     int currQuestionIndex = questionIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
+    Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
@@ -628,6 +629,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
     removeSessionObject(request,CLONED_MODULE);
     removeSessionObject(request,MODULE);
+    removeSessionObject(request,DELETED_QUESTIONS);
     return mapping.findForward(SUCCESS);
   }
 
@@ -649,11 +651,23 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    FormBuilderBaseDynaFormBean editForm = (FormBuilderBaseDynaFormBean) form;
+    FormBuilderBaseDynaFormBean moduleEditForm = (FormBuilderBaseDynaFormBean) form;
+    
+    Integer moduleIndex = (Integer) moduleEditForm.get(MODULE_INDEX);
+    
+    Form crf = (Form)getSessionObject(request,CRF);
+    Module module = (Module)getSessionObject(request,MODULE);
+    
+    Module orgModule = (Module)getSessionObject(request,CLONED_MODULE);
+    List modules = crf.getModules();
+    int index = modules.indexOf(module);
+    crf.getModules().add(index,orgModule);
+    crf.getModules().remove(index+1); 
     removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
     removeSessionObject(request,CLONED_MODULE);
     removeSessionObject(request,MODULE);
-    editForm.clear();
+    removeSessionObject(request,DELETED_QUESTIONS);
+    moduleEditForm.clear();
     return mapping.findForward(SUCCESS);
       
     }  
