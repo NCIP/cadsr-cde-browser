@@ -227,7 +227,7 @@ function updateCart() {
 
 function compareCDEs() {
   
-  var urlString="<%=request.getContextPath()%>/cdebrowser/compareCDEAction.do?method=compareCDEs&numberSelected=" + numberSelected;
+  var urlString="<%=request.getContextPath()%>/cdebrowser/compareCDEAction.do?method=compareCDEs&numberSelected=1";
   top.location.href=urlString;
 }
 
