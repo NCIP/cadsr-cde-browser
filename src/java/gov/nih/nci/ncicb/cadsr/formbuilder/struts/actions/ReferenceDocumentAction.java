@@ -1,13 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
-import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.dto.AttachmentTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ReferenceDocumentTransferObject;
-import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
-import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
-
-
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.ReferenceDocFormBean;
@@ -15,32 +10,33 @@ import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
-import java.io.IOException;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.sql.DataSource;
+import oracle.jdbc.OracleResultSet;
+
+import oracle.sql.BLOB;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
-import oracle.sql.BLOB;
-import oracle.jdbc.OracleResultSet;
 
 public class ReferenceDocumentAction extends FormBuilderSecureBaseDispatchAction {
 
@@ -123,6 +119,7 @@ public class ReferenceDocumentAction extends FormBuilderSecureBaseDispatchAction
     Blob theBlob = null;
     InputStream is = null;
     OutputStream out = null;
+    Connection conn = null;
     try {
       DBUtil dbUtil = new DBUtil();
       String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
@@ -136,7 +133,8 @@ public class ReferenceDocumentAction extends FormBuilderSecureBaseDispatchAction
   
       String sqlStmt = "SELECT blob_content, mime_type from reference_blobs where name = ?";
       log.info(sqlStmt);
-      PreparedStatement ps = dbUtil.getConnection().prepareStatement(sqlStmt);
+      conn = dbUtil.getConnection();
+      PreparedStatement ps = conn.prepareStatement(sqlStmt);
       ps.setString(1,attachmentName);
       ResultSet rs = ps.executeQuery();
       boolean exists = false;
@@ -160,6 +158,7 @@ public class ReferenceDocumentAction extends FormBuilderSecureBaseDispatchAction
     } 
     finally {
       try {
+        if (conn != null) conn.close();
         if (is != null) is.close();
         if (out != null) out.close();
         //if (db != null) db.closeDB();  
