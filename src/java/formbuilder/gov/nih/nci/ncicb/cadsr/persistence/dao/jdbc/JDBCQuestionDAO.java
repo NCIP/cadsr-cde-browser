@@ -1,12 +1,11 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
-import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCQuestionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCFormValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
-
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 
@@ -14,9 +13,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
-
+import java.util.Iterator;
 
 public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
   public JDBCQuestionDAO(ServiceLocator locator) {
@@ -66,12 +66,22 @@ public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
     return 0;
   }
 
+  /**
+   * Test application
+   * 
+   */
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
-
     JDBCQuestionDAO test = new JDBCQuestionDAO(locator);
+    
+    Collection result = test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
 
-    test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
+    Iterator iterator = result.iterator(); 
+		while(iterator.hasNext()) {
+      System.out.println("Valid Value: " + 
+        ((JDBCFormValidValueTransferObject)iterator.next()).toString());
+    }
+
   }
 
   /**
@@ -85,16 +95,14 @@ public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
 
     public void setSql() {
       super.setSql(
-        "SELECT * FROM SBREXT.CABIO_VALID_VALUES_VIEW where QUESTION_IDSEQ = ? ");
+        "SELECT * FROM SBREXT.FB_VALID_VALUES_VIEW where QUES_IDSEQ = ? ");
       declareParameter(new SqlParameter("QUESTION_IDSEQ", Types.VARCHAR));
     }
 
     protected Object mapRow(
       ResultSet rs,
       int rownum) throws SQLException {
-      //System.out.println("valid value name = " + rs.getString("LONG_NAME") +
-      //  " *** display order = " + rs.getString("DISPLAY_ORDER"));
-      return new JDBCQuestionTransferObject(rs);
+      return new JDBCFormValidValueTransferObject(rs);
     }
   }
 }
