@@ -43,7 +43,7 @@
       </field>
     </form>
 
-    <form name="/createForm">
+    <form name="createForm">
       <field   property="formLongName"
         depends="required, maxlength">
         <arg0 key="cadsr.formbuilder.form.longName"/>
