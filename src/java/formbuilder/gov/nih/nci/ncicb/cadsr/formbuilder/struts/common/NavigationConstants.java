@@ -29,32 +29,34 @@ public interface NavigationConstants
   //Edit Module
   public static final String GET_MODULE_TO_EDIT ="getModuleToEdit";
   public static final String MOVE_QUESTION_UP="moveQuestionUp";
-  public static final String MOVE_QUESTION_DOWN="moveQuestionDown"; 
-  public static final String DELETE_QUESTION="deleteQuestion"; 
+  public static final String MOVE_QUESTION_DOWN="moveQuestionDown";
+  public static final String DELETE_QUESTION="deleteQuestion";
   public static final String ADD_FROM_DELETED_QUESTION_LIST="addFromDeletedQuestionList";
   public static final String MOVE_VALID_VALUE_UP="moveValidValueUp";
-  public static final String MOVE_VALID_VALUE_DOWN="moveValidValueDown"; 
-  public static final String DELETE_VALID_VALUE="deleteValidValue"; 
+  public static final String MOVE_VALID_VALUE_DOWN="moveValidValueDown";
+  public static final String DELETE_VALID_VALUE="deleteValidValue";
   public static final String ADD_FROM_AVAILABLE_VALID_VALUE_LIST="addFromAvailableValidValueList";
   public static final String SAVE_MODULE="saveModule";
   public static final String CANCEL_MODULE_EDIT ="cancelModuleEdit";
   //Edit Form
   public static final String GET_FORM_TO_EDIT="getFormToEdit";
-  public static final String DELETE_FORM="deleteForm";  
+  public static final String DELETE_FORM="deleteForm";
   public static final String MOVE_MODULE_UP="moveModuleUp";
-  public static final String MOVE_MODULE_DOWN="moveModuleDown"; 
+  public static final String MOVE_MODULE_DOWN="moveModuleDown";
   public static final String DELETE_MODULE="deleteModule";
   public static final String ADD_FROM_DELETED_LIST="addFromDeletedList";
   public static final String CHECK_FOR_UPDATE="checkForUpdate";
   public static final String SAVE_FORM="saveForm";
- 
+
 
   public static final String CREATE_MODULE = "createModule";
   public static final String GO_TO_CREATE_MODULE = "goToCreateModule";
-  
+
+
   public static final String CREATE_FORM = "createForm";
   public static final String GO_TO_CREATE_FORM = "goToCreateForm";
-  
+  public static final String CANCEL_FORM_CREATE="cancelFormCreate";
+
   public static final String GET_PROTOCOL_LOV_METHOD="getProtocolsLOV";
 
   public static final String CHANGE_DE_ASSOCIATION = "changeAssociation";

@@ -157,6 +157,17 @@ public class FormCreateAction extends FormBuilderBaseDispatchAction {
     return mapping.findForward("gotoEdit");
     
   }
+  
+  public ActionForward cancelFormCreate(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    FormBuilderBaseDynaFormBean newForm = (FormBuilderBaseDynaFormBean) form;
+    newForm.clear();
+    return mapping.findForward(SUCCESS);
+      
+    }  
 
 }
   
