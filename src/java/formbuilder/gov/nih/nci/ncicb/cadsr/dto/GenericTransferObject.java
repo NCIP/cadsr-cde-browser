@@ -1,7 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.dto;
+import java.io.Serializable;
 import java.util.Date;
 
-public interface GenericTransferObject 
+public interface GenericTransferObject extends Serializable
 {
   public String getString(String key);
   public void setString(String key, String value);

@@ -3,12 +3,16 @@ package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 
+import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 import java.sql.Date;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 
 public class QuestionTransferObject extends AdminComponentTransferObject
@@ -72,12 +76,38 @@ public class QuestionTransferObject extends AdminComponentTransferObject
   public void setDataElement(DataElement dataElement) {
     this.dataElement = dataElement;
   }
-
+  /**
+   * Clones the object
+   * Makes a deep copy of the Valivalues
+   * form references are set to null;
+   * @return 
+   */
+  public Object clone() throws CloneNotSupportedException {
+     Question copy = null;
+      copy = (Question)super.clone();
+      // make the copy a little deeper
+     if(getValidValues()!=null)
+     {
+       List validValuesCopy = new ArrayList();
+       ListIterator it = getValidValues().listIterator();
+       while(it.hasNext())
+       {
+         FormValidValue validValue = (FormValidValue)it.next();
+         FormValidValue clonedValidValue = (FormValidValue)validValue.clone();
+         clonedValidValue.setQuestion(copy);
+         validValuesCopy.add(clonedValidValue);        
+       }
+       copy.setValidValues(validValuesCopy);
+       copy.setForm(null);
+       copy.setModule(null);
+     }     
+      return copy;
+  }
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    DebugStringBuffer sb = new DebugStringBuffer();
     sb.append(OBJ_SEPARATOR_START);
     sb.append(super.toString());
-    sb.append(ATTR_SEPARATOR + "quesIdseq=" + getQuesIdseq());
+    sb.append(ATTR_SEPARATOR + "quesIdseq=" + getQuesIdseq(),getQuesIdseq());
     sb.append(ATTR_SEPARATOR + "displayOrder=" + getDisplayOrder());
 
     List validValues = getValidValues();

@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 
 public class FormValidValueTransferObject extends AdminComponentTransferObject
   implements FormValidValue {
@@ -51,12 +52,24 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
     this.dispOrder = dispOrder;
   }
   
+  /**
+   * Clones the object
+   * Makes a deep copy of the Valivalues
+   * sets Question to null;
+   * @return 
+   */
+  public Object clone() throws CloneNotSupportedException {
+     FormValidValue copy = null;
+      copy = (FormValidValue)super.clone();
+      copy.setQuestion(null);   
+      return copy;
+  }  
   public String toString()
   {
-    StringBuffer sb = new StringBuffer();
+    DebugStringBuffer sb = new DebugStringBuffer();
     sb.append(OBJ_SEPARATOR_START);
     sb.append(super.toString());
-    sb.append(ATTR_SEPARATOR+"valueIdseq="+getValueIdseq()); 
+    sb.append(ATTR_SEPARATOR+"valueIdseq="+getValueIdseq(),getValueIdseq()); 
     sb.append(ATTR_SEPARATOR+"displayOrder="+getDisplayOrder()); 
     sb.append(OBJ_SEPARATOR_END);  
     return sb.toString();  

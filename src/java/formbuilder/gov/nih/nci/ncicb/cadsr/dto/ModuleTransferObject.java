@@ -3,10 +3,15 @@ package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
 
+import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 import java.sql.Date;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 
 public class ModuleTransferObject extends AdminComponentTransferObject
@@ -51,13 +56,38 @@ public class ModuleTransferObject extends AdminComponentTransferObject
   public void setDisplayOrder(int dispOrder) {
     this.dispOrder = dispOrder;
   }
-
+  /**
+   * Clones the object
+   * Makes a deep copy of the Questions
+   * @return 
+   */
+  public Object clone() throws CloneNotSupportedException {
+    Module copy = null;
+      copy = (Module)super.clone();
+      // make the copy a little deeper
+     if(getQuestions()!=null)
+     {
+       List questionsCopy = new ArrayList();
+       ListIterator it = getQuestions().listIterator();
+       while(it.hasNext())
+       {
+         Question question = (Question)it.next();
+         Question questionClone = (Question)question.clone();
+         questionClone.setModule(copy);
+         questionsCopy.add(questionClone);        
+       }
+       copy.setQuestions(questionsCopy);
+       copy.setForm(null);
+       copy.setQuestions(questionsCopy);
+     }     
+      return copy;
+  }
   public String toString()
   {
-    StringBuffer sb = new StringBuffer();
+    DebugStringBuffer sb = new DebugStringBuffer();
     sb.append(OBJ_SEPARATOR_START);
     sb.append(super.toString());
-    sb.append(ATTR_SEPARATOR+"moduleIdseq="+getModuleIdseq()); 
+    sb.append(ATTR_SEPARATOR+"moduleIdseq="+getModuleIdseq(),getModuleIdseq()); 
     sb.append(ATTR_SEPARATOR+"displayOrder="+getDisplayOrder()); 
     List questions = getQuestions();
     if(questions!=null) 
@@ -70,5 +100,22 @@ public class ModuleTransferObject extends AdminComponentTransferObject
     }    
     sb.append(OBJ_SEPARATOR_END);  
     return sb.toString();
+  }  
+  
+  public static void main(String args[]) throws Exception
+  {
+
+    Module module = new ModuleTransferObject();
+    module.setLongName("Module");
+   
+    
+    Module clone = (Module)module.clone();
+    module.setLongName("ChangedModule");  
+
+  
+    
+    System.out.println(module);
+    System.out.println(clone);
+    
   }  
 }

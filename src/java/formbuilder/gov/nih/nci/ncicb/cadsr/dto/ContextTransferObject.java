@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 
 
 public class ContextTransferObject extends BaseTransferObject implements Context {
@@ -57,12 +58,21 @@ public class ContextTransferObject extends BaseTransferObject implements Context
 
   public void setLanguage(String p0) {
   }
-
+  /**
+   * Clones the Context Object
+   * @return 
+   * @throws CloneNotSupportedException
+   */
+  public Object clone() throws CloneNotSupportedException {
+    Context copy = null;
+    copy = (Context)super.clone();
+    return copy;
+  }
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    DebugStringBuffer sb = new DebugStringBuffer();
     sb.append(OBJ_SEPARATOR_START);
-    sb.append(ATTR_SEPARATOR + "name=" + getName());
-    sb.append(ATTR_SEPARATOR + "conteIdSeq=" + getConteIdseq());
+    sb.append(ATTR_SEPARATOR + "name=" + getName(),getName());
+    sb.append(ATTR_SEPARATOR + "conteIdSeq=" + getConteIdseq(),getConteIdseq());
     sb.append(super.toString());
     sb.append(OBJ_SEPARATOR_END);
     sb.toString();

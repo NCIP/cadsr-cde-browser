@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.DataElementConcept;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
+import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 
 
 public class DataElementTransferObject extends AdminComponentTransferObject
@@ -105,10 +106,10 @@ public class DataElementTransferObject extends AdminComponentTransferObject
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+     DebugStringBuffer sb = new DebugStringBuffer();
     sb.append(OBJ_SEPARATOR_START);
     sb.append(super.toString());
-    sb.append(ATTR_SEPARATOR + "deIdseq=" + getDeIdseq());
+    sb.append(ATTR_SEPARATOR + "deIdseq=" + getDeIdseq(),getDeIdseq());
 
     /*
        ValueDomain valueDomain = getValueDomain();
@@ -117,7 +118,7 @@ public class DataElementTransferObject extends AdminComponentTransferObject
        else
          sb.append(ATTR_SEPARATOR+"ValueDomain=null");
      */
-    sb.append(ATTR_SEPARATOR + "vdIdseq=" + getVdIdseq());
+    sb.append(ATTR_SEPARATOR + "vdIdseq=" + getVdIdseq(),getVdIdseq());
 
     /*
        DataElementConcept dataElementConcept = getDataElementConcept();
@@ -126,13 +127,11 @@ public class DataElementTransferObject extends AdminComponentTransferObject
        else
          sb.append(ATTR_SEPARATOR+"DataElementConcept=null");
      */
-    sb.append(ATTR_SEPARATOR + "decIdseq=" + getDecIdseq());
-    sb.append(ATTR_SEPARATOR + "vdName=" + getVdName());
-    sb.append(ATTR_SEPARATOR + "contextName=" + getContextName());
-    sb.append(ATTR_SEPARATOR + "longCDEName=" + getLongCDEName());
-    sb.append(ATTR_SEPARATOR + "cDEId=" + getCDEId());
-    sb.append(ATTR_SEPARATOR + "decName=" + getDecName());
-    sb.append(ATTR_SEPARATOR + "usingContexts=" + getUsingContexts());
+    sb.append(ATTR_SEPARATOR + "vdName=" + getVdName(),getVdName());
+    sb.append(ATTR_SEPARATOR + "longCDEName=" + getLongCDEName(),getLongCDEName());
+    sb.append(ATTR_SEPARATOR + "cDEId=" + getCDEId(),getCDEId());
+    sb.append(ATTR_SEPARATOR + "decName=" + getDecName(),getDecName());
+    sb.append(ATTR_SEPARATOR + "usingContexts=" + getUsingContexts(),getUsingContexts());
     sb.append(OBJ_SEPARATOR_END);
 
     return sb.toString();

@@ -67,12 +67,14 @@ public class ProtocolTransferObject extends AdminComponentTransferObject
     this.endDate = endDate;
   }
 
-  public String toString() {
-    StringBuffer sb = new StringBuffer();
+  public String toString()
+  {
+    DebugStringBuffer sb = new DebugStringBuffer();
     sb.append(OBJ_SEPARATOR_START);
     sb.append(super.toString());
-    sb.append(ATTR_SEPARATOR + "longName=" + getLongName());
-    sb.append(ATTR_SEPARATOR + "protocolIdseq=" + getProtoIdseq());
+    sb.append(ATTR_SEPARATOR+"longName="+getLongName(),getLongName());
+    sb.append(ATTR_SEPARATOR+"protocolIdseq="+getProtoIdseq(),getProtoIdseq());
+
     sb.append(OBJ_SEPARATOR_END);
 
     return sb.toString();
