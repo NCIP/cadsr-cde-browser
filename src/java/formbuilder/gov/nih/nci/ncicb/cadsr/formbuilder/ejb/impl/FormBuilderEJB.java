@@ -2,8 +2,8 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.impl;
 
 import com.evermind.sql.OrionCMTDataSource;
 
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECart;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.ejb.common.SessionBeanAdapter;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service.FormBuilderServiceRemote;

@@ -1,10 +1,11 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.*;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECart;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.DataElementTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
@@ -104,7 +105,7 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
     }
 
     public void setSql() {
-      super.setSql("SELECT * FROM FB_DE_CART_VIEW where UA_NAME = ? ");
+      super.setSql("SELECT * FROM FB_CART_DE_VIEW where UA_NAME = ? ");
       declareParameter(new SqlParameter("ua_name", Types.VARCHAR));
     }
 
@@ -112,6 +113,7 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
       ResultSet rs,
       int rownum) throws SQLException {
       CDECartItem item = new CDECartItemTransferObject();
+      DataElement de = new DataElementTransferObject();
       return item;
     }
   }

@@ -12,13 +12,13 @@ import gov.nih.nci.ncicb.cadsr.persistence.bc4j.handler.*;
 import gov.nih.nci.ncicb.cadsr.resource.CDEBrowserPageContext;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.TreeParameters;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECart;
+import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.handler.CDEBrowserPageContextHandler;
 import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.util.*;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 import oracle.cle.persistence.HandlerFactory;

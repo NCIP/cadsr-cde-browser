@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.service;
 
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.*;
+import gov.nih.nci.ncicb.cadsr.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;

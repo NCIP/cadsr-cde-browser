@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 
 import java.sql.Timestamp;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
@@ -49,7 +49,7 @@ public class CDECartItemTransferObject implements CDECartItem {
   }
 
   public boolean equals(Object obj) {
-    if (((CDECartItem) obj).getId().equals(id)) {
+    if (((CDECartItem)obj).getId().equals(id)) {
       return true;
     }
     else {

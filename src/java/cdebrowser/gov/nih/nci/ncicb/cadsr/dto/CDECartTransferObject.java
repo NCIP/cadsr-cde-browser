@@ -1,7 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECart;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 
 import java.util.Collection;
 import java.util.Set;
