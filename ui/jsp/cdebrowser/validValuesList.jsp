@@ -344,6 +344,52 @@ function listChanged(urlInfo) {
 <%
   }
 %>
+
+
+<br>
+<table cellpadding="0" cellspacing="0" width="80%" align="center" >
+  <tr>
+    <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
+  </tr>
+  <tr>
+    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+  </tr>
+</table>
+<table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Document Name</th>
+    <th class="OraTableColumnHeader">Document Type</th>
+    <th class="OraTableColumnHeader">Document Text</th>
+    <th class="OraTableColumnHeader">URL</th>
+  </tr>
+<%
+  ReferenceDocument rd;
+  List refDocs = de.getValueDomain().getRefereceDocs();
+  int numberOfDocs = refDocs.size();
+  if (numberOfDocs > 0) {
+    for (int i=0;i<numberOfDocs; i++) {
+      rd = (ReferenceDocument)refDocs.get(i);
+%>
+      <tr class="OraTabledata">
+        <td class="OraFieldText"><%=rd.getDocName()%> </td>
+        <td class="OraFieldText"><%=rd.getDocType()%> </td>
+        <td class="OraFieldText"><%=rd.getDocText()%> </td>
+        <td class="OraFieldText"><%=rd.getUrl()%> </td>
+      </tr>
+<%
+    }
+  }
+  else {
+%>
+       <tr class="OraTabledata">
+         <td colspan="4">There are no reference documents for the value domain.</td>
+       </tr>
+<%
+  }
+%>
+</table>
+
+
 </form>
 
 <%@ include file="../common/common_bottom_border.jsp"%>

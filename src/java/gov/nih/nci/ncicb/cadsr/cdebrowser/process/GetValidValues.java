@@ -6,7 +6,9 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.dto.ConceptDerivationRuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.html.HTMLPageScroller;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
@@ -151,6 +153,11 @@ public class GetValidValues extends BasePersistingProcess {
         de.getValueDomain().setConceptDerivationRule(rule);
       }
 
+      if (de.getValueDomain().getRefereceDocs() == null) {
+        ValueDomainDAO vdDAO = daoFactory.getValueDomainDAO();
+        de.getValueDomain().setReferenceDocs(vdDAO.getAllReferenceDocuments(de.getValueDomain().getVdIdseq(), null));
+      }
+      
       ValidValueHandler validValueHandler =
         (ValidValueHandler) HandlerFactory.getHandler(ValidValue.class);
       vvList =
