@@ -17,4 +17,8 @@ public interface Question extends AdminComponent  {
 
   public DataElement getDataElement();
   public void setDataElement(DataElement dataElement);
+
+  public int getDisplayOrder();
+  public void setDisplayOrder(int dispOrder);
+  
 }
