@@ -27,6 +27,7 @@
       validate="false"
       >
       <forward name="showSuccess" path="/formbuilder/formCopy.jsp"/>
+      <forward name="failure" path="/formSearchAction.do"/>
     </action>
 
     <action name="copyForm" path="/formCopyAction" parameter="method"
