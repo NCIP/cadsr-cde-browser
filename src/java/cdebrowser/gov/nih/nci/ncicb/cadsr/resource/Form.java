@@ -10,6 +10,7 @@ public interface Form extends AdminComponent  {
   public void setFormType (String formType);
 
   public Protocol getProtocol();
+  public void setProtocol(Protocol protocol);
 
   public String getProtoIdseq();
   public void setProtoIdseq(String idseq);

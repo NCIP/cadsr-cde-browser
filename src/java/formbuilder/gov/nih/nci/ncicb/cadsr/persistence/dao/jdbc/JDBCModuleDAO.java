@@ -1,10 +1,15 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
 import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCQuestionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
@@ -13,6 +18,7 @@ import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.object.StoredProcedure;
+import org.springframework.jdbc.object.SqlUpdate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,10 +52,10 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
     return query.execute(moduleId);
   }
 
-  public int createModuleComponent(Module sourceModule)
+  public int createModuleComponentStoredProc(Module sourceModule)
     throws DMLException {
-    CreateModule createMod = new CreateModule(this.getDataSource());
-    Map out = createMod.execute(sourceModule);
+    CreateModuleStoredProc createMod = new CreateModuleStoredProc(this.getDataSource());
+    Map out = createMod.executeCreateCommand(sourceModule);
 
     String returnCode = (String) out.get("p_return_code");
     String returnDesc = (String) out.get("p_return_desc");
@@ -57,9 +63,40 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
     if (returnCode.equals("OK")) {
       return 1;
     }
-    else // for p_return_code is not OK
-     {
+    else{
+      // for p_return_code is not OK
       throw new DMLException(returnDesc);
+    }
+  }
+
+  public int createModuleComponent(Module sourceModule)
+    throws DMLException {
+
+    // check if the user has the privilege to create module
+    boolean create = 
+      this.hasCreate(sourceModule.getCreatedBy(), "QUEST_CONTENT", 
+        sourceModule.getConteIdseq());
+    if (!create) {
+      new DMLException("The user does not have the create module privilege.");
+    }
+
+    InsertQuestContent  insertQuestContent  = 
+      new InsertQuestContent (this.getDataSource());
+    String qcIdseq = generateGUID(); 
+    int res = insertQuestContent.createContent(sourceModule, qcIdseq);
+    if (res != 1) {
+      throw new DMLException("Did not succeed creating question.");
+    }
+    
+    InsertQuestRec  insertQuestRec  = 
+      new InsertQuestRec (this.getDataSource());
+    String qrIdseq = generateGUID();
+    int resRec = insertQuestRec.createContent(sourceModule, qcIdseq, qrIdseq);
+    if (resRec == 1) {
+      return 1;
+    }
+    else {
+      throw new DMLException("Did not succeed creating form question relationship record.");
     }
   }
 
@@ -71,18 +108,16 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
 
   public int deleteModule(String moduleId) throws DMLException {
     DeleteModule deleteMod = new DeleteModule(this.getDataSource());
-    Map out = deleteMod.execute(moduleId);
+    Map out = deleteMod.executeDeleteCommand(moduleId);
 
     String returnCode = (String) out.get("p_return_code");
     String returnDesc = (String) out.get("p_return_desc");
 
-    if (StringUtils.isInteger(returnCode))
-    // checks for null, and non positive integer value
-     {
+    if (returnCode.equals("OK")) {
       return 1;
     }
-    else // for p_return_code >= 0
-     {
+    else{
+      // for p_return_code is not OK
       throw new DMLException(returnDesc);
     }
   }
@@ -117,9 +152,61 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
 
     int res;
 
+    /*
     try {
       res = test.deleteModule("99CD59C5-B206-3FA4-E034-080020C9C0E0");
       System.out.println("\n*****Delete Module Result 1: " + res);
+    }
+    catch (DMLException de) {
+      System.out.println("******Printing DMLException*******");
+      de.printStackTrace();
+      System.out.println("******Finishing printing DMLException*******");
+    }
+    */
+    /*
+    try {
+      Module module = new ModuleTransferObject();
+      Form form = new FormTransferObject();
+      form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
+      module.setForm(form);
+      module.setVersion(new Float(2.31));
+      module.setPreferredName("test_mod_pref_name");
+      module.setLongName("Test Mod Long Name");
+      module.setPreferredDefinition("Test Mod pref def");
+      module.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+      form.setProtocol(new ProtocolTransferObject(""));
+      module.setAslName("DRAFT NEW");
+      module.setCreatedBy("Hyun");
+      module.setDisplayOrder(4);
+   
+      res = test.createModuleComponentStoredProc(module);
+      System.out.println("\n*****Create Module Result 1: " + res);
+    }
+    catch (DMLException de) {
+      System.out.println("******Printing DMLException*******");
+      de.printStackTrace();
+      System.out.println("******Finishing printing DMLException*******");
+    }
+    */
+
+    try {
+      // for each test, change preferred name and qcIdseq
+      Module module = new ModuleTransferObject();
+      Form form = new FormTransferObject();
+      form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
+      module.setForm(form);
+      module.setVersion(new Float(2.32));
+      module.setPreferredName("test_mod_pref_name_new 999");
+      module.setLongName("Test Mod Long Name new new 99");
+      module.setPreferredDefinition("Test Mod pref def");
+      module.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+      form.setProtocol(new ProtocolTransferObject(""));
+      module.setAslName("DRAFT NEW");
+      module.setCreatedBy("Hyun Kim");
+      module.setDisplayOrder(4);
+
+      res = test.createModuleComponent(module);
+      System.out.println("\n*****Create Module Result 1: " + res);
     }
     catch (DMLException de) {
       System.out.println("******Printing DMLException*******");
@@ -140,7 +227,7 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       compile();
     }
 
-    public Map execute(String modIdseq) {
+    public Map executeDeleteCommand(String modIdseq) {
       Map in = new HashMap();
       in.put("p_mod_idseq", modIdseq);
 
@@ -153,8 +240,8 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
   /**
    * Inner class that accesses database to create a module.
    */
-  private class CreateModule extends StoredProcedure {
-    public CreateModule(DataSource ds) {
+  private class CreateModuleStoredProc extends StoredProcedure {
+    public CreateModuleStoredProc(DataSource ds) {
       super(ds, "sbrext_form_builder_pkg.ins_module");
       declareParameter(new SqlParameter("p_crf_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("p_version", Types.VARCHAR));
@@ -174,7 +261,7 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       compile();
     }
 
-    public Map execute(Module sm) {
+    public Map executeCreateCommand(Module sm) {
       Map in = new HashMap();
       in.put("p_crf_idseq", sm.getForm().getFormIdseq());
       in.put("p_version", sm.getVersion().toString());
@@ -190,6 +277,94 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       Map out = execute(in);
 
       return out;
+    }
+  }
+
+  /**
+   * Inner class that accesses database to create a module in the
+   * quest_contents_ext table.
+   */
+ private class InsertQuestContent extends SqlUpdate {
+    public InsertQuestContent(DataSource ds) {
+      // super(ds, contentInsertSql);
+      String contentInsertSql = 
+      " INSERT INTO quest_contents_ext " + 
+      " (qc_idseq, version, preferred_name, long_name, preferred_definition, " + 
+      "  conte_idseq, proto_idseq, asl_name, created_by, qtl_name ) " +
+      " VALUES " +
+      " (?, ?, ?, ?, ?, ?, ?, ?, ?, 'MODULE') ";
+
+      this.setDataSource(ds);
+      this.setSql(contentInsertSql);
+      declareParameter(new SqlParameter("p_qc_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_version", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_preferred_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_long_name", Types.VARCHAR));
+      declareParameter(
+        new SqlParameter("p_preferred_definition", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_conte_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_proto_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_asl_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_created_by", Types.VARCHAR));
+      compile();
+    }
+    protected int createContent (Module sm, String qcIdseq) 
+    {
+      Object [] obj = 
+        new Object[]
+          {qcIdseq, 
+           sm.getVersion().toString(),
+           generatePreferredName(sm.getLongName()),
+           sm.getLongName(),
+           sm.getPreferredDefinition(),
+           sm.getConteIdseq(),
+           sm.getForm().getProtoIdseq(),
+           sm.getAslName(),
+           sm.getCreatedBy()
+          };
+      
+	    int res = update(obj);
+      return res;
+		  //return update(new Object[] {new Integer(custid)} ); 
+    }
+  }
+
+  /**
+   * Inner class that accesses database to create a relationship
+   * record in the qc_recs_ext table.
+   */
+ private class InsertQuestRec extends SqlUpdate {
+    public InsertQuestRec(DataSource ds) {
+      String questRecInsertSql = 
+      " INSERT INTO qc_recs_ext " +
+      " (qr_idseq, p_qc_idseq, c_qc_idseq, display_order, rl_name, created_by)" +  
+      " VALUES " + 
+      "( ?, ?, ?, ?, ?, ? )";
+
+      this.setDataSource(ds);
+      this.setSql(questRecInsertSql);
+      declareParameter(new SqlParameter("p_qr_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_qc_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("c_qc_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_pisplay_order", Types.INTEGER));
+      declareParameter(new SqlParameter("p_rl_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_created_by", Types.VARCHAR));
+      compile();
+    }
+    protected int createContent (Module sm, String qcIdseq, String qrIdseq) 
+    {
+      Object [] obj = 
+        new Object[]
+          {qrIdseq, 
+           sm.getForm().getFormIdseq(),
+           qcIdseq,
+           new Integer(sm.getDisplayOrder()),
+           "FORM_MODULE",
+           sm.getCreatedBy()
+          };
+      
+	    int res = update(obj);
+      return res;
     }
   }
 
