@@ -33,16 +33,21 @@
       <jsp:param name="label" value="Create&nbsp;Module"/>
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
-
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.form.module.create"/>
+      </td>
+    </tr>  
+</table> 
 
     <logic:present name="<%=FormConstants.CRF%>">
       <html:form action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_MODULE%>'
-        >
-      <%@ include file="/formbuilder/createModule_inc.jsp"%>    
+        >  
       <%@ include file="showMessages.jsp" %>
       <html:hidden property="<%= FormConstants.DISPLAY_ORDER %>"/>
 
-      <table cellspacing="2" cellpadding="3" border="0" width="100%">
+      <table align="center" cellspacing="2" cellpadding="3" border="0" width="100%">
         <tr>                                                      
           <td class="OraFieldtitlebold" nowrap>
               <bean:message key="cadsr.formbuilder.module.name" /></td> 

@@ -8,7 +8,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
-
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -156,7 +156,7 @@ public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
     }
 
     setSessionObject(request, CRF, createdForm);
-    request.setAttribute(FORM_ID_SEQ, createdForm.getFormIdseq());
+    request.setAttribute("showCached", CaDSRConstants.YES);
 
     saveMessage("cadsr.formbuilder.form.create.success", request);
 

@@ -245,6 +245,12 @@ function newSearch(){
 <input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
 
 <table width="100%" align="center">
+  <tr>
+    <td colspan="4" align="left" class="AbbreviatedText">Note: Enter/select search criteria and click search button to initiate search. The wildcard character is *. Click the Help button above for more information on CDEBrowser.</td>
+ </tr>
+</table>
+
+<table width="100%" align="center">
  
  <tr>
     <td class="OraFieldtitlebold" nowrap>Search For:</td>
@@ -338,13 +344,7 @@ function newSearch(){
     <td class="OraFieldText"><%=desb.getSearchInList()%></td>
  </tr>
  
-  <tr>
-  
-  </tr>
-    <td colspan="4" nowrap align="left" class="AbbreviatedText">Please enter/select search criteria and click Data Elements Search button to initiate search.</td>
-  <tr>
-    <td colspan="4" nowrap align="left" class="AbbreviatedText">Wildcard character for search is *</td>
- </tr>
+
 <%
   if ("".equals(src)) {
 %>

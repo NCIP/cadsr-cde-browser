@@ -70,6 +70,13 @@ function clearProtocol() {
         <jsp:param name="label" value="Edit&nbsp;Module"/>
         <jsp:param name="urlPrefix" value=""/>
       </jsp:include>
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.form.module.edit"/>
+      </td>
+    </tr>  
+</table>       
       <%@ include file="/formbuilder/moduleEditButton_inc.jsp"%>
         <%@ include file="showMessages.jsp" %>
     
@@ -289,14 +296,16 @@ function clearProtocol() {
               <tr class="OraTabledata">
                 <td>
                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">                  
+                      <logic:present name="question" property="dataElement">
                        <tr class="OraTabledata">
                           <td class="OraFieldtitleboldLeftAlign" nowrap align="left">
-                            <bean:message key="cadsr.formbuilder.question.workflow" />
+                            <bean:message key="cadsr.formbuilder.cde.workflow" />
                           </td>                      
                           <td class="OraFieldText">
-                             : <bean:write name="question" property="aslName"/>
+                             : <bean:write name="question" property="dataElement.aslName"/>
                           </td>
-                      </tr>                        
+                      </tr> 
+                      </logic:present>
                       <logic:present name="question" property="dataElement">
                       <logic:present name="question" property="dataElement.longName">
                         <tr class="OraTabledata">

@@ -86,6 +86,13 @@ function gotoClassificationsLOV() {
   </logic:present>
   **/
 -->
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.search.page"/>
+      </td>
+    </tr>  
+</table>    
   <table cellspacing="2" cellpadding="3" border="0" width="100%">
   
     <tr>
@@ -158,14 +165,7 @@ function gotoClassificationsLOV() {
 	</html:select> 
         </td>        
     </tr>        
-    <tr>    
-      <td colspan="4" nowrap align="left" class="AbbreviatedText">
-        <bean:message key="cadsr.formbuilder.search.message"/>
-      </td>
-    </tr>     
-  <tr>
-    <td colspan="4" nowrap align="left" class="AbbreviatedText">Wildcard character for search is *</td>
- </tr>
+   
  <TR>
 
     <td  colspan="4" align="center" nowrap >

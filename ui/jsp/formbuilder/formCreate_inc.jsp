@@ -33,6 +33,13 @@ function clearProtocol() {
     "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&chkContext=true&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
 
 %>
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.form.create"/>
+      </td>
+    </tr>  
+</table> 
 
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >
     <tr >
@@ -54,7 +61,7 @@ function clearProtocol() {
       </td>
     </tr>         
     <tr>
-      <td class="OraHeaderSubSub" width="100%">New Form Details</td>
+      <td class="OraHeaderSubSub" width="100%">Form Details</td>
     </tr>
     <tr>
       <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>

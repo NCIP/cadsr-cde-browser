@@ -103,7 +103,13 @@ function details(linkParms ){
   <jsp:param name="label" value="Add&nbsp;Question"/>
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
-
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.form.module.addquestion"/>
+      </td>
+    </tr>  
+</table> 
 <html:form action='<%= "/addQuestion?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.ADD_QUESTION %>' 
   onsubmit="validate(this)">
 

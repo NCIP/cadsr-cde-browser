@@ -65,6 +65,14 @@ function clearProtocol() {
         <jsp:param name="label" value="Edit&nbsp;Form"/>
         <jsp:param name="urlPrefix" value=""/>
       </jsp:include>
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.form.edit"/>
+      </td>
+    </tr>  
+</table> 
+
       <%@ include file="/formbuilder/editButton_inc.jsp"%>
     <%@ include file="showMessages.jsp" %>
 

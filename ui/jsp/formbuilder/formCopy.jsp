@@ -66,7 +66,7 @@ function clearProtocol() {
           </td>
         </tr>         
         <tr>
-          <td class="OraHeaderSubSub" width="100%">New Form Header</td>
+          <td class="OraHeaderSubSub" width="100%">Form Header</td>
         </tr>
         <tr>
           <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
@@ -189,7 +189,7 @@ function clearProtocol() {
           </td>
         </tr>         
         <tr>
-          <td class="OraHeaderSubSub" width="100%">New Form Details</td>
+          <td class="OraHeaderSubSub" width="100%">Form Details</td>
         </tr>
         <tr>
           <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
