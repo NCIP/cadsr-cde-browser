@@ -22,6 +22,9 @@ public interface FormConstants
 
     public static final String PROTOCOLS_LOV_PROTO_LONG_NAME = "SEARCH";
     public static final String PROTOCOLS_LOV_CONTEXT_CHECK = "chkContext";
+    
+    public static final String CSI_NAME = "txtClassSchemeItem";
+    public static final String CS_CSI_ID = "jspClassification";
 
 
 }

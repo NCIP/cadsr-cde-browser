@@ -76,7 +76,8 @@ public interface FormBuilderServiceRemote {
     String username,
     String password) throws DMLException, RemoteException;
 
-  public Collection getContextsForUserAndRole(
+ /** public Collection getContextsForUserAndRole(
     String username,
     String role) throws DMLException, RemoteException;
+    **/
 }

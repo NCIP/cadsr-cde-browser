@@ -119,6 +119,7 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
+     setInitLookupValues(request);
     return mapping.findForward(DEFAULT_HOME);
   }
 }

@@ -7,7 +7,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Module;
 import java.util.Collection;
 
 
-public interface FormBuilderServiceLocal extends FormBuilderServiceRemote {
+public interface FormBuilderServiceLocal  {
   public Collection getAllForms(
     String formLongName,
     String protocolIdSeq,
@@ -73,7 +73,8 @@ public interface FormBuilderServiceLocal extends FormBuilderServiceRemote {
     String username,
     String password) throws DMLException;
 
-  public Collection getContextsForUserAndRole(
+/**  public Collection getContextsForUserAndRole(
     String username,
     String role) throws DMLException;
+    **/
 }

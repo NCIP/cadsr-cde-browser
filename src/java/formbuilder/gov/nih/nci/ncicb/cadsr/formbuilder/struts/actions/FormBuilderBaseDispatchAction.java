@@ -1,10 +1,14 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceStartupException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
@@ -17,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * Base DispatchAction for all formbuilder DispatchActions
  * 
  */
-public class FormBuilderBaseDispatchAction extends DispatchAction implements FormConstants,NavigationConstants
+public class FormBuilderBaseDispatchAction extends DispatchAction implements FormConstants,NavigationConstants,PersistenceContants
 {
 
  public static final String DEFAULT_METHOD_NAME= SEND_HOME_METHOD;
@@ -76,6 +80,36 @@ public class FormBuilderBaseDispatchAction extends DispatchAction implements For
     svcDelegate = svcFactory.createService();
     return svcDelegate;
   }
+    /**
+      * Initializes the lookupvalues(contexts,categories,workflows into session)
+      * @return ActionForward
+      * @throws Exception
+     */  
+  protected void setInitLookupValues (
+    HttpServletRequest req)
+    {
+      Object obj = getSessionObject(req,ALL_CONTEXTS);
+      if(obj==null)
+      {
+          Collection contexts = getFormBuilderService().getAllContexts();
+          setSessionObject(req,ALL_CONTEXTS,contexts);          
+      }
+     
+      obj = getSessionObject(req,ALL_WORKFLOWS);
+      if(obj==null)
+      {
+        Collection contexts = getFormBuilderService().getStatusesForACType(FORM_ADMIN_COMPONENT_TYPE);
+        setSessionObject(req,ALL_WORKFLOWS,contexts);
+      }
+
+      obj = getSessionObject(req,ALL_FORM_CATEGORIES);
+      if(obj==null)
+      {
+        Collection contexts = getFormBuilderService().getAllFormCategories();
+        setSessionObject(req,ALL_FORM_CATEGORIES,contexts);
+      }
+
+    }
     /**
       * Sets default method name if no method is specified
       * @return ActionForward

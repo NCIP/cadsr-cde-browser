@@ -156,16 +156,16 @@ public class FormBuilderEJB extends SessionBeanAdapter
   }
 
   public Collection getAllContexts() throws DMLException {
-    return null;
+    return daoFactory.getContextDAO().getAllContexts();  
   }
 
   public Collection getAllFormCategories() throws DMLException {
-    return null;
+    return daoFactory.getFormCategoryDAO().getAllCategories();
   }
 
   public Collection getStatusesForACType(String acType)
     throws DMLException {
-    return null;
+    return daoFactory.getWorkFlowStatusDAO().getWorkFlowStatusesForACType(acType);
   }
 
   public boolean validateUser(
@@ -174,9 +174,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return false;
     }
 
-  public Collection getContextsForUserAndRole(
+ /** public Collection getContextsForUserAndRole(
     String username,
     String role) throws DMLException {
     return null;
     }
+    **/
 }

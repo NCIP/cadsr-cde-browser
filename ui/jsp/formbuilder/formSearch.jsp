@@ -48,7 +48,7 @@ function clearProtocol() {
 
 <P>&nbsp;</P>
 <html:form action="/formAction.do">
-  <table cellspacing="2" cellpadding="3" border="0">
+  <table cellspacing="2" cellpadding="3" border="0" width="100%">
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
         <td class="OraFieldText" nowrap>
@@ -75,20 +75,23 @@ function clearProtocol() {
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
         <td class="OraFieldText" nowrap>
         <html:select property="<%=FormConstants.CONTEXT_ID_SEQ%>">
-		<html:options collection="<%=FormConstants.CONTEXTS%>" property="conteIdseq" labelProperty="name"/>
+		<html:options collection="<%=FormConstants.ALL_CONTEXTS%>" 
+		   property="conteIdseq" labelProperty="name" />
 	</html:select>
-          <input type="text" name="<%=FormConstants.CONTEXT_ID_SEQ%>" value="" size ="20"> 
         </td>
-
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="<%=FormConstants.WORKFLOW%>" value="" size ="20"> 
+        <html:select property="<%=FormConstants.WORKFLOW%>">
+		<html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
+	</html:select>        
         </td>      
     </tr>
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="<%=FormConstants.CATEGORY_NAME%>" value="" size ="20"> 
+        <html:select property="<%=FormConstants.CATEGORY_NAME%>">
+		<html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> \
+	</html:select> 
         </td>
 
 

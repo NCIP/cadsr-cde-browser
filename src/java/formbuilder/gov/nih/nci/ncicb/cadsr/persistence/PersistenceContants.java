@@ -18,4 +18,8 @@ public interface PersistenceContants {
   public static final String JDBC_CONTEXT_DAO = "jdbcContextDAO";
   public static final String JDBC_FORM_CATEGORY_DAO = "jdbcFormCategoryDAO";
   public static final String JDBC_WK_FLOW_STATUS_DAO = "jdbcWkFlowStatusDAO";
+
+
+
+  public static final String FORM_ADMIN_COMPONENT_TYPE="QUEST_CONTENT";
 }

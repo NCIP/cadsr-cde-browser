@@ -58,18 +58,18 @@ public interface FormBuilderServiceDelegate {
     String modulePK,
     Collection validValues) throws FormBuilderException;
 
-  public Collection getAllContexts() throws FormBuilderException;
+  public Collection getAllContexts();
 
-  public Collection getAllFormCategories() throws FormBuilderException;
+  public Collection getAllFormCategories();
 
-  public Collection getStatusesForACType(String acType)
-    throws FormBuilderException;
+  public Collection getStatusesForACType(String acType);
 
   public boolean validateUser(
     String username,
     String password) throws FormBuilderException;
 
-  public Collection getContextsForUserAndRole(
+ /** public Collection getContextsForUserAndRole(
     String username,
     String role) throws FormBuilderException;
+    **/
 }
