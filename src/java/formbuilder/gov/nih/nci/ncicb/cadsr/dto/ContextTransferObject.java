@@ -3,16 +3,16 @@ import gov.nih.nci.ncicb.cadsr.resource.Context;
 
 public class ContextTransferObject extends AdminComponentTransferObject implements Context
 {
-  private String name = null;
   private String conteIdSeq = null;
+  private String name = null;
 
   public ContextTransferObject()
   {
   }
 
-  public ContextTransferObject(String newName)
+  public ContextTransferObject(String name)
   {
-	 name=newName;
+	  this.name = name;
   }
 
   public String getName()
@@ -20,9 +20,9 @@ public class ContextTransferObject extends AdminComponentTransferObject implemen
     return name;
   }
 
-  public void setName(String newName)
+  public void setName(String name)
   {
-    name = newName;
+    this.name = name;
   }
 
   public String getConteIdseq() {
@@ -73,7 +73,7 @@ public class ContextTransferObject extends AdminComponentTransferObject implemen
     StringBuffer sb = new StringBuffer();
     sb.append(OBJ_SEPARATOR_START);
     sb.append(super.toString());
-    sb.append(ATTR_SEPARATOR+"name="+getName());
+    sb.append(ATTR_SEPARATOR+"longName="+getLongName());
     sb.append(ATTR_SEPARATOR+"conteIdSeq="+getConteIdseq());   
     sb.append(OBJ_SEPARATOR_END);
     sb.toString();

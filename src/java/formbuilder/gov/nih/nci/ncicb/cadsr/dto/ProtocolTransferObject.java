@@ -4,11 +4,10 @@ import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 
 public class ProtocolTransferObject extends AdminComponentTransferObject implements Protocol 
 {
-  private String name;
   
-  public ProtocolTransferObject(String newName)
+  public ProtocolTransferObject(String longName)
   {
-      name=newName;
+      setLongName(longName);
   }
 
   public String getProtoIdseq()
@@ -70,7 +69,7 @@ public class ProtocolTransferObject extends AdminComponentTransferObject impleme
     StringBuffer sb = new StringBuffer();
     sb.append(OBJ_SEPARATOR_START);
     sb.append(super.toString());
-    sb.append(ATTR_SEPARATOR+"name="+name);  
+    sb.append(ATTR_SEPARATOR+"longName="+getLongName());  
     sb.append(OBJ_SEPARATOR_END);  
     return sb.toString();
   }

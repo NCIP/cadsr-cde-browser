@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
@@ -12,11 +13,13 @@ import java.util.List;
 
 public class QuestionTransferObject extends AdminComponentTransferObject
   implements Question {
-  private Form crf;
-  private Module module;
-  private List validValues;
-  private String quesIdseq;
-  private int dispOrder;
+  protected Form crf;
+  protected Module module;
+  protected List validValues;
+  protected String quesIdseq;
+  protected int displayOrder;
+  protected String deIdseq;
+  protected DataElement dataElement;
 
   public QuestionTransferObject() {
   }
@@ -54,29 +57,50 @@ public class QuestionTransferObject extends AdminComponentTransferObject
   }
 
   public int getDisplayOrder() {
-    return dispOrder;
+    return displayOrder;
   }
 
   public void setDisplayOrder(int dispOrder) {
-    this.dispOrder = dispOrder;
+    this.displayOrder = dispOrder;
   }
-  public String toString()
-  {
+
+  public DataElement getDataElement() {
+    return dataElement;
+  }
+
+  public void setDataElement(DataElement dataElement) {
+    this.dataElement = dataElement;
+  }
+
+  public String toString() {
     StringBuffer sb = new StringBuffer();
     sb.append(OBJ_SEPARATOR_START);
     sb.append(super.toString());
-    sb.append(ATTR_SEPARATOR+"quesIdseq="+getQuesIdseq()); 
-    sb.append(ATTR_SEPARATOR+"displayOrder="+getDisplayOrder()); 
+    sb.append(ATTR_SEPARATOR + "quesIdseq=" + getQuesIdseq());
+    sb.append(ATTR_SEPARATOR + "displayOrder=" + getDisplayOrder());
+
     List validValues = getValidValues();
-    if(validValues!=null) 
-    {      
-      sb.append(ATTR_SEPARATOR+"ValidValues="+validValues);
-    } 
-    else
-    {
-      sb.append(ATTR_SEPARATOR+"ValidValues="+null);
-    }    
-    sb.append(OBJ_SEPARATOR_END);  
+
+    if (validValues != null) {
+      sb.append(ATTR_SEPARATOR + "ValidValues=" + validValues);
+    }
+    else {
+      sb.append(ATTR_SEPARATOR + "ValidValues=" + null);
+    }
+
+    sb.append(OBJ_SEPARATOR_END);
+
+    DataElement dataElement = getDataElement();
+
+    if (dataElement != null) {
+      sb.append(ATTR_SEPARATOR + "DataElement=" + dataElement);
+    }
+    else {
+      sb.append(ATTR_SEPARATOR + "DataElement=" + null);
+    }
+
+    sb.append(OBJ_SEPARATOR_END);
+
     return sb.toString();
-  }    
+  }
 }
