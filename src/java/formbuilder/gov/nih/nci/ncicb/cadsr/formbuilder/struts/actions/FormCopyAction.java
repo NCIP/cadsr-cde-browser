@@ -78,8 +78,10 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
     catch (FormBuilderException exp)
       {
 	if (log.isDebugEnabled()) {
-	  log.debug("Exception on getFormToEdit =  " + exp);
+	  log.error("Exception on getFormToCopy =  " + exp);
 	}
+	saveError(exp.getErrorCode(), request);
+	return mapping.findForward("failure");
       }
     return mapping.findForward("showSuccess");
   }

@@ -187,8 +187,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     }
     catch (FormBuilderException exp) {
       if (log.isDebugEnabled()) {
-        log.debug("Exception on displayCDECart =  " + exp);
+        log.error("Exception on displayCDECart =  " + exp);
       }
+      saveError(exp.getErrorCode(), request);
     }
 
     return mapping.findForward(SUCCESS);
@@ -232,8 +233,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     }
     catch (FormBuilderException exp) {
       if (log.isDebugEnabled()) {
-        log.debug("Exception on addItems =  " + exp);
+        log.error("Exception on addItems =  " + exp);
       }
+      saveError(exp.getErrorCode(), request);
     }
 
     return mapping.findForward("addDeleteSuccess");
@@ -286,8 +288,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     }
     catch (FormBuilderException exp) {
       if (log.isDebugEnabled()) {
-        log.debug("Exception on removeItems =  " + exp);
+        log.error("Exception on removeItems =  " + exp);
       }
+      saveError(exp.getErrorCode(), request);
     }
 
     return mapping.findForward("addDeleteSuccess");

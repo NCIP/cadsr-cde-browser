@@ -62,8 +62,9 @@ public class ManageClassificationsAction extends FormBuilderSecureBaseDispatchAc
             setSessionObject(request, CLASSIFICATIONS, classifications);
         } catch (FormBuilderException exp) {
             if (log.isDebugEnabled()) {
-                log.debug("Exception on getAssociations =  " + exp);
+                log.error("Exception on getClassifications =  " + exp);
             }
+	    saveError(exp.getErrorCode(), request);
         }
 
         return mapping.findForward("success");
@@ -103,7 +104,7 @@ public class ManageClassificationsAction extends FormBuilderSecureBaseDispatchAc
             setSessionObject(request, CLASSIFICATIONS, classifications);
         } catch (FormBuilderException exp) {
             if (log.isDebugEnabled()) {
-                log.debug("Exception on getAssociations =  " + exp);
+                log.debug("Exception on addClassification =  " + exp);
             }
 	    saveError(exp.getErrorCode(), request);
 	    saveError("cadsr.formbuilder.classification.add.failure", request);
@@ -134,7 +135,7 @@ public class ManageClassificationsAction extends FormBuilderSecureBaseDispatchAc
             setSessionObject(request, CLASSIFICATIONS, classifications);
         } catch (FormBuilderException exp) {
             if (log.isDebugEnabled()) {
-                log.debug("Exception on getAssociations =  " + exp);
+                log.error("Exception on removeClassification =  " + exp);
             }
 	    saveError(exp.getErrorCode(), request);
 	    return mapping.findForward("failure");

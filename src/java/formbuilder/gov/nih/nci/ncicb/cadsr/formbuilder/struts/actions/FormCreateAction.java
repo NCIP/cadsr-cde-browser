@@ -147,7 +147,7 @@ public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
       createdForm = service.createForm(newForm, newFormHdrInst, newFormFtrInst);
     } catch (FormBuilderException exp) {
         if (log.isDebugEnabled()) {
-          log.debug("Exception on creating Form and its header and footer " +
+          log.error("Exception on creating Form and its header and footer " +
             "instructions =  " + exp);
         }
 	saveError(exp.getErrorCode(), request);
