@@ -393,7 +393,7 @@ function clearProtocol() {
                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">                                                                                 
                       <tr><td colspan="2">
                       <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                      <logic:present name="question" property="dataElement">                 
+                
                         <tr class="OraTabledata">
                             <td width="26%" class="OraTableColumnHeader" nowrap align="left">
                               <bean:message key="cadsr.formbuilder.form.instruction"/> 
@@ -404,7 +404,7 @@ function clearProtocol() {
                                 </html:textarea>                               
                             </td>
                         </tr> 
-                      
+                      <logic:present name="question" property="dataElement">                       
                        <tr class="OraTabledata">
                           <td width="26%" class="OraTableColumnHeader" nowrap align="left">
                             <bean:message key="cadsr.formbuilder.cde.workflow" />
@@ -413,8 +413,7 @@ function clearProtocol() {
                               <bean:write name="question" property="dataElement.aslName"/>
                           </td>
                       </tr> 
-                      </logic:present>
-                      <logic:present name="question" property="dataElement">
+
                       <logic:present name="question" property="dataElement.longName">
                         <tr class="OraTabledata">
                             <td width="26%" class="OraTableColumnHeader" nowrap align="left" >
