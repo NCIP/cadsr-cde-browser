@@ -63,7 +63,8 @@
       <form-property name="moduleQuestions" type="java.lang.String[]"/>
       <form-property name="addDeletedQuestionIdSeq" type="java.lang.String"/>
       <form-property name="validValueIndex" type="java.lang.Integer"/>
-      <form-property name="addAvailableValidValueIndex" type="java.lang.Integer"/>      
+      <form-property name="addAvailableValidValueIndex" type="java.lang.Integer"/> 
+      <form-property name="selectedSubsetIndex" type="java.lang.Integer"/> 
     </form-bean>       
     <form-bean name="displayCartForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.CDECartFormBean"/>
@@ -221,8 +222,12 @@
       input="/formbuilder/moduleEdit.jsp"
       >
       <forward name="moduleEdit" path="/formbuilder/moduleEdit.jsp" redirect="false"/>
+      <forward name="viewSubsets" path="/formbuilder/subsettedVDs.jsp" redirect="false"/>
+      <forward name="useSubsets" path="/formbuilder/useSubsettedVDs.jsp" redirect="false"/>
+      <forward name="saveSubsets" path="/formbuilder/formEdit.jsp" redirect="false"/>
       <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
       <forward name="failure" path="/formbuilder/moduleEdit.jsp" redirect="false"/>
+      
     </action> 
     <action name="moduleEditForm" path="/cancelModuleEditAction" parameter="method"
       scope="session"

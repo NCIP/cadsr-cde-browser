@@ -388,6 +388,16 @@
     <name>labelMapping</name>
     <required>true</required>
     <rtexprvalue>true</rtexprvalue>
-    </attribute>     
+    </attribute>    
+    <attribute>
+    <name>ascendingText</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>   
+    <attribute>
+    <name>descendingText</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>       
   </tag>  
 </taglib>
