@@ -53,10 +53,11 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
 	CDECart sessionCart =
 	    (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 
-  Form crf = (Form)getSessionObject(request, CRF);
-  Module module = (Module)getSessionObject(request, MODULE);
-	List questions = module.getQuestions();
+	Form crf = (Form)getSessionObject(request, CRF);
+	Module module = (Module)getSessionObject(request, MODULE);
 
+	List questions = module.getQuestions();
+	
 	Collection col = sessionCart.getDataElements();
 	ArrayList al = new ArrayList(col);
 
@@ -66,19 +67,22 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
 	    DataElement de = (DataElement)((CDECartItem)al.get(Integer.parseInt(selectedItems[i]))).getItem();
 	    
 	    Question q = new QuestionTransferObject();
-      module.setForm(crf);
-      q.setModule(module);
+	    module.setForm(crf);
+	    q.setModule(module);
 	    List values = de.getValueDomain().getValidValues();
 	    List newValidValues = DTOTransformer.toFormValidValueList(values,q);
+	    
+	    // set temporary ID used used to discriminate questions in editModule. This is is discarded before going to the DB.
+	    q.setQuesIdseq(new Date().getTime() + "" + i);
 
 	    q.setValidValues(newValidValues);
 	    q.setDataElement(de);
 	    q.setLongName(de.getLongName());
-      q.setVersion(crf.getVersion());
-      q.setAslName(crf.getAslName());
-      q.setPreferredDefinition(de.getPreferredDefinition());
-      q.setContext(crf.getContext());
-
+	    q.setVersion(crf.getVersion());
+	    q.setAslName(crf.getAslName());
+	    q.setPreferredDefinition(de.getPreferredDefinition());
+	    q.setContext(crf.getContext());
+	    
 	    q.setDisplayOrder(displayOrder);
 	    
 	    if(displayOrder < questions.size()) {
@@ -88,7 +92,7 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
 	    } else {
 		questions.add(q);
 	    }
-
+	    
 	}
 
 	return mapping.findForward("success");
