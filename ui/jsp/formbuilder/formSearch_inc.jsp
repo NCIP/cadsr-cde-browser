@@ -64,7 +64,7 @@ function clearForm() {
         </td>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
         <td class="OraFieldText" nowrap>
-        <html:select styleClass = "Dropdown" property="<%=FormConstants.WORKFLOW%>">
+        <html:select styleClass = "FreeDropdown" property="<%=FormConstants.WORKFLOW%>">
         	<html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
 		<html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
 	</html:select>        

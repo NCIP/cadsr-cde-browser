@@ -1,14 +1,32 @@
+
 <%@ page contentType="text/html;charset=windows-1252"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@page import="oracle.clex.process.jsp.GetInfoBean " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants"%>
+
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+
+<jsp:useBean id="currInfoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
+<jsp:setProperty name="currInfoBean" property="session" value="<%=session %>"/>
+
 <%
+  
+  List cachedDeList = null;
+  try{
+  	cachedDeList = (List)currInfoBean.getInfo(ProcessConstants.ALL_DATA_ELEMENTS);
+  }
+  catch(Exception ex){}
+  if(cachedDeList!=null)
+    pageContext.setAttribute("resultsPresent",new Boolean("true"));
+  
   CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
   String pageId = request.getParameter("PageId");
   String treeURL;
   String browserURL;
   String extraURLParams = "";
   String treeParams = "";
-
   String src = request.getParameter("src");
   if (src != null) {
     String modIndex = request.getParameter("moduleIndex");
@@ -45,7 +63,12 @@ CDE Browser
     <frameset rows="15%,*">
        <frame src="cdebrowserCommon_html/tree_hdr.html" frameborder="0" name="tree_header" scrolling = "no">
        <frame src="<%=treeURL%>" frameborder="0" name="tree">
-    </frameset>
-    <frame src="<%=browserURL%>" frameborder="0" name="body">
+    </frameset>    
+          <logic:present name="resultsPresent">
+            <frame src="<%="dataElementsSearch.jsp?performQuery=cached"%>" frameborder="0" name="body">
+          </logic:present>
+          <logic:notPresent name="resultsPresent">
+            <frame src="<%=browserURL%>" frameborder="0" name="body">
+          </logic:notPresent>      
   </frameset>
 </HTML>

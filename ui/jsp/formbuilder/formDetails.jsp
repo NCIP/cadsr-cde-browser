@@ -105,7 +105,15 @@
           <td  class="OraFieldText">
             <bean:write name="<%=FormConstants.CRF%>" property="formType"/>
           </td>
-        </tr>          
+        </tr> 
+        <tr class="OraTabledata">
+          <td class="TableRowPromptTextLeft"  width="20%">
+            <bean:message key="cadsr.formbuilder.question.version"/>
+          </td>                
+          <td  class="OraFieldText">
+            <bean:write  name="<%=FormConstants.CRF%>" property="version"/> 
+          </td>
+        </tr>                
       </table>
       <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         <tr >

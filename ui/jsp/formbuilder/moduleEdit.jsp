@@ -130,6 +130,7 @@ function clearProtocol() {
               <html:text size="100" property="<%=FormConstants.MODULE_LONG_NAME%>"></html:text>
             </td>
           </tr>
+          <!--TODO moved to 1.3 release
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="20%">
               <bean:message key="cadsr.formbuilder.moduleinstruction.name"/>
@@ -138,6 +139,7 @@ function clearProtocol() {
               <html:text size="100" property="<%=FormConstants.MODULE_INSTRUCTION_LONG_NAME%>"></html:text>
             </td>
           </tr>
+          -->
         </table>
         
       <table cellpadding="0" cellspacing="0" width="80%" align="center">

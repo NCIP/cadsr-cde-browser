@@ -35,6 +35,7 @@ import java.text.DateFormat;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -145,6 +146,22 @@ public class GetDataElements extends BasePersistingProcess {
     try {
       myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
       userSession = myRequest.getSession(false);
+      // This integrates cdebrowser with other application outside mvcframework
+      //stores the session keys that need to copied when session reset
+      String currentServiceString =
+        (String)userSession.getAttribute(ProcessConstants.SERVICENAME);
+      SessionUtils.addGlobalSessionKey(userSession,ProcessConstants.SERVICENAME);
+      SessionUtils.addGlobalSessionKey(userSession,"InfoTablePool");
+      if(currentServiceString!=null)
+        SessionUtils.addGlobalSessionKey(userSession,currentServiceString+".service");
+      SessionUtils.addGlobalSessionKey(userSession,"IsSessionReset");
+      SessionUtils.addGlobalSessionKey(userSession,"maintb");
+      SessionUtils.addGlobalSessionKey(userSession,"subtab0");
+      SessionUtils.addGlobalSessionKey(userSession,"MultipartRequest");
+      SessionUtils.addGlobalSessionKey(userSession,"RequestedValues");
+
+      
+      
       System.out.println(
         getCurrentTimestamp() +
         "- GetDataElements process started successfully ");

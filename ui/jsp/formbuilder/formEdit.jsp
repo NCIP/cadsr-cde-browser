@@ -150,7 +150,7 @@ function clearProtocol() {
               <bean:message key="cadsr.formbuilder.form.workflow" />
             </td>
             <td class="OraFieldText" nowrap>
-            <html:select styleClass = ".FreeDropdown" property="<%=FormConstants.WORKFLOW%>">        	
+            <html:select styleClass = "FreeDropdown" property="<%=FormConstants.WORKFLOW%>">        	
                <html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
               </html:select>        
             </td>   
@@ -172,7 +172,13 @@ function clearProtocol() {
                   <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
                </html:select> 
               </td>        
-          </tr>       
+          </tr> 
+          <tr class="OraTabledata" >
+              <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.question.version" /></td>  
+              <td class="OraFieldText" nowrap>
+                <bean:write  name="<%=FormConstants.CRF%>" property="version"/> 
+              </td>        
+          </tr>             
         </table>
       <table cellpadding="0" cellspacing="0" width="80%" align="center">
         <tr >

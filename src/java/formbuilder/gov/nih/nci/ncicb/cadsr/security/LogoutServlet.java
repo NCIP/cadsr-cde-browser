@@ -1,9 +1,11 @@
 package gov.nih.nci.ncicb.cadsr.security;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,32 +32,38 @@ public class LogoutServlet extends HttpServlet
     if(logoutHome!=null)
     {
       HttpSession session = request.getSession();
-      Collection keys = (Collection)session.getAttribute(CaDSRConstants.GLOBAL_SESSION_KEYS);
-      Map objMap = new HashMap();
-      if(keys!=null)
+      if(session!=null)
       {
-        Iterator it  = keys.iterator();
-        while(it.hasNext())
+        Set keys = (Set)session.getAttribute(CaDSRConstants.GLOBAL_SESSION_KEYS);
+        Map objMap = new HashMap();
+        if(keys!=null)
         {
-          String key = (String)it.next();
-          Object obj = session.getAttribute(key);
-          objMap.put(obj,key);
+          Iterator it  = keys.iterator();
+          while(it.hasNext())
+          {
+            String key = (String)it.next();
+            Object obj = session.getAttribute(key);
+            objMap.put(obj,key);
+          }
+        }
+        //cleanSession(session);
+       session.invalidate();
+       session = request.getSession(true);
+        if(keys!=null)
+        {
+          Iterator keyIt  = keys.iterator();
+          while(keyIt.hasNext())
+          {
+            String key = (String)keyIt.next();
+            Object obj = objMap.get(key);
+            session.setAttribute(key,obj);
+          }
         }
       }
-      session.invalidate();
-      
-      HttpSession newSession = request.getSession(true);
-      if(keys!=null)
+      else
       {
-        Iterator keyIt  = keys.iterator();
-        while(keyIt.hasNext())
-        {
-          String key = (String)keyIt.next();
-          Object obj = objMap.get(key);
-          newSession.setAttribute(key,obj);
-        }
+        session = request.getSession(true); 
       }
-
       RequestDispatcher dispacher = request.getRequestDispatcher("/"+logoutHome);
       dispacher.forward(request,response);
       
@@ -67,5 +75,12 @@ public class LogoutServlet extends HttpServlet
         response.getWriter().flush();
       }
   }
- 
+ private void cleanSession(HttpSession session)
+ {
+    Enumeration  keys = session.getAttributeNames();
+    for (; keys.hasMoreElements() ;) {
+         String key = (String)keys.nextElement();
+         session.removeAttribute(key);
+     }
+ }
 }

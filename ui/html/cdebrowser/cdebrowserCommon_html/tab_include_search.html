@@ -2,6 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@page import="oracle.clex.process.jsp.GetInfoBean " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants"%>
+
 
 <SCRIPT LANGUAGE="JavaScript">
 <!--
@@ -21,6 +25,10 @@ function subTabClicked(tabNum,urlParams) {
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/newWinJS.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/helpWinJS.js"></SCRIPT>
 
+<%
+
+  pageContext.setAttribute("deList",deList);
+%>
 <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
   <tr>
 
@@ -38,7 +46,7 @@ function subTabClicked(tabNum,urlParams) {
         <logic:present name="nciUser">
 		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= "formCDECartAction.do?method=displayCDECart" + urlParams %>" TARGET="_top"><IMG SRC="i/cde_cart.gif" alt="CDE Cart" border=0 ></A><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
         </logic:present>
-          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= tib.getHomeURL() %>" TARGET="_top"><IMG SRC="i/icon_home.gif" alt="Home" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font></TD>
+        <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= tib.getHomeURL() %>" TARGET="_top"><IMG SRC="i/icon_home.gif" alt="Home" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font></TD>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= "formSearchAction.do"%>" TARGET="_top"><IMG SRC="i/formicon.gif" alt="FormBuilder" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;FormBuilder&nbsp;</font></TD>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('cdebrowserCommon_html/cdeBrowserHelp.html','helpWin',700,600)"><IMG SRC="i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
 		<logic:present name="nciUser">
