@@ -9,20 +9,22 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
-import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.object.StoredProcedure;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import javax.sql.DataSource;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 
 public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
   public JDBCModuleDAO(ServiceLocator locator) {
@@ -46,18 +48,17 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
 
   public int createModuleComponent(Module sourceModule)
     throws DMLException {
-    
     CreateModule createMod = new CreateModule(this.getDataSource());
     Map out = createMod.execute(sourceModule);
 
-    String returnCode = (String)out.get("p_return_code");
-    String returnDesc = (String)out.get("p_return_desc");
-    if (returnCode.equals("OK")) 
-    {
+    String returnCode = (String) out.get("p_return_code");
+    String returnDesc = (String) out.get("p_return_desc");
+
+    if (returnCode.equals("OK")) {
       return 1;
     }
     else // for p_return_code is not OK
-    {
+     {
       throw new DMLException(returnDesc);
     }
   }
@@ -72,16 +73,58 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
     DeleteModule deleteMod = new DeleteModule(this.getDataSource());
     Map out = deleteMod.execute(moduleId);
 
-    String returnCode = (String)out.get("p_return_code");
-    String returnDesc = (String)out.get("p_return_desc");
-    if (StringUtils.isInteger(returnCode))  
+    String returnCode = (String) out.get("p_return_code");
+    String returnDesc = (String) out.get("p_return_desc");
+
+    if (StringUtils.isInteger(returnCode))
     // checks for null, and non positive integer value
-    {
+     {
       return 1;
     }
     else // for p_return_code >= 0
-    {
+     {
       throw new DMLException(returnDesc);
+    }
+  }
+
+  public int updateDisplayOrder(
+    String moduleId,
+    int newDisplayOrder) throws DMLException {
+    return 0;
+  }
+
+  public Module addQuestion(
+    String moduleId,
+    Question question) throws DMLException {
+    return null;
+  }
+
+  public int updateModuleLongName(
+    String moduleId,
+    String newLongName) throws DMLException {
+    return 0;
+  }
+
+  public static void main(String[] args) {
+    ServiceLocator locator = new SimpleServiceLocator();
+
+    JDBCModuleDAO test = new JDBCModuleDAO(locator);
+
+    //System.out.println(
+    //  test.getQuestionsInAModule("99CD59C5-B13D-3FA4-E034-080020C9C0E0"));
+    System.out.println(
+      test.getQuestionsInAModule("99CD59C5-A9C3-3FA4-E034-080020C9C0E0"));
+
+    int res;
+
+    try {
+      res = test.deleteModule("99CD59C5-B206-3FA4-E034-080020C9C0E0");
+      System.out.println("\n*****Delete Module Result 1: " + res);
+    }
+    catch (DMLException de) {
+      System.out.println("******Printing DMLException*******");
+      de.printStackTrace();
+      System.out.println("******Finishing printing DMLException*******");
     }
   }
 
@@ -96,14 +139,13 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
       compile();
     }
-              
-    public Map execute(
-      String modIdseq) {
-      
+
+    public Map execute(String modIdseq) {
       Map in = new HashMap();
       in.put("p_mod_idseq", modIdseq);
 
       Map out = execute(in);
+
       return out;
     }
   }
@@ -118,7 +160,8 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       declareParameter(new SqlParameter("p_version", Types.VARCHAR));
       declareParameter(new SqlParameter("p_preferred_name", Types.VARCHAR));
       declareParameter(new SqlParameter("p_long_name", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_preferred_definition", Types.VARCHAR));
+      declareParameter(
+        new SqlParameter("p_preferred_definition", Types.VARCHAR));
       declareParameter(new SqlParameter("p_conte_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("p_proto_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("p_asl_name", Types.VARCHAR));
@@ -130,10 +173,8 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
       compile();
     }
-              
-    public Map execute(
-      Module sm) {
-      
+
+    public Map execute(Module sm) {
       Map in = new HashMap();
       in.put("p_crf_idseq", sm.getForm().getFormIdseq());
       in.put("p_version", sm.getVersion().toString());
@@ -147,54 +188,9 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       in.put("p_display_order", new Integer(sm.getDisplayOrder()));
 
       Map out = execute(in);
+
       return out;
     }
-  }
-
-  public int updateDisplayOrder(
-    String moduleId,
-    int newDisplayOrder) throws DMLException {
-    return 0;
-  }
-
-  public static void main(String[] args) {
-    ServiceLocator locator = new SimpleServiceLocator();
-
-    JDBCModuleDAO test = new JDBCModuleDAO(locator);
-
-    //System.out.println(
-    //  test.getQuestionsInAModule("99CD59C5-B13D-3FA4-E034-080020C9C0E0"));
-    System.out.println(
-      test.getQuestionsInAModule("99CD59C5-A9C3-3FA4-E034-080020C9C0E0"));
-
-
-    int res;
-    try {
-      res = test.deleteModule("99CD59C5-B206-3FA4-E034-080020C9C0E0");
-      System.out.println("\n*****Delete Module Result 1: " + res);
-    }
-    catch (DMLException de)
-    {
-      System.out.println("******Printing DMLException*******");
-      de.printStackTrace();
-      System.out.println("******Finishing printing DMLException*******");
-    }
-
-
-
-
-  }
-
-  public Module addQuestion(
-    String moduleId,
-    Question question) throws DMLException {
-    return null;
-  }
-
-  public int updateModuleLongName(
-    String moduleId,
-    String newLongName) throws DMLException {
-    return 0;
   }
 
   /**
