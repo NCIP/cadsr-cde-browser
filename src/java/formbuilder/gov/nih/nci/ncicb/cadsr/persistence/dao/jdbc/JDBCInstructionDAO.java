@@ -6,7 +6,8 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 
 
-public abstract class JDBCInstructionDAO extends JDBCBaseDAO implements InstructionDAO {
+public abstract class JDBCInstructionDAO extends JDBCBaseDAO
+  implements InstructionDAO {
   public JDBCInstructionDAO(ServiceLocator locator) {
     super(locator);
   }
