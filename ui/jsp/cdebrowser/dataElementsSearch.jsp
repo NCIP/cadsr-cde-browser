@@ -13,10 +13,12 @@
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 
-
-
 <%
+  DESearchQueryBuilder queryBuilder = (DESearchQueryBuilder) infoBean.getInfo(ProcessConstants.DE_SEARCH_QUERY_BUILDER);
   pageContext.getSession().setAttribute("showCached",new Boolean("true"));
+  if (queryBuilder != null)
+  pageContext.getSession().setAttribute(ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR, 
+  queryBuilder.getSortColumnHeader());
   DataElementSearchBean desb = (DataElementSearchBean)infoBean.getInfo("desb");
   List deList = (List)infoBean.getInfo(ProcessConstants.ALL_DATA_ELEMENTS);
   HTMLPageScroller myScroller = (HTMLPageScroller)infoBean.getInfo(
@@ -447,12 +449,45 @@ function newSearch(){
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader"><input type="checkbox" name="deList" value="yes" onClick="ToggleAll(this)"/></th>
-    <th class="OraTableColumnHeader">Long Name</th>
+  	 <th class="OraTableColumnHeader" nowrap>
+ 		        <cde:sortableColumnHeader
+              sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
+              ascendingImageUrl="i/up.gif"
+              descendingImageUrl="i/down.gif" 
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+     	   	  columnHeader="Long Name" 
+              orderParamId="sortOrder" 
+     	   	  sortFieldId="sortField"
+       	     sortFieldValue = "long_name"
+            />   
+    </th>
     <th class="OraTableColumnHeader">Document Text</th>
     <th class="OraTableColumnHeader">Owned By</th>
     <th class="OraTableColumnHeader">Used By Context</th>
-    <th class="OraTableColumnHeader">Registration Status</th>
-    <th class="OraTableColumnHeader">Workflow Status</th>
+    <th class="OraTableColumnHeader" nowrap>
+ 	      <cde:sortableColumnHeader
+              sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
+              ascendingImageUrl="i/up.gif"
+              descendingImageUrl="i/down.gif" 
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+     	   	  columnHeader="Registration Status" 
+              orderParamId="sortOrder" 
+     	   	  sortFieldId="sortField"
+       	     sortFieldValue = "registration_status"
+            />   
+    </th>
+    <th class="OraTableColumnHeader" nowrap>
+ 	      <cde:sortableColumnHeader
+              sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
+              ascendingImageUrl="i/up.gif"
+              descendingImageUrl="i/down.gif" 
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+     	   	  columnHeader="Workflow Status" 
+              orderParamId="sortOrder" 
+     	   	  sortFieldId="sortField"
+       	     sortFieldValue = "asl_name"
+            />   
+    </th>
     <th class="OraTableColumnHeader">Public ID</th>
     <th class="OraTableColumnHeader">Version</th>
   </tr>
