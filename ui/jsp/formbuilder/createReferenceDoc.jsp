@@ -62,9 +62,7 @@
         
       
             <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-
-               
-               <tr class="OraTabledata">
+              <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="20%" nowrap>
                     Name 
                   </td>
@@ -111,7 +109,7 @@
                <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="20%" nowrap>
                     Description 
-                  </td
+                  </td>
                   <td  class="OraFieldText" size="80%" nowrap>
                     <html:text size="80" property="docText">
                        maxlength="<%= Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH)%>">
