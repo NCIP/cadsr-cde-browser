@@ -23,4 +23,8 @@ public interface Classification
    public String getClassSchemeItemType();
    public void setClassSchemeItemType(String aClassSchemeItemType);
 
+   public String getClassSchemePublicId();
+   public void setClassSchemePublicId(String publicId);
+
+
 }
