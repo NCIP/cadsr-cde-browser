@@ -198,9 +198,9 @@
                     <bean:message key="cadsr.formbuilder.form.context"/> 
                   </td>
                   <td class="OraFieldText" nowrap>
-                    <html:select styleClass="Dropdown" property="contextIdSeq">               
-                      <html:options collection="<%=CaDSRConstants.USER_CONTEXTS%>" property="conteIdseq" labelProperty="name"/>
-                    </html:select>
+              <html:select styleClass="Dropdown" name="refDoc" property="context.conteIdseq" >               
+                <html:options collection="<%=CaDSRConstants.USER_CONTEXTS%>" property="conteIdseq" labelProperty="name"/>
+              </html:select>
                   </td>
                </tr>  
                <tr class="OraTabledata">
@@ -208,7 +208,7 @@
                     URL 
                   </td>
                   <td class="OraFieldText" nowrap>
-                    <html:text size="80" property="url">
+                    <html:text size="80"  name="refDoc" property="url">
                        maxlength="<%= Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH)%>">
                     </html:text>
                   </td>
@@ -219,7 +219,7 @@
                   </td
                   <td class="OraFieldText" nowrap>
                   <td  class="OraFieldText" size="80%" nowrap>
-                    <html:text size="80" property="description">
+                    <html:text size="80" name="refDoc" property="docText">
                        maxlength="<%= Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH)%>">
                    </html:text>
                   </td>

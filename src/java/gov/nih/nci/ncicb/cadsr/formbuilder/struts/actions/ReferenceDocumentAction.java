@@ -64,12 +64,8 @@ public class ReferenceDocumentAction extends FormBuilderSecureBaseDispatchAction
     //refForm.reset(mapping,request);
 
     Form crf = (Form) getSessionObject(request, CRF);
+    //populate the refForm
       
-    if(crf.getRefereceDocs()==null)
-        crf.setReferenceDocs(getDummyRefDocs());
-    else if (crf.getRefereceDocs().isEmpty())
-        crf.setReferenceDocs(getDummyRefDocs());
-
     return mapping.findForward(SUCCESS);
 
   }
