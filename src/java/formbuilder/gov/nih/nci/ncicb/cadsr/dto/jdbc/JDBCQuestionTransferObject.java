@@ -20,5 +20,6 @@ public class JDBCQuestionTransferObject extends QuestionTransferObject
     dataElementTransferObject.setLongName(rs.getString(17)); // DE_LONG_NAME
     dataElementTransferObject.setCDEId(Integer.toString(rs.getInt(18)));
     setDataElement(dataElementTransferObject); 
+    dataElementTransferObject.setVdIdseq(rs.getString(19));
   }
 }
