@@ -19,7 +19,7 @@
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<FONT color="white" size=-2 face=arial>Version 2.1.1</FONT>
+<FONT color="white" size=-2 face=arial>Version 3.0 Build 1</FONT>
 </TD>
 
 </TR>
