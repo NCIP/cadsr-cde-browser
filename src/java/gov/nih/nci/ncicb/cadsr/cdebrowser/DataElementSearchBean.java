@@ -192,9 +192,11 @@ public class DataElementSearchBean extends Object {
     String[] selectedIndex,
     DBUtil dbUtil) {
     String where = " ACTL_NAME = 'DATAELEMENT' AND ASL_NAME != 'RETIRED DELETED' ";
-    String exludeWhere = getExcludeWhereCluase("ASL_NAME",aslNameExcludeList);
-    if(exludeWhere!=null)
-      where = where + " and "+ exludeWhere;
+    if(!StringUtils.isArrayWithEmptyStrings(aslNameExcludeList))
+     {
+       String exludeWhere = getExcludeWhereCluase("ASL_NAME",aslNameExcludeList);
+       where = where + " and "+ exludeWhere;
+     }
     workflowList =
       GenericPopListBean.buildList(
         "sbrext.ASL_ACTL_EXT", "ASL_NAME", "ASL_NAME", selectedIndex,
@@ -209,7 +211,11 @@ public class DataElementSearchBean extends Object {
   public void buildRegStatusList(
     String[] selectedIndex,
     DBUtil dbUtil) {
-    String where = getExcludeWhereCluase("REGISTRATION_STATUS",regStatusExcludeList);
+    String where = null;
+    if(!StringUtils.isArrayWithEmptyStrings(aslNameExcludeList))
+     {
+      where = getExcludeWhereCluase("REGISTRATION_STATUS",regStatusExcludeList);
+     }
     regStatusList =
       GenericPopListBean.buildList(
         "sbr.REG_STATUS_LOV", "REGISTRATION_STATUS", "REGISTRATION_STATUS", selectedIndex,
@@ -481,6 +487,8 @@ public class DataElementSearchBean extends Object {
         dbUtil.getConnectionFromContainer(params.getSbrDSN());
         buildWorkflowFullList(aslNameExcludeList, dbUtil);
         buildRegStatusFullList(regStatusExcludeList,dbUtil);
+        buildWorkflowList(aslName, dbUtil);
+        buildRegStatusList(regStatus,dbUtil);
       }
       catch (Exception ex) {
         ex.printStackTrace();
