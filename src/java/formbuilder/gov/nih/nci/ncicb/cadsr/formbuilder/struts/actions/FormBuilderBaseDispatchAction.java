@@ -158,10 +158,10 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
 	    if ((formIdSeq != null) && (formIdSeq.length() > 0)) {
 		crf = service.getFormDetails(formIdSeq);
 		setSessionObject(request, CRF, crf);
-	    } 
-	}
-	else {
-	    setSessionObject(request, CRF, null);
+	    } else {
+		crf = (Form)getSessionObject(request, CRF);
+	    } // end of else
+	    
 	}
 
 	return crf;
