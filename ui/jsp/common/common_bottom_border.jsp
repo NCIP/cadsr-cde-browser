@@ -1,7 +1,7 @@
 <TABLE width=100% cellspacing=0 cellpadding=0 border=0>
 <TR>
-<TD valign=bottom width=99%><img src="i/bottom_shade.gif" height=6 width="100%"></TD>
-<TD valign=bottom width="1%" align=right><IMG src="i/bottomblueright.gif"></TD>
+<TD valign=bottom width=99%><html:img page="/i/bottom_shade.gif" height="6" width="100%" /></TD>
+<TD valign=bottom width="1%" align=right><html:img page="/i/bottomblueright.gif" /></TD>
 </TR>
 </TABLE>
 <TABLE width=100% cellspacing=0 cellpadding=0 bgcolor="#336699" border=0>
@@ -24,6 +24,6 @@
 
 </TR>
 <TR>
-<TD colspan=2><IMG src="i/bottom_middle.gif" height=6 width="100%"></TD>
+<TD colspan=2><html:img page="/i/bottom_middle.gif" height="6" width="100%" /></TD>
 </TR>
 </TABLE>

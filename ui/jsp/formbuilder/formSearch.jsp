@@ -18,7 +18,7 @@
 <HEAD>
 <TITLE>Welcome to Form Builder..</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
-<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=urlPrefix%>cdebrowserCommon_html/blaf.css">
+<LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
 
 </HEAD>
 <BODY topmargin=0 bgcolor="#ffffff">

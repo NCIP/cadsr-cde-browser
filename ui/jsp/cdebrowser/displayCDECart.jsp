@@ -13,7 +13,7 @@
 <HEAD>
 <TITLE>Display CDE Cart</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
-<LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/checkbox.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
 <!--
@@ -77,11 +77,11 @@ function retrieveSavedItems() {
   String downloadXMLURL = "javascript:fileDownloadWin('downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
   String downloadExcelURL = "javascript:fileDownloadWin('downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
 %>
-<jsp:include page="common/common_header_jsp_inc.jsp" flush="true">
+<jsp:include page="../common/common_header_jsp_inc.jsp" flush="true">
   <jsp:param name="loginDestination" value="formCDECartAction.do?method=displayCDECart"/>
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
-<jsp:include page="common/tab_inc.jsp" flush="true">
+<jsp:include page="../common/tab_inc.jsp" flush="true">
   <jsp:param name="label" value="CDE&nbsp;Cart"/>
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
@@ -94,7 +94,7 @@ function retrieveSavedItems() {
     </tr>  
 </table> 
 
-<%@ include file="formbuilder/showMessages.jsp" %>
+<%@ include file="../formbuilder/showMessages.jsp" %>
 <html:form action="/cdeCartAction.do">
 <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
 <logic:present name="<%=CaDSRConstants.CDE_CART%>">
@@ -214,12 +214,12 @@ function retrieveSavedItems() {
 <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
   <tr >
     <td>
-      <a href='<%= "cdeBrowse.jsp?PageId=DataElementsGroup" %>'><html:img src="i/add_more_data_elements.gif" border="0" alt="Add more data elements"/></a>
+      <html:link page="/cdeBrowse.jsp?PageId=DataElementsGroup"><html:img page="/i/add_more_data_elements.gif" border="0" alt="Add more data elements" /></html:link>
     </td>
   </tr>
 </table>    
 
 </html:form>
-<%@ include file="common/common_bottom_border.jsp"%>
+<%@ include file="../common/common_bottom_border.jsp"%>
 </body>
 </html>

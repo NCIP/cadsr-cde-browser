@@ -13,7 +13,7 @@
   <HEAD>
     <TITLE>Add Classifications</TITLE>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
-    <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
+    <LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff">
     <%   

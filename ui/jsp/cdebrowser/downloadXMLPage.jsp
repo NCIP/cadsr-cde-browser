@@ -5,14 +5,14 @@
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
-<LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
 <TITLE>XML Download</TITLE>
 </HEAD>
 <BODY onLoad= "goPage()">
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function goPage() {
-  document.location.href = "search?xmlDownload=9&PageId=DataElementsGroup&src=" + "<%= source %>";
+  document.location.href ="<%=request.getContextPath()%>" + "/search?xmlDownload=9&PageId=DataElementsGroup&src=" + "<%= source %>";
   
 }
 function closeWindow() {

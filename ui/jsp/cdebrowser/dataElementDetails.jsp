@@ -28,7 +28,7 @@
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=WINDOWS-1252">
-<LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
 <TITLE>
 Data Element Details
 </TITLE>
@@ -214,7 +214,7 @@ function goPage(pageInfo) {
 
 </form>
 
-<%@ include file="common/common_bottom_border.jsp"%>
+<%@ include file="../common/common_bottom_border.jsp"%>
 
 </BODY>
 </HTML>

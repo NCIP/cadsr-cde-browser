@@ -14,7 +14,7 @@
 <HEAD>
 <TITLE>Display CDE Cart</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
-<LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
+<LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/checkbox.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
 <!--

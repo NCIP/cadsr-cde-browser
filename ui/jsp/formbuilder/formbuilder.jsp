@@ -20,7 +20,7 @@
   String treeURL;
   String formbuilderURL;
     treeURL = 
-      "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree"+
+      "common/WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree"+
       "&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" + 
       TreeConstants.FORM_SEARCH_TREE + ";" +
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
@@ -47,7 +47,7 @@ FormBuilder
   
   <frameset cols="25%,*">
     <frameset rows="15%,*">
-       <html:frame page="/cdebrowserCommon_html/tree_hdr.html"
+       <html:frame page="/common/tree_hdr.html"
               name="requestMap"
               frameborder="0"
               frameName="tree_header"

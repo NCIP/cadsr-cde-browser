@@ -1,9 +1,8 @@
-
 <html>
 <head>
 <title>Login</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 if (parent.frames[1]) 
@@ -18,7 +17,7 @@ if (parent.frames[1])
 
     <td align="left" nowrap>
 
-    <img src=i/graphic6.gif border=0>
+    <html:img page="/i/graphic6.gif" border="0" />
     </td>
 
     <td align=right valign=top colspan=2 nowrap>

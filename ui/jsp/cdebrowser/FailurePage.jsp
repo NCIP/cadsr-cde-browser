@@ -36,7 +36,7 @@
 <HEAD>
 <META HTTP-EQUIV="Expires" CONTENT="Thu, 01 Dec 1994 16:00:00 GMT">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
-<LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
 </HEAD>
 <BODY topmargin="0">
 <%@ include  file="cdebrowserCommon_html/tab_include_lov.html" %>
@@ -86,7 +86,7 @@
 </TABLE>
 </FORM>
 </CENTER>
-<%@ include file="common/common_bottom_border.jsp"%>
+<%@ include file="../common/common_bottom_border.jsp"%>
 
 </BODY>
 </HTML>

@@ -1,4 +1,4 @@
-<%@ page import="java.io.*"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><%@ page import="java.io.*"%>
 <%@ page import="java.util.*" %>
 <%@ page import="gov.nih.nci.ncicb.webtree.*" %>
 
@@ -87,7 +87,7 @@
 
           <td  class="searchResult" width=120>
             <a class="link" target="tree" href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&amp;treeAction=highlight#<%=java.net.URLEncoder.encode(myId)%>">
-              <img src="skins/<%=skin%>/images/TreeHighlightUP.gif" width="97" height="18" border="0" alt="highlight this term in the data tree">
+              <html:img page="/common/skins/<%=skin%>/images/TreeHighlightUP.gif" width="97" height="18" border="0" alt="highlight this term in the data tree" />
             </a>
           </td>
         </tr>                             

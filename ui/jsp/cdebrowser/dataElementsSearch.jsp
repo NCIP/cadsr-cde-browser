@@ -32,17 +32,20 @@
   //String latestVer = desb.getSearchStr(6);
   String latestVer = desb.getLatVersionInd();
   String paramIdseq = (String)infoBean.getInfo("P_IDSEQ");
+  //release 3.0, change URL for cde browser jsp
+  String contextPath = request.getContextPath() + "/cdebrowser";
+  
   if (paramIdseq == null) paramIdseq = "";
   String paramType = (String)infoBean.getInfo("P_PARAM_TYPE");
   if (paramType == null) paramType = "";
   String templateURL = "search?viewTemplate=9&templateIdseq="+paramIdseq+pageUrl;
   //String downloadXMLURL = "javascript:newDownloadWin('search?xmlDownload=9"+pageUrl+"','downloadWin',10,10)";
-  String downloadXMLURL = "javascript:fileDownloadWin('downloadXMLPage.jsp?src=deSearch','xmlWin',500,200)";
+  String downloadXMLURL = "javascript:fileDownloadWin('" + contextPath + "/downloadXMLPage.jsp?src=deSearch','xmlWin',500,200)";
   //String downloadExcelURL = "javascript:newDownloadWin('search?excelDownload=9"+pageUrl+"','downloadWin',10,10)";
-  String downloadExcelURL = "javascript:fileDownloadWin('downloadExcelPage.jsp?src=deSearch','excelWin',500,200)";
-  String valueDomainLOVUrl= "javascript:newWin('search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain"+pageUrl+"','vdLOV',700,600)";
-  String decLOVUrl= "javascript:newWin('search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept"+pageUrl+"','decLOV',700,600)";
-  String csLOVUrl= "javascript:newBrowserWin('search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
+  String downloadExcelURL = "javascript:fileDownloadWin('" + contextPath + "/downloadExcelPage.jsp?src=deSearch','excelWin',500,200)";
+  String valueDomainLOVUrl= "javascript:newWin('" + request.getContextPath() + "/search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain"+pageUrl+"','vdLOV',700,600)";
+  String decLOVUrl= "javascript:newWin('" + request.getContextPath() + "/search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept"+pageUrl+"','decLOV',700,600)";
+  String csLOVUrl= "javascript:newBrowserWin('" + request.getContextPath() + "/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
 
   
   String txtDataElementConcept = desb.getDECPrefName();
@@ -68,7 +71,7 @@
   String modIndex = "";
   String quesIndex = "";
   String urlParams = "";
-  String newSearchURL = "cdeBrowse.jsp?performQuery=newSearch&PageId=DataElementsGroup";
+  String newSearchURL = request.getContextPath() + "/cdeBrowse.jsp?performQuery=newSearch&PageId=DataElementsGroup";
   
   if ((src != null) && (!"".equals(src))) {
     modIndex = request.getParameter("moduleIndex");
@@ -85,7 +88,7 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=WINDOWS-1252">
 <META HTTP-EQUIV="Expires" CONTENT="Thu, 01 Dec 1994 16:00:00 GMT">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
-<LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
 <TITLE>
 Data Elements Search - Data Elements
 </TITLE>
@@ -294,7 +297,7 @@ function newSearch(){
              class="LOVField"
              size ="18"
       >
-      &nbsp;<a href="<%=valueDomainLOVUrl%>"><img src="i/search_light.gif" border="0" alt="Search for Value Domains"></a>&nbsp;
+      &nbsp;<a href="<%=valueDomainLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Value Domains" /></a>&nbsp;
       <a href="javascript:clearValueDomain()"><i>Clear</i></a>
       <input type="hidden" name="jspValueDomain" value="<%=desb.getVdIdseq()%>" >
     </td>
@@ -314,7 +317,7 @@ function newSearch(){
              class="LOVField"
              size ="18"
       >
-      &nbsp;<a href="<%=decLOVUrl%>"><img src="i/search_light.gif" border="0" alt="Search for Data Element Concepts"></a>&nbsp;
+      &nbsp;<a href="<%=decLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Data Element Concepts" /></a>&nbsp;
       <a href="javascript:clearDataElementConcept()"><i>Clear</i></a>
       <input type="hidden" name="jspDataElementConcept" value="<%=desb.getDecIdseq()%>" >
     </td>
@@ -327,7 +330,7 @@ function newSearch(){
              class="LOVField"
              size ="18"
       >
-      &nbsp;<a href="<%=csLOVUrl%>"><img src="i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
+      &nbsp;<a href="<%=csLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Classification Scheme Items" /></a>&nbsp;
       <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
       <input type="hidden" name="jspClassification" value="<%=desb.getCsCsiIdseq()%>" >
     </td>
@@ -385,9 +388,9 @@ function newSearch(){
  <TR>
    <td colspan="4" align="center" nowrap> 
    <table >
-    <td colspan="1" align="center" nowrap><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a></td>
-    <td colspan="1" align="center" nowrap><a href="javascript:clearForm()"><img src=i/clear.gif border=0></a></td>
-    <td colspan="1" align="center" nowrap><a href="javascript:newSearch()"><img src=i/newSearchButton.gif border=0></a></td>
+    <td colspan="1" align="center" nowrap><a href="javascript:submitForm()"><html:img page="/i/SearchDataElements.gif" border="0" /></a></td>
+    <td colspan="1" align="center" nowrap><a href="javascript:clearForm()"><html:img page="/i/clear.gif" border="0" /></a></td>
+    <td colspan="1" align="center" nowrap><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a></td>
     </table>
     </td>
  </TR>
@@ -396,10 +399,10 @@ function newSearch(){
   else {
 %>
   <TR>
-    <td  nowrap colspan="4" align="center"><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a>
-    &nbsp;<a href="javascript:clearForm()"><img src=i/clear.gif border=0></a>
-    &nbsp; <a href="javascript:newSearch()"><img src=i/newSearchButton.gif border=0></a>
-    &nbsp;<a href="javascript:done()"><img src=i/backButton.gif border=0></a>
+    <td  nowrap colspan="4" align="center"><a href="javascript:submitForm()"><html:img page="/i/SearchDataElements.gif" border="0" /></a>
+    &nbsp;<a href="javascript:clearForm()"><html:img page="/i/clear.gif" border="0" /></a>
+    &nbsp; <a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a>
+    &nbsp;<a href="javascript:done()"><html:img page="/i/backButton.gif" border="0" /></a>
     &nbsp;
     </td>
  </TR>
@@ -430,13 +433,13 @@ function newSearch(){
     </td>
   </tr>
   <tr>
-    <td width="100%" nowrap><img height=2 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%" nowrap><html:img height="2" page="/i/beigedot.gif" width="99%" align="top" border="0" /> </td>
   </tr>
 </table>
 
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
     <tr>
-      <td align="left"><a href="javascript:updateCart()"><img src="i/AddToCDECart.gif" border=0></a></td>
+      <td align="left"><a href="javascript:updateCart()"><html:img page="/i/AddToCDECart.gif" border="0" /></a></td>
       <td align="right"><%=topScroller.getScrollerHTML()%></td>
     </tr>
 </table>
@@ -484,7 +487,7 @@ function newSearch(){
 %>
 <table cellpadding="0" cellspacing="0" width="100%" align="center">
   <tr>
-    <td width="100%"><img height=2 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><html:img height="2" page="/i/beigedot.gif" width="99%" align="top" border="0" /> </td>
   </tr>
 </table>
 
@@ -508,7 +511,7 @@ function newSearch(){
   }
 %>
 </FORM>
-<%@ include file="common/common_bottom_border.jsp"%>
+<%@ include file="../common/common_bottom_border.jsp"%>
 
 </BODY>
 </HTML>

@@ -39,7 +39,7 @@
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
-<LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
 <TITLE>
 Classifications
 </TITLE>
@@ -161,7 +161,7 @@ function listChanged(urlInfo) {
 %>
 </form>
 
-<%@ include file="common/common_bottom_border.jsp"%>
+<%@ include file="../common/common_bottom_border.jsp"%>
 
 </BODY>
 </HTML>
