@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public class SessionUtils {
@@ -20,15 +22,18 @@ public class SessionUtils {
  public static Map  sessionObjectCache = Collections.synchronizedMap(new HashMap());
  private static Map  sessionObjectCacheTimeout = Collections.synchronizedMap(new HashMap());
  private static int CACHE_TIMEOUT_VALUE = 1800000;
+ protected static Log log = LogFactory.getLog(SessionUtils.class.getName());
   public SessionUtils() {
   }
 
  public static void setPreviousSessionValues(HttpServletRequest request)
  {
       String previousSessionId = request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
-    
+      log.error("SessionUtil.setPreviousSessionValues at :"+TimeUtils.getEasternTime());
+        
     synchronized(sessionObjectCache)
     {
+       log.error("SessionUtil.setPreviousSessionValues(synchronized Start) at :"+TimeUtils.getEasternTime());
        if(previousSessionId!=null)
        {
           Map map = (Map)SessionUtils.sessionObjectCache.get(previousSessionId);
@@ -44,8 +49,10 @@ public class SessionUtils {
             request.getSession().setAttribute(key,obj);
           }
         }
+        log.error("SessionUtil.setPreviousSessionValues(synchronized End) at :"+TimeUtils.getEasternTime());
        } 
     }
+    log.error("SessionUtil.setPreviousSessionValues end at :"+TimeUtils.getEasternTime());
  }
  /**
   public static void addGlobalSessionKey(
@@ -68,10 +75,12 @@ public class SessionUtils {
   {
     synchronized(sessionObjectCache)
     {
-    clearStaleObject();
-    Long currTime = new Long(new Date().getTime());
-    sessionObjectCacheTimeout.put(key,currTime);
-    sessionObjectCache.put(key,object);
+    log.error("SessionUtil.addToSessionCache(synchronized) start :"+TimeUtils.getEasternTime());
+     clearStaleObject();
+     Long currTime = new Long(new Date().getTime());
+     sessionObjectCacheTimeout.put(key,currTime);
+     sessionObjectCache.put(key,object);
+    log.error("SessionUtil.addToSessionCache(synchronized) End :"+TimeUtils.getEasternTime());
     }
   }
   
@@ -79,14 +88,17 @@ public class SessionUtils {
   {
    synchronized(sessionObjectCache)
     {
+    log.error("SessionUtil.removeFromSessionCache(synchronized) start :"+TimeUtils.getEasternTime());
     Object cachedObject = sessionObjectCache.remove(key);
     sessionObjectCacheTimeout.remove(key);    
+    log.error("SessionUtil.removeFromSessionCache(synchronized) end :"+TimeUtils.getEasternTime());
     return cachedObject;
     }
   }
   
   private static void clearStaleObject()
   {
+   log.error("SessionUtil.clearStaleObject start :"+TimeUtils.getEasternTime());
     Set keys = sessionObjectCacheTimeout.keySet();
     if(keys!=null)
     {
@@ -102,5 +114,6 @@ public class SessionUtils {
         }
       }
     }
+   log.error("SessionUtil.clearStaleObject( start :"+TimeUtils.getEasternTime());
   }
 }

@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
 import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
 
+import gov.nih.nci.ncicb.cadsr.util.TimeUtils;
 import java.io.IOException;
 
 import java.util.Collection;
@@ -20,6 +21,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public class LogoutServlet extends HttpServlet {
@@ -27,7 +30,8 @@ public class LogoutServlet extends HttpServlet {
   private static String AUTHORIZATION_ERROR_JSP = "authorizationError.jsp";
   private String[] logoutKeys =
     { CaDSRConstants.USER_KEY, CaDSRConstants.USER_CONTEXTS };
-
+  protected static Log log = LogFactory.getLog(LogoutServlet.class.getName());
+  
   public LogoutServlet() {
   }
 
@@ -41,6 +45,7 @@ public class LogoutServlet extends HttpServlet {
     HttpServletRequest request,
     HttpServletResponse response) throws ServletException, IOException {
     synchronized (SessionUtils.sessionObjectCache) {
+      log.error("LogoutServlet.doPost at start:"+TimeUtils.getEasternTime());
       HttpSession session = request.getSession();
       String error = request.getParameter("authorizationError");
       String forwardUrl;
@@ -81,28 +86,31 @@ public class LogoutServlet extends HttpServlet {
 
       RequestDispatcher dispacher = request.getRequestDispatcher(forwardUrl);
       dispacher.forward(request, response);
+      log.error("LogoutServlet.doPost at end:"+TimeUtils.getEasternTime());
     }
   }
 
   private Map copyAllsessionObjects(HttpSession session) {
+    log.error("LogoutServlet.copyAllsessionObjects start:"+TimeUtils.getEasternTime());
     HashMap map = new HashMap();
     Enumeration keys = session.getAttributeNames();
     for (; keys.hasMoreElements();) {
       String key = (String) keys.nextElement();
       map.put(key, session.getAttribute(key));
     }
-
+    log.error("LogoutServlet.copyAllsessionObjects end:"+TimeUtils.getEasternTime());
     return map;
   }
 
   private Set copyAllsessionKeys(HttpSession session) {
+    log.error("LogoutServlet.copyAllsessionKeys end:"+TimeUtils.getEasternTime());
     HashSet set = new HashSet();
     Enumeration keys = session.getAttributeNames();
     for (; keys.hasMoreElements();) {
       String key = (String) keys.nextElement();
       set.add(key);
     }
-
+    log.error("LogoutServlet.copyAllsessionKeys start:"+TimeUtils.getEasternTime());
     return set;
   }
 

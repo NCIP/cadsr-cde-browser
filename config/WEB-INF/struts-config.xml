@@ -86,7 +86,7 @@
       scope="request" path="/common/systemError.jsp"
       key="error.system.message"/>
     <exception type="gov.nih.nci.ncicb.cadsr.exception.InvalidUserException"
-      scope="request" path="/LoginError.jsp"
+      scope="request" path="/cdeBrowse.jsp"
       key="error.system.message"/>      
   </global-exceptions>
   <global-forwards>
@@ -297,12 +297,18 @@
       <forward name="success" path="/cdebrowser/protocolsLOV.jsp"/>
     </action>
     <action name="displayCartForm" path="/cdeCartAction" parameter="method"
-      scope="request"
+      scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.CDECartAction"
       validate="false">
       <forward name="success" path="/cdebrowser/displayCDECart.jsp"/>
-      <forward name="saveSuccess" path="/formCDECartAction.do?method=addItems"/>
+      <forward name="saveSuccess" path="/formCDECartRedirectAction.do?method=addItems" redirect="true"/>
     </action>
+    <action name="displayCartForm" path="/formCDECartRedirectAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureCDECartAction"
+      validate="false">
+      <forward name="addDeleteSuccess" path="/formCDECartAction.do?method=displayCDECart"/>
+    </action>    
     <action name="displayCartForm" path="/formCDECartAction" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureCDECartAction"

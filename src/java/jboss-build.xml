@@ -220,6 +220,7 @@
               <include name="gov/nih/nci/ncicb/cadsr/util/logging/CaDSRLogImpl.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/util/SessionUtils.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/util/DebugStringBuffer.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/TimeUtils.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/CaDSRConstants.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/persistence/PersistenceConstants.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/persistence/ErrorCodeConstants.class"/>

@@ -205,6 +205,10 @@
     </web-resource-collection>
     <web-resource-collection>
       <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>formCDECartRedirectAction.do</url-pattern>
+    </web-resource-collection>    
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
       <url-pattern>formSearchAction.do</url-pattern>
     </web-resource-collection>
     <web-resource-collection>

@@ -219,10 +219,12 @@ function gotoClassificationsLOV() {
              <td  >
                <a href="javascript:clearForm()"><img src=<%=urlPrefix%>i/reset.gif border=0></a>
               </td>
-             <td   nowrap>
-            <html:link action='<%="/newFormSearchAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.NEW_SEARCH_METHOD%>' target="_parent">
-             <html:img src='<%=urlPrefix+"i/newSearchButton.gif"%>' border="0" alt="New Search"/>
-            </html:link>
+              <logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
+                <td   nowrap>
+                <html:link action='<%="/newFormSearchAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.NEW_SEARCH_METHOD%>' target="_parent">
+                <html:img src='<%=urlPrefix+"i/newSearchButton.gif"%>' border="0" alt="New Search"/>
+               </html:link>
+              </logic:present>
           </td>          
            </tr>
       </table>       

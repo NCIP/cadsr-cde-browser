@@ -297,6 +297,39 @@ public class DBUtil  {
     return id;
   }
 
+  /**
+   *  Get unique id from the database
+   *  idGenerator - an Oracle sequence number or store proc
+   *
+   */
+    public static String getUniqueId(Connection con, String idGenerator) throws SQLException {
+    String id=null;
+    Statement stmt = null;
+    ResultSet	rs = null;
+
+    try {
+      stmt = con.createStatement();
+      rs = stmt.executeQuery
+        ("SELECT " + idGenerator + " FROM DUAL");
+      rs.next();
+      id = rs.getString(1);
+		}
+    catch(SQLException sqle) {
+			log.error("Exception in getUniqueId()", sqle);
+      throw sqle;
+		}
+    finally {
+      if (rs != null) {
+        rs.close();
+        rs = null;
+      }
+      if (stmt != null) {
+        stmt.close();
+        stmt = null;
+      }
+    }
+    return id;
+  }
   
   public void returnConnection() throws SQLException {
     try {

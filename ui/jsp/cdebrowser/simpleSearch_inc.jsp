@@ -107,7 +107,11 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
  <TR>
     <td align="center" nowrap><a href="javascript:submitSimpleForm()"><html:img page="/i/search.gif" border="0" /></a></td>
     <td  align="center" nowrap><a href="javascript:clearSimpleForm()"><html:img page="/i/clear.gif" border="0" /></a></td>
-    <td  align="center" nowrap><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a></td>
+    <%
+       if(deList!=null){
+    %>
+   <td  align="center" nowrap><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a></td>
+   <%}%>
  </TR>
  </table>
 <%
@@ -120,8 +124,12 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
     </td>
     <td><a href="javascript:clearSimpleForm()"><html:img page="/i/clear.gif" border="0" /></a>
     </td>
+    <%
+      if(deList!=null){
+    %>
     <td><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a>
     </td>
+    <%}%>
     <td><a href="javascript:done()"><html:img page="/i/backButton.gif" border="0" /></a>
     </td>
    </TR>
