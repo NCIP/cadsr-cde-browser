@@ -64,7 +64,9 @@ function details(linkParms ){
 
 <html:hidden property="<%= FormConstants.QUESTION_INDEX %>"/>
 
-<%@ include file="changeAssociation_inc.jsp" %>
+<logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
+  <%@ include file="changeAssociation_inc.jsp" %>
+</logic:notEmpty>
 
 <logic:present name="<%=CaDSRConstants.CDE_CART%>">
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -79,7 +81,7 @@ function details(linkParms ){
     </tr>
   <logic:empty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
     <tr class="OraTabledata">
-        <td class="OraFieldText">
+        <td class="OraFieldText" colspan="7">
           CDE Cart is empty. 
         </td>
     </tr>
@@ -135,17 +137,17 @@ function details(linkParms ){
       <% } %>
     </table>
     <br>
+  <%@ include file="changeAssociation_inc.jsp" %>
+  </logic:notEmpty>
 
-      <%@ include file="changeAssociation_inc.jsp" %>
     <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
-
+      
       <tr >
         <td>
           <a href='<%= "cdeBrowse.jsp?src=gotoChangeAssociation&amp;moduleIndex=" +  request.getParameter("moduleIndex") + "&amp;questionIndex=" + request.getParameter("questionIndex") %>'><html:img src='<%=urlPrefix+"i/add_more_data_elements.gif"%>' border="0" alt="Add more data elements"/></a>
-        </td>
-      </tr>
-    </table>    
-  </logic:notEmpty>
+          </td>
+        </tr>
+      </table>    
 </logic:present>
 </html:form>
 <%@ include file="../common/common_bottom_border.jsp"%>
