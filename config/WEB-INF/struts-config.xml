@@ -169,6 +169,8 @@
       <forward name="success" path="/formbuilder/formDetails.jsp"
         redirect="false"/>
       <forward name="failure" path="/formbuilder/formEdit.jsp" redirect="false"/>
+      <forward name="moduleEdit" path="/moduleToEditAction?method=getModuleToEdit" redirect="false"/>
+     <forward name="saveConfirm" path="/formbuilder/formSaveConfirm.jsp" redirect="false"/>
     </action>
     <action name="formEditForm" path="/cancelFormEditAction" parameter="method"
       scope="session"
