@@ -36,10 +36,8 @@
   <property name="ejb.name" value="formbuilder-ejb" />  
     
   <!-- Java Source Directories -->
-  <property name="cdebrowser.java.src.dir" value="${project.home}/src/java/cdebrowser"/>
-  <property name="formbuilder.java.src.dir" value="${project.home}/src/java/formbuilder"/>
-  <property name="common.java.src.dir" value="${project.home}/src/java/common"/>  
-  
+  <property name="java.src.dir" value="${project.home}/src/java"/>
+    
   <!-- ui Directories -->
   <property name="ui.dir" value="${project.home}/ui"/>  
   <property name="jsp.dir" value="${ui.dir}/jsp"/>  
@@ -165,9 +163,7 @@
    </path>
    
    <path id="srcpath">
-         <pathelement location="${common.java.src.dir}"/>
-	 <pathelement location="${cdebrowser.java.src.dir}"/>
-	 <pathelement location="${formbuilder.java.src.dir}"/>
+         <pathelement location="${java.src.dir}"/>
    </path>
    
    <target name="compile" depends="init">
