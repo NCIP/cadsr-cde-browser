@@ -119,7 +119,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     // check if the user has the privilege to create module
     boolean create =
       this.hasCreate(
-        sourceForm.getCreatedBy(), "QUEST_CONTENT", sourceForm.getConteIdseq());
+        sourceForm.getCreatedBy(), "QUEST_CONTENT", sourceForm.getContext().getConteIdseq());
 
     if (!create) {
          DMLException dmlExp = new DMLException("The user does not have the create form privilege.");
