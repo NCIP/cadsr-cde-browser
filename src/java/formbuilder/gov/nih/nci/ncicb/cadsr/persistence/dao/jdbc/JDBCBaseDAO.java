@@ -77,7 +77,6 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     HasCreateQuery hasCreate = new HasCreateQuery(this.getDataSource());
     String retValue = hasCreate.execute(username, acType, conteIdseq);
 
-    //System.out.println("Stored Function: " + retValue + ".");
     return StringUtils.toBoolean(retValue);
   }
 
@@ -95,7 +94,6 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     String acIdseq) {
     HasDeleteQuery hasDelete = new HasDeleteQuery(this.getDataSource());
     String retValue = hasDelete.execute(username, acIdseq);
-    //System.out.println("Stored Function: " + retValue + ".");
 
     return StringUtils.toBoolean(retValue);
   }
@@ -115,7 +113,6 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     HasUpdateQuery hasUpdate = new HasUpdateQuery(this.getDataSource());
     String retValue = hasUpdate.execute(username, acIdseq);
 
-    //System.out.println("Stored Function: " + retValue + ".");
     return StringUtils.toBoolean(retValue);
   }
 

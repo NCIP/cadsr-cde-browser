@@ -46,8 +46,6 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
     }
           
     protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
-      System.out.println("conte_idseq = " + rs.getString("conte_idseq"));
-      System.out.println("name = " + rs.getString("name"));
       return new JDBCContextTransferObject(rs);
     }
   }
@@ -70,9 +68,9 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
 
-    //JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory(locator);
     JDBCContextDAO test = new JDBCContextDAO(locator);
-    Collection coll = test.getAllContexts();
+    //Collection coll = test.getAllContexts();
+    System.out.println(test.getAllContexts());
   }
 
 }
