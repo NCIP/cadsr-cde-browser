@@ -23,16 +23,21 @@ import javax.rmi.PortableRemoteObject;
 
 import javax.sql.DataSource;
 
+import gov.nih.nci.ncicb.cadsr.servicelocator.AbstractServiceLocator;
 
 
 /**
  * This class is an implementation of the Service Locator pattern. It is used
  * to looukup resources such as EJBHomes, JMS Destinations, etc.
  */
-public class ServiceLocatorImpl implements ServiceLocator{
+public class ServiceLocatorImpl extends AbstractServiceLocator{
   private transient InitialContext ic;
 
+  
   public ServiceLocatorImpl()  {
+    ejbLookupPrefix = "java:comp/env/ejb/";
+    envLookupPrefix = "java:comp/env/";
+    dsLookupPrefix = "jdbc/";  
     try {
       ic = new InitialContext();
     }
@@ -49,8 +54,9 @@ public class ServiceLocatorImpl implements ServiceLocator{
    */
   public EJBLocalHome getLocalHome(String jndiHomeName)
     {
+
     try {
-      return (EJBLocalHome) ic.lookup(jndiHomeName);
+      return (EJBLocalHome) ic.lookup(resolveEJBLookupKey(jndiHomeName));
     }
     catch (Exception e) {
       throw new ServiceLocatorException("",e);
@@ -65,9 +71,11 @@ public class ServiceLocatorImpl implements ServiceLocator{
    */
   public EJBHome getRemoteHome(
     String jndiHomeName,
-    Class className)  {
+    Class className)  {      
     try {
-      Object objref = ic.lookup(jndiHomeName);
+      String key = resolveEJBLookupKey(jndiHomeName);
+      System.out.println("Key="+key);
+      Object objref = ic.lookup(key);
 
       return (EJBHome) PortableRemoteObject.narrow(objref, className);
     }
@@ -84,24 +92,27 @@ public class ServiceLocatorImpl implements ServiceLocator{
    */
   public DataSource getDataSource(String dataSourceName)
     {
-    try {
-        return (DataSource) ic.lookup(dataSourceName);
-    }
-    catch (Exception e) {
-      throw new ServiceLocatorException("",e);
-    }
+      try {
+          String key = resolveDsLookupKey(dataSourceName);
+          System.out.println("DS key "+key);
+          return (DataSource) ic.lookup(key);
+      }
+      catch (Exception e) {
+        throw new ServiceLocatorException("",e);
+      }
   }
 
   /**
    * @return the URL value corresponding to the env entry name.
    */
   public URL getUrl(String envName) throws ServiceLocatorException {
-    try {
-      return (URL) ic.lookup(envName);
-    }
-    catch (Exception e) {
-      throw new ServiceLocatorException("",e);
-    }
+  
+      try {
+        return (URL) ic.lookup(resolveEnvLookupKey(envName));
+      }
+      catch (Exception e) {
+        throw new ServiceLocatorException("",e);
+      }
   }
 
   /**
@@ -109,24 +120,29 @@ public class ServiceLocatorImpl implements ServiceLocator{
    *         SEND_CONFIRMATION_MAIL property.
    */
   public boolean getBoolean(String envName)  {
-    try {
-      return ((Boolean) ic.lookup(envName)).booleanValue();
-    }
-    catch (Exception e) {
-      throw new ServiceLocatorException("",e);
-    }
+
+        
+      try {
+        return ((Boolean) ic.lookup(resolveEnvLookupKey(envName))).booleanValue();
+      }
+      catch (Exception e) {
+        throw new ServiceLocatorException("",e);
+      }
   }
 
   /**
    * @return the String value corresponding to the env entry name.
    */
   public String getString(String envName) {
-    try {
-      return (String) ic.lookup(envName);
-    }
-    catch (Exception e) {
-      throw new ServiceLocatorException("",e);
-    }
+
+      try {
+          String key = resolveEnvLookupKey(envName);
+          System.out.println("DS key "+key);
+        return (String) ic.lookup(key);
+      }
+      catch (Exception e) {
+        throw new ServiceLocatorException("",e);
+      }
   }
   
 }

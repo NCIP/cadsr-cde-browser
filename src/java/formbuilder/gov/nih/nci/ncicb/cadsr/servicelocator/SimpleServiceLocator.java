@@ -1,15 +1,21 @@
 package gov.nih.nci.ncicb.cadsr.servicelocator;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.util.DataSourceUtil;
-import java.util.HashMap;
-import java.util.Map;
-import javax.ejb.EJBLocalHome;
-import javax.ejb.EJBHome;
-import javax.sql.DataSource;
+
 import java.net.URL;
 
-public class SimpleServiceLocator implements ServiceLocator 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.ejb.EJBHome;
+import javax.ejb.EJBLocalHome;
+
+import javax.sql.DataSource;
+public class SimpleServiceLocator extends AbstractServiceLocator 
 {
-  private Map envEntrys = null;
+  private Map envEntrys =  new HashMap();
+  private Map dataSources = new HashMap();
+
+  
   public SimpleServiceLocator()
   {
     init();
@@ -27,10 +33,22 @@ public class SimpleServiceLocator implements ServiceLocator
        envEntrys.put(DRIVER_MANAGER_DS,"true");
        envEntrys.put(DRIVER_CLASS_NAME,"oracle.jdbc.driver.OracleDriver");
        envEntrys.put(CONNECTION_STRING,"jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbdev");
-       envEntrys.put(USERNAME,"sbr");
-       envEntrys.put(PASSWORD,"jjsbr");
+       envEntrys.put(USERNAME,"sbrext");
+       envEntrys.put(PASSWORD,"jjuser");
+       
+       /**
+        * envEntrys.put(CONNECTION_STRING,"jdbc:oracle:thin:@localhost:1521:red");
+       envEntrys.put(USERNAME,"sbrext");
+       envEntrys.put(PASSWORD,"jjuser");
+       **/
+             
        envEntrys.put(DAO_FACTORY_CLASS_KEY,"gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory");
        
+        DataSource source = DataSourceUtil.getDriverManagerDS(getString(DRIVER_CLASS_NAME)
+                      ,getString(CONNECTION_STRING),getString(USERNAME)
+                      ,getString(PASSWORD));       
+        dataSources.put(DATASOURCE_LOCATION_KEY,source);
+
       }
       catch(Exception ex)
       {
@@ -49,18 +67,14 @@ public class SimpleServiceLocator implements ServiceLocator
 
   public DataSource getDataSource(String dataSourceName)
   {
-      try
-      {
-        return DataSourceUtil.getDriverManagerDS(getString(DRIVER_CLASS_NAME)
-                      ,getString(CONNECTION_STRING),getString(USERNAME)
-                      ,getString(PASSWORD));
-      }
-      catch (Exception e)
-      {
-        throw new ServiceLocatorException("",e);
-      }
-
+  
+    return (DataSource)dataSources.get(resolveDsLookupKey(dataSourceName));
   }
+  
+  public void setDataSource(String dataSourceKey, DataSource dataSource)
+  {
+    dataSources.put(dataSourceKey,dataSource);
+  }  
 
   public URL getUrl(String envName)
   {
@@ -74,7 +88,11 @@ public class SimpleServiceLocator implements ServiceLocator
 
   public String getString(String envName)
   {
-    return (String)envEntrys.get(envName);
+    return (String)envEntrys.get(resolveEnvLookupKey(envName));
   }
-
+ public static void main(String[] args)
+ {
+   SimpleServiceLocator locator = new SimpleServiceLocator();
+   
+ }
 }

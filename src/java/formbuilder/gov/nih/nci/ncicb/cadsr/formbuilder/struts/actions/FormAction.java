@@ -30,8 +30,14 @@ public class FormAction extends FormBuilderBaseDispatchAction
   
     FormBuilderServiceDelegate service = getFormBuilderService();
     DynaActionForm searchForm = (DynaActionForm) form;
+    String formName = (String)searchForm.get("formName");
+    String protocol = (String)searchForm.get("protocol");
     String context = (String)searchForm.get("context");
-    Collection forms = service.getFormsByContext(context);
+    String workflow = (String)searchForm.get("workflow");
+    String category = (String)searchForm.get("category");
+    String type = (String)searchForm.get("type");    
+    Collection forms = service.getAllForms(formName,protocol,context, 
+                        workflow,category,type);
     setSessionObject(request,"FormSearchResults",forms);
     System.out.println("In ActionForm");
     return mapping.findForward("success");

@@ -8,8 +8,8 @@
 </head>
 <body>
   <P>CDE Browser Functions</P>
-  <html:link page="/formbuilder/form_search.jsp">
-    <bean:message key="link.form_search"/>
+  <html:link page="/formbuilder/formSearch.jsp">
+    <bean:message key="link.formSearch"/>
   </html:link>
 </body>
 </html>

@@ -11,6 +11,8 @@ import com.evermind.security.Group;
  */
 public abstract class BaseUserManager extends AbstractUserManager {
 
+   public static final String DEBUG_KEY = "debug";
+   private boolean debug = false;
   /**
    * Method to determine if the given username is a valid user on the system.
    * @param <b>username</b> name of the user
@@ -40,6 +42,32 @@ public abstract class BaseUserManager extends AbstractUserManager {
 
   protected abstract boolean inGroup(String username, String groupname);
 
+  /**
+   * Method that is used to get user object
+   * @param <b>username</b> name of the user, whose information has to be returned
+   * @return <b>User</b> returns User object
+   */ 
+  public User getUser(String username) {
+    if(isDebug())
+      System.out.println("In getUser username="+username);
+    if(username != null && userExists(username)) {
+      OC4JUserObject user = new OC4JUserObject(username);
+      user.setUserManager(this);
+      return user;
+    }
+    else {
+      return getParent().getUser(username);
+    }
+  }  
 
+  public boolean isDebug()
+  {
+    return debug;
+  }
+
+  public void setDebug(boolean newDebug)
+  {
+    debug = newDebug;
+  }
 }
 

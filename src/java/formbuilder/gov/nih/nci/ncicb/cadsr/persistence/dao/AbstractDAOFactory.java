@@ -4,8 +4,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
 
-public abstract class AbstractDAOFactory {
+public abstract class AbstractDAOFactory implements PersistenceContants{
 
   private static Map cache = Collections.synchronizedMap(new HashMap());
   protected ServiceLocator serviceLocator;
@@ -25,17 +26,25 @@ public abstract class AbstractDAOFactory {
 
 
   public static AbstractDAOFactory getDAOFactory(ServiceLocator locator) throws DAOCreateException {
+
+    AbstractDAOFactory factory = null;
+    String daoFactoryClassName =
+      locator.getString(DAO_FACTORY_CLASS_KEY);
+    
+    factory = getDAOFactory(daoFactoryClassName);
+    factory.setServiceLocator(locator);
+    return factory;
+  }
+  
+  public static AbstractDAOFactory getDAOFactory(String daoFactoryClassName) throws DAOCreateException {
     AbstractDAOFactory factory = null;
 
-    String daoFactoryClassName =
-      locator.getString(locator.DAO_FACTORY_CLASS_KEY);
     factory = (AbstractDAOFactory) cache.get(daoFactoryClassName);
 
     if (factory == null) {
       try {
         Class factoryClass = Class.forName(daoFactoryClassName);
         factory = (AbstractDAOFactory) factoryClass.newInstance();
-        factory.setServiceLocator(locator);
         cache.put(factory.getClass().getName(), factory);
       }
       catch (Exception ex) {
@@ -46,8 +55,7 @@ public abstract class AbstractDAOFactory {
     }
 
     return factory;
-  }
-  
+  }  
 
   public void setServiceLocator(ServiceLocator newServiceLocator)
   {

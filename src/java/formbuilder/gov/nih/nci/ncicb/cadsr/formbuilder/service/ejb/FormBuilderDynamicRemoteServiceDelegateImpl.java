@@ -10,17 +10,16 @@ import javax.ejb.CreateException;
 
 public class FormBuilderDynamicRemoteServiceDelegateImpl extends FormBuilderDynamicServiceDelegateImpl
 {
-  public FormBuilderDynamicRemoteServiceDelegateImpl() throws FormBuilderException
+  public FormBuilderDynamicRemoteServiceDelegateImpl(ServiceLocator locator) throws FormBuilderException
   {
-    super();
+    super(locator);
   }
    protected void init() throws FormBuilderException {
     try {
 
-      ServiceLocator locator = ServiceLocatorFactory.getLocator();
       FormBuilderHome home =
-        (FormBuilderHome) locator.getRemoteHome(
-          "java:comp/env/ejb/FormBuilder",
+        (FormBuilderHome) getServiceLocator().getRemoteHome(
+          "FormBuilder",
           gov.nih.nci.ncicb.cadsr.formbuilder.ejb.FormBuilderHome.class);
  
    /**    FormBuilderHome home =

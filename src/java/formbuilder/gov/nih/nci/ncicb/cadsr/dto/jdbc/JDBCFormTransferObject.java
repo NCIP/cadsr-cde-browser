@@ -7,6 +7,6 @@ public class JDBCFormTransferObject extends FormTransferObject
 {
   public JDBCFormTransferObject(ResultSet rs) throws SQLException
   {
-    setPreferredName(rs.getString("preferredName"));
+    setPreferredName(rs.getString("form"));
   }
 }

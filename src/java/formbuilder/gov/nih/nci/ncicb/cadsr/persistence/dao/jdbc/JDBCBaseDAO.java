@@ -10,47 +10,20 @@ import java.sql.SQLException;
 
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ConnectionException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.BaseDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
 
-public class JDBCBaseDAO extends BaseDAO {
-  
- private final String DATASOURCE_LOCATION_KEY="java:comp/env/jdbc/FormBuilderDS";
+public class JDBCBaseDAO extends BaseDAO implements PersistenceContants {
  
- private Map dataAccessObjects = new HashMap();
- 
- 
- 
- public JDBCBaseDAO() {
-  }
-  
   public JDBCBaseDAO(ServiceLocator locator) {
     super(locator);
   }
 
-/**  
-  public Object getDataAccessObject(String dataAccessObjectClassName)
-  {
-    if(dataAccessObjects.containsKey(dataAccessObjectClassName))
-    {
-      return dataAccessObjects.get(dataAccessObjectClassName);
-    }
-    else
-    {
-      try{
-        Class accessClass = Class.forName(dataAccessObjectClassName);
-        Object  obj = accessClass.newInstance();
-        dataAccessObjects.put(dataAccessObjectClassName,obj);
-      }
-      catch(Exception ex)
-      {
-        throw new DAOCreateException("Cannot instatiate DataAccessObject",ex);
-      }
-    }    
-  }
-  
-  **/
+
   public DataSource getDataSource(String key)
   {
-    return getServiceLocator().getDataSource(key);
+    if(getServiceLocator()!=null)
+      return getServiceLocator().getDataSource(key);
+    return null;
   }
   
   public DataSource getDataSource()

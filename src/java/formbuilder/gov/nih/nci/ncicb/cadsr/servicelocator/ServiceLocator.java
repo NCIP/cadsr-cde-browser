@@ -20,15 +20,10 @@ import javax.sql.DataSource;
 
 public interface ServiceLocator {
 
-  public static final String DAO_FACTORY_CLASS_KEY="java:comp/env/DAOFactoryClassName";
-  public static final String SERVICE_LOCATOR_CLASS_KEY="java:comp/env/ServiceLocatorClassName";
-  public static final String DRIVER_MANAGER_DS="DriverManagerDS";
-  public static final String CONNECTION_STRING="connectionString";
-  public static final String DRIVER_CLASS_NAME="driverClassName";
-  public static final String USERNAME="username";
-  public static final String PASSWORD="password";
+  public static final String SERVICE_LOCATOR_CLASS_KEY="ServiceLocatorClassName";
+
   public static final String DEPLOYMENT_FILENAME="app_deployment.properties";
-  
+
   /**
    * will get the ejb Local home factory. clients need to cast to the type of
    * EJBHome they desire
@@ -54,7 +49,7 @@ public interface ServiceLocator {
    * @return the DataSource corresponding to the name parameter
    */
   public DataSource getDataSource(String dataSourceName);
-
+  
   /**
    * @return the URL value corresponding to the env entry name.
    */

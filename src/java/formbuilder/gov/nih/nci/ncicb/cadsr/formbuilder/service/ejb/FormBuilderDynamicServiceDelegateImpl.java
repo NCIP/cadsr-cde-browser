@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.service.ejb;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -8,16 +9,18 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
+import gov.nih.nci.ncicb.cadsr.servicelocator.Locate;
 
-public abstract class FormBuilderDynamicServiceDelegateImpl implements InvocationHandler
+public abstract class FormBuilderDynamicServiceDelegateImpl implements InvocationHandler, Locate
 {
 
   protected Map formBuilderMethodMap;
   protected Object formbuilderEJBObj;
+  private ServiceLocator serviceLocator = null;
   
-  
-  public FormBuilderDynamicServiceDelegateImpl() throws FormBuilderException
+  public FormBuilderDynamicServiceDelegateImpl(ServiceLocator locator) throws FormBuilderException
   {
+    serviceLocator=locator;
     init();
   }
   protected abstract void init() throws FormBuilderException;
@@ -57,5 +60,15 @@ public abstract class FormBuilderDynamicServiceDelegateImpl implements Invocatio
       }
     }
     
+  }
+
+  public ServiceLocator getServiceLocator()
+  {
+    return serviceLocator;
+  }
+
+  public void setServiceLocator(ServiceLocator newServiceLocator)
+  {
+    serviceLocator=newServiceLocator;
   }
 }

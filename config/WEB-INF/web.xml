@@ -69,7 +69,21 @@
       <url-pattern>/downloadtemplate</url-pattern>
    </servlet-mapping>
   
-  
+
+   <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>gov.nih.nci.ncicb.cadsr.security.LogoutServlet</servlet-class>
+    <init-param>
+      <param-name>LogoutHome</param-name>
+      <param-value>cdeBrowse.jsp</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+      <servlet-name>LogoutServlet</servlet-name>
+      <url-pattern>/logout</url-pattern>
+   </servlet-mapping>
+   
   <servlet>
     <servlet-name>action</servlet-name>
     <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
@@ -89,6 +103,10 @@
       <param-name>validate</param-name>
       <param-value>true</param-value>
     </init-param>
+    <init-param>
+      <param-name>ServiceLocatorClassName</param-name>
+      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</param-value>
+    </init-param>    
     <load-on-startup>1</load-on-startup>
   </servlet>
   
@@ -109,12 +127,7 @@
     <taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
     <taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
   </taglib>
-  <env-entry>
-    <description>Specifies the implementation class of FormBuilderServiceDelegate that should be used.</description>
-    <env-entry-name>FormBuilderServiceDelegate</env-entry-name>
-    <env-entry-value>gov.nih.nci.ncicb.cadsr.formbuilder.service.ejb.FormBuilderDynamicRemoteServiceDelegateImpl</env-entry-value>
-    <env-entry-type>java.lang.String</env-entry-type>
-  </env-entry>
+  
   <ejb-ref>
     <ejb-ref-name>ejb/FormBuilder</ejb-ref-name>
     <ejb-ref-type>Session</ejb-ref-type>
@@ -130,6 +143,18 @@
     <ejb-link>FormBuilder</ejb-link>
   </ejb-local-ref>
   
+   <env-entry>
+     <description>Specifies the implementation class of FormBuilderServiceDelegate that should be used.</description>
+     <env-entry-name>FormBuilderServiceDelegate</env-entry-name>
+     <env-entry-value>gov.nih.nci.ncicb.cadsr.formbuilder.service.ejb.FormBuilderDynamicRemoteServiceDelegateImpl</env-entry-value>
+     <env-entry-type>java.lang.String</env-entry-type>
+   </env-entry>
+   <env-entry>
+      <description>Class name of the DAOFactory that FormBuilderEJB will use.</description>
+      <env-entry-name>DAOFactoryClassName</env-entry-name>
+      <env-entry-value>gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
+      <env-entry-type>java.lang.String</env-entry-type>
+  </env-entry>
   
    <security-role>
        <description>The Only Secure Role</description>
@@ -141,6 +166,10 @@
       <web-resource-name>Secure Services</web-resource-name>
       <url-pattern>/formbuilder/*</url-pattern>
     </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>*.do</url-pattern>
+    </web-resource-collection>       
     <auth-constraint>
       <description>Authorized Users Group</description>
       <role-name>FORMBUILDER_USERS</role-name>

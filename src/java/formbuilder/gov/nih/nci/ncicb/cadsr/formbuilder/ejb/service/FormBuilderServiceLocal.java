@@ -9,7 +9,8 @@ import java.util.Collection;
 
 public interface FormBuilderServiceLocal {
 
-  public Collection getFormsByContext(String context) throws DMLException;
+  public Collection getAllForms(String formName, String protocol, String context, 
+    String workflow, String category, String type) throws DMLException;
   
   public Form getFormDetails(String formPK) throws DMLException;
 

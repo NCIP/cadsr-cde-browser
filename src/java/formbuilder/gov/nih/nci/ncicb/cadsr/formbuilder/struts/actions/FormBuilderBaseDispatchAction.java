@@ -5,10 +5,17 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceStartupException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.action.ActionForward;
+import javax.servlet.http.HttpServletResponse;
 
 public class FormBuilderBaseDispatchAction extends DispatchAction 
 {
+
+ public static final String DEFAULT_METHOD_NAME= "getAllForms";
+ 
 
   /**
    * Retrieve an object from the application scope by its name. This is a
@@ -56,7 +63,18 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
       (ServiceDelegateFactory) getApplicationObject(
         FormBuilderConstants.SERVICE_DELEGATE_FACTORY_KEY);
     svcDelegate = svcFactory.createService();
-
     return svcDelegate;
+  }
+    /**
+     * Sets default method name if no method is specified
+     * 
+     */
+  protected ActionForward dispatchMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, String name) throws Exception
+  {
+    if(name==null||name.equals(""))
+    {
+      name=this.DEFAULT_METHOD_NAME;
+    }
+    return super.dispatchMethod(mapping, form, request, response, name);
   }
 }

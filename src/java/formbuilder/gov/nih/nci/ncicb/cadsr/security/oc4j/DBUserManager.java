@@ -1,9 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.security.oc4j;
 // java utility classes
 import com.evermind.security.AbstractUserManager;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
-import gov.nih.nci.ncicb.cadsr.resource.NCIOC4JUser;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import java.util.ArrayList;
@@ -15,8 +15,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import com.evermind.security.User;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
 
-public class DBUserManager extends BaseUserManager {
+public class DBUserManager extends BaseUserManager implements PersistenceContants,CaDSRConstants {
 
   private AbstractDAOFactory daoFactory=null;
   private UserManagerDAO userManagerDAO =null;
@@ -27,11 +28,26 @@ public class DBUserManager extends BaseUserManager {
    */
   public void init(Properties properties) {
    
+    String debugStr = properties.getProperty(DEBUG_KEY);
+    try
+    {
+      this.setDebug(Boolean.valueOf(debugStr).booleanValue());
+    }
+    catch (Exception e)
+    { 
+      System.out.println("debug error"+e);
+    }
+    if(isDebug())
+      System.out.println("initializing Usermanager"+this);
+    String daoFactoryClassName = properties.getProperty(DAO_FACTORY_CLASS_KEY);
     String serviceLocatorClassName = properties.getProperty(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
-    String daoFactoryClassName = properties.getProperty(ServiceLocator.DAO_FACTORY_CLASS_KEY);
+    if(isDebug())
+    {
+      System.out.println("daoFactoryClassName ="+daoFactoryClassName);  
+      System.out.println("serviceLocatorClassName ="+serviceLocatorClassName);       
+    }
     ServiceLocator locator = ServiceLocatorFactory.getLocator(serviceLocatorClassName);
     daoFactory=AbstractDAOFactory.getDAOFactory(locator);    
-    System.out.println("in usermanager");
   }
 
 
@@ -44,11 +60,7 @@ public class DBUserManager extends BaseUserManager {
    *                         user exists.
    */
   protected boolean userExists(String username) {
-    if(daoFactory==null)
-      return false;
-    if(userManagerDAO==null)
-        userManagerDAO = daoFactory.getUserManagerDAO();
-    return userManagerDAO.validateUser(username);
+    return true;
     }
 
   /**
@@ -61,6 +73,8 @@ public class DBUserManager extends BaseUserManager {
    * @return <b>boolean </b> returns boolean flag to indicate that the user exists.
    */
   protected boolean checkPassword(String username, String password) {
+    if(isDebug())
+        System.out.println("in checkPassword");
     if(daoFactory==null)
       return false;
     if(userManagerDAO==null)
@@ -78,26 +92,13 @@ public class DBUserManager extends BaseUserManager {
    *                        exists and user belongs to that group/role
    */
   protected boolean inGroup(String username, String groupname) {
+    if(isDebug())
+        System.out.println("in inGroup username="+username+":groupname"+groupname);
     if(daoFactory==null)
       return false;
     if(userManagerDAO==null)
-        userManagerDAO = daoFactory.getUserManagerDAO();
+        userManagerDAO = daoFactory.getUserManagerDAO();       
     return userManagerDAO.userInGroup(username,groupname);
   }
   
-  /**
-   * Method that is used to get user object
-   * @param <b>username</b> name of the user, whose information has to be returned
-   * @return <b>User</b> returns User object
-   */ 
-  public User getUser(String username) {
-    if(username != null && userExists(username)) {
-      NCIOC4JUser user = (NCIOC4JUser)userManagerDAO.getUser(username);
-      user.setUserManager(this);
-      return user;
-    }
-    else {
-      return getParent().getUser(username);
-    }
-  }  
 }

@@ -29,17 +29,18 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
   public void ejbCreate() {
     locator = null;
-    ServiceLocator locator = ServiceLocatorFactory.getLocator();
+    ServiceLocator locator = ServiceLocatorFactory.getEJBLocator();
     daoFactory = AbstractDAOFactory.getDAOFactory(locator);
   }
 
- public Collection getFormsByContext(String context) throws DMLException
+ public Collection getAllForms(String formName, String protocol, String context, 
+    String workflow, String category, String type) throws DMLException
  {
     //        JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory((ServiceLocator)new TestServiceLocatorImpl());
     FormDAO dao = daoFactory.getFormDAO();
     Collection test = null;
     try{
-     test = dao.getFormsByContext(context);
+     test = dao.getAllForms(formName,protocol, context,workflow,category,type);
     }
     catch(Exception ex)
     {

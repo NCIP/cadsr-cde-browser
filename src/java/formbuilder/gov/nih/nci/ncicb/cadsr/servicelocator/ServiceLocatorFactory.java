@@ -8,7 +8,7 @@ public class ServiceLocatorFactory
   public ServiceLocatorFactory()
   {
   }
-  public static ServiceLocator getLocator()
+ public static ServiceLocator getEJBLocator()
   {
     return new ServiceLocatorImpl();
   }
@@ -17,6 +17,7 @@ public class ServiceLocatorFactory
   {
       ServiceLocator locator =null;
       try {
+        System.out.println("In fServicelocator factory locatorClassName="+locatorClassName);        
         Class locatorClass = Class.forName(locatorClassName);
         locator = (ServiceLocator) locatorClass.newInstance();
       }

@@ -3,17 +3,26 @@
 <struts-config>
    <form-beans>
       <form-bean name="searchForm" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean" dynamic="true">
+         <form-property name="formName" type="java.lang.String"/>
+         <form-property name="protocol" type="java.lang.String"/>
          <form-property name="context" type="java.lang.String"/>
-         <form-property name="method" type="java.lang.String"/>
+         <form-property name="workflow" type="java.lang.String"/>
+         <form-property name="category" type="java.lang.String"/>
+         <form-property name="type" type="java.lang.String"/>
       </form-bean>
    </form-beans>
    <action-mappings>
       <action path="/formAction" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction" parameter="method" name="searchForm" scope="request" validate="false">
-         <forward path="/formbuilder/form_search.jsp" name="success"/>
+         <forward path="/formbuilder/formSearch.jsp" name="success"/>
       </action>
    </action-mappings>
-   <controller locale="true"/>
-   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"
-    null="false"/>
+   <controller
+    contentType="text/html;charset=UTF-8"
+    debug="3"
+    locale="true"
+    nocache="true"
+    processorClass="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureRequestProcessor"/>
+
+   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
    <plug-in className="gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory"/>
 </struts-config>

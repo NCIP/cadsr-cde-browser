@@ -11,16 +11,16 @@ import javax.ejb.CreateException;
 
 public class FormBuilderDynamicLocalServiceDelegateImpl extends FormBuilderDynamicServiceDelegateImpl
 {
-  public FormBuilderDynamicLocalServiceDelegateImpl()throws FormBuilderException
+  public FormBuilderDynamicLocalServiceDelegateImpl(ServiceLocator locator)throws FormBuilderException
   {
-    super();
+    super(locator);
   }
   protected void init() throws FormBuilderException {
     try {
-     ServiceLocator locator = ServiceLocatorFactory.getLocator();
-      FormBuilderLocalHome home =
-        (FormBuilderLocalHome) locator.getLocalHome(
-          "java:comp/env/ejb/FormBuilder");
+     
+      FormBuilderLocalHome home = 
+        (FormBuilderLocalHome) getServiceLocator().getLocalHome(
+          "ejb/FormBuilder");
       formbuilderEJBObj = home.create();
       // Store Service methods 
       loadMethods(formbuilderEJBObj);
