@@ -65,4 +65,15 @@ public interface FormDAO {
   public Form addModules(
     String formId,
     Collection modules) throws DMLException;
+
+  /**
+   * Finds a form based on the primary key.
+   *
+   * @param <b>formId</b> Idseq of the form component.
+   *
+   * @return <b>Form</b> Form object representing the form.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public Form findFormByPrimaryKey(String formId) throws DMLException;
 }

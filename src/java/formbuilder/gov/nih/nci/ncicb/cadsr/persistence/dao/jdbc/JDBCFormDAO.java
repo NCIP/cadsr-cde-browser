@@ -91,6 +91,10 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     return null;
   }
 
+  public Form findFormByPrimaryKey(String formId) throws DMLException {
+    return null;
+  }
+
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
 
