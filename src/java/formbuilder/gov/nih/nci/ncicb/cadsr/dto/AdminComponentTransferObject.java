@@ -134,7 +134,6 @@ public class AdminComponentTransferObject extends BaseTransferObject
 
   public String toString() {
     StringBuffer sb = new StringBuffer();
-    sb.append(super.toString());
     sb.append(ATTR_SEPARATOR + "preferredName=" + getPreferredName());
     sb.append(ATTR_SEPARATOR + "longName=" + getLongName());
     sb.append(ATTR_SEPARATOR + "version=" + getVersion());
@@ -151,10 +150,10 @@ public class AdminComponentTransferObject extends BaseTransferObject
     if (context != null) {
       sb.append(ATTR_SEPARATOR + "Context=" + context.toString());
     }
-    else
-    {
+    else {
       sb.append(ATTR_SEPARATOR + "Context=null");
     }
+    sb.append(super.toString());
 
     return sb.toString();
   }
