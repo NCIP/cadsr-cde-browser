@@ -6,7 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpUtils;
+import oracle.cle.process.ProcessConstants;
 
 public class SessionFilter implements javax.servlet.Filter
 {
@@ -17,17 +17,13 @@ public class SessionFilter implements javax.servlet.Filter
       String controllerName = filterConfig.getInitParameter("controllerName");
       String expiredSessionJSP = filterConfig.getInitParameter("expiredSessionJSP");      
       HttpServletRequest req = (HttpServletRequest)request;
-      StringBuffer url = HttpUtils.getRequestURL(req);
-      int index = url.toString().indexOf(controllerName);
-      String newurl = url.substring(0,index);
       Object param = request.getParameter("FirstTimer"); 
-      String forwardURL = newurl+expiredSessionJSP;
       if(param==null)
       {
         HttpSession userSession = req.getSession(false);
         Object obj = null;
         if(userSession!=null)    
-          obj = userSession.getAttribute("webTree");  
+          obj = userSession.getAttribute(ProcessConstants.SERVICENAME);  
         if(obj==null)
           {
             RequestDispatcher dispatcher = filterConfig.getServletContext().getRequestDispatcher(expiredSessionJSP);

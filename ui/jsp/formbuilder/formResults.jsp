@@ -1,12 +1,15 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.html.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
+
 <HTML>
 <HEAD>
 <TITLE>Welcome to Form Builder..</TITLE>
@@ -81,25 +84,37 @@ function submitForm() {
       <td>&nbsp;</td>
     </tr>
   </table>
+
   <P>
       <logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
-        <table cellspacing="2" cellpadding="3"  border="1" width="100%">
-          <tr>
+        <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+          <tr class="OraTableColumnHeader">
+          	<td class="OraTableColumnHeader" nowrap>Action</td>
           	<td class="OraTableColumnHeader" nowrap>Long Name</td>
           	<td class="OraTableColumnHeader" nowrap>Type</td>
           	<td class="OraTableColumnHeader" nowrap>Workflow Status:</td>         	
           </tr>        
           <logic:iterate id="form" name="<%=FormConstants.FORM_SEARCH_RESULTS%>" type="gov.nih.nci.ncicb.cadsr.resource.Form">
-            <tr>
-          	<td>
+            <tr class="OraTabledata">
+                <td>
+                  <table cellspacing="2" cellpadding="3"  border="0" width="100%">
+                   <tr>                   
+                   <td><a href='test'/><img src="i/edit.gif" border=0 alt='View'></a></td>
+		   <td><cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Edit"/></td>
+		   <td><cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Copy"/></td>
+		   <td><cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Delete"/></td>
+                   </tr>
+                   </table>
+                </td>
+          	<td class="OraFieldText">
           		<html:link page="/formAction.do" paramName="form" paramProperty="preferredName">
             			<bean:write name="form" property="longName"/><br>
           		</html:link>    
           	</td>
-          	<td>
+          	<td class="OraFieldText">
           		<bean:write name="form" property="formType"/><br>
           	</td>
-          	<td>
+          	<td class="OraFieldText">
           		<bean:write name="form" property="aslName"/><br>
           	</td>          	
             </tr>

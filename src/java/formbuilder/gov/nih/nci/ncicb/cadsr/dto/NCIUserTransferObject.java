@@ -13,4 +13,9 @@ public class NCIUserTransferObject implements NCIUser
   {
     return username;
   }
+  
+  public boolean hasRoleAccess(String role, String ContextId)
+  {
+    return true;
+  }
 }
