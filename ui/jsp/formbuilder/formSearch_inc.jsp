@@ -32,7 +32,7 @@ function clearProtocol() {
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="<%=FormConstants.FORM_LONG_NAME%>" value="" size ="20"> 
+          <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="20" />
         </td>
 
     <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/>:</td>
@@ -80,18 +80,16 @@ function clearProtocol() {
 
     <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.classification"/>:</td>
     <td class="OraFieldText" nowrap>
-      <input type="text" name="<%=FormConstants.CSI_NAME%>" 
-             value="" 
-             readonly onFocus="this.blur();"
-             class="LOVField"
-             size ="18"
-      >
+      <html:text property="<%=FormConstants.CSI_NAME%>" 
+      	     readonly="true" 
+      	     size="19"
+      	     styleClass="LOVField"
+      	     onfocus="this.blur();"/>
       &nbsp;<a href="<%=csLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
       <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
-      <input type="hidden" name="<%=FormConstants.CS_CSI_ID%>" value="" >
+      <html:hidden  property="<%=FormConstants.CS_CSI_ID%>"/>
     </td>
-
-        
+       
     </tr>    
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  

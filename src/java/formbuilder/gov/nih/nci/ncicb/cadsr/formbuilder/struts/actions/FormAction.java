@@ -54,6 +54,7 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     String workflow = (String) searchForm.get(this.WORKFLOW);
     String categoryName = (String) searchForm.get(this.CATEGORY_NAME);
     String type = (String) searchForm.get(this.FORM_TYPE);
+    String classificationId = (String)searchForm.get(this.CS_CSI_ID);
 
     Collection forms = null;
 

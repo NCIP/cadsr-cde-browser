@@ -39,7 +39,7 @@ public class ServiceLocatorImpl extends ServiceLocatorAdapter {
   public ServiceLocatorImpl()  {
     ejbLookupPrefix = "java:comp/env/ejb/";
     envLookupPrefix = "java:comp/env/";
-    dsLookupPrefix = "jdbc/";  
+    dsLookupPrefix = "java:comp/env/jdbc/";  
     try {
       ic = new InitialContext();
     }
@@ -102,9 +102,11 @@ public class ServiceLocatorImpl extends ServiceLocatorAdapter {
     {
       try {
           String key = resolveDsLookupKey(dataSourceName);
+          if(log.isDebugEnabled())
+            log.debug("Lookup DataSource with key="+key);          
           DataSource ds = (DataSource) ic.lookup(key);
           if(log.isDebugEnabled())
-            log.debug("Lookup String with key="+key+" Value="+ds);
+            log.debug("Lookedup String with key="+key+" Value="+ds);
           return ds;
       }
       catch (Exception e) {

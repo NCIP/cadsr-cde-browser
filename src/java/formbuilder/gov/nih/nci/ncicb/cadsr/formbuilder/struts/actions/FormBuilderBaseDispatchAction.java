@@ -26,8 +26,6 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
       implements FormConstants, NavigationConstants, PersistenceConstants,CaDSRConstants
 {
 
- public static final String DEFAULT_METHOD_NAME= SEND_HOME_METHOD;
- 
 
   /**
    * Retrieve an object from the application scope by its name. This is a
@@ -128,7 +126,7 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
   {
     if(name==null||name.equals(""))
     {
-      name= DEFAULT_METHOD_NAME;
+      name= DEFAULT_METHOD;
     }
     return super.dispatchMethod(mapping, form, request, response, name);
   }
