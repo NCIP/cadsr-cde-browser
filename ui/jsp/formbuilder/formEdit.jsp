@@ -42,6 +42,7 @@ function clearProtocol() {
   <BODY topmargin=0 bgcolor="#ffffff">
     <% String urlPrefix = "";
     String startIndex="0";
+    pageContext.setAttribute("startIndex", startIndex); 
   String contextPath = request.getContextPath();
   String pageUrl = "&PageId=DataElementsGroup";
   // HSK
