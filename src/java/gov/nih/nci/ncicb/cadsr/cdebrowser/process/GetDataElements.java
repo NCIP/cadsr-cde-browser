@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.12 2005-03-09 21:04:30 jiangja Exp $
+ * @version: $Id: GetDataElements.java,v 1.13 2005-03-10 00:01:28 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -379,7 +379,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
           // Set search preference  from old Search Bean to the new one 
          setValuesFromOldSearchBean(desb);
          desb.setLOVLists(dbUtil);        
-      myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
+      //myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
 
       }
       else if (performQuery.equals("sortResults")) {

@@ -23,8 +23,6 @@
   
   if(jumpto!=null)
     jumptoStr = "onload=\"location.hash='#"+jumpto+"'";
-  System.out.println("jumpto="+jumpto);
-  System.out.println("jumptoStr="+jumptoStr);
 %>
 </HEAD>
 <BODY topmargin=0 bgcolor="#ffffff" <%=jumptoStr%> ">
