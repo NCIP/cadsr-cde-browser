@@ -29,6 +29,10 @@ public class BC4JDataElementConceptTransferObject extends AdminComponentTransfer
   protected int cdPublicId;
   protected int ocPublicId;
   protected int propPublicId;
+  protected String cDPublicId;
+  protected String objClassPublicId;
+  protected String propertyPublicId;
+
 
 	public BC4JDataElementConceptTransferObject() {
 		super();
@@ -178,5 +182,38 @@ public class BC4JDataElementConceptTransferObject extends AdminComponentTransfer
 	public Float getCDVersion() {
 		return cdVersion;
 	}
+  public void setCDPublicId(String cDPublicID)
+  {
+    this.cDPublicId = cDPublicID;
+  }
 
+
+  public String getCDPublicId()
+  {
+    return cDPublicId;
+  }
+
+
+  public void setObjClassPublicId(String objClassPublicId)
+  {
+    this.objClassPublicId = objClassPublicId;
+  }
+
+
+  public String getObjClassPublicId()
+  {
+    return objClassPublicId;
+  }
+
+
+  public void setPropertyPublicId(String propertyPublicId)
+  {
+    this.propertyPublicId = propertyPublicId;
+  }
+
+
+  public String getPropertyPublicId()
+  {
+    return propertyPublicId;
+  }
 }

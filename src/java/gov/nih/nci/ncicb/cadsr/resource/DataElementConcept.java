@@ -14,8 +14,14 @@ public interface DataElementConcept extends AdminComponent
    public String getOclName();
    public void setOclName(String aOclName);
    
+   public String getObjClassPublicId();
+   public void setObjClassPublicId(String aObjClassPublicId);
+   
    public String getObjClassQualifier();
    public void setObjClassQualifier(String aObjClassQualifier);
+
+   public String getPropertyPublicId();
+   public void setPropertyPublicId(String aPropertyPublicId);
 
    public String getPropertyQualifier();
    public void setPropertyQualifier(String aPropertyQualifier);
@@ -34,4 +40,6 @@ public interface DataElementConcept extends AdminComponent
    public String getCDContextName();
    public String getCDPrefName();
    public Float getCDVersion();
+   public String getCDPublicId();
+   public void setCDPublicId(String publicId);
 }

@@ -14,6 +14,7 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 	protected String classSchemeDefinition;
 	protected String classSchemeItemName;
 	protected String classSchemeItemType;
+  protected String csPublicId;
 
 	public BC4JClassificationsTransferObject() {
 		super();
@@ -68,5 +69,16 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 	public void setClassSchemeItemType(String aClassSchemeItemType) {
 		classSchemeItemType = aClassSchemeItemType;
 	}
+
+  public String getClassSchemePublicId() 
+  {
+    return csPublicId;
+  }
+  
+  public void setClassSchemePublicId(String publicId) 
+  {
+    csPublicId = publicId;
+  }
+
 
 }
