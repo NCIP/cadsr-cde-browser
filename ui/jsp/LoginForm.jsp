@@ -58,7 +58,6 @@ function submitForm() {
         <td class="OraFieldText" nowrap>
           <input type="text" name="j_username" value="" size ="20"> 
         </td>
-
     </tr>
     <tr>
         <td class="OraFieldtitlebold" nowrap>Password:</td>
@@ -81,6 +80,9 @@ function submitForm() {
     </tr>
   </table>    
   </form>
+  <SCRIPT>
+    document.forms[0].elements[0].focus();
+  </SCRIPT>
 <TABLE width=100% cellspacing=0 cellpadding=0 border=0>
 <TR>
 <TD valign=bottom width=99%><img src="i/bottom_shade.gif" height=6 width="100%"></TD>
