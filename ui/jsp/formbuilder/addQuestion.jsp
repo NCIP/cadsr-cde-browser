@@ -107,7 +107,10 @@ function details(linkParms ){
 <html:form action='<%= "/addQuestion?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.ADD_QUESTION %>' 
   onsubmit="validate(this)">
 
-<%@ include file="addQuestion_inc.jsp" %>
+<logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
+  <%@ include file="addQuestion_inc.jsp" %>
+</logic:notEmpty>
+
 <%@ include file="showMessages.jsp" %>
 <html:hidden property="<%= FormConstants.QUESTION_INDEX %>"/>
 
@@ -125,7 +128,7 @@ function details(linkParms ){
     </tr>
   <logic:empty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
     <tr class="OraTabledata">
-        <td class="OraFieldText">
+        <td class="OraFieldText" colspan="8">
           CDE Cart is empty. 
         </td>
     </tr>
@@ -174,16 +177,17 @@ function details(linkParms ){
     </table>
     <br>
 
-      <%@ include file="addQuestion_inc.jsp" %>
-    <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
-
-      <tr >
-        <td>
-          <a href='<%= "cdeBrowse.jsp?src=gotoAddQuestion&amp;moduleIndex=" +  request.getParameter("moduleIndex") + "&amp;questionIndex=" + request.getParameter("questionIndex")+"&PageId=DataElementsGroup" %>'><html:img src='<%=urlPrefix+"i/add_more_data_elements.gif"%>' border="0" alt="Add more data elements"/></a>
-        </td>
-      </tr>
-    </table>    
+    <%@ include file="addQuestion_inc.jsp" %>
   </logic:notEmpty>
+  
+  <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
+    
+    <tr >
+      <td>
+        <a href='<%= "cdeBrowse.jsp?src=gotoAddQuestion&amp;moduleIndex=" +  request.getParameter("moduleIndex") + "&amp;questionIndex=" + request.getParameter("questionIndex")+"&PageId=DataElementsGroup" %>'><html:img src='<%=urlPrefix+"i/add_more_data_elements.gif"%>' border="0" alt="Add more data elements"/></a>
+      </td>
+    </tr>
+  </table>    
 </logic:present>
 </html:form>
 <%@ include file="../common/common_bottom_border.jsp"%>
