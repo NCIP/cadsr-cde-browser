@@ -129,5 +129,6 @@ public interface FormBuilderServiceRemote {
         throws RemoteException;
 
     public Form createForm(Form form, FormInstruction formHeaderInstruction,
-        FormInstruction formFooterInstruction);
+        FormInstruction formFooterInstruction) 
+	throws RemoteException;
 }
