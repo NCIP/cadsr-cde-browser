@@ -70,8 +70,8 @@ function details(linkParms ){
 
 <% 
 
-  String downloadXMLURL = "javascript:fileDownloadWin('downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
-  String downloadExcelURL = "javascript:fileDownloadWin('downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
+  String downloadXMLURL = "javascript:fileDownloadWin('cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
+  String downloadExcelURL = "javascript:fileDownloadWin('cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
   
   String doneURL = "";
   
