@@ -101,7 +101,7 @@
  					paramName="question"
  					paramProperty="dataElement.deIdseq"
  					target="_blank">
-					<bean:write name="question" property="dataElement.publicId"/>
+					<bean:write name="question" property="dataElement.cDEId"/>
 	    			    </html:link>
 	    			 </td>
                               </logic:present>
