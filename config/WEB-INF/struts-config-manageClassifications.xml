@@ -37,6 +37,7 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ManageClassificationsAction"
       validate="false">
       <forward name="success" path="/formbuilder/manageClassifications.jsp"/>
+      <forward name="failure" path="/formbuilder/manageClassifications.jsp"/>
     </action>
 
   </action-mappings>
