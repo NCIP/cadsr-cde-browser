@@ -21,6 +21,7 @@
   
    <property name="jboss.home" value="D:/tools/other/jboss-4.0.0" /> 
    <property name="jboss.start.script.name" value="run.bat" />
+   <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
   
@@ -75,8 +76,8 @@
   <property name="open.source.dir.raw.lib" value="${open.source.dir.raw}/lib" />
   <property name="open.source.dir.raw.src" value="${open.source.dir.raw}/src" />
   <property name="open.source.dir.raw.ui" value="${open.source.dir.raw}/ui" />
-  <property name="app.docs.setup.distribution.readme.name" value="CDEBrowser_3.0_DistributionReadme" /> 
-  <property name="app.docs.setup.distribution.src.readme.name" value="CDEBrowser_3.0_SrcDistributionReadme" /> 
+  <property name="app.docs.setup.distribution.readme.name" value="CDEBrowserDistributionReadme" /> 
+  <property name="app.docs.setup.distribution.src.readme.name" value="CDEBrowserSrcDistributionReadme" /> 
   <property name="open.source.readme.name" value="source_readme" /> 
   
   <!-- base dir in the zip file -->
@@ -259,7 +260,16 @@
              <include name="crfBuilder.xml"/>
            </patternset>
          </fileset>      
-      </copy>    
+      </copy>  
+
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.home}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy> 
+        
    </target>
   <!-- =========== END DEV CONFIG ======================= -->
   
@@ -739,8 +749,16 @@
            <exec executable="cmd.exe" spawn="true" os="Windows 2000">
                            <arg value="/C"/>
                            <arg value="start"/>
-                           <arg value="${jboss.home}/bin/${jboss.stop.script.name}"/>
+                           <arg value="${jboss.home}/bin/${jboss.stop.script.name} -S"/>
            </exec>
+  </target>
+  
+  <target name="jboss_startdebug">
+               <exec executable="cmd.exe" spawn="true" os="Windows 2000">
+                               <arg value="/C"/>
+                               <arg value="start"/>
+                               <arg value="${jboss.home}/bin/${jboss.start.debug.script.name}"/>
+               </exec>
   </target>
   
   <target name="jboss_start">
@@ -756,21 +774,46 @@
 	<delete file="${jboss.home}/server/default/deploy/${ear.name}.ear" failonerror="true" verbose="true" />
    </target>    
    
-   <target  name="ear_deploy_jboss" depends="dev_config,ear_cdebrowser"> 
+   <target  name="deploy_dev" depends="clean,clean_jboss,dev_config,ear_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
              <include name="${ear.name}.ear"/>
            </patternset>
          </fileset> 
-     </copy>
+     </copy>  
+     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes">    
+         <fileset dir="${config.home}/connections">
+           <patternset>
+             <include name="oracle-ds.xml"/>
+           </patternset>
+         </fileset>
+      </copy>       
    </target> 
    
+   <target  name="deploy_dev_start" depends="deploy_dev,jboss_startdebug"> 
+   </target> 
    
   
-  <target  name="clean_build_deploy_qa" depends="clean,qa_config,ear_cdebrowser,clean_jboss,ear_deploy_jboss"> 
-  </target>
-  
+   <target  name="deploy_qa" depends="clean,clean_jboss,qa_config,ear_cdebrowser"> 
+     <copy todir="${jboss.home}/server/default/deploy">      
+         <fileset dir="${build.dir}">
+           <patternset>
+             <include name="${ear.name}.ear"/>
+           </patternset>
+         </fileset> 
+     </copy>  
+     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes">    
+         <fileset dir="${config.qa}/connections">
+           <patternset>
+             <include name="oracle-ds.xml"/>
+           </patternset>
+         </fileset>
+      </copy>       
+   </target> 
+   
+      <target  name="deploy_qa_start" depends="deploy_qa,jboss_startdebug"> 
+   </target>
 
 
 <!-- =========== End Deployment targets  ======================= -->
@@ -901,10 +944,6 @@
        jar_formbuilder_ejb    - Create formbuilder ejb
        jar_persistence_form   - Creates form builder persistence jar
        jar_common	      - Creates common jar
-       ear_deploy	      - Deploy the application ear(Developement)
-       bind_web_app	      - Binds the web app(Developement)
-       deploy_cdebrowser      - Deploy the application and binds the web app(Developement)
-       ear_undeploy	      - Undeploy the application(Developement)
 
        
        dist_dev		      - Creates Developement Clean distribution.
