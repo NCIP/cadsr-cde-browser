@@ -30,7 +30,7 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
    *   list of Valid Value objects (key: vd idseq, value: vv list)
    *   
    */
-  public Map getPermissibleValues(List vdIdseqs){
+  public Map getPermissibleValues(Collection vdIdseqs){
 
     if (vdIdseqs == null) {
       return new HashMap();
@@ -115,13 +115,13 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCValueDomainDAO vdTest = new JDBCValueDomainDAO(locator);
-    List vdIdseqList = new ArrayList();
+    Collection vdIdseqList = new ArrayList();
     //vdIdseqList.add("29A8FB24-0AB1-11D6-A42F-0010A4C1E842");
     //vdIdseqList.add("99BA9DC8-209C-4E69-E034-080020C9C0E0");
 
     JDBCValueDomainDAO vddao = new JDBCValueDomainDAO(locator);
-    //Map vdMap = vddao.getPermissibleValues(null);
-    Map vdMap = vddao.getPermissibleValues(vdIdseqList);
+    Map vdMap = vddao.getPermissibleValues(null);
+    //Map vdMap = vddao.getPermissibleValues(vdIdseqList);
   }
 
 }

@@ -14,6 +14,6 @@ public interface ValueDomainDAO {
    *   list of Valid Value objects (key: vd idseq, value: vv list)
    *   
    */
-  public Map getPermissibleValues(List vdIdseqs);
+  public Map getPermissibleValues(Collection vdIdseqs);
 
 }
