@@ -99,11 +99,10 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
       {
         ruleByIds = getAllDerivationRulesForIds(cdrIds);    
       }
-      if(ruleByIds==null)
-       return new ArrayList();
-      if(ruleByIds.isEmpty())
-       return new ArrayList();   
-       
+      if(ruleByIds==null || ruleByIds.isEmpty())
+       //return new ArrayList(); // Fixed by Ram Chilukuri
+       return vvList;
+             
       Iterator vvIt2 = vvList.iterator();
       while(vvIt2.hasNext())
       {
