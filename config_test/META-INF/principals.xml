@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE principals PUBLIC "//Evermind - Orion Principals//" "http://xmlns.oracle.com/ias/dtds/principals.dtd">
+
+<principals>
+	<groups>
+		<group name="CDE MANAGER">
+			<description>CDE MANAGER</description>
+			<permission name="rmi:login" />
+		</group>		
+	</groups>
+</principals>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE orion-ejb-jar PUBLIC "-//Evermind//DTD Enterprise JavaBeans 1.1 runtime//EN" "http://xmlns.oracle.com/ias/dtds/orion-ejb-jar.dtd">
+
+<orion-ejb-jar >
+	<enterprise-beans>
+		<session-deployment name="FormBuilder" location="FormBuilder" max-tx-retries="0" >
+			<resource-ref-mapping name="jdbc/FormBuilderDS"  location="jdbc/ejb/FormBuilderDS" />
+		</session-deployment> 
+	</enterprise-beans>
+</orion-ejb-jar>
