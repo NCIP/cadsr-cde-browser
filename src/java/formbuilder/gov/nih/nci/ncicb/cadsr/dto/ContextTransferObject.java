@@ -58,6 +58,25 @@ public class ContextTransferObject extends BaseTransferObject implements Context
 
   public void setLanguage(String p0) {
   }
+  
+  /**
+   * This equals method only compares the Idseq to define equals
+   * @param obj
+   * @return 
+   */  
+ public boolean equals(Object obj)
+ {
+   if(obj == null)
+    return false;
+   if(!(obj instanceof Context))
+    return false;
+   Context context = (Context)obj;
+
+  if(this.getConteIdseq().equals(context.getConteIdseq()))
+      return true;
+    else
+      return false;
+ }  
   /**
    * Clones the Context Object
    * @return 

@@ -15,6 +15,8 @@ public class ProtocolTransferObject extends AdminComponentTransferObject
   Date endDate = null;
   Date beginDate = null;
 
+  public ProtocolTransferObject() {
+  }
   public ProtocolTransferObject(String longName) {
     setLongName(longName);
   }
@@ -67,6 +69,24 @@ public class ProtocolTransferObject extends AdminComponentTransferObject
     this.endDate = endDate;
   }
 
+  /**
+   * This equals method only compares the Idseq to define equals
+   * @param obj
+   * @return 
+   */  
+ public boolean equals(Object obj)
+ {
+   if(obj == null)
+    return false;
+   if(!(obj instanceof Protocol))
+    return false;
+   Protocol protocol = (Protocol)obj;
+
+  if(this.getProtoIdseq().equals(protocol.getProtoIdseq()))
+      return true;
+    else
+      return false;
+ }
   public String toString()
   {
     DebugStringBuffer sb = new DebugStringBuffer();
