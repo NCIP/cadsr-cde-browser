@@ -72,5 +72,6 @@ public interface FormConstants extends FormBuilderConstants
     public static final String ADD_AVAILABLE_VALID_VALUE="addAvailableValidValue";
     public static final String  VALUE_DOMAIN_VALID_VALUES_MAP ="valueDomainValidValueMap";
 
+    public static final String SELECTED_ITEMS = "selectedItems";
 
 }
