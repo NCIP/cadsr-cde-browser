@@ -1,115 +1,145 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
-// java imports
-import java.util.*;
-import java.io.*;
-import javax.servlet.http.*;
 
-// Framework imports
-import oracle.cle.util.statemachine.TransitionCondition;
-import oracle.cle.util.statemachine.TransitionConditionException;
-import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.PersistingProcess;
-import oracle.cle.process.ProcessParameter;
-import oracle.cle.process.ProcessResult;
-import oracle.cle.process.ProcessInfo;
-import oracle.cle.process.Service;
-//import oracle.cle.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.base.process.*;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.database.*;
+import gov.nih.nci.ncicb.cadsr.lov.ProtocolsLOVBean;
+import gov.nih.nci.ncicb.cadsr.util.*;
+
 import oracle.cle.persistence.HandlerFactory;
 
-//CDE Browser Application Imports
+import oracle.cle.process.PersistingProcess;
+import oracle.cle.process.ProcessInfo;
+import oracle.cle.process.ProcessInfoException;
+import oracle.cle.process.ProcessParameter;
+import oracle.cle.process.ProcessResult;
+import oracle.cle.process.Service;
 
-import gov.nih.nci.ncicb.cadsr.util.*;
-import gov.nih.nci.ncicb.cadsr.database.*;
-import gov.nih.nci.ncicb.cadsr.base.process.*;
-import gov.nih.nci.ncicb.cadsr.resource.*;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import oracle.cle.util.statemachine.TransitionCondition;
+import oracle.cle.util.statemachine.TransitionConditionException;
+
+import java.io.*;
+
+import java.util.*;
+
+import javax.servlet.http.*;
 
 
 /**
- *
- * @author Ram Chilukuri 
+ * @author Oracle
  */
-public class GetProtocolsLov extends BasePersistingProcess
-{
-	private HttpServletRequest myRequest = null;
-  private StringBuffer contextsList = null;
-    
-	public GetProtocolsLov()
-	{
-		this(null);
+public class GetProtocolsLov extends BasePersistingProcess {
+  public GetProtocolsLov() {
+    this(null);
+    DEBUG = false;
+  }
 
-		DEBUG = false;
-	} 
+  public GetProtocolsLov(Service aService) {
+    super(aService);
+    DEBUG = false;
+  }
 
-	public GetProtocolsLov(Service aService)
-	{
-		super(aService);
-
-		DEBUG = false;
-	}
-
-
-	/**
-	* Registers all the parameters and results 
-	* (<code>ProcessInfo</code>) for this process
-	* during construction.
-	*
-	* @author Ram Chilukuri
-	*/
-	public void registerInfo()
-	{
-		try{
-			registerStringParameter(ProcessConstants.TEMPLATE_IDSEQ);
-      
-		} 
-		catch(ProcessInfoException pie){
-			reportException(pie,true);
-		}  
-
-    catch(Exception e) {
+  /**
+   * Registers all the parameters and results  (<code>ProcessInfo</code>) for
+   * this process during construction.
+   */
+  public void registerInfo() {
+    try {
+      registerResultObject(ProcessConstants.PROTO_LOV);
+      registerResultObject("tib");
+      registerParameterObject("SEARCH");
+      registerStringParameter("P_PARAM_TYPE");
+      registerStringParameter("P_CONTEXT");
+      registerStringParameter("P_CONTE_IDSEQ");
+      registerParameterObject(ProcessConstants.PROTO_LOV);
+      registerStringParameter("performQuery");
+      registerStringResult("performQuery");
+      registerParameterObject("dbUtil");
+      registerStringParameter("SBR_DSN");
     }
-	}
+    catch (ProcessInfoException pie) {
+      reportException(pie, true);
+    }
 
-	/**
-	* persist: called by start to do all persisting
-	*   work for this process.  If this method throws
-	*   an exception, then the condition returned by
-	*   the <code>getPersistFailureCondition()</code>
-	*   is set.  Otherwise, the condition returned by
-	*   <code>getPersistSuccessCondition()</code> is
-	*   set.
-	*
-	* @author Oracle
-	*/
-	public void persist() throws Exception
-	{
-		try
-		{
-      String crfIdseq = getStringInfo("templateIdseq");
+    catch (Exception e) {
+    }
+  }
 
-			setCondition(SUCCESS);
-			}
-		catch(Exception ex){
-      try{
-				setCondition(FAILURE);
-			}
-			catch(TransitionConditionException tce){
-				reportException(tce,DEBUG);
-			}
+  /**
+   * persist: called by start to do all persisting work for this process.  If
+   * this method throws an exception, then the condition returned by the
+   * <code>getPersistFailureCondition()</code> is set.  Otherwise, the
+   * condition returned by <code>getPersistSuccessCondition()</code> is set.
+   */
+  public void persist() throws Exception {
+    HttpServletRequest myRequest = null;
+    TabInfoBean tib = null;
+    String[] searchParam = null;
+    String performQuery = null;
+    ProtocolsLOVBean protolb = null;
+    String additionalWhere = "";
+    DBUtil dbUtil = null;
 
-			reportException(ex,DEBUG);
-			} 
-	}
+    try {
+      tib = new TabInfoBean("cdebrowser_lov_tabs");
+      myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
+      tib.processRequest(myRequest);
 
-	protected TransitionCondition getPersistSuccessCondition()
-	{
-		return getCondition(SUCCESS);
-	}
+      if (tib.getMainTabNum() != 0) {
+        tib.setMainTabNum(0);
+      }
 
-	protected TransitionCondition getPersistFailureCondition()
-	{
-		return getCondition(FAILURE);
-	}
+      performQuery = getStringInfo("performQuery");
 
-  
+      if (performQuery == null) {
+        dbUtil = (DBUtil) getInfoObject("dbUtil");
+
+        String dsName = getStringInfo("SBR_DSN");
+        dbUtil.getConnectionFromContainer(dsName);
+
+        String conteIdseq = getStringInfo("P_CONTE_IDSEQ");
+
+        if (conteIdseq == null) {
+          conteIdseq = "";
+        }
+
+        additionalWhere =
+          " and upper(nvl(proto_conte.conte_idseq,'%')) like upper ( '%" +
+          conteIdseq + "%') ";
+        protolb = new ProtocolsLOVBean(myRequest, dbUtil, additionalWhere);
+        dbUtil.returnConnection();
+      }
+      else {
+        protolb = (ProtocolsLOVBean) getInfoObject(ProcessConstants.PROTO_LOV);
+        protolb.getCommonLOVBean().resetRequest(myRequest);
+      }
+
+      setResult(ProcessConstants.PROTO_LOV, protolb);
+      setResult("performQuery", null);
+      setResult("tib", tib);
+      setCondition(SUCCESS);
+    }
+    catch (Exception ex) {
+      try {
+        setCondition(FAILURE);
+        dbUtil.returnConnection();
+      }
+      catch (TransitionConditionException tce) {
+        reportException(tce, DEBUG);
+      }
+      catch (Exception e) {
+        reportException(e, DEBUG);
+      }
+
+      reportException(ex, DEBUG);
+    }
+  }
+
+  protected TransitionCondition getPersistSuccessCondition() {
+    return getCondition(SUCCESS);
+  }
+
+  protected TransitionCondition getPersistFailureCondition() {
+    return getCondition(FAILURE);
+  }
 }

@@ -18,6 +18,17 @@
 function submitForm() {
   document.forms[0].submit();
 }
+/* HSK */
+function clearClassSchemeItem() {
+  document.forms[0].jspClassification.value = "";
+  document.forms[0].txtClassSchemeItem.value = "";
+}
+
+function clearProtocol() {
+  document.forms[0].jspProtocol.value = "";
+  document.forms[0].txtProtocol.value = "";
+}
+
 -->
 </SCRIPT>
 </HEAD>
@@ -25,7 +36,14 @@ function submitForm() {
 
 <%
   String urlPrefix = "../";
-  %>
+  String pageUrl = "&PageId=DataElementsGroup";
+  // HSK
+
+  String csLOVUrl= "javascript:newWin('/cdebrowser/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
+
+  String protoLOVUrl= "javascript:newWin('/cdebrowser/search?protocolsLOV=9&idVar=jspProtocol&nameVar=txtProtocol"+pageUrl+"','protoLOV',700,600)";
+
+%>
 <%@ include  file="/formbuilder/tab_include_search.jsp" %>
 
 <P>&nbsp;</P>
@@ -37,11 +55,22 @@ function submitForm() {
           <input type="text" name="<%=FormConstants.FORM_LONG_NAME%>" value="" size ="20"> 
         </td>
 
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol" />:</td>
-        <td class="OraFieldText" nowrap>
-          <input type="text" name="<%=FormConstants.PROTOCOL_ID_SEQ%>" value="" size ="20"> 
-        </td>      
+    <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/>:</td>
+    <td class="OraFieldText" nowrap>
+      <input type="text" name="txtProtocol" 
+             value="" 
+             readonly onFocus="this.blur();"
+             class="LOVField"
+             size ="18"
+      >
+      &nbsp;<a href="<%=protoLOVUrl%>"><img src="../i/search_light.gif" border="0" alt="Search for Protocols"></a>&nbsp;
+      <a href="javascript:clearProtocol()"><i>Clear</i></a>
+      <input type="hidden" name="jspProtocol" value="" >
+    </td>
+
+
     </tr>
+
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
         <td class="OraFieldText" nowrap>
@@ -59,12 +88,29 @@ function submitForm() {
           <input type="text" name="<%=FormConstants.CATEGORY_NAME%>" value="" size ="20"> 
         </td>
 
+
+    <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.classification"/>:</td>
+    <td class="OraFieldText" nowrap>
+      <input type="text" name="<%=FormConstants.CSI_NAME%>" 
+             value="" 
+             readonly onFocus="this.blur();"
+             class="LOVField"
+             size ="18"
+      >
+      &nbsp;<a href="<%=csLOVUrl%>"><img src="../i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
+      <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
+      <input type="hidden" name="<%=FormConstants.CS_CSI_ID%>" value="" >
+    </td>
+
+        
+    </tr>    
+    <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>
         <td class="OraFieldText" nowrap>
           <input type="text" name="<%=FormConstants.FORM_TYPE%>" value="" size ="20"> 
         </td>      
     </tr>    
-    <tr>
+    <tr>    
       <td>
         <html:hidden value="<%=NavigationConstants.GET_ALL_FORMS_METHOD%>" property="<%=NavigationConstants.METHOD_PARAM%>"/>
       </td>

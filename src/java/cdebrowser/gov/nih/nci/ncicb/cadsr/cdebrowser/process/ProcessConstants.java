@@ -49,6 +49,7 @@ public interface ProcessConstants extends oracle.cle.process.ProcessConstants {
   static final String VD_LOV = "vdlb";
   static final String DEC_LOV = "declb";
   static final String CS_LOV = "cslb";
+  static final String PROTO_LOV = "protolb";
 
   //Related to Page Context
   static final String PAGE_CONTEXT = "pgContext";
