@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
@@ -27,11 +28,11 @@ public class NCIUserTransferObject implements NCIUser,CaDSRConstants {
 
   public boolean hasRoleAccess(
     String role,
-    String contextId) {
+    Context context) {
     if (contexts != null) {
       Collection roleContexts = (Collection)contexts.get(role);
       if (roleContexts != null) {
-        if (roleContexts.contains(contextId)) {
+        if (roleContexts.contains(context)) {
           return true;
         }
       }

@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.jsp.tag.handler;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -89,14 +90,14 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
         }
         if(form==null)
           throw new JspException( "Secure icon: no form object in any scope ");
-        String contextId = form.getContext().getConteIdseq();
+        Context userContext = form.getContext();
         NCIUser  nciUser =  (NCIUser)pageContext.getSession().getAttribute(USER_KEY);
         req = ( HttpServletRequest )pageContext.getRequest();
         out = pageContext.getOut();    
       String targetStr = "";
       if(target!=null)
         targetStr="target=\""+target+"\" ";        
-       if( nciUser.hasRoleAccess(role,contextId))
+       if( nciUser.hasRoleAccess(role,userContext))
         {
           out.print("<a href='"+getHrefUrl(req,form)+"'"+targetStr+"/><img src=\""+urlPrefix+activeImageSource+"\" border=0 alt='"+altMessage+"'></a>");
         }

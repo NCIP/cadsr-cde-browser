@@ -5,7 +5,7 @@ import java.util.Map;
 public interface NCIUser 
 {
   public String getUsername();
-  public boolean hasRoleAccess(String role, String ContextId);
+  public boolean hasRoleAccess(String role, Context context);
   public Map getContextsByRole();
   public void setContextsByRole(Map contextsMap);
 }
