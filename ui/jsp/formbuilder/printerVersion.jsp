@@ -28,7 +28,7 @@
           <td  class="PrinterOraTableColumnHeader" width="20%">
             <bean:message key="cadsr.formbuilder.form.longName" />
           </td>                
-          <td  class="PrinterOraTableColumnHeader">
+          <td width="80%" class="PrinterOraTableColumnHeader">
             <bean:write name="<%=FormConstants.CRF%>" property="longName"/>
           </td>
         </tr>
@@ -36,7 +36,7 @@
           <td  width="20%">
             <bean:message key="cadsr.formbuilder.form.definition" />
           </td>                
-          <td  class="PrinterOraTableColumnHeader">
+          <td width="80%"  class="PrinterOraTableColumnHeader">
             <bean:write name="<%=FormConstants.CRF%>" property="preferredDefinition"/>
           </td>
         </tr>

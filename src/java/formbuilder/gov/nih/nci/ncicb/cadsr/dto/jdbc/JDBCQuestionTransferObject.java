@@ -24,7 +24,9 @@ public class JDBCQuestionTransferObject extends QuestionTransferObject
       dataElementTransferObject.setVersion(new Float(rs.getFloat(16))); // VERSION
       dataElementTransferObject.setLongName(rs.getString(17)); // DE_LONG_NAME
       dataElementTransferObject.setCDEId(Integer.toString(rs.getInt(18)));
+      dataElementTransferObject.setAslName(rs.getString("DE_WORKFLOW"));
       setDataElement(dataElementTransferObject); 
+      
       
       ValueDomainTransferObject valueDomainTransferObject = 
                                          new ValueDomainTransferObject();

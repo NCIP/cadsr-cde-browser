@@ -117,16 +117,7 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
       session.setAttribute(attrName, sessionObject);
 
       if (clear) {
-        Collection keys =
-          (Collection) session.getAttribute(
-            FormBuilderConstants.CLEAR_SESSION_KEYS);
-
-        if (keys == null) {
-          keys = new ArrayList();
-        }
-
-        keys.add(attrName);
-        session.setAttribute(FormBuilderConstants.CLEAR_SESSION_KEYS, keys);
+        setObjectsForClear(session,attrName);
       }
       else {
         setSessionObject(req, attrName, sessionObject);
@@ -199,7 +190,11 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
         (Collection) ((Map) nciUser.getContextsByRole()).get(CDE_MANAGER);
       setSessionObject(req, USER_CONTEXTS, contexts);
     }
-
+   
+   //Set the forms to be cleared if logedout or syserror
+   setObjectsForClear(req.getSession(),"searchForm");
+   setObjectsForClear(req.getSession(),"moduleEditForm");
+   setObjectsForClear(req.getSession(),"formEditForm");
 
   }
 
@@ -347,5 +342,20 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     if(str.equals(""))
       return false;
     return true;
+  }
+  
+  private void setObjectsForClear(HttpSession session, String attrName)
+  {
+        Collection keys =
+          (Collection) session.getAttribute(
+            FormBuilderConstants.CLEAR_SESSION_KEYS);
+
+        if (keys == null) {
+          keys = new ArrayList();
+        }
+
+        keys.add(attrName);
+        session.setAttribute(FormBuilderConstants.CLEAR_SESSION_KEYS, keys);
+
   }
 }

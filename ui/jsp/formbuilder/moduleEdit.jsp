@@ -267,10 +267,9 @@ function clearProtocol() {
                                 <tr class="OraTableColumnHeaderModule">
                                  
                                  <td >
-                                  <html:text size="100%"  property='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'>
-                                    maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>"
-                                  </html:text>
-                                 </td>
+                                  <html:textarea  styleClass="OraFieldText" rows="2" cols="102" property='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'>
+                                 </html:textarea>
+                                 </td>        
                                 <logic:present name="question" property="dataElement">
                                   <td align="center" width="70" >
                                    <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>' 

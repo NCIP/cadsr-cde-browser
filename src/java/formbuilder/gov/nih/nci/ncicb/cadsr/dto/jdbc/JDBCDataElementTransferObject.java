@@ -13,5 +13,6 @@ public class JDBCDataElementTransferObject extends DataElementTransferObject
     setCDEId(rs.getString(18));        // CDE_ID (public_id)
     setLongName(rs.getString(17));     // LONG_NAME
     setLongCDEName(rs.getString(15));  // Doc Text from Reference_Documents
+    setAslName(rs.getString("DE_WORKFLOW"));
   }
 }
