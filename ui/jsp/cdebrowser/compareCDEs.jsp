@@ -115,11 +115,28 @@ function details(linkParms ){
       </td>
     </tr>
 </table>
+<table cellpadding="0" cellspacing="0" width="80%" align="center" border=0>
+ <tr class="OraTabledata">
+    <td class="OraFieldText" ><a class="link" href="#dataElement">Data Element</a></td>
+    <td class="OraFieldText" ><a class="link" href="#referenceDocuments">Reference Documents</a></td>
+    <td class="OraFieldText" ><a class="link" href="#designations">Designations</a></td>
+    <td class="OraFieldText" ><a class="link" href="#dataElementConcept">Data Element Concept</a></td>
+    <td class="OraFieldText" ><a class="link" href="#valueDomainDetails">Value Domain Details</a></td>
+    <td class="OraFieldText" ><a class="link" href="#permissibleValues">Permissible Values</a></td>
+    <td class="OraFieldText" ><a class="link" href="#classifications">Classifications</a></td>
+ </tr>
+ </table>
+<table>
+    <tr>
+      <td align="left" class="AbbreviatedText">
+
+      </td>
+    </tr>
+</table>
 
 
 
-
-
+<A NAME="dataElement"></A> 
 
 <table cellpadding="0" cellspacing="0" width="80%" align="center" border=0>
   <tr>
@@ -224,6 +241,7 @@ function details(linkParms ){
 
 </table>
 
+<A NAME="referenceDocuments"></A> 
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
@@ -270,6 +288,7 @@ function details(linkParms ){
           <TD class=OraFieldText>HISTORIC SHORT CDE NAME
     </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
 
+<A NAME="designations"></A>
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
@@ -311,6 +330,7 @@ function details(linkParms ){
           <TD class=OraFieldText>USED_BY</TD>
           <TD class=OraFieldText>TEST</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
 
+<A NAME="dataElementConcept"></A>
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
@@ -383,7 +403,114 @@ function details(linkParms ){
     <td class="OraFieldText" width='40%'>3.2</td>
 
  </tr>
+ <tr class="OraTabledata">
+    <td class="OraTableColumnHeader">Conceptual Domain Preferred Name</td>
+
+    <td class="OraFieldText" width='40%'>BASIC SCIENCE </td>
+
+    <td class="OraFieldText" width='40%'>BASIC SCIENCE2</td>
+
+ </tr>
+
+ <tr class="OraTabledata">
+    <td class="OraTableColumnHeader">Conceptual Domain Context Name</td>
+
+    <td class="OraFieldText" width='40%'>CABIO</td>
+
+    <td class="OraFieldText" width='40%'>CTEP</td>
+
+ </tr> 
+ <tr class="OraTabledata">
+    <td class="OraTableColumnHeader">Conceptual Domain Version</td>
+
+    <td class="OraFieldText" width='40%'>3.1</td>
+
+    <td class="OraFieldText" width='40%'>4.2</td>
+
+ </tr>  
+ 
+  <tr class="OraTabledata">
+     <td class="OraTableColumnHeader">Object Class Preferred Name</td>
+ 
+     <td class="OraFieldText" width='40%'>MEASUREMENT </td>
+ 
+     <td class="OraFieldText" width='40%'>MEASUREMENT</td>
+ 
+ </tr> 
+ 
+   <tr class="OraTabledata">
+      <td class="OraTableColumnHeader">Object Class Context</td>
+  
+      <td class="OraFieldText" width='40%'>CABIO </td>
+  
+      <td class="OraFieldText" width='40%'>CTEP</td>
+  
+ </tr> 
+ 
+    <tr class="OraTabledata">
+       <td class="OraTableColumnHeader">Object Class Version</td>
+   
+       <td class="OraFieldText" width='40%'>2.1</td>
+   
+       <td class="OraFieldText" width='40%'>3.1</td>
+   
+ </tr> 
+
+ <tr class="OraTabledata">
+       <td class="OraTableColumnHeader">Object Class Qualifier</td>
+   
+       <td class="OraFieldText" width='40%'> </td>
+   
+       <td class="OraFieldText" width='40%'> </td>
+   
+ </tr> 
+ 
+  <tr class="OraTabledata">
+        <td class="OraTableColumnHeader">Property Preferred Name</td>
+    
+        <td class="OraFieldText" width='40%'> </td>
+    
+        <td class="OraFieldText" width='40%'> </td>
+    
+ </tr> 
+ 
+   <tr class="OraTabledata">
+         <td class="OraTableColumnHeader">Property Context</td>
+     
+         <td class="OraFieldText" width='40%'> </td>
+     
+         <td class="OraFieldText" width='40%'> </td>
+     
+ </tr> 
+ 
+    <tr class="OraTabledata">
+          <td class="OraTableColumnHeader">Property Context</td>
+      
+          <td class="OraFieldText" width='40%'> </td>
+      
+          <td class="OraFieldText" width='40%'> </td>
+      
+ </tr> 
+     <tr class="OraTabledata">
+           <td class="OraTableColumnHeader">Property Qualifier</td>
+       
+           <td class="OraFieldText" width='40%'> </td>
+       
+           <td class="OraFieldText" width='40%'> </td>
+       
+ </tr> 
+ <tr class="OraTabledata">
+            <td class="OraTableColumnHeader">Origin</td>
+        
+            <td class="OraFieldText" width='40%'> </td>
+        
+            <td class="OraFieldText" width='40%'> </td>
+        
+ </tr> 
 </table>
+
+
+<A NAME="valueDomainDetails"></A>
 
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
@@ -554,6 +681,7 @@ function details(linkParms ){
 
 </table>
 
+<A NAME="permissibleValues"></A>
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
@@ -693,7 +821,7 @@ function details(linkParms ){
          </TR>
 
        </TBODY></TABLE></TD></TR></TBODY></TABLE>
-
+<A NAME="classifications"></A>
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
