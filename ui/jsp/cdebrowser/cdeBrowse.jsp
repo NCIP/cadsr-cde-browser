@@ -16,14 +16,14 @@
 <%
   
   List cachedDeList = null;
-  Object webTree = null;
+  Boolean showCached = null;
   try{
   	cachedDeList = (List)currInfoBean.getInfo(ProcessConstants.ALL_DATA_ELEMENTS);
-  	webTree = session.getAttribute("webTree");
+  	showCached = session.getAttribute("showCached");
   	
   }
   catch(Exception ex){}
-  if(cachedDeList!=null||webTree!=null)
+  if(cachedDeList!=null||showCached!=null)
     pageContext.setAttribute("resultsPresent",new Boolean("true"));
   
   CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");

@@ -421,6 +421,7 @@ function done() {
 <%
     }
     else {
+    pageContext.getSession().setAttribute("showCached",new Boolean("true"));
 %>
 <table cellpadding="0" cellspacing="0" width="100%" align="center">
   <tr>
