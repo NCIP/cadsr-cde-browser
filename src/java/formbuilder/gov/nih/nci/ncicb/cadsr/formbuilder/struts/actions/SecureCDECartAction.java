@@ -110,7 +110,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
         questions.add(q);
       }
     }
-
+    saveMessage("cadsr.formbuilder.question.add.success",request);
     return mapping.findForward("success");
   }
 

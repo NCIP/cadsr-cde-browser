@@ -124,7 +124,14 @@
       validate="false">
       <forward name="success" path="/formbuilder/formResults.jsp"
         redirect="false"/>
-    </action>    
+    </action> 
+    <action name="searchForm" path="/newFormSearchAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction"
+      validate="false">
+      <forward name="success" path="/formbuilder/formbuilder.jsp"
+        redirect="false"/>
+    </action>     
     <action name="hrefCRFForm" path="/formDetailsAction" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction"

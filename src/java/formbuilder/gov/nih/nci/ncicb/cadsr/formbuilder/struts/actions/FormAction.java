@@ -105,6 +105,34 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
   }
 
   /**
+   * Clear the cache for a new search.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward newSearch(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    //Set the lookup values in the session
+    setInitLookupValues(request);
+    DynaActionForm searchForm = (DynaActionForm) form;
+    FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
+    formBean.clear();
+    removeSessionObject(request, this.FORM_SEARCH_RESULTS);
+    removeSessionObject(request, this.FORM_SEARCH_RESULTS_PAGINATION);
+    return mapping.findForward(SUCCESS);
+  }
+  
+  /**
    * Sets the parameters into a map. This action method need to called before
    * forwarding framed jsps since each frame has its own request object.
    *

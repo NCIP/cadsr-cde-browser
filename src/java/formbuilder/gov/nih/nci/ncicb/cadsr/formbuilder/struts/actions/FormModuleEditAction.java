@@ -864,7 +864,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       {
 
         List newVVList = currQuestion.getValidValues();
-        if(!newVVList.isEmpty())
+        if(newVVList!=null&&!newVVList.isEmpty())
         {
           if(validValuesChanges==null)
             validValuesChanges = new HashMap();
@@ -925,23 +925,31 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
                                             List editedValidValueList)
     {
        Map resultMap = new HashMap();
-       ListIterator orgIterator =   orgValidValueList.listIterator();
+       ListIterator orgIterator =  null;
+       if(orgValidValueList!=null)
+          orgIterator = orgValidValueList.listIterator();
        List deletedValidValueList = new ArrayList();
        List newVVList = new ArrayList();
        List updatedVVList = new ArrayList();
        // get the deleted Valid Values first
-       while(orgIterator.hasNext())
+       while(orgIterator!=null&&orgIterator.hasNext())
        {
           FormValidValue currVV = (FormValidValue)orgIterator.next();
           currVV.setQuestion(currQuestion);
-          if(!editedValidValueList.contains(currVV))
+          if(editedValidValueList!=null&&!editedValidValueList.contains(currVV))
+          {
+            deletedValidValueList.add(currVV);
+          }
+          if(editedValidValueList==null)
           {
             deletedValidValueList.add(currVV);
           }
        }
 
-       ListIterator editedIterator =   editedValidValueList.listIterator();
-       while(editedIterator.hasNext())
+       ListIterator editedIterator =  null;
+       if(editedValidValueList!=null)
+        editedValidValueList.listIterator();
+       while(editedIterator!=null&&editedIterator.hasNext())
        {
          FormValidValue editedVV = (FormValidValue)editedIterator.next();
          editedVV.setQuestion(currQuestion);

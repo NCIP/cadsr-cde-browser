@@ -55,16 +55,16 @@ function submitFormToSave(methodName) {
           </td>          
         </tr>          
       </table>  
-      <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >      
+      <table width="15%" align="center" cellpadding="1" cellspacing="1" border="0" >      
         <tr >
          <td align="center">
             <a href="javascript:submitFormToSave('<%=NavigationConstants.SAVE_FORM_CHANGES%>')">
-                <html:img src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
+                <html:img src='<%=urlPrefix+"i/yes.gif"%>' border="0" alt="Yes"/>
              </a> 
           </td>   
          <td align="center">
             <a href="javascript:submitFormToSave('<%=NavigationConstants.CANCEL_FORM_EDIT%>')">
-                <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+                <html:img src='<%=urlPrefix+"i/no.gif"%>' border="0" alt="No"/>
              </a> 
           </td>            
       </tr>      

@@ -53,7 +53,8 @@ function gotoClassificationsLOV() {
 </SCRIPT>
 
  <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
-
+<!--
+ TODO Will be in next build 
   <logic:present name="searchForm" property="<%=FormConstants.CONTEXT_NAME%>">
    <logic:notEqual name="searchForm" property="<%=FormConstants.CONTEXT_NAME%>" value='<%=""%>'>
      <logic:present name="searchForm" property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>">
@@ -83,7 +84,8 @@ function gotoClassificationsLOV() {
      </logic:notPresent>
      </logic:notEqual>
   </logic:present>
-  
+  **/
+-->
   <table cellspacing="2" cellpadding="3" border="0" width="100%">
   
     <tr>
@@ -173,10 +175,10 @@ function gotoClassificationsLOV() {
 	      <a href="javascript:submitForm('<%=NavigationConstants.GET_ALL_FORMS_METHOD%>')"><img src=<%=urlPrefix%>i/searchButton.gif border=0></a>
 	    </td>       
          <td align="left" >
-           <a href="javascript:clearForm()"><img src=<%=urlPrefix%>i/clear.gif border=0></a>
+           <a href="javascript:clearForm()"><img src=<%=urlPrefix%>i/reset.gif border=0></a>
           </td>
 	       <td  align="left" nowrap>
-	      <html:link action='<%="/clearFormSearchAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CLEAR_FORM_SEARCH_METHOD%>' >
+	      <html:link action='<%="/newFormSearchAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.NEW_SEARCH_METHOD%>' target="_parent">
 		     <html:img src='<%=urlPrefix+"i/newSearchButton.gif"%>' border="0" alt="New Search"/>
 	      </html:link>
 	    </td>          

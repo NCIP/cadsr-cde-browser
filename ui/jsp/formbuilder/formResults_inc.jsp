@@ -141,7 +141,7 @@ if(confirm(message)) location.href = url;
           	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	
           </tr>
       <tr class="OraTabledata" >
-         	<td colspan="5" ><bean:message key="cadsr.formbuilder.empty.search.results"/></td>
+         	<td colspan="6" ><bean:message key="cadsr.formbuilder.empty.search.results"/></td>
   	  </tr>
   	</table>        
                  

@@ -83,7 +83,7 @@ function clearProtocol() {
             <td class="OraTableColumnHeader" width="20%" nowrap>
               <bean:message key="cadsr.formbuilder.form.name"/>
             </td>
-            <td class="OraFieldText" nowrap>
+            <td class="OraFieldText" >
               <bean:write  name="<%=FormConstants.CRF%>" property="longName"/> 
             </td>
           </tr>
@@ -304,6 +304,14 @@ function clearProtocol() {
                                 
                             </td>
                         </tr>
+                       <tr class="OraTabledata">
+                          <td class="AbbreviatedText" nowrap align="left">
+                            <bean:message key="cadsr.formbuilder.helpText.moduleEdit.altText.deLongName"/>                            
+                          </td>                   
+                        <td colspan="4" nowrap align="left" class="OraFieldText">
+                          &nbsp;                          
+                        </td>
+                      </tr>                         
                       </logic:present>
                       <logic:present name="question" property="dataElement.longCDEName">
                       <tr class="OraTabledata">
@@ -319,15 +327,23 @@ function clearProtocol() {
                           </td>
                       </tr>
                        <tr class="OraTabledata">
+                          <td class="AbbreviatedText" nowrap align="left">
+                            <bean:message key="cadsr.formbuilder.helpText.moduleEdit.altText.deLongCDEName"/>                            
+                          </td>                   
+                        <td colspan="4" nowrap align="left" class="OraFieldText">
+                          &nbsp;                          
+                        </td>
+                      </tr>                                             
+                      </logic:present>                        
+                      </logic:present>
+                       <tr class="OraTabledata">
                           <td class="OraFieldText" nowrap align="left">
                             &nbsp;
                           </td> 
                           <td class="OraFieldText" nowrap align="left">
                             &nbsp;
                           </td>                           
-                      </tr>                      
-                      </logic:present>                      
-                      </logic:present>
+                       </tr>                         
                        <tr class="OraTabledata">
                           <td class="OraFieldText" nowrap align="left">
                             <bean:message key="cadsr.formbuilder.question.orginalValue" />
@@ -341,7 +357,15 @@ function clearProtocol() {
                                                   formIndex="0"
                                                   questionIndex="<%=questionIndex%>" /> 
                           </td>
-                      </tr>                        
+                      </tr>
+                       <tr class="OraTabledata">
+                          <td class="AbbreviatedText" nowrap align="left">
+                            <bean:message key="cadsr.formbuilder.helpText.moduleEdit.altText.orgQuestion"/>                            
+                          </td>                   
+                        <td colspan="4" nowrap align="left" class="OraFieldText">
+                          &nbsp;                          
+                        </td>
+                      </tr>                       
                       <logic:present name="question">
                       <logic:empty name="question" property="validValues">                           
                           <tr class="OraTabledata">
