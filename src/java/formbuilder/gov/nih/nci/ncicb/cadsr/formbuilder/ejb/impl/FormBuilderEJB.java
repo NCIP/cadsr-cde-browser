@@ -171,34 +171,32 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
     return fdao.deleteForm(formPK);
   }
-
-    /**
-     * @inheritDoc
-     */
+  
+  /**
+  * @inheritDoc
+  */
   public String createModule(
     Module module,
-    ModuleInstruction modInstruction
-    )  {
+    ModuleInstruction modInstruction) {
+    ModuleDAO mdao = daoFactory.getModuleDAO();
+    module.setContext(module.getForm().getContext());
 
-      ModuleDAO mdao = daoFactory.getModuleDAO();
-      module.setContext(module.getForm().getContext());
-      //       module.setProtocol(module.getForm().getProtocol());
-      module.setPreferredDefinition(module.getLongName());
-      String modulePK = mdao.createModuleComponent(module);
-      module.setModuleIdseq(modulePK);
+    //       module.setProtocol(module.getForm().getProtocol());
+    module.setPreferredDefinition(module.getLongName());
 
-      modInstruction.setModule(module);
-      modInstruction.setContext(module.getForm().getContext());
-      modInstruction.setPreferredDefinition(modInstruction.getLongName());
+    String modulePK = mdao.createModuleComponent(module);
+    module.setModuleIdseq(modulePK);
 
-      ModuleInstructionDAO midao = daoFactory.getModuleInstructionDAO();
-      midao.createModuleInstructionComponent(modInstruction);
-      
-      return modulePK;
+    modInstruction.setModule(module);
+    modInstruction.setContext(module.getForm().getContext());
+    modInstruction.setPreferredDefinition(modInstruction.getLongName());
+
+    ModuleInstructionDAO midao = daoFactory.getModuleInstructionDAO();
+    midao.createModuleInstructionComponent(modInstruction);
+
+    return modulePK;
   }
 
-
-    
   public int removeModule(
     String formPK,
     String modulePK) {
@@ -314,16 +312,24 @@ public class FormBuilderEJB extends SessionBeanAdapter
     String sourceFormPK,
     Form newForm) {
     Form resultForm = null;
-    
-    FormDAO myDAO= daoFactory.getFormDAO();
-    String resultFormPK = myDAO.copyForm(sourceFormPK,newForm);
+
+    FormDAO myDAO = daoFactory.getFormDAO();
+    String resultFormPK = myDAO.copyForm(sourceFormPK, newForm);
     resultForm = this.getFormDetails(resultFormPK);
 
     return resultForm;
   }
 
-  /**
-   * public Collection getContextsForUserAndRole( String username, String role)
-   * { return null; }
-   */
+  public int updateDEAssociation(
+    String questionId,
+    String deId,
+    String newLongName,
+    String username) {
+    QuestionDAO myDAO = daoFactory.getQuestionDAO();
+    int ret =
+      myDAO.updateQuestionDEAssociation(
+        questionId, deId, newLongName, this.getUserName());
+
+    return ret;
+  }
 }
