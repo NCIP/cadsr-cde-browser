@@ -5,11 +5,12 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.html.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
+
 <HTML>
 <HEAD>
 <TITLE>Welcome to Form Builder..</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
-<LINK REL=STYLESHEET TYPE="text/css" HREF="../cdebrowserCommon_html/blaf.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 
@@ -24,7 +25,7 @@ function submitForm() {
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 <%
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
-  String urlPrefix = "../";
+   String urlPrefix = "";
   %>
 <%@ include  file="/formbuilder/tab_include_search.jsp" %>
 
@@ -73,14 +74,40 @@ function submitForm() {
     <td colspan="4" nowrap align="left" class="AbbreviatedText">Wildcard character for search is *</td>
  </tr>
  <TR>
-    <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=../i/search.gif border=0></a></td>
-    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=../i/clear.gif border=0></a></td>
+    <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=i/search.gif border=0></a></td>
+    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=i/clear.gif border=0></a></td>
  </TR>    
     <tr>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
     </tr>
   </table>
+  <P>
+      <logic:present name="FormSearchResults">
+        <table cellspacing="2" cellpadding="3"  border="1" width="100%">
+          <tr>
+          	<td class="OraTableColumnHeader" nowrap>Long Name</td>
+          	<td class="OraTableColumnHeader" nowrap>Type</td>
+          	<td class="OraTableColumnHeader" nowrap>Workflow Status:</td>         	
+          </tr>        
+          <logic:iterate id="form" name="FormSearchResults" type="gov.nih.nci.ncicb.cadsr.resource.Form">
+            <tr>
+          	<td>
+          		<html:link page="/formAction.do" paramName="form" paramProperty="preferredName">
+            			<bean:write name="form" property="longName"/><br>
+          		</html:link>    
+          	</td>
+          	<td>
+          		<bean:write name="form" property="formType"/><br>
+          	</td>
+          	<td>
+          		<bean:write name="form" property="aslName"/><br>
+          	</td>          	
+            </tr>
+          </logic:iterate>
+        </table>
+        </logic:present>
+   </P>
   <P>
     
   </P>

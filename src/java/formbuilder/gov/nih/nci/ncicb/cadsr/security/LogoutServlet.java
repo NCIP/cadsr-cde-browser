@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.security;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ public class LogoutServlet extends HttpServlet
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    String logoutHome = this.getServletContext().getInitParameter("LogoutHome");
+    String logoutHome = request.getParameter(CaDSRConstants.LOGOUT_URL);
     if(logoutHome!=null)
     {
       request.getSession().invalidate();
@@ -27,7 +28,7 @@ public class LogoutServlet extends HttpServlet
     }
     else
       {
-        response.getWriter().println("<b><h3>User Logged out</h3></b>");
+        response.getWriter().println("User Logged out");
         response.getWriter().flush();
       }
   }

@@ -8,6 +8,8 @@ import gov.nih.nci.ncicb.cadsr.resource.Form;
 public class FormTransferObject extends AdminComponentTransferObject implements Form 
 {
 
+  Protocol protocol = null;
+  String formType = null;
   
   public FormTransferObject()
   {
@@ -24,17 +26,23 @@ public class FormTransferObject extends AdminComponentTransferObject implements 
 
   public String getFormType()
   {
-    return null;
+    return formType;
   }
 
-  public void setFormType(String p0)
+  public void setFormType(String newFormType)
   {
+    formType=newFormType;
   }
 
   public Protocol getProtocol()
   {
-    return null;
+    return protocol;
   }
+  
+  public void setProtocol(Protocol newProtocol)
+  {
+    this.protocol=newProtocol;
+  }  
 
   public String getProtoIdseq()
   {

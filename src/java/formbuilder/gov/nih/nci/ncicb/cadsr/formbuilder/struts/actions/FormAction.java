@@ -30,16 +30,32 @@ public class FormAction extends FormBuilderBaseDispatchAction
   
     FormBuilderServiceDelegate service = getFormBuilderService();
     DynaActionForm searchForm = (DynaActionForm) form;
-    String formName = (String)searchForm.get("formName");
-    String protocol = (String)searchForm.get("protocol");
-    String context = (String)searchForm.get("context");
+    String formLongName = (String)searchForm.get("formLongName");
+    String protocolIdSeq = (String)searchForm.get("protocolIdSeq");
+    String contextIdSeq = (String)searchForm.get("contextIdSeq");
     String workflow = (String)searchForm.get("workflow");
-    String category = (String)searchForm.get("category");
+    String categoryName = (String)searchForm.get("categoryName");
     String type = (String)searchForm.get("type");    
-    Collection forms = service.getAllForms(formName,protocol,context, 
-                        workflow,category,type);
+    Collection forms = service.getAllForms(formLongName,protocolIdSeq,contextIdSeq, 
+                        workflow,categoryName,type);
     setSessionObject(request,"FormSearchResults",forms);
     System.out.println("In ActionForm");
     return mapping.findForward("success");
   }
+
+  /**
+   * This Action forwards to the default formbuilder home.
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   * @return 
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward sendHome(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+  {
+       return mapping.findForward("defaultHome");  
+  }
+  
 }

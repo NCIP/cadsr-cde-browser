@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FormBuilderBaseDispatchAction extends DispatchAction 
 {
 
- public static final String DEFAULT_METHOD_NAME= "getAllForms";
+ public static final String DEFAULT_METHOD_NAME= "sendHome";
  
 
   /**

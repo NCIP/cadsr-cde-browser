@@ -1,5 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.security.oc4j;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.security.Permission;
 import com.evermind.security.Group;
@@ -12,6 +15,7 @@ public class OC4JUserObject implements User
 {
   BaseUserManager userManager =null;
   String name = null;
+  Collection groupNameList ;
   public OC4JUserObject()
   {
   } 
@@ -69,7 +73,19 @@ public class OC4JUserObject implements User
 
   public boolean isMemberOf(Group group)
   {
-    return userManager.inGroup(this.getName(),group.getName());
+    if(groupNameList==null)
+      groupNameList= new ArrayList();
+    if(groupNameList.contains(group.getName()))
+      return true;
+    if(userManager.inGroup(this.getName(),group.getName()))
+      {
+        groupNameList.add(group.getName());
+        return true;
+      }
+    else
+    {
+      return false;
+    }
   }
 
   public void setPassword(String p0)

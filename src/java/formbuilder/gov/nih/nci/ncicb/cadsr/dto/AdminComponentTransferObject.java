@@ -7,7 +7,10 @@ import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 public class AdminComponentTransferObject extends BaseTransferObject implements AdminComponent 
 {
 
-  protected String preferredName;
+  private String preferredName;
+  private Context context;
+  private String longName;
+  private String aslName;
   
   public AdminComponentTransferObject()
   {
@@ -18,18 +21,19 @@ public class AdminComponentTransferObject extends BaseTransferObject implements 
     return preferredName;
   }
 
-  public void setPreferredName(String p0)
+  public void setPreferredName(String newPreferredName)
   {
-    preferredName=p0;
+    preferredName=newPreferredName;
   }
 
   public String getLongName()
   {
-    return null;
+    return longName;
   }
 
-  public void setLongName(String p0)
+  public void setLongName(String newLongName)
   {
+    longName=newLongName;
   }
 
   public Float getVersion()
@@ -52,11 +56,12 @@ public class AdminComponentTransferObject extends BaseTransferObject implements 
 
   public String getAslName()
   {
-    return null;
+    return aslName;
   }
 
-  public void setAslName(String p0)
+  public void setAslName(String newAslName)
   {
+    aslName=newAslName;
   }
 
   public String getLatestVersionInd()
@@ -88,11 +93,12 @@ public class AdminComponentTransferObject extends BaseTransferObject implements 
 
   public Context getContext()
   {
-    return null;
+    return context;
   }
 
-  public void setContext(Context p0)
+  public void setContext(Context newContext)
   {
+    context=newContext;
   }
 
   public List getRefereceDocs()

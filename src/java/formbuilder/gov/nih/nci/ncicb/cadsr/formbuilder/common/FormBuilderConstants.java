@@ -12,7 +12,7 @@ public interface FormBuilderConstants {
   public static final String FAILURE_KEY = "Failure";
   public static final String SIGNON_KEY = "Login";
   public static final String LOGIN_TOKEN_KEY = "Loginkey";
-  public static final String USER_KEY = "user";
+  public static final String USER_KEY = "nciUser";
   
 
 }

@@ -20,13 +20,13 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO  {
     super(locator);  
   }
 
-  public Collection getAllForms(String formName, String protocol, String context, 
-    String workflow, String category, String type)
+  public Collection getAllForms(String formLongName, String protocolIdSeq, String contextIdSeq, 
+          String workflow, String categoryName, String type)
   {  
      Collection col = new ArrayList();    
      FromQuery query = new FromQuery();
      query.setDataSource(getDataSource());
-     query.setSql(formName, protocol, context, workflow,category, type);
+     query.setSql(formLongName, protocolIdSeq, contextIdSeq, workflow,categoryName, type);
      return query.execute();  
     }   
     
@@ -36,11 +36,11 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO  {
         FromQuery() {
         super();
         }
-        public void setSql(String formName, String protocol, String context, 
-          String workflow, String category, String type)
+        public void setSql(String formLongName, String protocolIdSeq, String contextIdSeq, 
+          String workflow, String categoryName, String type)
           {
-            String whereClause = makeWhereClause(formName, protocol, context, workflow, 
-            category, type); 
+            String whereClause = makeWhereClause(formLongName, protocolIdSeq, contextIdSeq, workflow, 
+            categoryName, type); 
             super.setSql("SELECT * FROM FORM_TEMPLATE_VIEW " + whereClause);
           }
           
@@ -57,10 +57,10 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO  {
           if (!formName.equals("")){
             String temp = StringUtils.strReplace(formName,"*","%");
             if (hasWhere) {
-              whereBuffer.append(" AND UPPER(FORM) LIKE " + "UPPER('" + temp + "')");
+              whereBuffer.append(" AND UPPER(LONG_NAME) LIKE " + "UPPER('" + temp + "')");
             }
             else {
-              whereBuffer.append(" WHERE UPPER(FORM) LIKE " + "UPPER('"+ temp + "')");
+              whereBuffer.append(" WHERE UPPER(LONG_NAME) LIKE " + "UPPER('"+ temp + "')");
               hasWhere = true;
             }
           }
@@ -93,10 +93,10 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO  {
           }
           if (!category.equals("")){
             if (hasWhere) {
-              whereBuffer.append(" AND CATEGORY ='" + category + "'");
+              whereBuffer.append(" AND CATEGORY_NAME ='" + category + "'");
             }
             else {
-              whereBuffer.append(" WHERE CATEGORY ='" + category + "'");
+              whereBuffer.append(" WHERE CATEGORY_NAME ='" + category + "'");
               hasWhere = true;
             }
           }
