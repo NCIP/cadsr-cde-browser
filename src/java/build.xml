@@ -45,12 +45,6 @@
   <property name="jsp.dir" value="${ui.dir}/jsp"/>  
   <property name="html.dir" value="${ui.dir}/html"/>   
   <property name="formbuilder.jsp.dir" value="${jsp.dir}/formbuilder"/>  
-  <property name="cdebrowser.jsp.dir" value="${jsp.dir}/cdebrowser"/>
-  <property name="cdebrowser.html.dir" value="${html.dir}/cdebrowser"/>
-
-   
-  
-  
   <property name="build.dir" value="${project.home}/build"/>
   <property name="dist.dir" value="${project.home}/dist"/>
   <property name="classes.build.dir" value="${build.dir}/classes"/>
@@ -536,6 +530,8 @@
       <fileset dir="${jsp.dir}/">
         <patternset>
           <include name="formbuilder/**/*.*"/>  
+  <!-- release 3.0, reorganze ui directory -->
+          <include name="cdebrowser/**/*.*"/>  
           <include name="*.jsp"/>
         </patternset>
       </fileset>
@@ -546,16 +542,11 @@
                 <include name="*.jsp"/>
               </patternset>
       </fileset>
-        
-      <fileset dir="${cdebrowser.jsp.dir}/">        
+      
+  <!-- release 3.0, reorganze ui directory -->
+      <fileset dir="${html.dir}/">
         <patternset>
-          <include name="**/*.*"/>   
-        </patternset> 
-      </fileset>
-
-      <fileset dir="${cdebrowser.html.dir}/">
-        <patternset>
-          <include name="**/*.*"/>   
+          <include name="common/**/*.*"/>   
         </patternset>         
       </fileset>
 
@@ -568,6 +559,8 @@
       <fileset dir="${ui.dir}/">
         <patternset>
           <include name="jsLib/**/*.*"/>   
+          <!-- release 3.0, moved css to its own directory -->
+          <include name="css/**/*.*"/>   
         </patternset>      
       </fileset>
 
