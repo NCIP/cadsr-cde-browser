@@ -88,7 +88,26 @@
             <bean:write name="<%=FormConstants.CRF%>" property="version"/>
           </td>
          </tr>         
-          
+        <logic:present name="<%=FormConstants.CRF%>" property="instruction">
+          <tr class="PrinterOraTableColumnHeader">
+            <td   width="20%">
+              <bean:message key="cadsr.formbuilder.form.header.instruction"/>
+            </td>                
+            <td  class="PrinterOraTableColumnHeader">
+              <bean:write  name="<%=FormConstants.CRF%>" property="instruction.longName"/>
+            </td>
+          </tr>
+        </logic:present>
+        <logic:present name="<%=FormConstants.CRF%>" property="footerInstruction">     
+          <tr class="PrinterOraTableColumnHeader">
+            <td class="PrinterOraTableColumnHeader"  width="20%">
+              <bean:message key="cadsr.formbuilder.form.footer.instruction"/>
+            </td>                
+            <td  class="PrinterOraTableColumnHeader">
+              <bean:write  name="<%=FormConstants.CRF%>" property="footerInstruction.longName"/>
+            </td>
+          </tr> 
+        </logic:present>              
       </table>
       <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         <tr >
@@ -99,12 +118,28 @@
       </table>      
             <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
               <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
-                <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentBlack">               
+                <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentBlack">               
                  <tr class="PrinterOraTableColumnHeader">                 
                     <td class="PrinterOraTableColumnHeader">
                       <bean:write name="module" property="longName"/>
                     </td>
                   </tr>
+                   <logic:present name="module" property="instruction">                   
+                      <tr class="PrinterOraTabledata" >  
+                       <td colspan="2">
+                           <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentBlack" >
+                             <tr class="PrinterOraTabledata">
+                              <td class="PrinterOraTableColumnHeader" width="10%" nowrap>
+                                <bean:message key="cadsr.formbuilder.form.instruction"/> 
+                             </td>
+                             <td class="PrinterOraTabledata">
+                               <bean:write  name="module" property="instruction.longName"/>
+                             </td>
+                            </tr>
+                           </table>
+                       </td>
+                      </tr>
+                   </logic:present>                    
                   <logic:present name="module">
                   <logic:notEmpty name="module" property = "questions">
                     <tr class="PrinterOraTabledata">
@@ -137,7 +172,24 @@
                                     &nbsp;
                                  </td>                              
                             </logic:notPresent>                                
-                            </tr>                             
+                            </tr>    
+                            <logic:present name="question" property="instruction">
+                              <tr class="PrinterOraTableColumnHeader">
+                                 <td class="PrinterOraTableColumnHeader" width="50">&nbsp;</td>
+                                  <td class="PrinterOraTableColumnHeader" colspan="2">                              
+                                   <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentBlack" >
+                                     <tr class="PrinterOraTabledata">
+                                      <td class="PrinterOraTableColumnHeader" width="10%" nowrap>
+                                        <bean:message key="cadsr.formbuilder.form.instruction"/>
+                                     </td>
+                                     <td class="PrinterOraFieldText">
+                                       <bean:write  name="question" property="instruction.longName"/>
+                                     </td>
+                                    </tr>
+                                   </table>                                                            
+                                 </td>
+                               </tr> 
+                            </logic:present>                            
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">
                               <tr class="PrinterOraTabledata">
@@ -151,6 +203,33 @@
                                           <bean:write name="validValue" property="longName"/>
                                         </td>
                                       </tr>
+                                      <tr   class="PrinterOraTabledata">
+                                        <td class="PrinterOraFieldText" width="50">&nbsp;</td>
+                                        <td >                                      
+                                        <% if(question.getDataElement()!=null|| validValue.getInstruction()!=null){%>
+                                          <table align="center" width="100%" cellpadding="1" cellspacing="1" border="0"  class="OraBGAccentBlack" >                          
+                                            <logic:present name="question" property="dataElement">
+                                               <tr class="PrinterOraTabledata" >
+                                                 <td  class="PrinterOraTableColumnHeader" width="10%" nowrap >
+                                                   <bean:message key="cadsr.formbuilder.valueMeaning.name" /></td>
+                                                 <td class="PrinterOraFieldText" >
+                                                  <bean:write name="validValue" property="shortMeaning"/></td>                                          
+                                               </tr>  
+                                            </logic:present>
+                                              <logic:present name="validValue" property="instruction">                
+                                                 <tr class="PrinterOraTabledata" >
+                                                  <td class="PrinterOraTableColumnHeader" width="10%" nowrap>
+                                                    <bean:message key="cadsr.formbuilder.form.instruction"/> 
+                                                 </td>
+                                                 <td class="PrinterOraFieldText">
+                                                   <bean:write  name="validValue" property="instruction.longName"/>
+                                                 </td>
+                                                </tr>   
+                                              </logic:present>  
+                                           </table>   
+                                          <%}%>    
+                                        </td>
+                                      </tr>                                              
                                     </logic:iterate><!-- valid Value-->
                                   </table>
                                 </td>
