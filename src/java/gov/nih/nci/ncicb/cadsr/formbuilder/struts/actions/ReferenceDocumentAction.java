@@ -79,6 +79,14 @@ public class ReferenceDocumentAction
   }
 
   setSessionObject(request, DELETED_REFDOCS, deletedRefDocs);
+  
+  List deletedAtts = (List)getSessionObject(request, DELETED_ATTACHMENTS);
+
+  if (deletedAtts == null) {
+   deletedAtts = new ArrayList();
+  }
+
+  setSessionObject(request,  DELETED_ATTACHMENTS, deletedAtts);
 
   List clonedRefDocs = orgCRF.getRefereceDocs();
   setSessionObject(request, REFDOCS_CLONED, clonedRefDocs);
@@ -390,7 +398,6 @@ public class ReferenceDocumentAction
    }
 
    List deletedAtts = (List)getSessionObject(request, DELETED_ATTACHMENTS);
-
    for (int i = 0; i < deletedAtts.size(); i++) {
     Attachment deleteAttachment = (Attachment)deletedAtts.get(i);
 
