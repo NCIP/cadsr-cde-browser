@@ -2,8 +2,7 @@
 <!DOCTYPE orion-web-app PUBLIC "-//Evermind//DTD Orion Web Application 2.3//EN" "http://xmlns.oracle.com/ias/dtds/orion-web.dtd">
 
 <orion-web-app>
- 	<resource-ref-mapping  
- 	    location="jdbc/FormBuilderDS"  
-    	    name="jdbc/FormBuilderDS" />
-    	    
+  <resource-ref-mapping  
+    location="jdbc/pooled/FormBuilderDS"  
+    name="jdbc/FormBuilderDS" />
 </orion-web-app>
