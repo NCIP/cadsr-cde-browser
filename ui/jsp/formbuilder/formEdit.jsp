@@ -18,17 +18,21 @@
 <!--
 
 function submitForm() {
-  document.forms[0].submit();
+     document.forms[0].submit();
 }
 
 function submitFormEdit(methodName,moduleIndexValue) {
+  if(validateFormEditForm(formEditForm)) {
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
   document.forms[0].<%=FormConstants.MODULE_INDEX%>.value=moduleIndexValue;
   document.forms[0].submit();
+  }
 }
 function submitFormToSave(methodName) {
-  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
-  document.forms[0].submit();
+  if(validateFormEditForm(formEditForm)) {
+     document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+     document.forms[0].submit();
+  }
 }
 
 function clearProtocol() {
@@ -51,6 +55,8 @@ function clearProtocol() {
     "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
 
 %>
+
+      
     <html:form action="/formSaveAction.do">
      <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
      <html:hidden value="" property="<%=FormConstants.MODULE_INDEX%>"/>
@@ -60,6 +66,8 @@ function clearProtocol() {
         <jsp:param name="urlPrefix" value=""/>
       </jsp:include>
       <%@ include file="/formbuilder/editButton_inc.jsp"%>
+
+    <%@ include file="showValidationErrors.jsp" %>
     
       <logic:messagesPresent message="true">
        <table width="80%" align="center">
@@ -376,5 +384,7 @@ function clearProtocol() {
      <%@ include file="/formbuilder/editButton_inc.jsp"%>
     </html:form>
     <%@ include file="/common/common_bottom_border.jsp"%>
+
+    <html:javascript formName="formEditForm"/>
   </BODY>
 </HTML>
