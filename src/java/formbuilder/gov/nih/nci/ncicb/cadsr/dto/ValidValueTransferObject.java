@@ -71,7 +71,7 @@ public class ValidValueTransferObject implements ValidValue {
     return false;
    ValidValue vv = (ValidValue)obj;
 
-  if(this.getShortMeaningValue().equals(vv.getShortMeaningValue()))
+  if(this.getShortMeaningValue().equalsIgnoreCase(vv.getShortMeaningValue()))
       return true;
     else
       return false;

@@ -864,10 +864,17 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       {
 
         List newVVList = currQuestion.getValidValues();
-        if(newVVList!=null&&!newVVList.isEmpty())
+        if(currQuestion.getDataElement()==null)
+        {
+         validValuesChanges =
+            getNewDeletedUpdatedValidValues(currQuestion,orgQuestion.getValidValues(),
+                                            currQuestion.getValidValues());          
+        }
+        else if(newVVList!=null&&!newVVList.isEmpty())
         {
           if(validValuesChanges==null)
             validValuesChanges = new HashMap();
+          setQuestionForFormValidValues(currQuestion,newVVList);
           validValuesChanges.put(this.NEW_VV_LIST,newVVList);
         }
       }
@@ -979,7 +986,28 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
 
 
+  /**
+   * Removes the Question given by "quesIdSeq" from the question list
+   *
+   * @param questionIdSeq
+   * @param modules
+   *
+   * @return the removed module
+   */
+  private void setQuestionForFormValidValues(
+    Question question,
+    List fvvs) {
+    if(fvvs==null) return;
+    
+    ListIterator iterate = fvvs.listIterator();
 
+    while (iterate.hasNext()) {
+      FormValidValue fvv = (FormValidValue) iterate.next();
+      fvv.setQuestion(question);
+      }
+    }
+
+  
   /**
    * Removes the Question given by "quesIdSeq" from the question list
    *

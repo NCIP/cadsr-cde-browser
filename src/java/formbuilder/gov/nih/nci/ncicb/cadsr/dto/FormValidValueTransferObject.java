@@ -78,7 +78,7 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
     return false;
    FormValidValue vv = (FormValidValue)obj;
 
-   if(getLongName().equals(vv.getLongName()))
+   if(getLongName().equalsIgnoreCase(vv.getLongName()))
       return true;
     else
       return false;

@@ -138,6 +138,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
     if ((selectedText == null) | (selectedText.indexOf(",") == -1)) {
       // this is the remove association case
+      saveMessage("cadsr.formbuilder.question.changeAssociation.remove",request);
     }
     else {
       int ind = selectedText.indexOf(',');
@@ -158,6 +159,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
       q.setLongName(newLongName);
       q.setValidValues(newValidValues);
+      saveMessage("cadsr.formbuilder.question.changeAssociation.newAssociation",request);
     }
 
     q.setDataElement(de);
