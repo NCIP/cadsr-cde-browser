@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
+import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -101,7 +101,8 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
         log.debug("Exp while getting validValue" + exp);
       }
     }
-    Map availableValidValuesMap = getAvailableValidValuesForQuestions(selectedModule.getQuestions(),validValueMap);
+    selectedModule.setForm(crf);
+    Map availableValidValuesMap = getAvailableValidValuesForQuestions(selectedModule,selectedModule.getQuestions(),validValueMap);
     setSessionObject(request, AVAILABLE_VALID_VALUES_MAP, availableValidValuesMap);
 
     return mapping.findForward(SUCCESS);
@@ -656,13 +657,14 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     return mapping.findForward(SUCCESS);
       
     }  
- private Map getAvailableValidValuesForQuestions(List questions, Map vdvvMap)
+ private Map getAvailableValidValuesForQuestions(Module module,List questions, Map vdvvMap)
  {
    ListIterator questionIterator = questions.listIterator();
    Map availableVVMap = new HashMap();
    while(questionIterator.hasNext())
    {
      Question currQuestion = (Question)questionIterator.next();
+     currQuestion.setModule(module);    
      if(currQuestion.getDataElement()==null)
      {
        List vvList  = currQuestion.getValidValues();
@@ -702,10 +704,8 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
          ListIterator vvvdIterator = vdVVList.listIterator();         
          while(vvvdIterator.hasNext())
          {
-           ValidValue vv = (ValidValue)vvvdIterator.next();
-           FormValidValue tempFvv = new FormValidValueTransferObject();
-           tempFvv.setLongName(vv.getShortMeaningValue());
-           tempFvv.setVpIdseq(vv.getVpIdseq());
+            ValidValue vv = (ValidValue)vvvdIterator.next();
+            FormValidValue tempFvv = DTOTransformer.toFormValidValue(vv,currQuestion);
            if(!copyList.contains(tempFvv))
             copyList.add(tempFvv);
          }          

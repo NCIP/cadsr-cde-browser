@@ -56,7 +56,8 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     throws DMLException {
 
     // check if the user has the privilege to create valid value
-    boolean create = 
+    // This check only need to be at the form level -skakkodi
+   /** boolean create = 
       this.hasCreate(newValidValue.getCreatedBy(), "QUEST_CONTENT", 
         newValidValue.getConteIdseq());
     if (!create) {
@@ -64,6 +65,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       dml.setErrorCode(INSUFFICIENT_PRIVILEGES);
       throw dml;
     }
+    **/
 
     InsertQuestContent  insertQuestContent  = 
       new InsertQuestContent (this.getDataSource());
@@ -233,6 +235,11 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     }
     protected int createContent (FormValidValue sm, String qcIdseq) 
     {
+      String protocolIdSeq = null;
+      if( sm.getQuestion().getModule().getForm().getProtocol()!=null)
+      {
+         protocolIdSeq=sm.getQuestion().getModule().getForm().getProtocol().getProtoIdseq();
+      }
       Object [] obj = 
         new Object[]
           {qcIdseq,
@@ -240,8 +247,8 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
            generatePreferredName(sm.getLongName()),
            sm.getLongName(),
            sm.getPreferredDefinition(),
-           sm.getConteIdseq(),
-           sm.getQuestion().getModule().getForm().getProtoIdseq(),
+           sm.getContext().getConteIdseq(),
+           protocolIdSeq,
            sm.getAslName(),
            sm.getCreatedBy(),
            "VALID_VALUE",

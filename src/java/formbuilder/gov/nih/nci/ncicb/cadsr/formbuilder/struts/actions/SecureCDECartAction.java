@@ -53,7 +53,9 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
 	CDECart sessionCart =
 	    (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 
-	List questions = ((Module)getSessionObject(request, MODULE)).getQuestions();
+  Form crf = (Form)getSessionObject(request, CRF);
+  Module module = (Module)getSessionObject(request, MODULE);
+	List questions = module.getQuestions();
 
 	Collection col = sessionCart.getDataElements();
 	ArrayList al = new ArrayList(col);
@@ -64,13 +66,18 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
 	    DataElement de = (DataElement)((CDECartItem)al.get(Integer.parseInt(selectedItems[i]))).getItem();
 	    
 	    Question q = new QuestionTransferObject();
-
+      module.setForm(crf);
+      q.setModule(module);
 	    List values = de.getValueDomain().getValidValues();
-	    List newValidValues = DTOTransformer.toFormValidValueList(values);
+	    List newValidValues = DTOTransformer.toFormValidValueList(values,q);
 
 	    q.setValidValues(newValidValues);
 	    q.setDataElement(de);
 	    q.setLongName(de.getLongName());
+      q.setVersion(crf.getVersion());
+      q.setAslName(crf.getAslName());
+      q.setPreferredDefinition(de.getPreferredDefinition());
+      q.setContext(crf.getContext());
 
 	    q.setDisplayOrder(displayOrder);
 	    
@@ -125,7 +132,7 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
 	    de = (DataElement)((CDECartItem)al.get(deIndex)).getItem();
 
 	    List values = de.getValueDomain().getValidValues();
-	    newValidValues = DTOTransformer.toFormValidValueList(values);
+	    newValidValues = DTOTransformer.toFormValidValueList(values,q);
 	    
 	    q.setLongName(newLongName);
 	    

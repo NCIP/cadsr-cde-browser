@@ -80,6 +80,8 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     throws DMLException {
 
     // check if the user has the privilege to create module
+    //This check need to be done only at the Form level
+  /**
     boolean create = 
       this.hasCreate(sourceModule.getCreatedBy(), "QUEST_CONTENT", 
         sourceModule.getConteIdseq());
@@ -88,7 +90,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
        dml.setErrorCode(this.INSUFFICIENT_PRIVILEGES);
        throw dml;
     }
-
+   **/
     sourceModule.setPreferredName(generatePreferredName(sourceModule.getLongName()));
 
     InsertQuestContent  insertQuestContent  = 

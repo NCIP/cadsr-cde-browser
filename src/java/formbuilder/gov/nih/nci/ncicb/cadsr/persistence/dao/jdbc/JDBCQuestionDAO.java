@@ -239,7 +239,10 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
    public Question createQuestionComponent(Question newQuestion)
     throws DMLException {
     // check if the user has the privilege to create module
-    boolean create =
+    //This need to be done only at the form level-skakkodi
+   
+   /**
+    * boolean create =
       this.hasCreate(
         newQuestion.getCreatedBy(), "QUEST_CONTENT", newQuestion.getConteIdseq());
 
@@ -248,6 +251,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
        dml.setErrorCode(this.INSUFFICIENT_PRIVILEGES);
        throw dml;
     }
+    **/
 
     InsertQuestContent insertQuestContent =
       new InsertQuestContent(this.getDataSource());
@@ -405,13 +409,20 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     protected int createContent(
       Question sm,
       String qcIdseq) {
+      String conextIdSeq = null;
+      String deIdseq = null;
+      
+      if( sm.getDataElement()!=null)
+      {
+         deIdseq = deIdseq = sm.getDataElement().getDeIdseq();
+      }       
       Object[] obj =
         new Object[] {
           qcIdseq, sm.getVersion().toString(),
           generatePreferredName(sm.getLongName()), sm.getLongName(),
-          sm.getPreferredDefinition(), sm.getConteIdseq(),
+          sm.getPreferredDefinition(), sm.getContext().getConteIdseq(),
           sm.getAslName(), sm.getCreatedBy(),
-          "QUESTION", sm.getDataElement().getDeIdseq()
+          "QUESTION", deIdseq
         };
 
       int res = update(obj);

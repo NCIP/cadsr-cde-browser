@@ -86,6 +86,23 @@ function clearProtocol() {
         </table>
       </logic:messagesPresent>
       <logic:present name="<%=FormConstants.MODULE%>">
+      <table  width="80%">
+        <tr>
+           <td>&nbsp;</td>
+        </tr>
+      </table>      
+        <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+         <tr align="center">
+          <td align="left" class="OraTableColumnHeader">
+           <bean:write  name="<%=FormConstants.CRF%>" property="longName"/> 
+          </td>       
+        </tr>
+      </table>
+      <table  width="80%">
+        <tr>
+           <td>&nbsp;</td>
+        </tr>
+      </table>
         <bean:define id="module" name="<%=FormConstants.MODULE%>"></bean:define>
         <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
