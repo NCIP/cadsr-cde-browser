@@ -17,15 +17,8 @@
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff">
     <%   
-      int nbOfClassifications = 3;
       String urlPrefix = "";
-      String pageUrl = "&PageId=DataElementsGroup";
-      String contextPath = request.getContextPath();
-      String[] csLOVUrl = new String[3];
-      for(int i=0; i<nbOfClassifications; i++) 
-      csLOVUrl[i] = "javascript:newWin('"+contextPath+"/search?classificationsLOV=9&idVar=jspClassification[" + i + "]&nameVar=txtClassSchemeItem" + i + pageUrl+"','csLOV',700,600)";
-
-      %>
+    %>
     <%@ include file="../common/common_header_inc.jsp"%>
     <jsp:include page="../common/tab_inc.jsp" flush="true">
       <jsp:param name="label" value="Add&nbsp;Classifications"/>
@@ -45,6 +38,20 @@
     </SCRIPT>
 
     <logic:present name="<%=FormConstants.CRF%>">
+
+    <%
+      int nbOfClassifications = 3;
+      String pageUrl = "&PageId=DataElementsGroup";
+      String contextPath = request.getContextPath();
+      String[] csLOVUrl = new String[3];
+
+      String contextId = ((gov.nih.nci.ncicb.cadsr.resource.Form)session.getAttribute(FormConstants.CRF)).getContext().getConteIdseq();
+
+      for(int i=0; i<nbOfClassifications; i++) 
+      csLOVUrl[i] = "javascript:newWin('"+contextPath+"/search?classificationsLOV=1&P_CONTE_IDSEQ=" + contextId +"&idVar=jspClassification[" + i + "]&nameVar=txtClassSchemeItem" + i + pageUrl + "','csLOV',700,600)";
+
+      %>
+
       <html:form action='<%="/addClassifications?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.ADD_CLASSIFICATIONS%>'>
 
   <table cellspacing="2" cellpadding="3" border="0" width="80%" >
@@ -75,7 +82,7 @@
   </html:form>
 </logic:present>
 
-    <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
+    <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a different user </logic:notPresent>
 
     <%@ include file="../common/common_bottom_border.jsp"%>
 
