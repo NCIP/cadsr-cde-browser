@@ -40,6 +40,26 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
+
+  public ActionForward gotoChangeDEAssociation (
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+
+    DynaActionForm dynaForm = (DynaActionForm) form;
+    int questionIndex =
+      Integer.parseInt((String) dynaForm.get("questionIndex"));
+    List questions =
+      ((Module) getSessionObject(request, MODULE)).getQuestions();
+    Question q = (Question) questions.get(questionIndex);
+
+    if(q.getDataElement() == null) 
+      request.setAttribute("removeButton", "no");
+
+    return displayCDECart(mapping, form, request, response);
+  }
+
   public ActionForward addQuestion(
     ActionMapping mapping,
     ActionForm form,

@@ -120,11 +120,15 @@
         </td>
       </tr>
     </logic:iterate>
+    <% String rem = (String)request.getAttribute("removeButton");
+      if(rem == null || !rem.equals("no")) {
+      %>
       <tr>
         <td colspan="8">
           <html:radio property="selectedText" value="false"/><bean:message key="cadsr.formbuilder.question.noAssociation"/>
         </td>
       </tr>
+      <% } %>
     </table>
     <br>
 
