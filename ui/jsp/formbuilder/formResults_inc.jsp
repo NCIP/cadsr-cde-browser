@@ -26,7 +26,7 @@
                      
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTableColumnHeader">
-          	<th class="OraTableColumnHeader" nowrap>View</th>
+          	<th class="OraTableColumnHeader" nowrap>Download</th>
           	<th class="OraTableColumnHeader" nowrap>Copy</th>
           	<th class="OraTableColumnHeader" nowrap>Edit</th>
           	<th class="OraTableColumnHeader" nowrap>Delete</th>
