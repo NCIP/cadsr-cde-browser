@@ -164,7 +164,15 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   }
 
   public int updateFormComponent(Form newForm) throws DMLException {
-    return 0;
+  
+    UpdateFormComponent  updateFormComponent  = 
+      new UpdateFormComponent (this.getDataSource());
+    int res = updateFormComponent.updateFormFields(newForm);
+    if (res != 1) {
+      throw new DMLException("Did not succeed updating form record in the " + 
+        " quest_contents_ext table.");
+    }
+    return res;
   }
 
   public Form addModule(
@@ -230,7 +238,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
-
+    /*
     FormTransferObject newForm = new FormTransferObject();
 
     newForm.setLongName("CHRIS TEST 1");
@@ -258,14 +266,12 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     newForm.setCreatedBy("Anonymous");
     
     try {
-	formTest.copyForm("9DC06CFF-6DF7-2B36-E034-080020C9C0E0", 
-			  newForm);
-
+	    formTest.copyForm("9DC06CFF-6DF7-2B36-E034-080020C9C0E0",  newForm);
     } catch (DMLException e){
-	System.out.println("Failed: " + e);
+	    System.out.println("Failed: " + e);
     } 
-
-// end of try-catch
+    */
+    
 //     //String formId1 = "9E343E83-5FEB-119F-E034-080020C9C0E0";  //CRF
 //     String formId1 = "99CD59C5-A98A-3FA4-E034-080020C9C0E0"; // TEMPLATE
 
@@ -351,6 +357,23 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
          System.out.println("******Finishing printing DMLException*******");
        }
      */
+    Form formX = null;
+    try {
+      formX = formTest.findFormByPrimaryKey("D4D75662-033F-6DD1-E034-0003BA0B1A09");
+    }
+    catch (DMLException e) {
+      System.out.println("Failed to get a form for " + formX);
+    }
+
+    formX.setFormType("CRF");
+    formX.getContext().setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+    formX.setAslName("CRF TEMPLATE");
+    formX.setPreferredName("Form update test");
+    formX.setPreferredDefinition("Form update test definition");
+    formX.getProtocol().setProtoIdseq("9B0EAC7E-6A62-0DEB-E034-080020C9C0E0");
+    formX.setLongName("Form update test long name");
+    formX.setFormCategory("Lab");
+    formTest.updateFormComponent(formX);
   }
 
   /**
@@ -654,4 +677,46 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       return out;
     }
   }
+
+  /**
+   * Inner class to update the Form component.
+   *
+   */
+  private class UpdateFormComponent extends SqlUpdate {
+    public UpdateFormComponent(DataSource ds) {
+      String updateFormSql =
+        " UPDATE quest_contents_ext SET " +
+        " qtl_name = ?, conte_idseq = ?, asl_name = ?, preferred_name = ?, " + 
+        " preferred_definition = ?, proto_idseq = ?, long_name = ?, qcdl_name = ? " + 
+        " WHERE qc_idseq = ? ";
+
+      this.setDataSource(ds);
+      this.setSql(updateFormSql);
+      declareParameter(new SqlParameter("qtl_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("conte_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("asl_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("preferred_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("preferred_definition", Types.VARCHAR));
+      declareParameter(new SqlParameter("proto_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("long_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("qcdl_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
+      compile();
+    }
+
+    protected int updateFormFields(
+      Form form) {
+      Object[] obj =
+        new Object[] {
+          form.getFormType(), form.getContext().getConteIdseq(), form.getAslName(),
+          form.getPreferredName(), form.getPreferredDefinition(), 
+          form.getProtocol().getProtoIdseq(), form.getLongName(),
+          form.getFormCategory(), form.getFormIdseq()
+        };
+      int res = update(obj);
+
+      return res;
+    }
+  }
+
 }
