@@ -210,7 +210,7 @@
                 <bean:write name="attachment" property="name"/>
               </html:link>                 
            <logic:equal name="attachment" property="name" value="<%=(String) request.getSession().getAttribute(FormConstants.REFDOCS_TEMPLATE_ATT_NAME)%>">
-             (Can download from CDE Browser using "Download Template" link)
+             <font class="AbbreviatedText">(Can be downloaded from CDE Browser using "Download Template" link)</font>
             </logic:equal>
                           </td>
                         </tr>
