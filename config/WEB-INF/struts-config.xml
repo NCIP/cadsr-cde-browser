@@ -169,6 +169,8 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
       validate="false">
       <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
+      <forward name="searchResults" path="/formSearchAction.do?method=getAllForms"
+        redirect="false"/>
     </action>
     <action name="formEditForm" path="/formSaveAction" parameter="method"
       scope="session"
