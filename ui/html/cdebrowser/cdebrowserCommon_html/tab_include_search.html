@@ -27,6 +27,18 @@ function subTabClicked(tabNum,urlParams) {
     <td align=right valign=top colspan=2 nowrap>
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>
+<%
+	if (session.getAttribute("nciUser") == null) {
+%>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= "cdeCartAction.do?method=displayCDECart"%>" TARGET="_top"><IMG SRC="i/Icon_cde_cart.gif" alt="CDE Cart" border=0 ></A><br><font color=brown face=verdana size=1></font></TD>
+<%
+	}
+	else {
+%>
+		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= "formCDECartAction.do?method=displayCDECart"%>" TARGET="_top"><IMG SRC="i/Icon_cde_cart.gif" alt="CDE Cart" border=0 ></A><br><font color=brown face=verdana size=1></font></TD>
+<%
+	}
+%>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= tib.getHomeURL() %>" TARGET="_top"><IMG SRC="i/icon_home.gif" alt="Home" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font></TD>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= "formSearchAction.do"%>" TARGET="_top"><IMG SRC="i/formicon.jpg" alt="FormBuilder" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;FormBuilder&nbsp;</font></TD>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('cdebrowserCommon_html/cdeBrowserHelp.html','helpWin',700,600)"><IMG SRC="i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
