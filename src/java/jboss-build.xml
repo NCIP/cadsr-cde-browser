@@ -75,8 +75,8 @@
   <property name="open.source.dir.raw.lib" value="${open.source.dir.raw}/lib" />
   <property name="open.source.dir.raw.src" value="${open.source.dir.raw}/src" />
   <property name="open.source.dir.raw.ui" value="${open.source.dir.raw}/ui" />
-  <property name="app.docs.setup.distribution.readme.name" value="CDEBrowserDistributionReadme" /> 
-  <property name="app.docs.setup.distribution.src.readme.name" value="CDEBrowserSrcDistributionReadme" /> 
+  <property name="app.docs.setup.distribution.readme.name" value="CDEBrowser_3.0_DistributionReadme" /> 
+  <property name="app.docs.setup.distribution.src.readme.name" value="CDEBrowser_3.0_SrcDistributionReadme" /> 
   <property name="open.source.readme.name" value="source_readme" /> 
   
   <!-- base dir in the zip file -->
