@@ -120,20 +120,36 @@ function submitModuleEdit(methodName) {
           <bean:size id="selectedSize" name="<%=FormConstants.SELECTED_DATAELEMENTS%>" />
             
           <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">                      
-                <tr class="OraTableColumnHeaderModule">
-                  <td>
-                    <bean:write name="selectedDataElement" property="longName"/>
-                  </td>
-                  <td align="center" width="70" class="OraFieldText">
-                      <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>' 
-                         paramId="p_de_idseq" paramName="selectedDataElement" paramProperty="deIdseq" target="_blank">
-                        <bean:write name="selectedDataElement" property="CDEId"/>
-                      </html:link>
-                    </td>
-                   <td align="center" width="70" class="OraFieldText">
-                      <bean:write name="selectedDataElement" property="version"/>
-                   </td>                                                     
-                </tr>
+                <tr class="OraTabledata">
+
+                      <td class="OraHeaderBlack">
+                        <bean:write name="selectedDataElement" property="longName"/>
+                      </td>
+                      <td align="center" width="70" class="OraHeaderBlack">
+                          <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>' 
+                             paramId="p_de_idseq" paramName="selectedDataElement" paramProperty="deIdseq" target="_blank">
+                            <bean:write name="selectedDataElement" property="CDEId"/>
+                          </html:link>
+                        </td>
+                       <td align="center" width="70" class="OraHeaderBlack">
+                          <bean:write name="selectedDataElement" property="version"/>
+                       </td>                                                     
+
+               </tr>
+              <tr class="OraTabledata">
+               <td colspan=3 class="OraTabledata">
+                <table  width="100%" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                  <tr class="OraTabledata" >  
+                    <td width="15%" class="OraTableColumnHeader" nowrap align="left">
+                         Instruction
+                    </td>                      
+                    <td class="OraFieldTextInstruction">
+                           Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
+                     </td>
+                  </tr>
+                </table>
+               </td>  
+              </tr>                 
                 <tr class="OraTabledata">
                   <td colspan=3 class="OraTabledata">
                     <a href="javascript:CheckAll('<%= FormConstants.SELECTED_ITEMS+cdeIndex%>')">Check All</a>&nbsp;-&nbsp;<a href="javascript:ClearAll('<%= FormConstants.SELECTED_ITEMS+cdeIndex%>')">Clear All</a>
@@ -149,27 +165,46 @@ function submitModuleEdit(methodName) {
                           <td colspan="2" class="OraTabledata">&nbsp;</td>                       
                         </tr>
                         <tr>
-                          <td class="OraTabledata" width="50">
-                             <INPUT TYPE=CHECKBOX NAME="<%= FormConstants.SELECTED_ITEMS+cdeIndex%>" value="<%= itemId %>">
-                             
+                          <td class="OraTabledata" width="50" align="center">
+                             <INPUT TYPE=CHECKBOX NAME="<%= FormConstants.SELECTED_ITEMS+cdeIndex%>" value="<%= itemId %>">                       
                           </td>
                           <td>
                             <table width="100%" align="center" cellpadding="1" cellspacing="0" border="0" class="OraBGAccentVeryDark">                        
                              <tr ><td>                       
                                <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">                        
+                                
+                                
                                  <tr >
-                                  <td colspan="2" class="OraTableColumnHeaderVVNOBold" width="100%">
+                                  <td  class="OraHeaderBlack" width="100%">
                                     <bean:write name="validValue" property="shortMeaningValue"/>
                                   </td>
                                  </tr>
-                                 <tr>
-                                  <td width="30%" class="OraTableColumnHeaderVV" >
-                                    <bean:message key="cadsr.formbuilder.valueMeaning.name" />
-                                  </td>
-                                  <td class="OraFieldTextVV" >
-                                     :<bean:write name="validValue" property="shortMeaning"/>
-                                  </td>                                          
-                                </tr>                         
+                                      <tr   class="OraTabledata">
+                                        
+                                        <td >
+                                          <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                                             <tr class="OraTabledata">
+                                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                                <b>ValueMeaning</b> 
+                                             </td>
+                                             <td class="OraFieldText">
+                                                &nbsp;
+                                             </td>
+                                            </tr>
+                                             <tr class="OraTabledata">
+                                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                                Instruction 
+                                             </td>
+                                             <td class="OraFieldTextInstruction">
+                                               Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
+                                             </td>
+                                            </tr>                        
+                                          </table>                                       
+                                        </td>
+                                      </tr>                                      
+                                
+                                
+                                
                                </table>
                               </td></tr>
                              </table>

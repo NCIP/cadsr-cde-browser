@@ -141,7 +141,7 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .OraFieldtitleboldLeftAlign {FONT-WEIGHT: bold; FONT-SIZE: 9pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: left; text-indent:1}
 .InputFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000;text-align: left}
 .Dropdown {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; BACKGROUND-COLOR: #CFCFCF; text-align: left; width:39mm }
-.UnderlineOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; border-bottom:1px solid #999966;}
+.UnderlineOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt;  color:#000000; border-bottom:1px solid #999966;}
 .PrinterOraTableColumnHeader {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; background-color:#FFFFFF; color:#000000; text-indent:1}
 .PrinterOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000}
 .PrinterOraTabledata {FONT-SIZE: 10pt; BACKGROUND: #FFFFFF; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif}
@@ -154,4 +154,6 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .OraTableColumnHeaderModule {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; background-color:#CCCC99; color:#336699; text-indent:1}
 .FreeDropdown {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; BACKGROUND-COLOR: #CFCFCF; text-align: left}
 .OraFieldTextVV {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color:#CCCCFF; color:#000000}
-.OraHeaderBlack {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt;  text-align:left; background-color:#cccc99; color:#000000; text-indent:1}
+.OraHeaderBlack {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt;  background-color:#cccc99; color:#000000; text-indent:1}
+.OraFieldTextInstruction {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-style:italic; color:#000000}
+.OraTableColumnHeaderInstruction {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; font-style:italic; text-align:left; background-color:#cccc99; color:#336699; text-indent:1}

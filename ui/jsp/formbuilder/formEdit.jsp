@@ -177,17 +177,17 @@ function clearProtocol() {
           </tr>   
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="20%" nowrap>
-              Header Instruction
+              <bean:message key="cadsr.formbuilder.form.header.instruction"/>
             </td>
-            <td  class="OraFieldText" width="80%" nowrap>
+            <td  class="OraFieldTextInstruction" width="80%" nowrap>
 		<TEXTAREA NAME="comments" COLS=79 ROWS=2></TEXTAREA>
             </td>
           </tr>          
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="20%" nowrap>
-              Footer Instruction
+              <bean:message key="cadsr.formbuilder.form.footer.instruction"/>
             </td>
-            <td  class="OraFieldText" width="80%" nowrap>
+            <td  class="OraFieldTextInstruction" width="80%" nowrap>
              <TEXTAREA NAME="comments" COLS=79 ROWS=2></TEXTAREA>
             </td>
           </tr>                    
@@ -322,9 +322,9 @@ function clearProtocol() {
                        <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
                          <tr class="OraTabledata">
                           <td class="OraTableColumnHeader" width="10%" nowrap>
-                            <b>Instruction</b> 
+                            <bean:message key="cadsr.formbuilder.form.instruction"/> 
                          </td>
-                         <td class="OraFieldText">
+                         <td class="OraFieldTextInstruction">
                            Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
                          </td>
                         </tr>
@@ -337,64 +337,73 @@ function clearProtocol() {
               <logic:present name="module">
                 <logic:notEmpty name="module" property="questions">
                   <tr class="OraTabledata">
-                    <td>
-                      <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
-                        <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">
-                          <tr class="OraTabledata">
-                            <td class="OraFieldText" width="50">&nbsp;</td>
-                            <td height="1" class="OraFieldText"></td>
-                          </tr>
-                          <tr class="OraTabledata">
-                            <td class="OraFieldText" width="50">&nbsp;</td>
-                            <td class="UnderlineOraFieldText">
-                              <bean:write name="question" property="longName"/>
-                            </td>
-                            <logic:present name="question" property="dataElement">
-                              <td align="center" width="70" class="UnderlineOraFieldText">
-                                <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>' 
-                                   paramId="p_de_idseq" paramName="question" paramProperty="dataElement.deIdseq" target="_blank">
-                                  <bean:write name="question" property="dataElement.CDEId"/>
-                                </html:link>
+                    <td>                
+                        <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraTabledata">      
+                          <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">                           
+                            <tr class="OraTabledata">
+                              <td class="OraFieldText" width="50">&nbsp;</td>
+                              <td height="1"  class="OraFieldText">                               
+                              </td>                              
+                            </tr>                             
+                            <tr class="OraTabledata">
+                              <td class="OraFieldText" width="7%">&nbsp;</td>
+                              <td class="UnderlineOraFieldText" >
+                                <bean:write name="question" property="longName"/>
                               </td>
-                             <td align="center" width="70" class="UnderlineOraFieldText">
-                                <bean:write name="question" property="dataElement.version"/>
-                             </td>                              
-                            </logic:present>
-                            <logic:notPresent name="question" property="dataElement">
-                              <td align="center" width="70" class="UnderlineOraFieldText">
-                               &nbsp;
-                              </td>
-                             <td align="center" width="70" class="UnderlineOraFieldText">
-                                &nbsp;
-                             </td>                              
-                            </logic:notPresent>                            
-                          </tr>
-                          
+                              <td class="OraTabledata" width="15%" align="right" >
+                               <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraTabledata">
+                                 <tr>
+                                   <logic:present name="question" property = "dataElement">
+                                     <td align="right" width="70" class="UnderlineOraFieldText" >                        
+                                            <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
+                                               paramId = "p_de_idseq"
+                                                paramName="question"
+                                                paramProperty="dataElement.deIdseq"
+                                                target="_blank">
+                                            <bean:write name="question" property="dataElement.CDEId"/>
+                                            </html:link>
+                                     </td>
+                                    <td align="right" width="70" class="UnderlineOraFieldText">
+                                       <bean:write name="question" property="dataElement.version"/>
+                                    </td>                                  
+                                   </logic:present>
+                                   <logic:notPresent name="question" property="dataElement">
+                                     <td align="center" width="70" class="UnderlineOraFieldText">
+                                       &nbsp;
+                                     </td>
+                                     <td align="center" width="70" class="UnderlineOraFieldText">
+                                       &nbsp;
+                                      </td>                              
+                                   </logic:notPresent>  
+                                 </tr>  
+                               </table>
+                              </td> 
+                            </tr>
                             <tr class="OraTabledata">
                                <td class="OraFieldText" width="50">&nbsp;</td>
-                                <td class="OraFieldText">                              
+                                <td class="OraFieldText" colspan="2">                              
                                  <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
                                    <tr class="OraTabledata">
                                     <td class="OraTableColumnHeader" width="10%" nowrap>
-                                      <b>Instruction</b> 
+                                      <bean:message key="cadsr.formbuilder.form.instruction"/>
                                    </td>
-                                   <td class="OraFieldText">
+                                   <td class="OraFieldTextInstruction">
                                      Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
                                    </td>
                                   </tr>
                                  </table>                                                            
                                </td>
-                             </tr>                          
-                          
-                          <logic:present name="question">
-                            <logic:notEmpty name="question" property="validValues">
+                             </tr> 
+
+
+                            <logic:present name="question">
+                            <logic:notEmpty name="question" property = "validValues">
                               <tr class="OraTabledata">
                                 <td class="OraFieldText" width="50">&nbsp;</td>
-                                <td>
+                                <td colspan="2">
                                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                     <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
-
-                                    <tr   class="OraTabledata">
+                                      <tr   class="OraTabledata">
                                         <td COLSPAN="2" class="OraFieldText" >&nbsp;</td>
                                       </tr>
                                       <tr   class="OraTabledata">
@@ -417,24 +426,39 @@ function clearProtocol() {
                                             </tr>
                                              <tr class="OraTabledata">
                                               <td class="OraTableColumnHeader" width="10%" nowrap>
-                                                <b>Instruction</b> 
+                                                <bean:message key="cadsr.formbuilder.form.instruction"/> 
                                              </td>
-                                             <td class="OraFieldText">
+                                             <td class="OraFieldTextInstruction">
                                                Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
                                              </td>
                                             </tr>                        
                                           </table>                                       
                                         </td>
-                                      </tr>       
-                                      
+                                      </tr>                                        
                                     </logic:iterate><!-- valid Value-->
                                   </table>
                                 </td>
                               </tr>
                             </logic:notEmpty>
-                          </logic:present>
-                        </logic:iterate><!-- Question-->
-                      </table>
+                            <logic:empty name="question" property = "validValues">
+                              <tr class="OraTabledata">
+                                <td class="OraFieldText" width="50">&nbsp;</td>
+                                <td>
+                                  <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                                      <tr  COLSPAN="3" class="OraTabledata">
+                                        <td class="OraFieldText" width="50">&nbsp;</td>
+                                        <td class="OraFieldText">
+                                          &nbsp;
+                                        </td>
+                                      </tr>   
+                                  </table>
+                                </td>
+                              </tr>                            
+                            </logic:empty>
+                            </logic:present>
+                          </logic:iterate><!-- Question-->
+                        </table>                      
+                                           
                     </td>
                   </tr>
                 </logic:notEmpty>
