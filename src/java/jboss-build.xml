@@ -628,6 +628,7 @@
          <fileset dir="${config.opensource}">
            <patternset>
              <include name="connections/${app.setup.jboss.oracle.datasource.filename}"/>
+             <include name="connections/cle-providers.xml"/>
            </patternset>
          </fileset>               
       </copy>   
@@ -635,6 +636,7 @@
          <fileset dir="${config.home}">
            <patternset>
              <include name="ejb/*.*"/>
+             <exclude name="ejb/orion*" />
            </patternset>
          </fileset>               
       </copy>   
@@ -642,6 +644,8 @@
          <fileset dir="${config.home}">
            <patternset>
              <include name="META-INF/*.*"/>
+             <exclude name="META-INF/orion*" />
+             <exclude name="META-INF/principals.xml" />
            </patternset>
          </fileset>               
       </copy>  
@@ -649,9 +653,18 @@
          <fileset dir="${config.home}">
            <patternset>
              <include name="WEB-INF/*.*"/>
+             <exclude name="WEB-INF/orion*" />
+             <exclude name="WEB-INF/web.xml" />
            </patternset>
          </fileset>               
-      </copy>             
+      </copy>  
+     <copy todir="${open.source.dir.raw.config}/WEB-INF">      
+         <fileset dir="${config.home}/WEB-INF/jboss">
+           <patternset>
+             <include name="web.xml"/>
+           </patternset>
+         </fileset>               
+      </copy>       
      <copy todir="${open.source.dir.raw.config}">      
          <fileset dir="${config.home}">
            <patternset>
@@ -809,7 +822,7 @@
   <!-- =========== END PROD DISTRIBUTION ======================= -->
   
   <!-- =========== PROD DISTRIBUTION Complete============== -->
-        <target name="dist_prod_full" depends="dist_prod,dist_download,
+        <target name="dist_download_full" depends="dist_download,
                                                              dist_opensource ">  
                <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
                includes="${app.docs.setup.readme.name}.txt"               
@@ -829,6 +842,7 @@
   <!-- =========== Download distribution============== -->
         <target name="dist_download" depends="clean_build_dir,opensource_config,ear_cdebrowser"> 
             <mkdir dir="${build.dir}/download"/>
+            <mkdir dir="${build.dir}/download/lib"/>
              <copy todir="${build.dir}/download" >      
                  <fileset dir="${build.dir}">
                    <patternset>
@@ -847,7 +861,15 @@
                includes="${app.setup.jboss.oracle.datasource.filename}"               
                />     
                     
-   
+              <!-- copy spring libs -->
+               <copy todir="${build.dir}/download/lib">      
+                  <fileset dir="${java.lib.dir}">
+                    <patternset>
+                     <include name="spring.jar"/>
+                     <include name="spring-jdbc.jar"/>
+                    </patternset>
+                  </fileset>               
+                </copy>     
             <zip destfile="${dist.dir}/${download.file.name.windows}.zip"
                  basedir="${build.dir}/download"
                  update="true" />      

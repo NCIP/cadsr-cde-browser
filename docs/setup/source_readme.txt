@@ -1,9 +1,9 @@
 
 ===============================================================================
-			CDBrowser 2.1.1
+			CDBrowser 3.0
 ===============================================================================
 
-Contains the complete application source for CDEBrowser 2.1.1
+Contains the complete application source for CDEBrowser 3.0
 
 The Content of the zip file by directory
 	
@@ -11,10 +11,10 @@ lib            - Third party libraries.
 config         -  Property and xml files that should be in the application 
 		  classpath.
 		  
-config\connections  -  Datasources.xml and cle-providers.xml  which defines the 
+config\connections  -  oracle-ds.xml and cle-providers.xml  which defines the 
 			database connections for the application.
 config\ejb          -  EJB discriptor files.
-config\META-INF     -  Principal.xml and application.xml.
+config\META-INF     -  application.xml.
 config\properties   -  Property files used within the application.
 config\services     -  MVC Framework for J2EE service discriptors.
 config\WEB-INF      -  web module discriptors and struts config files.

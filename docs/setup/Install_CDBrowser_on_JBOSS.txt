@@ -1,0 +1,108 @@
+=============================================================================
+CD Browser 3.0 Installation Document for JBOSS
+=============================================================================
+
+Pre-requisites
+---------------
+
+1. JBOSS 4.0 installed. Available from http://www.jboss.org
+2. caDSR 3.0 repository installed. Please refer to caDSR installation document
+
+Installation steps
+------------------
+
+
+Please replace the following references with your environment specific information.
+
+<JBOSS_HOME> refers to Jboss home directory.
+<INSTALL_HOME> refers to directory to which "CDBrowser_3.0.zip" is unzipped.
+       
+       
+1. Shutdown Jboss instance
+
+2. Copy spring.jar and spring-jdbc.jar 
+     from <INSTALL_HOME>\lib  to  <JBOSS_HOME>\server\default\lib
+
+3. Copy  file <INSTALL_HOME>\oracle-ds.xml to directory <JBOSS_HOME> server\default\deploy
+    If file already exists in <JBOSS_HOME> server\default\deploy, then update the file with 
+    datasources defined in <INSTALL_HOME>\oracle-ds.xml.
+    Note: Please verify the sbr and sbrext user passwords.
+    
+4. Edit login-config.xml in <JBOSS_HOME>\server\default\conf to add the 
+   xml snipet below between <policy> tags
+
+	<application-policy name="FormbuilderDomain">
+		<authentication>
+			<login-module code="gov.nih.nci.ncicb.cadsr.security.jboss.DBLoginModule" flag="required">
+	                                       <module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</module-option>
+			  <module-option name="ClassName">test</module-option>
+			</login-module>
+		</authentication>
+	</application-policy>    
+
+5. Edit log4j.xml in <JBOSS_HOME>\server\default\conf to added the xml snippet below to end of the file before
+  </log4j:configuration> closing tag
+
+
+        <!-- ======================= -->
+        <!-- Setup the CDE Browser Appender -->
+        <!-- ======================= -->
+        <appender name="CDEBROWSER_FILE" class="org.jboss.logging.appender.RollingFileAppender">
+                <errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
+                <param name="File" value="${jboss.server.home.dir}/log/cdebrowser.log"/>
+                <param name="Append" value="false"/>
+                <param name="MaxFileSize" value="1MB"/>
+                <param name="MaxBackupIndex" value="3"/>
+                <layout class="org.apache.log4j.PatternLayout">
+                        <param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+                </layout>
+        </appender>
+
+        <!-- ======================= -->
+        <!-- Setup the CDE Browser category -->
+        <!-- ======================= -->
+        <category name="gov.nih.nci.ncicb.cadsr" additivity="false">
+                <priority value="DEBUG"/>
+                <appender-ref ref="CDEBROWSER_FILE"/>
+        </category>
+ 
+6. Make sure the following directory exist.
+	<JBOSS_HOME>/output/ 
+	 <JBOSS_HOME>/server/default/log 
+	 
+6. Copy cdebrowser.ear from <INSTALL_HOME> to 
+	<JBOSS_HOME>\server\default\deploy
+	
+7. Startup the Jboss instance
+
+8. WEB-INF\classes\cle_providers.xml contains the connection information for SBR 
+   repository schema, update this file to reflect your connection parameters.
+   
+   eg.
+   <?xml version="1.0"?>
+   <!DOCTYPE cle-providers SYSTEM "http://xmlns.oracle.com/ias/mvc/cle-providers.dtd">
+   <cle-providers>
+     <provider name="cdebrowser_bc4j" 
+     		class="oracle.clex.persistence.bc4j.ApplicationModuleProvider">
+       <property name="user" value="sbr"/>
+       <property name="password" value="mypassword"/>
+       <property name="modulename" 
+       		value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule"/>
+       <property name="connectionstring" 
+       		value="jdbc:oracle:thin:sbr/i1sn0w@cbiodb2-d.nci.nih.gov:1521:cb"/>
+       <property name="host" value="cbiodb2-d.nci.nih.gov"/>
+       <property name="sid" value="cb"/>
+       <property name="persistencebase" 
+       		value="gov.nih.nci.ncicb.cadsr.persistence.bc4j"/>
+       <property name="failover" value=""/>
+     </provider>
+    </cle-providers>
+    
+    Above can be achived two ways
+    	- By updating this file in JBOSS tmp directory 
+    	- By unjaring cdebrowser.ear, updating this file re-jaring the ear 
+    	  and then deploying the application.
+    
+9. Access the application using url http://<HOST>:<POST>/CDEBrowser/
+    eg.
+    	http://localhost:8080/CDEBrowser/
