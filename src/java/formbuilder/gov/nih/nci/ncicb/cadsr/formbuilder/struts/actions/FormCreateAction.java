@@ -86,18 +86,17 @@ public class FormCreateAction extends FormBuilderBaseDispatchAction {
     FormInstruction newFormFtrInst = null;
 	
     // assemble a new form information.
+    /*
     // all required fields.
-    if (!(StringUtils.doesValueExist((String)dynaForm.get(FORM_PREFERRED_NAME))&&
-          StringUtils.doesValueExist((String)dynaForm.get(FORM_LONG_NAME))&&
+    if (!(StringUtils.doesValueExist((String)dynaForm.get(FORM_LONG_NAME))&&
           StringUtils.doesValueExist((String)dynaForm.get(PREFERRED_DEFINITION))&&
           StringUtils.doesValueExist((String)dynaForm.get(FORM_TYPE))&&
           StringUtils.doesValueExist((String)dynaForm.get(CONTEXT_ID_SEQ)))) {
-      System.out.println("******************** in null check");
+      //System.out.println("******************** in null check");
       return mapping.findForward("toSearch");
     }
-
+    */
     newForm = new FormTransferObject();    
-    newForm.setPreferredName((String)dynaForm.get(FORM_PREFERRED_NAME));
     newForm.setLongName((String)dynaForm.get(FORM_LONG_NAME));
     newForm.setPreferredDefinition((String)dynaForm.get(PREFERRED_DEFINITION));
 
@@ -121,7 +120,6 @@ public class FormCreateAction extends FormBuilderBaseDispatchAction {
     if (StringUtils.doesValueExist((String)dynaForm.get(FORM_HEADER))){
       newFormHdrInst = new FormInstructionTransferObject();
       //newFormHdrInst.setForm(newForm); // form's qc_idseq missing
-      newFormHdrInst.setPreferredName((String)dynaForm.get(FORM_HEADER));
       newFormHdrInst.setLongName((String)dynaForm.get(FORM_HEADER));
       newFormHdrInst.setPreferredDefinition((String)dynaForm.get(PREFERRED_DEFINITION));
       newFormHdrInst.setConteIdseq(context.getConteIdseq());
@@ -134,7 +132,6 @@ public class FormCreateAction extends FormBuilderBaseDispatchAction {
     if (StringUtils.doesValueExist((String)dynaForm.get(FORM_FOOTER))){
       newFormFtrInst = new FormInstructionTransferObject();
       //newFormFtrInst.setForm(newForm); // form's qc_idseq missing
-      newFormFtrInst.setPreferredName((String)dynaForm.get(FORM_FOOTER));
       newFormFtrInst.setLongName((String)dynaForm.get(FORM_FOOTER));
       newFormFtrInst.setPreferredDefinition((String)dynaForm.get(PREFERRED_DEFINITION));
       newFormFtrInst.setConteIdseq(context.getConteIdseq());

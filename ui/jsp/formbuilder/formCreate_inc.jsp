@@ -31,15 +31,15 @@ function clearProtocol() {
 
 
     <tr>
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.preferredName" />:</td>
-        <td class="OraFieldText" nowrap>
-          <html:text property="<%=FormConstants.FORM_PREFERRED_NAME%>" size="20" />
-        </td>
 
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.longName" />:</td>
         <td class="OraFieldText" nowrap>
           <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="20" />
         </td>
+        
+        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
+        <td><B>DRAFT NEW</B></td>      
+        
     </tr>
 
     <tr>
@@ -72,16 +72,6 @@ function clearProtocol() {
 		           property="<%=FormConstants.CRF_CONTEXT_ID_SEQ%>" labelProperty="name" />
 	        </html:select>
         </td>
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
-        <td class="OraFieldText" nowrap>
-        <html:select styleClass = "Dropdown" property="<%=FormConstants.WORKFLOW%>">
-        	<html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
-		      <html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
-	      </html:select>        
-        </td>      
-    </tr>
-    
-    <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
         <td class="OraFieldText" nowrap>
         <html:select styleClass = "Dropdown" property="<%=FormConstants.FORM_CATEGORY%>">
@@ -89,6 +79,9 @@ function clearProtocol() {
 		      <html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> 
 	      </html:select> 
         </td>
+    </tr>
+    
+    <tr>
     </tr>   
 
     <tr>
@@ -136,7 +129,7 @@ function clearProtocol() {
     <TR>
       <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=<%=urlPrefix%>i/save.gif border=0></a></td>
       <td >
-        <html:link action='<%= "/cancelAction?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GO_TO_SEARCH %>'>
+        <html:link action='<%= "/formSearchFramedAction?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_ALL_FORMS_METHOD %>'>
           <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
         </html:link>             
       </td>                

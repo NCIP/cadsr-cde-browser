@@ -47,13 +47,11 @@
       <form-property name="contextIdSeq" type="java.lang.String"/>
       <form-property name="protocolLongName" type="java.lang.String"/>
       <form-property name="protocolIdSeq" type="java.lang.String"/>
-      <form-property name="workflow" type="java.lang.String"/>
       <form-property name="formCategory" type="java.lang.String"/>
       <form-property name="formType" type="java.lang.String"/>
       <form-property name="gotoEdit" type="java.lang.Boolean"/>
       <form-property name="formVersion" type="java.lang.Float"/>
       <form-property name="formComments" type="java.lang.String"/>
-      <form-property name="formPreferredName" type="java.lang.String"/>
       <form-property name="formHeader" type="java.lang.String"/>
       <form-property name="formFooter" type="java.lang.String"/>      
     </form-bean>
