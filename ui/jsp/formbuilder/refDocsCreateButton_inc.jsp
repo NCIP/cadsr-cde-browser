@@ -3,7 +3,7 @@
         <tr >
          <td>
             <a href="javascript:submitForm('<%="saveNewReferenceDoc"%>')">
-                <html:img src="i/save.gif" border="0" alt="Save"/>
+                <html:img src="i/add_button.gif" border="0" alt="Add"/>
              </a> 
           </td>          
               
