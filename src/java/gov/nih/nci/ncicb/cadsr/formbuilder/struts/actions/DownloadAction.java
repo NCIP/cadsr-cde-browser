@@ -88,7 +88,7 @@ public class DownloadAction extends FormBuilderSecureBaseDispatchAction {
           return mapping.findForward(FAILURE);
         }  
         
-        File f = new File("c:\\temp\\exceldownload.xls");
+        File f = new File("D:\\projects\NCI3\\cdebrowser_other\\excel_template\\exceldownload.xls");
         String ctype = getContentType(f.getName());
 
 			  response.setContentType(ctype);			
