@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JDataElementTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JReferenceBlobTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JDataElementFormUsageTO;
+import gov.nih.nci.ncicb.cadsr.dto.ValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.*;
 import gov.nih.nci.ncicb.cadsr.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.util.PageIterator;
@@ -116,8 +117,19 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
       rows = new Vector(view1.getRowCount());
 
       while (view1.hasNext()) {
-        rows.addElement(
-          new ValidValuesValueObject((ValidValuesViewRowImpl) view1.next()));
+        /*rows.addElement(
+          new ValidValuesValueObject((ValidValuesViewRowImpl) view1.next()));*/
+
+        ValidValuesViewRowImpl vvImpl = (ValidValuesViewRowImpl)view1.next();
+        ValidValue vv = new ValidValueTransferObject();
+        vv.setVdIdseq(vvImpl.getVdIdseq());
+        vv.setDescription(vvImpl.getDescription());
+        vv.setShortMeaning(vvImpl.getShortMeaning());
+        vv.setShortMeaningDescription(vvImpl.getMeaningDescription());
+        vv.setShortMeaningValue(vvImpl.getValue());
+        vv.setVpIdseq(vvImpl.getVpIdseq());
+
+        rows.add(vv);
       }
     }
     catch (Exception e) {
@@ -961,5 +973,13 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
    */
   public HistoricalCdeIdsViewImpl getHistoricalCdeIdsView() {
     return (HistoricalCdeIdsViewImpl)findViewObject("HistoricalCdeIdsView");
+  }
+
+  /**
+   * 
+   * Container's getter for AcRegistrationsView
+   */
+  public AcRegistrationsViewImpl getAcRegistrationsView() {
+    return (AcRegistrationsViewImpl)findViewObject("AcRegistrationsView");
   }
 }

@@ -114,6 +114,10 @@ function goPage(pageInfo) {
     <td class="TableRowPromptText">Origin:</td>
     <td class="OraFieldText"><%=de.getOrigin()%> </td>
  </tr>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Registration Status:</td>
+    <td class="OraFieldText"><%=de.getRegistrationStatus()%> </td>
+ </tr>
  
 </table>
 

@@ -2,8 +2,14 @@ package gov.nih.nci.ncicb.cadsr.persistence.bc4j.handler;
 
 import gov.nih.nci.ncicb.cadsr.cdebrowser.userexception.*;
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JDataElementTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.DataElementConceptTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModuleImpl;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
+import gov.nih.nci.ncicb.cadsr.resource.DataElementConcept;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.util.PageIterator;
@@ -150,6 +156,17 @@ public class DataElementHandlerImpl extends Handler
         de.setVersion(
           new Float(((Number)deRows[i].getAttribute(7)).floatValue()));
         de.setUsingContexts(checkForNull((String)deRows[i].getAttribute(8)));
+
+        ValueDomain vd = new ValueDomainTransferObject();
+        vd.setVdIdseq((String)deRows[i].getAttribute(9));
+        de.setValueDomain(vd);
+        DataElementConcept dec = new DataElementConceptTransferObject();
+        dec.setDecIdseq((String)deRows[i].getAttribute(10));
+        de.setDataElementConcept(dec);
+        Context conte = new ContextTransferObject ();
+        conte.setConteIdseq((String)deRows[i].getAttribute(11));
+        de.setContext(conte);
+        de.setPreferredDefinition((String)deRows[i].getAttribute(12));
 
         /*de.setContextName((String) deRows[i].getAttribute(3));
         de.setAslName((String) deRows[i].getAttribute(4));

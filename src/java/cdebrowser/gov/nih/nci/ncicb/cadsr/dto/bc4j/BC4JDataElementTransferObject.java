@@ -1,154 +1,162 @@
 package gov.nih.nci.ncicb.cadsr.dto.bc4j;
 
+import gov.nih.nci.ncicb.cadsr.dto.base.AdminComponentTransferObject;
+import gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsViewRowImpl;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.resource.DataElementConcept;
+import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
+
+import java.io.Serializable;
 
 import java.sql.Date;
 import java.sql.SQLException;
+
 import java.util.List;
-import java.io.Serializable;
-import gov.nih.nci.ncicb.cadsr.dto.base.AdminComponentTransferObject;
-import gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsViewRowImpl;
+
 
 public class BC4JDataElementTransferObject extends AdminComponentTransferObject
-                                    implements DataElement,Serializable {
-	protected String deIdseq;
-	protected String vdIdseq;
-	protected String decIdseq;
-	protected ValueDomain valueDomain;
-	protected DataElementConcept dec;
-	protected String vdName;
-	protected String longCDEName;
-	protected String cdeId;
-	protected String contextName;
-	protected String usingContexts = "";
+  implements DataElement, Serializable {
+  protected String deIdseq;
+  protected String vdIdseq;
+  protected String decIdseq;
+  protected ValueDomain valueDomain;
+  protected DataElementConcept dec;
+  protected String vdName;
+  protected String longCDEName;
+  protected String cdeId;
+  protected String contextName;
+  protected String usingContexts = "";
 
-	public BC4JDataElementTransferObject() {
-
+  public BC4JDataElementTransferObject() {
   }
 
-	public BC4JDataElementTransferObject(DataElementsViewRowImpl dataElementsViewRowImpl)
-		throws Exception {
-		deIdseq = dataElementsViewRowImpl.getDeIdseq();
+  public BC4JDataElementTransferObject(
+    DataElementsViewRowImpl dataElementsViewRowImpl) throws Exception {
+    deIdseq = dataElementsViewRowImpl.getDeIdseq();
     idseq = deIdseq;
-		preferredDefinition = dataElementsViewRowImpl.getPreferredDefinition();
-		preferredName = dataElementsViewRowImpl.getPreferredName();
-		longName = checkForNull(dataElementsViewRowImpl.getLongName());
-		createdBy = dataElementsViewRowImpl.getCreatedBy();
-		//createdDate = (Date)dataElementsViewRowImpl.getDateCreated().getData();
-		modifiedBy = dataElementsViewRowImpl.getModifiedBy();
-		//modifiedDate = (Date)(dataElementsViewRowImpl.getDateModified().getData());
-		aslName = dataElementsViewRowImpl.getAslName();
-		version = new Float(dataElementsViewRowImpl.getVersion().floatValue());
-		deletedInd = checkForNull(dataElementsViewRowImpl.getDeletedInd());
-		latestVerInd = checkForNull(dataElementsViewRowImpl.getLatestVersionInd());
-		vdIdseq = dataElementsViewRowImpl.getVdIdseq();
-		valueDomain = dataElementsViewRowImpl.getValueDomain();
-		context = dataElementsViewRowImpl.getContext();
-		conteIdseq = dataElementsViewRowImpl.getConteIdseq();
-		contextName = context.getName();
-		decIdseq = dataElementsViewRowImpl.getDecIdseq();
-		longCDEName = checkForNull(dataElementsViewRowImpl.getLongCDEName());
-		dec = dataElementsViewRowImpl.getDataElementConcept();
-		cdeId = checkForNull(dataElementsViewRowImpl.getCDEId());
-		refDocs = dataElementsViewRowImpl.getReferenceDocs();
-		designations = dataElementsViewRowImpl.getDesignations();
-		usingContexts = dataElementsViewRowImpl.getUsingContexts();
-    if (dataElementsViewRowImpl.getCdeId() != null)
+    preferredDefinition = dataElementsViewRowImpl.getPreferredDefinition();
+    preferredName = dataElementsViewRowImpl.getPreferredName();
+    longName = checkForNull(dataElementsViewRowImpl.getLongName());
+    createdBy = dataElementsViewRowImpl.getCreatedBy();
+
+    //createdDate = (Date)dataElementsViewRowImpl.getDateCreated().getData();
+    modifiedBy = dataElementsViewRowImpl.getModifiedBy();
+
+    //modifiedDate = (Date)(dataElementsViewRowImpl.getDateModified().getData());
+    aslName = dataElementsViewRowImpl.getAslName();
+    version = new Float(dataElementsViewRowImpl.getVersion().floatValue());
+    deletedInd = checkForNull(dataElementsViewRowImpl.getDeletedInd());
+    latestVerInd = checkForNull(dataElementsViewRowImpl.getLatestVersionInd());
+    vdIdseq = dataElementsViewRowImpl.getVdIdseq();
+    valueDomain = dataElementsViewRowImpl.getValueDomain();
+    context = dataElementsViewRowImpl.getContext();
+    conteIdseq = dataElementsViewRowImpl.getConteIdseq();
+    contextName = context.getName();
+    decIdseq = dataElementsViewRowImpl.getDecIdseq();
+    longCDEName = checkForNull(dataElementsViewRowImpl.getLongCDEName());
+    dec = dataElementsViewRowImpl.getDataElementConcept();
+    cdeId = checkForNull(dataElementsViewRowImpl.getCDEId());
+    refDocs = dataElementsViewRowImpl.getReferenceDocs();
+    designations = dataElementsViewRowImpl.getDesignations();
+    usingContexts = dataElementsViewRowImpl.getUsingContexts();
+
+    if (dataElementsViewRowImpl.getCdeId() != null) {
       publicId = dataElementsViewRowImpl.getCdeId().intValue();
+    }
+
     origin = checkForNull(dataElementsViewRowImpl.getOrigin());
+    registrationStatus =
+      checkForNull(dataElementsViewRowImpl.getRegistrationStatus());
+  }
 
-	}
+  public String getDeIdseq() {
+    return deIdseq;
+  }
 
-	public String getDeIdseq() {
-		return deIdseq;
-	}
+  public String getVdIdseq() {
+    return vdIdseq;
+  }
 
-	public String getVdIdseq() {
-		return vdIdseq;
-	}
+  public String getDecIdseq() {
+    return decIdseq;
+  }
 
-	public String getDecIdseq() {
-		return decIdseq;
-	} 
+  public ValueDomain getValueDomain() {
+    return valueDomain;
+  }
 
-	public ValueDomain getValueDomain() {
-		return valueDomain;
-	}
+  public String getVdName() {
+    return valueDomain.getLongName();
+  }
 
-	public String getVdName() {
-		return valueDomain.getLongName();
-	}
+  public String getContextName() {
+    //return context.getName();
+    return contextName;
+  }
 
-	public String getContextName() {
-		//return context.getName();
-		return contextName;
-	}
+  public String getLongCDEName() {
+    return longCDEName;
+  }
 
-	public String getLongCDEName() {
-		return longCDEName;
-	}
+  public String getCDEId() {
+    return cdeId;
+  }
 
-	public String getCDEId() {
-		return cdeId;
-	}
+  public String getDecName() {
+    return dec.getLongName();
+  }
 
-	public String getDecName() {
-		return dec.getLongName();
-	}
+  public DataElementConcept getDataElementConcept() {
+    return dec;
+  }
 
-	public DataElementConcept getDataElementConcept() {
-		return dec;
-	}
+  public String getUsingContexts() {
+    return usingContexts;
+  }
 
-	public String getUsingContexts() {
-		return usingContexts;
-	}
+  //setter methods
+  public void setVdIdseq(String pVdIdseq) {
+    vdIdseq = pVdIdseq;
+  }
 
-	//setter methods
-
-	public void setVdIdseq(String pVdIdseq) {
-		vdIdseq = pVdIdseq;
-	}
-
-	public void setDeIdseq(String pDeIdseq) {
-		deIdseq = pDeIdseq;
+  public void setDeIdseq(String pDeIdseq) {
+    deIdseq = pDeIdseq;
     idseq = pDeIdseq;
-	}
+  }
 
-	public void setValueDomain(ValueDomain pValueDomain) {
-		valueDomain = pValueDomain;
-	}
+  public void setValueDomain(ValueDomain pValueDomain) {
+    valueDomain = pValueDomain;
+  }
 
-	public void setDecIdseq(String pDecIdseq) {
-		decIdseq = pDecIdseq;
-	} //end method
+  public void setDecIdseq(String pDecIdseq) {
+    decIdseq = pDecIdseq;
+  }
+   //end method
 
-	public void setDataElementConcept(DataElementConcept pDataElementConcept) {
-		dec = pDataElementConcept;
-	} //end method
+  public void setDataElementConcept(DataElementConcept pDataElementConcept) {
+    dec = pDataElementConcept;
+  }
+   //end method
 
-	public void setLongCDEName(String pLongCDEName) {
-		longCDEName = pLongCDEName;
-	}
+  public void setLongCDEName(String pLongCDEName) {
+    longCDEName = pLongCDEName;
+  }
 
-	public void setCDEId(String pCDEId) {
-		cdeId = pCDEId;
+  public void setCDEId(String pCDEId) {
+    cdeId = pCDEId;
     publicId = Integer.parseInt(pCDEId);
-	}
+  }
 
-	public void setContextName(String pConteName) {
-		contextName = pConteName;
-	}
+  public void setContextName(String pConteName) {
+    contextName = pConteName;
+  }
 
-	public void setUsingContexts(String usingContexts) {
-		this.usingContexts = usingContexts;
-	}
+  public void setUsingContexts(String usingContexts) {
+    this.usingContexts = usingContexts;
+  }
 
   public void setIdseq(String pDeIdseq) {
-		deIdseq = pDeIdseq;
+    deIdseq = pDeIdseq;
     idseq = pDeIdseq;
-	}
-
+  }
 }

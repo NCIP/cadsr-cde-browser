@@ -67,6 +67,8 @@ public class DESearchQueryBuilder extends Object {
       searchStr = "";
       whereClause = "";
       selIndex = "";
+      latestWhere = " and de.latest_version_ind = 'Yes' ";
+      whereBuffer.append(latestWhere);
     }
     else {
       searchStr0 = StringUtils.replaceNull(request.getParameter("jspKeyword"));  
@@ -90,8 +92,9 @@ public class DESearchQueryBuilder extends Object {
       searchStr6 = 
         StringUtils.replaceNull(request.getParameter("jspLatestVersion"));
       
-      if (searchStr6.equals("Yes")) {
-        latestWhere = " and de.latest_version_ind = '"+searchStr6+"'";    
+      if (searchStr6.equals("Yes")||searchStr6.equals("")) {
+        //latestWhere = " and de.latest_version_ind = '"+searchStr6+"'";
+        latestWhere = " and de.latest_version_ind = 'Yes' ";    
       } 
       else {
         latestWhere = "";
@@ -120,10 +123,14 @@ public class DESearchQueryBuilder extends Object {
       //if (!getSearchStr(3).equals("")){
       if (!searchStr3.equals("")){
         String newCdeStr = StringReplace.strReplace(searchStr3,"*","%");
-        cdeIdWhere = " and de.de_idseq IN "
-                     +"(SELECT ac_idseq "
+        cdeIdWhere =  " and de.de_idseq IN "
+                     +"(SELECT de_idseq "
+                     +"FROM   data_elements "
+					           +"WHERE  cde_id = "+newCdeStr
+                     +" UNION "
+                     +"SELECT ac_idseq "
                      +"FROM designations "
-                     +"WHERE detl_name IN ('CDE_ID','HISTORICAL_CDE_ID') "
+                     +"WHERE detl_name = 'HISTORICAL_CDE_ID' "
                      +"AND to_char(to_number(ltrim(substr(name,1,7)))) like '"+newCdeStr+"')";
       }
       //if (!getSearchStr(2).equals("")){
@@ -167,8 +174,8 @@ public class DESearchQueryBuilder extends Object {
       if (treeParamType == null ||treeParamType.equals("P_PARAM_TYPE")){
         fromWhere =  " from sbr.data_elements de , "+
                             "sbr.reference_documents rd , "+
-                            "sbr.contexts conte, "+
-                            "sbrext.de_cde_id_view dc " +
+                            "sbr.contexts conte "+
+                            //"sbrext.de_cde_id_view dc " +
                             //"sbr.value_domains vd, "+
                             //"sbr.data_element_concepts dec " +
                             vdFrom +
@@ -179,7 +186,7 @@ public class DESearchQueryBuilder extends Object {
                      //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
                      " and de.asl_name != 'RETIRED DELETED' " + 
                      " and conte.conte_idseq = de.conte_idseq " +
-                     " and de.de_idseq = dc.ac_idseq (+) "+
+                     //" and de.de_idseq = dc.ac_idseq (+) "+
                      //" and vd.vd_idseq = de.vd_idseq " +
                      //" and dec.dec_idseq = de.dec_idseq " + 
                      csiWhere + whereClause;
@@ -188,8 +195,8 @@ public class DESearchQueryBuilder extends Object {
       else if (treeParamType.equals("CONTEXT")){
         fromWhere= " from sbr.data_elements de , "+
                              "sbr.reference_documents rd , "+
-                             "sbr.contexts conte, "+
-                             "sbrext.de_cde_id_view dc " +
+                             "sbr.contexts conte "+
+                             //"sbrext.de_cde_id_view dc " +
                              //"sbr.value_domains vd, "+
                              //"sbr.data_element_concepts dec " +
                              vdFrom +
@@ -200,7 +207,7 @@ public class DESearchQueryBuilder extends Object {
                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
                    " and de.asl_name != 'RETIRED DELETED' " + 
                    " and conte.conte_idseq = de.conte_idseq " +
-                   " and de.de_idseq = dc.ac_idseq (+) " +
+                   //" and de.de_idseq = dc.ac_idseq (+) " +
                    //" and conte.conte_idseq = '"+treeParamIdSeq+"'" +
                    //" and vd.vd_idseq = de.vd_idseq " +
                    //" and dec.dec_idseq = de.dec_idseq " +
@@ -212,7 +219,7 @@ public class DESearchQueryBuilder extends Object {
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +
                                " sbr.contexts conte, " +
-                               " sbrext.de_cde_id_view dc, " +
+                               //" sbrext.de_cde_id_view dc, " +
                                " sbrext.quest_contents_ext frm ," +
                                " sbrext.protocols_ext pt ," +
                                " sbrext.quest_contents_ext qc " +
@@ -226,7 +233,7 @@ public class DESearchQueryBuilder extends Object {
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
                          " and de.asl_name != 'RETIRED DELETED' " + 
                          " and conte.conte_idseq = de.conte_idseq " +
-                         " and de.de_idseq = dc.ac_idseq (+) " +
+                         //" and de.de_idseq = dc.ac_idseq (+) " +
                          " and pt.proto_idseq = frm.proto_idseq " +
                          " and frm.qtl_name = 'CRF' " +
                          " and qc.dn_crf_idseq = frm.qc_idseq " +
@@ -241,7 +248,7 @@ public class DESearchQueryBuilder extends Object {
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +
                                " sbr.contexts conte, " +
-                               " sbrext.de_cde_id_view dc, " +
+                               //" sbrext.de_cde_id_view dc, " +
                                " sbrext.quest_contents_ext qc " +
                                //" sbr.value_domains vd, "+
                                //" sbr.data_element_concepts dec " +
@@ -253,7 +260,7 @@ public class DESearchQueryBuilder extends Object {
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
                          " and de.asl_name != 'RETIRED DELETED' " + 
                          " and conte.conte_idseq = de.conte_idseq " +
-                         " and de.de_idseq = dc.ac_idseq (+) " +
+                         //" and de.de_idseq = dc.ac_idseq (+) " +
                          " and qc.dn_crf_idseq = '"+treeParamIdSeq+"'" +
                          " and qc.qtl_name = 'QUESTION' " +
                          " and qc.de_idseq = de.de_idseq " +
@@ -270,7 +277,7 @@ public class DESearchQueryBuilder extends Object {
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +
                                " sbr.contexts conte, " +
-                               " sbrext.de_cde_id_view dc, " +
+                               //" sbrext.de_cde_id_view dc, " +
                                " sbr.ac_csi acs " +
                                //" sbr.value_domains vd, "+
                                //" sbr.data_element_concepts dec " +
@@ -281,7 +288,7 @@ public class DESearchQueryBuilder extends Object {
                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
                          " and de.asl_name != 'RETIRED DELETED' " + 
                          " and conte.conte_idseq = de.conte_idseq " +
-                         " and de.de_idseq = dc.ac_idseq (+) " +
+                         //" and de.de_idseq = dc.ac_idseq (+) " +
                          csiWhere +
                          " and acs.ac_idseq = de.de_idseq " +
                          //" and vd.vd_idseq = de.vd_idseq " +
@@ -298,7 +305,7 @@ public class DESearchQueryBuilder extends Object {
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +
                                " sbr.contexts conte, " +
-                               " sbrext.de_cde_id_view dc, " +
+                               //" sbrext.de_cde_id_view dc, " +
                                " sbr.ac_csi acs, " +
                                " sbr.cs_csi csc " +
                                //" sbr.value_domains vd, "+
@@ -310,7 +317,7 @@ public class DESearchQueryBuilder extends Object {
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
                          " and de.asl_name != 'RETIRED DELETED' " + 
                          " and conte.conte_idseq = de.conte_idseq " +
-                         " and de.de_idseq = dc.ac_idseq (+) " +
+                         //" and de.de_idseq = dc.ac_idseq (+) " +
                          " and csc.cs_idseq = '"+treeParamIdSeq+"'" +
                          " and csc.cs_csi_idseq = acs.cs_csi_idseq " +
                          " and acs.ac_idseq = de.de_idseq " +
@@ -322,8 +329,8 @@ public class DESearchQueryBuilder extends Object {
       else if (treeParamType.equals("CORE")) {
         fromWhere = " from sbr.data_elements de , "+
                                 "sbr.reference_documents rd , "+
-                                "sbr.contexts conte, "+
-                                "sbrext.de_cde_id_view dc " +
+                                "sbr.contexts conte "+
+                                //"sbrext.de_cde_id_view dc " +
                                 //"sbr.value_domains vd, "+
                                 //"sbr.data_element_concepts dec " +
                                 vdFrom +
@@ -334,7 +341,7 @@ public class DESearchQueryBuilder extends Object {
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
                          " and de.asl_name != 'RETIRED DELETED' " + 
                          " and conte.conte_idseq = de.conte_idseq " +
-                         " and de.de_idseq = dc.ac_idseq (+) "+
+                         //" and de.de_idseq = dc.ac_idseq (+) "+
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " + 
                          " and de.de_idseq in ( select de_idseq " +
@@ -346,8 +353,8 @@ public class DESearchQueryBuilder extends Object {
       else if (treeParamType.equals("NON-CORE")) {
         fromWhere = " from sbr.data_elements de , "+
                                 "sbr.reference_documents rd , "+
-                                "sbr.contexts conte, "+
-                                "sbrext.de_cde_id_view dc " +
+                                "sbr.contexts conte "+
+                                //"sbrext.de_cde_id_view dc " +
                                 //"sbr.value_domains vd, "+
                                 //"sbr.data_element_concepts dec " +
                                 vdFrom +
@@ -358,7 +365,7 @@ public class DESearchQueryBuilder extends Object {
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
                          " and de.asl_name != 'RETIRED DELETED' " + 
                          " and conte.conte_idseq = de.conte_idseq " +
-                         " and de.de_idseq = dc.ac_idseq (+) "+
+                         //" and de.de_idseq = dc.ac_idseq (+) "+
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " + 
                          " and de.de_idseq in ( select de_idseq " +
@@ -376,9 +383,13 @@ public class DESearchQueryBuilder extends Object {
                            +"      ,rd.doc_text "
                            +"      ,conte.name "
                            +"      ,de.asl_name "
-                           +"      ,to_char(dc.min_cde_id) "
+                           +"      ,to_char(de.cde_id) "
                            +"      ,de.version de_version "
-                           +"      ,meta_config_mgmt.get_usedby(de.de_idseq) ";
+                           +"      ,meta_config_mgmt.get_usedby(de.de_idseq) "
+                           +"      ,de.vd_idseq "
+                           +"      ,de.dec_idseq "
+                           +"      ,de.conte_idseq "
+                           +"      ,de.preferred_definition ";
       finalSqlStmt.append(selectClause);
       finalSqlStmt.append(fromWhere);
       sqlWithoutOrderBy = finalSqlStmt.toString();

@@ -1,41 +1,51 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-import gov.nih.nci.ncicb.cadsr.base.process.*;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.database.*;
+import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.TreeParametersTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JDataElementTransferObject;
 import gov.nih.nci.ncicb.cadsr.html.HTMLPageScroller;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.PageContextValueObject;
-import gov.nih.nci.ncicb.cadsr.persistence.bc4j.handler.*;
 import gov.nih.nci.ncicb.cadsr.resource.CDEBrowserPageContext;
+import gov.nih.nci.ncicb.cadsr.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.TreeParameters;
-import gov.nih.nci.ncicb.cadsr.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.resource.handler.CDEBrowserPageContextHandler;
 import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
-import gov.nih.nci.ncicb.cadsr.util.*;
-import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
-import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
-import gov.nih.nci.ncicb.cadsr.resource.impl.*;
-import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-
-
-import oracle.cle.persistence.HandlerFactory;
-
-import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.Service;
-
-import oracle.cle.util.statemachine.TransitionCondition;
-import oracle.cle.util.statemachine.TransitionConditionException;
+import gov.nih.nci.ncicb.cadsr.resource.handler.ValidValueHandler;
+import gov.nih.nci.ncicb.cadsr.resource.impl.CDECartImpl;
+import gov.nih.nci.ncicb.cadsr.util.BC4JPageIterator;
+import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.util.PageIterator;
+import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
+import gov.nih.nci.ncicb.cadsr.util.UserErrorMessage;
+import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
 
 import java.text.DateFormat;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+
+import oracle.cle.persistence.HandlerFactory;
+import oracle.cle.process.ProcessInfoException;
+import oracle.cle.process.Service;
+import oracle.cle.util.statemachine.TransitionCondition;
+import oracle.cle.util.statemachine.TransitionConditionException;
 
 
 /**
@@ -321,7 +331,7 @@ public class GetDataElements extends BasePersistingProcess {
       }
 
       else if (performQuery.equals("addToCart")) {
-        System.out.println("In add to cart");
+        ValidValueHandler valueHandler = (ValidValueHandler) HandlerFactory.getHandler(ValidValue.class);
         desb = (DataElementSearchBean) getInfoObject("desb");
         dePageIterator =
           (PageIterator) getInfoObject(
@@ -332,30 +342,25 @@ public class GetDataElements extends BasePersistingProcess {
         queryResults = (List)getInfoObject(
             ProcessConstants.ALL_DATA_ELEMENTS);
 
-        /*CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
-        if (cart == null)
-          cart = new CDECartTransferObject();*/
         CDECart cart = this.findCart(userSession);
         String [] itemsList = getInfoStringArray(ProcessConstants.SELECT_DE);
         CDECartItem cdeItem = null;
         DataElement de = null;
+        ValueDomain vd = null;
         for (int i=0; i <itemsList.length; i++){
           cdeItem = new CDECartItemTransferObject();
-          /*cdeItem.setId(itemsList[i]);
-          cdeItem.setType("DATAELEMENT");*/
           de = locateDataElement(queryResults,itemsList[i]);
-          //cdeItem.setDataElement(de);
+          vd = de.getValueDomain();
+          vd.setValidValues(valueHandler.getValidValues(vd.getVdIdseq(),getSessionId()));
           cdeItem.setItem(de);
           cart.setDataElement(cdeItem);
         }
 
-        Collection coll = cart.getDataElements();
-        System.out.println("Cart count: "+coll.size());
+        /*Collection coll = cart.getDataElements();
         Iterator it = coll.iterator();
         while (it.hasNext()) {
           System.out.println("DE Id: "+((CDECartItem)it.next()).getId());
-        }
-        //userSession.setAttribute(CaDSRConstants.CDE_CART,cart);
+        }*/
 
       }
 
@@ -505,7 +510,7 @@ public class GetDataElements extends BasePersistingProcess {
     while (it.hasNext()) {
       de = (DataElement)it.next();
       if (de.getDeIdseq().equals(deId)){
-        return de;
+        return DTOTransformer.toDataElement((BC4JDataElementTransferObject)de);
       }
     }
     return de;

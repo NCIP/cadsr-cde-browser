@@ -159,6 +159,7 @@ public class GetXMLDownload extends BasePersistingProcess {
                         ", \"ContextName\" "+
                         ", \"ContextVersion\" "+
                         ", \"Origin\" "+
+                        ", \"RegistrationStatus\" "+
                         ", \"DataElementConcept\" "+
                         ", \"ValueDomain\" " +
                         ", \"ReferenceDocumentsList\" " +

@@ -3,7 +3,6 @@
 
 <Entity
    Name="AdministeredComponents"
-   TimeStamp="1037902927394"
    DBObjectType="table"
    DBObjectName="ADMINISTERED_COMPONENTS"
    AliasName="AdministeredComponents"
@@ -13,18 +12,18 @@
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponentsImpl" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.2.7.99" />
+      <Attr Name="_version" Value="9.0.3.10.62" />
       <AttrArray Name="_publishEvents">
       </AttrArray>
    </DesignTime>
    <Attribute
       Name="AcIdseq"
       IsNotNull="true"
+      Precision="36"
       Type="java.lang.String"
       ColumnName="AC_IDSEQ"
       ColumnType="CHAR"
-      SQLType="CHAR"
-      Precision="36"
+      SQLType="VARCHAR"
       TableName="ADMINISTERED_COMPONENTS"
       PrimaryKey="true"
       RetrievedOnUpdate="true"
@@ -37,11 +36,11 @@
       Name="ActlName"
       IsUnique="true"
       IsNotNull="true"
+      Precision="20"
       Type="java.lang.String"
       ColumnName="ACTL_NAME"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="20"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="20" />
@@ -51,12 +50,12 @@
       Name="Version"
       IsUnique="true"
       IsNotNull="true"
+      Precision="4"
+      Scale="2"
       Type="oracle.jbo.domain.Number"
       ColumnName="VERSION"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
-      Precision="4"
-      Scale="2"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="0" />
@@ -77,11 +76,11 @@
       Name="PreferredName"
       IsUnique="true"
       IsNotNull="true"
+      Precision="30"
       Type="java.lang.String"
       ColumnName="PREFERRED_NAME"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -102,11 +101,11 @@
       Name="ConteIdseq"
       IsUnique="true"
       IsNotNull="true"
+      Precision="36"
       Type="java.lang.String"
       ColumnName="CONTE_IDSEQ"
       ColumnType="CHAR"
-      SQLType="CHAR"
-      Precision="36"
+      SQLType="VARCHAR"
       TableName="ADMINISTERED_COMPONENTS"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -117,11 +116,11 @@
    <Attribute
       Name="PreferredDefinition"
       IsNotNull="true"
+      Precision="2000"
       Type="java.lang.String"
       ColumnName="PREFERRED_DEFINITION"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="2000"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="2000" />
@@ -129,11 +128,11 @@
    </Attribute>
    <Attribute
       Name="StewaIdseq"
+      Precision="36"
       Type="java.lang.String"
       ColumnName="STEWA_IDSEQ"
       ColumnType="CHAR"
-      SQLType="CHAR"
-      Precision="36"
+      SQLType="VARCHAR"
       TableName="ADMINISTERED_COMPONENTS"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -143,11 +142,11 @@
    </Attribute>
    <Attribute
       Name="CmslName"
+      Precision="20"
       Type="java.lang.String"
       ColumnName="CMSL_NAME"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="20"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="20" />
@@ -155,11 +154,11 @@
    </Attribute>
    <Attribute
       Name="ChangeNote"
+      Precision="2000"
       Type="java.lang.String"
       ColumnName="CHANGE_NOTE"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="2000"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="2000" />
@@ -168,11 +167,11 @@
    <Attribute
       Name="AslName"
       IsNotNull="true"
+      Precision="20"
       Type="java.lang.String"
       ColumnName="ASL_NAME"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="20"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="20" />
@@ -180,11 +179,11 @@
    </Attribute>
    <Attribute
       Name="LongName"
+      Precision="255"
       Type="java.lang.String"
       ColumnName="LONG_NAME"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="255"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="255" />
@@ -192,11 +191,11 @@
    </Attribute>
    <Attribute
       Name="UnresolvedIssue"
+      Precision="200"
       Type="java.lang.String"
       ColumnName="UNRESOLVED_ISSUE"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="200"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="200" />
@@ -204,11 +203,11 @@
    </Attribute>
    <Attribute
       Name="Origin"
+      Precision="240"
       Type="java.lang.String"
       ColumnName="ORIGIN"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="240"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="240" />
@@ -216,11 +215,11 @@
    </Attribute>
    <Attribute
       Name="LatestVersionInd"
+      Precision="3"
       Type="java.lang.String"
       ColumnName="LATEST_VERSION_IND"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="3"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="3" />
@@ -228,11 +227,11 @@
    </Attribute>
    <Attribute
       Name="DeletedInd"
+      Precision="3"
       Type="java.lang.String"
       ColumnName="DELETED_IND"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="3"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="3" />
@@ -253,11 +252,11 @@
    <Attribute
       Name="CreatedBy"
       IsNotNull="true"
+      Precision="30"
       Type="java.lang.String"
       ColumnName="CREATED_BY"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -276,11 +275,11 @@
    </Attribute>
    <Attribute
       Name="ModifiedBy"
+      Precision="30"
       Type="java.lang.String"
       ColumnName="MODIFIED_BY"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="ADMINISTERED_COMPONENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -306,6 +305,22 @@
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc"
       AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc.AcCsi"
       AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc.AdministeredComponents"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Designations"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesigAcFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesigAcFkAssoc.Designations"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesigAcFkAssoc.AdministeredComponents"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="AcRegistrations"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc.AcRegistrations"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc.AdministeredComponents"
       Type="oracle.jbo.RowIterator"
       IsUpdateable="false" >
    </AccessorAttribute>

@@ -111,7 +111,7 @@ function retrieveSavedItems() {
     </tr>
   <logic:empty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
     <tr class="OraTabledata">
-        <td class="OraFieldText">
+        <td class="OraFieldText" colspan="7">
           CDE Cart is empty. 
         </td>
     </tr>

@@ -28,6 +28,10 @@ public class ReferenceDocumentsImpl extends EntityImpl
   protected static final int URL = 13;
   protected static final int LAENAME = 14;
   protected static final int DISPLAYORDER = 15;
+  protected static final int ADMINISTEREDCOMPONENTS = 16;
+  protected static final int ACREGISTRATIONS = 17;
+  protected static final int REFERENCEBLOBS = 18;
+
 
   private static EntityDefImpl mDefinitionObject;
 
@@ -43,14 +47,13 @@ public class ReferenceDocumentsImpl extends EntityImpl
    * 
    * Retrieves the definition object for this instance class.
    */
-  public static synchronized EntityDefImpl getDefinitionObject()
-  {
-    if (mDefinitionObject == null)
-    {
+  public static synchronized EntityDefImpl getDefinitionObject() {
+    if (mDefinitionObject == null) {
       mDefinitionObject = (EntityDefImpl)EntityDefImpl.findDefObject("gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments");
     }
     return mDefinitionObject;
   }
+
 
 
   /**
@@ -378,6 +381,12 @@ public class ReferenceDocumentsImpl extends EntityImpl
         return getLaeName();
       case DISPLAYORDER:
         return getDisplayOrder();
+      case REFERENCEBLOBS:
+        return getReferenceBlobs();
+      case ADMINISTEREDCOMPONENTS:
+        return getAdministeredComponents();
+      case ACREGISTRATIONS:
+        return getAcRegistrations();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -442,12 +451,52 @@ public class ReferenceDocumentsImpl extends EntityImpl
       }
   }
 
+
+  /**
+   * 
+   * Gets the associated entity AdministeredComponentsImpl
+   */
+  public AdministeredComponentsImpl getAdministeredComponents() {
+    return (AdministeredComponentsImpl)getAttributeInternal(ADMINISTEREDCOMPONENTS);
+  }
+
+  /**
+   * 
+   * Sets <code>value</code> as the associated entity AdministeredComponentsImpl
+   */
+  public void setAdministeredComponents(AdministeredComponentsImpl value) {
+    setAttributeInternal(ADMINISTEREDCOMPONENTS, value);
+  }
+
+  /**
+   * 
+   * Gets the associated entity AcRegistrationsImpl
+   */
+  public AcRegistrationsImpl getAcRegistrations() {
+    return (AcRegistrationsImpl)getAttributeInternal(ACREGISTRATIONS);
+  }
+
+  /**
+   * 
+   * Sets <code>value</code> as the associated entity AcRegistrationsImpl
+   */
+  public void setAcRegistrations(AcRegistrationsImpl value) {
+    setAttributeInternal(ACREGISTRATIONS, value);
+  }
+
+  /**
+   * 
+   * Gets the associated entity oracle.jbo.RowIterator
+   */
+  public RowIterator getReferenceBlobs() {
+    return (RowIterator)getAttributeInternal(REFERENCEBLOBS);
+  }
+
   /**
    * 
    * Creates a Key object based on given key constituents
    */
-  public static Key createPrimaryKey(String rdIdseq)
-  {
+  public static Key createPrimaryKey(String rdIdseq) {
     return new Key(new Object[] {rdIdseq});
   }
 

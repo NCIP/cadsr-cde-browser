@@ -27,6 +27,7 @@ public class AdminComponentTransferObject extends BaseValueObject
   protected int publicId;
   protected String origin;
   protected String idseq;
+  protected String registrationStatus;
 
 	public AdminComponentTransferObject() {
 		super();
@@ -45,6 +46,7 @@ public class AdminComponentTransferObject extends BaseValueObject
 		context = null;
 		refDocs = null;
 		designations = null;
+    registrationStatus=null;
 	}
 
 	public String getCreatedBy() {
@@ -189,6 +191,14 @@ public class AdminComponentTransferObject extends BaseValueObject
 
   public void setIdseq(String idseq) {
     this.idseq = idseq;
+  }
+
+  public String getRegistrationStatus() {
+    return registrationStatus;
+  }
+
+  public void setRegistrationStatus(String regStatus) {
+    registrationStatus = regStatus;
   }
     /**
    * Clones the Object

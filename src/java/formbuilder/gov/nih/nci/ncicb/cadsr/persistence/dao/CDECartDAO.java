@@ -12,7 +12,7 @@ public interface CDECartDAO  {
    *
    * @throws <b>DMLException</b>
    */
-  public CDECart findCDECart(String username)throws DMLException ;
+  public CDECart findCDECart(String username);
 
   /**
    * Inserts an item into cart.
@@ -22,7 +22,7 @@ public interface CDECartDAO  {
    *
    * @throws <b>DMLException</b>
    */
-  public int insertCartItem(CDECartItem item) throws DMLException;
+  public int insertCartItem(CDECartItem item);
 
   /**
    * Deletes an item from cart.
@@ -32,6 +32,6 @@ public interface CDECartDAO  {
    *
    * @throws <b>DMLException</b>
    */
-  public int deleteCartItem(String itemId, String username) throws DMLException;
+  public int deleteCartItem(String itemId, String username);
   
 }

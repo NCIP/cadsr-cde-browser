@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.PlugIn;
 import org.apache.struts.config.ModuleConfig;
 
+import java.util.*;
 import javax.servlet.ServletException;
 
 
@@ -21,7 +22,7 @@ public class ServiceDelegateFactory implements PlugIn {
     "gov.nih.nci.ncicb.cadsr.formbuilder.service.ejb.FormBuilderDynamicRemoteServiceDelegateImpl";
   private ServiceLocator locator = null;    
   private ActionServlet servlet;
-
+  private static Map cache = Collections.synchronizedMap(new HashMap());
   public ServiceDelegateFactory() {
   }
 
@@ -47,10 +48,10 @@ public class ServiceDelegateFactory implements PlugIn {
     FormBuilderServiceDelegate proxy = null;
 
     try {
-      String className = locator.getString(FormBuilderConstants.SERVICE_DELEGATE_CLASS_KEY);
+      /*String className = locator.getString(FormBuilderConstants.SERVICE_DELEGATE_CLASS_KEY);
       if (className != null) {
         serviceClassName = className;
-      }
+      }*/
 
       Class serviceClass = Class.forName(getServiceClassName());
       Class[] paramTypes = new Class[1];
@@ -75,7 +76,25 @@ public class ServiceDelegateFactory implements PlugIn {
     return proxy;
   }
 
+  public FormBuilderServiceDelegate findService()
+    throws ServiceStartupException {
+    FormBuilderServiceDelegate proxy = null;
+    String key = this.getServiceClassName();
+    if (cache.containsKey(key)) {
+      proxy = (FormBuilderServiceDelegate)cache.get(this.getServiceClassName());
+    }
+    else {
+      proxy = this.createService();
+      cache.put(key,proxy);
+    }
+    return proxy;
+  }
+
   public String getServiceClassName() {
+    String className = locator.getString(FormBuilderConstants.SERVICE_DELEGATE_CLASS_KEY);
+    if (className != null) {
+      serviceClassName = className;
+    }
     return serviceClassName;
   }
 

@@ -11,6 +11,10 @@ public class CDECartFormBean extends ActionForm  {
   private String [] selectedSaveItems;
   private String [] selectedDeleteItems;
   private String [] selectedItems;
+  private String moduleIndex;
+  private String questionIndex;
+  private String src;
+  
   
   public String[] getSelectedDeleteItems() {
     return selectedDeleteItems;
@@ -60,6 +64,30 @@ public class CDECartFormBean extends ActionForm  {
     ActionMapping mapping,
     HttpServletRequest request) {
     return super.validate(mapping, request);
+  }
+
+  public String getModuleIndex() {
+    return moduleIndex;
+  }
+
+  public void setModuleIndex(String newModuleIndex) {
+    moduleIndex = newModuleIndex;
+  }
+
+  public String getQuestionIndex() {
+    return questionIndex;
+  }
+
+  public void setQuestionIndex(String newQuestionIndex) {
+    questionIndex = newQuestionIndex;
+  }
+
+  public String getSrc() {
+    return src;
+  }
+
+  public void setSrc(String newSrc) {
+    src = newSrc;
   }
 
 }

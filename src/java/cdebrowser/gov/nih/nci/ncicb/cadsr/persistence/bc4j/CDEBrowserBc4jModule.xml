@@ -182,6 +182,10 @@
       Name="HistoricalCdeIdsView"
       ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.HistoricalCdeIdsView" >
    </ViewUsage>
+   <ViewUsage
+      Name="AcRegistrationsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsView" >
+   </ViewUsage>
    <ViewLinkUsage
       Name="DeConteFkLink"
       ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeConteFkLink"

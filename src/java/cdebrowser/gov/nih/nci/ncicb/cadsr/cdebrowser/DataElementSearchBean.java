@@ -166,8 +166,8 @@ public class DataElementSearchBean extends Object {
       "<select multiple name=\"jspSearchIn\" size=\"4\" class=\"LOVField\"> ");
 
     if (searchIn == null) {
-      searchInList.append("<option selected value=\"ALL\">ALL</option> ");
-      searchInList.append("<option value=\"Long Name\">Long Name</option> ");
+      searchInList.append("<option value=\"ALL\">ALL</option> ");
+      searchInList.append("<option selected value=\"Long Name\">Long Name</option> ");
       searchInList.append(
         "<option value=\"Preferred Name\">Preferred Name</option> ");
       searchInList.append("<option value=\"Doc Text\">Document Text</option> ");

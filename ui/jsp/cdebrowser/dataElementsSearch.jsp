@@ -57,6 +57,21 @@
 
   String queryFlag = request.getParameter("performQuery");
   if (queryFlag == null) queryFlag = "";
+
+
+  String doneURL = "";
+
+  String src = request.getParameter("src");
+  String modIndex = "";
+  String quesIndex = "";
+  String urlParams = "";
+  
+  if ((src != null) || ("".equals(src))) {
+    modIndex = request.getParameter("moduleIndex");
+    quesIndex = request.getParameter("questionIndex");
+    doneURL= src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
+    urlParams = "&src="+src+"&method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
+  }
     
 %>
 
@@ -83,7 +98,7 @@ function redirect1(detailReqType, linkParms )
   
 }
 function goPage(pageNumber, pageInfo) {
-  document.location.href = "search?searchDataElements=9&"+pageInfo+"&deSearchPageNum="+pageNumber+ "<%= pageUrl %>";
+  document.location.href = "search?searchDataElements=9&"+pageInfo+"&deSearchPageNum="+pageNumber+ "<%= pageUrl %>"+"<%= urlParams %>";
     
 }
 function clearValueDomain() {
@@ -191,6 +206,10 @@ function updateCart() {
   }
 }
 
+function done() {
+  top.location.href = "<%=doneURL%>";
+}
+
 
 //-->
 </SCRIPT>
@@ -204,6 +223,9 @@ function updateCart() {
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="performQuery" VALUE="yes">
+<INPUT TYPE="HIDDEN" NAME="src" VALUE="<%=src%>">
+<INPUT TYPE="HIDDEN" NAME="moduleIndex" VALUE="<%=modIndex%>">
+<INPUT TYPE="HIDDEN" NAME="questionIndex" VALUE="<%=quesIndex%>">
 <input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
 
 <table width="100%" align="center">
@@ -271,7 +293,7 @@ function updateCart() {
       <table>
         <tr>
 <%
-  if (latestVer.equals("Yes")) {
+  if (latestVer.equals("Yes") || latestVer.equals("")) {
 %>
           <td class="OraFieldText" nowrap>Latest Version<input type="radio" name="jspLatestVersion" value="Yes" checked></td>
           <td class="OraFieldText" nowrap>All Versions<input type="radio" name="jspLatestVersion" value="No"></td>
@@ -304,10 +326,28 @@ function updateCart() {
   <tr>
     <td colspan="4" nowrap align="left" class="AbbreviatedText">Wildcard character for search is *</td>
  </tr>
+<%
+  if (src == null) {
+%>
  <TR>
     <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a></td>
     <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=i/clear.gif border=0></a></td>
  </TR>
+<%
+  }
+  else {
+%>
+  <TR>
+    <td  nowrap colspan="4" align="center"><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a>
+    &nbsp;<a href="javascript:clearForm()"><img src=i/clear.gif border=0></a>
+    &nbsp;<a href="javascript:done()"><img src=i/backButton.gif border=0></a>
+    &nbsp;
+    </td>
+ </TR>
+
+<%
+  }
+%>
 </table>
 <br>
 

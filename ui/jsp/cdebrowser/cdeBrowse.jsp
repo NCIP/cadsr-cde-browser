@@ -6,23 +6,31 @@
   String pageId = request.getParameter("PageId");
   String treeURL;
   String browserURL;
+  String extraURLParams = "";
+  String treeParams = "";
+
+  String src = request.getParameter("src");
+  if (src != null) {
+    String modIndex = request.getParameter("moduleIndex");
+    String quesIndex = request.getParameter("questionIndex");
+    extraURLParams += "&src="+src+"&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
+    treeParams += treeParams + ";src:"+src + ";" + "questionIndex:" + quesIndex
+                  + ";moduleIndex:"+modIndex;
+  }
 
   treeURL = "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree"+
       "&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" + 
       TreeConstants.DE_SEARCH_TREE + ";" +
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
-      TreeConstants.DE_SEARCH_FUNCTION +
+      TreeConstants.DE_SEARCH_FUNCTION + treeParams +
       "&skin=CDEBrowser1";
       
   if (pageId == null) {
-   //String treeURL = "WebTree.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree&skin=CDEBrowser1";
-    //treeURL = "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree&treeParams=treeType:DE;functionName:performAction&skin=CDEBrowser1";
-    browserURL = "search?FirstTimer=0";
+   browserURL = "search?FirstTimer=0"+extraURLParams;
   }
   else {
-    //treeURL = "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree&skin=CDEBrowser1&PageId="+pageId;
     treeURL = treeURL + "&PageId="+pageId;
-    browserURL = "search?PageId="+pageId+"&FirstTimer=0";
+    browserURL = "search?PageId="+pageId+"&FirstTimer=0"+extraURLParams;
   }
 %>
 <HTML>

@@ -9,6 +9,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+
 <HTML>
 <HEAD>
 <TITLE>Display CDE Cart</TITLE>
@@ -66,6 +67,23 @@ function details(linkParms ){
 
   String downloadXMLURL = "javascript:fileDownloadWin('downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
   String downloadExcelURL = "javascript:fileDownloadWin('downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
+  
+  String doneURL = "";
+  
+  String src = request.getParameter("src");
+  String modIndex = "";
+  String quesIndex = "";
+  String urlParams = "";
+    
+  if ((src != null) || ("".equals(src))) {
+    modIndex = request.getParameter("moduleIndex");
+    quesIndex = request.getParameter("questionIndex");
+    doneURL= src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
+    urlParams = "&src="+src+"&method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
+  }
+  else {
+    doneURL="cdeBrowse.jsp?PageId=DataElementsGroup";
+  }
 %>
 <jsp:include page="../common/common_header_inc.jsp" flush="true">
   <jsp:param name="loginDestination" value="formCDECartAction.do?method=displayCDECart"/>
@@ -77,6 +95,9 @@ function details(linkParms ){
 
 <html:form action="/formCDECartAction.do">
 <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
+<html:hidden property="<%= FormConstants.QUESTION_INDEX %>"/>
+<html:hidden property="<%= FormConstants.MODULE_INDEX %>"/>
+<html:hidden property="<%= FormConstants.DE_SEARCH_SRC %>"/>
 <logic:present name="<%=CaDSRConstants.CDE_CART%>">
 <logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
     <table cellpadding="0" cellspacing="0" width="80%" align="center">
@@ -171,8 +192,8 @@ function details(linkParms ){
           </a>
         </td> 
         <td >
-          <html:link href="cdeBrowse.jsp?PageId=DataElementsGroup">				
-            <html:img src='<%="i/backButton.gif"%>' border="0" alt="Back"/>
+          <html:link href="<%=doneURL%>">				
+            <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Back"/>
           </html:link>             
         </td> 
       </tr>

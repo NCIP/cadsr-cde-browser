@@ -38,6 +38,9 @@ public class AdministeredComponentsImpl extends EntityImpl
   protected static final int CONTEXTS = 21;
   protected static final int REFERENCEDOCUMENTS = 22;
   protected static final int ACCSI = 23;
+  protected static final int DESIGNATIONS = 24;
+  protected static final int ACREGISTRATIONS = 25;
+
 
 
 
@@ -61,6 +64,7 @@ public class AdministeredComponentsImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -539,6 +543,10 @@ public class AdministeredComponentsImpl extends EntityImpl
         return getReferenceDocuments();
       case ACCSI:
         return getAcCsi();
+      case DESIGNATIONS:
+        return getDesignations();
+      case ACREGISTRATIONS:
+        return getAcRegistrations();
       case CONTEXTS:
         return getContexts();
       default:
@@ -654,6 +662,23 @@ public class AdministeredComponentsImpl extends EntityImpl
    */
   public RowIterator getAcCsi() {
     return (RowIterator)getAttributeInternal(ACCSI);
+  }
+
+
+  /**
+   * 
+   * Gets the associated entity oracle.jbo.RowIterator
+   */
+  public RowIterator getDesignations() {
+    return (RowIterator)getAttributeInternal(DESIGNATIONS);
+  }
+
+  /**
+   * 
+   * Gets the associated entity oracle.jbo.RowIterator
+   */
+  public RowIterator getAcRegistrations() {
+    return (RowIterator)getAttributeInternal(ACREGISTRATIONS);
   }
 
   /**

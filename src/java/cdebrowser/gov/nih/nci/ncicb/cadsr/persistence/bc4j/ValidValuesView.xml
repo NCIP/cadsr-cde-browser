@@ -3,7 +3,6 @@
 
 <ViewObject
    Name="ValidValuesView"
-   TimeStamp="1045683926197"
    BindingStyle="Oracle"
    CustomQuery="true"
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValidValuesViewRowImpl"
@@ -18,13 +17,14 @@ SELECT ValueMeaningsLov.SHORT_MEANING,
        PermissibleValues.VALUE, 
        PermissibleValues.PV_IDSEQ, 
        ValueDomains.VD_IDSEQ ,
-   nvl(PermissibleValues.MEANING_DESCRIPTION,'&nbsp;')
+   nvl(PermissibleValues.MEANING_DESCRIPTION,'&nbsp;'),
+   VdPvs.VP_IDSEQ
 FROM VD_PVS VdPvs, VALUE_MEANINGS_LOV ValueMeaningsLov, VALUE_DOMAINS ValueDomains, PERMISSIBLE_VALUES PermissibleValues
 WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = PermissibleValues.PV_IDSEQ) AND (ValueMeaningsLov.SHORT_MEANING = PermissibleValues.SHORT_MEANING)
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.9.62" />
+      <Attr Name="_version" Value="9.0.3.10.62" />
       <Attr Name="_CodeGenFlagNew" Value="36" />
    </DesignTime>
    <EntityUsage
@@ -100,7 +100,8 @@ WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = Permissible
       IsNotNull="true"
       EntityAttrName="ShortMeaning"
       EntityUsage="ValueMeaningsLov"
-      AliasName="SHORT_MEANING" >
+      AliasName="SHORT_MEANING"
+      ColumnType="$none$" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="0" />
       </DesignTime>
@@ -110,7 +111,8 @@ WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = Permissible
       IsUpdateable="false"
       EntityAttrName="Description"
       EntityUsage="ValueMeaningsLov"
-      AliasName="DESCRIPTION" >
+      AliasName="DESCRIPTION"
+      ColumnType="$none$" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="0" />
       </DesignTime>
@@ -122,7 +124,8 @@ WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = Permissible
       IsNotNull="true"
       EntityAttrName="Value"
       EntityUsage="PermissibleValues"
-      AliasName="VALUE" >
+      AliasName="VALUE"
+      ColumnType="$none$" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="0" />
       </DesignTime>
@@ -133,7 +136,8 @@ WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = Permissible
       IsNotNull="true"
       EntityAttrName="PvIdseq"
       EntityUsage="PermissibleValues"
-      AliasName="PV_IDSEQ" >
+      AliasName="PV_IDSEQ"
+      ColumnType="$none$" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="0" />
       </DesignTime>
@@ -144,7 +148,8 @@ WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = Permissible
       IsNotNull="true"
       EntityAttrName="VdIdseq"
       EntityUsage="ValueDomains"
-      AliasName="VD_IDSEQ" >
+      AliasName="VD_IDSEQ"
+      ColumnType="$none$" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="0" />
       </DesignTime>
@@ -154,7 +159,19 @@ WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = Permissible
       IsUpdateable="false"
       EntityAttrName="MeaningDescription"
       EntityUsage="PermissibleValues"
-      AliasName="MEANING_DESCRIPTION" >
+      AliasName="MEANING_DESCRIPTION"
+      ColumnType="$none$" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VpIdseq"
+      IsNotNull="true"
+      EntityAttrName="VpIdseq"
+      EntityUsage="VdPvs"
+      AliasName="VP_IDSEQ"
+      ColumnType="VARCHAR2" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="0" />
       </DesignTime>

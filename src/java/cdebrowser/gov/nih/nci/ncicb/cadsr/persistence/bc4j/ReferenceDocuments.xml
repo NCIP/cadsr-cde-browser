@@ -3,7 +3,6 @@
 
 <Entity
    Name="ReferenceDocuments"
-   TimeStamp="1027698984535"
    DBObjectType="table"
    DBObjectName="REFERENCE_DOCUMENTS"
    AliasName="ReferenceDocuments"
@@ -13,18 +12,18 @@
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocumentsImpl" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.2.7.99" />
+      <Attr Name="_version" Value="9.0.3.10.62" />
       <AttrArray Name="_publishEvents">
       </AttrArray>
    </DesignTime>
    <Attribute
       Name="RdIdseq"
       IsNotNull="true"
+      Precision="36"
       Type="java.lang.String"
       ColumnName="RD_IDSEQ"
       ColumnType="CHAR"
-      SQLType="CHAR"
-      Precision="36"
+      SQLType="VARCHAR"
       TableName="REFERENCE_DOCUMENTS"
       PrimaryKey="true"
       RetrievedOnUpdate="true"
@@ -37,11 +36,11 @@
       Name="Name"
       IsUnique="true"
       IsNotNull="true"
+      Precision="30"
       Type="java.lang.String"
       ColumnName="NAME"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="REFERENCE_DOCUMENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -49,11 +48,11 @@
    </Attribute>
    <Attribute
       Name="OrgIdseq"
+      Precision="36"
       Type="java.lang.String"
       ColumnName="ORG_IDSEQ"
       ColumnType="CHAR"
-      SQLType="CHAR"
-      Precision="36"
+      SQLType="VARCHAR"
       TableName="REFERENCE_DOCUMENTS"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -65,11 +64,11 @@
       Name="DctlName"
       IsUnique="true"
       IsNotNull="true"
+      Precision="60"
       Type="java.lang.String"
       ColumnName="DCTL_NAME"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="60"
       TableName="REFERENCE_DOCUMENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="60" />
@@ -78,11 +77,11 @@
    <Attribute
       Name="AcIdseq"
       IsUnique="true"
+      Precision="36"
       Type="java.lang.String"
       ColumnName="AC_IDSEQ"
       ColumnType="CHAR"
-      SQLType="CHAR"
-      Precision="36"
+      SQLType="VARCHAR"
       TableName="REFERENCE_DOCUMENTS"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -92,11 +91,11 @@
    </Attribute>
    <Attribute
       Name="AchIdseq"
+      Precision="36"
       Type="java.lang.String"
       ColumnName="ACH_IDSEQ"
       ColumnType="CHAR"
-      SQLType="CHAR"
-      Precision="36"
+      SQLType="VARCHAR"
       TableName="REFERENCE_DOCUMENTS"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -106,11 +105,11 @@
    </Attribute>
    <Attribute
       Name="ArIdseq"
+      Precision="36"
       Type="java.lang.String"
       ColumnName="AR_IDSEQ"
       ColumnType="CHAR"
-      SQLType="CHAR"
-      Precision="36"
+      SQLType="VARCHAR"
       TableName="REFERENCE_DOCUMENTS"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -120,11 +119,11 @@
    </Attribute>
    <Attribute
       Name="RdtlName"
+      Precision="20"
       Type="java.lang.String"
       ColumnName="RDTL_NAME"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="20"
       TableName="REFERENCE_DOCUMENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="20" />
@@ -132,11 +131,11 @@
    </Attribute>
    <Attribute
       Name="DocText"
+      Precision="4000"
       Type="java.lang.String"
       ColumnName="DOC_TEXT"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="4000"
       TableName="REFERENCE_DOCUMENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="4000" />
@@ -157,11 +156,11 @@
    <Attribute
       Name="CreatedBy"
       IsNotNull="true"
+      Precision="30"
       Type="java.lang.String"
       ColumnName="CREATED_BY"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="REFERENCE_DOCUMENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -180,11 +179,11 @@
    </Attribute>
    <Attribute
       Name="ModifiedBy"
+      Precision="30"
       Type="java.lang.String"
       ColumnName="MODIFIED_BY"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="REFERENCE_DOCUMENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -192,11 +191,11 @@
    </Attribute>
    <Attribute
       Name="Url"
+      Precision="240"
       Type="java.lang.String"
       ColumnName="URL"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="240"
       TableName="REFERENCE_DOCUMENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="240" />
@@ -204,11 +203,11 @@
    </Attribute>
    <Attribute
       Name="LaeName"
+      Precision="30"
       Type="java.lang.String"
       ColumnName="LAE_NAME"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="REFERENCE_DOCUMENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -216,17 +215,39 @@
    </Attribute>
    <Attribute
       Name="DisplayOrder"
+      Precision="2"
+      Scale="0"
       Type="oracle.jbo.domain.Number"
       ColumnName="DISPLAY_ORDER"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
-      Precision="2"
-      Scale="0"
       TableName="REFERENCE_DOCUMENTS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="0" />
       </DesignTime>
    </Attribute>
+   <AccessorAttribute
+      Name="AdministeredComponents"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc.AdministeredComponents"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc.ReferenceDocuments"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponentsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="AcRegistrations"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc.AcRegistrations"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc.ReferenceDocuments"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ReferenceBlobs"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RbRdFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RbRdFkAssoc.ReferenceBlobs"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RbRdFkAssoc.ReferenceDocuments"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
    <Key
       Name="RdPk" >
       <AttrArray Name="Attributes">

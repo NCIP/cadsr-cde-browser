@@ -34,6 +34,17 @@ public class BaseTreeNode implements TreeConstants  {
       extraURLParameters = 
         "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
     }
+
+    if (getTreeType().equals(DE_SEARCH_TREE) ) {
+      String src = (String)treeParams.get("src");
+      if (src != null) {
+        String modIndex = (String)treeParams.get("moduleIndex");
+        String quesIndex = (String)treeParams.get("questionIndex");
+        extraURLParameters += "&src="+src+"&moduleIndex="+modIndex+
+                              "&questionIndex="+quesIndex;
+      }
+    }
+    
     return extraURLParameters;
   }
 

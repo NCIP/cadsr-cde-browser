@@ -18,7 +18,7 @@ public class DataElementTransferObject extends AdminComponentTransferObject
   private String longCDEName;
   private String cDEId;
   private String decName;
-  private String conteName;
+  //private String conteName;
   private String usingContexts;
 
   public DataElementTransferObject() {
@@ -90,7 +90,7 @@ public class DataElementTransferObject extends AdminComponentTransferObject
   }
 
   public void setContextName(String pConteName) {
-    conteName = pConteName;
+    contextName = pConteName;
   }
 
   public void setCDEId(String pCDEId) {

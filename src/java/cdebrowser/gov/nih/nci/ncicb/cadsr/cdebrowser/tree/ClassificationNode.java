@@ -37,8 +37,8 @@ public class ClassificationNode extends BaseTreeNode  {
       new WebNode(myCsVO.getCsIdseq()
         ,myCsVO.getLongName()
         ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CLASSIFICATION&P_IDSEQ="+
-        myCsVO.getCsIdseq()+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
-        "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
+        myCsVO.getCsIdseq()+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()
+        +getExtraURLParameters()+"')"
         ,myCsVO.getPreferredDefinition()));
   }
 
@@ -83,8 +83,8 @@ public class ClassificationNode extends BaseTreeNode  {
           new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
             ,rs.getString(2)
             ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CSI&P_IDSEQ="+
-            rs.getString(5)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
-            "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
+            rs.getString(5)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()
+            +getExtraURLParameters()+"')"
             ,rs.getString(4)));
         List tempNodes;
         if ("CTEP".equals(contextName)){
@@ -98,8 +98,8 @@ public class ClassificationNode extends BaseTreeNode  {
                 rs.getString(1)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
                 "&P_CS_CSI_IDSEQ="+rs.getString(5)+
                 "&diseaseName="+URLEncoder.encode(rs.getString(2))+
-                "&csName="+URLEncoder.encode(myCsVO.getLongName())+
-                "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
+                "&csName="+URLEncoder.encode(myCsVO.getLongName())
+                +getExtraURLParameters()+"')"
                 ,"Core Data Set"));
             csiNode.add(coreNode);
 
@@ -109,8 +109,8 @@ public class ClassificationNode extends BaseTreeNode  {
                 ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=NON-CORE&P_IDSEQ="+
                 rs.getString(1)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
                 "&P_CS_CSI_IDSEQ="+rs.getString(5)+
-                "&diseaseName="+URLEncoder.encode(rs.getString(2))+
-                "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
+                "&diseaseName="+URLEncoder.encode(rs.getString(2))
+                +getExtraURLParameters()+"')"
                 ,"Non-Core Data Set"));
             csiNode.add(nonCoreNode);
           }
@@ -194,8 +194,8 @@ public class ClassificationNode extends BaseTreeNode  {
           new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
                      ,rs.getString(2)
                      ,"javascript:"+getFormJsFunctionName()+"('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
-                       rs.getString(1)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
-                       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
+                       rs.getString(1)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()
+                       +getExtraURLParameters()+"')"
                      ,rs.getString(3)));
         tempNodes.add(tempNode);
       }
@@ -246,8 +246,8 @@ public class ClassificationNode extends BaseTreeNode  {
           new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
             ,rs.getString(2)
             ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CSI&P_IDSEQ="+
-            rs.getString(5)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
-            "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
+            rs.getString(5)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()
+            +getExtraURLParameters()+"')"
             ,rs.getString(4)));
         //Recursive call    
         children = this.getClassSchemeItemsTree(rs.getString(5));

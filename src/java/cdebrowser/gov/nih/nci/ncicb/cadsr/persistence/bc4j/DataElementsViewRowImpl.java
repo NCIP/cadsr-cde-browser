@@ -642,6 +642,34 @@ public class DataElementsViewRowImpl extends ViewRowImpl {
     }
   }
 
+  public String getRegistrationStatus() {
+    String rgStatus = null;
+
+    try {
+      oracle.jbo.ViewObject rView =
+        getViewObject().getApplicationModule().findViewObject(
+          "AcRegistrationsView");
+
+      rView.setWhereClause(
+        "AC_IDSEQ='" + getDeIdseq() + "'");
+
+      Row row = rView.first();
+
+      if (row != null) {
+        rgStatus = (String) row.getAttribute("RegistrationStatus");
+      }
+
+      //String longCDEName = row
+    } // end try
+    catch (Exception e) {
+      System.out.println(
+        "Error in DataElementsViewRowImpl.getRegistrationStatus(): " + e.getMessage());
+    }
+
+    return rgStatus;
+  }
+
+
   public DataElementConcept getDataElementConcept() {
     try {
       oracle.jbo.ViewObject decView =

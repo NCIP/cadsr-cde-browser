@@ -55,4 +55,8 @@ public interface AdminComponent extends Audit {
   public String getIdseq();
 
   public void setIdseq(String idseq);
+
+  public String getRegistrationStatus();
+
+  public void setRegistrationStatus(String regStatus);
 }

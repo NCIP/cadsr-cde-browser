@@ -16,6 +16,7 @@ public class ValidValuesViewRowImpl extends ViewRowImpl
   protected static final int PVIDSEQ = 3;
   protected static final int VDIDSEQ = 4;
   protected static final int MEANINGDESCRIPTION = 5;
+  protected static final int VPIDSEQ = 6;
   /**
    * 
    * This is the default constructor (do not remove)
@@ -114,6 +115,8 @@ public class ValidValuesViewRowImpl extends ViewRowImpl
         return getVdIdseq();
       case MEANINGDESCRIPTION:
         return getMeaningDescription();
+      case VPIDSEQ:
+        return getVpIdseq();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -124,6 +127,9 @@ public class ValidValuesViewRowImpl extends ViewRowImpl
   {
     switch (index)
       {
+      case VPIDSEQ:
+        setVpIdseq((String)value);
+        return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);
         return;
@@ -148,6 +154,22 @@ public class ValidValuesViewRowImpl extends ViewRowImpl
   public String getVdIdseq()
   {
     return (String)getAttributeInternal(VDIDSEQ);
+  }
+
+  /**
+   * 
+   * Gets the attribute value for VP_IDSEQ using the alias name VpIdseq
+   */
+  public String getVpIdseq() {
+    return (String)getAttributeInternal(VPIDSEQ);
+  }
+
+  /**
+   * 
+   * Sets <code>value</code> as attribute value for VP_IDSEQ using the alias name VpIdseq
+   */
+  public void setVpIdseq(String value) {
+    setAttributeInternal(VPIDSEQ, value);
   }
 
 

@@ -24,6 +24,7 @@ public class AdminComponentTransferObject extends BaseTransferObject
   protected int publicId;
   protected String origin;
   protected String idseq;
+  protected String registrationStatus;
 
   public AdminComponentTransferObject() {
   }
@@ -131,6 +132,14 @@ public class AdminComponentTransferObject extends BaseTransferObject
 
   public void setOrigin(String source) {
     origin = source;
+  }
+
+  public String getRegistrationStatus() {
+    return registrationStatus;
+  }
+
+  public void setRegistrationStatus(String regStatus) {
+    registrationStatus = regStatus;
   }
   
   /**

@@ -654,4 +654,24 @@
       FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.HistoricalCdeIdsView"
       ObjectType="ViewObject" >
    </Containee>
+   <Containee
+      Name="AcRegistrations"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="RdArFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ArAcFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="AcRegistrationsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsView"
+      ObjectType="ViewObject" >
+   </Containee>
 </JboPackage>
