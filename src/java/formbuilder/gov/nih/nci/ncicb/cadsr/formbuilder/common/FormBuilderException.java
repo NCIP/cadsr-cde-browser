@@ -9,7 +9,7 @@ public class FormBuilderException extends NestedCheckedException {
   }
  public FormBuilderException(InvocationTargetException exp)
  {
-   super("Method",exp);
+   super("Method",exp.getTargetException());
  }
   public FormBuilderException(DMLException exp)
  {
