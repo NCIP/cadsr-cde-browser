@@ -25,9 +25,22 @@ function clearProtocol() {
   String contextPath = request.getContextPath();
   String csLOVUrl= "javascript:newWin('"+contextPath+"/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
   String protoLOVUrl= 
-    "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
+    "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&chkContext=true&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
 
 %>
+
+  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >
+    <tr >
+      <td >
+        &nbsp;
+      </td>
+    </tr>         
+    <TR>
+      <td align="right" nowrap width="50%"><a href="javascript:submitForm()"><img src="<%=urlPrefix%>i/save.gif" border=0 alt="Save"></a></td>
+      <td nowrap width="50%"><html:link action='<%="/formSearchAction"%>'><html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/></html:link></td>                
+    </TR>    
+  </table>
+
 
   <table cellpadding="0" cellspacing="0" width="80%" align="center">
     <tr >
@@ -44,6 +57,8 @@ function clearProtocol() {
   </table>
 
   <%@ include file="showValidationErrors.jsp" %>
+
+
 
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
     <tr class="OraTabledata">
@@ -173,17 +188,15 @@ function clearProtocol() {
     </tr>
   </table>
 
-  <br/>
-  <br/>
-  <table cellspacing="2" cellpadding="3" border="0" width="100%">
-
-    <TR>
-      <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=<%=urlPrefix%>i/save.gif border=0></a></td>
+  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >
+    <tr >
       <td >
-        <html:link action='<%="/formSearchAction"%>'>				
-          <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
-        </html:link>             
-      </td>                
+        &nbsp;
+      </td>
+    </tr>         
+    <TR>
+      <td align="right" nowrap width="50%"><a href="javascript:submitForm()"><img src="<%=urlPrefix%>i/save.gif" border=0 alt="Save"></a></td>
+      <td nowrap width="50%"><html:link action='<%="/formSearchAction"%>'><html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/></html:link></td>                
     </TR>    
   </table>
 
