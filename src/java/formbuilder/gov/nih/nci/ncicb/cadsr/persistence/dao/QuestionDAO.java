@@ -21,15 +21,29 @@ public interface QuestionDAO {
    *
    * @param <b>newQuestion</b> Question object
    *
-   * @return <b>Question</b> Question object representing the new question.
+   * @return <b>int</b> 1 - success, 0 - failure.
    *
    * @throws <b>DMLException</b>
    */
-  public Question createQuestionComponent(Question newQuestion)
+  public int createQuestionComponent(Question newQuestion)
     throws DMLException;
 
   /**
-   * Adds new valid values to a question.
+   * Creates new question components (just the header info).
+   *
+   * @param <b>questions</b> Collection of question objects
+   *
+   * @return <b>int</b> 1 - success, 0 - failure..
+   *
+   * @throws <b>DMLException</b>
+   */
+  public int createQuestionComponents(Collection questions)
+    throws DMLException;
+
+  /**
+   * Adds new valid values to a question. 
+   * 
+   * Hyun: Don't implement this method
    *
    * @param <b>questionId</b> Idseq of the question component.
    * @param <b>validValues</b> FormValidValue objects to be added to the
@@ -58,6 +72,8 @@ public interface QuestionDAO {
   /**
    * Changes the display order of the specified question. Display order of the
    * other questions the module is also updated accordingly.
+   * 
+   * Hyun: Use stored procedure: sbrext_form_builder_pkg.remove_question
    *
    * @param <b>questionId</b> Idseq of the question component.
    * @param <b>newDisplayOrder</b> New display order of the question component.
@@ -82,5 +98,37 @@ public interface QuestionDAO {
    */
   public int updateQuestionLongName(
     String questionId,
+    String newLongName) throws DMLException;
+
+  /**
+   * Changes the data element associated with a question.
+   *
+   * @param <b>questionId</b> Idseq of the question component.
+   * @param <b>newDEId</b> Idseq of the data element associated with the
+   *        question component.
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public int updateQuestionDEAssociation(
+    String questionId,
+    String newDEId) throws DMLException;
+
+  /**
+   * Changes the data element associated with a question.
+   *
+   * @param <b>questionId</b> Idseq of the question component.
+   * @param <b>newDEId</b> Idseq of the data element associated with the
+   *        question component.
+   * @param <b>newLongName</b> New long name of the question component.
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public int updateQuestionDEAssociation(
+    String questionId,
+    String newDEId,
     String newLongName) throws DMLException;
 }

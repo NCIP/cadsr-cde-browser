@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Module;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,8 +28,8 @@ public interface FormDAO {
   public Collection getModulesInAForm(String formId);
 
   /**
-   * Creates a new form by copying an existing form
-   *
+   * Creates a new form by copying an existing form.
+   * Hyun: Use stored procedure: sbrext_form_builder_pkg.copy_crf 
    * @param <b>sourceForm</b> Form that is being copied.
    * @param <b>newForm</b> Specifies data for new form
    *
@@ -52,7 +53,8 @@ public interface FormDAO {
   public Form createFormComponent(Form sourceForm) throws DMLException;
 
   /**
-   * Adds new modules to a form.
+   * Adds new modules to a form. 
+   * Hyun: Don't implement this method
    *
    * @param <b>formId</b> Idseq of the form component.
    * @param <b>modules</b> Module objects to be added to the form
@@ -67,6 +69,22 @@ public interface FormDAO {
     Collection modules) throws DMLException;
 
   /**
+   * Adds new module to a form. 
+   * Hyun: Don't implement this method
+   *
+   * @param <b>formId</b> Idseq of the form component.
+   * @param <b>module</b> Module object to be added to the form
+   *
+   * @return <b>Form</b> Form object representing the form after addition of
+   *         new module.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public Form addModule(
+    String formId,
+    Module module) throws DMLException;
+
+  /**
    * Finds a form based on the primary key.
    *
    * @param <b>formId</b> Idseq of the form component.
@@ -76,4 +94,26 @@ public interface FormDAO {
    * @throws <b>DMLException</b>
    */
   public Form findFormByPrimaryKey(String formId) throws DMLException;
+
+  /**
+   * Changes (updates) a form component (just the header info).
+   *
+   * @param <b>newForm</b> Form object
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public int updateFormComponent(Form newForm) throws DMLException;
+
+  /**
+   * Deletes the entire form including all the components associated with it.
+   * Hyun: Use stored procedure: sbrext_form_builder_pkg.remove_crf 
+   * @param <b>formId</b> Idseq of the form component.
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public int deleteForm(String formId) throws DMLException;
 }
