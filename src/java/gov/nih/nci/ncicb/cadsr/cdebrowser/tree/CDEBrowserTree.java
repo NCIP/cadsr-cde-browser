@@ -68,7 +68,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
     DefaultMutableTreeNode tree = null;
     BaseTreeNode baseNode = null;
 
-    TimeUtils.recordStartTime("Tree");
+    //TimeUtils.recordStartTime("Tree");
     try {
       CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
       String datasourceName = params.getSbrDSN();
@@ -241,7 +241,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                   }
                  **/
                  // Add form with no protocol
-                  if(!formNodes.isEmpty()&&showFormsAlphebetically)
+                  if(!formNodes.isEmpty())
                   {
                     Iterator tmpIter = formNodes.iterator();
                     while (tmpIter.hasNext()) {
@@ -377,9 +377,9 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
         ex.printStackTrace();
       }
     }
-    TimeUtils.recordEndTime("Tree");
-    System.out.println("Time to build tree in Milli  :  "+TimeUtils.getLapsedTime("Tree"));
-    System.out.println("Time to build tree in Minute  :  "+TimeUtils.getLapsedTimeInMinutes("Tree"));
+    //TimeUtils.recordEndTime("Tree");
+    //System.out.println("Time to build tree in Milli  :  "+TimeUtils.getLapsedTime("Tree"));
+    //System.out.println("Time to build tree in Minute  :  "+TimeUtils.getLapsedTimeInMinutes("Tree"));
     return tree;
   }
 
