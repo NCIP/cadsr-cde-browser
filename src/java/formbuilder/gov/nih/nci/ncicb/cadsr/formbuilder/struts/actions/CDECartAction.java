@@ -107,6 +107,7 @@ public class CDECartAction extends FormBuilderBaseDispatchAction {
     }
 
     sessionCart.removeDataElements(items);
+    saveMessage("cadsr.cdecart.delete.success",request);
 
     return mapping.findForward("success");
   }
@@ -132,7 +133,7 @@ public class CDECartAction extends FormBuilderBaseDispatchAction {
     CDECartFormBean myForm = (CDECartFormBean) form;
     String[] selectedSaveItems = myForm.getSelectedItems();
     myForm.setSelectedSaveItems(selectedSaveItems);
-    
+    saveMessage("cadsr.cdecart.save.success",request);
     return mapping.findForward("saveSuccess");
   }
 }

@@ -251,6 +251,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
       CDECart cart =
         (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+      saveMessage("cadsr.cdecart.save.success",request);
     }
     catch (FormBuilderException exp) {
       if (log.isErrorEnabled()) {
@@ -306,6 +307,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
       service.removeFromCDECart(savedItems);
       sessionCart.removeDataElements(items);
+      saveMessage("cadsr.cdecart.delete.success",request);
     }
     catch (FormBuilderException exp) {
       if (log.isErrorEnabled()) {
