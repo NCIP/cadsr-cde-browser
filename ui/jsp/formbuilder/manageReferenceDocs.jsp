@@ -364,7 +364,6 @@
               </logic:notEqual>  
               
            </logic:iterate>
-         </logic:notEmpty>    
          
                 <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
                   <tr class>
@@ -377,7 +376,9 @@
                     </td>
                   </tr> 
                 </table>
-                
+          </logic:notEmpty>    
+ 
+               
         <%@ include file="/formbuilder/refDocsButton_inc.jsp"%>
               
   </logic:present>
