@@ -14,7 +14,7 @@ if(confirm(message)) location.href = url;
           </td> 
           <td >
             <html:link action='<%="/formSearchAction"%>' >				
-            <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Back"/>
+            <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Done"/>
             </html:link>             
           </td>                
           <td >
