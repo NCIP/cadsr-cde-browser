@@ -14,6 +14,7 @@ public class CDEBrowserParams
     String xmlFileMaxRecord;
     String treeURL = "";
     String evsUrlThesaurus = "";
+    String showFormsAlphebetical ="no";    
     
     static CDEBrowserParams instance;
     // constructor
@@ -50,6 +51,9 @@ public class CDEBrowserParams
             index++;
             evsUrlThesaurus = b.getString("EVS_URL_THESAURUS");
             index++;
+            showFormsAlphebetical = b.getString("SHOW_FORMS_ALPHEBETICAL");
+            index++;            
+            
                         
         } 
         catch (java.util.MissingResourceException mre) 
@@ -99,6 +103,16 @@ public class CDEBrowserParams
   public String getEvsUrlThesaurus()
   {
     return evsUrlThesaurus;
+  }
+  public void setShowFormsAlphebetical(String showFormsAlphebetical)
+  {
+    this.showFormsAlphebetical = showFormsAlphebetical;
+  }
+
+
+  public String getShowFormsAlphebetical()
+  {
+    return showFormsAlphebetical;
   }
            
 }

@@ -15,7 +15,6 @@ import java.util.Hashtable;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-//import oracle.jdbc.OraclePreparedStatement;
 
 import java.net.URLEncoder;
 
@@ -48,8 +47,28 @@ public class ClassificationNode extends BaseTreeNode  {
    * scheme item node for this classification scheme in the tree.  
    *  
    */
-  public List getClassSchemeItems()throws Exception {
-    final String csiQueryStmt = "SELECT  csi.csi_idseq "
+  public List getClassSchemeItems(String treeType)throws Exception {
+       
+    String csiQueryStmt = "";
+    
+    if(treeType.equalsIgnoreCase(this.DE_SEARCH_TREE))
+    {                               
+    
+       /**
+      *  Used to filter out no-relevent Classifications
+      * Reverted back due to performance problems
+      * 
+      csiQueryStmt = "SELECT  csi_idseq "
+                               +"       ,csi_name "
+                               +"       ,csitl_name "
+                               +"       ,description "
+                               +"       ,cs_csi_idseq "
+                               +"FROM   BR_CDE_CSI_FILTER_VIEW aview "
+                               +"WHERE   aview.cs_idseq = ? "
+                               +"AND   aview.p_cs_csi_idseq is null "
+                               +"ORDER BY upper(aview.csi_name) ";
+                               
+       csiQueryStmt = "SELECT  csi.csi_idseq "
                                +"       ,csi_name "
                                +"       ,csitl_name "
                                +"       ,description "
@@ -59,7 +78,69 @@ public class ClassificationNode extends BaseTreeNode  {
                                +"WHERE csi.csi_idseq = csc.csi_idseq "
                                +"AND   csc.cs_idseq = ? "
                                +"AND   csc.p_cs_csi_idseq is null "
-                               +"ORDER BY csi.csi_name ";
+                               +" AND csi.csi_idseq in  "
+                               +" ( select filter.CSI_IDSEQ from BR_CDE_CSI_FILTER_VIEW filter) "
+                               +"ORDER BY upper(csi.csi_name) ";
+                               **/
+                      
+        csiQueryStmt = "SELECT  csi.csi_idseq "
+                                       +"       ,csi_name "
+                                       +"       ,csitl_name "
+                                       +"       ,description "
+                                       +"       ,csc.cs_csi_idseq "
+                                       +"FROM   sbr.class_scheme_items csi "
+                                       +"      ,sbr.cs_csi csc "
+                                       +"WHERE csi.csi_idseq = csc.csi_idseq "
+                                       +"AND   csc.cs_idseq = ? "
+                                       +"AND   csc.p_cs_csi_idseq is null "  
+                                        +"ORDER BY upper(csi.csi_name) ";
+                                        
+                                        
+    }
+    if(treeType.equalsIgnoreCase(this.FORM_SEARCH_TREE))
+    {
+       
+       /**
+      *  Used to filter out no-relevent Classifications
+      * Reverted back due to performance problems
+      
+       csiQueryStmt = "SELECT  csi_idseq "
+                               +"       ,csi_name "
+                               +"       ,csitl_name "
+                               +"       ,description "
+                               +"       ,cs_csi_idseq "
+                               +"FROM   FB_FORMS_CSI_FILTER_VIEW aview "
+                               +"WHERE   aview.cs_idseq = ? "
+                               +"AND   aview.p_cs_csi_idseq is null "
+                               +"ORDER BY upper(aview.csi_name) ";   
+                               
+       csiQueryStmt = "SELECT  csi.csi_idseq "
+                               +"       ,csi_name "
+                               +"       ,csitl_name "
+                               +"       ,description "
+                               +"       ,csc.cs_csi_idseq "
+                               +"FROM   sbr.class_scheme_items csi "
+                               +"      ,sbr.cs_csi csc "
+                               +"WHERE csi.csi_idseq = csc.csi_idseq "
+                               +"AND   csc.cs_idseq = ? "
+                               +"AND   csc.p_cs_csi_idseq is null "
+                               +" AND csi.csi_idseq in  "
+                               +" ( select filter.CSI_IDSEQ from FB_FORMS_CSI_FILTER_VIEW filter) "
+                               +"ORDER BY upper(csi.csi_name) ";    
+                               **/
+                               
+        csiQueryStmt = "SELECT  csi.csi_idseq "
+                                       +"       ,csi_name "
+                                       +"       ,csitl_name "
+                                       +"       ,description "
+                                       +"       ,csc.cs_csi_idseq "
+                                       +"FROM   sbr.class_scheme_items csi "
+                                       +"      ,sbr.cs_csi csc "
+                                       +"WHERE csi.csi_idseq = csc.csi_idseq "
+                                       +"AND   csc.cs_idseq = ? "
+                                       +"AND   csc.p_cs_csi_idseq is null "  
+                                        +"ORDER BY upper(csi.csi_name) ";                               
+    }
     PreparedStatement pstmt = null;
     ResultSet rs = null;
     List csiNodes = null;
@@ -73,6 +154,7 @@ public class ClassificationNode extends BaseTreeNode  {
       //pstmt.defineColumnType(3,Types.VARCHAR);
       //pstmt.defineColumnType(4,Types.VARCHAR);
       //pstmt.defineColumnType(5,Types.VARCHAR);
+      
       pstmt.setFetchSize(25);
       pstmt.setString(1,myCsVO.getCsIdseq());
       rs = pstmt.executeQuery();
@@ -130,7 +212,7 @@ public class ClassificationNode extends BaseTreeNode  {
             }
           }
         }
-        children = this.getClassSchemeItemsTree(rs.getString(5));
+        children = this.getClassSchemeItemsTree(rs.getString(5),treeType);
         for(Iterator it = children.iterator(); it.hasNext();) {
           csiNode.add((DefaultMutableTreeNode)it.next());
         }
@@ -175,7 +257,7 @@ public class ClassificationNode extends BaseTreeNode  {
                                 +"AND    tem.latest_version_ind = 'Yes' "
                                 +"AND    tem.qc_idseq = acv.ac_idseq "
                                 +"AND    acv.CS_CSI_IDSEQ = ? "
-                                +"ORDER BY tem.long_name ";
+                                +"ORDER BY upper(tem.long_name) ";
     PreparedStatement pstmt = null;
     ResultSet rs = null;
     List tempNodes = new ArrayList(11);
@@ -184,7 +266,7 @@ public class ClassificationNode extends BaseTreeNode  {
          (PreparedStatement)myDbUtil.getConnection().
                             prepareStatement(tempQueryStmt);
       //pstmt.defineColumnType(1,Types.VARCHAR);
-      //pstmt.defineColumnType(2,Types.VARCHAR);
+     // pstmt.defineColumnType(2,Types.VARCHAR);
       //pstmt.defineColumnType(3,Types.VARCHAR);
       //pstmt.defineColumnType(4,Types.VARCHAR);
       pstmt.setFetchSize(25);
@@ -211,18 +293,94 @@ public class ClassificationNode extends BaseTreeNode  {
     return tempNodes;
   }
 
-  public List getClassSchemeItemsTree(String csCsiIdseq)throws Exception {
-    final String csiQueryStmt = "SELECT  csi.csi_idseq "
+  public List getClassSchemeItemsTree(String csCsiIdseq, String treeType)throws Exception {
+     String csiQueryStmt = "";
+                                                   
+    if(treeType.equalsIgnoreCase(this.DE_SEARCH_TREE))
+    {                               
+ 
+        /**
+      *  Used to filter out no-relevent Classifications
+      * Reverted back due to performance problems
+      * 
+           csiQueryStmt = "SELECT  csi_idseq "
+                               +"       ,csi_name "
+                               +"       ,csitl_name "
+                               +"       ,description "
+                               +"       ,cs_csi_idseq "
+                               +" FROM   BR_CDE_CSI_FILTER_VIEW aview"
+                               +" WHERE aview.p_cs_csi_idseq = ? "
+                               +" ORDER BY upper(aview.csi_name) ";	
+                               
+                               
+          csiQueryStmt = "SELECT  csi.csi_idseq "
                                +"       ,csi_name "
                                +"       ,csitl_name "
                                +"       ,description "
                                +"       ,csc.cs_csi_idseq "
-                               +"FROM   sbr.class_scheme_items csi "
+                               +" FROM   sbr.class_scheme_items csi "
                                +"      ,sbr.cs_csi csc "
-                               +"WHERE csi.csi_idseq = csc.csi_idseq "
-                               //+"AND   csc.cs_idseq = ? "
-                               +"AND   csc.p_cs_csi_idseq = ? "
-                               +"ORDER BY csi.csi_name ";
+                               +" WHERE csi.csi_idseq = csc.csi_idseq "
+                               +" AND csi.csi_idseq in ( select filter.CSI_IDSEQ from BR_CDE_CSI_FILTER_VIEW filter) "
+                               +" AND   csc.p_cs_csi_idseq = ? "
+                               +" ORDER BY upper(csi.csi_name) ";	
+                               
+                               **/
+                                    
+          csiQueryStmt = "SELECT  csi.csi_idseq "
+                               +"       ,csi_name "
+                               +"       ,csitl_name "
+                               +"       ,description "
+                               +"       ,csc.cs_csi_idseq "
+                               +" FROM   sbr.class_scheme_items csi "
+                               +"      ,sbr.cs_csi csc "
+                               +" WHERE csi.csi_idseq = csc.csi_idseq "
+                              +" AND   csc.p_cs_csi_idseq = ? "
+                               +" ORDER BY upper(csi.csi_name) ";	  
+                               
+                               
+    }
+    if(treeType.equalsIgnoreCase(this.FORM_SEARCH_TREE))
+    {
+         /**
+      *  Used to filter out no-relevent Classifications
+      * Reverted back due to performance problems
+      * 
+          csiQueryStmt = "SELECT  csi_idseq "
+                               +"       ,csi_name "
+                               +"       ,csitl_name "
+                               +"       ,description "
+                               +"       ,cs_csi_idseq "
+                               +" FROM   FB_FORMS_CSI_FILTER_VIEW aview"
+                               +" WHERE aview.p_cs_csi_idseq = ? "
+                               +" ORDER BY upper(aview.csi_name) ";	   
+                    
+          csiQueryStmt = "SELECT  csi.csi_idseq "
+                               +"       ,csi_name "
+                               +"       ,csitl_name "
+                               +"       ,description "
+                               +"       ,csc.cs_csi_idseq "
+                               +" FROM   sbr.class_scheme_items csi "
+                               +"      ,sbr.cs_csi csc "
+                               +" WHERE csi.csi_idseq = csc.csi_idseq "
+                               +" AND csi.csi_idseq in ( select filter.CSI_IDSEQ from FB_FORMS_CSI_FILTER_VIEW filter) "
+                               +" AND   csc.p_cs_csi_idseq = ? "
+                               +" ORDER BY upper(csi.csi_name) ";	 
+                               
+                               **/
+
+          csiQueryStmt = "SELECT  csi.csi_idseq "
+                               +"       ,csi_name "
+                               +"       ,csitl_name "
+                               +"       ,description "
+                               +"       ,csc.cs_csi_idseq "
+                               +" FROM   sbr.class_scheme_items csi "
+                               +"      ,sbr.cs_csi csc "
+                               +" WHERE csi.csi_idseq = csc.csi_idseq "
+                              +" AND   csc.p_cs_csi_idseq = ? "
+                               +" ORDER BY upper(csi.csi_name) ";	
+                               
+    }                               
     PreparedStatement pstmt = null;
     ResultSet rs = null;
     List csiNodes = null;
@@ -251,7 +409,7 @@ public class ClassificationNode extends BaseTreeNode  {
             +getExtraURLParameters()+"')"
             ,rs.getString(4)));
         //Recursive call    
-        children = this.getClassSchemeItemsTree(rs.getString(5));
+        children = this.getClassSchemeItemsTree(rs.getString(5),treeType);
         for(Iterator it = children.iterator(); it.hasNext();) {
           csiNode.add((DefaultMutableTreeNode)it.next());
         }

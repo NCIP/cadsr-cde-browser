@@ -66,6 +66,16 @@ public interface AdminComponentDAO {
    */
   public int removeClassification(String acCsiId);
 
+  
+  /**
+   * Removes the specified classification assignment for an admin component
+   *
+   * @param <b>acCsiId</b> acCsiId
+   *
+   * @return <b>int</b> 1 - success; 0 - failure
+   */
+  public int removeClassification(String cscsiIdseq, String acId);
+
   /**
    * Retrieves all the assigned classifications for an admin component
    *
@@ -82,5 +92,26 @@ public interface AdminComponentDAO {
    * @return <b>Collection</b> Collection of ReferenceDocumentTransferObjects
    */
   public List getAllReferenceDocuments(String adminComponentId,String docType);
+
+// Publish Change order
+  /**
+   * Checks if a Admin Component is Classified for that function
+   *
+   * @param <b>acId</b> Idseq of an admin component
+   *
+   * 
+   */  
+    public boolean isClassifiedForPublish(String acId, String conteIdSeq);
+    
+  // Publish Change order
+  /**
+   * Gets all CSCSI by cs type and csi type 
+   *
+   * @param <b>acId</b> Idseq of an admin component
+   *
+   * 
+   */  
+    Collection getCSIByType(String csType, String csiType, String contextIdseq);
+   
 
 }

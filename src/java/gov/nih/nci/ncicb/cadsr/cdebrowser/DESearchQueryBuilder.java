@@ -287,6 +287,39 @@ public class DESearchQueryBuilder extends Object {
                          //" and dec.dec_idseq = de.dec_idseq " +
                          csiWhere + whereClause + registrationWhere;
       }
+      //Published Change Order
+      else if (treeParamType.equals("PUBLISHING_PROTOCOL")){
+        fromWhere = " from  sbr.data_elements de , " +
+                               " sbr.reference_documents rd , " +
+                               " sbr.contexts conte, " +
+                               //" sbrext.de_cde_id_view dc, " +
+                               " sbrext.quest_contents_ext frm ," +
+                               " sbrext.protocols_ext pt ," +
+                               " sbrext.quest_contents_ext qc , " +
+                               " sbrext.published_forms_view published " +
+                               //"sbr.value_domains vd, "+
+                               //"sbr.data_element_concepts dec " +
+                               vdFrom +
+                               decFrom +
+                               fromClause+
+                               registrationFrom+
+                   " where de.deleted_ind = 'No' "+
+                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
+                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
+                         " and de.asl_name != 'RETIRED DELETED' " +
+                         " and conte.conte_idseq = de.conte_idseq " +
+                         //" and de.de_idseq = dc.ac_idseq (+) " +
+                         " and pt.proto_idseq = frm.proto_idseq " +
+                         " and frm.qtl_name = 'CRF' " +
+                         " and qc.dn_crf_idseq = frm.qc_idseq " +
+                         " and qc.qtl_name = 'QUESTION' " +
+                         " and qc.de_idseq = de.de_idseq " +
+                         " and frm.qc_idseq = published.qc_idseq " +
+                         " and pt.proto_idseq = '"+treeParamIdSeq+"'" +
+                         //" and vd.vd_idseq = de.vd_idseq " +
+                         //" and dec.dec_idseq = de.dec_idseq " +
+                         csiWhere + whereClause + registrationWhere;
+      }         
       else if (treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")){
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +

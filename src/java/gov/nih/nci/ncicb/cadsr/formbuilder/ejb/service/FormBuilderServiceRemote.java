@@ -132,5 +132,24 @@ public interface FormBuilderServiceRemote {
 
     public Form createForm(Form form, Instruction formHeaderInstruction,
         Instruction formFooterInstruction)
-	throws RemoteException;
+	    throws RemoteException;
+  
+    //Publish Change Order
+    public Collection getAllPublishedFormsForProtocol(String protocolIdSeq) throws RemoteException;
+    //Publish Change Order
+    public Collection getAllFormsForClassification(String classificationIdSeq) throws RemoteException;
+    /**
+     * Publishes the form by assigning publishing classifications to the form
+     * 
+     * @inheritDoc
+     */
+    public void publishForm(String formIdSeq,String formType, String contextIdSeq) throws RemoteException;
+
+    //Publish Change Order
+    /**
+     * Removes the publishing classifications assigned to this form
+     * @inheritDoc
+     */
+      public void unpublishForm(String formIdSeq, String formType, String contextIdSe) throws RemoteException;
+
 }

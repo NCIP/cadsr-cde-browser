@@ -58,11 +58,20 @@ public class PageContextValueObject implements CDEBrowserPageContext,java.io.Ser
       crfName = (String)ht.get("CRFName");
       protocolName = (String)ht.get("ProtocolName");
       conteIdseq = (String)ht.get("ConteIdseq");
-      pageContextDisplayString = pageContextDisplayString + contextName
+      if(protocolName!=null)
+      {
+        pageContextDisplayString = pageContextDisplayString + contextName
                       + " >> Protocol Forms >> " + protocolName +
                       //" >> Templates >> " 
                        " >> "
-                      +crfName;
+                      +crfName;        
+      }
+      else
+      {
+        pageContextDisplayString = pageContextDisplayString + contextName 
+                      +" >> Protocol Forms >> "
+                      +crfName;              
+      }
     }
     else if (paramType.equals("PROTOCOL")){
       contextName = (String)ht.get("ContextName");
@@ -71,6 +80,13 @@ public class PageContextValueObject implements CDEBrowserPageContext,java.io.Ser
       pageContextDisplayString = pageContextDisplayString + contextName
                       + " >> Protocol Forms >> " + protocolName;
     }
+    else if (paramType.equals("PUBLISHING_PROTOCOL")){
+      contextName = (String)ht.get("ContextName");
+      protocolName = (String)ht.get("ProtocolName");
+      conteIdseq = (String)ht.get("ConteIdseq");
+      pageContextDisplayString = pageContextDisplayString + contextName
+                      + " >> Protocol Forms >> " + protocolName+"(Published)";
+    }     
     else if (paramType.equals("CORE")){
       contextName = (String)ht.get("ContextName");
       classSchemeName = (String)ht.get("ClassSchemeName");

@@ -32,7 +32,11 @@ public interface PersistenceConstants {
   public static final String FORM_TYPE_TEMPLATE="TEMPLATE";
   public static final String[] FORM_TYPE_VALUES={"CRF","TEMPLATE"};
   
-  
-
   public static final String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
+  
+// Change Order Publish  
+  public static final String CS_TYPE_PUBLISH ="Publishing";
+  public static final String CSI_TYPE_PUBLISH_FORM="Form Type";
+  public static final String CSI_TYPE_PUBLISH_TEMPLATE="Template Type";
+  
 }

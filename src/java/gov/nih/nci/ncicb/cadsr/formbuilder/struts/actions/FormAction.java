@@ -76,8 +76,8 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     String workflow = (String) searchForm.get(this.WORKFLOW);
     String categoryName = (String) searchForm.get(this.CATEGORY_NAME);
     String type = (String) searchForm.get(this.FORM_TYPE);
-    String classificationIdSeq = (String) searchForm.get(this.CS_CSI_ID);
-
+    String csCsiIdSeq = (String) searchForm.get(this.CS_CSI_ID);
+    String csIdseq = (String) searchForm.get(this.CS_ID);
 
    //Set the Context Name
    
@@ -87,13 +87,24 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     searchForm.set(this.CONTEXT_NAME,currContext.getName());
    
    Collection forms = null;
-
+   String nodeType = request.getParameter("P_PARAM_TYPE");
+    if(nodeType!=null&&nodeType.equals("CLASSIFICATION"))
+    {
+      forms = service.getAllFormsForClassification(csIdseq);
+    }
+    else if(nodeType!=null&&nodeType.equals("PUBLISHING_PROTOCOL"))
+    {
+      forms = service.getAllPublishedFormsForProtocol(protocolIdSeq);
+    }
+    else
+    {
     forms =
       service.getAllForms(
         formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type,
-        classificationIdSeq,(NCIUser)getSessionObject(request,this.USER_KEY));
-    setSessionObject(request, this.FORM_SEARCH_RESULTS, forms,true);
+        csCsiIdSeq,(NCIUser)getSessionObject(request,this.USER_KEY));
 
+    }
+    setSessionObject(request, this.FORM_SEARCH_RESULTS, forms,true);    
     //Initialize and add the PagenationBean to the Session
     PaginationBean pb = new PaginationBean();
 
@@ -377,13 +388,14 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     String protocolLongName = "";
     String formIdSeq = "";
     String csCsiIdSeq = "";
+    String csIdseq = "";    
     String nodeType = request.getParameter("P_PARAM_TYPE");
     String nodeIdSeq = request.getParameter("P_IDSEQ");
     String contextIdSeq = request.getParameter("P_CONTE_IDSEQ");
     if (contextIdSeq == null) contextIdSeq = "";
     String csiName = "";
 
-    if ("PROTOCOL".equals(nodeType)) {
+    if ("PROTOCOL".equals(nodeType)||"PUBLISHING_PROTOCOL".equals(nodeType)) {
       protocolIdSeq = nodeIdSeq;
       protocolLongName = request.getParameter("protocolLongName");
     }
@@ -392,6 +404,14 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     else if ("CSI".equals(nodeType)) {
       csCsiIdSeq = nodeIdSeq;
       csiName = request.getParameter("csiName");
+      //Publishing Change Order
+      contextIdSeq = "";
+    }
+    //Publish Change Order
+    else if("CLASSIFICATION".equals(nodeType))
+    {
+      csIdseq=nodeIdSeq;
+      contextIdSeq = "";
     }
 
     FormBuilderBaseDynaFormBean searchForm = (FormBuilderBaseDynaFormBean) form;
@@ -402,7 +422,9 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     searchForm.set(this.FORM_ID_SEQ,formIdSeq);
     searchForm.set("jspClassification",csCsiIdSeq);
     searchForm.set("txtClassSchemeItem",csiName);
-
+    //Publish Change Order
+    searchForm.set(this.CS_ID,nodeIdSeq);
+    
     if ("CRF".equals(nodeType) || "TEMPLATE".equals(nodeType))
       return this.getFormDetails(mapping, form, request, response);
     else

@@ -31,10 +31,14 @@ import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
+import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+import gov.nih.nci.ncicb.cadsr.resource.Classification;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.ErrorCodeConstants;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 
 import java.rmi.RemoteException;
 
@@ -109,6 +113,52 @@ public class FormBuilderEJB extends SessionBeanAdapter
         return forms;
     }
 
+    
+    /**
+     * Get all forms that have been classified by this classification
+     */
+    public Collection getAllFormsForClassification(String classificationIdSeq)
+    {
+        FormDAO dao = daoFactory.getFormDAO();
+        ContextDAO contextDao = daoFactory.getContextDAO();
+
+        Collection forms = null;
+
+        try {
+          forms = dao.getAllFormsForClassification(classificationIdSeq);
+        } catch (Exception ex) {
+            throw new DMLException("Cannot get Forms", ex);
+        }
+
+        return forms;      
+    }
+    
+    /**
+     * Get all published forms for a protocol
+     */
+    public Collection getAllPublishedFormsForProtocol(String protocolIdSeq)
+    {
+        FormDAO dao = daoFactory.getFormDAO();
+        ContextDAO contextDao = daoFactory.getContextDAO();
+
+        Collection forms = null;
+
+        try {
+          forms = dao.getAllPublishedFormsForProtocol(protocolIdSeq);
+        } catch (Exception ex) {
+            throw new DMLException("Cannot get Forms", ex);
+        }
+
+        return forms;      
+    }    
+    
+    /**
+     * Uses get complete form
+     * Change Order : isPublished check
+     * @param formPK
+     *
+     * @return form that match the formPK.
+     */    
     public Form getFormDetails(String formPK) {
         Form myForm = null;
         FormDAO fdao = daoFactory.getFormDAO();
@@ -122,6 +172,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
         
         FormValidValueDAO vdao = daoFactory.getFormValidValueDAO();
         FormValidValueInstructionDAO vvInstrdao = daoFactory.getFormValidValueInstructionDAO();
+        ContextDAO cdao = daoFactory.getContextDAO();
         
         myForm = getFormRow(formPK);
         List refDocs = fdao.getAllReferenceDocuments(formPK,myForm.REF_DOC_TYPE_IMAGE);
@@ -179,6 +230,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
         }
 
         myForm.setModules(modules);
+        Context caBIG = cdao.getContextByName(CaDSRConstants.CONTEXT_CABIG);
+        myForm.setPublished(fdao.isFormPublished(myForm.getIdseq(),caBIG.getConteIdseq()));
 
         return myForm;
     }
@@ -579,7 +632,17 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
         return myDAO.assignClassification(acId, csCsiId);
     }
+    
+    /**
+     *
+     * @inheritDoc
+     */
+    public int removeFormClassification(String cscsiIdseq, String acId){
+        FormDAO myDAO = daoFactory.getFormDAO();
 
+        return myDAO.removeClassification(cscsiIdseq,acId);
+    }
+    
     /**
      *
      * @inheritDoc
@@ -621,7 +684,64 @@ public class FormBuilderEJB extends SessionBeanAdapter
         return insertedForm;
 
     }
-    
+
+    //Publish Change Order
+    /**
+     * Publishes the form by assigning publishing classifications to the form
+     * 
+     * @inheritDoc
+     */
+    public void publishForm(String formIdSeq, String formType,String contextIdSeq) {
+        FormDAO myDAO = daoFactory.getFormDAO();
+        Collection schemeItems = null;
+        if(formType.equals(PersistenceConstants.FORM_TYPE_CRF))
+          schemeItems = myDAO.getPublishingCSCSIsForForm(contextIdSeq);
+
+        if(formType.equals(PersistenceConstants.FORM_TYPE_TEMPLATE))
+          schemeItems = myDAO.getPublishingCSCSIsForTemplate(contextIdSeq);
+          
+        if(schemeItems==null) return;
+        Iterator it = schemeItems.iterator();
+
+        while(it.hasNext())
+        {
+          String  cscsi = (String)it.next();
+          try{
+            myDAO.assignClassification(formIdSeq,cscsi);   
+          
+          }
+        catch(DMLException exp)
+          {
+             //Ignored If already classified
+             if(!exp.getErrorCode().equals(ErrorCodeConstants.ERROR_DUPLICATE_CLASSIFICATION))
+             {
+               throw exp;
+             }            
+          }
+        }
+    }
+   //Publish Change Order
+    /**
+     * Removes the publishing classifications assigned to this form
+     * @inheritDoc
+     */
+    public void unpublishForm(String formIdSeq, String formType,String contextIdSeq) {
+        FormDAO myDAO = daoFactory.getFormDAO();
+        Collection schemeItems = null;
+        if(formType.equals(PersistenceConstants.FORM_TYPE_CRF))
+          schemeItems = myDAO.getPublishingCSCSIsForForm(contextIdSeq);
+
+        if(formType.equals(PersistenceConstants.FORM_TYPE_TEMPLATE))
+          schemeItems = myDAO.getPublishingCSCSIsForTemplate(contextIdSeq);
+          
+        if(schemeItems==null) return;
+        Iterator it = schemeItems.iterator();
+        while(it.hasNext())
+        {
+          String  cscsi = (String)it.next();
+          myDAO.removeClassification(cscsi,formIdSeq);        
+        }
+    }
   private void makeInstructionChanges(InstructionDAO dao, Map changesMap)
   {
     //Create new ones

@@ -19,6 +19,26 @@ public interface FormDAO extends AdminComponentDAO {
     String classificationIdseq,
     String contextRestriction);
 
+//Publish Change Order
+  /**
+   * Gets all the forms that has been classified by this Classification
+   *
+   * @param <b>formId</b> Idseq of the Classification
+   *
+   * @return <b>Collection</b> List of Forms
+   */
+  public Collection getAllFormsForClassification(String classificationIdSeq);
+ 
+ //Publis Change Order
+  /**
+   * Gets all the forms that has been classified by this Classification
+   *
+   * @param <b>formId</b> Idseq of the Classification
+   *
+   * @return <b>Collection</b> List of Forms
+   */
+  public Collection getAllPublishedFormsForProtocol(String protocolIdSeq); 
+  
   /**
    * Gets all the modules in a form
    *
@@ -116,4 +136,29 @@ public interface FormDAO extends AdminComponentDAO {
    * @throws <b>DMLException</b>
    */
   public int deleteForm(String formId) throws DMLException;
+  
+// Publish Change order
+
+    
+ public boolean isFormPublished(String formIdSeq,String conteIdSeq);
+// Publish Change order
+    /**
+   * Checks if the Template  published to a specific context
+   *
+   * @param <b>acId</b> Idseq of an admin component
+   *
+   * 
+   */  
+    
+  public Collection getPublishingCSCSIsForForm(String contextIdSeq);
+
+    /**
+   * Gets all the publishing Classifications for a Template
+   *
+   * @param <b>acId</b> Idseq of an admin component
+   *
+   * 
+   */  
+  public Collection getPublishingCSCSIsForTemplate(String contextIdSeq);   
+  
 }

@@ -8,15 +8,27 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+
+<!--Publish ChangeOrder_-->
+<%@page import="gov.nih.nci.ncicb.cadsr.resource.Context"%>
 
 <%@ page import="java.util.List" %>
 
-
+<cde:checkAccess
+  role="<%=CaDSRConstants.CDE_MANAGER%>"
+  key="accessValue"
+  contextName="<%=Context.CTEP%>"
+  />
 
 <jsp:useBean id="currInfoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="currInfoBean" property="session" value="<%=session %>"/>
 
 <%
+
+  //Publish Change Order
+  String ctepUser = (String)pageContext.getAttribute("accessValue");
+  
   String performQuery = request.getParameter("performQuery");
   SessionUtils.setPreviousSessionValues(request);
   List cachedDeList = null;
@@ -52,6 +64,8 @@
   treeURL = "/common/WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree"+
       "&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" + 
       TreeConstants.DE_SEARCH_TREE + ";" +
+      TreeConstants.CTEP_USER_FLAG + ":" +
+      ctepUser +  ";"+            
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
       TreeConstants.DE_SEARCH_FUNCTION + treeParams +
       "&skin=CDEBrowser1";

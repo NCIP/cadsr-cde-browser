@@ -1,13 +1,18 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.tree;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.dto.jdbc.ClassSchemeValueObject;
 import gov.nih.nci.ncicb.cadsr.dto.jdbc.ProtocolValueObject;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
 import gov.nih.nci.ncicb.cadsr.resource.ClassificationScheme;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.webtree.WebNode;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,13 +21,15 @@ import java.sql.Types;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 import java.util.Hashtable;
 import javax.swing.tree.DefaultMutableTreeNode;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
-//import oracle.jdbc.OraclePreparedStatement;
 import java.net.URLEncoder;
 
 public class ContextNode extends BaseTreeNode  {
@@ -35,7 +42,7 @@ public class ContextNode extends BaseTreeNode  {
                                        +"AND    deleted_ind = 'No' "
                                        +"AND    latest_version_ind = 'Yes' "
                                        +"AND    qcdl_name is not null "
-                                       +"ORDER BY qcdl_name ";
+                                       +"ORDER BY upper(qcdl_name) ";
   final String protoQueryStmt =     "SELECT  proto_idseq "
                                     +"      ,preferred_name "
                                     +"      ,long_name "
@@ -44,8 +51,21 @@ public class ContextNode extends BaseTreeNode  {
                                     +"WHERE conte_idseq = ? "
                                     +"AND   deleted_ind = 'No' "
                                     +"AND   latest_version_ind = 'Yes' "
-                                    +"ORDER BY long_name ";
+                                    +"ORDER BY upper(long_name) ";
 
+  final String publishedFormProtoQueryStmt = " select distinct proto_idseq, proto.preferred_name "
+                                            +" ,proto.long_name ,proto.preferred_definition "
+                                            +" ,proto.conte_idseq "
+                                            +" from protocols_ext proto "
+                                            +" , published_forms_view "
+                                            +" where "
+                                            +" proto.PROTO_IDSEQ=published_forms_view.PROTOCOL_IDSEQ "
+                                            +" and proto.PROTO_IDSEQ=published_forms_view.PROTOCOL_IDSEQ "
+                                            +" and   proto.deleted_ind = 'No' "
+                                            +" and	 proto.latest_version_ind = 'Yes' "
+                                            +" and   PUBLISH_CONTE_IDSEQ=? "
+                                            +" order by upper(proto.long_name) ";
+                                    
   final String csiQueryStmt = "SELECT  csi.csi_idseq "
                                +"       ,csi_name "
                                +"       ,csitl_name "
@@ -57,7 +77,7 @@ public class ContextNode extends BaseTreeNode  {
                                +"WHERE csi.csi_idseq = csc.csi_idseq "
                                +"AND csc.cs_idseq = cs.cs_idseq "
                                +"AND   cs.preferred_name = ? "
-                               +"ORDER BY csi.csi_name ";
+                               +"ORDER BY upper(csi.csi_name) ";
 
   final String templateQueryStmt =  "SELECT  qc_idseq "
                                     +"      ,preferred_name "
@@ -68,11 +88,58 @@ public class ContextNode extends BaseTreeNode  {
                                     +"AND   deleted_ind = 'No' "
                                     +"AND   latest_version_ind = 'Yes' "
                                     +"AND   qtl_name = 'TEMPLATE' "
-                                    +"ORDER BY long_name ";
+                                    +"ORDER BY upper(long_name) ";
+  
+  //Publish Change order
+  final String publishedTemplateQuery = " select  published.QC_IDSEQ "
+                                    +" ,published.QC_LONG_NAME "
+                                    +" ,published.QC_PREFERRED_NAME "
+                                    +" ,published.QC_PREFERRED_DEFINITION "
+                                    +" ,published.FORM_CONTE_IDSEQ "
+                                    +" ,published.FORM_CONTEXT "
+                                    +" from published_forms_view published "
+                                    +" where "
+                                    +" published.QTL_NAME = '"+PersistenceConstants.FORM_TYPE_TEMPLATE+"' " 
+                                    +" and   published.PUBLISH_CONTE_IDSEQ=? "
+                                    +" order by upper(QC_LONG_NAME) ";  
+                                    
+  final String publishedFormQuery = " select  published.QC_IDSEQ "
+                                    +" ,published.QC_LONG_NAME "
+                                    +",published.QC_PREFERRED_NAME"
+                                    +" ,published.QC_PREFERRED_DEFINITION "
+                                    +" ,published.FORM_CONTE_IDSEQ "
+                                    +" ,published.FORM_CONTEXT "
+                                    +" from published_forms_view published "
+                                    +" where "
+                                    +" published.QTL_NAME = '"+PersistenceConstants.FORM_TYPE_CRF+"' " 
+                                    +" and   published.PUBLISH_CONTE_IDSEQ=? "
+                                    +" order by upper(QC_LONG_NAME) ";                                     
+                                          
+ final String publishingNodeInfo =  " select csi.CSITL_NAME , cs.LONG_NAME,cscsi.LABEL,cscsi.CS_CSI_IDSEQ"
+                                             + " from classification_schemes cs, class_scheme_items csi, cs_csi cscsi "
+                                             + " where cs.CS_IDSEQ=cscsi.CS_IDSEQ "
+                                             + " and csi.CSI_IDSEQ =cscsi.CSI_IDSEQ "
+                                             + " and cs.CSTL_NAME='Publishing' "
+                                             + " and csi.CSITL_NAME in ('"+PersistenceConstants.CSI_TYPE_PUBLISH_FORM +"'"
+                                                                        + ",'"+PersistenceConstants.CSI_TYPE_PUBLISH_TEMPLATE+"') "
+                                             + " and cs.CONTE_IDSEQ = ? ";
+		                                        
 
+ final String crfQueryStmt =  "SELECT qc_idseq "
+                                +"      ,long_name "
+                                +"      ,preferred_name "
+                                +"      ,preferred_definition "
+                                +"FROM  sbrext.quest_contents_ext "
+                                +"WHERE conte_idseq = ? "
+                                +"AND   qtl_name = 'CRF' "
+                                +"AND   deleted_ind = 'No' "
+                                +"AND   latest_version_ind = 'Yes' "
+                                +"ORDER BY upper(long_name) ";
+                                
   Context myContext = null;
   DefaultMutableTreeNode myContextNode = null;
   List templateTypes;
+
 
   /**
    * Constructor creates DefaultMutableTreeNode object based on info provided
@@ -94,7 +161,7 @@ public class ContextNode extends BaseTreeNode  {
     if ("CTEP".equals(myContext.getName())) {
       templateTypes = this.getTemplateTypes();
     }
-
+    
   }
 
   /**
@@ -104,12 +171,26 @@ public class ContextNode extends BaseTreeNode  {
    *
    */
 
-  public List getClassificationNodes() throws Exception {
+  public List getClassificationNodes(String treeType) throws Exception {
     PreparedStatement pstmt = null;
     ResultSet rs = null;
     List csNodes = null;
-    String csFilter = "";
-    String classSchemeQueryStmt = "SELECT cs_idseq "
+
+    String classSchemeQueryStmt = "";
+    if(treeType.equalsIgnoreCase(this.DE_SEARCH_TREE))
+    {
+
+    /** Used to filter our no relevent Classifications
+     * Reverted back due to performance problems
+     * classSchemeQueryStmt = "SELECT cs_idseq "
+                                    +"      ,preferred_name "
+                                    +"      ,long_name "
+                                    +"      ,preferred_definition "
+                                    +"FROM   BR_CDE_CS_FILTER_VIEW  "
+                                    +"WHERE conte_idseq = ? "                                  
+                                    +"ORDER BY upper(long_name) "; 
+                               
+       classSchemeQueryStmt = "SELECT cs_idseq "
                                     +"      ,preferred_name "
                                     +"      ,long_name "
                                     +"      ,preferred_definition "
@@ -118,7 +199,68 @@ public class ContextNode extends BaseTreeNode  {
                                     +"AND    deleted_ind = 'No' "
                                     +"AND    latest_version_ind = 'Yes' "
                                     +"AND    asl_name = 'RELEASED' "
-                                    +"ORDER BY long_name ";
+                                    +" AND cs_idseq in "
+                                    +" ( select filter.CS_IDSEQ from BR_CDE_CS_FILTER_VIEW filter) "
+                                    +" AND classification_schemes.CSTL_NAME!='Publishing'"                                   
+                                    +"ORDER BY upper(long_name) ";  
+                                    
+                                    **/
+    
+    
+      classSchemeQueryStmt = "SELECT cs_idseq "
+                                          +"      ,preferred_name "
+                                          +"      ,long_name "
+                                          +"      ,preferred_definition "
+                                          +"FROM  sbr.classification_schemes "
+                                          +"WHERE conte_idseq = ? "
+                                          +"AND    deleted_ind = 'No' "
+                                          +"AND    latest_version_ind = 'Yes' "
+                                          +"AND    asl_name = 'RELEASED' "  
+                                          +"AND    CSTL_NAME!='Publishing'"
+                                          +"ORDER BY upper(long_name) "; 
+          
+    }
+    if(treeType.equalsIgnoreCase(this.FORM_SEARCH_TREE))
+    {
+       /**
+      *  Used to filter out no-relevent Classifications
+      * Reverted back due to performance problems 
+        * classSchemeQueryStmt = "SELECT cs_idseq "
+                                    +"      ,preferred_name "
+                                    +"      ,long_name "
+                                    +"      ,preferred_definition "
+                                    +"FROM  FB_FORMS_CS_FILTER_VIEW "
+                                    +" WHERE conte_idseq = ? "                             
+                                    +"ORDER BY upper(long_name) ";   
+                                    
+        classSchemeQueryStmt = "SELECT cs_idseq "
+                                    +"      ,preferred_name "
+                                    +"      ,long_name "
+                                    +"      ,preferred_definition "
+                                    +"FROM  sbr.classification_schemes "
+                                    +"WHERE conte_idseq = ? "
+                                    +"AND    deleted_ind = 'No' "
+                                    +"AND    latest_version_ind = 'Yes' "
+                                    +"AND    asl_name = 'RELEASED' "
+                                    +" AND cs_idseq in "
+                                    +" ( select filter.CS_IDSEQ from FB_FORMS_CS_FILTER_VIEW filter) "
+                                    +" AND classification_schemes.CSTL_NAME!='Publishing'"                                   
+                                    +"ORDER BY upper(long_name) ";      
+                                    
+                                    **/
+      classSchemeQueryStmt = "SELECT cs_idseq "
+                                          +"      ,preferred_name "
+                                          +"      ,long_name "
+                                          +"      ,preferred_definition "
+                                          +"FROM  sbr.classification_schemes "
+                                          +"WHERE conte_idseq = ? "
+                                          +"AND    deleted_ind = 'No' "
+                                          +"AND    latest_version_ind = 'Yes' "
+                                          +"AND    asl_name = 'RELEASED' "  
+                                          +"AND    CSTL_NAME!='Publishing'"
+                                          +"ORDER BY upper(long_name) ";                                     
+    }
+                                                                    
 
     try {
       pstmt =
@@ -127,7 +269,7 @@ public class ContextNode extends BaseTreeNode  {
       //pstmt.defineColumnType(2,Types.VARCHAR);
       //pstmt.defineColumnType(3,Types.VARCHAR);
       //pstmt.defineColumnType(4,Types.VARCHAR);
-      //kakkodis No more need for thin driver
+  
       pstmt.setFetchSize(25);
       pstmt.setString(1,myContext.getConteIdseq());
       rs = pstmt.executeQuery();
@@ -143,8 +285,7 @@ public class ContextNode extends BaseTreeNode  {
         csVO.setConteIdseq(myContext.getConteIdseq());
         ClassificationNode cn = new ClassificationNode(csVO,myDbUtil,treeParams);
         DefaultMutableTreeNode csNode = cn.getTreeNode();
-        List csiNodes = cn.getClassSchemeItems();
-        //csiNodes = cn.getClassSchemeItems();
+        List csiNodes = cn.getClassSchemeItems(treeType);
         Iterator iter = csiNodes.iterator();
         while (iter.hasNext()){
           csNode.add((DefaultMutableTreeNode)iter.next());
@@ -273,7 +414,6 @@ public class ContextNode extends BaseTreeNode  {
       //pstmt1.defineColumnType(3,Types.VARCHAR);
       //pstmt1.defineColumnType(4,Types.VARCHAR);
       //pstmt1.defineColumnType(5,Types.VARCHAR);
-      
       pstmt1.setFetchSize(25);
       pstmt1.setString(1,"Phase");
       rs1 = pstmt1.executeQuery();
@@ -321,7 +461,6 @@ public class ContextNode extends BaseTreeNode  {
     return phaseLabelNode;
   }
 
-
   /**
    * This method returns a list of DefaultMutableTreeNode objects. Each
    * DefaultMutableTreeNode object in the list represents a Protocol
@@ -353,10 +492,117 @@ public class ContextNode extends BaseTreeNode  {
         proto.setPreferredName(rs.getString(2));
         proto.setPreferredDefinition(rs.getString(4));
         proto.setConteIdseq(myContext.getConteIdseq());
-        pn = new ProtocolNode(proto,myDbUtil,treeParams);
+        pn = new ProtocolNode(proto,myDbUtil,treeParams,myContext.getConteIdseq());
 
         protoNode = pn.getTreeNode();
         crfNodes = pn.getCRFs();
+        for (Iterator it = crfNodes.iterator(); it.hasNext();){
+          protoNode.add((DefaultMutableTreeNode)it.next());
+        }
+        if(!crfNodes.isEmpty())
+            protoNodes.add(protoNode);
+      }
+    }
+    catch (SQLException ex) {
+      ex.printStackTrace();
+      throw ex;
+    }
+    finally {
+      try {
+        if (rs != null) rs.close();
+        if (pstmt != null) pstmt.close();
+      }
+      catch (Exception ex) {
+        ex.printStackTrace();
+      }
+    }
+
+    return protoNodes;
+  }
+  
+
+
+  public List getFormNodes() throws SQLException {
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    List _crfNodes = new ArrayList(7);
+
+    try {
+      pstmt =  
+         (PreparedStatement)myConn.prepareStatement(crfQueryStmt);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
+      
+      pstmt.setString(1,myContext.getConteIdseq());
+      rs = pstmt.executeQuery();
+      
+      while (rs.next()){
+        DefaultMutableTreeNode crfNode = new DefaultMutableTreeNode(
+          new WebNode(rs.getString(1)
+                     ,rs.getString(2)
+                     ,"javascript:"+getFormJsFunctionName()+"('P_PARAM_TYPE=CRF&P_IDSEQ="+
+                       rs.getString(1)+"&P_CONTE_IDSEQ="+" "+
+                       "&P_PROTO_IDSEQ="+""+
+                       getExtraURLParameters()+"')"
+                     ,rs.getString(4)));
+        _crfNodes.add(crfNode);
+      }
+    } 
+    catch (Exception ex) {
+      ex.printStackTrace();
+    } 
+    finally {
+      try {
+        if (rs != null) rs.close();
+        if (pstmt != null) pstmt.close();  
+      } 
+      catch (Exception ex) {
+        ex.printStackTrace();
+      } 
+    }
+    return _crfNodes;
+    
+  }
+  
+//Publish Change order
+  /**
+   * This method returns a list of DefaultMutableTreeNode objects. Each
+   * DefaultMutableTreeNode object in the list represents a Protocol
+   * node of a published CRF.
+   *
+   */
+  public List getPublishedFormProtocolNodes() throws SQLException {
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    List protoNodes = new ArrayList(11);
+    try {
+      pstmt =
+         (PreparedStatement)myConn.prepareStatement(publishedFormProtoQueryStmt);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
+      //pstmt.defineColumnType(5,Types.VARCHAR);
+      pstmt.setFetchSize(25);
+      pstmt.setString(1,myContext.getConteIdseq());
+      rs = pstmt.executeQuery();
+      Protocol proto = new ProtocolValueObject();
+      DefaultMutableTreeNode protoNode;
+      ProtocolNode pn;
+      List crfNodes;
+
+      while (rs.next()){
+        proto.setProtoIdseq(rs.getString(1));
+        proto.setLongName(rs.getString(3));
+        proto.setPreferredName(rs.getString(2));
+        proto.setPreferredDefinition(rs.getString(4));
+        proto.setConteIdseq(rs.getString(5));
+        pn = new ProtocolNode(proto,myDbUtil,treeParams,myContext.getConteIdseq());
+
+        protoNode = pn.getTreeNode();
+        crfNodes = pn.getPublishedForms();
         for (Iterator it = crfNodes.iterator(); it.hasNext();){
           protoNode.add((DefaultMutableTreeNode)it.next());
         }
@@ -379,7 +625,7 @@ public class ContextNode extends BaseTreeNode  {
 
     return protoNodes;
   }
-
+  
   /**
    * This method returns ContextNode object as DefaultMutableTreeNode object.
    */
@@ -508,7 +754,167 @@ public class ContextNode extends BaseTreeNode  {
 
     return templateNodes;
   }
+//Publish Change Order
+  /**
+   * This method returns a list of DefaultMutableTreeNode objects. Each
+   * DefaultMutableTreeNode object in the list represents a Form Template 
+   * which have been published.
+   *
+   */
+  public List getPublishedTemplateNodes() throws SQLException {
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    List templateNodes = new ArrayList();
 
+    try {
+      pstmt =
+         (PreparedStatement)myConn.prepareStatement(publishedTemplateQuery);
+         
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
+      //pstmt.defineColumnType(5,Types.VARCHAR);
+     // pstmt.defineColumnType(6,Types.VARCHAR);
+      
+      pstmt.setFetchSize(25);
+      pstmt.setString(1,myContext.getConteIdseq());
+      rs = pstmt.executeQuery();
+
+      while (rs.next()){
+        DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode(
+          new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
+                     ,rs.getString(2)+" ("+rs.getString(6)+")"
+                     ,"javascript:"+getFormJsFunctionName()+"('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
+                       rs.getString(1)+"&P_CONTE_IDSEQ="+rs.getString(5)+
+                       "&templateName="+URLEncoder.encode(rs.getString(2))+
+                       "&contextName="+URLEncoder.encode(rs.getString(6))+
+                       getExtraURLParameters()+"')"
+                     ,rs.getString(4)));
+        templateNodes.add(tmpNode);
+      }
+    }
+    catch (SQLException ex) {
+      ex.printStackTrace();
+      throw ex;
+    }
+    finally {
+      try {
+        if (rs != null) rs.close();
+        if (pstmt != null) pstmt.close();
+      }
+      catch (Exception ex) {
+        ex.printStackTrace();
+      }
+    }
+
+    return templateNodes;
+  }
+  
+//Publish Change Order
+  /**
+   * This method returns a list of DefaultMutableTreeNode objects. Each
+   * DefaultMutableTreeNode object in the list represents a Form Template 
+   * which have been published.
+   *
+   */
+  public List getPublishedFormNodes() throws SQLException {
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    List templateNodes = new ArrayList();
+
+    try {
+      pstmt =
+         (PreparedStatement)myConn.prepareStatement(publishedFormQuery);
+         
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
+      //pstmt.defineColumnType(5,Types.VARCHAR);
+      //pstmt.defineColumnType(6,Types.VARCHAR);
+      
+      pstmt.setFetchSize(25);
+      pstmt.setString(1,myContext.getConteIdseq());
+      rs = pstmt.executeQuery();
+                                   
+                                          
+      while (rs.next()){
+        DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode(
+          new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
+                     ,rs.getString(2)+" ("+rs.getString(6)+")"
+                     ,"javascript:"+getFormJsFunctionName()+"('P_PARAM_TYPE=CRF&P_IDSEQ="+
+                       rs.getString(1)+"&P_CONTE_IDSEQ="+rs.getString(5)+
+                       "&templateName="+URLEncoder.encode(rs.getString(2))+
+                       "&contextName="+URLEncoder.encode(rs.getString(6))+
+                       getExtraURLParameters()+"')"
+                     ,rs.getString(4)));
+        templateNodes.add(tmpNode);
+      }
+    }
+    catch (SQLException ex) {
+      ex.printStackTrace();
+      throw ex;
+    }
+    finally {
+      try {
+        if (rs != null) rs.close();
+        if (pstmt != null) pstmt.close();
+      }
+      catch (Exception ex) {
+        ex.printStackTrace();
+      }
+    }
+
+    return templateNodes;
+  }
+  
+//Publish Change Order
+   /**
+   * This method returns the  CSI for a Context for a Function.
+   *
+   */
+  public Map getPublisingNodeInfo() throws SQLException {
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    Map info = new HashMap();
+    try {
+      pstmt =
+         (PreparedStatement)myConn.prepareStatement(publishingNodeInfo);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
+      
+      pstmt.setFetchSize(25);
+      pstmt.setString(1,myContext.getConteIdseq());      
+      rs = pstmt.executeQuery();
+
+      while(rs.next())
+      {
+        Map values = new HashMap();
+        values.put("publishNodeLabel",rs.getString(2));
+        values.put("publishChildNodeLabel",rs.getString(3));
+        values.put("cscsi",rs.getString(4));
+        info.put(rs.getString(1),values);
+      }
+    }
+    catch (SQLException ex) {
+      ex.printStackTrace();
+      throw ex;
+    }
+    finally {
+      try {
+        if (rs != null) rs.close();
+        if (pstmt != null) pstmt.close();
+      }
+      catch (Exception ex) {
+        ex.printStackTrace();
+      }
+    }
+
+    return info;
+  }
 
 
 }

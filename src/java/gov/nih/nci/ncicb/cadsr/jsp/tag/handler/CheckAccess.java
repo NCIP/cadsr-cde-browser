@@ -56,6 +56,11 @@ public class CheckAccess extends TagSupport implements CaDSRConstants,FormConsta
            else
             pageContext.setAttribute(key,NO);
          }
+         //Publish Change Order
+         else
+          {
+            pageContext.setAttribute(key,NO);
+          }         
         
       } catch(Exception ioe ) {
           throw new JspException( "I/O Error : " + ioe.getMessage() );

@@ -485,7 +485,10 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
         pageContextHT.put("ParamType", "CRF");
         pageContextHT.put("ContextName", qcRow.getContextName());
         pageContextHT.put("CRFName", qcRow.getLongName());
-        pageContextHT.put("ProtocolName", protoRow.getLongName());
+        //Publish Change Request
+        if(protoRow!=null)
+          pageContextHT.put("ProtocolName", protoRow.getLongName());
+          
         pageContextHT.put("ConteIdseq", qcRow.getConteIdseq());
         pc = new PageContextValueObject(pageContextHT);
       }
@@ -500,6 +503,17 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
         pageContextHT.put("ConteIdseq", protoRow.getConteIdseq());
         pc = new PageContextValueObject(pageContextHT);
       }
+      else if (nodeType.equals("PUBLISHING_PROTOCOL")) {
+        ProtocolsViewImpl protoView = getProtocolsView();
+        protoView.setWhereClause("PROTO_IDSEQ='" + nodeIdseq + "'");
+        protoRow = (ProtocolsViewRowImpl) bc4jUtil.getRow(protoView);
+        pageContextHT.put("ParamType", "PUBLISHING_PROTOCOL");
+        pageContextHT.put(
+          "ContextName", protoRow.getContext().getAttribute("Name"));
+        pageContextHT.put("ProtocolName", protoRow.getLongName());
+        pageContextHT.put("ConteIdseq", protoRow.getConteIdseq());
+        pc = new PageContextValueObject(pageContextHT);
+      }        
       else if (nodeType.equals("CORE")) {
         CsCsiViewImpl csCsiView = getCsCsiView();
         CsCsiViewImpl csCsiView1 =

@@ -63,4 +63,9 @@ public interface AdminComponent extends Audit {
   public String getRegistrationStatus();
 
   public void setRegistrationStatus(String regStatus);
+
+  //Publish Change Order - Shaji
+  public boolean getIsPublished();
+  
+  public void setPublished(boolean published);  
 }

@@ -25,6 +25,8 @@ public class AdminComponentTransferObject extends BaseTransferObject
   protected String origin;
   protected String idseq;
   protected String registrationStatus;
+  //Publish Change Order
+  protected boolean published;  
 
   public AdminComponentTransferObject() {
   }
@@ -141,7 +143,18 @@ public class AdminComponentTransferObject extends BaseTransferObject
   public void setRegistrationStatus(String regStatus) {
     registrationStatus = regStatus;
   }
-  
+
+//Publish Change Order
+  public boolean getIsPublished()
+  {
+    return published;
+  }
+
+  public void setPublished(boolean published)
+  {
+    this.published = published;
+  }
+    
   /**
    * Clone the AdminComponent
    * Does a deep Copy of the Context

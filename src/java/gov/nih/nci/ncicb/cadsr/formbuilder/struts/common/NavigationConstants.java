@@ -93,4 +93,8 @@ public interface NavigationConstants
 
  public static final String GO_TO_MANAGE_CLASSIFICATIONS = "gotoManageClassifications";
 
+
+// Publish Change Request
+ public static final String PUBLISH_FORM = "publishForm";
+ public static final String UNPUBLISH_FORM = "unpublishForm";
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Hashtable;
 import javax.swing.tree.DefaultMutableTreeNode;
-//import oracle.jdbc.OraclePreparedStatement;
+
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import java.net.URLEncoder;
 
@@ -79,7 +79,6 @@ public class TemplateNode extends BaseTreeNode  {
       //pstmt.defineColumnType(2,Types.VARCHAR);
       //pstmt.defineColumnType(3,Types.VARCHAR);
       //pstmt.defineColumnType(4,Types.VARCHAR);
-      // No more needed for thin drivers
       
       pstmt.setString(1,myContext.getConteIdseq());
       pstmt.setString(2,myTemplateGroup);

@@ -3,7 +3,10 @@ package gov.nih.nci.ncicb.cadsr;
 public interface CaDSRConstants {
   public static final String USER_KEY = "nciUser";
   public static final String CDE_MANAGER = "CDE MANAGER";
+  //Publish Chamge Order Oct 24/04
   public static final String CONTEXT_ADMIN = "CONTEXT ADMIN";
+  public static final String CONTEXT_CABIG = "caBIG";
+
   public static final String SESSION_SCOPE = "sessionScope";
   public static final String PAGE_SCOPE = "pageScope";
   public static final String ATTR_SEPARATOR = ",";
@@ -17,4 +20,6 @@ public interface CaDSRConstants {
   public static final String YES="Yes";
   public static final String NO="No";
   public static final String CDEBROWSER_SERVICE_LOCATOR_CLASSNAME = "gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl";
+  public static final String TREE_REFRESH_INDICATOR="treeRefreshIndicator";
+
 }

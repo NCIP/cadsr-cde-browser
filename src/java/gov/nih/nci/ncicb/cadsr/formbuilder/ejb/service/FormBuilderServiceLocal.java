@@ -119,4 +119,22 @@ public interface FormBuilderServiceLocal  {
     Form form,
     Instruction formHeaderInstruction,
     Instruction formFooterInstruction);
+    
+    //Publish Change Order
+    public Collection getAllPublishedFormsForProtocol(String protocolIdSeq);
+    //Publish Change Order
+    public Collection getAllFormsForClassification(String classificationIdSeq);  
+    /**
+     * Publishes the form by assigning publishing classifications to the form
+     * 
+     * @inheritDoc
+     */
+    public void publishForm(String formIdSeq,String formType, String contextIdSeq);
+
+    //Publish Change Order
+    /**
+     * Removes the publishing classifications assigned to this form
+     * @inheritDoc
+     */
+      public void unpublishForm(String formIdSeq, String formType, String contextIdSe);    
 }

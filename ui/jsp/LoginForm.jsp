@@ -63,6 +63,14 @@ function clearForm()
   </TR>
   </table>
   
+  <table>
+    <tr>    
+      <td align="left" class="OraTipText">
+        <bean:message key="cadsr.formbuilder.helpText.login"/>
+      </td>
+    </tr>  
+  </table>  
+  
   <form method="POST" action="j_security_check">
 
   <table align=center cellspacing="2" cellpadding="3" border="0">

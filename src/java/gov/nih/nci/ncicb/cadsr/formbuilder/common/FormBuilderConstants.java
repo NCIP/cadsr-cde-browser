@@ -27,6 +27,9 @@ public interface FormBuilderConstants {
   public static final String ERROR_FORM_DOES_NOT_EXIST="FB008"; 
   public static final String ERROR_FORM_EDIT_FAILED="FB0010";
   public static final String ERROR_FORM_COPY_FAILED="FB0011"; 
+    //Publish Change Order
+  public static final String ERROR_FORM_PUBLISH="FB0012";
+  public static final String ERROR_FORM_UNPUBLISH="FB0013";  
   public static final String ERROR_FATAL="FB911";
   
 

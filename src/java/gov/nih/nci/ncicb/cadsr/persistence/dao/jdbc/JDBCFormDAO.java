@@ -3,8 +3,13 @@ package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
-
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCFormTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
@@ -71,6 +76,39 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     return query.execute();
   }
 
+ 
+ //Publis Change Order   
+  /**
+   * Gets all the forms that has been classified by this Classification
+   *
+   * @param <b>formId</b> Idseq of the Classification
+   *
+   * @return <b>Collection</b> List of Forms
+   */
+  public Collection getAllFormsForClassification(String classificationIdSeq)
+  {
+    FormByClassificationQuery query = new FormByClassificationQuery();
+    query.setDataSource(getDataSource());
+    query.setQuerySql(classificationIdSeq);
+    return query.execute();
+  }
+//Publis Change Order
+  /**
+   * Gets all the forms that has been classified by this Classification
+   *
+   * @param <b>formId</b> Idseq of the Classification
+   *
+   * @return <b>Collection</b> List of Forms
+   */
+  public Collection getAllPublishedFormsForProtocol(String protocolIdSeq)
+  {
+    PublishedFormsByProtocol query = new PublishedFormsByProtocol();
+    query.setDataSource(getDataSource());
+    query.setQuerySql(protocolIdSeq);
+    return query.execute();
+  }
+  
+  
   /**
    * Gets all the modules that belong to the specified form
    *
@@ -247,7 +285,39 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
     return myForm;
   }
+ // Publish Change Order
 
+  /**
+   * Checks if the Form Component is published
+   *
+   * @param <b>acId</b> Idseq of an admin component
+   */
+  public boolean isFormPublished(String formIdSeq,String conteIdSeq) {
+    return this.isClassifiedForPublish(formIdSeq,conteIdSeq);
+    
+  }
+
+  // Publish Change Order
+
+  /**
+   * Gets all the publishing Classifications for a form
+   */
+  public Collection getPublishingCSCSIsForForm(String contextIdSeq) {
+    return getCSIByType(PersistenceConstants.CS_TYPE_PUBLISH
+                    , PersistenceConstants.CSI_TYPE_PUBLISH_FORM
+                    ,  contextIdSeq);
+  }
+
+  // Publish Change Order
+
+  /**
+   * Gets all the publishing Classifications for a form
+   */
+  public Collection getPublishingCSCSIsForTemplate(String contextIdSeq) {
+    return getCSIByType(PersistenceConstants.CS_TYPE_PUBLISH
+                    , PersistenceConstants.CSI_TYPE_PUBLISH_TEMPLATE
+                    ,  contextIdSeq);
+  }
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
 
@@ -676,6 +746,69 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     }
   }
 
+//Publish Change Order
+
+  /**
+   * Inner class that accesses database to get all the forms 
+   * match the given criteria
+   */
+  class FormByClassificationQuery extends MappingSqlQuery {
+    FormByClassificationQuery() {
+      super();
+    }
+
+    public void setQuerySql(String csidSeq) {
+     String querySql = " SELECT * FROM FB_FORMS_VIEW formview, sbr.cs_csi csc,sbr.ac_csi acs "
+        + " where  csc.cs_idseq = '"+ csidSeq +"'"
+        + " and csc.cs_csi_idseq = acs.cs_csi_idseq "
+				+ " and acs.AC_IDSEQ=formview.QC_IDSEQ "
+        + " ORDER BY upper(protocol_long_name), upper(context_name)";        
+      super.setSql(querySql);
+    }
+
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      String formName = rs.getString("LONG_NAME");
+
+      return new JDBCFormTransferObject(rs);
+    }
+
+  }
+  
+  
+  
+  //Publish Change Order
+
+  /**
+   * Inner class that accesses database to get all the forms  that
+   * match the given criteria
+   */
+  class PublishedFormsByProtocol extends MappingSqlQuery {
+    PublishedFormsByProtocol() {
+      super();
+    }
+
+    public void setQuerySql(String protocolIdSeq) {
+     String querySql = " SELECT * from FB_FORMS_VIEW formview, published_forms_view published "
+        + " where PROTO_IDSEQ = '"+ protocolIdSeq +"'"
+        + " and published.QC_IDSEQ = formview.QC_IDSEQ "
+        + " ORDER BY upper(protocol_long_name), upper(context_name)";        
+      super.setSql(querySql);
+    }
+
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      String formName = rs.getString("LONG_NAME");
+
+      return new JDBCFormTransferObject(rs);
+    }
+
+  }
+  
   /**
    * Inner class that accesses database to create a form in the
    * quest_contents_ext table.

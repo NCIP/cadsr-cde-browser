@@ -18,6 +18,7 @@
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="sortField" type="java.lang.String"/>
       <form-property name="sortOrder" type="java.lang.Integer"/>
+      <form-property name="csIdseq" type="java.lang.String"/>      
     </form-bean>
     <form-bean name="hrefCRFForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"

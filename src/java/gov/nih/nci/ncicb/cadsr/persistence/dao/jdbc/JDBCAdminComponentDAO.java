@@ -181,6 +181,27 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
   }
 
   /**
+   * Removes the specified classification assignment for an admin component
+   * give cscsiIdseq and adminComponent Idseq
+   * @param <b>acCsiId</b> acCsiId
+   *
+   * @return <b>int</b> 1 - success; 0 - failure
+   */
+  public int removeClassification(String cscsiIdseq, String acId) {
+
+    DeleteCSIForAdminComp deleteAcCsi =
+      new DeleteCSIForAdminComp(this.getDataSource());
+    int res = deleteAcCsi.deleteAcClassification(cscsiIdseq,acId);
+
+    if (res != 1) {
+         DMLException dmlExp = new DMLException("Did not succeed removing classification for an AC.");
+	       dmlExp.setErrorCode(ERROR_REMOVEING_CLASSIFICATION);
+           throw dmlExp;        
+    }    
+    return 1;
+  }
+  
+  /**
    * Retrieves all the assigned classifications for an admin component
    *
    * @param <b>acId</b> Idseq of an admin component
@@ -196,7 +217,38 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     return classificationQuery.execute(acId);
   }
 
+// Publish ChangeOrder
+  /**
+   * Check if the Admin Component is published
+   *
+   * @param <b>acId</b> Idseq of an admin component
+   *
+   * @return <b>Collection</b> Collection of CSITransferObject
+   */
+  public boolean isClassifiedForPublish(String acId,String conteIdSeq) {
 
+    PublishClassificationQuery query = new PublishClassificationQuery(getDataSource());
+    Integer count =  (Integer)query.isPublished(acId,conteIdSeq);
+    if(count.intValue()>0)
+      return true;
+    else
+     return false;
+  }
+  
+  // Publish ChangeOrder
+  /**
+   * Gets all CSI by funtion and admin Component type
+   *
+   * @param <b>acId</b> Idseq of an admin component
+   *
+   * 
+   */  
+  public Collection getCSIByType(String csType, String csiType, String contextIdseq)
+    {
+      CSCSIsByTypeQuery query = new CSCSIsByTypeQuery(getDataSource());
+      return query.getCSCSIs(csType,csiType,contextIdseq);
+    }
+    
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
     JDBCAdminComponentDAO jdbcAdminComponentDAO = 
@@ -466,5 +518,107 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       return refDoc;
     }
   }
+  //Change Order
+  class PublishClassificationQuery extends MappingSqlQuery {
+    PublishClassificationQuery(DataSource ds) {
+      super(
+        ds,
+        "SELECT COUNT(*) from published_forms_view   "+
+        " WHERE QC_idseq = ?  and publish_conte_idseq = ?" );
+      declareParameter(new SqlParameter("QC_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("publish_conte_idseq", Types.VARCHAR));
+      compile();
+    }
+
+    protected Object isPublished(
+      String acIdseq,String conteIdSeq) {
+
+      Object[] obj =
+        new Object[] {
+          acIdseq,
+          conteIdSeq
+        };
+
+      return findObject(obj);
+    }
+    
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      return new Integer(rs.getInt(1));
+    }
+  }
   
+    //Publish Change Order
+  class CSCSIsByTypeQuery extends MappingSqlQuery {
+    CSCSIsByTypeQuery(DataSource ds) {
+      super(
+        ds,
+          "select distinct cscsi.CS_CSI_IDSEQ from  classification_schemes cs, "
+          + " sbr.class_scheme_items i , cs_csi cscsi "
+	   			+" where cs.CSTL_NAME=? and i.CSITL_NAME=? "
+					+" and cscsi.CSI_IDSEQ=i.CSI_IDSEQ "
+					+" and cscsi.CS_IDSEQ=cs.CS_IDSEQ "
+          +" and cs.CONTE_IDSEQ=? ");     
+
+      declareParameter(new SqlParameter("CSTL_NAME", Types.VARCHAR));
+      declareParameter(new SqlParameter("CSITL_NAME", Types.VARCHAR));
+      declareParameter(new SqlParameter("CONTE_IDSEQ", Types.VARCHAR));
+      compile();
+    }
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      return rs.getString("CS_CSI_IDSEQ");
+    }
+    
+    protected Collection getCSCSIs(
+      String csType,
+      String csiType,
+      String contextIdSeq) {
+
+
+      Object[] obj =
+        new Object[] {
+          csType,
+          csiType,
+          contextIdSeq
+        };
+
+      return execute(obj);
+    }
+  }
+  
+  //Publish Chnage Order
+
+  /**
+   * Inner class that delete a record in the ac_csi table. 
+   * 
+   */
+  private class DeleteCSIForAdminComp extends SqlUpdate {
+    public DeleteCSIForAdminComp(DataSource ds) {
+      String deleteSql =
+        " DELETE FROM ac_csi WHERE cs_csi_idseq = ? and ac_idseq = ? ";
+
+      this.setDataSource(ds);
+      this.setSql(deleteSql);
+      declareParameter(new SqlParameter("cs_csi_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("ac_idseq", Types.VARCHAR));
+      
+      compile();
+    }
+
+    protected int deleteAcClassification(
+      String cscsiIdSeq,String acIdSeq) {
+      Object[] obj =
+        new Object[] {
+          cscsiIdSeq,acIdSeq
+        };
+
+      int res = update(obj);
+
+      return res;
+    }
+  }   
 }

@@ -215,7 +215,7 @@ public class AdminComponentTransferObject extends BaseValueObject
   }  
   
 //Publish Change Order
-  public boolean isPublished()
+  public boolean getIsPublished()
   {
     return published;
   }
