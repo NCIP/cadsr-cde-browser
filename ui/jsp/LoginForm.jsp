@@ -68,7 +68,7 @@ function clearForm()
   <table align=center cellspacing="2" cellpadding="3" border="0">
     <% if(request.getAttribute("msg") != null) { %>
     <tr>
-      <td colspan=2 class="OraErrorText"><%= request.getAttribute("msg") %></td>
+      <b>><td colspan=2 class="OraErrorText"><%= request.getAttribute("msg") %></td></b
     </tr>
     <% } %>
     <tr>
@@ -90,7 +90,7 @@ function clearForm()
      <TR>
         
         <td colspan="1" align="right" nowrap><a href="javascript:submitForm()"><img src=i/logon.gif border=0></a></td>
-        <td colspan="1" align="left" nowrap><a href="javascript:clearForm()"><img src=i/reset.gif border=0></a></td>
+        <td colspan="1" align="left" nowrap><a href="javascript:clearForm()"><img src=i/clear.gif border=0></a></td>
     </TR>  
     <tr>
       <td>&nbsp;</td>

@@ -68,7 +68,7 @@ function resetForm() {
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.longName" />:</td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.longName" /></td>
           <td class="OraFieldText" nowrap>
             <html:text 
               property="<%= FormConstants.FORM_LONG_NAME %>"
@@ -80,7 +80,20 @@ function resetForm() {
         </tr>
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.definition" /></td>
+          <td class="OraFieldText" nowrap>
+            <html:textarea 
+              property="<%= FormConstants.PREFERRED_DEFINITION %>"
+              name="<%= FormConstants.CRF %>"
+              cols="100"
+              rows="3"
+              styleClass="OraFieldText"
+              />
+           </td>
+         </tr>
+         
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" /></td>
           <td class="OraFieldText" nowrap>
             <bean:define id="context" scope="session" name="<%= FormConstants.CRF %>" property="<%= FormConstants.CRF_CONTEXT %>" toScope="page"/>
 
@@ -92,45 +105,7 @@ function resetForm() {
         </tr>
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.version" />:</td>
-          <td class="OraFieldText" nowrap>
-            <html:text 
-              property="<%= FormConstants.FORM_VERSION %>"
-              size="10"
-              maxlength="<%= FormConstants.VERSION_MAX_LENGTH %>"
-              />
-          </td>
-        </tr>
-
-        <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
-          <td class="OraFieldText" nowrap>
-            DRAFT NEW
-            <!--
-            <html:text 
-              property="<%= FormConstants.WORKFLOW %>"
-              readonly="true" 
-              size="19"
-              styleClass="LOVField"
-              />
-            <html:select styleClass = "Dropdown" property="<%=FormConstants.WORKFLOW%>">
-              <html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
-            </html:select>        
--->
-          </td>      
-        </tr>
-
-        <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
-          <td class="OraFieldText" nowrap>
-            <html:select styleClass="Dropdown" name="<%= FormConstants.CRF %>" property="<%=FormConstants.FORM_TYPE%>">
-              <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
-            </html:select> 
-          </td>        
-        </tr>
-
-        <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocol" />:</td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocol" /></td>
           <td class="OraFieldText" nowrap>
             <html:text 
               property="<%= FormConstants.PROTOCOLS_LOV_NAME_FIELD %>"
@@ -143,29 +118,38 @@ function resetForm() {
             <html:hidden  property="<%=FormConstants.PROTOCOLS_LOV_ID_FIELD%>"/>
           </td>
         </tr>
-
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.workflow" /></td>
+          <td class="OraFieldText" nowrap>
+            DRAFT NEW
+          </td>      
+        </tr>
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" /></td>
           <td class="OraFieldText" nowrap>
             <html:select styleClass = "Dropdown" name="<%= FormConstants.CRF %>" property="<%=FormConstants.FORM_CATEGORY%>">
               <html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> \
             </html:select> 
           </td>
-        </tr>     
+        </tr>   
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" /></td>  
           <td class="OraFieldText" nowrap>
-            <html:textarea 
-              property="<%= FormConstants.PREFERRED_DEFINITION %>"
-              name="<%= FormConstants.CRF %>"
-              cols="100"
-              rows="3"
-              styleClass="OraFieldText"
-              />
-           </td>
-         </tr>
+            <html:select styleClass="Dropdown" name="<%= FormConstants.CRF %>" property="<%=FormConstants.FORM_TYPE%>">
+              <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
+            </html:select> 
+          </td>        
+        </tr>
+        
+    <tr class="OraTabledata">
+      <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.version" /></td>
+      <td class="OraFieldText" nowrap>
+        <html:hidden property="<%= FormConstants.FORM_VERSION %>" value="1.0" />
+        1.0
+      </td>
+    </tr>
 
          <!--
         <tr class="OraTabledata">
