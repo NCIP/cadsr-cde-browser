@@ -79,7 +79,7 @@ function clearProtocol() {
         <html:text 
           size="100"
           property="<%= FormConstants.FORM_LONG_NAME %>"
-          maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>"
+          maxlength="<%= (new Integer(FormConstants.LONG_NAME_MAX_LENGTH)).toString() %>"
           />
       </td>
     </tr>
