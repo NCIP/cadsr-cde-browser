@@ -12,7 +12,7 @@
 	          </html:link>             
           </td>  
          <td>
-            <a href="javascript:submitFormToSave('<%=NavigationConstants.SAVE_FORM%>')">
+            <a href="javascript:submitModuleToSave('<%=NavigationConstants.SAVE_MODULE%>')">
                 <html:img src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
              </a> 
           </td>          

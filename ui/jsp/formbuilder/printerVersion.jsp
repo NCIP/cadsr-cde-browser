@@ -92,10 +92,18 @@
                                 <td align="center" width="70" class="PrinterUnderlineOraFieldText" >
 				                          <bean:write name="question" property="dataElement.CDEId"/>
 	    			                    </td>
-                              </logic:present>
                               <td align="center" width="70" class="PrinterUnderlineOraFieldText">
                                 	<bean:write name="question" property="dataElement.version"/>
-                              </td>                              
+                              </td>                                
+                              </logic:present>
+                              <logic:notPresent name="question" property="dataElement">
+                                  <td align="center" width="70" class="PrinterUnderlineOraFieldText">
+                                   &nbsp;
+                                  </td>
+                                 <td align="center" width="70" class="PrinterUnderlineOraFieldText">
+                                    &nbsp;
+                                 </td>                              
+                            </logic:notPresent>                                
                             </tr>                             
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">

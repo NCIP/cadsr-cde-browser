@@ -76,6 +76,25 @@ public class QuestionTransferObject extends AdminComponentTransferObject
   public void setDataElement(DataElement dataElement) {
     this.dataElement = dataElement;
   }
+  
+  /**
+   * This equals method only compares the Idseq to define equals
+   * @param obj
+   * @return 
+   */
+  public boolean equals(Object obj)
+  {
+   if(obj == null)
+    return false;
+   if(!(obj instanceof Question))
+    return false;
+   Question question = (Question)obj;
+   if(question.getQuesIdseq().equals(this.getQuesIdseq()))
+   {
+     return true;
+   }
+   return false;
+ }
   /**
    * Clones the object
    * Makes a deep copy of the Valivalues

@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
@@ -11,6 +12,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 
+import java.util.HashMap;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -30,7 +32,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 
-public class FormModuleEditAction extends FormEditAction {
+public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
+ 
+ 
+  private static final String UPDATED_QUESTION_LIST="updatedQuestionList";
+  private static final String NEW_QUESTION_LIST="newQuestionList";
+  private static final String DELETED_VV_LIST="deletedVVList";
+  private static final String NEW_VV_LIST="newVVList";
+  private static final String UPDATED_VV_LIST="updatedVVList";
+  private static final String DELETED_QUESTION_LIST="deletedQuestionList";
   /**
    * Sets Module given an Id for Edit.
    *
@@ -44,14 +54,22 @@ public class FormModuleEditAction extends FormEditAction {
    * @throws IOException
    * @throws ServletException
    */
-  public ActionForward getModuleToEdit(
+  public ActionForward getModuleToEdit (
     ActionMapping mapping,
     ActionForm editForm,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     Form crf = null;
     DynaActionForm moduleEditForm = (DynaActionForm) editForm;
+    
     Integer moduleIndex = (Integer) moduleEditForm.get(MODULE_INDEX);
+    
+    Form orgCRF = (Form)getSessionObject(request, CLONED_CRF);
+    List orgModules = orgCRF.getModules();
+    Module orgModule = (Module) orgModules.get(moduleIndex.intValue());
+    setSessionObject(request, CLONED_MODULE, orgModule);
+
+    
     crf = (Form) getSessionObject(request, CRF);
 
     List modules = crf.getModules();
@@ -75,8 +93,8 @@ public class FormModuleEditAction extends FormEditAction {
         log.debug("Exp while getting validValue" + exp);
       }
     }
-
-    setSessionObject(request, VALUE_DOMAIN_VALID_VALUES_MAP, validValueMap);
+    Map availableValidValuesMap = getAvailableValidValuesForQuestions(selectedModule.getQuestions(),validValueMap);
+    setSessionObject(request, AVAILABLE_VALID_VALUES_MAP, availableValidValuesMap);
 
     return mapping.findForward(SUCCESS);
   }
@@ -212,7 +230,7 @@ public class FormModuleEditAction extends FormEditAction {
     if ((questions != null) && (questions.size() > 0)) {
       Question deletedQuestion =
         (Question) questions.remove(questionIndex.intValue());
-      decrementDisplayOrder(questions, questionIndex.intValue());
+      FormActionUtil.decrementDisplayOrder(questions, questionIndex.intValue());
       deletedQuestions.add(deletedQuestion);
     }
 
@@ -266,7 +284,7 @@ public class FormModuleEditAction extends FormEditAction {
         Question currQuestion =
           (Question) questions.get(questionIndex.intValue());
         int displayOrder = currQuestion.getDisplayOrder();
-        incrementDisplayOrder(questions, questionIndex.intValue());
+        FormActionUtil.incrementDisplayOrder(questions, questionIndex.intValue());
         questionToAdd.setDisplayOrder(displayOrder);
         questions.add((questionIndex.intValue()), questionToAdd);
       }
@@ -432,8 +450,8 @@ public class FormModuleEditAction extends FormEditAction {
 
     if ((validValues != null) && (validValues.size() > 0)) {
       FormValidValue deletedValidValue =
-        (FormValidValue) validValues.remove(currValidValueIndex);
-      decrementDisplayOrder(validValues, currValidValueIndex);
+        (FormValidValue) validValues.remove(currValidValueIndex);        
+      FormActionUtil.decrementDisplayOrder(validValues, currValidValueIndex);
     }
 
     questionArr = getQuestionsAsArray(module.getQuestions());
@@ -467,60 +485,46 @@ public class FormModuleEditAction extends FormEditAction {
     int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
 
-    String addAvailableValidValueVPIdSeq =
-      (String) moduleEditForm.get(ADD_AVAILABLE_VALID_VALUE_VP_ID_SEQ);
+    Integer addAvailableValidValueIndex =
+      (Integer) moduleEditForm.get(ADD_AVAILABLE_VALID_VALUE_INDEX);
 
     Map availbleValidValuesMap =
-      (Map) getSessionObject(request, VALUE_DOMAIN_VALID_VALUES_MAP);
-
+      (Map) getSessionObject(request, this.AVAILABLE_VALID_VALUES_MAP);
+    
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
-    DataElement de = currQuestion.getDataElement();
-    String currDEValueDomainIdSeq = null;
 
-    if (de != null) {
-      ValueDomain vd = de.getValueDomain();
-
-      if (vd != null) {
-        currDEValueDomainIdSeq = vd.getVdIdseq();
-      }
-    }
-
-    List validValues = currQuestion.getValidValues();
-
-    if ((currDEValueDomainIdSeq != null) 
-         && (validValueIndex != null) 
-         &&(availbleValidValuesMap != null)) {
-      FormValidValue formValidValueToAdd =
-        getValidValueFromMap(
-          addAvailableValidValueVPIdSeq, currDEValueDomainIdSeq,
-          availbleValidValuesMap);
-     if(formValidValueToAdd==null)
+    List availablevvList = (List)availbleValidValuesMap.get(currQuestion.getQuesIdseq());
+    
+    FormValidValue formValidValueToAdd = (FormValidValue)availablevvList.get(addAvailableValidValueIndex.intValue());;
+    
+    if(formValidValueToAdd==null)
       return mapping.findForward(MODULE_EDIT);
-      if ((currValidValueIndex < validValues.size()) &&
-            (formValidValueToAdd != null)) {
-        FormValidValue currValidValue =
-          (FormValidValue) validValues.get(currValidValueIndex);
-        int displayOrder = currValidValue.getDisplayOrder();
-        incrementDisplayOrder(validValues, currValidValueIndex);
-        formValidValueToAdd.setDisplayOrder(displayOrder);
-        validValues.add(currValidValueIndex, formValidValueToAdd);
-      }
-      else {
-        int newDisplayOrder = 0;
+    
+    List validValues = currQuestion.getValidValues();
+    
+    if (currValidValueIndex < validValues.size()) {
+      FormValidValue currValidValue =
+        (FormValidValue) validValues.get(currValidValueIndex);
+      int displayOrder = currValidValue.getDisplayOrder();
+      FormActionUtil.incrementDisplayOrder(validValues, currValidValueIndex);
+      formValidValueToAdd.setDisplayOrder(displayOrder);
+      validValues.add(currValidValueIndex, formValidValueToAdd);
+    }
+    else {
+      int newDisplayOrder = 0;
 
-        if (currValidValueIndex != 0) {
-          FormValidValue lastValidValue =
-            (FormValidValue) validValues.get(validValues.size() - 1);
-          newDisplayOrder = lastValidValue.getDisplayOrder() + 1;
-        }
-
-        formValidValueToAdd.setDisplayOrder(newDisplayOrder);
-        validValues.add(formValidValueToAdd);
+      if (currValidValueIndex != 0) {
+        FormValidValue lastValidValue =
+          (FormValidValue) validValues.get(validValues.size() - 1);
+        newDisplayOrder = lastValidValue.getDisplayOrder() + 1;
       }
+
+      formValidValueToAdd.setDisplayOrder(newDisplayOrder);
+      validValues.add(formValidValueToAdd);
     }
 
     questionArr = getQuestionsAsArray(module.getQuestions());
@@ -530,33 +534,288 @@ public class FormModuleEditAction extends FormEditAction {
   }
 
   /**
-   * Removes the ValidValue given by "validValueIdSeq" from the question list
+   * Add ValidValue from deleted list.
    *
-   * @param questionIdSeq
-   * @param modules
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
    *
-   * @return the removed module
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
    */
-  protected FormValidValue getValidValueFromMap(
-    String validValueVpIdSeq,
-    String valueDomainIdSeq,
-    Map availableValidValuesMap) {
-    List validValues = (List) availableValidValuesMap.get(valueDomainIdSeq);
+  public ActionForward saveModule(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    DynaActionForm moduleEditForm = (DynaActionForm) form;  
+    Module module = (Module) getSessionObject(request, MODULE);
+    Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
 
-    ListIterator iterate = validValues.listIterator();
+    String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
+    setQuestionsFromArray(module, questionArr);
 
-    while (iterate.hasNext()) {
-      ValidValue validValue = (ValidValue) iterate.next();
-      if(validValue.getVpIdseq().equals(validValueVpIdSeq)){
-        FormValidValue formValidValue = new FormValidValueTransferObject();
-        formValidValue.setVpIdseq(validValueVpIdSeq);
-        formValidValue.setLongName(validValue.getShortMeaningValue());
-        return formValidValue;
+    Map changes = getUpdatedNewDeletedQuestions(orgModule.getQuestions(),module.getQuestions());
+    return mapping.findForward(MODULE_EDIT);
+  }
+  
+ private Map getAvailableValidValuesForQuestions(List questions, Map vdvvMap)
+ {
+   ListIterator questionIterator = questions.listIterator();
+   Map availableVVMap = new HashMap();
+   while(questionIterator.hasNext())
+   {
+     Question currQuestion = (Question)questionIterator.next();
+     if(currQuestion.getDataElement()==null)
+     {
+       List vvList  = currQuestion.getValidValues();
+       List copyList = cloneFormValidValueList(vvList);
+       if(!copyList.isEmpty())
+        availableVVMap.put(currQuestion.getQuesIdseq(),copyList);
+     }
+     else
+     {
+       //get vv from VD for the question
+       String vdIdSeq = null;
+       List vdVVList =null;
+       ValueDomain vd = currQuestion.getDataElement().getValueDomain();
+       if(vd!=null)
+        vdIdSeq = vd.getVdIdseq();
+       if(vdIdSeq!=null)
+       {
+         vdVVList = (List)vdvvMap.get(vdIdSeq);
+         //Check if vv in question has vpIdseq         
+       }
+       List vvList = currQuestion.getValidValues();
+       ListIterator vvIterator = vvList.listIterator();
+       boolean vpvdPresent = false;
+       while(vvIterator.hasNext())
+       {
+         FormValidValue fvv = (FormValidValue)vvIterator.next();
+         if(fvv.getVpIdseq()!=null)
+          {
+            vpvdPresent=true;
+            break;
+          }
+       }  
+       //Get the intersection
+       List copyList = cloneFormValidValueList(vvList);
+       if(vpvdPresent&&vdVVList!=null)
+       {
+         ListIterator vvvdIterator = vdVVList.listIterator();         
+         while(vvvdIterator.hasNext())
+         {
+           ValidValue vv = (ValidValue)vvIterator.next();
+           FormValidValue tempFvv = new FormValidValueTransferObject();
+           tempFvv.setLongName(vv.getShortMeaningValue());
+           tempFvv.setVpIdseq(vv.getVpIdseq());
+           if(!copyList.contains(tempFvv))
+            copyList.add(tempFvv);
+         }          
+       }
+       if(copyList!=null&&!copyList.isEmpty())
+       {
+         availableVVMap.put(currQuestion.getQuesIdseq(),copyList);
+       }
+     }
+   }
+   return availableVVMap;
+ }
+ 
+ private List cloneFormValidValueList(List fvvList)
+ {
+       List copyVVList = new ArrayList();
+       if(fvvList==null)
+         return copyVVList;
+       ListIterator vvIterator = fvvList.listIterator();
+       
+       while(vvIterator.hasNext())
+       {
+         FormValidValue fvv = (FormValidValue)vvIterator.next();
+         FormValidValue copyVV = null;
+         try{
+            copyVV = (FormValidValue)fvv.clone();
+         }
+        catch (CloneNotSupportedException clexp) {
+          if (log.isDebugEnabled()) {
+            log.debug("Exception on Clone =  " + clexp);
+          }
+        }
+        if(copyVVList==null)
+          copyVVList= new ArrayList();
+        if(copyVV!=null)
+         copyVVList.add(copyVV);
+       }
+       return copyVVList;
+ }
+  /**
+   * The Map that is return
+   * Has new, updated,deleted questions by respective key
+   * the validValue changes are keyed by questionIdseq whose vale
+   * is a map containg new, updated,deleted validValues with respective
+   * keys
+   *
+   * @param orgQuestionsList
+   * @param editedQuestionList
+   *
+   * @return the Map Containing the Changes
+   */
+ private Map getUpdatedNewDeletedQuestions(List orgQuestionList, List editedQuestionList)
+ {
+   ListIterator editedQuestionIterate = editedQuestionList.listIterator();
+   List newQuestionList = new ArrayList();
+   List updatedQuestionList = new ArrayList();
+   List deletedQuestionList = new ArrayList();
+   Map resultMap = new HashMap();
+   
+   ListIterator iterate = orgQuestionList.listIterator();
+   while(iterate.hasNext())
+   {
+     Question currQuestion = (Question)iterate.next();
+     if(!editedQuestionList.contains(currQuestion))
+     {
+       deletedQuestionList.add(currQuestion);
+     }
+   }   
+   
+   while(editedQuestionIterate.hasNext())
+   {
+     Question currQuestion = (Question)editedQuestionIterate.next();
+     if(!orgQuestionList.contains(currQuestion))
+     {
+       newQuestionList.add(currQuestion);
+     }
+     else
+     {
+       int orgQuestionIndex= orgQuestionList.indexOf(currQuestion);
+       Question orgQuestion = (Question)orgQuestionList.get(orgQuestionIndex);
+       DataElement orgQusetionDE = orgQuestion.getDataElement();
+       DataElement currQusetionDE = currQuestion.getDataElement();
+       boolean hasDEAssosiationChanged = true;
+       if(orgQusetionDE==null&&currQusetionDE==null)
+       {
+         hasDEAssosiationChanged=false;
+       }
+       else 
+       {
+         if(orgQusetionDE==null||currQusetionDE==null)
+         {
+           hasDEAssosiationChanged=true;
+         }
+         else
+         {
+           if(orgQusetionDE.equals(currQusetionDE))
+           {
+             hasDEAssosiationChanged=false;
+           }
+           else
+           {
+             hasDEAssosiationChanged = true;
+           }
+         }
+       }
+       // Check if the LongName
+       // DisplayOrder has been updated
+       // DE Association Changed
+       if(!orgQuestion.getLongName().equals(currQuestion.getLongName())||
+         orgQuestion.getDisplayOrder()!=currQuestion.getDisplayOrder()||
+         hasDEAssosiationChanged)
+       {
+         updatedQuestionList.add(currQuestion);
+       }
+
+     // Check if there is change in ValidValues
+     Map validValuesChanges = null;
+     if(!hasDEAssosiationChanged&&(orgQusetionDE!=null&&currQusetionDE!=null))
+      {
+         validValuesChanges =  
+            getNewDeletedUpdatedValidValues(orgQuestion.getValidValues(),
+                                            currQuestion.getValidValues());        
       }
+      else if(hasDEAssosiationChanged)
+      {
+        
+        List newVVList = currQuestion.getValidValues();
+        if(!newVVList.isEmpty())
+          validValuesChanges.put(this.NEW_VV_LIST,newVVList);
+      }
+      if(validValuesChanges!=null&&!validValuesChanges.isEmpty())
+      {
+        resultMap.put(currQuestion.getQuesIdseq(), validValuesChanges);
+      }
+     }                                                  
+   }
+ 
+   if(!newQuestionList.isEmpty())
+   {
+     resultMap.put(NEW_QUESTION_LIST,newQuestionList);
+   }
+   if(!updatedQuestionList.isEmpty())
+   {
+     resultMap.put(UPDATED_QUESTION_LIST,updatedQuestionList);
+   }
+   if(!deletedQuestionList.isEmpty())
+   {
+     resultMap.put(this.DELETED_QUESTION_LIST,deletedQuestionList);
+   }
+   
+   return resultMap;
+ }
+  
+  //Gets the validvalue Changes in a map
+  //If no changes returns a empty Map
+  // Only Changes are present in tha Map
+  private Map getNewDeletedUpdatedValidValues(List orgValidValueList,
+                                            List editedValidValueList)
+    {
+       Map resultMap = new HashMap();
+       ListIterator orgIterator =   orgValidValueList.listIterator();
+       List deletedValidValueList = new ArrayList();
+       List newVVList = new ArrayList();
+       List updatedVVList = new ArrayList();
+       // get the deleted Valid Values first
+       while(orgIterator.hasNext())
+       {
+          FormValidValue currVV = (FormValidValue)orgIterator.next();
+          if(!editedValidValueList.contains(currVV))
+          {
+            deletedValidValueList.add(currVV);
+          }
+       }
+       
+       ListIterator editedIterator =   editedValidValueList.listIterator();
+       while(editedIterator.hasNext())
+       {
+         FormValidValue editedVV = (FormValidValue)editedIterator.next();
+         // get new valid Values 
+         if(!orgValidValueList.contains(editedVV))
+         {
+           newVVList.add(editedVV);
+         }
+         else
+         { // get updated(Displayorder) VVs
+           int orgIndex = orgValidValueList.indexOf(editedVV);
+           FormValidValue orgVV = (FormValidValue)orgValidValueList.get(orgIndex);
+           if(editedVV.getDisplayOrder()!= orgVV.getDisplayOrder())
+           {
+             updatedVVList.add(orgVV);
+           }
+         }// contained in orgValidValues
+       }
+       if(!newVVList.isEmpty())
+          resultMap.put(NEW_VV_LIST,newVVList);
+       if(!updatedVVList.isEmpty())
+          resultMap.put(UPDATED_VV_LIST,updatedVVList);
+       if(!deletedValidValueList.isEmpty())
+          resultMap.put(DELETED_VV_LIST,deletedValidValueList);
+      return resultMap;
     }
 
-    return null;
-  }
+ 
+
 
   /**
    * Removes the Question given by "quesIdSeq" from the question list
@@ -566,7 +825,7 @@ public class FormModuleEditAction extends FormEditAction {
    *
    * @return the removed module
    */
-  protected Question removeQuestionFromList(
+  private Question removeQuestionFromList(
     String questionIdSeq,
     List questions) {
     ListIterator iterate = questions.listIterator();
@@ -592,7 +851,7 @@ public class FormModuleEditAction extends FormEditAction {
    *
    * @return the  module else returns null;
    */
-  protected Question getQuestionFromList(
+  private Question getQuestionFromList(
     String moduleIdSeq,
     List questions) {
     ListIterator iterate = questions.listIterator();

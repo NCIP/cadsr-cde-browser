@@ -33,7 +33,7 @@ function submitModuleEdit(methodName,questionIndexValue) {
   document.forms[0].<%=FormConstants.QUESTION_INDEX%>.value=questionIndexValue;
   document.forms[0].submit();
 }
-function submitFormToSave(methodName) {
+function submitModuleToSave(methodName) {
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
   document.forms[0].submit();
 }
@@ -246,6 +246,14 @@ function clearProtocol() {
                                     <bean:write name="question" property="dataElement.version"/>
                                   </td>
                                  </logic:present>
+                                  <logic:notPresent name="question" property="dataElement">
+                                    <td align="center" width="70" class="UnderlineOraFieldText">
+                                     &nbsp;
+                                    </td>
+                                   <td align="center" width="70" class="UnderlineOraFieldText">
+                                      &nbsp;
+                                   </td>                              
+                                  </logic:notPresent>                                  
                                 </tr>
                               </table>
                             </td>
@@ -304,9 +312,9 @@ function clearProtocol() {
                                           <td align="right"   class="OraFieldText" nowrap width="90%">    
                                             <cde:availableValidValues
                                               questionBeanId="question"
-                                              valueDomainMapId="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>"
+                                              availableValidValusMapId="<%=FormConstants.AVAILABLE_VALID_VALUES_MAP%>"
                                               selectClassName="FreeDropdown"
-                                              selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_VP_ID_SEQ%>"/>
+                                              selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX%>"/>
                                           </td>
                                           <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                            <td align="left" width="4%">
@@ -340,9 +348,9 @@ function clearProtocol() {
                                                   <td align="right"   class="OraFieldText" nowrap width="90%">    
                                                     <cde:availableValidValues
                                                       questionBeanId="question"
-                                                      valueDomainMapId="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>"
+                                                      availableValidValusMapId="<%=FormConstants.AVAILABLE_VALID_VALUES_MAP%>"
                                                       selectClassName="FreeDropdown"
-                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_VP_ID_SEQ%>"/>
+                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX%>"/>
                                                   </td>
                                                   <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                                     <td align="left" width="4%">
@@ -403,9 +411,9 @@ function clearProtocol() {
                                                   <td align="right"   class="OraFieldText" nowrap width="90%">    
                                                     <cde:availableValidValues
                                                       questionBeanId="question"
-                                                      valueDomainMapId="<%=FormConstants.VALUE_DOMAIN_VALID_VALUES_MAP%>"
+                                                      availableValidValusMapId="<%=FormConstants.AVAILABLE_VALID_VALUES_MAP%>"
                                                       selectClassName="FreeDropdown"
-                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_VP_ID_SEQ%>"/>
+                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX%>"/>
                                                   </td>
                                                   <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                                     <td align="left" width="4%">

@@ -104,7 +104,24 @@ public class DataElementTransferObject extends AdminComponentTransferObject
   public void setUsingContexts(String usingContexts) {
     this.usingContexts = usingContexts;
   }
-
+  /**
+   * This equals method only compares the Idseq to define equals
+   * @param obj
+   * @return 
+   */
+  public boolean equals(Object obj)
+  {
+   if(obj == null)
+    return false;
+   if(!(obj instanceof DataElement))
+    return false;
+   DataElement dataElement = (DataElement)obj;
+   if(dataElement.getDeIdseq().equals(this.getDeIdseq()))
+   {
+     return true;
+   }
+   return false;
+ }   
   public String toString() {
      DebugStringBuffer sb = new DebugStringBuffer();
     sb.append(OBJ_SEPARATOR_START);

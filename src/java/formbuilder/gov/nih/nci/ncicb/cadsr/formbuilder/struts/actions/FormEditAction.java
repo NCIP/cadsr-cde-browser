@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
@@ -209,7 +210,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       }
 
       Module deletedModule = (Module) modules.remove(moduleIndex.intValue());
-      decrementDisplayOrder(modules, moduleIndex.intValue());
+      FormActionUtil.decrementDisplayOrder(modules, moduleIndex.intValue());
       deletedModules.add(deletedModule);
     }
 
@@ -262,7 +263,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       if ((moduleIndex.intValue() < modules.size()) && (moduleToAdd != null)) {
         Module currModule = (Module) modules.get(moduleIndex.intValue());
         int displayOrder = currModule.getDisplayOrder();
-        incrementDisplayOrder(modules, moduleIndex.intValue());
+        FormActionUtil.incrementDisplayOrder(modules, moduleIndex.intValue());
         moduleToAdd.setDisplayOrder(displayOrder);
         modules.add((moduleIndex.intValue()), moduleToAdd);
       }
@@ -494,43 +495,6 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     return null;
   }
 
-  /**
-   * increments the display order of Modules by 1 starting from "startIndex" of
-   * the list
-   *
-   * @param modules
-   * @param startIndex
-   */
-  protected void incrementDisplayOrder(
-    List list,
-    int startIndex) {
-    ListIterator iterate = list.listIterator(startIndex);
-
-    while (iterate.hasNext()) {
-      Orderable orderableObj = (Orderable) iterate.next();
-      int displayOrder = orderableObj.getDisplayOrder();
-      orderableObj.setDisplayOrder(++displayOrder);
-    }
-  }
-
-  /**
-   * Decrments the display order of Modules by 1 starting from "startIndex" of
-   * the list
-   *
-   * @param modules
-   * @param startIndex
-   */
-  protected void decrementDisplayOrder(
-    List list,
-    int startIndex) {
-    ListIterator iterate = list.listIterator(startIndex);
-
-    while (iterate.hasNext()) {
-      Orderable orderable = (Orderable) iterate.next();
-      int displayOrder = orderable.getDisplayOrder();
-      orderable.setDisplayOrder(--displayOrder);
-    }
-  }
 
   /**
    * Compares the display order of the modules from the original form and the

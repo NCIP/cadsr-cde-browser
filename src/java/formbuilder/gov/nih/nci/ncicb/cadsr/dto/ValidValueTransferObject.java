@@ -57,7 +57,12 @@ public class ValidValueTransferObject implements ValidValue {
   public Object clone() throws CloneNotSupportedException {
     return null;
   }
-  
+
+  /**
+   * This equals method only compares the Idseq to define equals
+   * @param obj
+   * @return 
+   */  
  public boolean equals(Object obj)
  {
    if(obj == null)
@@ -65,11 +70,11 @@ public class ValidValueTransferObject implements ValidValue {
    if(!(obj instanceof ValidValue))
     return false;
    ValidValue vv = (ValidValue)obj;
-   if(getShortMeaningValue().equals(vv.getShortMeaningValue()))
-   {
-     return true;
-   }
-   return false;
+
+  if(this.getShortMeaningValue().equals(vv.getShortMeaningValue()))
+      return true;
+    else
+      return false;
  }
 
   public String getVpIdseq() {

@@ -64,7 +64,12 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
       copy.setQuestion(null);   
       return copy;
   }  
-  
+ 
+   /**
+   * This equals method only compares the Idseq to define equals
+   * @param obj
+   * @return 
+   */ 
  public boolean equals(Object obj)
  {
    if(obj == null)
@@ -72,11 +77,12 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
    if(!(obj instanceof FormValidValue))
     return false;
    FormValidValue vv = (FormValidValue)obj;
+
    if(getLongName().equals(vv.getLongName()))
-   {
-     return true;
-   }
-   return false;
+      return true;
+    else
+      return false;
+ 
  }  
   public String toString()
   {

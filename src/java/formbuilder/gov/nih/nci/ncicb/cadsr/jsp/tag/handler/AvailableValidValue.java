@@ -23,7 +23,7 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
 {
 
   private String questionBeanId;
-  private String valueDomainMapId;
+  private String availableValidValusMapId;
   private String selectClassName;
   private String selectName;
   public static final String AVAILABLE_VALID_VALUE_PRESENT="availableValidValuePresent";
@@ -38,37 +38,32 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
         out = pageContext.getOut();
         pageContext.setAttribute(AVAILABLE_VALID_VALUE_PRESENT,null);
         Question currQuestion = (Question)pageContext.getAttribute(questionBeanId);
-        Map vdMap = (Map)pageContext.getSession().getAttribute(valueDomainMapId);
+        Map availableVVMap = (Map)pageContext.getSession().getAttribute(availableValidValusMapId);
         List questionVVList = currQuestion.getValidValues();
-        String questionVdIdSeq = null;
-        if((currQuestion.getDataElement()!=null)&&(currQuestion.getDataElement().getValueDomain()!=null))
+        String questionIdSeq = currQuestion.getQuesIdseq();
+        List availableVVs = (List)availableVVMap.get(questionIdSeq);
+        
+        if(availableVVs!=null&&!availableVVs.isEmpty())
         {
-          questionVdIdSeq = currQuestion.getDataElement().getValueDomain().getVdIdseq();
+
+           List nonListedVVs = getNotListedValidValues(currQuestion.getValidValues(),availableVVs);
+             if(!nonListedVVs.isEmpty())
+             {
+               String html = generateHtml(nonListedVVs,availableVVs);
+               out.print(html); 
+               pageContext.setAttribute(AVAILABLE_VALID_VALUE_PRESENT,"Yes");
+             }
+             else
+             {
+               out.print("&nbsp;"); 
+               pageContext.removeAttribute(AVAILABLE_VALID_VALUE_PRESENT);
+             }
         }
-        List vdVVList = null;
-        if(questionVdIdSeq!=null)
+        else
         {
-           vdVVList = (List)vdMap.get(questionVdIdSeq);
-           if((vdVVList!=null)&&!vdVVList.isEmpty())
-           {
-               List avalilableVVs = getAvailableValidValues(questionVVList,vdVVList);
-                 if(!avalilableVVs.isEmpty())
-                 {
-                   String html = generateHtml(avalilableVVs);
-                   out.print(html); 
-                   pageContext.setAttribute(AVAILABLE_VALID_VALUE_PRESENT,"Yes");
-                 }
-                 else
-                 {
-                   out.print("&nbsp;"); 
-                   pageContext.removeAttribute(AVAILABLE_VALID_VALUE_PRESENT);
-                 }
-           }
-           else
-           {
-             out.print("&nbsp;"); 
-           }
-        }
+            pageContext.removeAttribute(AVAILABLE_VALID_VALUE_PRESENT);
+            out.print("&nbsp;"); 
+        }        
         
       } catch(Exception ioe ) {
           throw new JspException( "I/O Error : " + ioe.getMessage() );
@@ -77,37 +72,36 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
 
     }//end doStartTag()  
 
-  public List getAvailableValidValues(List questionVVList, List vdVVList)
+  public List getNotListedValidValues(List questionVVList, List availableVVList)
   {
-    List availableVVs = new ArrayList();
-    ListIterator questionVVListIterate = questionVVList.listIterator();
-    ListIterator vdVVListIterate = vdVVList.listIterator();
+    List nonListedVVs = new ArrayList();
+    ListIterator availableVVListIterate = availableVVList.listIterator();
     
-    ValidValue currValidValue =null;
     FormValidValue  currFormValidValue = null;
-    while (vdVVListIterate.hasNext()) {
-      currValidValue = (ValidValue) vdVVListIterate.next();
-      FormValidValue fvv = new FormValidValueTransferObject();
-      fvv.setLongName(currValidValue.getShortMeaningValue());
-      if(!questionVVList.contains(fvv))
-      {
-          availableVVs.add(currValidValue);
+    while (availableVVListIterate.hasNext()) {
+      currFormValidValue = (FormValidValue) availableVVListIterate.next();
+      //Valid Values may not be mapped to VD
+      if(!questionVVList.contains(currFormValidValue))
+      { 
+        nonListedVVs.add(currFormValidValue);
       }
     }
-    return availableVVs;
+    return nonListedVVs;
   }
   
-  public String generateHtml(List avalilableVVs)
+  public String generateHtml(List nonListedVVs,List availableValidVaues)
   {
     StringBuffer sb = new StringBuffer("<select class=\""+selectClassName+"\" name=\""+selectName+"\"> \n");
-    ListIterator avalilableVVsListIterate = avalilableVVs.listIterator();
+    ListIterator avalilableVVsListIterate = nonListedVVs.listIterator();
      while (avalilableVVsListIterate.hasNext()) {
-      ValidValue vv = (ValidValue) avalilableVVsListIterate.next();
-      sb.append("<option value=\""+vv.getVpIdseq()+"\">"+vv.getShortMeaningValue()+"</option> \n" );
+      FormValidValue fvv = (FormValidValue) avalilableVVsListIterate.next();
+      int index = availableValidVaues.indexOf(fvv);
+      sb.append("<option value=\""+index+"\">"+fvv.getLongName()+"</option> \n" );
      }
     sb.append("</select>");
     return sb.toString();
   }
+
   public String getQuestionBeanId()
   {
     return questionBeanId;
@@ -118,14 +112,14 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
     questionBeanId = newQuestionBeanId;
   }
 
-  public String getValueDomainMapId()
+  public String getAvailableValidValusMapId()
   {
-    return valueDomainMapId;
+    return availableValidValusMapId;
   }
 
-  public void setValueDomainMapId(String newValueDomainMapId)
+  public void setAvailableValidValusMapId(String newAvailableValidValusMapId)
   {
-    valueDomainMapId = newValueDomainMapId;
+    availableValidValusMapId = newAvailableValidValusMapId;
   }
 
   public String getSelectClassName()
@@ -147,4 +141,6 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
   {
     selectName = newSelectName;
   }
+
+
 }

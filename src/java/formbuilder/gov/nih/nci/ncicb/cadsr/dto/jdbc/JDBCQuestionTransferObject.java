@@ -12,19 +12,22 @@ public class JDBCQuestionTransferObject extends QuestionTransferObject
     setQuesIdseq(rs.getString(1));  //QUES_IDSEQ
     setLongName(rs.getString(9));   // LONG_NAME
     setDisplayOrder(rs.getInt(13)); // DISPLAY_ORDER
-    
-    DataElementTransferObject dataElementTransferObject =
-      new DataElementTransferObject();
-    dataElementTransferObject.setDeIdseq(rs.getString(8)); // DE_IDSEQ
-    dataElementTransferObject.setLongCDEName(rs.getString(15)); // DOC_TEXT 
-    dataElementTransferObject.setVersion(new Float(rs.getFloat(16))); // VERSION
-    dataElementTransferObject.setLongName(rs.getString(17)); // DE_LONG_NAME
-    dataElementTransferObject.setCDEId(Integer.toString(rs.getInt(18)));
-    setDataElement(dataElementTransferObject); 
-
-    ValueDomainTransferObject valueDomainTransferObject = 
-      new ValueDomainTransferObject();
-    valueDomainTransferObject.setVdIdseq(rs.getString(19)); // VD_IDSEQ
-    dataElementTransferObject.setValueDomain(valueDomainTransferObject);
+    String deIdSeq = rs.getString(8);
+    if(deIdSeq!=null)
+    {
+      DataElementTransferObject dataElementTransferObject =
+        new DataElementTransferObject();       
+      dataElementTransferObject.setDeIdseq(deIdSeq); // DE_IDSEQ
+      dataElementTransferObject.setLongCDEName(rs.getString(15)); // DOC_TEXT 
+      dataElementTransferObject.setVersion(new Float(rs.getFloat(16))); // VERSION
+      dataElementTransferObject.setLongName(rs.getString(17)); // DE_LONG_NAME
+      dataElementTransferObject.setCDEId(Integer.toString(rs.getInt(18)));
+      setDataElement(dataElementTransferObject); 
+      
+      ValueDomainTransferObject valueDomainTransferObject = 
+                                         new ValueDomainTransferObject();
+      valueDomainTransferObject.setVdIdseq(rs.getString(19)); // VD_IDSEQ
+      dataElementTransferObject.setValueDomain(valueDomainTransferObject);
+    }
   }
 }

@@ -176,7 +176,7 @@
     <rtexprvalue>true</rtexprvalue>
     </attribute>  
     <attribute>
-    <name>valueDomainMapId</name>
+    <name>availableValidValusMapId</name>
     <required>true</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute> 

@@ -270,10 +270,18 @@ function clearProtocol() {
                                   <bean:write name="question" property="dataElement.CDEId"/>
                                 </html:link>
                               </td>
+                             <td align="center" width="70" class="UnderlineOraFieldText">
+                                <bean:write name="question" property="dataElement.version"/>
+                             </td>                              
                             </logic:present>
-                            <td align="center" width="70" class="UnderlineOraFieldText">
-                              <bean:write name="question" property="dataElement.version"/>
-                            </td>
+                            <logic:notPresent name="question" property="dataElement">
+                              <td align="center" width="70" class="UnderlineOraFieldText">
+                               &nbsp;
+                              </td>
+                             <td align="center" width="70" class="UnderlineOraFieldText">
+                                &nbsp;
+                             </td>                              
+                            </logic:notPresent>                            
                           </tr>
                           <logic:present name="question">
                             <logic:notEmpty name="question" property="validValues">

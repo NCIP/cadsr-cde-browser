@@ -32,6 +32,7 @@ public interface FormConstants extends FormBuilderConstants
 
     public static final String CLONED_CRF = "clonedCrf";
     public static final String MODULE = "eModule";
+    public static final String CLONED_MODULE="clonedModule";
     public static final String DELETED_MODULES = "deletedModules";
     public static final String FORM_ID_SEQ = "formIdSeq";
     public static final String PREFERRED_DEFINITION = "preferredDefinition";
@@ -69,8 +70,9 @@ public interface FormConstants extends FormBuilderConstants
     public static final String ADD_DELETED_QUESTION_IDSEQ="addDeletedQuestionIdSeq";
     public static final String VALID_VALUE_INDEX = "validValueIndex";
     public static final String AVAILABLE_VALID_VALUES ="AvailableValidValue";
-    public static final String ADD_AVAILABLE_VALID_VALUE_VP_ID_SEQ="addAvailableValidValueVPIdSeq";
+    public static final String ADD_AVAILABLE_VALID_VALUE_INDEX="addAvailableValidValueIndex";
     public static final String  VALUE_DOMAIN_VALID_VALUES_MAP ="valueDomainValidValueMap";
+    public static final String  AVAILABLE_VALID_VALUES_MAP ="AvailableValidValuesMap";
 
     public static final String SELECTED_ITEMS = "selectedItems";
 
