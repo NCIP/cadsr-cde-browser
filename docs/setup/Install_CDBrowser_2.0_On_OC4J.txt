@@ -1,0 +1,155 @@
+=============================================================================
+CD Browser 2.0 Installation Document for OC4J
+=============================================================================
+
+Pre-requisites
+---------------
+
+1. OC4J 902 or above installed. Available from http://otn.oracle.com
+2. caDSR repository installed. Please refer to caDsr installation document
+
+Installation steps
+------------------
+
+
+Please replace the following references with your environment specific information.
+
+<ORACLE_HOME> refers to 9ias home directory.
+<INSTALL_HOME> refers to directory to which "CDBrowser_2.0.zip" is unzipped.
+<OC4J_INSTANCE> refers to oc4j instance on which CDEBrowser is to be deployed.
+<DB_HOST> referes to fully qualified name or IP address of the caDSR 
+          repository database host. eg. test.nih.nci.com
+<DB_PORT> referes to the database port eg 1521
+<DB_SID>  referes to caDSR repository SID
+<SCHEMA_PASSWORD1> referes to caDSR repository password for 
+                              database user SBR
+<SCHEMA_PASSWORD2> referes to caDSR repository password for
+		              database user  SBREXT
+
+1. Setup the datasources in oc4j by adding the following snippet to 
+	<OC4J_HOME>\j2ee\config\datasources.xml	
+
+	The following must be added within tag <data-sources>
+	
+       <data-source class="com.evermind.sql.DriverManagerDataSource" 
+       		connection-driver="oracle.jdbc.driver.OracleDriver" 
+       		ejb-location="jdbc/SBR_CoreDS" inactivity-timeout="30" 
+       		location="jdbc/SBR_CoreDS" name="SBR_CBTESTDS" 
+       		password=<SCHEMA_PASSWORD1> pooled-location="jdbc/SBR_CoreDS" 
+       		url="jdbc:oracle:thin:@<DB_HOST>:<DB_PORT>:<DB_SID>" 
+       		username="SBR" xa-location="jdbc/xa/SBR_CoreDS"/>
+       		
+       <data-source class="com.evermind.sql.DriverManagerDataSource" 
+       		connection-driver="oracle.jdbc.driver.OracleDriver" 
+       		ejb-location="jdbc/SBREXT_CoreDS" inactivity-timeout="30" 
+       		location="jdbc/SBREXT_CBTESTCoreDS" name="SBREXT_CoreDS" 
+       		password=<SCHEMA_PASSWORD2> pooled-location="jdbc/SBREXT_CoreDS" 
+       		url="jdbc:oracle:thin:@<DB_HOST>:<DB_PORT>:<DB_SID>" 
+       		username="sbrext" xa-location="jdbc/xa/SBREXT_CoreDS"/>
+       
+       eg.
+       
+       <?xml version = '1.0' encoding = 'windows-1252'?>
+       <!DOCTYPE data-sources PUBLIC "Orion data-sources" 
+       		"http://xmlns.oracle.com/ias/dtds/data-sources.dtd">
+
+         <data-sources>
+         .
+         .
+         .
+            <data-source class="com.evermind.sql.DriverManagerDataSource" 
+        	connection-driver="oracle.jdbc.driver.OracleDriver" 
+        	ejb-location="jdbc/SBR_CoreDS" inactivity-timeout="30" 
+        	location="jdbc/SBR_CoreDS" name="SBR_CoreDS" 
+        	password="i1sn0w" pooled-location="jdbc/SBR_CoreDS" 
+        	url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest" 
+        	username="SBR" xa-location="jdbc/xa/SBR_CoreDS"/>
+        	
+            <data-source class="com.evermind.sql.DriverManagerDataSource" 
+        	connection-driver="oracle.jdbc.driver.OracleDriver" 
+        	ejb-location="jdbc/SBREXT_CoreDS" inactivity-timeout="30" 
+        	location="jdbc/SBREXT_CoreDS" name="SBREXT_CoreDS" 
+        	password="i1sn0w" pooled-location="jdbc/SBREXT_CoreDS" 
+        	url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest" 
+        	username="sbrext" xa-location="jdbc/xa/SBREXT_CoreDS"/>
+  	 .
+  	 .
+         </data-sources>
+         
+       
+       
+2. Copy cdebrowser.ear from <INSTALL_HOME> to 
+	<OC4J_HOME>\j2ee\home\applications
+
+3. Add the following snippet to <OC4J_HOME>\j2ee\config\server.xml
+
+	The line below must be added within <application-server> tag
+	
+	<application name="CDEBrowser" path="../applications/cdebrowser.ear" 
+							auto-start="true" />
+	
+	eg.
+	<application-server application-directory="../applications"
+	 deployment-directory="../application-deployments"
+	 connector-directory="../connectors">
+		<rmi-config path="./rmi.xml" />
+		<jms-config path="./jms.xml" />
+		<log>
+			<file path="../log/server.log" />
+		</log>
+		<transaction-config timeout="30000" />
+		<global-application name="default" path="application.xml" />
+		.
+		.
+		.
+		<application name="CDEBrowser" 
+			path="../applications/cdebrowser.ear" 
+			auto-start="true" />
+		.
+
+		<global-web-app-config path="global-web-application.xml" />
+		<web-site path="./http-web-site.xml" />
+		<cluster id="-1858702553" />
+	</application-server>
+	
+	server.xml can also be updated using following command.
+	
+
+	
+3, Bind the web application by add the following snippet  the 
+			<OC4J_HOME>\j2ee\config\http-web-site.xml
+
+	The following must be added inside <web-site>
+	
+      <web-app application="CDEBrowser" name="CDEBrowser" root="/CDEBrowser" />
+	
+	eg.
+	<web-site port="8888" display-name=
+		"Oracle9iAS Containers for J2EE HTTP Web Site">
+		<default-web-app application="default" name="defaultWebApp" />
+		.
+		.
+		.
+		<web-app application="CDEBrowser" name="cdebrowser" 
+			root="/CDEBrowser" />
+		.
+	</web-site>
+
+	
+
+4. Startup the OC4J instance
+
+5. <OC4J_HOME>\j2ee\home\applications\CDEBrowser\WEB-INF\classes
+   \cdebrowser.properties contains the entry 'XML_DOWNLOAD_DIR' that points to 
+   the default directory in which xml and excel files are created temporarily 
+   before the user  downloads the files.
+   
+   Edit this entry to point a physical directory on the server.
+   NOTE: '\\' must be used for separators for windows environment
+        
+   eg.
+   	XML_DOWNLOAD_DIR=c:\\temp\\download\\xml\\
+   	
+6. Access the application using url http://<HOST>:<POST>/CDEBrowser/
+    eg.
+    	http://localhost:8888/CDEBrowser/
