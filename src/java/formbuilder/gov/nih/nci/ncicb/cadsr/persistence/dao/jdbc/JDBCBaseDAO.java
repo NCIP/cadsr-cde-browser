@@ -159,6 +159,34 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
   /**
    * Utility method to update the display order of the target record 
    * (Module, Question, Valid Value, and Instructions) with the new display order.
+   *
+   * @param <b>targetRecordId<b> corresponds to the target record whose 
+   *        display order is to be updated
+   * @param <b>newDisplayOrder<b> corresponds to the new display order
+   * @param <b>relationshipName<b> corresponds to the relationship of
+   *        the parent and the child records (for example, "FORM_MODULE")
+   *
+   * @return <b>int</b> 1 if the display order update is successful
+   *
+   * @throws <b>DMLException</b>
+   */
+  public int updateDisplayOrderDirect(
+    String targetRecordId, String relationshipName,
+    int newDisplayOrder) throws DMLException {
+
+    UpdateDisplayOrder updateRec = new UpdateDisplayOrder(getDataSource());
+    int updatedCount = 
+      updateRec.executeUpdate(newDisplayOrder, targetRecordId, relationshipName); 
+    if (updatedCount <= 0){
+      throw new DMLException("No matching target record, " + 
+        ", was found whose display order is to be updated.");
+    }
+    return 1;  // success
+  }
+
+  /**
+   * Utility method to update the display order of the target record 
+   * (Module, Question, Valid Value, and Instructions) with the new display order.
    * The display order of the record which has the new display order will be 
    * updated to have the original display order of the target record. The display
    * orders are swapped.
@@ -236,12 +264,23 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
        System.out.println("\n*****Update Result 2: " + res);
     System.out.println("Preferred Name: " + test.generatePreferredName("my long name test test"));
     */
+    /*
     try {
       test.swapDisplayOrder("D458E178-32A5-7522-E034-0003BA0B1A09", "FORM_MODULE", 6);
     }
     catch (DMLException e) {
       System.out.println("Failed to find the target record to update its display order");
     }
+    */
+
+    try {
+      test.updateDisplayOrderDirect (
+        "D458E178-32A5-7522-E034-0003BA0B1A09", "FORM_MODULE", 5); 
+    }
+    catch (DMLException e) {
+      System.out.println("cannot update the display order");
+    }
+    
   }
 
   /**
@@ -371,6 +410,37 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
       String retValue = (String) out.get("returnValue");
 
       return retValue;
+    }
+  }
+
+  /**
+   * Inner class to update the display order of the target record.
+   * 
+   */
+  private class UpdateDisplayOrder extends SqlUpdate {
+    public UpdateDisplayOrder(DataSource ds) {
+      String updateSql = 
+        "update qc_recs_ext set display_order = ? where " + 
+        " C_QC_IDSEQ = ? and RL_NAME = ? ";
+      this.setDataSource(ds);
+      this.setSql(updateSql);
+      declareParameter(new SqlParameter("DISPLAY_ORDER", Types.INTEGER));
+      declareParameter(new SqlParameter("C_QC_IDSEQ", Types.VARCHAR));
+      declareParameter(new SqlParameter("RL_NAME", Types.VARCHAR));
+      compile();
+    }
+    protected int executeUpdate (int displayOrder, String cQcIdseq, 
+      String rlName) 
+    {
+      Object [] obj = 
+        new Object[]
+          {new Integer(displayOrder), 
+           cQcIdseq,
+           rlName
+          };
+      
+	    int res = update(obj);
+      return res;
     }
   }
 

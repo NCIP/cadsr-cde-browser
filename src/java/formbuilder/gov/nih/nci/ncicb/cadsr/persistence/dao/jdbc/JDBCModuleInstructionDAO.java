@@ -49,13 +49,8 @@ public class JDBCModuleInstructionDAO extends JDBCInstructionDAO
     String instructionId,
     int newDisplayOrder) throws DMLException {
 
-    try {
-      swapDisplayOrder(instructionId, "MODULE_INSTRUCTION", newDisplayOrder);
-    }
-    catch (DMLException e) {
-      System.out.println("Failed to find the target record to update its display order");
-    }
-    return 1; //success
+    return updateDisplayOrderDirect(instructionId, "MODULE_INSTRUCTION", 
+      newDisplayOrder);
   }
   
   /**

@@ -53,13 +53,8 @@ public class JDBCFormValidValueInstructionDAO extends JDBCInstructionDAO
     String instructionId,
     int newDisplayOrder) throws DMLException {
 
-    try {
-      swapDisplayOrder(instructionId, "VALUE_INSTRUCTION", newDisplayOrder);
-    }
-    catch (DMLException e) {
-      System.out.println("Failed to find the target record to update its display order");
-    }
-    return 1; //success
+    return updateDisplayOrderDirect(instructionId, "VALUE_INSTRUCTION", 
+      newDisplayOrder);
   }
 
   /**

@@ -156,13 +156,7 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
     String moduleId,
     int newDisplayOrder) throws DMLException {
 
-    try {
-      swapDisplayOrder(moduleId, "FORM_MODULE", newDisplayOrder);
-    }
-    catch (DMLException e) {
-      System.out.println("Failed to find the target record to update its display order");
-    }
-    return 1; //success
+    return updateDisplayOrderDirect(moduleId, "FORM_MODULE", newDisplayOrder);
   }
   
   public Module addQuestion(

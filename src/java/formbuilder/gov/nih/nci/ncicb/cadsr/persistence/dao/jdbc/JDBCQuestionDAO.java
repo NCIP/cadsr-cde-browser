@@ -103,13 +103,8 @@ public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
     String questionId,
     int newDisplayOrder) throws DMLException {
 
-    try {
-      swapDisplayOrder(questionId, "MODULE_ELEMENT", newDisplayOrder);
-    }
-    catch (DMLException e) {
-      System.out.println("Failed to find the target record to update its display order");
-    }
-    return 1; //success
+    return updateDisplayOrderDirect(questionId, "MODULE_ELEMENT", 
+      newDisplayOrder);
   }
   
   public int updateQuestionLongName(

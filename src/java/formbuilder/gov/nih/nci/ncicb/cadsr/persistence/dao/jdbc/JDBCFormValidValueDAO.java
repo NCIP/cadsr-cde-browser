@@ -105,13 +105,8 @@ public class JDBCFormValidValueDAO extends JDBCBaseDAO
     String validValueId,
     int newDisplayOrder) throws DMLException {
 
-    try {
-      swapDisplayOrder(validValueId, "ELEMENT_VALUE", newDisplayOrder);
-    }
-    catch (DMLException e) {
-      System.out.println("Failed to find the target record to update its display order");
-    }
-    return 1; //success
+    return updateDisplayOrderDirect(validValueId, "ELEMENT_VALUE", 
+      newDisplayOrder);
   }
 
   /**
