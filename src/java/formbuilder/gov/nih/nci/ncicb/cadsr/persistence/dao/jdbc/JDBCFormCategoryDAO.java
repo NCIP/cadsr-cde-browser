@@ -41,11 +41,12 @@ public class JDBCFormCategoryDAO extends JDBCBaseDAO implements FormCategoryDAO 
 
     Collection coll = test.getAllCategories();
 
+    System.out.println(coll);
+    /*
     for (Iterator it = coll.iterator(); it.hasNext();) {
       Object anObject = it.next();
-
-      //System.out.println( "category list display = " + anObject ); 
     }
+    */
   }
 
   /**

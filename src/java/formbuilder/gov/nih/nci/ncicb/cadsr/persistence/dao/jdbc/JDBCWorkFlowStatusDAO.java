@@ -41,12 +41,13 @@ public class JDBCWorkFlowStatusDAO extends JDBCBaseDAO
     JDBCWorkFlowStatusDAO test = new JDBCWorkFlowStatusDAO(locator);
 
     Collection coll = test.getWorkFlowStatusesForACType("QUEST_CONTENT");
-
+    System.out.println(coll);
+    /*
     for (Iterator it = coll.iterator(); it.hasNext();) {
       Object anObject = it.next();
-
       //System.out.println( "workflow status display = " + anObject ); 
     }
+    */
   }
 
   /**

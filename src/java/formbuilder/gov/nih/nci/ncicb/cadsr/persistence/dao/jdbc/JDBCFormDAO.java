@@ -110,18 +110,19 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
     //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
     // type, classificationIdseq
-    formTest.getAllForms(
+    /*
+    System.out.println(formTest.getAllForms(
       "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "",
-      "99BA9DC8-A622-4E69-E034-080020C9C0E0");
-    formTest.getAllForms(
-      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", null);
-    
-    formTest.getModulesInAForm("99CD59C5-A9A0-3FA4-E034-080020C9C0E0");
+      "99BA9DC8-A622-4E69-E034-080020C9C0E0"));
+    System.out.println(formTest.getAllForms(
+      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", null));
+    */
+    System.out.println(
+      formTest.getModulesInAForm("99CD59C5-A9A0-3FA4-E034-080020C9C0E0"));
 
     String formId = "99CD59C5-A9A0-3FA4-E034-080020C9C0E0";
-
     try {
-      formTest.findFormByPrimaryKey(formId);
+      System.out.println(formTest.findFormByPrimaryKey(formId));
     }
     catch (DMLException e) {
       System.out.println("Failed to get a form for " + formId);
@@ -145,8 +146,6 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     protected Object mapRow(
       ResultSet rs,
       int rownum) throws SQLException {
-      //System.out.println("module name = " + rs.getString("LONG_NAME") +
-      //  " display order = " + rs.getString("DISPLAY_ORDER"));
       return new JDBCModuleTransferObject(rs);
     }
   }
@@ -167,7 +166,6 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     protected Object mapRow(
       ResultSet rs,
       int rownum) throws SQLException {
-      //System.out.println("\n form name by primary key **** = " + rs.getString("LONG_NAME"));
       return new JDBCFormTransferObject(rs);
     }
   }
@@ -201,7 +199,6 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       int rownum) throws SQLException {
       String formName = rs.getString("LONG_NAME");
 
-      //System.out.println("form name ++++++ = " + formName);
       return new JDBCFormTransferObject(rs);
     }
 

@@ -65,7 +65,8 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
 
     JDBCModuleDAO test = new JDBCModuleDAO(locator);
 
-    test.getQuestionsInAModule("99CD59C5-B13D-3FA4-E034-080020C9C0E0");
+    System.out.println(
+      test.getQuestionsInAModule("99CD59C5-B13D-3FA4-E034-080020C9C0E0"));
   }
 
   /**
@@ -86,8 +87,6 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
     protected Object mapRow(
       ResultSet rs,
       int rownum) throws SQLException {
-      //System.out.println("question name = " + rs.getString("LONG_NAME") +
-      //  " display order = " + rs.getString("DISPLAY_ORDER"));
       return new JDBCQuestionTransferObject(rs);
     }
   }
