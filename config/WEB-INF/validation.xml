@@ -64,6 +64,12 @@
         </var>
       </field>
 
+      <field   property="formVersion"
+        depends="required, float">
+        <arg0 key="cadsr.formbuilder.form.version"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+      </field>
+
       <!-- not in struts until 1.2
       <field   property="protocolIdSeq"
         depends="required, validwhen">
