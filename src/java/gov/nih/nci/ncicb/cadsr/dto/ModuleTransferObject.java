@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 
@@ -22,7 +23,7 @@ public class ModuleTransferObject extends AdminComponentTransferObject
   private List terms;
   private String moduleIdseq;
   private int dispOrder;
-  private Collection instructions;
+  private List instructions;
 
   public ModuleTransferObject() {
     idseq = moduleIdseq;
@@ -60,11 +61,31 @@ public class ModuleTransferObject extends AdminComponentTransferObject
     this.dispOrder = dispOrder;
   }
   
-  public Collection getInstructions()
+  public Instruction getInstruction()
+  {
+    if(instructions!=null&&!instructions.isEmpty())
+      return (Instruction)instructions.get(0);
+    else
+      return null;
+  }
+  public void setInstruction(Instruction newInstruction)
+  {
+    if(newInstruction!=null)
+    {
+    instructions= new ArrayList();
+    instructions.add(newInstruction);      
+    }
+    else
+    {
+      instructions=null;
+    }
+  }
+  
+  public List getInstructions()
   {
     return instructions;
   }
-  public void setInstructions(Collection newInstructions)
+  public void setInstructions(List newInstructions)
   {
     instructions=newInstructions;
   }
@@ -92,7 +113,21 @@ public class ModuleTransferObject extends AdminComponentTransferObject
        copy.setQuestions(questionsCopy);
        copy.setForm(null);
        copy.setQuestions(questionsCopy);
-     }     
+     } 
+     
+     if(getInstructions()!=null)
+     {
+       List instructionsCopy = new ArrayList();
+       ListIterator it = getInstructions().listIterator();
+       while(it.hasNext())
+       {
+         Instruction instr = (Instruction)it.next();
+         Instruction instrClone = (Instruction)instr.clone(); 
+         instructionsCopy.add(instrClone);
+       }
+       copy.setInstructions(instructionsCopy);
+     } 
+      
       return copy;
   }
   public String toString()
@@ -102,6 +137,12 @@ public class ModuleTransferObject extends AdminComponentTransferObject
     sb.append(super.toString());
     sb.append(ATTR_SEPARATOR+"moduleIdseq="+getModuleIdseq(),getModuleIdseq()); 
     sb.append(ATTR_SEPARATOR+"displayOrder="+getDisplayOrder()); 
+    
+    if(instructions!=null)
+      sb.append(ATTR_SEPARATOR+"Instructions="+instructions);
+    else
+      sb.append(ATTR_SEPARATOR+"instructions=null");
+      
     List questions = getQuestions();
     if(questions!=null) 
     {      
@@ -110,7 +151,8 @@ public class ModuleTransferObject extends AdminComponentTransferObject
     else
     {
       sb.append(ATTR_SEPARATOR+"Questions="+null);
-    }    
+    } 
+    
     sb.append(OBJ_SEPARATOR_END);  
     return sb.toString();
   }  

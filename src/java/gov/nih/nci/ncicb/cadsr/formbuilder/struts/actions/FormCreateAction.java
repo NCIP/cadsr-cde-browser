@@ -2,14 +2,14 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.FormInstructionTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.InstructionTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
-import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
@@ -71,8 +71,8 @@ public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
 
     DynaActionForm dynaForm = (DynaActionForm)form;
     Form newForm = null;
-    FormInstruction newFormHdrInst = null;
-    FormInstruction newFormFtrInst = null;
+    Instruction newFormHdrInst = null;
+    Instruction newFormFtrInst = null;
 
     // assemble a new form information.
     /*
@@ -105,24 +105,23 @@ public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
 
     // assemble a new form instruction for having form header.
     int dispOrder = 0;
-    if (StringUtils.doesValueExist((String)dynaForm.get(FORM_HEADER))){
-      newFormHdrInst = new FormInstructionTransferObject();
-      //newFormHdrInst.setForm(newForm); // form's qc_idseq missing
-      newFormHdrInst.setLongName((String)dynaForm.get(FORM_HEADER));
-      newFormHdrInst.setPreferredDefinition((String)dynaForm.get(PREFERRED_DEFINITION));
-      newFormHdrInst.setConteIdseq(context.getConteIdseq());
+    String headerInstrStr = (String)dynaForm.get(FORM_HEADER_INSTRUCTION);
+    if (StringUtils.doesValueExist(headerInstrStr)){
+      newFormHdrInst = new InstructionTransferObject();
+      newFormHdrInst.setLongName(headerInstrStr);
+      newFormHdrInst.setPreferredDefinition(headerInstrStr);
+      newFormHdrInst.setContext(context);
       newFormHdrInst.setAslName("DRAFT NEW");
       newFormHdrInst.setVersion(new Float(1.0));
       newFormHdrInst.setCreatedBy(request.getRemoteUser());
       newFormHdrInst.setDisplayOrder(++dispOrder);
     }
-
-    if (StringUtils.doesValueExist((String)dynaForm.get(FORM_FOOTER))){
-      newFormFtrInst = new FormInstructionTransferObject();
-      //newFormFtrInst.setForm(newForm); // form's qc_idseq missing
-      newFormFtrInst.setLongName((String)dynaForm.get(FORM_FOOTER));
-      newFormFtrInst.setPreferredDefinition((String)dynaForm.get(PREFERRED_DEFINITION));
-      newFormFtrInst.setConteIdseq(context.getConteIdseq());
+    String footerInstrStr = (String)dynaForm.get(FORM_FOOTER_INSTRUCTION);
+    if (StringUtils.doesValueExist(footerInstrStr)){
+      newFormFtrInst = new InstructionTransferObject();
+      newFormFtrInst.setLongName(footerInstrStr);
+      newFormFtrInst.setPreferredDefinition(footerInstrStr);
+      newFormFtrInst.setContext(context);
       newFormFtrInst.setAslName("DRAFT NEW");
       newFormFtrInst.setVersion(new Float(1.0));
       newFormFtrInst.setCreatedBy(request.getRemoteUser());

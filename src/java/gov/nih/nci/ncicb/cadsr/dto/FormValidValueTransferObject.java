@@ -1,8 +1,12 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.ListIterator;
 
 public class FormValidValueTransferObject extends AdminComponentTransferObject
   implements FormValidValue {
@@ -12,7 +16,7 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
   private String vpIdseq;
   private int dispOrder;
   private String shortMeaning;
-  private Collection instructions;
+  private List instructions;
   
   public FormValidValueTransferObject() {
   }
@@ -61,11 +65,33 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
   public void setShortMeaning(String newShortMeaning){
     shortMeaning=newShortMeaning;
   }
-  public Collection getInstructions()
+
+
+  public Instruction getInstruction()
+  {
+    if(instructions!=null&&!instructions.isEmpty())
+      return (Instruction)instructions.get(0);
+    else
+      return null;
+  }
+  public void setInstruction(Instruction newInstruction)
+  {
+    if(newInstruction!=null)
+    {
+    instructions= new ArrayList();
+    instructions.add(newInstruction);      
+    }
+    else
+    {
+      instructions=null;
+    }
+  }
+  
+  public List getInstructions()
   {
     return instructions;
   }
-  public void setInstructions(Collection newInstructions)
+  public void setInstructions(List newInstructions)
   {
     instructions=newInstructions;
   }
@@ -79,7 +105,21 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
   public Object clone() throws CloneNotSupportedException {
      FormValidValue copy = null;
       copy = (FormValidValue)super.clone();
-      copy.setQuestion(null);   
+      copy.setQuestion(null);
+      
+     if(getInstructions()!=null)
+     {
+       List instructionsCopy = new ArrayList();
+       ListIterator it = getInstructions().listIterator();
+       while(it.hasNext())
+       {
+         Instruction instr = (Instruction)it.next();
+         Instruction instrClone = (Instruction)instr.clone();
+         instructionsCopy.add(instrClone);
+       }
+       copy.setInstructions(instructionsCopy);
+     } 
+      
       return copy;
   }  
  
@@ -109,6 +149,12 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
     sb.append(super.toString());
     sb.append(ATTR_SEPARATOR+"valueIdseq="+getValueIdseq(),getValueIdseq()); 
     sb.append(ATTR_SEPARATOR+"displayOrder="+getDisplayOrder()); 
+    
+    if(instructions!=null)
+      sb.append(ATTR_SEPARATOR+"Instructions="+instructions);
+    else
+      sb.append(ATTR_SEPARATOR+"instructions=null");
+      
     sb.append(OBJ_SEPARATOR_END);  
     return sb.toString();  
   }

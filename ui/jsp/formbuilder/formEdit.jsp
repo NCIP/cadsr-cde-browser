@@ -174,24 +174,31 @@ function clearProtocol() {
               <td class="OraFieldText" nowrap>
                 <bean:write  name="<%=FormConstants.CRF%>" property="version"/> 
               </td>        
-          </tr>   
-          <tr class="OraTabledata">
-            <td class="OraTableColumnHeader" width="20%" nowrap>
-              <bean:message key="cadsr.formbuilder.form.header.instruction"/>
-            </td>
-            <td  class="OraFieldTextInstruction" width="80%" nowrap>
-		          <TEXTAREA NAME="comments" COLS=79 ROWS=2></TEXTAREA>
-            </td>
-          </tr>          
-          <tr class="OraTabledata">
-            <td class="OraTableColumnHeader" width="20%" nowrap>
-              <bean:message key="cadsr.formbuilder.form.footer.instruction"/>
-            </td>
-            <td  class="OraFieldTextInstruction" width="80%" nowrap>
-             <TEXTAREA NAME="comments" COLS=79 ROWS=2></TEXTAREA>
-            </td>
           </tr> 
-                    
+                  
+            <tr class="OraTabledata">
+              <td class="OraTableColumnHeader" width="20%" nowrap>
+                <bean:message key="cadsr.formbuilder.form.header.instruction"/>
+              </td>        
+              <td  class="OraFieldText" width="80%" >
+                <html:textarea  styleClass="OraFieldTextInstruction" rows="2" cols="102" 
+                   property="<%=FormConstants.FORM_HEADER_INSTRUCTION%>">
+                </html:textarea>
+              </td>            
+            </tr>   
+            
+            <tr class="OraTabledata">
+              <td class="OraTableColumnHeader" width="20%" nowrap>
+                <bean:message key="cadsr.formbuilder.form.footer.instruction"/>
+              </td>
+              <td  class="OraFieldText" width="80%" >
+                <html:textarea  styleClass="OraFieldTextInstruction" rows="2" cols="102" 
+                   property="<%=FormConstants.FORM_FOOTER_INSTRUCTION%>">
+                </html:textarea>
+              </td>     
+            </tr>  
+
+        
         </table>
       <table cellpadding="0" cellspacing="0" width="80%" align="center">
         <tr >
@@ -318,22 +325,24 @@ function clearProtocol() {
                            </table>
                       </td>
                     </tr>
-                    <tr>  
-                     <td colspan="2">
-                       <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
-                         <tr class="OraTabledata">
-                          <td class="OraTableColumnHeader" width="10%" nowrap>
-                            <bean:message key="cadsr.formbuilder.form.instruction"/> 
-                         </td>
-                         <td class="OraFieldTextInstruction">
-                           Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
-                         </td>
-                        </tr>
-                       </table>
-                      </td>
-		    </tr>
-                  </table>
-                </td>
+                   <logic:present name="module" property="instruction">                   
+                      <tr>  
+                       <td colspan="2">
+                           <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                             <tr class="OraTabledata">
+                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                <bean:message key="cadsr.formbuilder.form.instruction"/> 
+                             </td>
+                             <td class="OraFieldTextInstruction">
+                               <bean:write  name="module" property="instruction.longName"/>
+                             </td>
+                            </tr>
+                           </table>
+                       </td>
+                      </tr>
+                   </logic:present> 
+                 </table>
+               </td>
               </tr>
               <logic:present name="module">
                 <logic:notEmpty name="module" property="questions">
@@ -380,22 +389,23 @@ function clearProtocol() {
                                </table>
                               </td> 
                             </tr>
-                            <tr class="OraTabledata">
-                               <td class="OraFieldText" width="50">&nbsp;</td>
-                                <td class="OraFieldText" colspan="2">                              
-                                 <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
-                                   <tr class="OraTabledata">
-                                    <td class="OraTableColumnHeader" width="10%" nowrap>
-                                      <bean:message key="cadsr.formbuilder.form.instruction"/>
-                                   </td>
-                                   <td class="OraFieldTextInstruction">
-                                     Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
-                                   </td>
-                                  </tr>
-                                 </table>                                                            
-                               </td>
-                             </tr> 
-
+                            <logic:present name="question" property="instruction">
+                              <tr class="OraTabledata">
+                                 <td class="OraFieldText" width="50">&nbsp;</td>
+                                  <td class="OraFieldText" colspan="2">                              
+                                   <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                                     <tr class="OraTabledata">
+                                      <td class="OraTableColumnHeader" width="10%" nowrap>
+                                        <bean:message key="cadsr.formbuilder.form.instruction"/>
+                                     </td>
+                                     <td class="OraFieldTextInstruction">
+                                       <bean:write  name="question" property="instruction.longName"/>
+                                     </td>
+                                    </tr>
+                                   </table>                                                            
+                                 </td>
+                               </tr> 
+                            </logic:present>
 
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">
@@ -412,27 +422,30 @@ function clearProtocol() {
                                         <td class="OraFieldText">
                                           <bean:write name="validValue" property="longName"/>
                                         </td>
-                                      </tr>
+                                      </tr>                                       
                                       <tr   class="OraTabledata">
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td >
                                           <table align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
                                              <tr class="OraTabledata">
-                                             <td  class="OraTableColumnHeader" width="10%" nowrap ><bean:message key="cadsr.formbuilder.valueMeaning.name" /></td>
-                                             <td class="OraFieldText" ><bean:write name="validValue" property="shortMeaning"/></td>                                          
+                                             <td  class="OraTableColumnHeader" width="10%" nowrap >
+                                                 <bean:message key="cadsr.formbuilder.valueMeaning.name" /></td>
+                                             <td class="OraFieldText" >
+                                                <bean:write name="validValue" property="shortMeaning"/></td>                                          
                                             </tr>
-                                            
-                                             <tr class="OraTabledata">
-                                              <td class="OraTableColumnHeader" width="10%" nowrap>
-                                                <bean:message key="cadsr.formbuilder.form.instruction"/> 
-                                             </td>
-                                             <td class="OraFieldTextInstruction">
-                                               Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
-                                             </td>
-                                            </tr>                        
+                                             <logic:present name="validValue" property="instruction">                
+                                                 <tr class="OraTabledata">
+                                                  <td class="OraTableColumnHeader" width="10%" nowrap>
+                                                    <bean:message key="cadsr.formbuilder.form.instruction"/> 
+                                                 </td>
+                                                 <td class="OraFieldTextInstruction">
+                                                   <bean:write  name="validValue" property="instruction.longName"/>
+                                                 </td>
+                                                </tr>   
+                                              </logic:present>                                                    
                                           </table>                                       
                                         </td>
-                                      </tr>                                        
+                                      </tr>  
                                     </logic:iterate><!-- valid Value-->
                                   </table>
                                 </td>

@@ -1,10 +1,13 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.dto.FormInstructionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.InstructionTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
 import org.apache.commons.logging.Log;
@@ -82,8 +85,8 @@ public class ModuleCreateAction extends FormBuilderSecureBaseDispatchAction {
 
     DynaActionForm dynaForm = (DynaActionForm)form;
     Module newModule = new ModuleTransferObject();
-    ModuleInstruction newModInst = new ModuleInstructionTransferObject();
-
+    Form crf = (Form) getSessionObject(request, CRF);
+    
     int displayOrder = ((Integer)dynaForm.get(DISPLAY_ORDER)).intValue();
 
     Form f = (Form)getSessionObject(request, CRF);
@@ -97,12 +100,20 @@ public class ModuleCreateAction extends FormBuilderSecureBaseDispatchAction {
     newModule.setDisplayOrder(displayOrder);
     newModule.setQuestions(new ArrayList());
 
-    newModInst.setLongName((String)dynaForm.get(MODULE_INSTRUCTION_LONG_NAME));
-    newModInst.setAslName("DRAFT NEW");
-    newModInst.setVersion(new Float(1.0));
-    newModInst.setCreatedBy(request.getRemoteUser());
+    String modInstrStr = (String)dynaForm.get(MODULE_INSTRUCTION);
+    if (StringUtils.doesValueExist(modInstrStr)){
+      Instruction newModHdrInst = new InstructionTransferObject();
+      newModHdrInst.setLongName(modInstrStr);
+      newModHdrInst.setPreferredDefinition(modInstrStr);
+      newModHdrInst.setContext(crf.getContext());
+      newModHdrInst.setAslName("DRAFT NEW");
+      newModHdrInst.setVersion(new Float(1.0));
+      newModHdrInst.setCreatedBy(request.getRemoteUser());
+      newModHdrInst.setDisplayOrder(1);
+      newModule.setInstruction(newModHdrInst);
+    }
+    
 
-    Form crf = (Form) getSessionObject(request, CRF);
 
     List modules = crf.getModules();
     if(modules == null) {

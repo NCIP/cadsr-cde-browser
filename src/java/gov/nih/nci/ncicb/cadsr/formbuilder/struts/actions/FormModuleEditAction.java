@@ -1,6 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.InstructionChangesTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.InstructionTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
@@ -8,9 +10,12 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
+import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
+import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
@@ -50,6 +55,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
   private static final String NEW_VV_MAP="newVVMap";
   private static final String UPDATED_VV_MAP="updatedVVMap";
 
+
   private static final String VALID_VALUE_CHANGES="validValueChanges";
   /**
    * Sets Module given an Id for Edit.
@@ -85,10 +91,22 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     List modules = crf.getModules();
     Module selectedModule = (Module) modules.get(moduleIndex.intValue());
     String[] questionArr = getQuestionsAsArray(selectedModule.getQuestions());
-    moduleEditForm.set(MODULE_LONG_NAME, selectedModule.getLongName());
-    moduleEditForm.set(
-      MODULE_INSTRUCTION_LONG_NAME, selectedModule.getLongName());
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    
+    moduleEditForm.set(MODULE_LONG_NAME, selectedModule.getLongName());
+    
+    if(selectedModule.getInstruction()!=null)
+    {
+      moduleEditForm.set(
+        MODULE_INSTRUCTION, selectedModule.getInstruction().getLongName());
+    }
+
+    String[] questionInstructionArr = getQuestionInstructionsAsArray(selectedModule.getQuestions());
+    moduleEditForm.set(QUESTION_INSTRUCTIONS,questionInstructionArr);
+
+    String[] validValueInstructionArr = getValidValueInstructionsAsArray(selectedModule.getQuestions());
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS,validValueInstructionArr);
+
     setSessionObject(request, MODULE, selectedModule,true);
 
     FormBuilderServiceDelegate service = getFormBuilderService();
@@ -138,6 +156,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     //Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
+        
+    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+    setQuestionInstructionsFromArray(module,questionInstructionsArr);
+    
+    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);    
 
     List questions = module.getQuestions();
 
@@ -179,9 +203,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
     int currQuestionIndex = questionIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
+    
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
+    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+    setQuestionInstructionsFromArray(module,questionInstructionsArr);
+    
+    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);
+    
     List questions = module.getQuestions();
 
     if ((questions != null) && (questions.size() > 1)) {
@@ -227,6 +258,13 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
+
+    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+    setQuestionInstructionsFromArray(module,questionInstructionsArr);
+    
+    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);
+    
 
     if (deletedQuestions == null) {
       deletedQuestions = new ArrayList();
@@ -274,8 +312,15 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     Module module = (Module) getSessionObject(request, MODULE);
     List deletedQuestions = (List) getSessionObject(request, DELETED_QUESTIONS);
+    
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
+    
+    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+    setQuestionInstructionsFromArray(module,questionInstructionsArr);
+    
+    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);    
 
     List questions = module.getQuestions();
 
@@ -340,8 +385,15 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     int currQuestionIndex = questionIndex.intValue();
     int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
+    
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
+    
+    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+    setQuestionInstructionsFromArray(module,questionInstructionsArr);
+    
+    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);    
 
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
@@ -389,9 +441,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     int currQuestionIndex = questionIndex.intValue();
     int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
+    
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
+    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+    setQuestionInstructionsFromArray(module,questionInstructionsArr);
+    
+    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);
+    
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
@@ -443,6 +502,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
+    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+    setQuestionInstructionsFromArray(module,questionInstructionsArr);
+    
+    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);
+    
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
@@ -490,6 +555,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
+    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+    setQuestionInstructionsFromArray(module,questionInstructionsArr);
+    
+    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);
+    
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
@@ -546,6 +617,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
+    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+    setQuestionInstructionsFromArray(module,questionInstructionsArr);
+    
+    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);
+    
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
 
@@ -609,13 +686,43 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     Form crf = (Form) getSessionObject(request, CRF);
     Form orgCrf = (Form) getSessionObject(request, this.CLONED_CRF);
     module.setForm(crf);
+    module.setContext(crf.getContext());//This is done so that all new Element created will have this Context
     Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
-    String longName = (String) moduleEditForm.get(MODULE_LONG_NAME);
+    String longName = (String) moduleEditForm.get(MODULE_LONG_NAME);    
     module.setLongName(longName);
+    
+    String moduleInstruction = (String) moduleEditForm.get(MODULE_INSTRUCTION);
+    if(moduleInstruction!=null&&!moduleInstruction.trim().equalsIgnoreCase(""))
+    {
+      Instruction instr = module.getInstruction();
+      if(instr==null)
+      {
+        instr = new InstructionTransferObject();
+        instr.setDisplayOrder(0);
+        instr.setVersion(new Float(1));
+        instr.setAslName("DRAFT NEW");
+        instr.setContext(module.getContext());
+        instr.setPreferredDefinition(moduleInstruction);
+      }
+      instr.setLongName(moduleInstruction);
+      module.setInstruction(instr);
+    }
+    else
+    {
+      module.setInstruction(null);
+    }
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
+    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+    setQuestionInstructionsFromArray(module,questionInstructionsArr);
+    
+    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);
+    
     Map changes = getUpdatedNewDeletedQuestions(module,orgModule.getQuestions(),module.getQuestions());
+    InstructionChanges instructionChanges = getUpdatedNewDeletedInstructions(module,orgModule);
+    
     Module moduleHeader = null;
     if(!longName.equals(orgModule.getLongName()))
     {
@@ -623,7 +730,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       moduleHeader.setLongName(longName);
       moduleHeader.setModuleIdseq(module.getModuleIdseq());
     }
-    if(changes.isEmpty()&&moduleHeader==null)
+    if(instructionChanges.isEmpty()&&changes.isEmpty()&&moduleHeader==null)
     {
       saveMessage("cadsr.formbuilder.form.edit.nochange", request);
       return mapping.findForward(MODULE_EDIT);
@@ -632,14 +739,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     FormBuilderServiceDelegate service = getFormBuilderService();
     Module updatedModule = null;
     try{
-    updatedModule = service.updateModule(module.getModuleIdseq(),
-                          moduleHeader,
-                          (Collection)changes.get(UPDATED_QUESTION_LIST),
-                         (Collection)changes.get(DELETED_QUESTION_LIST),
-                         (Collection)changes.get(NEW_QUESTION_LIST),
-                         (Map)changes.get(UPDATED_VV_MAP),
-                         (Map)changes.get(NEW_VV_MAP),
-                         (Map)changes.get(DELETED_VV_MAP));
+    //TODO move the method param to a transfer object
+      updatedModule = service.updateModule(module.getModuleIdseq(),
+                            moduleHeader,
+                            (Collection)changes.get(UPDATED_QUESTION_LIST),
+                           (Collection)changes.get(DELETED_QUESTION_LIST),
+                           (Collection)changes.get(NEW_QUESTION_LIST),
+                           (Map)changes.get(UPDATED_VV_MAP),
+                           (Map)changes.get(NEW_VV_MAP),
+                           (Map)changes.get(DELETED_VV_MAP),
+                            instructionChanges);                              
     }
     catch(FormBuilderException exp)
     {
@@ -1190,7 +1299,113 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
 
 
-
+  /**
+   * Get all the changes to Instructions
+   *  
+   * @param orgQuestionsList
+   * @param editedQuestionList
+   *
+   * @return the TO Containing the Changes 
+   */
+ private InstructionChanges getUpdatedNewDeletedInstructions(Module currModule, Module orgModule)
+ {
+  InstructionChanges changes =  new InstructionChangesTransferObject();
+  
+  Map modChanges = getKeyValueForInstructionChanges(changes.getModuleInstructionChanges(),orgModule.getInstruction(),currModule.getInstruction(),orgModule.getModuleIdseq());
+  changes.setModuleInstructionChanges(modChanges);
+  List currQuestions = currModule.getQuestions();
+  List orgQuestions = orgModule.getQuestions();
+  if(currQuestions!=null&&!currQuestions.isEmpty())
+  {
+    ListIterator currQuestionsIt = currQuestions.listIterator();
+    while(currQuestionsIt.hasNext())
+    {
+      Question currQuestion = (Question)currQuestionsIt.next();
+      if(orgQuestions!=null&&orgQuestions.contains(currQuestion))
+      {
+        int index = orgQuestions.indexOf(currQuestion);
+        Question orgQuestion = (Question)orgQuestions.get(index);
+        
+        Map quesChanges = getKeyValueForInstructionChanges(changes.getQuestionInstructionChanges(),orgQuestion.getInstruction(),currQuestion.getInstruction(),currQuestion.getQuesIdseq());
+        changes.setQuestionInstructionChanges(quesChanges);
+        
+        List vvOrgList = orgQuestion.getValidValues();
+        List vvCurrList = currQuestion.getValidValues();
+        ListIterator currVVIt = vvCurrList.listIterator();
+        while(currVVIt.hasNext())
+        {
+          FormValidValue currVV = (FormValidValue)currVVIt.next();
+          if(vvOrgList!=null&&vvOrgList.contains(currVV))
+          {
+            int vvindex = vvOrgList.indexOf(currVV);
+            FormValidValue orgVV = (FormValidValue)vvOrgList.get(vvindex);
+            Map vvChanges = getKeyValueForInstructionChanges(changes.getValidValueInstructionChanges(),orgVV.getInstruction(),currVV.getInstruction(),currVV.getValueIdseq());            
+            changes.setValidValueInstructionChanges(vvChanges);
+          }
+        }
+      }      
+    }
+  }
+  
+  return changes;
+ }
+ 
+ private Map getKeyValueForInstructionChanges(Map mainMap, Instruction orgInstr,Instruction currInstr, String parentId)
+ {   
+  if(mainMap==null)
+       mainMap = new HashMap(); 
+   if(currInstr==null&&orgInstr!=null)
+   {
+     List toDelete = (List)mainMap.get(InstructionChanges.DELETED_INSTRUCTIONS);
+     if(toDelete==null)
+     {
+        toDelete = new ArrayList();       
+     }
+     toDelete.add(orgInstr);
+     mainMap.put(InstructionChanges.DELETED_INSTRUCTIONS,toDelete);
+     return mainMap;
+   }
+   if(currInstr!=null&&orgInstr==null)
+   {
+     if (!currInstr.getLongName().trim().equals(""))
+     {
+       Map newInstrs = (Map)mainMap.get(InstructionChanges.NEW_INSTRUCTION_MAP);
+       if(newInstrs==null)
+       {
+          newInstrs = new HashMap();       
+       }
+       newInstrs.put(parentId,currInstr);
+       mainMap.put(InstructionChanges.NEW_INSTRUCTION_MAP,newInstrs);
+       return mainMap;     
+     }
+   }
+   if(currInstr!=null&&orgInstr!=null)
+   {
+     if(!currInstr.equals(orgInstr)&&!currInstr.getLongName().trim().equals(""))
+       {
+         List updatedInstrs = (List)mainMap.get(InstructionChanges.UPDATED_INSTRUCTIONS);
+         if(updatedInstrs==null)
+         {
+            updatedInstrs = new ArrayList();       
+         }
+         updatedInstrs.add(currInstr);
+         mainMap.put(InstructionChanges.UPDATED_INSTRUCTIONS,updatedInstrs);
+         return mainMap;     
+       }
+       else if(!currInstr.equals(orgInstr)&&currInstr.getLongName().trim().equals(""))
+       {
+         List toDelete = (List)mainMap.get(InstructionChanges.DELETED_INSTRUCTIONS);
+         if(toDelete==null)
+         {
+            toDelete = new ArrayList();       
+         }
+         toDelete.add(orgInstr);
+         mainMap.put(InstructionChanges.DELETED_INSTRUCTIONS,toDelete);
+         return mainMap;       
+       }
+   }   
+   return mainMap;
+ }
   /**
    * Removes the Question given by "quesIdSeq" from the question list
    *
@@ -1289,10 +1504,140 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     for (int i = 0; i < questionArr.length; i++) {
       String questionStr = questionArr[i];
       Question currQuestion = (Question) questions.get(i);
+      currQuestion.setContext(module.getContext());//This is done so that all new Element created will have this Context
       currQuestion.setLongName(questionStr);
     }
   }
 
+  private String[] getQuestionInstructionsAsArray(List questions) {
+    if (questions == null) {
+      return null;
+    }
+
+    ListIterator iterate = questions.listIterator();
+    String[] questionInstructionsArr = new String[questions.size()];
+
+    while (iterate.hasNext()) {
+      int index = iterate.nextIndex();
+      Question question = (Question) iterate.next();
+      Instruction instr = question.getInstruction();
+      if(instr!=null)
+      {
+        questionInstructionsArr[index] = instr.getLongName();
+      }
+      else
+      {
+        questionInstructionsArr[index] = "";
+      }
+    }
+    return questionInstructionsArr;
+  }
+
+  private void setQuestionInstructionsFromArray(
+    Module module,
+    String[] questionInstructionArr) {
+    List questions = module.getQuestions();
+
+    for (int i = 0; i < questionInstructionArr.length; i++) {
+      String instrStr = questionInstructionArr[i];
+      Question currQuestion = (Question) questions.get(i);
+      if(currQuestion.getInstruction()!=null)
+      {
+        if(instrStr!=null&&!instrStr.trim().equals(""))
+        {
+          currQuestion.getInstruction().setLongName(instrStr);
+        }
+        else
+        {
+          currQuestion.setInstruction(null);
+        }
+      }
+      else if((instrStr!=null)&&(!instrStr.equals("")))
+      {
+        Instruction instr = new InstructionTransferObject();
+        instr.setLongName(instrStr);
+        instr.setDisplayOrder(0);
+        instr.setVersion(new Float(1));
+        instr.setAslName("DRAFT NEW");
+        instr.setContext(module.getContext());        
+        instr.setPreferredDefinition(instrStr);        
+        currQuestion.setInstruction(instr);
+      }
+    }
+  }
+  
+  private String[] getValidValueInstructionsAsArray(List questions) {
+    if (questions == null) {
+      return null;
+    }
+
+    ListIterator iterate = questions.listIterator();
+    String[] validValueInstructionsArr = new String[getMaxVVSize(questions)];
+     int vvIndex = 0;
+    while (iterate.hasNext()) {
+      int index = iterate.nextIndex();
+      Question question = (Question) iterate.next();
+      if(question!=null&&question.getValidValues()!=null)
+      {
+        List vvList = question.getValidValues();
+        ListIterator vvIterate = vvList.listIterator();
+        while(vvIterate.hasNext())
+        {
+          FormValidValue vv = (FormValidValue) vvIterate.next();
+          Instruction instr = vv.getInstruction();
+          if(instr!=null)
+          {
+            validValueInstructionsArr[vvIndex] = instr.getLongName();
+          }
+          else
+          {
+            validValueInstructionsArr[vvIndex] = "";
+          } 
+         ++vvIndex;
+        }
+       }
+      }
+    return validValueInstructionsArr;
+  }
+
+  private void setValidValueInstructionsFromArray(
+    Module module,
+    String[] validValueInstructionArr) {
+    List questions = module.getQuestions();
+    int index=0;
+    for (int i = 0; i < questions.size(); i++) {
+        Question currQuestion = (Question) questions.get(i);  
+        List vvList = currQuestion.getValidValues();
+       for (int j = 0; j < vvList.size(); j++) {  
+            String instrStr = validValueInstructionArr[index];
+            FormValidValue currVV = (FormValidValue) vvList.get(j); 
+            if(currVV.getInstruction()!=null)
+            {
+              if(instrStr!=null&&!instrStr.trim().equals(""))
+              {
+                currVV.getInstruction().setLongName(instrStr);
+              }
+              else
+              {
+                currVV.setInstruction(null);
+              }              
+            }
+            else if((instrStr!=null)&&(!instrStr.equals("")))
+            {
+              Instruction instr = new InstructionTransferObject();
+              instr.setLongName(instrStr);
+              instr.setDisplayOrder(0);
+              instr.setVersion(new Float(1));
+              instr.setAslName("DRAFT NEW");    
+              instr.setContext(module.getContext());              
+              instr.setPreferredDefinition(instrStr);                     
+              currVV.setInstruction(instr);
+            }
+          ++index;
+       }
+    }
+  }
+  
   private Collection getAllVDsForQuestions(List questions) {
     ListIterator iterate = questions.listIterator();
     Collection vdIds = new ArrayList();
@@ -1313,5 +1658,23 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
 
     return vdIds;
+  }
+  
+  private int getMaxVVSize(List questions)
+  {
+    if(questions==null)
+      return 0;
+    int maxSize = 0;
+    ListIterator iterate = questions.listIterator();
+    while (iterate.hasNext()) {
+      Question question = (Question) iterate.next();
+      if(question!=null&&question.getValidValues()!=null)
+      {
+        List vvList = question.getValidValues();
+        if(vvList!=null)
+          maxSize=maxSize+vvList.size();
+       }
+      }    
+    return maxSize;
   }
 }

@@ -165,45 +165,30 @@ function clearProtocol() {
       </td>
     </tr>
 
-    <!--
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.comments" />:</td>
-        <td class="OraFieldText" nowrap>
-          <html:textarea 
-            property="<%= FormConstants.FORM_COMMENTS %>"
-            cols="100"
-            rows="3"
-            styleClass="OraFieldText"
-          />        
-        </td>
-    </tr>
--->
+      <td class="OraTableColumnHeader" width="20%" nowrap>
+        <bean:message key="cadsr.formbuilder.form.header.instruction"/>
+      </td>        
+      <td  class="OraFieldText" width="80%" >
+        <html:textarea  styleClass="OraFieldTextInstruction" rows="2" cols="102" 
+           property="<%=FormConstants.FORM_HEADER_INSTRUCTION%>">
+        </html:textarea>
+      </td>            
+    </tr>   
+    
+    <tr class="OraTabledata">
+      <td class="OraTableColumnHeader" width="20%" nowrap>
+        <bean:message key="cadsr.formbuilder.form.footer.instruction"/>
+      </td>
+      <td  class="OraFieldText" width="80%" >
+        <html:textarea  styleClass="OraFieldTextInstruction" rows="2" cols="102" 
+           property="<%=FormConstants.FORM_FOOTER_INSTRUCTION%>">
+        </html:textarea>
+      </td>     
+    </tr>  
   
  </table>
 
- <!--
-  <br/>
-  <hr/>
-  <br/>
-  
-  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-
-    <tr class="OraTabledata">
-        <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.header" />:</td>
-        <td class="OraFieldText" nowrap>
-          <html:text property="<%=FormConstants.FORM_HEADER%>" size="80" />
-        </td>
-    </tr>
-
-    <tr class="OraTabledata">
-        <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.footer" />:</td>
-        <td class="OraFieldText" nowrap>
-          <html:text property="<%=FormConstants.FORM_FOOTER%>" size="80" />
-            <html:hidden value="<%=NavigationConstants.GET_ALL_FORMS_METHOD%>" property="<%=NavigationConstants.METHOD_PARAM%>"/>
-        </td>
-    </tr>
-  </table>
--->
 
 
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >

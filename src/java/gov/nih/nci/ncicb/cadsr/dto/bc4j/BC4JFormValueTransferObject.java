@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.dto.base.AdminComponentTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormValidValuesViewRowImpl;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 
@@ -79,12 +80,22 @@ public class BC4JFormValueTransferObject extends AdminComponentTransferObject
   /**
   * Dummy methods to match the interface :skakkodi
   */
-    public Collection getInstructions()
-    {
-      return null;
-    }
-    public void setInstructions(Collection newInstructions)
-    {
+  public Instruction getInstruction()
+  {
 
-   }
+      return null;
+  }
+  public void setInstruction(Instruction newInstruction)
+  {
+
+  }
+  
+  public List getInstructions()
+  {
+    return null;
+  }
+  public void setInstructions(List newInstructions)
+  {
+
+  }
 }

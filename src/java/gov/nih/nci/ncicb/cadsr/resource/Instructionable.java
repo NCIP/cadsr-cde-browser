@@ -1,7 +1,11 @@
 package gov.nih.nci.ncicb.cadsr.resource;
-import java.util.Collection;
+import java.util.List;
 
 public interface Instructionable {
-  public Collection getInstructions();
-  public void setInstructions(Collection instrcutions);
+  public Instruction getInstruction();
+  public void setInstruction(Instruction instrcution);
+  
+  public List getInstructions();
+  public void setInstructions(List instrcution);
+  
 }

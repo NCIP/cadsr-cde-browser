@@ -2,8 +2,9 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service;
 
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
+import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
-import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
@@ -32,7 +33,8 @@ public interface FormBuilderServiceLocal  {
     Form formHeader,
     Collection updatedModules,
     Collection deletedModules,
-    Collection addedModules) ;
+    Collection addedModules
+    ,InstructionChanges instructionChanges) ;
 
   public Module updateModule(
        String moduleIdSeq,
@@ -42,7 +44,7 @@ public interface FormBuilderServiceLocal  {
        Collection newQuestions,
        Map updatedValidValues,
        Map addedValidValues,
-       Map deletedValidValues);
+       Map deletedValidValues,InstructionChanges instructionChanges);
 
   public Form copyForm(
     String sourceFormPK,
@@ -115,6 +117,6 @@ public interface FormBuilderServiceLocal  {
 
   public Form createForm(
     Form form,
-    FormInstruction formHeaderInstruction,
-    FormInstruction formFooterInstruction);
+    Instruction formHeaderInstruction,
+    Instruction formFooterInstruction);
 }

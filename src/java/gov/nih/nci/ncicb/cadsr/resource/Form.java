@@ -21,6 +21,12 @@ public interface Form extends AdminComponent,Instructionable  {
   public String getFormCategory();
   public void setFormCategory (String formCategory);
   
+  public Instruction getFooterInstruction();
+  public void setFooterInstruction(Instruction instrcution);
+  
+  public List getFooterInstructions();
+  public void setFooterInstructions(List instrcutions);
+  
   public Object clone() throws CloneNotSupportedException ;
 
 }

@@ -1,9 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
-import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
-
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import java.util.Collection;
+import java.util.List;
 
 
 public interface ModuleInstructionDAO extends InstructionDAO {
@@ -16,8 +16,8 @@ public interface ModuleInstructionDAO extends InstructionDAO {
    *
    * @throws <b>DMLException</b>
    */
-  public String createModuleInstructionComponent(ModuleInstruction moduleInstr)
+  public int createInstruction(Instruction moduleInstr, String parentId)
     throws DMLException;
 
-  public Collection getModuleInstructions(String moduleId) throws DMLException;
+  public List getInstructions(String moduleID);
 }

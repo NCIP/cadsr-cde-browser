@@ -4,10 +4,10 @@ import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
-import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
+import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
-import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 
 import java.rmi.RemoteException;
 
@@ -24,12 +24,13 @@ public interface FormBuilderServiceRemote {
     public Form getFormDetails(String formPK) throws RemoteException;
 
     public Form updateForm(String formIdSeq, Form formHeader, Collection updatedModules,
-        Collection deletedModules,Collection addedModules) throws RemoteException;
+        Collection deletedModules,Collection addedModules
+        ,InstructionChanges instructionChanges) throws RemoteException;
 
     public Module updateModule(String moduleIdSeq, Module moduleHeader,
         Collection updatedQuestions, Collection deletedQuestions,
         Collection newQuestions, Map updatedValidValues, Map addedValidValues,
-        Map deletedValidValues) throws RemoteException;
+        Map deletedValidValues,InstructionChanges instructionChanges) throws RemoteException;
 
     public Form getFormRow(String formPK) throws RemoteException;
 
@@ -50,7 +51,7 @@ public interface FormBuilderServiceRemote {
      *
      * @exception RemoteException if an error occurs
      */
-    public String createModule(Module module, ModuleInstruction modInstrustion)
+    public String createModule(Module module, Instruction modInstrustion)
         throws RemoteException;
 
     public int removeModule(String formPK, String modulePK)
@@ -129,7 +130,7 @@ public interface FormBuilderServiceRemote {
     public Collection retrieveFormClassifications(String acId)
         throws RemoteException;
 
-    public Form createForm(Form form, FormInstruction formHeaderInstruction,
-        FormInstruction formFooterInstruction)
+    public Form createForm(Form form, Instruction formHeaderInstruction,
+        Instruction formFooterInstruction)
 	throws RemoteException;
 }

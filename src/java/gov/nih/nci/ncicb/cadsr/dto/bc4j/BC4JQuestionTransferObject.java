@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.dto.base.AdminComponentTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionsViewRowImpl;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
@@ -19,7 +20,7 @@ import java.util.List;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class BC4JQuestionTransferObject extends QuestionTransferObject {
 
@@ -118,15 +119,26 @@ public class BC4JQuestionTransferObject extends QuestionTransferObject {
    */
   public void setValidValues(List values) {
   }
+  
   /**
   * Dummy methods to match the interface :skakkodi
   */
-    public Collection getInstructions()
-    {
-      return null;
-    }
-    public void setInstructions(Collection newInstructions)
-    {
+  public Instruction getInstruction()
+  {
 
-   }
+      return null;
+  }
+  public void setInstruction(Instruction newInstruction)
+  {
+
+  }
+  
+  public List getInstructions()
+  {
+    return null;
+  }
+  public void setInstructions(List newInstructions)
+  {
+
+  }
 }

@@ -47,26 +47,31 @@
       <%@ include file="showMessages.jsp" %>
       <html:hidden property="<%= FormConstants.DISPLAY_ORDER %>"/>
 
-      <table align="center" cellspacing="2" cellpadding="3" border="0" width="100%">
-        <tr>                                                      
-          <td class="OraFieldtitlebold" nowrap>
-              <bean:message key="cadsr.formbuilder.module.name" /></td> 
-          <td class="OraFieldText" nowrap>
+        <table width="70%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader" width="20%" nowrap>
+              <bean:message key="cadsr.formbuilder.module.name" />
+            </td>
+            <td  class="OraFieldText" width="80%" nowrap>
             <html:text 
               property="<%= FormConstants.MODULE_LONG_NAME %>"
               size="50"
               maxlength="<%=Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH)%>"
               />
-          </td>
-        </tr>
-        <tr >
-          <td >
-            &nbsp;
-          </td>
-          <td >
-            &nbsp;
-          </td>          
-        </tr>  
+            </td>
+          </tr>
+
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" width="20%" nowrap>
+            <bean:message key="cadsr.formbuilder.form.instruction"/>
+          </td>        
+          <td  class="OraFieldText" width="80%" >
+            <html:textarea  styleClass="OraFieldTextInstruction" rows="2" cols="102" 
+               property="<%=FormConstants.MODULE_INSTRUCTION%>">
+            </html:textarea>
+          </td>            
+        </tr>           
+ 
       </table>
       
       <%@ include file="/formbuilder/createModule_inc.jsp"%>    

@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.dto.bc4j;
 
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -93,13 +94,42 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
   /**
   * Dummy methods to match the interface :skakkodi
   */
-    public Collection getInstructions()
-    {
-      return null;
-    }
-    public void setInstructions(Collection newInstructions)
-    {
+  public Instruction getInstruction()
+  {
 
-   }
+      return null;
+  }
+  public void setInstruction(Instruction newInstruction)
+  {
+
+  }
+  
+  public List getInstructions()
+  {
+    return null;
+  }
+  public void setInstructions(List newInstructions)
+  {
+
+  }
+  
+    public Instruction getFooterInstruction()
+  {
+
+      return null;
+  }
+  public void setFooterInstruction(Instruction newInstruction)
+  {
+
+  }
+  
+  public List getFooterInstructions()
+  {
+    return null;
+  }
+  public void setFooterInstructions(List newInstructions)
+  {
+
+  }
 
 }

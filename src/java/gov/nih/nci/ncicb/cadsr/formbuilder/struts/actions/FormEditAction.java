@@ -2,6 +2,8 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.InstructionChangesTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.InstructionTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
@@ -11,6 +13,8 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaF
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
+import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Orderable;
 
@@ -19,9 +23,11 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +44,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
   private static String FORM_EDIT_UPDATED_MODULES = "formEditUpdatedModules";
   private static String FORM_EDIT_DELETED_MODULES = "formEditDeletedModules";
   private static String FORM_EDIT_ADDED_MODULES = "formEditAddedModules";
+  private static String FORM_EDIT_INSTRUCTION_CHANGES = "formEditInstructionChanges";  
 
   /**
    * Returns Complete form given an Id for Edit.
@@ -92,15 +99,30 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       dynaFormEditForm.set(
         this.PREFERRED_DEFINITION, crf.getPreferredDefinition());
       dynaFormEditForm.set(CONTEXT_ID_SEQ, crf.getContext().getConteIdseq());
-      dynaFormEditForm.set(
-        this.PROTOCOL_ID_SEQ, crf.getProtocol().getProtoIdseq());
-      dynaFormEditForm.set(
-        this.PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
+      
+      if(crf.getProtocol()!=null)
+      {
+        dynaFormEditForm.set(
+          this.PROTOCOL_ID_SEQ, crf.getProtocol().getProtoIdseq());
+        dynaFormEditForm.set(
+          this.PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
+      }
       dynaFormEditForm.set(CATEGORY_NAME, crf.getFormCategory());
       dynaFormEditForm.set(
         this.FORM_TYPE, crf.getFormType());
       dynaFormEditForm.set(CATEGORY_NAME, crf.getFormCategory());
       dynaFormEditForm.set(this.WORKFLOW, crf.getAslName());
+      
+      //Instructions
+      if(crf.getInstruction()!=null)
+      {
+        dynaFormEditForm.set(this.FORM_HEADER_INSTRUCTION, crf.getInstruction().getLongName());
+      }
+      if(crf.getFooterInstruction()!=null)
+      {
+        dynaFormEditForm.set(this.FORM_FOOTER_INSTRUCTION, crf.getFooterInstruction().getLongName());
+      }      
+
     }
 
     removeSessionObject(request, DELETED_MODULES);
@@ -397,7 +419,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           Collection updatedModules = (Collection)getSessionObject(request,FORM_EDIT_UPDATED_MODULES);
           Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
           Collection addedModules = (Collection)getSessionObject(request,FORM_EDIT_ADDED_MODULES);
-          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules);
+          InstructionChanges instrChanges = (InstructionChanges)getSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES);
+          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules,instrChanges);
           setSessionObject(request,CRF, updatedCrf,true);
           Form clonedCrf = (Form) updatedCrf.clone();
           setSessionObject(request, CLONED_CRF, clonedCrf,true);
@@ -534,7 +557,9 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           Collection updatedModules = (Collection)getSessionObject(request,FORM_EDIT_UPDATED_MODULES);
           Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
           Collection addedModules = (Collection)getSessionObject(request,FORM_EDIT_ADDED_MODULES);
-          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules);
+          InstructionChanges instrChanges = (InstructionChanges)getSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES);          
+          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules
+                                                  , deletedModules,addedModules,instrChanges);
           setSessionObject(request,CRF, updatedCrf);
           Form clonedCrf = (Form) updatedCrf.clone();
           setSessionObject(request, CLONED_CRF, clonedCrf);
@@ -608,6 +633,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     removeSessionObject(request, FORM_EDIT_UPDATED_MODULES);
     removeSessionObject(request, FORM_EDIT_DELETED_MODULES);
     removeSessionObject(request, FORM_EDIT_ADDED_MODULES);
+    removeSessionObject(request, FORM_EDIT_INSTRUCTION_CHANGES);
+    
 
     return mapping.findForward(FORM_EDIT);
 
@@ -774,6 +801,19 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       if(hasValue(orgPreferredDef))
         headerUpdate = true;
     }
+    
+    String headerInsterStr = (String) editForm.get(FORM_HEADER_INSTRUCTION);
+    InstructionChanges instrChanges = new InstructionChangesTransferObject();
+    Map headerInstrChanges  = getInstructionChanges(instrChanges.getFormHeaderInstructionChanges()
+                              , headerInsterStr , clonedCrf.getInstruction(),crf);
+    instrChanges.setFormHeaderInstructionChanges(headerInstrChanges);  
+    
+    String footerInsterStr = (String) editForm.get(FORM_FOOTER_INSTRUCTION);
+    Map footerInstrChanges  = getInstructionChanges(instrChanges.getFormFooterInstructionChanges()
+                              , footerInsterStr , clonedCrf.getFooterInstruction(),crf);
+    instrChanges.setFormFooterInstructionChanges(footerInstrChanges);                              
+                              
+                              
 
    List updatedModules =
        getUpdatedModules(clonedCrf.getModules(), crf.getModules());
@@ -784,11 +824,12 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
        header=null;
     if (
         header!=null || ((deletedModules != null) && !deletedModules.isEmpty()) ||
-          !updatedModules.isEmpty()||!addedModules.isEmpty()) {
+          !updatedModules.isEmpty()||!addedModules.isEmpty()||!instrChanges.isEmpty()) {
         setSessionObject(request,FORM_EDIT_HEADER,header,true);
         setSessionObject(request,FORM_EDIT_UPDATED_MODULES,updatedModules,true);
         setSessionObject(request,FORM_EDIT_DELETED_MODULES,deletedModules,true);
         setSessionObject(request,FORM_EDIT_ADDED_MODULES,addedModules,true);
+        setSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES,instrChanges,true);
         return true;
       }
     else
@@ -811,6 +852,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         removeSessionObject(request,FORM_EDIT_UPDATED_MODULES);
         removeSessionObject(request,FORM_EDIT_DELETED_MODULES);
         removeSessionObject(request,FORM_EDIT_ADDED_MODULES);
+        removeSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES);
+        
   }
   /**
    * Removes the module given by "moduleIdSeq" from the module list
@@ -947,4 +990,70 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       log.debug(module.getLongName() + "-->" + module.getDisplayOrder());
     }
   }
+  
+  private Map getInstructionChanges(Map mainMap, String currInstrStr , Instruction orgInstr, Form parent)
+  {
+    if(mainMap==null)
+           mainMap = new HashMap(); 
+       if(currInstrStr==null&&orgInstr!=null)
+       {
+         List toDelete = (List)mainMap.get(InstructionChanges.DELETED_INSTRUCTIONS);
+         if(toDelete==null)
+         {
+            toDelete = new ArrayList();       
+         }
+         toDelete.add(orgInstr);
+         mainMap.put(InstructionChanges.DELETED_INSTRUCTIONS,toDelete);
+         return mainMap;
+       }
+       if(currInstrStr!=null&&orgInstr==null)
+       {
+         if (!currInstrStr.trim().equals(""))
+         {
+            Instruction instr = new InstructionTransferObject();
+            instr.setLongName(currInstrStr);
+            instr.setDisplayOrder(0);
+            instr.setVersion(new Float(1));
+            instr.setAslName("DRAFT NEW");
+            instr.setContext(parent.getContext());        
+            instr.setPreferredDefinition(currInstrStr);
+    
+           Map newInstrs = (Map)mainMap.get(InstructionChanges.NEW_INSTRUCTION_MAP);
+           if(newInstrs==null)
+           {
+              newInstrs = new HashMap();       
+           }
+           newInstrs.put(parent.getFormIdseq(),instr);
+           mainMap.put(InstructionChanges.NEW_INSTRUCTION_MAP,newInstrs);
+           return mainMap;     
+         }
+       }
+       if(currInstrStr!=null&&orgInstr!=null)
+       {
+         if(!currInstrStr.equals(orgInstr.getLongName())&&!currInstrStr.trim().equals(""))
+           {
+             List updatedInstrs = (List)mainMap.get(InstructionChanges.UPDATED_INSTRUCTIONS);
+             if(updatedInstrs==null)
+             {
+                updatedInstrs = new ArrayList();       
+             }
+             orgInstr.setLongName(currInstrStr);
+             updatedInstrs.add(orgInstr);
+             mainMap.put(InstructionChanges.UPDATED_INSTRUCTIONS,updatedInstrs);
+             return mainMap;     
+           }
+           else if(!currInstrStr.equals(orgInstr.getLongName())&&currInstrStr.trim().equals(""))
+           {
+             List toDelete = (List)mainMap.get(InstructionChanges.DELETED_INSTRUCTIONS);
+             if(toDelete==null)
+             {
+                toDelete = new ArrayList();       
+             }
+             toDelete.add(orgInstr);
+             mainMap.put(InstructionChanges.DELETED_INSTRUCTIONS,toDelete);
+             return mainMap;       
+           }
+       }   
+       return mainMap;
+      }
 }

@@ -167,19 +167,26 @@ function clearProtocol() {
       </td>
     </tr>
 
-         <!--
-        <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.comments" />:</td>
-          <td class="OraFieldText" nowrap>
-            <html:textarea 
-              property="<%= FormConstants.FORM_COMMENTS %>"
-              cols="30"
-              rows="5"
-              styleClass="OraFieldText"
-              />
-           </td>
-        </tr>
-        -->
+  <logic:present name="<%=FormConstants.CRF%>" property="instruction">
+    <tr class="OraTabledata">
+      <td class="TableRowPromptTextLeft"  width="20%">
+        <bean:message key="cadsr.formbuilder.form.header.instruction"/>
+      </td>                
+      <td  class="OraFieldTextInstruction">
+        <bean:write  name="<%=FormConstants.CRF%>" property="instruction.longName"/>
+      </td>
+    </tr>
+  </logic:present>
+  <logic:present name="<%=FormConstants.CRF%>" property="footerInstruction">     
+    <tr class="OraTabledata">
+      <td class="TableRowPromptTextLeft"  width="20%">
+        <bean:message key="cadsr.formbuilder.form.footer.instruction"/>
+      </td>                
+      <td  class="OraFieldTextInstruction">
+        <bean:write  name="<%=FormConstants.CRF%>" property="footerInstruction.longName"/>
+      </td>
+    </tr> 
+  </logic:present> 
 
         <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap  colspan="2"><bean:message key="cadsr.formbuilder.form.confirmCopy"/>:
@@ -203,89 +210,7 @@ function clearProtocol() {
         </tr>
       </table>
       
-      <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
-        <logic:iterate id="module" indexId="moduleIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
-          <bean:size id="moduleSize" name="<%=FormConstants.CRF%>" property="modules"  />
-          <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
-          <tr class="OraTableColumnHeader">
-            <td class="OraTableColumnHeader">
-              <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                <tr class="OraTableColumnHeader" >
-                  <td>
-                    <bean:write name="module" property="longName"/>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <logic:present name="module">
-            <logic:notEmpty name="module" property = "questions">
-              <tr class="OraTabledata">
-                <td>
-                  <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" >      
-                  <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">                           
-                  <tr class="OraTabledata">
-                    <td class="OraFieldText" width="50">&nbsp;</td>
-                    <td height="1"  class="OraFieldText">                               
-                  </td>                              
-                </tr>                           
-                <tr class="OraTabledata">
-                  <td class="OraFieldText" width="50">&nbsp;</td>
-                  <td class="UnderlineOraFieldText">
-                    <bean:write name="question" property="longName"/>
-                  </td>
-                  <logic:present name="question" property = "dataElement">
-                    <td align="center" width="70" class="UnderlineOraFieldText" >
-                      <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
-                        paramId = "p_de_idseq"
-                        paramName="question"
-                        paramProperty="dataElement.deIdseq"
-                        target="_blank">
-                        <bean:write name="question" property="dataElement.CDEId"/>
-                      </html:link>
-                    </td>
-                    <td align="center" width="70" class="UnderlineOraFieldText">
-                      <bean:write name="question" property="dataElement.version"/>
-                    </td>                              
-                  </logic:present>
-                </tr>                                                     
-                <logic:present name="question">
-                  <logic:notEmpty name="question" property = "validValues">
-                    <tr class="OraTabledata">
-                      <td class="OraFieldText" width="50">&nbsp;</td>
-                      <td>
-                        <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                          <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
-                            <tr COLSPAN="3" class="OraTabledata">
-                              <td class="OraFieldText" width="50">&nbsp;</td>
-                              <td class="OraFieldText">
-                                <bean:write name="validValue" property="longName"/>
-                              </td>
-                            </tr>
-                          </logic:iterate><!-- valid Value-->
-                        </table>
-                      </td>
-                    </tr>
-                  </logic:notEmpty>
-                </logic:present>
-              </logic:iterate><!-- Question-->
-            </table>
-          </td>
-        </tr>
-      </logic:notEmpty>
-    </logic:present>
-  </table>
-  
-  <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
-    <tr class>
-      <td >
-        &nbsp;
-      </td>
-    </tr> 
-  </table>
-  
-</logic:iterate><!-- Module-->
-</logic:notEmpty>
+     <%@ include file="/formbuilder/moduleDetails_inc.jsp"%>
 
 <%@ include file="/formbuilder/copyButton_inc.jsp"%>    
 </html:form>

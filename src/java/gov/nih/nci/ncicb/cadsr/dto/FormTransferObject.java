@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 
@@ -22,7 +23,8 @@ public class FormTransferObject extends AdminComponentTransferObject
   private List modules;
   private String formIdseq = null;
   private String formCategory = null;
-  private Collection instructions = null;
+  private List instructions = null;
+   private List footerInstructions = null;
 
   public FormTransferObject() {
     
@@ -81,13 +83,56 @@ public class FormTransferObject extends AdminComponentTransferObject
     formCategory = newFormCategory;
   }
  
-  public Collection getInstructions()
+  public Instruction getInstruction()
+  {
+    if(instructions!=null&&!instructions.isEmpty())
+      return (Instruction)instructions.get(0);
+    else
+      return null;
+  }
+  public void setInstruction(Instruction newInstruction)
+  {
+    if(newInstruction!=null)
+    {
+    instructions= new ArrayList();
+    instructions.add(newInstruction);      
+    }
+    else
+    {
+      instructions=null;
+    }
+
+  }
+  
+  public List getInstructions()
   {
     return instructions;
   }
-  public void setInstructions(Collection newInstructions)
+  public void setInstructions(List newInstructions)
   {
     instructions=newInstructions;
+  }
+  
+  public Instruction getFooterInstruction()
+  {
+    if(footerInstructions!=null&&!footerInstructions.isEmpty())
+      return (Instruction)footerInstructions.get(0);
+    else
+      return null;
+  }
+  public void setFooterInstruction(Instruction newFooterInstruction)
+  {
+    footerInstructions= new ArrayList();
+    footerInstructions.add(newFooterInstruction);
+  }
+  
+  public List getFooterInstructions()
+  {
+    return footerInstructions;
+  }
+  public void setFooterInstructions(List newFooterInstructions)
+  {
+    footerInstructions=newFooterInstructions;
   }
  /**
    * Make a clone of the form.
@@ -115,6 +160,33 @@ public class FormTransferObject extends AdminComponentTransferObject
      } 
      if(this.getProtocol()!=null)
       copy.setProtocol((Protocol)getProtocol().clone());
+
+     if(getInstructions()!=null)
+     {
+       List instructionsCopy = new ArrayList();
+       ListIterator it = getInstructions().listIterator();
+       while(it.hasNext())
+       {
+         Instruction instr = (Instruction)it.next();
+         Instruction instrClone = (Instruction)instr.clone();   
+         instructionsCopy.add(instrClone);
+       }
+       copy.setInstructions(instructionsCopy);
+     } 
+
+     if(getFooterInstructions()!=null)
+     {
+       List instructionsCopy = new ArrayList();
+       ListIterator it = getFooterInstructions().listIterator();
+       while(it.hasNext())
+       {
+         Instruction instr = (Instruction)it.next();
+         Instruction instrClone = (Instruction)instr.clone(); 
+         instructionsCopy.add(instrClone);
+       }
+       copy.setFooterInstructions(instructionsCopy);
+     } 
+                
       return copy;
   }
 
@@ -130,7 +202,17 @@ public class FormTransferObject extends AdminComponentTransferObject
       sb.append(ATTR_SEPARATOR+"Protocol="+protocol.toString());
     else
       sb.append(ATTR_SEPARATOR+"Protocol=null");
-
+      
+    if(instructions!=null)
+      sb.append(ATTR_SEPARATOR+"Instructions="+instructions);
+    else
+      sb.append(ATTR_SEPARATOR+"instructions=null");
+      
+    if(footerInstructions!=null)
+      sb.append(ATTR_SEPARATOR+"footerInstructions="+footerInstructions);
+    else
+      sb.append(ATTR_SEPARATOR+"footerInstructions=null");      
+      
     List modules = getModules();
     if(modules!=null) 
     {      

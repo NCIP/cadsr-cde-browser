@@ -12,8 +12,8 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String CONTEXT_ID_SEQ = "contextIdSeq";
   public static final String CONTEXT_NAME = "contextName";
   public static final String WORKFLOW = "workflow";
-  public static final String FORM_HEADER = "formHeader";
-  public static final String FORM_FOOTER = "formFooter";
+  public static final String FORM_HEADER_INSTRUCTION = "formHeaderInstruction";
+  public static final String FORM_FOOTER_INSTRUCTION = "formFooterInstruction";
   public static final String FORM_PROTOCOL_ID_SEQ = "formProtocolIdseq";
   public static final String FORM_PROTOCOL_NAME = "formProtocolName";
   public static final String LONG_NAME = "longName";
@@ -36,8 +36,8 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String CHANGED_FORM_UPDATED_MODULES = "gotoEdit";
   public static final String CHANGED_FORM_DELETED_MODULES = "gotoEdit";
   public static final String MODULE_LONG_NAME = "moduleLongName";
-  public static final String MODULE_INSTRUCTION_LONG_NAME =
-    "moduleInstructionLongName";
+ // public static final String MODULE_INSTRUCTION_LONG_NAME =
+   // "moduleInstructionLongName";
   public static final String CLONED_CRF = "clonedCrf";
   public static final String MODULE = "eModule";
   public static final String CLONED_MODULE = "clonedModule";
@@ -69,6 +69,9 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String QUESTION_ID_SEQ = "questionIdSeq";
   public static final String QUESTION_INDEX = "questionIndex";
   public static final String MODULE_QUESTIONS = "moduleQuestions";
+  public static final String MODULE_INSTRUCTION = "moduleInstruction";  
+  public static final String QUESTION_INSTRUCTIONS = "questionInstructions";
+  public static final String FORM_VALID_VALUE_INSTRUCTIONS = "formsValidValueInstructions";
   public static final String DELETED_QUESTIONS = "deletedQuestions";
   public static final String ADD_DELETED_QUESTION_IDSEQ =
     "addDeletedQuestionIdSeq";

@@ -4,9 +4,9 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
-import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
+import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
-import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
 import java.util.Collection;
@@ -21,12 +21,13 @@ public interface FormBuilderServiceDelegate {
     public Form getFormDetails(String formPK) throws FormBuilderException;
 
     public Form updateForm(String formIdSeq, Form formHeader, Collection updatedModules,
-        Collection deletedModules,Collection addedModules) throws FormBuilderException;
+        Collection deletedModules,Collection addedModules
+         ,InstructionChanges instructionChanges) throws FormBuilderException;
 
     public Module updateModule(String moduleIdSeq, Module moduleHeader,
         Collection updatedQuestions, Collection deletedQuestions,
         Collection newQuestions, Map updatedValidValues, Map addedValidValues,
-        Map deletedValidValues) throws FormBuilderException;
+        Map deletedValidValues,InstructionChanges instructionChanges) throws FormBuilderException;
 
     public Form getFormRow(String formPK) throws FormBuilderException;
 
@@ -38,7 +39,7 @@ public interface FormBuilderServiceDelegate {
     public int deleteForm(String formPK) throws FormBuilderException;
 
     public String createModule(Module module,
-        ModuleInstruction moduleInstruction) throws FormBuilderException;
+        Instruction moduleInstruction) throws FormBuilderException;
 
     public int removeModule(String formPK, String modulePK)
         throws FormBuilderException;
@@ -93,7 +94,7 @@ public interface FormBuilderServiceDelegate {
     public Collection retrieveFormClassifications(String acId)
         throws FormBuilderException;
 
-    public Form createForm(Form form, FormInstruction formHeaderInstruction,
-        FormInstruction formFooterInstruction)
+    public Form createForm(Form form, Instruction formHeaderInstruction,
+        Instruction formFooterInstruction)
         throws FormBuilderException;
 }

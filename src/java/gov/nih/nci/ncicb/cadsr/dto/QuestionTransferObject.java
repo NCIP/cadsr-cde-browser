@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 
@@ -25,7 +26,7 @@ public class QuestionTransferObject extends AdminComponentTransferObject
   protected int displayOrder;
   protected String deIdseq;
   protected DataElement dataElement;
-  protected Collection instructions = null;
+  protected List instructions = null;
 
   public QuestionTransferObject() {
     idseq = quesIdseq;
@@ -79,11 +80,31 @@ public class QuestionTransferObject extends AdminComponentTransferObject
     this.dataElement = dataElement;
   }
   
-  public Collection getInstructions()
+  public Instruction getInstruction()
+  {
+    if(instructions!=null&&!instructions.isEmpty())
+      return (Instruction)instructions.get(0);
+    else
+      return null;
+  }
+  public void setInstruction(Instruction newInstruction)
+  {
+    if(newInstruction!=null)
+    {
+    instructions= new ArrayList();
+    instructions.add(newInstruction);      
+    }
+    else
+    {
+      instructions=null;
+    }
+  }
+  
+  public List getInstructions()
   {
     return instructions;
   }
-  public void setInstructions(Collection newInstructions)
+  public void setInstructions(List newInstructions)
   {
     instructions=newInstructions;
   }
@@ -130,7 +151,21 @@ public class QuestionTransferObject extends AdminComponentTransferObject
        copy.setValidValues(validValuesCopy);
        copy.setForm(null);
        copy.setModule(null);
-     }     
+     }  
+     
+     if(getInstructions()!=null)
+     {
+       List instructionsCopy = new ArrayList();
+       ListIterator it = getInstructions().listIterator();
+       while(it.hasNext())
+       {
+         Instruction instr = (Instruction)it.next();
+         Instruction instrClone = (Instruction)instr.clone(); 
+         instructionsCopy.add(instrClone);
+       }
+       copy.setInstructions(instructionsCopy);
+     } 
+     
       return copy;
   }
   public String toString() {
@@ -140,6 +175,11 @@ public class QuestionTransferObject extends AdminComponentTransferObject
     sb.append(ATTR_SEPARATOR + "quesIdseq=" + getQuesIdseq(),getQuesIdseq());
     sb.append(ATTR_SEPARATOR + "displayOrder=" + getDisplayOrder());
 
+    if(instructions!=null)
+      sb.append(ATTR_SEPARATOR+"Instructions="+instructions);
+    else
+      sb.append(ATTR_SEPARATOR+"instructions=null");
+         
     List validValues = getValidValues();
 
     if (validValues != null) {

@@ -17,8 +17,8 @@
       <form-property name="gotoEdit" type="java.lang.Boolean"/>
       <form-property name="formVersion" type="java.lang.Float"/>
       <form-property name="formComments" type="java.lang.String"/>
-      <form-property name="formHeader" type="java.lang.String"/>
-      <form-property name="formFooter" type="java.lang.String"/>      
+      <form-property name="formHeaderInstruction" type="java.lang.String"/>
+      <form-property name="formFooterInstruction" type="java.lang.String"/>   
     </form-bean>
   </form-beans>
   

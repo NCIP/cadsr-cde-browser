@@ -46,6 +46,8 @@
       <form-property name="protocolLongName" type="java.lang.String"/>
       <form-property name="workflow" type="java.lang.String"/>      
       <form-property name="formType" type="java.lang.String"/>
+      <form-property name="formHeaderInstruction" type="java.lang.String"/>
+      <form-property name="formFooterInstruction" type="java.lang.String"/>
       <form-property name="moduleIdSeq" type="java.lang.String"/>
       <form-property name="addDeletedModuleIdSeq" type="java.lang.String"/>
       <form-property name="moduleIndex" type="java.lang.Integer"/>
@@ -54,13 +56,15 @@
     <form-bean name="moduleEditForm" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean" dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="moduleLongName" type="java.lang.String"/>
-      <form-property name="moduleInstructionLongName" type="java.lang.String"/>
+      <form-property name="moduleInstruction" type="java.lang.String"/>
       <form-property name="moduleIndex" type="java.lang.Integer"/>
       <form-property name="questionLongName" type="java.lang.String"/>
       <form-property name="questionIdSeq" type="java.lang.String"/>
       <form-property name="questionIndex" type="java.lang.Integer"/>
       <form-property name="questionOption" type="java.lang.String"/>  
-      <form-property name="moduleQuestions" type="java.lang.String[]"/>    
+      <form-property name="moduleQuestions" type="java.lang.String[]"/>  
+      <form-property name="questionInstructions" type="java.lang.String[]"/>
+      <form-property name="formsValidValueInstructions" type="java.lang.String[]"/>            
       <form-property name="addDeletedQuestionIdSeq" type="java.lang.String"/>
       <form-property name="validValueIndex" type="java.lang.Integer"/>
       <form-property name="addAvailableValidValueIndex" type="java.lang.Integer"/> 

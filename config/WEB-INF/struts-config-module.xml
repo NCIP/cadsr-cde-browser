@@ -6,7 +6,7 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
       <form-property name="moduleLongName" type="java.lang.String"/>
-      <form-property name="moduleInstructionLongName" type="java.lang.String"/>
+      <form-property name="moduleInstruction" type="java.lang.String"/>
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="comments" type="java.lang.String"/>
       <form-property name="displayOrder" type="java.lang.Integer"/>

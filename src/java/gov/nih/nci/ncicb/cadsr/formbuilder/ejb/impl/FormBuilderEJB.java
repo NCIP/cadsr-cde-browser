@@ -15,18 +15,21 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormValidValueDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.FormValidValueInstructionDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.InstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
-import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Instruction;
+import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
-import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
@@ -109,12 +112,27 @@ public class FormBuilderEJB extends SessionBeanAdapter
     public Form getFormDetails(String formPK) {
         Form myForm = null;
         FormDAO fdao = daoFactory.getFormDAO();
+        FormInstructionDAO fInstrdao = daoFactory.getFormInstructionDAO();
+        
         ModuleDAO mdao = daoFactory.getModuleDAO();
+        ModuleInstructionDAO mInstrdao = daoFactory.getModuleInstructionDAO();
+        
         QuestionDAO qdao = daoFactory.getQuestionDAO();
+        QuestionInstructionDAO qInstrdao = daoFactory.getQuestionInstructionDAO();
+        
         FormValidValueDAO vdao = daoFactory.getFormValidValueDAO();
+        FormValidValueInstructionDAO vvInstrdao = daoFactory.getFormValidValueInstructionDAO();
+        
         myForm = getFormRow(formPK);
         List refDocs = fdao.getAllReferenceDocuments(formPK,myForm.REF_DOC_TYPE_IMAGE);
         myForm.setReferenceDocs(refDocs);
+        
+        List instructions = fInstrdao.getInstructions(formPK);
+        myForm.setInstructions(instructions);
+
+        List footerInstructions = fInstrdao.getFooterInstructions(formPK);
+        myForm.setFooterInstructions(footerInstructions);
+        
         List modules = (List) fdao.getModulesInAForm(formPK);
         Iterator mIter = modules.iterator();
         List questions;
@@ -129,15 +147,32 @@ public class FormBuilderEJB extends SessionBeanAdapter
             block = (Module) mIter.next();
 
             String moduleId = block.getModuleIdseq();
-            questions = (List) mdao.getQuestionsInAModule(moduleId);
+            
+            List mInstructions = mInstrdao.getInstructions(moduleId);
+            block.setInstructions(mInstructions);
+        
+            questions = (List) mdao.getQuestionsInAModule(moduleId);            
             qIter = questions.iterator();
 
             while (qIter.hasNext()) {
                 term = (Question) qIter.next();
 
                 String termId = term.getQuesIdseq();
+                
+                List qInstructions = qInstrdao.getInstructions(termId);
+                term.setInstructions(qInstructions);   
+                
                 values = (List) qdao.getValidValues(termId);
                 term.setValidValues(values);
+                
+                vIter = values.iterator();
+                while(vIter.hasNext())
+                {
+                  FormValidValue vv = (FormValidValue)vIter.next();
+                  String vvId = vv.getIdseq();
+                  List vvInstructions = vvInstrdao.getInstructions(vvId);
+                  vv.setInstructions(vvInstructions);                     
+                }
             }
 
             block.setQuestions(questions);
@@ -153,17 +188,27 @@ public class FormBuilderEJB extends SessionBeanAdapter
     ModuleDAO mdao = daoFactory.getModuleDAO();
     QuestionDAO qdao = daoFactory.getQuestionDAO();
     FormValidValueDAO vdao = daoFactory.getFormValidValueDAO();
-
+    ModuleInstructionDAO moduleInstrDao = daoFactory.getModuleInstructionDAO();
+    QuestionInstructionDAO questionInstrDao = daoFactory.getQuestionInstructionDAO();
+    FormValidValueInstructionDAO valueValueInstrDao = daoFactory.getFormValidValueInstructionDAO();
+    
     Module module = mdao.findModuleByPrimaryKey(modulePK);
+    module.setInstructions(moduleInstrDao.getInstructions(modulePK));
     List questions = (List) mdao.getQuestionsInAModule(modulePK);
     Iterator qIter = questions.iterator();
     Question term =null;
 
     while (qIter.hasNext()) {
         term = (Question) qIter.next();
-        String termId = term.getQuesIdseq();
+        String termId = term.getQuesIdseq();        
+        term.setInstructions(questionInstrDao.getInstructions(termId));
         List values = (List) qdao.getValidValues(termId);
         term.setValidValues(values);
+        Iterator vvIter = values.iterator();
+        while (vvIter.hasNext()) {      
+          FormValidValue vv = (FormValidValue) vvIter.next();
+          vv.setInstructions(valueValueInstrDao.getInstructions(vv.getValueIdseq()));
+        }
       }
 
     module.setQuestions(questions);
@@ -178,18 +223,51 @@ public class FormBuilderEJB extends SessionBeanAdapter
        Collection newQuestions,
        Map updatedValidValues,
        Map addedValidValues,
-       Map deletedValidValues)
+       Map deletedValidValues,
+       InstructionChanges instructionChanges)
        {
          ModuleDAO moduleDao = daoFactory.getModuleDAO();
          QuestionDAO questionDao = daoFactory.getQuestionDAO();
          FormValidValueDAO formValidValueDao = daoFactory.getFormValidValueDAO();
-
+         ModuleInstructionDAO moduleInstrDao= daoFactory.getModuleInstructionDAO();
+         QuestionInstructionDAO questionInstrDao= daoFactory.getQuestionInstructionDAO();
+         FormValidValueInstructionDAO validValueInstrDao= daoFactory.getFormValidValueInstructionDAO();
          if(moduleHeader!=null)
          {
            moduleHeader.setModifiedBy(getUserName());
            moduleDao.updateModuleComponent(moduleHeader);
          }
-
+         //make module instruction changes
+         if(instructionChanges!=null&&
+            instructionChanges.getModuleInstructionChanges()!=null)
+             {
+               Map changesMap = instructionChanges.getModuleInstructionChanges();
+               if(!changesMap.isEmpty())
+               {
+                 makeInstructionChanges(moduleInstrDao,changesMap);
+               }
+             }
+         //make Question instruction changes
+         if(instructionChanges!=null&&
+            instructionChanges.getQuestionInstructionChanges()!=null)
+             {
+               Map changesMap = instructionChanges.getQuestionInstructionChanges();
+               if(!changesMap.isEmpty())
+               {
+                 makeInstructionChanges(questionInstrDao,changesMap);
+               }
+             }
+         //make ValidValues instruction changes
+         if(instructionChanges!=null&&
+            instructionChanges.getValidValueInstructionChanges()!=null)
+             {
+               Map changesMap = instructionChanges.getValidValueInstructionChanges();
+               if(!changesMap.isEmpty())
+               {
+                 makeInstructionChanges(validValueInstrDao,changesMap);
+               }
+             }             
+             
          if(updatedQuestions!=null&&!updatedQuestions.isEmpty())
          {
            Iterator updatedIt = updatedQuestions.iterator();
@@ -285,9 +363,12 @@ public class FormBuilderEJB extends SessionBeanAdapter
     Form formHeader,
     Collection updatedModules,
     Collection deletedModules,
-    Collection addedModules) {
+    Collection addedModules,InstructionChanges instructionChanges) {
     ModuleDAO dao = daoFactory.getModuleDAO();
     FormDAO formdao = daoFactory.getFormDAO();
+    FormInstructionDAO formInstrdao = daoFactory.getFormInstructionDAO();
+    ModuleInstructionDAO moduleInstrdao = daoFactory.getModuleInstructionDAO();
+    
    if(formHeader!=null)
    {
      formdao.updateFormComponent(formHeader);
@@ -297,7 +378,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
       while (addedIt.hasNext()) {
         Module addedModule = (Module) addedIt.next();
-        dao.createModuleComponent(addedModule);
+        String newModIdseq = dao.createModuleComponent(addedModule);
+        Instruction instr = addedModule.getInstruction();
+        if(instr!=null)
+          moduleInstrdao.createInstruction(instr,newModIdseq);
       }
     }   
     if ((updatedModules != null) && !updatedModules.isEmpty()) {
@@ -319,7 +403,11 @@ public class FormBuilderEJB extends SessionBeanAdapter
         dao.deleteModule(deletedModule.getModuleIdseq());
       }
     }
-
+    //Update Instructions
+    
+    makeInstructionChanges(formInstrdao,instructionChanges.getFormHeaderInstructionChanges());  
+    makeFooterInstructionChanges(formInstrdao,instructionChanges.getFormFooterInstructionChanges());
+    
     return getFormDetails(formIdSeq);
   }
 
@@ -343,7 +431,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     /**
     * @inheritDoc
     */
-    public String createModule(Module module, ModuleInstruction modInstruction) {
+    public String createModule(Module module, Instruction modInstruction) {
         ModuleDAO mdao = daoFactory.getModuleDAO();
         module.setContext(module.getForm().getContext());
 
@@ -353,12 +441,11 @@ public class FormBuilderEJB extends SessionBeanAdapter
         String modulePK = mdao.createModuleComponent(module);
         module.setModuleIdseq(modulePK);
 
-        modInstruction.setModule(module);
         modInstruction.setContext(module.getForm().getContext());
         modInstruction.setPreferredDefinition(modInstruction.getLongName());
 
         ModuleInstructionDAO midao = daoFactory.getModuleInstructionDAO();
-        midao.createModuleInstructionComponent(modInstruction);
+        midao.createInstruction(modInstruction,modulePK);
 
         return modulePK;
     }
@@ -513,27 +600,105 @@ public class FormBuilderEJB extends SessionBeanAdapter
         return myDAO.retrieveClassifications(acId);
     }
 
-    public Form createForm(Form form, FormInstruction formHeaderInstruction,
-        FormInstruction formFooterInstruction) {
+    public Form createForm(Form form, Instruction formHeaderInstruction,
+        Instruction formFooterInstruction) {
         FormDAO fdao = daoFactory.getFormDAO();
         String newFormIdseq = fdao.createFormComponent(form);
-        Form insertedForm = this.getFormDetails(newFormIdseq);
+        
 
         if (formHeaderInstruction != null)
         {
           FormInstructionDAO fidao1 = daoFactory.getFormInstructionDAO();
-          formHeaderInstruction.setForm(insertedForm);
-          fidao1.createFormInstructionComponent(formHeaderInstruction);
+          fidao1.createInstruction(formHeaderInstruction,newFormIdseq);
         }
 
         if (formFooterInstruction != null)
         {
           FormInstructionDAO fidao2 = daoFactory.getFormInstructionDAO();
-          formFooterInstruction.setForm(insertedForm);
-          fidao2.createFormInstructionComponent(formFooterInstruction);
+          fidao2.createFooterInstruction(formFooterInstruction,newFormIdseq);
         }
-
+       Form insertedForm = this.getFormDetails(newFormIdseq);
         return insertedForm;
 
     }
+    
+  private void makeInstructionChanges(InstructionDAO dao, Map changesMap)
+  {
+    //Create new ones
+    Map newInstrs = (Map)changesMap.get(InstructionChanges.NEW_INSTRUCTION_MAP);
+    if(newInstrs!=null&&!newInstrs.isEmpty())
+    {
+           Set keySet = newInstrs.keySet();
+           Iterator keyIt = keySet.iterator();
+           while(keyIt.hasNext())
+           {
+             String parentIdSeq = (String)keyIt.next();
+             Instruction instr = (Instruction)newInstrs.get(parentIdSeq);
+             instr.setCreatedBy(getUserName());
+             dao.createInstruction(instr,parentIdSeq);
+           }      
+    }
+    //update
+    List updatedInstrs = (List)changesMap.get(InstructionChanges.UPDATED_INSTRUCTIONS);
+    if(updatedInstrs!=null&&!updatedInstrs.isEmpty())
+    {
+           ListIterator updatedInstrIt = updatedInstrs.listIterator();
+           while(updatedInstrIt.hasNext())
+           {
+             Instruction instr = (Instruction)updatedInstrIt.next();
+             dao.updateInstruction(instr);
+           }      
+    }
+    //delete
+    List deleteInstrs = (List)changesMap.get(InstructionChanges.DELETED_INSTRUCTIONS);
+    if(deleteInstrs!=null&&!deleteInstrs.isEmpty())
+    {
+           ListIterator deleteInstrIt = deleteInstrs.listIterator();
+           while(deleteInstrIt.hasNext())
+           {
+             Instruction instr = (Instruction)deleteInstrIt.next();
+             dao.deleteInstruction(instr.getIdseq());
+           }        
+    }    
+  }
+  
+  private void makeFooterInstructionChanges(FormInstructionDAO dao, Map changesMap)
+  {
+    //Create new ones
+    Map newInstrs = (Map)changesMap.get(InstructionChanges.NEW_INSTRUCTION_MAP);
+    if(newInstrs!=null&&!newInstrs.isEmpty())
+    {
+           Set keySet = newInstrs.keySet();
+           Iterator keyIt = keySet.iterator();
+           while(keyIt.hasNext())
+           {
+             String parentIdSeq = (String)keyIt.next();
+             Instruction instr = (Instruction)newInstrs.get(parentIdSeq);
+             instr.setCreatedBy(getUserName());
+             dao.createFooterInstruction(instr,parentIdSeq);
+           }      
+    }
+    //update
+    List updatedInstrs = (List)changesMap.get(InstructionChanges.UPDATED_INSTRUCTIONS);
+    if(updatedInstrs!=null&&!updatedInstrs.isEmpty())
+    {
+           ListIterator updatedInstrIt = updatedInstrs.listIterator();
+           while(updatedInstrIt.hasNext())
+           {
+             Instruction instr = (Instruction)updatedInstrIt.next();
+             dao.updateInstruction(instr);
+           }      
+    }
+    //delete
+    List deleteInstrs = (List)changesMap.get(InstructionChanges.DELETED_INSTRUCTIONS);
+    if(deleteInstrs!=null&&!deleteInstrs.isEmpty())
+    {
+           ListIterator deleteInstrIt = deleteInstrs.listIterator();
+           while(deleteInstrIt.hasNext())
+           {
+             Instruction instr = (Instruction)deleteInstrIt.next();
+             dao.deleteInstruction(instr.getIdseq());
+           }        
+    }    
+  }  
 }
