@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.10 2005-02-21 23:36:24 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.11 2005-02-24 20:57:25 jiangja Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -409,9 +409,15 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
            sortOrder = Integer.valueOf(getStringInfo("sortOrder")).intValue();
         
         SortableColumnHeader sortColumnHeader = queryBuilder.getSortColumnHeader();
-        
+        //release 3.0, TT#1280, once user click on column header, the default
+        // sort order will be wiped out
         if ( !sortField.equalsIgnoreCase(sortColumnHeader.getPrimary())||sortColumnHeader.isDefaultOrder()) {
            
+        if (sortColumnHeader.isDefaultOrder()) {
+           sortColumnHeader.setPrimary(sortField);
+           sortColumnHeader.setSecondary(null);
+           sortColumnHeader.setTertiary(null);
+        } else {
            if(!sortField.equalsIgnoreCase(sortColumnHeader.getPrimary()))
            {
              String secondary = sortColumnHeader.getSecondary();
@@ -430,7 +436,9 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
            {
              sortColumnHeader.setTertiary(null);
            }
-           sortColumnHeader.setDefaultOrder(false);
+        }
+        
+        sortColumnHeader.setDefaultOrder(false);
         }
         sortColumnHeader.setOrder(sortOrder);
        

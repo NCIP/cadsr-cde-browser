@@ -619,11 +619,11 @@ public class DESearchQueryBuilder extends Object {
     if (sortColumnHeader.getOrder() == SortableColumnHeader.DESCENDING)
        sortOrder = " DESC";
     StringBuffer sb = new StringBuffer();
-    sb = sb.append(sortColumnHeader.getPrimary() +  sortOrder);
+    sb = sb.append("upper(" + sortColumnHeader.getPrimary()+ ")" +  sortOrder);
     if(sortColumnHeader.getSecondary()!=null&&!sortColumnHeader.getSecondary().equalsIgnoreCase(""))
-      sb.append("," + sortColumnHeader.getSecondary()+ sortOrder);
+      sb.append("," + "upper(" + sortColumnHeader.getSecondary()+ ")"+ sortOrder);
     if(sortColumnHeader.getTertiary()!=null&&!sortColumnHeader.getTertiary().equalsIgnoreCase(""))
-      sb.append("," + sortColumnHeader.getTertiary()+ sortOrder);
+      sb.append("," + "upper("+ sortColumnHeader.getTertiary()+ ")"+ sortOrder);
     return sb.toString();
   }
 
