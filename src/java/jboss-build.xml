@@ -250,23 +250,7 @@
   <!-- =========== END COMMON JAR PROCESS ======================= -->    
   
   <!-- =========== DEV CONFIG ======================= -->
-    <target name="dev_config" depends="init">    
-     <copy todir="${classes.build.dir}/META-INF">      
-         <fileset dir="${config.home}/connections">
-           <patternset>
-             <include name="data-sources.xml"/>
-           </patternset>
-         </fileset>      
-      </copy>   
-      <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
-           <fileset dir="${config.home}/META-INF">
-             <patternset>
-               <include name="application.xml"/>
-               <include name="orion-application.xml"/>
-               <include name="principals.xml"/>                 
-             </patternset>
-           </fileset>      
-        </copy>       
+    <target name="dev_config" depends="init">          
      <copy todir="${classes.build.dir}/WEB-INF/classes">
          <fileset dir="${config.home}/properties">
            <patternset>
@@ -379,14 +363,7 @@
              <include name="cdebrowser.properties"/>
            </patternset>
          </fileset>
-      </copy>   
-     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
-         <fileset dir="${config.prod}/properties">
-           <patternset>
-             <include name="log4j.properties"/>
-           </patternset>
-         </fileset>
-      </copy>         
+      </copy>            
     </target>
   <!-- =========== END PROD CONFIG ======================= -->  
   
@@ -394,20 +371,7 @@
     
     <target name="opensource_config" depends="init,dev_config">    
       <delete file="${classes.build.dir}/META-INF/data-sources.xml" failonerror="false"/>
-       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
-           <fileset dir="${config.opensource}/META-INF">
-             <patternset>
-               <include name="orion-application.xml"/>
-             </patternset>
-           </fileset>      
-        </copy>       
-       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
-           <fileset dir="${config.opensource}/connections">
-             <patternset>
-               <include name="data-sources.xml"/>
-             </patternset>
-           </fileset>      
-        </copy>         
+         
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
          <fileset dir="${config.opensource}/connections">
            <patternset>
@@ -416,19 +380,13 @@
          </fileset>
       </copy>   
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.opensource}/properties">
+         <fileset dir="${config.opensource}/properties/jboss">
            <patternset>
              <include name="cdebrowser.properties"/>
            </patternset>
          </fileset>
       </copy>   
-     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
-         <fileset dir="${config.opensource}/properties">
-           <patternset>
-             <include name="log4j.properties"/>
-           </patternset>
-         </fileset>
-      </copy>         
+       
     </target>
   <!-- =========== END OpenSource CONFIG ======================= -->  
   
@@ -499,7 +457,6 @@
           <include name="WEB-INF/*.tld"/>
           <include name="WEB-INF/struts-config*.xml"/>
           <include name="WEB-INF/validat*.xml"/>
-          <include name="WEB-INF/orion-web.xml"/>
           <include name="WEB-INF/jboss-web.xml"/>
         </patternset>
       </fileset>
@@ -596,7 +553,6 @@
          <fileset dir="${config.home}/ejb">
            <patternset>
             <include name="ejb-jar.xml"/> 
-            <include name="orion-ejb-jar.xml"/>
             <include name="jboss.xml"/>
            </patternset>
          </fileset>      
@@ -610,7 +566,6 @@
               </patternset>
             </fileset>          
 	    <fileset dir="${classes.build.dir}/ejb" includes="META-INF/ejb-jar.xml"/>
-	    <fileset dir="${classes.build.dir}/ejb" includes="META-INF/orion-ejb-jar.xml"/>
             <fileset dir="${classes.build.dir}/ejb" includes="META-INF/jboss.xml"/>
             <manifest>
                <attribute name="Built-By" value="${user.name}"/>
@@ -647,13 +602,6 @@
           </patternset>
         </fileset>
         
-        <fileset dir="${classes.build.dir}">
-          <patternset>
-             <include name="META-INF/data-sources.xml"/>
-             <include name="META-INF/orion-application.xml"/>
-             <include name="META-INF/principals.xml"/>             
-          </patternset>
-        </fileset>
         
         <patternset>
           <exclude name="*.*"/>
