@@ -6,8 +6,8 @@
             </a>
           </td>           
           <td >
-            <a href="javascript:clearForm()">
-              <html:img src='<%=urlPrefix+"i/clear.gif"%>' border="0" alt="Clear All"/>
+            <a href="javascript:resetForm()">
+              <html:img src='<%=urlPrefix+"i/reset.gif"%>' border="0" alt="Reset"/>
             </a>
           </td>                
           <td >
