@@ -30,6 +30,7 @@
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
 
+    <%@ include file="showMessages.jsp"%>
 
     <logic:present name="<%=FormConstants.CRF%>">
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
