@@ -235,10 +235,10 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
 
       if (!protocol.equals("")) {
         if (hasWhere) {
-          whereBuffer.append(" AND PTOTO_IDSEQ ='" + protocol + "'");
+          whereBuffer.append(" AND PROTO_IDSEQ ='" + protocol + "'");
         }
         else {
-          whereBuffer.append(" WHERE PTOTO_IDSEQ ='" + protocol + "'");
+          whereBuffer.append(" WHERE PROTO_IDSEQ ='" + protocol + "'");
           hasWhere = true;
         }
       }
