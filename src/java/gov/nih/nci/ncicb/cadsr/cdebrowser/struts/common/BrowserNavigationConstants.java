@@ -11,6 +11,7 @@ public interface  BrowserNavigationConstants
   public static final String DONE_CDE_COMPARE="doneCDECompare";
   public static final String CHANGE_COMPARE_ORDER="changeCompareOrder";
   
+  public static final String CHANGE_SCREEN_TYPE="changeScreenType";
   
   
 }

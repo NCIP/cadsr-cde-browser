@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.4 2004-12-08 02:02:26 kakkodis Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.5 2004-12-10 03:53:21 kakkodis Exp $
  */
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
@@ -50,8 +50,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 
-public class CompareCDEAction extends FormBuilderBaseDispatchAction implements BrowserFormConstants 
-              ,BrowserNavigationConstants{
+public class CompareCDEAction extends BrowserBaseDispatchAction {
   /**
    * Displays CDE Cart.
    *

@@ -34,6 +34,7 @@ public class DataElementSearchBean extends Object {
   private StringBuffer searchInList;
   private String validValue;
   private String altName;
+  private String publicIdInd;
 
   public DataElementSearchBean(
     HttpServletRequest request,
@@ -56,6 +57,7 @@ public class DataElementSearchBean extends Object {
     contextUse = request.getParameter("contextUse");
     validValue = request.getParameter("jspValidValue");
     altName = request.getParameter("jspAltName");
+    publicIdInd = request.getParameter("jspPublicIdInd");
 
     if (contextUse == null) {
       contextUse = "";
@@ -274,5 +276,15 @@ public class DataElementSearchBean extends Object {
   
   public String getAltName() {
     return StringUtils.replaceNull(altName);
+  }
+
+  public String getPublicIdInd()
+  {
+    return publicIdInd;
+  }
+
+  public void setPublicIdInd(String publicIdInd)
+  {
+    this.publicIdInd = publicIdInd;
   }
 }

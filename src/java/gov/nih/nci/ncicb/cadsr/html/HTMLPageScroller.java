@@ -105,4 +105,14 @@ public class HTMLPageScroller  {
    public void setContextPath(String contextPath) {
       this.contextPath = contextPath;
    }
+   public String getTotalRecordCount()
+   {
+     String sizeStr = "";
+     if(pageIterator!=null)
+     {
+     long size = pageIterator.getTotalRecordCount();
+      sizeStr = new Long(size).toString();
+     }
+     return sizeStr;
+   }
 }

@@ -1,24 +1,22 @@
-package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
+package gov.nih.nci.ncicb.cadsr.struts.common;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-import gov.nih.nci.ncicb.cadsr.resource.Context;
-import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
-import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
-import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
-import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory;
-import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceStartupException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
-import gov.nih.nci.ncicb.cadsr.resource.Form;
-import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
-import gov.nih.nci.ncicb.cadsr.struts.common.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -27,28 +25,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
-
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 
 /**
- * Base DispatchAction for all formbuilder DispatchActions
+ * Base DispatchAction for all  DispatchActions
  */
-public class FormBuilderBaseDispatchAction extends BaseDispatchAction
-   {
-  protected static Log log = LogFactory.getLog(FormBuilderBaseDispatchAction.class.getName());
+abstract public class BaseDispatchAction extends DispatchAction
+  implements FormConstants, NavigationConstants, PersistenceConstants,
+    FormBuilderConstants, CaDSRConstants {
+  protected static Log log = LogFactory.getLog(BaseDispatchAction.class.getName());
 
   /**
    * Retrieve an object from the application scope by its name. This is a
@@ -125,118 +111,8 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
     }
   }
 
-  /**
-   * Gets the ServiceDelegateFactory form the application scope and
-   * instantiates a FormBuilderServiceDelegate from the factory
-   *
-   * @return FormBuilderServiceDelegate
-   *
-   * @throws ServiceStartupException
-   */
-  protected FormBuilderServiceDelegate getFormBuilderService()
-    throws ServiceStartupException {
-    FormBuilderServiceDelegate svcDelegate = null;
-    ServiceDelegateFactory svcFactory =
-      (ServiceDelegateFactory) getApplicationObject(
-        FormBuilderConstants.SERVICE_DELEGATE_FACTORY_KEY);
-    //svcDelegate = svcFactory.createService();
-    svcDelegate = svcFactory.findService();
 
-    return svcDelegate;
-  }
 
-  /**
-   * Initializes the lookupvalues(contexts,categories,workflows into session)
-   *
-   * @return ActionForward
-   *
-   * @throws Exception
-   */
-  protected void setInitLookupValues(HttpServletRequest req) {
-    Object obj = getSessionObject(req, ALL_CONTEXTS);
-
-    if (obj == null) {
-      Collection contexts = getFormBuilderService().getAllContexts();
-      setSessionObject(req, ALL_CONTEXTS, contexts);
-    }
-
-    obj = getSessionObject(req, ALL_WORKFLOWS);
-
-    if (obj == null) {
-      Collection workflows =
-        getFormBuilderService().getStatusesForACType(FORM_ADMIN_COMPONENT_TYPE);
-      setSessionObject(req, ALL_WORKFLOWS, workflows);
-    }
-
-    obj = getSessionObject(req, ALL_FORM_CATEGORIES);
-
-    if (obj == null) {
-      Collection categories = getFormBuilderService().getAllFormCategories();
-      setSessionObject(req, ALL_FORM_CATEGORIES, categories);
-    }
-
-    obj = getSessionObject(req, ALL_FORM_TYPES);
-
-    if (obj == null) {
-      Collection types = Arrays.asList(FORM_TYPE_VALUES);
-      setSessionObject(req, ALL_FORM_TYPES, types);
-    }
-
-    obj = getSessionObject(req, USER_CONTEXTS);
-
-    if (obj == null) {
-      NCIUser nciUser = (NCIUser) getSessionObject(req, USER_KEY);
-      //Change order Context Admin Check
-      Collection contexts =nciUser.getContextsByRoleAccess(CDE_MANAGER);
-      setSessionObject(req, USER_CONTEXTS, contexts);
-    }
-   
-   //Set the forms to be cleared if logedout or syserror
-   setObjectsForClear(req.getSession(),"searchForm");
-   setObjectsForClear(req.getSession(),"moduleEditForm");
-   setObjectsForClear(req.getSession(),"formEditForm");
-
-  }
-
-  /**
-   * If a iconForm(DynaForm) exist then get the FormDetails for the formIdSeq
-   * is retrived.
-   *
-   * @param form The optional ActionForm bean for this request.
-   * @param request The HTTP Request we are processing.
-   */
-  protected Form setFormForAction(
-    ActionForm form,
-    HttpServletRequest request) throws FormBuilderException {
-    FormBuilderServiceDelegate service = getFormBuilderService();
-    DynaActionForm hrefCRFForm = (DynaActionForm) form;
-    Form crf = null;
-
-    String showCached = (String)request.getAttribute("showCached");
-
-    if(showCached!=null&&showCached.equalsIgnoreCase(CaDSRConstants.YES))
-    {
-      crf = (Form) getSessionObject(request, CRF);
-    }
-    else if (hrefCRFForm != null) {
-      String formIdSeq = (String) hrefCRFForm.get(FORM_ID_SEQ);
-      //Added to support tree
-      if ("".equals(formIdSeq)) {
-        formIdSeq = request.getParameter("P_IDSEQ");
-        hrefCRFForm.set(FORM_ID_SEQ,formIdSeq);
-      }
-      if ((formIdSeq != null) && (formIdSeq.length() > 0)) {
-        crf = service.getFormDetails(formIdSeq);
-        setSessionObject(request, CRF, crf);
-      }
-      else {
-        crf = (Form) getSessionObject(request, CRF);
-      }
-       // end of else
-    }
-
-    return crf;
-  }
 
   protected void saveError(
       String key,
@@ -269,7 +145,7 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
   }
 
   /**
-   * This Action forwards to the default formbuilder home.
+   * This Action forwards to the default  home.
    *
    * @param mapping The ActionMapping used to select this instance.
    * @param form The optional ActionForm bean for this request.
@@ -281,15 +157,7 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
    * @throws IOException
    * @throws ServletException
    */
-  public ActionForward sendHome(
-    ActionMapping mapping,
-    ActionForm form,
-    HttpServletRequest request,
-    HttpServletResponse response) throws IOException, ServletException {
-    setInitLookupValues(request);
-
-    return mapping.findForward(DEFAULT_HOME);
-  }
+   public ActionForward sendHome;
 
   /**
    * Sets default method name if no method is specified
