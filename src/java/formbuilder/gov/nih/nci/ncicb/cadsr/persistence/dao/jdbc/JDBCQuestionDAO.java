@@ -337,9 +337,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
    * @throws <b>DMLException</b>
    */
   public int updateQuestionLongNameDispOrderDeIdseq(
-    Question question, int newDispOrder) throws DMLException {
+    Question question) throws DMLException {
 
-    int res = updateDisplayOrder(question.getQuesIdseq(), newDispOrder);
+    int res = updateDisplayOrder(question.getQuesIdseq(), question.getDisplayOrder());
     if (res != 1) {
       throw new DMLException(
         "Did not succeed updating question's display order.");
