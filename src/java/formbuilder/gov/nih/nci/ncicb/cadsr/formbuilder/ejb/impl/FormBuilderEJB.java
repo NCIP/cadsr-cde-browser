@@ -2,22 +2,20 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.impl;
 
 import com.evermind.sql.OrionCMTDataSource;
 
-import gov.nih.nci.ncicb.cadsr.resource.CDECart;
-import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.ejb.common.SessionBeanAdapter;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service.FormBuilderServiceRemote;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.*;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.resource.*;
-import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 
 import java.rmi.RemoteException;
-import javax.ejb.EJBException;
-
 
 import java.sql.Connection;
 
@@ -26,6 +24,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
@@ -68,7 +67,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     String workflow,
     String categoryName,
     String type,
-    String classificationIdSeq)  {
+    String classificationIdSeq) {
     FormDAO dao = daoFactory.getFormDAO();
     Collection forms = null;
 
@@ -85,7 +84,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return forms;
   }
 
-  public Form getFormDetails(String formPK)  {
+  public Form getFormDetails(String formPK) {
     Form myForm = null;
     FormDAO fdao = daoFactory.getFormDAO();
     ModuleDAO mdao = daoFactory.getModuleDAO();
@@ -132,35 +131,32 @@ public class FormBuilderEJB extends SessionBeanAdapter
     Collection deletedModules) {
     ModuleDAO dao = daoFactory.getModuleDAO();
 
-      //TODO Update form header
-      
-      //Update Module Display Order If there are Modules to update
-      if(updatedModules!=null&&!updatedModules.isEmpty())
-      {
-        Iterator updatedIt = updatedModules.iterator();
-        while(updatedIt.hasNext())
-        {
-          Module updatedModule = (Module)updatedIt.next();
-          dao.updateDisplayOrder(updatedModule.getModuleIdseq()
-              ,updatedModule.getDisplayOrder());
-        }      
-      }
-  
-      //Delete Modules
-      if(deletedModules!=null&&!deletedModules.isEmpty())
-      {    
-        Iterator deletedIt = deletedModules.iterator();
-        while(deletedIt.hasNext())
-        {
-          Module deletedModule = (Module)deletedIt.next();
-          dao.deleteModule(deletedModule.getModuleIdseq());
-        }    
-      }
-      return getFormDetails(formHeader.getFormIdseq());
+    //TODO Update form header
+    //Update Module Display Order If there are Modules to update
+    if ((updatedModules != null) && !updatedModules.isEmpty()) {
+      Iterator updatedIt = updatedModules.iterator();
 
+      while (updatedIt.hasNext()) {
+        Module updatedModule = (Module) updatedIt.next();
+        dao.updateDisplayOrder(
+          updatedModule.getModuleIdseq(), updatedModule.getDisplayOrder());
+      }
+    }
+
+    //Delete Modules
+    if ((deletedModules != null) && !deletedModules.isEmpty()) {
+      Iterator deletedIt = deletedModules.iterator();
+
+      while (deletedIt.hasNext()) {
+        Module deletedModule = (Module) deletedIt.next();
+        dao.deleteModule(deletedModule.getModuleIdseq());
+      }
+    }
+
+    return getFormDetails(formHeader.getFormIdseq());
   }
 
-  public Form getFormRow(String formPK)  {
+  public Form getFormRow(String formPK) {
     FormDAO dao = daoFactory.getFormDAO();
 
     return dao.findFormByPrimaryKey(formPK);
@@ -170,8 +166,9 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return null;
   }
 
-  public int deleteForm(String formPK)  {
+  public int deleteForm(String formPK) {
     FormDAO fdao = daoFactory.getFormDAO();
+
     return fdao.deleteForm(formPK);
   }
 
@@ -204,99 +201,113 @@ public class FormBuilderEJB extends SessionBeanAdapter
     
   public int removeModule(
     String formPK,
-    String modulePK)  {
+    String modulePK) {
     return 0;
   }
 
   public Form copyModules(
     String formPK,
-    Collection modules)  {
+    Collection modules) {
     return null;
   }
 
   public Form createQuestions(
     String modulePK,
-    Collection questions)  {
+    Collection questions) {
     return null;
   }
 
   public Form removeQuestions(
     String modulePK,
-    Collection questions)  {
+    Collection questions) {
     return null;
   }
 
   public Form copyQuestions(
     String modulePK,
-    Collection questions)  {
+    Collection questions) {
     return null;
   }
 
   public Form createValidValues(
     String modulePK,
-    Collection validValues)  {
+    Collection validValues) {
     return null;
   }
 
   public Form removeValidValues(
     String modulePK,
-    Collection validValues)  {
+    Collection validValues) {
     return null;
   }
 
   public Form copyValidValues(
     String modulePK,
-    Collection validValues)  {
+    Collection validValues) {
     return null;
   }
 
-  public String getUserName() {
+  private String getUserName() {
     return context.getCallerPrincipal().getName();
   }
 
-  public Collection getAllContexts()  {
+  public Collection getAllContexts() {
     return daoFactory.getContextDAO().getAllContexts();
   }
 
-  public Collection getAllFormCategories()  {
+  public Collection getAllFormCategories() {
     return daoFactory.getFormCategoryDAO().getAllCategories();
   }
 
-  public Collection getStatusesForACType(String acType)
-     {
+  public Collection getStatusesForACType(String acType) {
     return daoFactory.getWorkFlowStatusDAO().getWorkFlowStatusesForACType(
       acType);
   }
 
   public boolean validateUser(
     String username,
-    String password)  {
+    String password) {
     return false;
   }
 
-  public CDECart retrieveCDECart()
-    throws DMLException {
-    String user = context.getCallerPrincipal().getName();
+  public CDECart retrieveCDECart() {
+    String user = getUserName();
     CDECartDAO myDAO = daoFactory.getCDECartDAO();
     CDECart cart = myDAO.findCDECart(user);
-    
+
     return cart;
   }
 
-  public int addToCDECart(CDECartItem item)
-    throws DMLException {
+  public int addToCDECart(Collection items) {
     String user = context.getCallerPrincipal().getName();
+    Iterator it = items.iterator();
+    CDECartItem item = null;
     CDECartDAO myDAO = daoFactory.getCDECartDAO();
-    item.setCreatedBy(user);
-    int ret = myDAO.insertCartItem(item);
-    return ret;
+    int count = 0;
+
+    while (it.hasNext()) {
+      item = (CDECartItem) it.next();
+      item.setCreatedBy(user);
+      myDAO.insertCartItem(item);
+      count++;
+    }
+
+    return count;
   }
 
-  public int removeFromCDECart(String itemId)
-    throws DMLException {
+  public int removeFromCDECart(Collection items) {
+    Iterator it = items.iterator();
+    String itemId = null;
     CDECartDAO myDAO = daoFactory.getCDECartDAO();
-    int ret = myDAO.deleteCartItem(itemId);
-    return ret;
+    int count = 0;
+
+    while (it.hasNext()) {
+      itemId = (String) it.next();
+      myDAO.deleteCartItem(itemId);
+      count++;
+    }
+
+    return count;
   }
 
   public Form copyForm(
@@ -313,6 +324,6 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
   /**
    * public Collection getContextsForUserAndRole( String username, String role)
-   *  { return null; }
+   * { return null; }
    */
 }

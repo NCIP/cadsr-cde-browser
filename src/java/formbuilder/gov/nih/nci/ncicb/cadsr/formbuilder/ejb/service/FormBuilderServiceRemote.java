@@ -99,17 +99,12 @@ public interface FormBuilderServiceRemote {
 
 
   public CDECart retrieveCDECart()
-    throws DMLException, RemoteException;
+    throws RemoteException;
 
-  public int addToCDECart(CDECartItem item)
-    throws DMLException, RemoteException;
+  public int addToCDECart(Collection items)
+    throws RemoteException;
 
-  public int removeFromCDECart(String itemId)
-    throws DMLException, RemoteException;
-
-  /**
-   * public Collection getContextsForUserAndRole( String username, String role)
-   * throws DMLException, RemoteException;
-   */
-
+  public int removeFromCDECart(Collection items)
+    throws RemoteException;
+  
 }
