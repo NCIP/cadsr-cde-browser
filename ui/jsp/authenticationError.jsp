@@ -61,18 +61,25 @@ if (parent.frames[1])
   </TR>
   </table>
   
-      <table width=100% Cellpadding=0 Cellspacing=0 border=0>
-      <tr><td>&nbsp;</td></tr>   
-      <tr><td>&nbsp;</td></tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr class="OraErrorText">
-          <td align="center" class="OraErrorText">Invalid username/password combination. <a href="LoginForm.jsp"> Retry Login </a>
-          </td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr><td class="OraErrorText"></td></tr>   
-      <tr><td>&nbsp;</td></tr>
-      </table>
+      <table>
+            <tr>
+              <td class="OraErrorHeader">
+              	Login Error <br><br>
+                <table width="80%" align="center">
+                  <tr align="center" >
+                     <td  align="left" class="OraErrorText" nowrap>
+                      <b>Invalid username/password combination. <a href="LoginForm.jsp"> Retry Login </a></b>
+                    </td>
+                  </tr>
+                  <tr align="center" >
+                   <td>
+                      &nbsp;
+                  </td>
+                 </tr>        
+                </table>
+              </td>
+            </tr>
+ </table>
 
 <TABLE width=100% cellspacing=0 cellpadding=0 border=0>
 <TR>
