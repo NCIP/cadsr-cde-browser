@@ -27,7 +27,8 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
    * @param <b>vdIdseqs</b> list of Value Domain Idseq.
    *
    * @return <b>Map</b> Map of Value Domain objects each having
-   *   list of Valid Value objects (key: vd idseq, value: vv list)
+   *   list of Valid Value objects (key: vd idseq, value: vv list).
+   *   For non-enummerated VD, vd_idseq with empty list of VV should be returned.
    *   
    */
   public Map getPermissibleValues(Collection vdIdseqs){
@@ -39,42 +40,49 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
     if (vdIdseqs.size() == 0) {
       return new HashMap();
     }
-    
+
 		Iterator vdIdseqIterator = vdIdseqs.iterator();
     String whereString = "";
-    
+    Map vvMap = new HashMap();
+
 		while(vdIdseqIterator.hasNext()) {
-      
+
+      // put every vd_idseq with empty list into the map
+      List vvList = new ArrayList();
+      String vdomainIdSeq = (String) vdIdseqIterator.next();
+      // vd_idseq is the key and vvList is the value (list of valid values)
+      vvMap.put(vdomainIdSeq, vvList);
+
       if (StringUtils.doesValueExist(whereString)){
-        whereString = whereString + " or VD_IDSEQ = '" + vdIdseqIterator.next() + "'";
+        whereString = whereString + " or VD_IDSEQ = '" + vdomainIdSeq + "'";
       }
       else {
-        whereString = whereString + " where VD_IDSEQ = '" + vdIdseqIterator.next() + "'";
+        whereString = whereString + " where VD_IDSEQ = '" + vdomainIdSeq + "'";
       }
 		}
 
-    PedrmissibleValueQuery query = new PedrmissibleValueQuery();
+    PermissibleValueQuery query = new PermissibleValueQuery(vvMap);
     query.setDataSource(getDataSource());
     query.setSql(whereString, "");
 
+    // query.execute returns map of n number of records retrieved from db
     query.execute();  
     Map records = query.getValidValueMap();
-    System.out.println(records);
     return records;
   }
 
   /**
-   * Inner class to get all valid values and it value domain
+   * Inner class to get all valid values for each value domain
    * 
    */
-  class PedrmissibleValueQuery extends MappingSqlQuery {
+  class PermissibleValueQuery extends MappingSqlQuery {
   
     // vd_idseq is the key and vvList is the value (list of valid values)
     private Map vvMap = null;
     
-    PedrmissibleValueQuery() {
+    PermissibleValueQuery(Map vvvMap) {
       super();
-      vvMap = new HashMap();
+      this.vvMap = vvvMap;
     }
 
     public void setSql(String whereString, String dummy) {
@@ -89,25 +97,18 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
       ResultSet rs,
       int rownum) throws SQLException {
 
+      // reaches to this point for each record retrieved.
       String vdomainIdSeq = rs.getString(1);  // VD_IDSEQ
       
       ValidValueTransferObject vvto = new ValidValueTransferObject();
       vvto.setShortMeaningValue(rs.getString(3)); // PV_VALUE
       vvto.setShortMeaning(rs.getString(4));  // PV_SHORT_MEANING
       vvto.setShortMeaningDescription(rs.getString(5)); // PV_MEANING_DESCRIPTION
-
-      /*if (vvMap == null) {
-        vvMap = new HashMap();
-      }*/
+      vvto.setVpIdseq(rs.getString(6)); //VP_IDSEQ
+      
       List vvList = (List) vvMap.get(vdomainIdSeq);
-      if (vvList != null) {
-        vvList.add(vvto);
-      }
-      else {
-        List newVvList = new ArrayList();
-        newVvList.add(vvto);
-        vvMap.put(vdomainIdSeq, newVvList);
-      }
+      vvList.add(vvto);
+      vvMap.put(vdomainIdSeq, vvList);
       return vvMap;
     }
   }
@@ -117,12 +118,15 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
 
     JDBCValueDomainDAO vdTest = new JDBCValueDomainDAO(locator);
     Collection vdIdseqList = new ArrayList();
-    //vdIdseqList.add("29A8FB24-0AB1-11D6-A42F-0010A4C1E842");
+    vdIdseqList.add("29A8FB24-0AB1-11D6-A42F-0010A4C1E842");
     //vdIdseqList.add("99BA9DC8-209C-4E69-E034-080020C9C0E0");
+    // not existing vd_idseq
+    vdIdseqList.add("99BA9DC8-209C-4E69-E034-080020C9C0E"); 
 
     JDBCValueDomainDAO vddao = new JDBCValueDomainDAO(locator);
-    Map vdMap = vddao.getPermissibleValues(null);
-    //Map vdMap = vddao.getPermissibleValues(vdIdseqList);
+    //Map vdMap = vddao.getPermissibleValues(null);
+    Map vdMap = vddao.getPermissibleValues(vdIdseqList);
+    System.out.println(vdMap);
   }
 
 }
