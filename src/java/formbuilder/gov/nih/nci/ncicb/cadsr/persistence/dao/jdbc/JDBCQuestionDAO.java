@@ -77,11 +77,12 @@ public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
     Collection result = test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
 
     Iterator iterator = result.iterator(); 
+    /*
 		while(iterator.hasNext()) {
       System.out.println("Valid Value: " + 
         ((JDBCFormValidValueTransferObject)iterator.next()).toString());
     }
-
+    */
   }
 
   /**

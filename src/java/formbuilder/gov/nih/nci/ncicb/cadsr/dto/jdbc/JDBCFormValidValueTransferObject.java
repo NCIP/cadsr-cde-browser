@@ -12,9 +12,4 @@ public class JDBCFormValidValueTransferObject extends FormValidValueTransferObje
     setDisplayOrder(rs.getInt(14));     // DISPLAY_ORDER
   }
 
-  public String toString() 
-  {
-    return "valueIdseq = " + getValueIdseq() + ", longName = " + 
-      getLongName() + ", displayOrder = " + getDisplayOrder();
-  }
 }
