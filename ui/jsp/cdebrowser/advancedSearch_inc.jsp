@@ -207,6 +207,18 @@
                           <td width="30%" class="OraTableColumnHeaderNoBG" >Alternate Name    Type(s)</td>
                           <td width="70%" class="OraTabledata"><%=desb.getAltNameList()%></td>
                         </tr>               
+                        <tr >
+                         <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Object Class</td>
+                         <td width="70%" class="OraTabledata" nowrap>
+                           <input type="text" name="jspObjectClass" value="<%=desb.getObjectClass()%>" size ="20"> 
+                         </td>
+                        </tr>    
+                        <tr >
+                         <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Property</td>
+                         <td width="70%" class="OraTabledata" nowrap>
+                           <input type="text" name="jspProperty" value="<%=desb.getProperty()%>" size ="20"> 
+                         </td>
+                        </tr>    
                         </table>
                     </td>
                 </tr>

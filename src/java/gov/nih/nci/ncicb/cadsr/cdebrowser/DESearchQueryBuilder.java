@@ -95,6 +95,10 @@ public class DESearchQueryBuilder extends Object {
       String [] searchIn = request.getParameterValues("jspSearchIn");
       String validValue =
         StringUtils.replaceNull(request.getParameter("jspValidValue"));
+      String objectClass =
+        StringUtils.replaceNull(request.getParameter("jspObjectClass"));
+      String property =
+        StringUtils.replaceNull(request.getParameter("jspProperty"));
       boolean doStatusSearch = false;
       if (searchStr1 != null) {
         if (!StringUtils.containsKey(searchStr1,"ALL")) {
@@ -203,7 +207,10 @@ public class DESearchQueryBuilder extends Object {
       }
       // Check to see if a WHERE clause for concepts needs to be added
       String conceptWhere = this.buildConceptWhere(conceptName,conceptCode);
-      
+
+      // release 3.0, TT1235, 1236
+      // check to see if a Where clause for object class and property needs to be added
+      String deConceptWhere = this.buildDEConceptWhere(objectClass, property);
 
       whereBuffer.append(wkFlowWhere);
       whereBuffer.append(regStatusWhere);
@@ -216,6 +223,7 @@ public class DESearchQueryBuilder extends Object {
       whereBuffer.append(vvWhere);
       whereBuffer.append(altNameWhere);
       whereBuffer.append(conceptWhere);
+      whereBuffer.append(deConceptWhere);
     }
 
     if (treeConteIdSeq != null) {
@@ -899,6 +907,48 @@ public class DESearchQueryBuilder extends Object {
     return vvWhere;
 
   }
+  private String buildDEConceptWhere(String objectClass, String property) {
+  
+      if (objectClass.equals("") && property.equals("")) 
+        return "";
+        
+      String objectClassWhere = "";
+      String objectClassFrom = "";
+      String propertyFrom = "";
+      String propertyWhere = "";
+      
+      if (!"".equals(objectClass)) {
+        String newObjClass = StringReplace.strReplace(objectClass,"*","%");
+        newObjClass = StringReplace.strReplace(newObjClass,"'","''");
+        objectClassFrom = ", object_classes_ext oc ";
+        objectClassWhere = "oc.oc_idseq = dec.oc_idseq " +
+        " and upper(oc.LONG_NAME) like upper('" + newObjClass + "')";
+      }
+      
+      if (!"".equals(property)) {
+        String newSearchStr = StringReplace.strReplace(property,"*","%");
+        newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
+        propertyFrom = " , sbrext.properties_ext pc";
+        propertyWhere = " pc.PROP_IDSEQ = dec.PROP_IDSEQ " + 
+        "and upper(pc.LONG_NAME) like upper('" + newSearchStr + "')";
+        
+        if (!"".equals(objectClassWhere)) 
+          propertyWhere = " and " + propertyWhere;
+      }
+        
+    String deConceptWhere = "and  de.de_idseq IN ("
+                      +"select de_idseq "
+                      +"from   data_elements "
+                      +"where  dec_idseq IN (select dec.dec_idseq "
+					                                 +"from   data_element_concepts dec "
+                                           + objectClassFrom
+                                           + propertyFrom
+					                                 +" where  "
+					                                 + objectClassWhere 
+                                           + propertyWhere + "))";
+    return deConceptWhere;
+
+  }
 
     private String buildAltNamesWhere(String text, String[] altNameTypes) {
     String altWhere = "";
@@ -962,14 +1012,14 @@ public class DESearchQueryBuilder extends Object {
                       +"where  dec_idseq IN (select dec.dec_idseq "
 					                                 +"from   data_element_concepts dec, "
                                            +"       object_classes_ext oc "
-					                                 +"where  oc.oc_idseq = dec.oc_idseq "
+                                           +"where  oc.oc_idseq = dec.oc_idseq "
 					                                 +"and    oc.condr_idseq in(select cdr.condr_idseq "
 											                                              +"from   con_derivation_rules_ext cdr, "
                                                                     +"       component_concepts_ext cc "
 											                                              +"where  cdr.condr_idseq = cc.condr_idseq "
 											                                              +"and    cc.con_idseq in (select con_idseq "
 											                                                                      +"from   concepts_ext "
-																	                                                          +conceptNameWhere+conceptCodeWhere+")) "
+																	                                                          +conceptNameWhere+conceptCodeWhere+ ")) "
                                            +"UNION "
                                            +"select dec.dec_idseq "
                                            +"from   data_element_concepts dec, properties_ext pc "
