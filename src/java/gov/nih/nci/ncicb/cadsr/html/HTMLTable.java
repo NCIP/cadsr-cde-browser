@@ -1,9 +1,14 @@
 package gov.nih.nci.ncicb.cadsr.html;
 
-import javax.swing.table.TableModel;
 import java.lang.IllegalArgumentException;
 
+import javax.swing.table.TableModel;
+
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
 public class HTMLTable  {
+  private static Log log = LogFactory.getLog(HTMLTable.class.getName());
   protected int[] displayedColumns = null;
   protected String [] columnSizes = null;
   protected String [] columnHeaders = null;
@@ -23,7 +28,7 @@ public class HTMLTable  {
   
   public HTMLTable(TableModel table) {
     this.table = table;
-    System.out.println("Row count in html table is "+table.getRowCount());
+    log.trace("Row count in html table is "+table.getRowCount());
   }
 
   public void setDisplayedColumns(int[] dispColumns){
