@@ -102,7 +102,6 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
       String targetStr = "";
       if(target!=null)
         targetStr="target=\""+target+"\" ";        
-       if( nciUser.hasRoleAccess(role,userContext))
        if(hasPrivilege(role,nciUser,form))
         {
           out.print("<a href='"+getHrefUrl(req,form)+"'"+targetStr+"/><img src=\""+urlPrefix+activeImageSource+"\" border=0 alt='"+altMessage+"'></a>");
@@ -130,7 +129,7 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
      
     if(!workflowList.isEmpty())
     {
-      if(user.hasRoleAccess(userRole,userContext)&&workflowList.contains(form.getAslName()))
+      if(user.hasRoleAccess(userRole,userContext)&&!workflowList.contains(form.getAslName()))
       {
         return true;
       }

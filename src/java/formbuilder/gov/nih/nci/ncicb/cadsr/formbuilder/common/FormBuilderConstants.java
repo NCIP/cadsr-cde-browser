@@ -17,33 +17,14 @@ public interface FormBuilderConstants {
   //This provides the Workflows that can edited,deleted, and copied by cdemanager
   public static final String EDITABLE_WORKFLOW_STATUS_LIST="editableWorkflowStatusList";
   public static final String[] EDITABLE_WORKFLOW_STATUSES=
-                       {"CRF MATCH EXISTING","CRF NOT APPROVED","CRF RELOAD"
-                        ,"CRF TEMPLATE","DATA QUAL REV DONE"
-                        ,"EXACT MATCH","GRP REVIEW","NEW TERM SUBMTD"
-                        ,"NEW VERS SUBMTD","RECOMM TERM USED","RECOMMENDED TERM"};
+                       {"RELEASED"};
   public static final String DELETABLE_WORKFLOW_STATUS_LIST="deletableWorkflowStatusList";
   public static final String[] DELETABLE_WORKFLOW_STATUSES=
-                         {"CRF MATCH EXISTING","CRF NOT APPROVED","CRF RELOAD"
-                        ,"CRF TEMPLATE","DATA QUAL REV DONE"
-                        ,"EXACT MATCH","GRP REVIEW","NEW TERM SUBMTD"
-                        ,"NEW VERS SUBMTD","RECOMM TERM USED","RECOMMENDED TERM"};
+                         {"RELEASED"};;
   public static final String COPYABLE_WORKFLOW_STATUS_LIST="copyableWorkflowStatusList";
   public static final String[] COPYABLE_WORKFLOW_STATUSES=
-                         {"CRF MATCH EXISTING","CRF NOT APPROVED","CRF RELOAD"
-                        ,"CRF TEMPLATE","DATA QUAL REV DONE"
-                        ,"EXACT MATCH","GRP REVIEW","NEW TERM SUBMTD"
-                        ,"NEW VERS SUBMTD","RECOMM TERM USED","RECOMMENDED TERM"};
-
-  /**TODO - delete later skakkodi
-  public static final String[] EDITABLE_WORKFLOW_STATUSES=
-                       {"CRF GROUP RV DONE"};
-  public static final String DELETABLE_WORKFLOW_STATUS_LIST="deletableWorkflowStatusList";
-  public static final String[] DELETABLE_WORKFLOW_STATUSES=
-                         {"CRF DE TO GROUP"};
-  public static final String COPYABLE_WORKFLOW_STATUS_LIST="copyableWorkflowStatusList";
-  public static final String[] COPYABLE_WORKFLOW_STATUSES=
-                         {"PROTOCOL TO GRP REV"};
- **/                         
+                         {"RELEASED"};;
+                       
   public static final String ERROR_FORM_SAVE_FAILED="FB001";
   public static final String ERROR_FORM_SAVE_RETRIEVE="FB002";
   public static final String ERROR_FORM_DELETE_FAILED="FB002";
