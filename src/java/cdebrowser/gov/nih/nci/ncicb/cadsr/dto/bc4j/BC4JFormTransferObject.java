@@ -62,6 +62,10 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
     return null;
   }
 
+  public void setProtocol(Protocol protocol){
+  }
+  
+
   public List getModules() {
     return modules;
   }

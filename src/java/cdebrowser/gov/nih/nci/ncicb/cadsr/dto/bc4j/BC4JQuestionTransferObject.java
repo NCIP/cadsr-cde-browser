@@ -6,6 +6,8 @@ import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
+import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
 import java.io.Serializable;
 
@@ -16,14 +18,10 @@ import java.util.List;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public class BC4JQuestionTransferObject extends AdminComponentTransferObject
-  implements Question, Serializable {
-  private String quesIdseq;
-  private List validValues;
-  private int displayOrder;
-
+public class BC4JQuestionTransferObject extends QuestionTransferObject {
+  
   /**
    * Creates a new BC4JQuestionTransferObject object.
    *
@@ -33,7 +31,7 @@ public class BC4JQuestionTransferObject extends AdminComponentTransferObject
     quesIdseq = termRow.getQcIdseq();
     preferredDefinition = termRow.getPreferredDefinition();
     preferredName = termRow.getPreferredName();
-    longName = checkForNull(termRow.getLongName());
+    longName = StringUtils.replaceNull(termRow.getLongName());
 
     //createdBy = formRow.getCreatedBy();
     //createdDate = (Date)dataElementsViewRowImpl.getDateCreated().getData();
@@ -42,8 +40,8 @@ public class BC4JQuestionTransferObject extends AdminComponentTransferObject
     aslName = termRow.getAslName();
     version = new Float(termRow.getVersion().floatValue());
 
-    //deletedInd = checkForNull(termRow.getDeletedInd());
-    //latestVerInd = checkForNull(termRow.getLatestVersionInd());
+    //deletedInd = StringUtils.replaceNull(termRow.getDeletedInd());
+    //latestVerInd = StringUtils.replaceNull(termRow.getLatestVersionInd());
     displayOrder = termRow.getDisplayOrder().intValue();
 
     validValues = termRow.getFormVVTranferObjects();
