@@ -169,8 +169,6 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
       validate="false">
       <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
-      <forward name="searchResults" path="/formSearchAction.do?method=getAllForms"
-        redirect="false"/>
     </action>
     <action name="formEditForm" path="/formSaveAction" parameter="method"
       scope="session"
@@ -181,6 +179,13 @@
         redirect="false"/>
       <forward name="failure" path="/formbuilder/formEdit.jsp" redirect="false"/>
     </action>
+    <action name="formEditForm" path="/cancelFormEditAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
+      validate="false">
+      <forward name="success" path="/formSearchAction.do?method=getAllForms"
+        redirect="false"/>
+    </action>    
     
     <action name="moduleEditForm" path="/moduleToEditAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction" validate="false">
       <forward name="success" path="/formbuilder/moduleEdit.jsp" redirect="false"/>
