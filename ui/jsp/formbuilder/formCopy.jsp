@@ -89,7 +89,7 @@ function clearProtocol() {
               property="<%= FormConstants.FORM_LONG_NAME %>"
               size="100"
               styleClass="OraFieldText"
-              maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>"
+              maxlength="<%= (new Integer (FormConstants.LONG_NAME_MAX_LENGTH)).toString() %>"
               />
           </td>
         </tr>
