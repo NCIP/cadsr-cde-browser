@@ -97,9 +97,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       validValueMap = service.getValidValues(allVdIds);
     }
     catch (FormBuilderException exp) {
+      saveError(ERROR_MODULE_RETRIEVE, request);
+      saveError(exp.getErrorCode(),request);
       if (log.isDebugEnabled()) {
         log.debug("Exp while getting validValue" + exp);
       }
+      mapping.findForward(FAILURE);
     }
     selectedModule.setForm(crf);
     Map availableValidValuesMap = getAvailableValidValuesForQuestions(selectedModule,selectedModule.getQuestions(),validValueMap);

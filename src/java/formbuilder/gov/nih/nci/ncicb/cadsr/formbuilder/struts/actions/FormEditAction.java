@@ -66,11 +66,11 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       setSessionObject(request, CLONED_CRF, clonedCrf,true);
     }
     catch (FormBuilderException exp) {
+      saveError(exp.getErrorCode(),request);
       if (log.isDebugEnabled()) {
         log.debug("Exception on getFormForEdit =  " + exp);
       }
-      //TODO Change this to so to FormSearch Page
-      throw new FatalException(exp);
+      return mapping.findForward(FAILURE);
     }
     catch (CloneNotSupportedException clexp) {
       if (log.isDebugEnabled()) {

@@ -123,12 +123,16 @@
       validate="false">
       <forward name="success" path="/formbuilder/formDetails.jsp"
         redirect="false"/>
+      <forward name="failure" path="/formSearchAction.do?method=getAllForms"
+        redirect="false"/>        
     </action>
     <action name="formEditForm" path="/formToEditAction" parameter="method"
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
       validate="false">
       <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
+      <forward name="failure" path="/formSearchAction.do?method=getAllForms"
+        redirect="false"/>       
     </action>
     <action name="formEditForm" path="/formSaveAction" parameter="method"
       scope="session"
@@ -155,6 +159,7 @@
     
     <action name="moduleEditForm" path="/moduleToEditAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction" validate="false">
       <forward name="success" path="/formbuilder/moduleEdit.jsp" redirect="false"/>
+      <forward name="failure" path="/formbuilder/formEdit.jsp" redirect="false"/>
     </action>
     <action name="moduleEditForm" path="/moduleSaveAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction" 
       validate="true"
