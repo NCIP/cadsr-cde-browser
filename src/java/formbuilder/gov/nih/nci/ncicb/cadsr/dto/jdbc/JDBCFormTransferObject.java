@@ -33,6 +33,7 @@ public class JDBCFormTransferObject extends FormTransferObject {
     setVersion(new Float(rs.getString(2))); // VERSION
     setPreferredDefinition(rs.getString(8)); // PREFERRED_DEFINITION
     setCreatedBy(rs.getString(13)); // CREATED_BY
+    this.setFormCategory(rs.getString(5));
     
   }
 }
