@@ -34,6 +34,7 @@ public interface NavigationConstants
   public static final String SAVE_FORM="saveForm";
 
   public static final String CREATE_MODULE = "createModule";
+  public static final String GO_TO_CREATE_MODULE = "goToCreateModule";
   
   public static final String GET_PROTOCOL_LOV_METHOD="getProtocolsLOV";
 

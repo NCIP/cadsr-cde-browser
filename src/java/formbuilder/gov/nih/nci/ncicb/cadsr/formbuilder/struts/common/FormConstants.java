@@ -10,6 +10,10 @@ public interface FormConstants extends FormBuilderConstants
     public static final String CONTEXT_ID_SEQ = "contextIdSeq";
     public static final String WORKFLOW = "workflow";
 
+    public static final String LONG_NAME = "longName";
+    public static final String COMMENTS = "comments";
+    public static final String DISPLAY_ORDER = "displayOrder";
+
     public static final String CRF = "crf";
 
     public static final String FORM_TYPE = "formType";
@@ -22,6 +26,9 @@ public interface FormConstants extends FormBuilderConstants
     public static final String FORM_VERSION = "formVersion";
     public static final String FORM_COMMENTS = "formComments";
     public static final String FORM_GOTO_EDIT = "gotoEdit";
+
+    public static final String MODULE_LONG_NAME = "longName";
+    public static final String MODULE_INSTRUCTION_LONG_NAME = "comments";
 
     public static final String CLONED_CRF = "clonedCrf";
     public static final String DELETED_MODULES = "deletedModules";
