@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
 import java.util.Collection;
+import java.util.List;
 
 
 public interface AdminComponentDAO {
@@ -73,4 +74,13 @@ public interface AdminComponentDAO {
    * @return <b>Collection</b> Collection of CSITransferObject
    */
   public Collection retrieveClassifications(String acId);
+  
+
+  /**
+   * Gets all ReferenceDocuments for a AdminComp
+   *
+   * @return <b>Collection</b> Collection of ReferenceDocumentTransferObjects
+   */
+  public List getAllReferenceDocuments(String adminComponentId,String docType);
+
 }

@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto.bc4j;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import gov.nih.nci.ncicb.cadsr.dto.base.AdminComponentTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormsViewRowImpl;
@@ -8,7 +9,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 
-public class BC4JFormTransferObject extends AdminComponentTransferObject 
+public class BC4JFormTransferObject extends AdminComponentTransferObject
                           implements Form,Serializable  {
   protected String formIdseq;
   protected String formType;
@@ -20,7 +21,7 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
     super();
     idseq = formIdseq;
   }
-  
+
   public BC4JFormTransferObject(FormsViewRowImpl formRow ) {
     super();
     this.formRow = formRow;
@@ -66,7 +67,7 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
 
   public void setProtocol(Protocol protocol){
   }
-  
+
 
   public List getModules() {
     return modules;
@@ -88,4 +89,17 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
 
   public void setFormCategory(String formCategory) {
   }
+
+  /**
+  * Dummy methods to match the interface :skakkodi
+  */
+    public Collection getInstructions()
+    {
+      return null;
+    }
+    public void setInstructions(Collection newInstructions)
+    {
+
+   }
+
 }

@@ -112,7 +112,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
         QuestionDAO qdao = daoFactory.getQuestionDAO();
         FormValidValueDAO vdao = daoFactory.getFormValidValueDAO();
         myForm = getFormRow(formPK);
-
+        List refDocs = fdao.getAllReferenceDocuments(formPK,myForm.REF_DOC_TYPE_IMAGE);
+        myForm.setReferenceDocs(refDocs);
         List modules = (List) fdao.getModulesInAForm(formPK);
         Iterator mIter = modules.iterator();
         List questions;
@@ -395,6 +396,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
     private String getUserName() {
         return context.getCallerPrincipal().getName();
+        //return "JASUR";//jboss
     }
 
     public Collection getAllContexts() {

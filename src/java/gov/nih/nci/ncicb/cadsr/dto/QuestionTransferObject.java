@@ -11,6 +11,7 @@ import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 import java.sql.Date;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -24,6 +25,7 @@ public class QuestionTransferObject extends AdminComponentTransferObject
   protected int displayOrder;
   protected String deIdseq;
   protected DataElement dataElement;
+  protected Collection instructions = null;
 
   public QuestionTransferObject() {
     idseq = quesIdseq;
@@ -75,6 +77,15 @@ public class QuestionTransferObject extends AdminComponentTransferObject
 
   public void setDataElement(DataElement dataElement) {
     this.dataElement = dataElement;
+  }
+  
+  public Collection getInstructions()
+  {
+    return instructions;
+  }
+  public void setInstructions(Collection newInstructions)
+  {
+    instructions=newInstructions;
   }
   
   /**

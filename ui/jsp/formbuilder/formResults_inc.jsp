@@ -58,8 +58,8 @@ if(confirm(message)) location.href = url;
           </tr>        
           <logic:iterate id="form" name="<%=FormConstants.FORM_SEARCH_RESULTS%>" 
           	type="gov.nih.nci.ncicb.cadsr.resource.Form"
-                offset="<%=pageBean.getOffset()%>"
-                length="<%=pageBean.getPageSize()%>">
+                offset="<%=Integer.toString(pageBean.getOffset())%>"
+                length="<%=Integer.toString(pageBean.getPageSize())%>">
             <tr class="OraTabledata">
              <td width="100">
               <table  >

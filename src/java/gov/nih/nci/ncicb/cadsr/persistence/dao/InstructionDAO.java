@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
+import java.util.Collection;
 
 
 public interface InstructionDAO {
@@ -32,4 +33,7 @@ public interface InstructionDAO {
   public int updateDisplayOrder(
     String instructionId,
     int newDisplayOrder) throws DMLException;
+    
+  public Collection getInstructions(
+    String componentId);
 }

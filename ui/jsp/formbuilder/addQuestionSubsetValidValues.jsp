@@ -122,44 +122,30 @@ function submitModuleEdit(methodName) {
           <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">                      
                 <tr class="OraTabledata">
 
-                      <td class="OraHeaderBlack">
-                        <bean:write name="selectedDataElement" property="longName"/>
-                      </td>
-                      <td align="center" width="70" class="OraHeaderBlack">
-                          <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>' 
-                             paramId="p_de_idseq" paramName="selectedDataElement" paramProperty="deIdseq" target="_blank">
-                            <bean:write name="selectedDataElement" property="CDEId"/>
-                          </html:link>
-                        </td>
-                       <td align="center" width="70" class="OraHeaderBlack">
-                          <bean:write name="selectedDataElement" property="version"/>
-                       </td>                                                     
-
-               </tr>
-              <tr class="OraTabledata">
-               <td colspan=3 class="OraTabledata">
-                <table  width="100%" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                  <tr class="OraTabledata" >  
-                    <td width="15%" class="OraTableColumnHeader" nowrap align="left">
-                         Instruction
-                    </td>                      
-                    <td class="OraFieldTextInstruction">
-                           Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
-                     </td>
-                  </tr>
-                </table>
-               </td>  
-              </tr>                 
+                  <td class="OraHeaderBlack">
+                    <bean:write name="selectedDataElement" property="longName"/>
+                  </td>
+                         <td align="center" width="10%" class="OraHeaderBlack">
+                            <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>' 
+                               paramId="p_de_idseq" paramName="selectedDataElement" paramProperty="deIdseq" target="_blank">
+                              <bean:write name="selectedDataElement" property="CDEId"/>
+                            </html:link>
+                          </td>
+                         <td align="center" width="10%" class="OraHeaderBlack">
+                            <bean:write name="selectedDataElement" property="version"/>
+                         </td>                                            
+               </tr>                          
+               
+                <logic:notEmpty name="selectedDataElement" property="valueDomain.validValues">
                 <tr class="OraTabledata">
                   <td colspan=3 class="OraTabledata">
                     <a href="javascript:CheckAll('<%= FormConstants.SELECTED_ITEMS+cdeIndex%>')">Check All</a>&nbsp;-&nbsp;<a href="javascript:ClearAll('<%= FormConstants.SELECTED_ITEMS+cdeIndex%>')">Clear All</a>
                   </td>
-                </tr>            
-               
-                <logic:notEmpty name="selectedDataElement" property="valueDomain.validValues">
+                </tr>                    
                    <tr>
                     <td colspan="3">
                     <logic:iterate id="validValue" name="selectedDataElement" type="gov.nih.nci.ncicb.cadsr.resource.ValidValue" property="valueDomain.validValues" indexId="itemId">                     
+                      <bean:size id="vvSize" name="selectedDataElement" property="valueDomain.validValues" />
                       <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">                        
                         <tr>
                           <td colspan="2" class="OraTabledata">&nbsp;</td>                       
@@ -190,35 +176,33 @@ function submitModuleEdit(methodName) {
                                              <td class="OraFieldText">
                                                 &nbsp;
                                              </td>
-                                            </tr>
-                                             <tr class="OraTabledata">
-                                              <td class="OraTableColumnHeader" width="10%" nowrap>
-                                                Instruction 
-                                             </td>
-                                             <td class="OraFieldTextInstruction">
-                                               Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
-                                             </td>
-                                            </tr>                        
+                                            </tr>                   
                                           </table>                                       
                                         </td>
                                       </tr>                                      
-                                
-                                
-                                
+                                                                                              
                                </table>
                               </td></tr>
                              </table>
                             </td></tr>
+
+                            <logic:equal value="<%= String.valueOf(vvSize.intValue()-1) %>" name="itemId">          
+                            <tr>
+                              <td colspan="2" class="OraTabledata">&nbsp;</td>                       
+                            </tr>         
+                            </logic:equal>  
+                            
                            </table>                       
                      </logic:iterate><!-- valid Value-->    
                      
-                  </td></tr>             
-                </logic:notEmpty>     
+                  </td></tr>   
                 <tr class="OraTabledata">
                   <td colspan=3 class="OraTabledata">
                     <a href="javascript:CheckAll('<%= FormConstants.SELECTED_ITEMS+cdeIndex%>')">Check All</a>&nbsp;-&nbsp;<a href="javascript:ClearAll('<%= FormConstants.SELECTED_ITEMS+cdeIndex%>')">Clear All</a>
                   </td>
-                </tr>              
+                </tr>                        
+                </logic:notEmpty>     
+        
           </table>
           <logic:notEqual value="<%= String.valueOf(selectedSize.intValue()-1) %>" name="cdeIndex">          
           <table cellpadding="0" cellspacing="0" width="80%" align="center">

@@ -171,7 +171,7 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=dec.getCDVersion()%> </td>
  </tr>
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Conceptual Domain Concept id:</td>
+    <td class="TableRowPromptText">Conceptual Domain Concept ID:</td>
     <td class="OraFieldText">
     <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
     </td>
@@ -193,7 +193,7 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=socVersion%> </td>
  </tr>
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Object Class Concept Id:</td>
+    <td class="TableRowPromptText">Object Class Concept ID:</td>
     <td class="OraFieldText">
  
  <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
@@ -225,7 +225,7 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=dec.getPropertyQualifier()%> </td>
  </tr>
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Property Concept Id:</td>
+    <td class="TableRowPromptText">Property Concept ID:</td>
     <td class="OraFieldText">
     <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
     </td>

@@ -154,7 +154,7 @@ function details(linkParms ){
       <tr class="OraTabledata">
 
           <td class="OraFieldText">
-           <html:checkbox property="<%= FormConstants.SELECTED_ITEMS %>" value="<%= itemId %>"/>
+           <html:checkbox property="<%= FormConstants.SELECTED_ITEMS %>" value="<%= itemId.toString() %>"/>
           </td>
          <td class="OraFieldText">
           <a href="<%= detailsURL %>">

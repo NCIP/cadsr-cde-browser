@@ -2,7 +2,7 @@ package gov.nih.nci.ncicb.cadsr.resource;
 
 import java.util.List;
 
-public interface Module extends AdminComponent,Orderable {
+public interface Module extends AdminComponent,Orderable,Instructionable  {
   public String getModuleIdseq();
   public void setModuleIdseq(String idseq);
 

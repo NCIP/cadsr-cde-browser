@@ -4,6 +4,8 @@ import java.util.List;
 
 
 public interface AdminComponent extends Audit {
+  
+  public static final String REF_DOC_TYPE_IMAGE = "IMAGE_FILE";
   public String getPreferredName();
 
   public void setPreferredName(String pPreferredName);
@@ -41,6 +43,8 @@ public interface AdminComponent extends Audit {
   public void setContext(Context pContext);
 
   public List getRefereceDocs();
+  
+  public void setReferenceDocs(List refDocs);
 
   public List getDesignations();
 

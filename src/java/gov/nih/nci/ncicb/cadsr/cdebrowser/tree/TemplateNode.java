@@ -4,13 +4,14 @@ import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.webtree.WebNode;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Hashtable;
 import javax.swing.tree.DefaultMutableTreeNode;
-import oracle.jdbc.OraclePreparedStatement;
+//import oracle.jdbc.OraclePreparedStatement;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import java.net.URLEncoder;
 
@@ -68,16 +69,17 @@ public class TemplateNode extends BaseTreeNode  {
                                   +"AND   qc.qc_idseq = acs.ac_idseq "
                                   +"AND   acs.cs_csi_idseq = ? "
                                   +"ORDER BY long_name ";;
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List tmpNodes = new ArrayList(11);;
     try {
       pstmt =  
-         (OraclePreparedStatement)myConn.prepareStatement(templateQueryStmt);
-      pstmt.defineColumnType(1,Types.VARCHAR);
-      pstmt.defineColumnType(2,Types.VARCHAR);
-      pstmt.defineColumnType(3,Types.VARCHAR);
-      pstmt.defineColumnType(4,Types.VARCHAR);
+         (PreparedStatement)myConn.prepareStatement(templateQueryStmt);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
+      // No more needed for thin drivers
       
       pstmt.setString(1,myContext.getConteIdseq());
       pstmt.setString(2,myTemplateGroup);

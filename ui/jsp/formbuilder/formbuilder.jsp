@@ -42,9 +42,6 @@ FormBuilder
 </HEAD>
   <jsp:useBean id="requestMap" scope="request" class="java.util.HashMap" />
   
-  </jsp:useBean>
-  
-  
   <frameset cols="25%,*">
     <frameset rows="15%,*">
        <html:frame page="/common/tree_hdr.html"

@@ -8,9 +8,10 @@ import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.webtree.WebNode;
 import gov.nih.nci.ncicb.webtree.WebTree;
 
-import oracle.jdbc.OraclePreparedStatement;
+//import oracle.jdbc.OraclePreparedStatement;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
 
@@ -46,7 +47,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
 
   public DefaultMutableTreeNode buildTree(Hashtable treeParams) throws Exception {
     DBUtil dbHelper = new DBUtil();
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     Connection conn = null;
     Context ctx = null;
@@ -72,10 +73,11 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
           +"('P_PARAM_TYPE=P_PARAM_TYPE&P_IDSEQ=P_IDSEQ&"
           +baseNode.getExtraURLParameters()+"')");
       tree = new DefaultMutableTreeNode(contexts);
-      pstmt = (OraclePreparedStatement) conn.prepareStatement(contextQueryStmt);
-      pstmt.defineColumnType(1, Types.VARCHAR);
-      pstmt.defineColumnType(2, Types.VARCHAR);
-      pstmt.defineColumnType(3, Types.VARCHAR);
+      pstmt = (PreparedStatement) conn.prepareStatement(contextQueryStmt);
+     // pstmt.defineColumnType(1, Types.VARCHAR);
+      //pstmt.defineColumnType(2, Types.VARCHAR);
+      //pstmt.defineColumnType(3, Types.VARCHAR);
+      
       rs = pstmt.executeQuery();
       ctx = new BC4JContextTransferObject();
 

@@ -9,6 +9,7 @@ import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 import java.sql.Date;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -21,6 +22,7 @@ public class FormTransferObject extends AdminComponentTransferObject
   private List modules;
   private String formIdseq = null;
   private String formCategory = null;
+  private Collection instructions = null;
 
   public FormTransferObject() {
     
@@ -79,6 +81,14 @@ public class FormTransferObject extends AdminComponentTransferObject
     formCategory = newFormCategory;
   }
  
+  public Collection getInstructions()
+  {
+    return instructions;
+  }
+  public void setInstructions(Collection newInstructions)
+  {
+    instructions=newInstructions;
+  }
  /**
    * Make a clone of the form.
    * Protocol,Context,ModuleList reference are only

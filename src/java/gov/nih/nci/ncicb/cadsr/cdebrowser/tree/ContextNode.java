@@ -10,6 +10,7 @@ import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.webtree.WebNode;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ import java.util.Vector;
 import java.util.Hashtable;
 import javax.swing.tree.DefaultMutableTreeNode;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
-import oracle.jdbc.OraclePreparedStatement;
+//import oracle.jdbc.OraclePreparedStatement;
 import java.net.URLEncoder;
 
 public class ContextNode extends BaseTreeNode  {
@@ -104,7 +105,7 @@ public class ContextNode extends BaseTreeNode  {
    */
 
   public List getClassificationNodes() throws Exception {
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List csNodes = null;
     String csFilter = "";
@@ -121,11 +122,12 @@ public class ContextNode extends BaseTreeNode  {
 
     try {
       pstmt =
-         (OraclePreparedStatement)myConn.prepareStatement(classSchemeQueryStmt);
-      pstmt.defineColumnType(1,Types.VARCHAR);
-      pstmt.defineColumnType(2,Types.VARCHAR);
-      pstmt.defineColumnType(3,Types.VARCHAR);
-      pstmt.defineColumnType(4,Types.VARCHAR);
+         (PreparedStatement)myConn.prepareStatement(classSchemeQueryStmt);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
+      //kakkodis No more need for thin driver
       pstmt.setFetchSize(25);
       pstmt.setString(1,myContext.getConteIdseq());
       rs = pstmt.executeQuery();
@@ -180,24 +182,24 @@ public class ContextNode extends BaseTreeNode  {
    *
    */
   public DefaultMutableTreeNode getDataTemplateNodesByDisease()throws Exception {
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List tmpNodes = new ArrayList(11);
     List tmpTypes = null;
-    OraclePreparedStatement pstmt1 = null;
+    PreparedStatement pstmt1 = null;
     ResultSet rs1 = null;
     DefaultMutableTreeNode diseaseLabelNode = null;
     ClassSchemeItem csiTO = new CSITransferObject();
     try {
       //Getting the CRF Disease types
       pstmt1 =
-         (OraclePreparedStatement)myDbUtil.getConnection().
+         (PreparedStatement)myDbUtil.getConnection().
                             prepareStatement(csiQueryStmt);
-      pstmt1.defineColumnType(1,Types.VARCHAR);
-      pstmt1.defineColumnType(2,Types.VARCHAR);
-      pstmt1.defineColumnType(3,Types.VARCHAR);
-      pstmt1.defineColumnType(4,Types.VARCHAR);
-      pstmt1.defineColumnType(5,Types.VARCHAR);
+      //pstmt1.defineColumnType(1,Types.VARCHAR);
+      //pstmt1.defineColumnType(2,Types.VARCHAR);
+      //pstmt1.defineColumnType(3,Types.VARCHAR);
+      //pstmt1.defineColumnType(4,Types.VARCHAR);
+      //pstmt1.defineColumnType(5,Types.VARCHAR);
       pstmt1.setFetchSize(25);
       pstmt1.setString(1,"CRF_DISEASE");
       rs1 = pstmt1.executeQuery();
@@ -253,24 +255,25 @@ public class ContextNode extends BaseTreeNode  {
    *
    */
   public DefaultMutableTreeNode getDataTemplateNodesByPhase()throws Exception {
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List tmpNodes = new ArrayList(11);
     List tmpTypes = null;
-    OraclePreparedStatement pstmt1 = null;
+    PreparedStatement pstmt1 = null;
     ResultSet rs1 = null;
     DefaultMutableTreeNode phaseLabelNode = null;
     ClassSchemeItem csiTO = new CSITransferObject();
     try {
       //Getting the CRF Disease types
       pstmt1 =
-         (OraclePreparedStatement)myDbUtil.getConnection().
+         (PreparedStatement)myDbUtil.getConnection().
                             prepareStatement(csiQueryStmt);
-      pstmt1.defineColumnType(1,Types.VARCHAR);
-      pstmt1.defineColumnType(2,Types.VARCHAR);
-      pstmt1.defineColumnType(3,Types.VARCHAR);
-      pstmt1.defineColumnType(4,Types.VARCHAR);
-      pstmt1.defineColumnType(5,Types.VARCHAR);
+      //pstmt1.defineColumnType(1,Types.VARCHAR);
+      //pstmt1.defineColumnType(2,Types.VARCHAR);
+      //pstmt1.defineColumnType(3,Types.VARCHAR);
+      //pstmt1.defineColumnType(4,Types.VARCHAR);
+      //pstmt1.defineColumnType(5,Types.VARCHAR);
+      
       pstmt1.setFetchSize(25);
       pstmt1.setString(1,"Phase");
       rs1 = pstmt1.executeQuery();
@@ -326,16 +329,16 @@ public class ContextNode extends BaseTreeNode  {
    *
    */
   public List getProtocolNodes() throws SQLException {
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List protoNodes = new ArrayList(11);
     try {
       pstmt =
-         (OraclePreparedStatement)myConn.prepareStatement(protoQueryStmt);
-      pstmt.defineColumnType(1,Types.VARCHAR);
-      pstmt.defineColumnType(2,Types.VARCHAR);
-      pstmt.defineColumnType(3,Types.VARCHAR);
-      pstmt.defineColumnType(4,Types.VARCHAR);
+         (PreparedStatement)myConn.prepareStatement(protoQueryStmt);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
       pstmt.setFetchSize(25);
       pstmt.setString(1,myContext.getConteIdseq());
       rs = pstmt.executeQuery();
@@ -423,14 +426,14 @@ public class ContextNode extends BaseTreeNode  {
 
 
   private List getTemplateTypes() {
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List tmpTypes = new ArrayList(11);
 
     try {
       pstmt =
-         (OraclePreparedStatement)myConn.prepareStatement(templateTypesQueryStmt);
-      pstmt.defineColumnType(1,Types.VARCHAR);
+         (PreparedStatement)myConn.prepareStatement(templateTypesQueryStmt);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
       pstmt.setString(1,myContext.getConteIdseq());
       rs = pstmt.executeQuery();
       while (rs.next()){
@@ -461,16 +464,16 @@ public class ContextNode extends BaseTreeNode  {
    *
    */
   public List getDataTemplateNodes() throws SQLException {
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List templateNodes = new ArrayList(11);
     try {
       pstmt =
-         (OraclePreparedStatement)myConn.prepareStatement(templateQueryStmt);
-      pstmt.defineColumnType(1,Types.VARCHAR);
-      pstmt.defineColumnType(2,Types.VARCHAR);
-      pstmt.defineColumnType(3,Types.VARCHAR);
-      pstmt.defineColumnType(4,Types.VARCHAR);
+         (PreparedStatement)myConn.prepareStatement(templateQueryStmt);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
       pstmt.setFetchSize(25);
       pstmt.setString(1,myContext.getConteIdseq());
       rs = pstmt.executeQuery();

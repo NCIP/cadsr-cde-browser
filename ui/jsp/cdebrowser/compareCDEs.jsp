@@ -115,14 +115,14 @@ function details(linkParms ){
       </td>
     </tr>
 </table>
-<table cellpadding="0" cellspacing="0" width="80%" align="center" border=0>
+<table cellpadding="0" cellspacing="0" width="90%" align="center" border=0>
  <tr class="OraTabledata">
     <td class="OraFieldText" ><a class="link" href="#dataElement">Data Element</a></td>
-    <td class="OraFieldText" ><a class="link" href="#referenceDocuments">Reference Documents</a></td>
-    <td class="OraFieldText" ><a class="link" href="#designations">Designations</a></td>
     <td class="OraFieldText" ><a class="link" href="#dataElementConcept">Data Element Concept</a></td>
-    <td class="OraFieldText" ><a class="link" href="#valueDomainDetails">Value Domain Details</a></td>
+    <td class="OraFieldText" ><a class="link" href="#valueDomain">Value Domain</a></td>
     <td class="OraFieldText" ><a class="link" href="#permissibleValues">Permissible Values</a></td>
+    <td class="OraFieldText" ><a class="link" href="#referenceDocuments">Reference Documents</a></td>
+    <td class="OraFieldText" ><a class="link" href="#designations">Designations</a></td>    
     <td class="OraFieldText" ><a class="link" href="#classifications">Classifications</a></td>
  </tr>
  </table>
@@ -135,63 +135,62 @@ function details(linkParms ){
 </table>
 
 
-
+<br>
 <A NAME="dataElement"></A> 
 
-<table cellpadding="0" cellspacing="0" width="80%" align="center" border=0>
+<table cellpadding="0" cellspacing="0" width="90%" align="center">
   <tr>
-     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
-  </tr>
- <tr>
     <td class="OraHeaderSubSub" width="100%">Data Element</td>
   </tr>
-
+  <tr>
+    <td width="100%"><img height=2 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+  </tr>  
 </table>
-
-<table width="80%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="20%">Long Name</td>
-
-    <td class="OraFieldText" width='40%'>Adverse Event Therapy 1</td>
-
-    <td class="OraFieldText" width='40%'>Adverse Event Therapy 2</td>
-
- </tr>
+<table width="90%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader" width="20%">Public ID</td>
 
-    <td class="OraFieldText" width='40%'>2004104</td>
+    <td class="OraFieldText" width='40%'>61250</td>
 
-    <td class="OraFieldText" width='40%'>2004104</td>
+    <td class="OraFieldText" width='40%'>2093</td>
 
  </tr>
+ 
+ <tr class="OraTabledata">
+    <td class="OraTableColumnHeader" width="20%">Long Name</td>
+
+    <td class="OraFieldText" width='40%'>Agent Dose Units</td>
+
+    <td class="OraFieldText" width='40%'>Agent Dose UOM</td>
+
+ </tr>
+
 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader" width="20%">Preferred Name</td>
 
-    <td class="OraFieldText" width='40%'>AE_THERAPY 1</td>
+    <td class="OraFieldText" width='40%'>AGENT_DOSE_UNITS(GYN)</td>
 
-    <td class="OraFieldText" width='40%'>AE_THERAPY 2</td>
-
-  </tr>
+    <td class="OraFieldText" width='40%'>AGT_DOSE_UOM</td>
+ </tr>
 
 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Document Text</td>
 
-    <td class="OraFieldText" width='40%'>Therapy 1</td>
+    <td class="OraFieldText" width='40%'>Units</td>
 
-    <td class="OraFieldText" width='40%'>Therapy 2</td>
+    <td class="OraFieldText" width='40%'>Units</td>
 
  </tr>
 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Definition</td>
 
-    <td class="OraFieldText" width='40%'>What additional therapy is required to treat the adverse event.</td>
+    <td class="OraFieldText" width='40%'>Measurement units for each treatment agent (i.e., drug, antibody, etc.) </td>
 
-    <td class="OraFieldText" width='40%'>What additional therapy is required to treat the adverse event.</td>
+    <td class="OraFieldText" width='40%'>the measurement units for each treatment agent (i.e., drug, antibody, etc.). </td>
 
  </tr>
 
@@ -200,26 +199,26 @@ function details(linkParms ){
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Context</td>
 
-    <td class="OraFieldText" width='40%'>CCR  1</td>
+    <td class="OraFieldText" width='40%'>CTEP</td>
 
-    <td class="OraFieldText" width='40%'>CCR  2</td>
+    <td class="OraFieldText" width='40%'>CTEP</td>
 
  </tr>
 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Workflow Status</td>
 
-    <td class="OraFieldText" width='40%'>DRAFT NEW</td>
+    <td class="OraFieldText" width='40%'>RETIRED ARCHIVED</td>
 
-    <td class="OraFieldText" width='40%'>DRAFT NEW</td>
+    <td class="OraFieldText" width='40%'>RELEASED</td>
 
  </tr>
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Version</td>
 
-    <td class="OraFieldText" width='40%'>3.1</td>
+    <td class="OraFieldText" width='40%'>2.31</td>
 
-    <td class="OraFieldText" width='40%'>3.2</td>
+    <td class="OraFieldText" width='40%'>3.0</td>
 
  </tr>
  <tr class="OraTabledata">
@@ -227,7 +226,7 @@ function details(linkParms ){
 
     <td class="OraFieldText" width='40%'></td>
 
-    <td class="OraFieldText" width='40%'></td>
+    <td class="OraFieldText" width='40%'>Data element and all values comply with Clinical Data Update System (CDUS) v3.0 Release 2</td>
 
  </tr>
  <tr class="OraTabledata">
@@ -235,155 +234,70 @@ function details(linkParms ){
 
     <td class="OraFieldText" width='40%'></td>
 
-    <td class="OraFieldText" width='40%'></td>
+    <td class="OraFieldText" width='40%'>Qualified </td>
 
  </tr>
 
 </table>
 
-<A NAME="referenceDocuments"></A> 
-<table cellpadding="0" cellspacing="0" width="80%" align="center">
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
-  </tr>
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
-  </tr>
-</table>
-<TABLE cellSpacing=5 cellPadding=2 width="80%" align=center border=0>
-  <TBODY>
-  <TR>
-    <TD vAlign=top>
-      <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
-      align=center border=0>
-        <TBODY>
-        <TR class=OraTableColumnHeader>
-          <TH class=OraTableColumnHeader>Document Name</TH>
-          <TH class=OraTableColumnHeader>Document Type</TH></TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>ADDRESS </TD>
-          <TD class=OraFieldText>LONG_NAME </TD></TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>CTEP_SHORT_NAME3169 </TD>
-          <TD class=OraFieldText>HISTORIC SHORT CDE NAME
-    </TD></TR></TBODY></TABLE></TD>
-    <TD vAlign=top>
-      <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
-      align=center border=0>
-        <TBODY>
-        <TR class=OraTableColumnHeader>
-          <TH class=OraTableColumnHeader>Document Name</TH>
-          <TH class=OraTableColumnHeader>Document Type</TH></TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>CRF Text </TD>
-          <TD class=OraFieldText>HISTORIC SHORT CDE NAME </TD></TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>CRF Text </TD>
-          <TD class=OraFieldText>LONG_NAME </TD></TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>ADDRESS </TD>
-          <TD class=OraFieldText>LONG_NAME </TD></TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>CTEP_SHORT_NAME3169 </TD>
-          <TD class=OraFieldText>HISTORIC SHORT CDE NAME
-    </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
-
-<A NAME="designations"></A>
-<table cellpadding="0" cellspacing="0" width="80%" align="center">
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
-  </tr>
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Designations</td>
-  </tr>
-</table>
-
-<TABLE cellSpacing=0 cellPadding=2 width="80%" align=center border=0>
-  <TBODY>
-  <TR>
-    <TD vAlign=top>
-      <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="40%"
-      align=center border=0>
-        <TBODY>
-        <TR class=OraTableColumnHeader>
-          <TH class=OraTableColumnHeader>Name</TH>
-          <TH class=OraTableColumnHeader>Type</TH>
-          <TH class=OraTableColumnHeader>Context</TH></TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>ENGLISH </TD>
-          <TD class=OraFieldText>CONTEXT NAME</TD>
-          <TD class=OraFieldText>CTEP</TD></TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>ADDITIONAL_DIAGNOSES_SPECIFY</TD>
-          <TD class=OraFieldText>USED_BY</TD>
-          <TD class=OraFieldText>TEST</TD></TR></TBODY></TABLE></TD>
-    <TD vAlign=top>
-      <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="40%"
-      align=center border=0>
-        <TBODY>
-        <TR class=OraTableColumnHeader>
-          <TH class=OraTableColumnHeader>Name</TH>
-          <TH class=OraTableColumnHeader>Type</TH>
-          <TH class=OraTableColumnHeader>Context</TH></TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>ADDITIONAL_DIAGNOSES_SPECIFY</TD>
-          <TD class=OraFieldText>USED_BY</TD>
-          <TD class=OraFieldText>TEST</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
-
+<br>
 <A NAME="dataElementConcept"></A>
-<table cellpadding="0" cellspacing="0" width="80%" align="center">
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
-  </tr>
+
+<table cellpadding="0" cellspacing="0" width="90%" align="center">
   <tr>
     <td class="OraHeaderSubSub" width="100%">Data Element Concept</td>
   </tr>
-
+  <tr>
+    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+  </tr>  
 </table>
 
-<table width="80%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="20%">Long Name</td>
-
-    <td class="OraFieldText" width='40%'>ADVERSE_EVENT/PATIENT_OUTCOME 1</td>
-
-    <td class="OraFieldText" width='40%'>ADVERSE_EVENT/PATIENT_OUTCOME 2</td>
-
- </tr>
+<table width="90%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader" width="20%">Public ID</td>
 
-    <td class="OraFieldText" width='40%'>2004104</td>
+    <td class="OraFieldText" width='40%'>2008656</td>
 
-    <td class="OraFieldText" width='40%'>2004104</td>
+    <td class="OraFieldText" width='40%'>2014029</td>
 
  </tr>
 
  <tr class="OraTabledata">
+    <td class="OraTableColumnHeader" width="20%">Long Name</td>
+
+    <td class="OraFieldText" width='40%'>AGENT DOSE UNITS</td>
+
+    <td class="OraFieldText" width='40%'>Agent Quantity</td>
+
+ </tr>
+
+
+
+ <tr class="OraTabledata">
     <td class="OraTableColumnHeader" width="20%">Preferred Name</td>
 
-    <td class="OraFieldText" width='40%'>AE_THERAPY 1</td>
+    <td class="OraFieldText" width='40%'>AGENT_DOSE_UNITS</td>
 
-    <td class="OraFieldText" width='40%'>AE_THERAPY 2</td>
+    <td class="OraFieldText" width='40%'>AGT_QTY</td>
 
   </tr>
 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader" width="20%">Definition</td>
 
-    <td class="OraFieldText" width='40%'>AE_THERAPY 1</td>
+    <td class="OraFieldText" width='40%'>AGENT_DOSE_UNITS</td>
 
-    <td class="OraFieldText" width='40%'>AE_THERAPY 2</td>
+    <td class="OraFieldText" width='40%'>the amount of the agent or drug.</td>
 
   </tr>
 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Context</td>
 
-    <td class="OraFieldText" width='40%'>CCR  1</td>
+    <td class="OraFieldText" width='40%'>CTEP</td>
 
-    <td class="OraFieldText" width='40%'>CCR  2</td>
+    <td class="OraFieldText" width='40%'>CTEP</td>
 
  </tr>
 
@@ -392,30 +306,31 @@ function details(linkParms ){
 
     <td class="OraFieldText" width='40%'>DRAFT NEW</td>
 
-    <td class="OraFieldText" width='40%'>DRAFT NEW</td>
+    <td class="OraFieldText" width='40%'>RELEASED</td>
 
  </tr>
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Version</td>
 
-    <td class="OraFieldText" width='40%'>3.1</td>
+    <td class="OraFieldText" width='40%'>2.31</td>
 
-    <td class="OraFieldText" width='40%'>3.2</td>
+    <td class="OraFieldText" width='40%'>1.0</td>
 
  </tr>
+ 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Conceptual Domain Preferred Name</td>
 
-    <td class="OraFieldText" width='40%'>BASIC SCIENCE </td>
+    <td class="OraFieldText" width='40%'>CTEP</td>
 
-    <td class="OraFieldText" width='40%'>BASIC SCIENCE2</td>
+    <td class="OraFieldText" width='40%'>TX_DOSES</td>
 
  </tr>
 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Conceptual Domain Context Name</td>
 
-    <td class="OraFieldText" width='40%'>CABIO</td>
+    <td class="OraFieldText" width='40%'>CTEP</td>
 
     <td class="OraFieldText" width='40%'>CTEP</td>
 
@@ -423,25 +338,25 @@ function details(linkParms ){
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Conceptual Domain Version</td>
 
-    <td class="OraFieldText" width='40%'>3.1</td>
+    <td class="OraFieldText" width='40%'>2.31</td>
 
-    <td class="OraFieldText" width='40%'>4.2</td>
+    <td class="OraFieldText" width='40%'>1.0</td>
 
  </tr>  
  
   <tr class="OraTabledata">
      <td class="OraTableColumnHeader">Object Class Preferred Name</td>
  
-     <td class="OraFieldText" width='40%'>MEASUREMENT </td>
+     <td class="OraFieldText" width='40%'>&nbsp;</td>
  
-     <td class="OraFieldText" width='40%'>MEASUREMENT</td>
+     <td class="OraFieldText" width='40%'>Agent</td>
  
  </tr> 
  
    <tr class="OraTabledata">
       <td class="OraTableColumnHeader">Object Class Context</td>
   
-      <td class="OraFieldText" width='40%'>CABIO </td>
+      <td class="OraFieldText" width='40%'>&nbsp;</td>
   
       <td class="OraFieldText" width='40%'>CTEP</td>
   
@@ -450,9 +365,9 @@ function details(linkParms ){
     <tr class="OraTabledata">
        <td class="OraTableColumnHeader">Object Class Version</td>
    
-       <td class="OraFieldText" width='40%'>2.1</td>
+       <td class="OraFieldText" width='40%'>&nbsp;</td>
    
-       <td class="OraFieldText" width='40%'>3.1</td>
+       <td class="OraFieldText" width='40%'>1.0</td>
    
  </tr> 
 
@@ -468,7 +383,7 @@ function details(linkParms ){
   <tr class="OraTabledata">
         <td class="OraTableColumnHeader">Property Preferred Name</td>
     
-        <td class="OraFieldText" width='40%'> </td>
+        <td class="OraFieldText" width='40%'>Quantity</td>
     
         <td class="OraFieldText" width='40%'> </td>
     
@@ -479,18 +394,11 @@ function details(linkParms ){
      
          <td class="OraFieldText" width='40%'> </td>
      
-         <td class="OraFieldText" width='40%'> </td>
+         <td class="OraFieldText" width='40%'>CTEP</td>
      
  </tr> 
  
-    <tr class="OraTabledata">
-          <td class="OraTableColumnHeader">Property Context</td>
-      
-          <td class="OraFieldText" width='40%'> </td>
-      
-          <td class="OraFieldText" width='40%'> </td>
-      
- </tr> 
+
      <tr class="OraTabledata">
            <td class="OraTableColumnHeader">Property Qualifier</td>
        
@@ -509,50 +417,49 @@ function details(linkParms ){
  </tr> 
 </table>
 
+<br>
+<A NAME="valueDomain"></A>
 
-<A NAME="valueDomainDetails"></A>
-
-<table cellpadding="0" cellspacing="0" width="80%" align="center">
+<table cellpadding="0" cellspacing="0" width="90%" align="center">
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td class="OraHeaderSubSub" width="100%">Value Domain</td>
   </tr>
   <tr>
-    <td class="OraHeaderSubSub" width="100%">Value Domain Details</td>
-  </tr>
-
+    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+  </tr>  
 </table>
 
-<table width="80%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
+<table width="90%" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
  <tr class="OraTabledata">
-    <td class="OraTableColumnHeader">Public Id</td>
+    <td class="OraTableColumnHeader">Public ID</td>
 
-    <td class="OraFieldText" width='40%'>123234545</td>
+    <td class="OraFieldText" width='40%'>2015315</td>
 
-    <td class="OraFieldText" width='40%'>123234545</td>
+    <td class="OraFieldText" width='40%'>2015211</td>
 
  </tr>
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Long Name</td>
 
-    <td class="OraFieldText" width='40%'>ADVERSE_EVENT/PATIENT_OUTCO_VD</td>
+    <td class="OraFieldText" width='40%'>AGENT_DOSE_UNITS(GYN)_VD </td>
 
-    <td class="OraFieldText" width='40%'>ADVERSE_EVENT/PATIENT_OUTCO_VD</td>
+    <td class="OraFieldText" width='40%'>Agent Dose UOM</td>
 
  </tr>
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader">Preferred Name</td>
 
-    <td class="OraFieldText" width='40%'>ADVERSE_EVENT/PATIENT_OUTCO_VD</td>
+    <td class="OraFieldText" width='40%'>AGENT_DOSE_UNITS(GYN)_VD </td>
 
-    <td class="OraFieldText" width='40%'>ADVERSE_EVENT/PATIENT_OUTCO_VD</td>
+    <td class="OraFieldText" width='40%'>AGT_UOM</td>
 
  </tr>
   <tr class="OraTabledata">
      <td class="OraTableColumnHeader">Definition</td>
 
-     <td class="OraFieldText" width='40%'>ADVERSE_EVENT/PATIENT_OUTCO_VD</td>
+     <td class="OraFieldText" width='40%'>AGENT_DOSE_UNITS(GYN)_VD</td>
 
-     <td class="OraFieldText" width='40%'>ADVERSE_EVENT/PATIENT_OUTCO_VD</td>
+     <td class="OraFieldText" width='40%'>the units in which the agent or drug is measured.</td>
 
  </tr>
   <tr class="OraTabledata">
@@ -560,7 +467,7 @@ function details(linkParms ){
 
      <td class="OraFieldText" width='40%'>Draft New</td>
 
-     <td class="OraFieldText" width='40%'>Draft New</td>
+     <td class="OraFieldText" width='40%'>RELEASED</td>
 
  </tr>
   <tr class="OraTabledata">
@@ -568,7 +475,7 @@ function details(linkParms ){
 
      <td class="OraFieldText" width='40%'>2.31</td>
 
-     <td class="OraFieldText" width='40%'>2.31</td>
+     <td class="OraFieldText" width='40%'>3.0</td>
 
  </tr>
   <tr class="OraTabledata">
@@ -599,9 +506,9 @@ function details(linkParms ){
   <tr class="OraTabledata">
      <td class="OraTableColumnHeader">Maximum Length</td>
 
-     <td class="OraFieldText" width='40%'>8</td>
+     <td class="OraFieldText" width='40%'>10</td>
 
-     <td class="OraFieldText" width='40%'>8</td>
+     <td class="OraFieldText" width='40%'>15</td>
 
  </tr>
   <tr class="OraTabledata">
@@ -640,34 +547,34 @@ function details(linkParms ){
    <tr class="OraTabledata">
       <td class="OraTableColumnHeader">Value Domain Type</td>
 
-      <td class="OraFieldText" width='40%'></td>
+      <td class="OraFieldText" width='40%'>Enumerated</td>
 
-      <td class="OraFieldText" width='40%'></td>
+      <td class="OraFieldText" width='40%'>Enumerated</td>
 
   </tr>
    <tr class="OraTabledata">
       <td class="OraTableColumnHeader">Conceptual Domain Preferred Name</td>
 
-      <td class="OraFieldText" width='40%'></td>
+      <td class="OraFieldText" width='40%'>CTEP</td>
 
-      <td class="OraFieldText" width='40%'></td>
+      <td class="OraFieldText" width='40%'>UOM</td>
 
   </tr>
 
    <tr class="OraTabledata">
       <td class="OraTableColumnHeader">Conceptual Domain Context Name</td>
 
-      <td class="OraFieldText" width='40%'>8</td>
+      <td class="OraFieldText" width='40%'>CTEP</td>
 
-      <td class="OraFieldText" width='40%'>8</td>
+      <td class="OraFieldText" width='40%'>CTEP</td>
 
   </tr>
    <tr class="OraTabledata">
       <td class="OraTableColumnHeader">Conceptual Domain Version</td>
 
-      <td class="OraFieldText" width='40%'></td>
+      <td class="OraFieldText" width='40%'>2.31</td>
 
-      <td class="OraFieldText" width='40%'></td>
+      <td class="OraFieldText" width='40%'>1.0</td>
 
  </tr>
  <tr class="OraTabledata">
@@ -681,16 +588,19 @@ function details(linkParms ){
 
 </table>
 
+<br>
 <A NAME="permissibleValues"></A>
-<table cellpadding="0" cellspacing="0" width="80%" align="center">
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
-  </tr>
+
+<table cellpadding="0" cellspacing="0" width="90%" align="center">
   <tr>
     <td class="OraHeaderSubSub" width="100%">Permissible Values</td>
   </tr>
+  <tr>
+    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+  </tr>  
 </table>
-<TABLE cellSpacing=5 cellPadding=2 width="80%" align=center border=0>
+
+<TABLE cellSpacing=5 cellPadding=2 width="90%" align=center border=0>
   <TBODY>
   <TR>
     <TD vAlign=top>
@@ -702,17 +612,107 @@ function details(linkParms ){
           <TH class=OraTableColumnHeader>value meaning</TH>
           <TH class=OraTableColumnHeader>Description</TH>
          </TR>
-
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
+          <TD class=OraFieldText>Ci</TD>
+          <TD class=OraFieldText>CURIE</TD>
+          <TD class=OraFieldText>CURIE</TD>
+        </TR>
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>Eq</TD>
+          <TD class=OraFieldText>GRAM-EQUIVALENT WEIGHT</TD>
+          <TD class=OraFieldText>GRAM-EQUIVALENT WEIGHT</TD>
+       </TR>    
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>Gy</TD>
+          <TD class=OraFieldText>GRAYS</TD>
+          <TD class=OraFieldText>GRAYS</TD>
+       </TR>  
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>Hz</TD>
+          <TD class=OraFieldText>HERTZ</TD>
+          <TD class=OraFieldText>HERTZ</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Alive</TD>
-          <TD class=OraFieldText>Alive</TD>
-          <TD class=OraFieldText>Alive</TD>
-    </TR></TBODY></TABLE>
+          <TD class=OraFieldText>IU</TD>
+          <TD class=OraFieldText>INTERNATIONAL UNIT</TD>
+          <TD class=OraFieldText>INTERNATIONAL UNIT</TD>
+         </TR>
+         <TR class=OraTabledata>
+          <TD class=OraFieldText>JCM2</TD>
+          <TD class=OraFieldText>IJOULES PER CENTIMETER SQUARE </TD>
+          <TD class=OraFieldText>JOULES PER CENTIMETER SQUARE </TD>
+         </TR> 
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>L</TD>
+          <TD class=OraFieldText>LITER</TD>
+          <TD class=OraFieldText>LITER</TD>
+         </TR>   
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>MHz</TD>
+          <TD class=OraFieldText>MEGAHERTZ</TD>
+          <TD class=OraFieldText>MEGAHERTZ</TD>
+         </TR>   
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>MMM</TD>
+          <TD class=OraFieldText>MILLIGRAMS PER MILLILITER PER MINUTE </TD>
+          <TD class=OraFieldText>MILLIGRAMS PER MILLILITER PER MINUTE </TD>
+         </TR>   
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>MeV</TD>
+          <TD class=OraFieldText>MILLION ELECTRON VOLTS</TD>
+          <TD class=OraFieldText>MILLION ELECTRON VOLTS</TD>
+         </TR>
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>Mrad</TD>
+          <TD class=OraFieldText>MEGARAD</TD>
+          <TD class=OraFieldText>MEGARAD</TD>
+         </TR>  
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>N/A</TD>
+          <TD class=OraFieldText>NOT APPLICABLE</TD>
+          <TD class=OraFieldText>NOT APPLICABLE</TD>
+         </TR>  
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>Osmol</TD>
+          <TD class=OraFieldText>OSMOLE</TD>
+          <TD class=OraFieldText>OSMOLE</TD>
+         </TR>   
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>Pa</TD>
+          <TD class=OraFieldText>PASCAL</TD>
+          <TD class=OraFieldText>PASCAL</TD>
+         </TR>  
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>VP</TD>
+          <TD class=OraFieldText>VIRAL PARTICLES</TD>
+          <TD class=OraFieldText>VIRAL PARTICLES</TD>
+         </TR>    
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>cGy</TD>
+          <TD class=OraFieldText>CENTIGRAYS</TD>
+          <TD class=OraFieldText>CENTIGRAYS</TD>
+         </TR>   
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>cm</TD>
+          <TD class=OraFieldText>CENTIMETER</TD>
+          <TD class=OraFieldText>CENTIMETER</TD>
+         </TR>   
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>dL</TD>
+          <TD class=OraFieldText>DECILITER</TD>
+          <TD class=OraFieldText>DECILITER</TD>
+         </TR> 
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>dm</TD>
+          <TD class=OraFieldText>DECIMETER</TD>
+          <TD class=OraFieldText>DECIMETER</TD>
+         </TR>   
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>g</TD>
+          <TD class=OraFieldText>GRAM</TD>
+          <TD class=OraFieldText>GRAM</TD>
+         </TR>          
+    </TBODY></TABLE>
     </TD>
     <TD vAlign=top>
       <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
@@ -725,162 +725,594 @@ function details(linkParms ){
          </TR>
 
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
+          <TD class=OraFieldText>J/cm^2</TD>
+          <TD class=OraFieldText>JOULES PER CENTIMETER SQUARE</TD>
+          <TD class=OraFieldText>JOULES PER CENTIMETER SQUARE</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-         </TR>
+          <TD class=OraFieldText>Ci</TD>
+          <TD class=OraFieldText>CURIE</TD>
+          <TD class=OraFieldText>CURIE</TD>
+        </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Alive</TD>
-          <TD class=OraFieldText>Alive</TD>
-          <TD class=OraFieldText>Alive</TD>
+          <TD class=OraFieldText>Eq</TD>
+          <TD class=OraFieldText>GRAM-EQUIVALENT WEIGHT</TD>
+          <TD class=OraFieldText>GRAM-EQUIVALENT WEIGHT</TD>
        </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
+          <TD class=OraFieldText>Hz</TD>
+          <TD class=OraFieldText>HERTZ</TD>
+          <TD class=OraFieldText>HERTZ</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
+          <TD class=OraFieldText>IU</TD>
+          <TD class=OraFieldText>INTERNATIONAL UNIT</TD>
+          <TD class=OraFieldText>INTERNATIONAL UNIT</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
+          <TD class=OraFieldText>L</TD>
+          <TD class=OraFieldText>LITER</TD>
+          <TD class=OraFieldText>LITER</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
+          <TD class=OraFieldText>MeV</TD>
+          <TD class=OraFieldText>MILLION ELECTRON VOLTS</TD>
+          <TD class=OraFieldText>MILLION ELECTRON VOLTS</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
+          <TD class=OraFieldText>Mrad</TD>
+          <TD class=OraFieldText>MEGARAD </TD>
+          <TD class=OraFieldText>MEGARAD</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
+          <TD class=OraFieldText>N/A</TD>
+          <TD class=OraFieldText>NOT APPLICABLE</TD>
+          <TD class=OraFieldText>NOT APPLICABLE </TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
+          <TD class=OraFieldText>Osmol</TD>
+          <TD class=OraFieldText>OSMOLE</TD>
+          <TD class=OraFieldText>OSMOLE</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
+          <TD class=OraFieldText>Pa</TD>
+          <TD class=OraFieldText>PASCAL</TD>
+          <TD class=OraFieldText>PASCAL</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
+          <TD class=OraFieldText>VP</TD>
+          <TD class=OraFieldText>VIRAL PARTICLES</TD>
+          <TD class=OraFieldText>VIRAL PARTICLES </TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
+          <TD class=OraFieldText>cm</TD>
+          <TD class=OraFieldText>CENTIMETER</TD>
+          <TD class=OraFieldText>CENTIMETER</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
+          <TD class=OraFieldText>dL</TD>
+          <TD class=OraFieldText>DECILITER</TD>
+          <TD class=OraFieldText>DECILITER</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
+          <TD class=OraFieldText>dm</TD>
+          <TD class=OraFieldText>DECIMETER</TD>
+          <TD class=OraFieldText>DECIMETER</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
+          <TD class=OraFieldText>g</TD>
+          <TD class=OraFieldText>GRAM</TD>
+          <TD class=OraFieldText>GRAM</TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
+          <TD class=OraFieldText>gravity</TD>
+          <TD class=OraFieldText>GRAVITY (IN CENTRIFUGATION) </TD>
+          <TD class=OraFieldText>GRAVITY (IN CENTRIFUGATION) </TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
-          <TD class=OraFieldText>Recovered /Alive</TD>
+          <TD class=OraFieldText>kHz</TD>
+          <TD class=OraFieldText>KILOHERTZ</TD>
+          <TD class=OraFieldText>KILOHERTZ </TD>
          </TR>
         <TR class=OraTabledata>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
-          <TD class=OraFieldText>Sequela /Alive</TD>
+          <TD class=OraFieldText>kPa</TD>
+          <TD class=OraFieldText>KILOPASCAL</TD>
+          <TD class=OraFieldText>KILOPASCAL</TD>
          </TR>
-
+        <TR class=OraTabledata>
+          <TD class=OraFieldText>keV</TD>
+          <TD class=OraFieldText>KILO-ELECTRON VOLT </TD>
+          <TD class=OraFieldText>KILO-ELECTRON VOLT </TD>
+         </TR>
        </TBODY></TABLE></TD></TR></TBODY></TABLE>
-<A NAME="classifications"></A>
-<table cellpadding="0" cellspacing="0" width="80%" align="center">
+       
+
+<A NAME="referenceDocuments"></A> 
+<br>
+<table cellpadding="0" cellspacing="0" width="90%" align="center" >
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
   </tr>
+  <tr>
+    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+  </tr>
+</table>
+
+<TABLE cellSpacing=0 cellPadding=2 width="90%" align=center border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top width="50%">
+
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Document Name</th>
+    <th class="OraTableColumnHeader">Document Type</th>
+    <th class="OraTableColumnHeader">Document Text</th>
+  </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">CRF Text </td>
+        <td class="OraFieldText">LONG_NAME </td>
+        <td class="OraFieldText">Units </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">CRF Text </td>
+        <td class="OraFieldText">HISTORIC SHORT CDE NAME </td>
+        <td class="OraFieldText">Agent Dose Units </td>
+      </tr>
+
+</table>
+
+    </TD>
+    <TD vAlign=top width="50%">
+    
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Document Name</th>
+    <th class="OraTableColumnHeader">Document Type</th>
+    <th class="OraTableColumnHeader">Document Text</th>
+  </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">CRF Text </td>
+        <td class="OraFieldText">HISTORIC SHORT CDE NAME </td>
+        <td class="OraFieldText">Agent Dose Units </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">CRF Text </td>
+        <td class="OraFieldText">LONG_NAME </td>
+        <td class="OraFieldText">Units </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">Source </td>
+        <td class="OraFieldText">DATA_ELEMENT_SOURCE </td>
+        <td class="OraFieldText">Data element and all values comply with Clinical Data Update System (CDUS) v3.0 Release 2 </td>
+      </tr>
+
+</table>
+    
+    </TD></TR></TBODY></TABLE>
+<br>
+<A NAME="designations"></A>
+<table cellpadding="0" cellspacing="0" width="90%" align="center">
+  <tr>
+    <td class="OraHeaderSubSub" width="100%">Designations</td>
+  </tr>
+  <tr>
+    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+  </tr>  
+</table>
+
+<TABLE cellSpacing=0 cellPadding=2 width="90%" align=center border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top width ="50%">
+      
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Name</th>
+    <th class="OraTableColumnHeader">Type</th>
+    <th class="OraTableColumnHeader">Context</th>
+    <th class="OraTableColumnHeader">Language</th>
+  </tr>
+
+       <tr class="OraTabledata">
+         <td colspan=4">There are no designations for this CDE.</td>
+       </tr>
+
+</table>
+
+    </TD>
+    <TD vAlign=top width="50%">
+    
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Name</th>
+    <th class="OraTableColumnHeader">Type</th>
+    <th class="OraTableColumnHeader">Context</th>
+    <th class="OraTableColumnHeader">Language</th>
+  </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">0002094 </td>
+        <td class="OraFieldText">HISTORICAL_CDE_ID </td>
+        <td class="OraFieldText">CTEP </td>
+        <td class="OraFieldText">ENGLISH </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">0002095 </td>
+        <td class="OraFieldText">HISTORICAL_CDE_ID </td>
+        <td class="OraFieldText">CTEP </td>
+        <td class="OraFieldText">ENGLISH </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">0002096 </td>
+        <td class="OraFieldText">HISTORICAL_CDE_ID </td>
+        <td class="OraFieldText">CTEP </td>
+        <td class="OraFieldText">ENGLISH </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">0058399 </td>
+        <td class="OraFieldText">HISTORICAL_CDE_ID </td>
+        <td class="OraFieldText">CTEP </td>
+        <td class="OraFieldText">ENGLISH </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">0062759 </td>
+        <td class="OraFieldText">HISTORICAL_CDE_ID </td>
+        <td class="OraFieldText">CTEP </td>
+        <td class="OraFieldText">ENGLISH </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">0064797 </td>
+        <td class="OraFieldText">HISTORICAL_CDE_ID </td>
+        <td class="OraFieldText">CTEP </td>
+        <td class="OraFieldText">ENGLISH </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">0065120 </td>
+        <td class="OraFieldText">HISTORICAL_CDE_ID </td>
+        <td class="OraFieldText">CTEP </td>
+        <td class="OraFieldText">ENGLISH </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">0061250 </td>
+        <td class="OraFieldText">HISTORICAL_CDE_ID </td>
+        <td class="OraFieldText">CTEP </td>
+        <td class="OraFieldText">ENGLISH </td>
+      </tr>
+
+</table>
+          
+    </TD></TR></TBODY></TABLE>
+          
+<br> 
+<A NAME="classifications"></A>
+
+<table cellpadding="0" cellspacing="0" width="90%" align="center">
   <tr>
     <td class="OraHeaderSubSub" width="100%">Classifications</td>
   </tr>
+  <tr>
+    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+  </tr>  
 </table>
-<TABLE cellSpacing=5 cellPadding=2 width="80%" align=center border=0>
+<TABLE cellSpacing=1 cellPadding=0 width="90%" align=center border=0>
   <TBODY>
   <TR>
-    <TD vAlign=top>
+    <TD vAlign=top width="50">
       <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
       align=center border=0>
         <TBODY>
+        
         <TR class=OraTableColumnHeader>
           <TH class=OraTableColumnHeader>CS* Preferred Name</TH>
           <TH class=OraTableColumnHeader>CS* Definition</TH>
+          <TH class=OraTableColumnHeader>Public ID</TH>
           <TH class=OraTableColumnHeader>CSI* Name</TH>
           <TH class=OraTableColumnHeader>CSI* Type</TH>
          </TR>
 
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>CATEGORY</TD>
-          <TD class=OraFieldText>Type of Category</TD>
-          <TD class=OraFieldText>Adverse Events</TD>
-          <TD class=OraFieldText>CATEGORY_TYPE</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>DISEASE</TD>
-          <TD class=OraFieldText>Type of Disease</TD>
-          <TD class=OraFieldText>Breast</TD>
-          <TD class=OraFieldText>DISEASE_TYPE</TD>
-    </TR></TBODY></TABLE>
+      <tr class="OraTabledata">
+        <td class="OraFieldText">CATEGORY </td>
+        <td class="OraFieldText">Type of Category </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Treatment </td>
+        <td class="OraFieldText">CATEGORY_TYPE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">DISEASE </td>
+        <td class="OraFieldText">Type of Disease </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Gynecologic </td>
+        <td class="OraFieldText">DISEASE_TYPE </td>
+      </tr>
+      
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Primary Cervical </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Primary Endometrial </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Primary Ovarian </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Recurrent Gyn </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+      <tr class="OraTabledata">
+        <td class="OraFieldText">USAGE </td>
+        <td class="OraFieldText">Type of Usage </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">CLINICAL TRIALS </td>
+        <td class="OraFieldText">USAGE_TYPE </td>
+      </tr>
+      
+    </TBODY></TABLE>
     </TD>
-    <TD vAlign=top>
+    <TD vAlign=top width="50" >
       <TABLE class=OraBGAccentVeryDark cellSpacing=1 cellPadding=1 width="100%"
       align=center border=0>
         <TBODY>
         <TR class=OraTableColumnHeader>
           <TH class=OraTableColumnHeader>CS* Preferred Name</TH>
           <TH class=OraTableColumnHeader>CS* Definition</TH>
+          <TH class=OraTableColumnHeader>Public ID</TH>
           <TH class=OraTableColumnHeader>CSI* Name</TH>
           <TH class=OraTableColumnHeader>CSI* Type</TH>
          </TR>
 
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>CCR Implementation</TD>
-          <TD class=OraFieldText>Applications within CCR implementing CDEs</TD>
-          <TD class=OraFieldText>C3D</TD>
-          <TD class=OraFieldText>USAGE_TYPE</TD>
-         </TR>
-        <TR class=OraTabledata>
-          <TD class=OraFieldText>C3D Domain</TD>
-          <TD class=OraFieldText>Central Cancer Clinical Database</TD>
-          <TD class=OraFieldText>CTMSv3.02</TD>
-          <TD class=OraFieldText>C3D</TD>
-    </TR></TBODY></TABLE>
-    </TD></TR></TBODY></TABLE>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">CATEGORY </td>
+        <td class="OraFieldText">Type of Category </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Protocol/Admin. </td>
+        <td class="OraFieldText">CATEGORY_TYPE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">CATEGORY </td>
+        <td class="OraFieldText">Type of Category </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Treatment </td>
+        <td class="OraFieldText">CATEGORY_TYPE </td>
+      </tr>
+
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">CRF_DISEASE </td>
+        <td class="OraFieldText">this scheme is used to classify by disease case report forms and their associated data elements.  Assignments to this scheme should not be made manually but occur through use of the CRF Loader and the CRT. </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Colorectal </td>
+        <td class="OraFieldText">DISEASE_TYPE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">ALL Prev Untreated </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">AML Prev Untreated </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">APL Prev Untreated </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Adjuvant Esophageal </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Adjuvant Gastric </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Advanced Esophageal </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Advanced Gastric </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">CLL Prev Untreated </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">CML Prev Untreated </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">HCL Prev Untreated </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">MDS Prev Untreated </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">NSCLC 2nd Line </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Primary Cervical </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Primary Endometrial </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">Primary Ovarian </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">TTU </td>
+        <td class="OraFieldText">Trial Type Usages (CDE Disease Committees) </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">SCLC 2nd Line </td>
+        <td class="OraFieldText">TRIAL_TYPE_USAGE </td>
+      </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">USAGE </td>
+        <td class="OraFieldText">Type of Usage </td>
+        <td class="OraFieldText">
+          &nbsp;
+         </td>
+        <td class="OraFieldText">CLINICAL TRIALS </td>
+        <td class="OraFieldText">USAGE_TYPE </td>
+      </tr>    
+    
+    </TBODY></TABLE>
+    </TD></TR>
+    
+    </TBODY></TABLE>
 
  <br>
 

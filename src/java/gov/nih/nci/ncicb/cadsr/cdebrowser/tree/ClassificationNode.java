@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.resource.ClassificationScheme;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.webtree.WebNode;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
 
@@ -14,7 +15,7 @@ import java.util.Hashtable;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import oracle.jdbc.OraclePreparedStatement;
+//import oracle.jdbc.OraclePreparedStatement;
 
 import java.net.URLEncoder;
 
@@ -59,19 +60,19 @@ public class ClassificationNode extends BaseTreeNode  {
                                +"AND   csc.cs_idseq = ? "
                                +"AND   csc.p_cs_csi_idseq is null "
                                +"ORDER BY csi.csi_name ";
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List csiNodes = null;
     List children = new ArrayList(11);
     try {
       pstmt =  
-         (OraclePreparedStatement)myDbUtil.getConnection().
+         (PreparedStatement)myDbUtil.getConnection().
                             prepareStatement(csiQueryStmt);
-      pstmt.defineColumnType(1,Types.VARCHAR);
-      pstmt.defineColumnType(2,Types.VARCHAR);
-      pstmt.defineColumnType(3,Types.VARCHAR);
-      pstmt.defineColumnType(4,Types.VARCHAR);
-      pstmt.defineColumnType(5,Types.VARCHAR);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
+      //pstmt.defineColumnType(5,Types.VARCHAR);
       pstmt.setFetchSize(25);
       pstmt.setString(1,myCsVO.getCsIdseq());
       rs = pstmt.executeQuery();
@@ -175,17 +176,17 @@ public class ClassificationNode extends BaseTreeNode  {
                                 +"AND    tem.qc_idseq = acv.ac_idseq "
                                 +"AND    acv.CS_CSI_IDSEQ = ? "
                                 +"ORDER BY tem.long_name ";
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List tempNodes = new ArrayList(11);
     try {
       pstmt =  
-         (OraclePreparedStatement)myDbUtil.getConnection().
+         (PreparedStatement)myDbUtil.getConnection().
                             prepareStatement(tempQueryStmt);
-      pstmt.defineColumnType(1,Types.VARCHAR);
-      pstmt.defineColumnType(2,Types.VARCHAR);
-      pstmt.defineColumnType(3,Types.VARCHAR);
-      pstmt.defineColumnType(4,Types.VARCHAR);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
       pstmt.setFetchSize(25);
       pstmt.setString(1,csCsiIdseq);
       rs = pstmt.executeQuery();
@@ -222,18 +223,18 @@ public class ClassificationNode extends BaseTreeNode  {
                                //+"AND   csc.cs_idseq = ? "
                                +"AND   csc.p_cs_csi_idseq = ? "
                                +"ORDER BY csi.csi_name ";
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List csiNodes = null;
     try {
       pstmt =  
-         (OraclePreparedStatement)myDbUtil.getConnection().
+         (PreparedStatement)myDbUtil.getConnection().
                             prepareStatement(csiQueryStmt);
-      pstmt.defineColumnType(1,Types.VARCHAR);
-      pstmt.defineColumnType(2,Types.VARCHAR);
-      pstmt.defineColumnType(3,Types.VARCHAR);
-      pstmt.defineColumnType(4,Types.VARCHAR);
-      pstmt.defineColumnType(5,Types.VARCHAR);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
+      //pstmt.defineColumnType(5,Types.VARCHAR);
       pstmt.setFetchSize(25);
       //pstmt.setString(1,myCsVO.getCsIdseq());
       pstmt.setString(1,csCsiIdseq);

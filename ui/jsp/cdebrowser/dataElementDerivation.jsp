@@ -11,7 +11,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.html.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants " %>
-
+<%@page import="java.util.Iterator" %>
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 

@@ -9,9 +9,11 @@ import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 import java.sql.Date;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+
 
 
 public class ModuleTransferObject extends AdminComponentTransferObject
@@ -20,6 +22,7 @@ public class ModuleTransferObject extends AdminComponentTransferObject
   private List terms;
   private String moduleIdseq;
   private int dispOrder;
+  private Collection instructions;
 
   public ModuleTransferObject() {
     idseq = moduleIdseq;
@@ -56,6 +59,16 @@ public class ModuleTransferObject extends AdminComponentTransferObject
   public void setDisplayOrder(int dispOrder) {
     this.dispOrder = dispOrder;
   }
+  
+  public Collection getInstructions()
+  {
+    return instructions;
+  }
+  public void setInstructions(Collection newInstructions)
+  {
+    instructions=newInstructions;
+  }
+  
   /**
    * Clones the object
    * Makes a deep copy of the Questions

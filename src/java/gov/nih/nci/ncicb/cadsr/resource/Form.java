@@ -2,7 +2,7 @@ package gov.nih.nci.ncicb.cadsr.resource;
 
 import java.util.List;
 
-public interface Form extends AdminComponent  {
+public interface Form extends AdminComponent,Instructionable  {
   public String getFormIdseq();
   public void setFormIdseq (String idseq);
 

@@ -45,7 +45,7 @@ public class DBUtil  {
         ("Connected to the database successfully using datasource "+dataSourceName);
       }
       catch (NamingException ne) {
-        log.error("Exception occurred in getConnectionFromContainer", ne);
+        log.error("Exception occurred in getConnectionFromContainer for DataSource name="+dataSourceName, ne);
         throw new NamingException
                 ("Failed to lookup JDBC datasource. Check the datasource name");
       }

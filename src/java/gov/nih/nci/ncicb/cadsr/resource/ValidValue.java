@@ -1,7 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.resource;
 import java.io.Serializable;
 
-public interface ValidValue extends Serializable{
+public interface ValidValue extends Serializable {
   public String getVdIdseq();
 
   public void setVdIdseq(String aVdIdseq);

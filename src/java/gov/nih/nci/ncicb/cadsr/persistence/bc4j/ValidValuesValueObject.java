@@ -69,7 +69,7 @@ public class ValidValuesValueObject implements ValidValue {
   }
     /**
    * Clones the Object
-   * @return 
+   * @return
    * @throws CloneNotSupportedException
    */
   public Object clone() throws CloneNotSupportedException {

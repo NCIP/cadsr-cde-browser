@@ -119,7 +119,7 @@ function clearProtocol() {
             </td>
             <td class="OraFieldText" nowrap>
               <html:text size="100" property="<%=FormConstants.MODULE_LONG_NAME%>"
-                  maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>">
+                  maxlength="<%= Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH) %>">
               </html:text>
             </td>
           </tr>
@@ -325,7 +325,7 @@ function clearProtocol() {
                                                     htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
                                                     deProperty = "longName"
                                                     formIndex="0"
-                                                    questionIndex="<%=questionIndex%>" /> 
+                                                    questionIndex="<%=questionIndex.toString()%>" /> 
                                 
                             </td>
                         </tr>                       
@@ -340,7 +340,7 @@ function clearProtocol() {
                                                   htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
                                                   deProperty = "longCDEName"
                                                   formIndex="0"
-                                                  questionIndex="<%=questionIndex%>" /> 
+                                                  questionIndex="<%=questionIndex.toString()%>" /> 
                           </td>
                       </tr>                                            
                       </logic:present>                        
@@ -356,7 +356,7 @@ function clearProtocol() {
                                                   deProperty = "longName"
                                                   orgModuleBeanId= '<%=FormConstants.CLONED_MODULE%>'
                                                   formIndex="0"
-                                                  questionIndex="<%=questionIndex%>" /> 
+                                                  questionIndex="<%=questionIndex.toString()%>" /> 
                           </td>
                       </tr>  
                       </table>

@@ -1,17 +1,20 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.dto.ReferenceDocumentTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.BaseDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ConnectionException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DAOCreateException;
+import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.security.oc4j.BaseUserManager;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 
+import java.util.ArrayList;
 import org.apache.commons.logging.LogFactory; 
 
 import org.springframework.jdbc.core.SqlOutParameter;
@@ -82,6 +85,20 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
     return StringUtils.toBoolean(retValue);
   }
+
+  /**
+   * Gets all ReferenceDocuments for a AdminComp
+   *
+   * @return <b>Collection</b> Collection of ReferenceDocumentTransferObjects
+   */
+  public List getAllReferenceDocuments(String adminComponentId,String docType) {
+     List col = new ArrayList();
+     ReferenceDocumentsQuery query = new ReferenceDocumentsQuery();
+     query.setDataSource(getDataSource());
+     query.setSql(adminComponentId,docType);
+     return query.execute();
+  }
+  
 
   private JDBCAdminComponentDAO.HasCreateQuery getHasCreateQry() {
     if (hasCreateQry == null) {
@@ -418,5 +435,36 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     }
   }
 
+  /**
+   * Inner class to get all ReferenceDocuments that belong to
+   * the specified Admin Component
+   */
+  class ReferenceDocumentsQuery extends MappingSqlQuery {
+    ReferenceDocumentsQuery() {
+      super();
+    }
+
+    public void setSql(String adminCompId,String docType) {
+      super.setSql(
+        "SELECT ref.name, ref.dctl_name, ref.ac_idseq, " + 
+        "       ref.rd_idseq, ref.url, ref.doc_text " + 
+        " FROM reference_documents ref" +
+        " WHERE ref.ac_idseq = '" +adminCompId+"'"+
+        " AND   ref.DCTL_NAME = '"+ docType+"'");
+    }
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      ReferenceDocument refDoc = new ReferenceDocumentTransferObject();
+
+      refDoc.setDocName(rs.getString(1));
+      refDoc.setDocType(rs.getString(2));
+      refDoc.setDocIDSeq(rs.getString(4));
+      refDoc.setUrl(rs.getString(5));
+      refDoc.setDocText(rs.getString(6));
+      return refDoc;
+    }
+  }
   
 }

@@ -1,7 +1,7 @@
 <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
   <tr >
     <td >
-      <a href="javascript:submitFormEdit('<%=NavigationConstants.ADD_QUESTION%>')">
+      <a href="javascript:submitForm('<%=NavigationConstants.ADD_QUESTION%>')">
         <html:img src='<%=urlPrefix+"i/add_button.gif"%>' border="0" alt="Add"/>
       </a>
     </td>     

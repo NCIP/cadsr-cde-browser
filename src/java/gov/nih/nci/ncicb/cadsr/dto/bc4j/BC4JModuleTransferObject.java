@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Question;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -75,4 +76,17 @@ public class BC4JModuleTransferObject extends AdminComponentTransferObject
   public void setDisplayOrder(int dispOrder) {
     this.displayOrder = dispOrder;
   }
+
+  /**
+  * Dummy methods to match the interface :skakkodi
+  */
+    public Collection getInstructions()
+    {
+      return null;
+    }
+    public void setInstructions(Collection newInstructions)
+    {
+
+   }
+
 }

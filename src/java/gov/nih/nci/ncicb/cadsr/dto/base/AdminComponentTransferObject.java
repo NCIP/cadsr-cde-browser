@@ -165,12 +165,13 @@ public class AdminComponentTransferObject extends BaseValueObject
 	public List getRefereceDocs() {
 		return refDocs;
 	}
+
+  public void setReferenceDocs(List lRefDocs) {
+    refDocs = lRefDocs;
+  }
+  
 	public List getDesignations() {
 		return designations;
-	}
-
-	public void setReferenceDocs(List lRefDocs) {
-		refDocs = lRefDocs;
 	}
 
 	public void setDesignations(List lDes) {

@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.webtree.WebNode;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.sql.SQLException;
@@ -14,7 +15,7 @@ import java.util.Hashtable;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import oracle.jdbc.OraclePreparedStatement;
+//import oracle.jdbc.OraclePreparedStatement;
 
 public class ProtocolNode extends BaseTreeNode  {
   //DBUtil _myDbUtil = null;
@@ -48,7 +49,7 @@ public class ProtocolNode extends BaseTreeNode  {
    *  
    */
   public List getCRFs() throws SQLException {
-    OraclePreparedStatement pstmt = null;
+    PreparedStatement pstmt = null;
     ResultSet rs = null;
     List _crfNodes = new ArrayList(7);
     final String crfQueryStmt =  "SELECT qc_idseq "
@@ -63,11 +64,11 @@ public class ProtocolNode extends BaseTreeNode  {
                                 +"ORDER BY long_name ";; 
     try {
       pstmt =  
-         (OraclePreparedStatement)myConn.prepareStatement(crfQueryStmt);
-      pstmt.defineColumnType(1,Types.VARCHAR);
-      pstmt.defineColumnType(2,Types.VARCHAR);
-      pstmt.defineColumnType(3,Types.VARCHAR);
-      pstmt.defineColumnType(4,Types.VARCHAR);
+         (PreparedStatement)myConn.prepareStatement(crfQueryStmt);
+      //pstmt.defineColumnType(1,Types.VARCHAR);
+      //pstmt.defineColumnType(2,Types.VARCHAR);
+      //pstmt.defineColumnType(3,Types.VARCHAR);
+      //pstmt.defineColumnType(4,Types.VARCHAR);
       
       pstmt.setString(1,_myProtoVO.getProtoIdseq());
       rs = pstmt.executeQuery();

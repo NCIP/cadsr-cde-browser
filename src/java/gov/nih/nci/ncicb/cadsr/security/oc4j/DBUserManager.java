@@ -122,4 +122,14 @@ public class DBUserManager extends BaseUserManager implements PersistenceConstan
     daoFactory=AbstractDAOFactory.getDAOFactory(locator);
         log.debug("Set AbstractDAOFactory ="+daoFactory);  
   }
+
+  public ServiceLocator getLocator()
+  {
+    return locator;
+  }
+
+  public void setLocator(ServiceLocator locator)
+  {
+    this.locator = locator;
+  }
 }

@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
+import java.io.Serializable;
 import java.sql.*;
 
 /**
@@ -7,7 +8,7 @@ import java.sql.*;
  * <P>
  * @author Oracle Corporation
  */
-public class UserErrorMessage extends Object {
+public class UserErrorMessage extends Object implements Serializable {
 
   private String msgOverview = "";
   private String msgText = "";

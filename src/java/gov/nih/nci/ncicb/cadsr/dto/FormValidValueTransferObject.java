@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
+import java.util.Collection;
 
 public class FormValidValueTransferObject extends AdminComponentTransferObject
   implements FormValidValue {
@@ -11,7 +12,8 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
   private String vpIdseq;
   private int dispOrder;
   private String shortMeaning;
-
+  private Collection instructions;
+  
   public FormValidValueTransferObject() {
   }
 
@@ -59,6 +61,15 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
   public void setShortMeaning(String newShortMeaning){
     shortMeaning=newShortMeaning;
   }
+  public Collection getInstructions()
+  {
+    return instructions;
+  }
+  public void setInstructions(Collection newInstructions)
+  {
+    instructions=newInstructions;
+  }
+  
   /**
    * Clones the object
    * Makes a deep copy of the Valivalues

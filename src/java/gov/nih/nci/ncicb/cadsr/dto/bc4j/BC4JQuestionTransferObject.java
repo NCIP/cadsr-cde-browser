@@ -11,6 +11,7 @@ import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -18,10 +19,10 @@ import java.util.List;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class BC4JQuestionTransferObject extends QuestionTransferObject {
-  
+
   /**
    * Creates a new BC4JQuestionTransferObject object.
    *
@@ -117,4 +118,15 @@ public class BC4JQuestionTransferObject extends QuestionTransferObject {
    */
   public void setValidValues(List values) {
   }
+  /**
+  * Dummy methods to match the interface :skakkodi
+  */
+    public Collection getInstructions()
+    {
+      return null;
+    }
+    public void setInstructions(Collection newInstructions)
+    {
+
+   }
 }

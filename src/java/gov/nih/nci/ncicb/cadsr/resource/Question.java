@@ -2,7 +2,7 @@ package gov.nih.nci.ncicb.cadsr.resource;
 
 import java.util.List;
 
-public interface Question extends AdminComponent,Orderable  {
+public interface Question extends AdminComponent,Orderable,Instructionable   {
   public String getQuesIdseq();
   public void setQuesIdseq(String idseq);
 

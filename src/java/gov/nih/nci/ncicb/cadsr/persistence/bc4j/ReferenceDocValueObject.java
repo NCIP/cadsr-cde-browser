@@ -10,6 +10,8 @@ public class ReferenceDocValueObject extends BaseValueObject
   String docText = null;
   String lang = null;
   String url = null;
+  String docIdSeq;
+  String language;
   //Integer displayOrder 
   public ReferenceDocValueObject(ReferenceDocumentsViewRowImpl refDoc) {
     docName = checkForNull(refDoc.getName());
@@ -22,6 +24,10 @@ public class ReferenceDocValueObject extends BaseValueObject
   public String getDocName(){
     return docName;
   }
+  public void setDocName(String docName)
+  {
+    this.docName = docName;
+  }  
   public String getDocType(){
     return docType;
   }
@@ -31,10 +37,34 @@ public class ReferenceDocValueObject extends BaseValueObject
   public String getDocIDSeq(){
     return docIDSeq;
   }
+  public void setDocIDSeq(String docIdSeq)
+  {
+    this.docIdSeq = docIdSeq;
+  }
+  
   public String getUrl(){
     return url;
   }
   public String getLanguage(){
     return lang;
   }
+  public void setDocText(String docText)
+  {
+    this.docText = docText;
+  }
+
+  public void setDocType(String docType)
+  {
+    this.docType = docType;
+  }
+
+  public void setLanguage(String language)
+  {
+    this.language = language;
+  }
+
+  public void setUrl(String url)
+  {
+    this.url = url;
+  }  
 }

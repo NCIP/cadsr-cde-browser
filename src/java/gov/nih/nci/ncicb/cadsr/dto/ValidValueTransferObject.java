@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
+import java.util.Collection;
 
 public class ValidValueTransferObject implements ValidValue {
 
@@ -9,6 +10,7 @@ public class ValidValueTransferObject implements ValidValue {
   protected String shortMeaningDescription;
   protected String shortMeaningValue;
   protected String description;
+  protected Collection instructions = null;
   
   public ValidValueTransferObject() {
   }
@@ -53,7 +55,15 @@ public class ValidValueTransferObject implements ValidValue {
   public void setDescription(String description) {
     this.description = description;
   }
-  
+ 
+  public Collection getInstructions()
+  {
+    return instructions;
+  }
+  public void setInstructions(Collection newInstructions)
+  {
+    instructions=newInstructions;
+  }
   public Object clone() throws CloneNotSupportedException {
     return null;
   }

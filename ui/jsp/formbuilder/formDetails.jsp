@@ -21,6 +21,7 @@
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff">
     <% String urlPrefix = "";
+     int dummyInstructionDisplayCount = 3;
 
 %>
     <%@ include file="../common/in_process_common_header_inc.jsp"%>
@@ -129,13 +130,14 @@
         </tr>
       </table>      
             <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
-              <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
+              <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules" indexId="modIndex" >                            
                 <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
                  <tr>                 
                     <td class="OraHeaderBlack">
                       <bean:write name="module" property="longName"/>
                     </td>
                   </tr>
+                 <logic:lessThan value="2" name="modIndex">          
                  <tr class="OraTabledata">                 
                     <td >
                        <table align="center" cellpadding="1" cellspacing="0" border="0" class="OraBGAccentVeryDark" >
@@ -149,13 +151,15 @@
                         </tr>
                        </table>
                     </td>                                                          
-                  </tr>                  
+                  </tr>         
+                  </logic:lessThan>                                 
                   <logic:present name="module">
                   <logic:notEmpty name="module" property = "questions">
                     <tr class="OraTabledata">
                       <td>
                         <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraTabledata">      
-                          <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">                           
+                          <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions" indexId="questionIndex" >                           
+                            <bean:size id="questionSize" name="module" property="questions" />
                             <tr class="OraTabledata">
                               <td class="OraFieldText" width="50">&nbsp;</td>
                               <td height="1"  class="OraFieldText">                               
@@ -195,6 +199,7 @@
                                </table>
                               </td> 
                             </tr>
+                           <logic:lessThan value="2" name="questionIndex"> 
                             <tr class="OraTabledata">
                                <td class="OraFieldText" width="50">&nbsp;</td>
                                 <td class="OraFieldText" colspan="2">                              
@@ -210,7 +215,7 @@
                                  </table>                                                            
                                </td>
                              </tr> 
-
+                            </logic:lessThan>
 
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">
@@ -218,7 +223,7 @@
                                 <td class="OraFieldText" width="50">&nbsp;</td>
                                 <td colspan="2">
                                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                                    <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
+                                    <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues" indexId="vvIndex">
                                       <tr   class="OraTabledata">
                                         <td COLSPAN="2" class="OraFieldText" >&nbsp;</td>
                                       </tr>
@@ -231,7 +236,7 @@
                                       <tr   class="OraTabledata">
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td >
-                                          <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                                          <table align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
                                              <tr class="OraTabledata">
                                               <td class="OraTableColumnHeader" width="10%" nowrap>
                                                 <b>ValueMeaning</b> 
@@ -240,6 +245,7 @@
                                                 &nbsp;
                                              </td>
                                             </tr>
+                                            <logic:lessThan value="1" name="vvIndex">
                                              <tr class="OraTabledata">
                                               <td class="OraTableColumnHeader" width="10%" nowrap>
                                                 <bean:message key="cadsr.formbuilder.form.instruction"/> 
@@ -247,8 +253,9 @@
                                              <td class="OraFieldTextInstruction">
                                                Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
                                              </td>
-                                            </tr>                        
-                                          </table>                                       
+                                            </tr>
+                                           </logic:lessThan>
+                                           </table>                                  
                                         </td>
                                       </tr>                                        
                                     </logic:iterate><!-- valid Value-->
@@ -272,6 +279,14 @@
                               </tr>                            
                             </logic:empty>
                             </logic:present>
+                            
+                           <logic:equal value="<%= String.valueOf(questionSize.intValue()-1) %>" name="questionIndex">          
+                            <tr class="OraTabledata">
+                              <td class="OraFieldText" width="50">&nbsp;</td>
+                              <td height="1"  class="OraFieldText">                               
+                              </td>                              
+                            </tr>         
+                          </logic:equal>                             
                           </logic:iterate><!-- Question-->
                         </table>
                       </td>

@@ -101,7 +101,7 @@ function clearProtocol() {
             </td>
             <td  class="OraFieldText" width="80%" nowrap>
               <html:text size="100" property="<%=FormConstants.FORM_LONG_NAME%>"
-              maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>">
+                 maxlength="<%= Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH)%>">
              </html:text>
             </td>
           </tr>
@@ -415,7 +415,7 @@ function clearProtocol() {
                                       <tr   class="OraTabledata">
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td >
-                                          <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                                          <table align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
                                              <tr class="OraTabledata">
                                               <td class="OraTableColumnHeader" width="10%" nowrap>
                                                 <b>ValueMeaning</b> 

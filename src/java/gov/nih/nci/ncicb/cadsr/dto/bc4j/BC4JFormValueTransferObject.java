@@ -9,6 +9,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Question;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -74,4 +75,16 @@ public class BC4JFormValueTransferObject extends AdminComponentTransferObject
   public void setShortMeaning(String shortMeaning){
   //dummy implementation
   }
+
+  /**
+  * Dummy methods to match the interface :skakkodi
+  */
+    public Collection getInstructions()
+    {
+      return null;
+    }
+    public void setInstructions(Collection newInstructions)
+    {
+
+   }
 }
