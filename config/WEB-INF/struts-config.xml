@@ -183,7 +183,8 @@
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
       validate="false">
-      <forward name="success" path="/formSearchAction.do?method=getAllForms"
+      <forward name="success"
+        path="/formSearchFramedAction.do?method=getAllForms"
         redirect="false"/>
     </action>    
     
