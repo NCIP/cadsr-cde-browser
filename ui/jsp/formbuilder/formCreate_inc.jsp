@@ -67,6 +67,7 @@ function clearProtocol() {
           property="<%= FormConstants.FORM_LONG_NAME %>"
           cols="30"
           rows="5"
+          styleClass="OraFieldText"
           />
       </td>
         
@@ -147,8 +148,9 @@ function clearProtocol() {
         <td class="OraFieldText" nowrap>
           <html:textarea 
             property="<%= FormConstants.PREFERRED_DEFINITION %>"
-             cols="30"
+            cols="30"
             rows="5"
+            styleClass="OraFieldText"
           />
         </td>
         
@@ -158,6 +160,7 @@ function clearProtocol() {
             property="<%= FormConstants.FORM_COMMENTS %>"
             cols="30"
             rows="5"
+            styleClass="OraFieldText"
           />        
         </td>
     </tr>

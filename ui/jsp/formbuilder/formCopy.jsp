@@ -76,6 +76,7 @@ function submitForm() {
               property="<%= FormConstants.FORM_LONG_NAME %>"
               cols="30"
               rows="5"
+              styleClass="OraFieldText"
               />
           </td>
 
@@ -160,6 +161,7 @@ function submitForm() {
               name="<%= FormConstants.CRF %>"
               cols="30"
               rows="5"
+              styleClass="OraFieldText"
               />
            </td>
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.comments" />:</td>
@@ -168,6 +170,7 @@ function submitForm() {
               property="<%= FormConstants.FORM_COMMENTS %>"
               cols="30"
               rows="5"
+              styleClass="OraFieldText"
               />
            </td>
         </tr>
