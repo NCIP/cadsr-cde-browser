@@ -6,6 +6,8 @@ import org.springframework.jdbc.object.MappingSqlQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
+import java.util.Iterator;
 
 public class JDBCFormCategoryDAO extends JDBCBaseDAO implements FormCategoryDAO  {
   public JDBCFormCategoryDAO(ServiceLocator locator) {
@@ -43,6 +45,19 @@ public class JDBCFormCategoryDAO extends JDBCBaseDAO implements FormCategoryDAO 
     }
   }
           
+  public static void main(String[] args) {
+    ServiceLocator locator = new SimpleServiceLocator();
+
+    //JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory(locator);
+    JDBCFormCategoryDAO test = new JDBCFormCategoryDAO(locator);
+
+    Collection coll = test.getAllCategories();
+    for (Iterator it=coll.iterator(); it.hasNext( ); ) { 
+        Object anObject = it.next( ); 
+        System.out.println( "category list display = " + anObject ); 
+    }
+
+  }
 
 
   

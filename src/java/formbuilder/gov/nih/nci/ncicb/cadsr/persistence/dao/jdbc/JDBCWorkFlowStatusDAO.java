@@ -53,12 +53,11 @@ public class JDBCWorkFlowStatusDAO extends JDBCBaseDAO implements WorkFlowStatus
     //JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory(locator);
     JDBCWorkFlowStatusDAO test = new JDBCWorkFlowStatusDAO(locator);
 
-    Collection coll = test.getWorkFlowStatusesForACType("DATAELEMENT");
+    Collection coll = test.getWorkFlowStatusesForACType("QUEST_CONTENT");
     for (Iterator it=coll.iterator(); it.hasNext( ); ) { 
         Object anObject = it.next( ); 
         System.out.println( "workflow status display = " + anObject ); 
     }
-
   }
           
   

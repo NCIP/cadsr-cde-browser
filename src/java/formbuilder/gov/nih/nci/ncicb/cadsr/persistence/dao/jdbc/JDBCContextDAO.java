@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.ArrayList;
 import org.springframework.jdbc.object.MappingSqlQuery;
+import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
+import java.util.Iterator;
 
 
 public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
@@ -41,7 +43,9 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
     }
           
     protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
-        return new JDBCContextTransferObject(rs);
+      System.out.println("conte_idseq = " + rs.getString("conte_idseq"));
+      System.out.println("name = " + rs.getString("name"));
+      return new JDBCContextTransferObject(rs);
     }
   }
           
@@ -59,4 +63,14 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
     //Hyun, don't implement this method right now.
     return null;
   }
+
+  public static void main(String[] args) {
+    ServiceLocator locator = new SimpleServiceLocator();
+
+    //JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory(locator);
+    JDBCContextDAO test = new JDBCContextDAO(locator);
+    Collection coll = test.getAllContexts();
+  }
+
 }
+          
