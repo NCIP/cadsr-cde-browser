@@ -187,7 +187,17 @@ function clearProtocol() {
                                     </logic:notEqual>
                                   </td>
                                   <td align="center">
-                                       <html:img src='<%=urlPrefix+"i/edit.gif"%>' border="0" alt="Change DE Association"/>
+                                    <%-- 
+                                      // TEMPORARY 
+                                      --%>
+                                      <a href="gotoChangeAssociation.do?method=displayCDECart&amp;<%= FormConstants.QUESTION_INDEX%>=<bean:write name="questionIndex"/>&amp;<%= FormConstants.MODULE_INDEX %>=0">
+                                        <img src="<%=urlPrefix%>i/edit.gif" border="0" alt="Change DE Association"/>
+                                      </a>
+                                    <%--
+                                    <a href="javascript:submitModuleEdit('<%=NavigationConstants.CHANGE_DE_ASSOCIATION%>','<%=questionIndex%>')">
+                                      <img src="<%=urlPrefix%>i/edit.gif" border="0" alt="Change DE Association"/>
+                                    </a>
+                                    --%>
                                   </td>                                  
                                   <td align="center">
                                     <a href="javascript:submitModuleEdit('<%=NavigationConstants.DELETE_QUESTION%>','<%=questionIndex%>')">
