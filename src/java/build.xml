@@ -46,7 +46,8 @@
   <property name="html.dir" value="${ui.dir}/html"/>   
   <property name="formbuilder.jsp.dir" value="${jsp.dir}/formbuilder"/>  
   <property name="cdebrowser.jsp.dir" value="${jsp.dir}/cdebrowser"/>
-  <property name="cdebrowser.html.dir" value="${html.dir}/cdebrowser"/>  
+  <property name="cdebrowser.html.dir" value="${html.dir}/cdebrowser"/>
+  <property name="cdebrowser.jsp.dir" value="${jsp.dir}/cdebrowser"/>
    
   
   
@@ -332,6 +333,13 @@
           <include name="formbuilder/**/*.*"/>  
           <include name="*.jsp"/>
         </patternset>
+      </fileset>
+      
+      <fileset dir="${jsp.dir}/">
+              <patternset>
+                <include name="common/**/*.*"/>  
+                <include name="*.jsp"/>
+              </patternset>
       </fileset>
         
       <fileset dir="${cdebrowser.jsp.dir}/">        
