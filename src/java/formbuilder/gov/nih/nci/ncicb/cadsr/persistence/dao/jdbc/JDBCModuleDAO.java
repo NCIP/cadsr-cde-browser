@@ -180,6 +180,32 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     return 0;
   }
 
+
+
+  /**
+   * Changes several fields of a module.
+   *
+   * @param <b>Module</b> Module component.
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public int updateModuleComponent(
+    Module module) throws DMLException {
+
+    UpdateModuleComponent updateModuleComponent =
+      new UpdateModuleComponent(this.getDataSource());
+    int res = updateModuleComponent.updateModule(module);
+
+    if (res != 1) {
+      throw new DMLException(
+        "Did not succeed updating module's long name");
+    }
+
+    return 1;
+  }
+
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
 
@@ -191,9 +217,17 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       test.getQuestionsInAModule("99CD59C5-A9C3-3FA4-E034-080020C9C0E0"));
     */
     
-    System.out.println(
-      test.findModuleByPrimaryKey("99CD59C5-B04A-3FA4-E034-080020C9C0E0"));
-      
+    Module module = test.findModuleByPrimaryKey("99CD59C5-B04A-3FA4-E034-080020C9C0E0");
+    System.out.println(module);
+    module.setLongName("test long name");    
+    try {
+      int res = test.updateModuleComponent(module );
+      System.out.println("updated module's long name " + res);
+    }
+    catch (DMLException de) {
+      de.printStackTrace();
+    }
+    
     /*
     try {
       int res = test.deleteModule("99CD59C5-B206-3FA4-E034-080020C9C0E0");
@@ -492,6 +526,38 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     }
   }
 
+  /**
+   * Inner class that updates long name of the question. 
+   * 
+   */
+  private class UpdateModuleComponent extends SqlUpdate {
+    public UpdateModuleComponent(DataSource ds) {
+      String updateSql =
+        " UPDATE quest_contents_ext " + 
+        " SET LONG_NAME = ? " +
+        " WHERE QC_IDSEQ = ? ";
 
+      this.setDataSource(ds);
+      this.setSql(updateSql);
+      declareParameter(new SqlParameter("long_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
+      compile();
+    }
+
+    protected int updateModule(
+      Module module) {
+
+      Object[] obj =
+        new Object[] {
+          module.getLongName(),
+          module.getModuleIdseq()
+        };
+
+      int res = update(obj);
+
+      return res;
+    }
+  }
 
 }
+

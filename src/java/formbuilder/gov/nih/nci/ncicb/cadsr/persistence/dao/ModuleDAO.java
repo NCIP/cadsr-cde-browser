@@ -103,6 +103,18 @@ public interface ModuleDAO {
     String newLongName) throws DMLException;
 
   /**
+   * Changes several fields of a module.
+   *
+   * @param <b>Module</b> Module component.
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public int updateModuleComponent(
+    Module module) throws DMLException;
+
+  /**
    * Finds a module based on the primary key.
    *
    * @param <b>moduleId</b> Idseq of the form component.
