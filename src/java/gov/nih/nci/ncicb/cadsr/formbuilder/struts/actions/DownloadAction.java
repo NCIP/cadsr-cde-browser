@@ -228,7 +228,7 @@ public class DownloadAction
   }
 
   CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-  String excelFilename = params.getXMLDownloadDir() + "Form" + "_" + crf.getLongName() + ".xls";
+  String excelFilename = params.getXMLDownloadDir() + "Form" + "_" + crf.getLongName().replace('/', '_') + ".xls";
   FileOutputStream fileOut = new FileOutputStream(excelFilename);
   wb.write(fileOut);
   fileOut.close();
