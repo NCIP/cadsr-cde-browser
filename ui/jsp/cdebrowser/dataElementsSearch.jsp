@@ -68,7 +68,7 @@
   String modIndex = "";
   String quesIndex = "";
   String urlParams = "";
-  String newSearchURL = "search?PageId=DataElementsGroup";
+  String newSearchURL = "cdeBrowse.jsp?performQuery=newSearch&PageId=DataElementsGroup";
   
   if ((src != null) && (!"".equals(src))) {
     modIndex = request.getParameter("moduleIndex");
@@ -216,7 +216,7 @@ function done() {
 }
 
 function newSearch(){
-  document.location.href= "<%=newSearchURL%>";
+  top.location.href= "<%=newSearchURL%>";
 }
 //-->
 </SCRIPT>

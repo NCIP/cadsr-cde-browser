@@ -25,11 +25,19 @@ import gov.nih.nci.ncicb.cadsr.resource.impl.CDECartImpl;
 import gov.nih.nci.ncicb.cadsr.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
 import gov.nih.nci.ncicb.cadsr.util.PageIterator;
+import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
 import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
 import gov.nih.nci.ncicb.cadsr.util.UserErrorMessage;
-import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
-import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
+
+import oracle.cle.persistence.HandlerFactory;
+
+import oracle.cle.process.ProcessInfoException;
+import oracle.cle.process.Service;
+
+import oracle.cle.util.statemachine.TransitionCondition;
+import oracle.cle.util.statemachine.TransitionConditionException;
 
 import java.text.DateFormat;
 
@@ -41,13 +49,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-
-import oracle.cle.persistence.HandlerFactory;
-import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.Service;
-import oracle.cle.util.statemachine.TransitionCondition;
-import oracle.cle.util.statemachine.TransitionConditionException;
 
 
 /**
@@ -78,6 +79,12 @@ public class GetDataElements extends BasePersistingProcess {
       registerResultObject("tibSearchDE");
       registerStringParameter("P_PARAM_TYPE");
       registerStringParameter("P_IDSEQ");
+
+      //
+      registerStringResult("P_PARAM_TYPE");
+      registerStringResult("P_IDSEQ");
+
+      //
       registerStringParameter("P_CS_CSI_IDSEQ");
       registerStringResult("P_CONTEXT");
       registerStringResult("P_CONTE_IDSEQ");
@@ -146,22 +153,26 @@ public class GetDataElements extends BasePersistingProcess {
     try {
       myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
       userSession = myRequest.getSession(false);
+
       // This integrates cdebrowser with other application outside mvcframework
       //stores the session keys that need to copied when session reset
       String currentServiceString =
-        (String)userSession.getAttribute(ProcessConstants.SERVICENAME);
-      SessionUtils.addGlobalSessionKey(userSession,ProcessConstants.SERVICENAME);
-      SessionUtils.addGlobalSessionKey(userSession,"InfoTablePool");
-      if(currentServiceString!=null)
-        SessionUtils.addGlobalSessionKey(userSession,currentServiceString+".service");
-      SessionUtils.addGlobalSessionKey(userSession,"IsSessionReset");
-      SessionUtils.addGlobalSessionKey(userSession,"maintb");
-      SessionUtils.addGlobalSessionKey(userSession,"subtab0");
-      SessionUtils.addGlobalSessionKey(userSession,"MultipartRequest");
-      SessionUtils.addGlobalSessionKey(userSession,"RequestedValues");
+        (String) userSession.getAttribute(ProcessConstants.SERVICENAME);
+      SessionUtils.addGlobalSessionKey(
+        userSession, ProcessConstants.SERVICENAME);
+      SessionUtils.addGlobalSessionKey(userSession, "InfoTablePool");
 
-      
-      
+      if (currentServiceString != null) {
+        SessionUtils.addGlobalSessionKey(
+          userSession, currentServiceString + ".service");
+      }
+
+      SessionUtils.addGlobalSessionKey(userSession, "IsSessionReset");
+      SessionUtils.addGlobalSessionKey(userSession, "maintb");
+      SessionUtils.addGlobalSessionKey(userSession, "subtab0");
+      SessionUtils.addGlobalSessionKey(userSession, "MultipartRequest");
+      SessionUtils.addGlobalSessionKey(userSession, "RequestedValues");
+
       System.out.println(
         getCurrentTimestamp() +
         "- GetDataElements process started successfully ");
@@ -197,7 +208,7 @@ public class GetDataElements extends BasePersistingProcess {
 
       TreeParameters treeParam = new TreeParametersTransferObject();
 
-      if ((paramType != null) && (paramIdSeq != null)) {
+      if ((paramType != null) && (paramIdSeq != null) && !("newSearch".equals(performQuery))) {
         CDEBrowserPageContextHandler ph =
           (CDEBrowserPageContextHandler) HandlerFactory.getHandler(
             CDEBrowserPageContext.class);
@@ -269,19 +280,20 @@ public class GetDataElements extends BasePersistingProcess {
         dePageIterator =
           (PageIterator) getInfoObject(
             ProcessConstants.DE_SEARCH_PAGE_ITERATOR);
-        //dePageIterator.setCurrentPage(0);
 
+        //dePageIterator.setCurrentPage(0);
         if (dePageIterator == null) {
           System.out.println(
-          getCurrentTimestamp() +
-          "- Unable to retrieve PageIterator from session. Creating a new PageIterator..");
+            getCurrentTimestamp() +
+            "- Unable to retrieve PageIterator from session. Creating a new PageIterator..");
           dePageIterator = new BC4JPageIterator(40);
         }
         else {
           System.out.println(
-          getCurrentTimestamp() +
-          "- Retrieved PageIterator from session successfully");
+            getCurrentTimestamp() +
+            "- Retrieved PageIterator from session successfully");
         }
+
         dePageIterator.setCurrentPage(0);
         queryBuilder =
           new DESearchQueryBuilder(
@@ -349,7 +361,8 @@ public class GetDataElements extends BasePersistingProcess {
       }
 
       else if (performQuery.equals("addToCart")) {
-        ValidValueHandler valueHandler = (ValidValueHandler) HandlerFactory.getHandler(ValidValue.class);
+        ValidValueHandler valueHandler =
+          (ValidValueHandler) HandlerFactory.getHandler(ValidValue.class);
         desb = (DataElementSearchBean) getInfoObject("desb");
         dePageIterator =
           (PageIterator) getInfoObject(
@@ -357,29 +370,36 @@ public class GetDataElements extends BasePersistingProcess {
         queryBuilder =
           (DESearchQueryBuilder) getInfoObject(
             ProcessConstants.DE_SEARCH_QUERY_BUILDER);
-        queryResults = (List)getInfoObject(
-            ProcessConstants.ALL_DATA_ELEMENTS);
+        queryResults = (List) getInfoObject(ProcessConstants.ALL_DATA_ELEMENTS);
 
         CDECart cart = this.findCart(userSession);
-        String [] itemsList = getInfoStringArray(ProcessConstants.SELECT_DE);
+        String[] itemsList = getInfoStringArray(ProcessConstants.SELECT_DE);
         CDECartItem cdeItem = null;
         DataElement de = null;
         ValueDomain vd = null;
-        for (int i=0; i <itemsList.length; i++){
+
+        for (int i = 0; i < itemsList.length; i++) {
           cdeItem = new CDECartItemTransferObject();
-          de = locateDataElement(queryResults,itemsList[i]);
+          de = locateDataElement(queryResults, itemsList[i]);
           vd = de.getValueDomain();
-          vd.setValidValues(valueHandler.getValidValues(vd.getVdIdseq(),getSessionId()));
+          vd.setValidValues(
+            valueHandler.getValidValues(vd.getVdIdseq(), getSessionId()));
           cdeItem.setItem(de);
           cart.setDataElement(cdeItem);
         }
 
-       myRequest.setAttribute (
-        ProcessConstants.CDE_CART_ADD_SUCCESS
-       ,"Data Element(s) added to your CDE Cart Successfully.");
-
+        myRequest.setAttribute(
+          ProcessConstants.CDE_CART_ADD_SUCCESS,
+          "Data Element(s) added to your CDE Cart Successfully.");
       }
-
+      else if (performQuery.equals("newSearch")) {
+        paramType = null;
+        paramIdSeq = null;
+        queryResults = null;
+        desb =
+          new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
+        
+      }
 
       setResult("desb", desb);
       setResult(ProcessConstants.DE_SEARCH_PAGE_ITERATOR, dePageIterator);
@@ -387,6 +407,10 @@ public class GetDataElements extends BasePersistingProcess {
       setResult(ProcessConstants.ALL_DATA_ELEMENTS, queryResults);
       setResult("tibSearchDE", tib);
       setResult("performQuery", null);
+
+      //
+      setResult("P_PARAM_TYPE", paramType);
+      setResult("P_IDSEQ", paramIdSeq);
 
       setCondition(SUCCESS);
     }
@@ -452,9 +476,10 @@ public class GetDataElements extends BasePersistingProcess {
       setResult("XML_FILE_MAX_RECORDS", params.getXMLFileMaxRecords());
       setResult("TREE_URL", params.getTreeURL());
       setResult("INITIALIZED", "yes");
+
       CDECart cart = this.findCart(mySession);
-      mySession.setAttribute(CaDSRConstants.CDE_CART,cart);
-      SessionUtils.addGlobalSessionKey(mySession,CaDSRConstants.CDE_CART);
+      mySession.setAttribute(CaDSRConstants.CDE_CART, cart);
+      SessionUtils.addGlobalSessionKey(mySession, CaDSRConstants.CDE_CART);
     }
     else {
       setResult("SBREXT_DSN", getStringInfo("SBREXT_DSN"));
@@ -520,22 +545,30 @@ public class GetDataElements extends BasePersistingProcess {
     return ts;
   }
 
-  private DataElement locateDataElement(List results, String deId) {
+  private DataElement locateDataElement(
+    List results,
+    String deId) {
     Iterator it = results.iterator();
     DataElement de = null;
+
     while (it.hasNext()) {
-      de = (DataElement)it.next();
-      if (de.getDeIdseq().equals(deId)){
-        return DTOTransformer.toDataElement((BC4JDataElementTransferObject)de);
+      de = (DataElement) it.next();
+
+      if (de.getDeIdseq().equals(deId)) {
+        return DTOTransformer.toDataElement((BC4JDataElementTransferObject) de);
       }
     }
+
     return de;
   }
 
   private CDECart findCart(HttpSession mySession) {
-    CDECart cart = (CDECart)mySession.getAttribute(CaDSRConstants.CDE_CART);
-    if (cart == null)
+    CDECart cart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
+
+    if (cart == null) {
       cart = new CDECartImpl();
+    }
+
     return cart;
   }
 }

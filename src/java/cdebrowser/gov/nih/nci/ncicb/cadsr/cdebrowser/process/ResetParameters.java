@@ -1,112 +1,81 @@
-/**
-*
-*Copyright (c) 2002 Oracle Corporation
-*/
-
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-
-// java imports
-import java.util.*;
-import java.io.*;
+import oracle.cle.process.GenericProcess;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.base.process.BaseGenericProcess;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
+import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import oracle.cle.process.ProcessInfo;
+import oracle.cle.process.ProcessInfoException;
+import oracle.cle.process.ProcessParameter;
+import oracle.cle.process.ProcessResult;
+import oracle.cle.process.Service;
 
 // Framework imports
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
-import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.GenericProcess;
-import oracle.cle.process.ProcessParameter;
-import oracle.cle.process.ProcessResult;
-import oracle.cle.process.ProcessInfo;
-import oracle.cle.process.Service;
-import oracle.cle.process.ProcessConstants;
-//Constants Imports
 
+import java.io.*;
 
+import java.util.*;
 
 /**
- *
- * @author Oracle Corporation 
+ * @author Ram Chilukuri
  */
-public class ResetParameters extends GenericProcess
-{
-	
+public class ResetParameters extends BaseGenericProcess {
+  public ResetParameters() {
+    super();
+    DEBUG = false;
+  }
 
+ /**
+   * Registers all the parameters and results  (<code>ProcessInfo</code>) for
+   * this process during construction.
+   */
+  protected void registerInfo() {
+    try {
+      registerStringParameter("P_PARAM_TYPE");
+      registerStringParameter("P_IDSEQ");
+      registerStringResult("P_PARAM_TYPE");
+      registerStringResult("P_IDSEQ");
+      registerParameterObject(ProcessConstants.PAGE_CONTEXT);
+      registerParameterObject(ProcessConstants.ALL_DATA_ELEMENTS);
+      registerResultObject(ProcessConstants.PAGE_CONTEXT);
+      registerResultObject(ProcessConstants.ALL_DATA_ELEMENTS);
+      registerParameterObject("SEARCH");
+      registerResultObject("SEARCH");
+      registerResultObject("desb");
+      registerParameterObject("dbUtil");
+      registerStringParameter("SBR_DSN");
+    }
+    catch (ProcessInfoException pie) {
+      reportException(pie, DEBUG);
+    }
+  }
 
-	public ResetParameters()
-	{
- 		super();
- 		
-		//add conditions here
-		
-		DEBUG = false;
-	} // end default constructor
+  /**
+   * Start:  Everything that this process does at runtime is done within the
+   * scope of this method and anything that it invokes.
+   */
+  public void start() {
+    try {
+      /*String paramType = getStringInfo("P_PARAM_TYPE");
+      String paramIdSeq = getStringInfo("P_IDSEQ");
+      DBUtil dbUtil = (DBUtil) getInfoObject("dbUtil");
+      dbUtil.getConnectionFromContainer(dsName);
+      DataElementSearchBean desb =
+          new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);*/
+      setCondition(SUCCESS);
+    }
+    catch (Exception ex) {
+      try {
+        setCondition(FAILURE);
+      }
+      catch (TransitionConditionException tce) {
+        reportException(tce, DEBUG);
+      }
 
-
-	/**
-	* Registers all the parameters and results 
-	* (<code>ProcessInfo</code>) for this process
-	* during construction.
-	* 
-	* @author Oracle Corporation	
-	*/
-	protected void registerInfo()
-	{
-		try
-		{
-			// register info here
-			registerParameter(
-				new ProcessParameter(ProcessConstants.USER,
-				ProcessConstants.USER,
-				"The logged in User",
-				null));
-
-			// result info
-			
-
-
-			// parameter info
-			
-		} // end try
-		catch(ProcessInfoException pie)
-		{
-			reportException(pie, DEBUG);
-		} // end cath
-	} // end registerInfo
-
-
-
-	/**
-	* Start:  Everything that this process does at runtime is
-	* done within the scope of this method and anything that
-	* it invokes.
-	*
-	* @author Oracle Corporation	
-	*/
-	public void start()
-	{
-		try
-		{
-			// local variables for results
-			
-
-			// local variables for parameters
-			
-
-
-			setCondition(SUCCESS);
-			} // end try
-		catch(Exception ex)
-		{
-			try
-			{
-				setCondition(FAILURE);
-			} // end try
-			catch(TransitionConditionException tce)
-			{
-				reportException(tce,DEBUG);
-			} // end catch
-			reportException(ex,DEBUG);
-		} // end catch
-	} // end start
+      reportException(ex, DEBUG);
+    }
+  }
 }

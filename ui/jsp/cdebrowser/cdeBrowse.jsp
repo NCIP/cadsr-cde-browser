@@ -14,7 +14,7 @@
 <jsp:setProperty name="currInfoBean" property="session" value="<%=session %>"/>
 
 <%
-  
+  String performQuery = request.getParameter("performQuery");
   List cachedDeList = null;
   Boolean showCached = null;
   try{
@@ -51,6 +51,10 @@
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
       TreeConstants.DE_SEARCH_FUNCTION + treeParams +
       "&skin=CDEBrowser1";
+
+  if (performQuery != null ) {
+    extraURLParams += "&performQuery="+performQuery; 
+  }
       
   if (pageId == null) {
    browserURL = "search?FirstTimer=0"+extraURLParams;
@@ -60,7 +64,7 @@
     browserURL = "search?PageId="+pageId+"&FirstTimer=0"+extraURLParams;
   }
 
-  if(cachedDeList!=null||showCached!=null) {
+  if((cachedDeList!=null||showCached!=null) && (performQuery == null)) {
     pageContext.setAttribute("resultsPresent",new Boolean("true"));
     browserURL = "dataElementsSearch.jsp?performQuery=cached"+"&FirstTimer=0"+extraURLParams;
   }
