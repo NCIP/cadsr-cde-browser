@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto.bc4j;
 
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
+import java.util.List;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -25,6 +26,7 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 	protected String cdContextName;
 	protected Float cdVersion;
 	protected String vdType;
+  protected List validValues;
 
 	public BC4JValueDomainTransferObject() {
     idseq = vdIdseq;
@@ -152,6 +154,7 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 		else
 			return vdType;
 	}
+  
 	public void setVDType(String type) {
 		vdType = type;
 	}
