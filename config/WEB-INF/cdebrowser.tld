@@ -132,4 +132,36 @@
     <rtexprvalue>true</rtexprvalue>
     </attribute>   
   </tag>   
+  
+  <tag>
+    <name>questionAltText</name>
+    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.AltQuestionText</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>questionAltText</info>  
+    <attribute>
+    <name>questionBeanId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>deProperty</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>htmlObjectRef</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>formIndex</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>    
+    <attribute>
+    <name>questionIndex</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>     
+  </tag>   
 </taglib>

@@ -213,7 +213,7 @@ function clearProtocol() {
                                 <tr class="OraTableColumnHeaderModule">
                                  
                                  <td >
-                                  <html:text size="100%" indexed="true" property='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'></html:text>
+                                  <html:text size="100%"  property='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'></html:text>
                                  </td>
                                 <logic:present name="question" property="dataElement">
                                   <td align="center" width="70" >
@@ -243,21 +243,30 @@ function clearProtocol() {
                       <logic:present name="question" property="dataElement">
                       <logic:present name="question" property="dataElement.longName">
                       <tr class="OraTabledata">
-                          <td class="OraFieldText" width="50">&nbsp;</td>                       
+                          <td class="OraFieldText" nowrap align="left" >
+                            <bean:message key="cadsr.formbuilder.form.longName" />
+                          </td>                       
                           <td class="OraFieldText">
-                            <html:radio property='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>' value="dataElement.longName">
-                              <bean:write name="question" property="dataElement.longName"/>
-                             </html:radio>  
+                             : <cde:questionAltText questionBeanId= "question" 
+                                                  htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
+                                                  deProperty = "longName"
+                                                  formIndex="0"
+                                                  questionIndex="<%=questionIndex%>" /> 
+                              
                           </td>
                       </tr>
                       </logic:present>
                       <logic:present name="question" property="dataElement.longCDEName">
                       <tr class="OraTabledata">
-                          <td class="OraFieldText" width="50">&nbsp;</td>                       
+                          <td class="OraFieldText" nowrap align="left">
+                            <bean:message key="cadsr.formbuilder.form.longCDEName" />
+                          </td>                      
                           <td class="OraFieldText">
-                            <html:radio property='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>' value="dataElement.longCDEName">
-                              <bean:write name="question" property="dataElement.longCDEName"/>
-                             </html:radio>  
+                             : <cde:questionAltText questionBeanId= "question" 
+                                                  htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
+                                                  deProperty = "longCDEName"
+                                                  formIndex="0"
+                                                  questionIndex="<%=questionIndex%>" /> 
                           </td>
                       </tr>
                       </logic:present>                      
