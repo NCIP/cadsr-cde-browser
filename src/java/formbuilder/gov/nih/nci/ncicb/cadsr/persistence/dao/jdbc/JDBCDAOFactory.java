@@ -2,12 +2,15 @@ package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DAOCreateException;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.FormCategoryDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormValidValueDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.WorkFlowStatusDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.*;
 
 import java.util.Collection;
@@ -76,6 +79,41 @@ public class JDBCDAOFactory extends AbstractDAOFactory
     if (myDAO == null) {
       myDAO = new JDBCUserManagerDAO(serviceLocator);
       daoCache.put(JDBC_USER_MGR_DAO, myDAO);
+    }
+
+    return myDAO;
+  }
+
+  public ContextDAO getContextDAO() {
+    ContextDAO myDAO = (JDBCContextDAO) daoCache.get(JDBC_CONTEXT_DAO);
+
+    if (myDAO == null) {
+      myDAO = new JDBCContextDAO(serviceLocator);
+      daoCache.put(JDBC_CONTEXT_DAO, myDAO);
+    }
+
+    return myDAO;
+  }
+
+  public FormCategoryDAO getFormCategoryDAO() {
+    FormCategoryDAO myDAO =
+      (JDBCFormCategoryDAO) daoCache.get(JDBC_FORM_CATEGORY_DAO);
+
+    if (myDAO == null) {
+      myDAO = new JDBCFormCategoryDAO(serviceLocator);
+      daoCache.put(JDBC_FORM_CATEGORY_DAO, myDAO);
+    }
+
+    return myDAO;
+  }
+
+  public WorkFlowStatusDAO getWorkFlowStatusDAO() {
+    WorkFlowStatusDAO myDAO =
+      (JDBCWorkFlowStatusDAO) daoCache.get(JDBC_WK_FLOW_STATUS_DAO);
+
+    if (myDAO == null) {
+      myDAO = new JDBCWorkFlowStatusDAO(serviceLocator);
+      daoCache.put(JDBC_WK_FLOW_STATUS_DAO, myDAO);
     }
 
     return myDAO;

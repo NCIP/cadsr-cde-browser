@@ -1,13 +1,14 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
 
-public abstract class AbstractDAOFactory implements PersistenceContants{
 
+public abstract class AbstractDAOFactory implements PersistenceContants {
   private static Map cache = Collections.synchronizedMap(new HashMap());
   protected ServiceLocator serviceLocator;
 
@@ -21,22 +22,28 @@ public abstract class AbstractDAOFactory implements PersistenceContants{
   public abstract QuestionDAO getQuestionDAO();
 
   public abstract FormValidValueDAO getFormValidValueDAO();
-  
+
   public abstract UserManagerDAO getUserManagerDAO();
 
+  public abstract ContextDAO getContextDAO();
 
-  public static AbstractDAOFactory getDAOFactory(ServiceLocator locator) throws DAOCreateException {
+  public abstract FormCategoryDAO getFormCategoryDAO();
 
+  public abstract WorkFlowStatusDAO getWorkFlowStatusDAO();
+
+  public static AbstractDAOFactory getDAOFactory(ServiceLocator locator)
+    throws DAOCreateException {
     AbstractDAOFactory factory = null;
-    String daoFactoryClassName =
-      locator.getString(DAO_FACTORY_CLASS_KEY);
-    
+    String daoFactoryClassName = locator.getString(DAO_FACTORY_CLASS_KEY);
+
     factory = getDAOFactory(daoFactoryClassName);
     factory.setServiceLocator(locator);
+
     return factory;
   }
-  
-  public static AbstractDAOFactory getDAOFactory(String daoFactoryClassName) throws DAOCreateException {
+
+  public static AbstractDAOFactory getDAOFactory(String daoFactoryClassName)
+    throws DAOCreateException {
     AbstractDAOFactory factory = null;
 
     factory = (AbstractDAOFactory) cache.get(daoFactoryClassName);
@@ -55,15 +62,13 @@ public abstract class AbstractDAOFactory implements PersistenceContants{
     }
 
     return factory;
-  }  
+  }
 
-  public void setServiceLocator(ServiceLocator newServiceLocator)
-  {
+  public void setServiceLocator(ServiceLocator newServiceLocator) {
     serviceLocator = newServiceLocator;
   }
 
-  public ServiceLocator getServiceLocator()
-  {
+  public ServiceLocator getServiceLocator() {
     return serviceLocator;
   }
 }
