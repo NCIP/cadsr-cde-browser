@@ -71,67 +71,76 @@ public class BC4JDataElementConceptTransferObject extends AdminComponentTransfer
 		latestVerInd = dataElementConceptsViewRowImpl.getLatestVersionInd();
     
     //ObjectClass Info
-    ObjectClass objClass = new ObjectClassTransferObject();
-		String objClassPrefName =
-			checkForNull(dataElementConceptsViewRowImpl.getObjectClassPrefName());
-    objClass.setPreferredName(objClassPrefName);
-		Number objClassPublicId = dataElementConceptsViewRowImpl.getObjectClassPublicId();
-    if (objClassPublicId != null)
+    String objectClassPrefName = dataElementConceptsViewRowImpl.getObjectClassPrefName();
+    if(objectClassPrefName!=null&&!objectClassPrefName.equals(""))
     {
-      objClass.setPublicId(objClassPublicId.intValue());
-    }    
-    
-		String objClassContextName =
-			checkForNull(dataElementConceptsViewRowImpl.getObjectClassContext());
-    Context objContext = new ContextTransferObject();
-    objContext.setName(objClassContextName);
-    objClass.setContext(objContext);
-    Float objClassVersion = null;
-		if (dataElementConceptsViewRowImpl.getObjectClassVersion() != null)
-			objClassVersion =
-				new Float(
-					dataElementConceptsViewRowImpl.getObjectClassVersion().floatValue());
-		else
-			objClassVersion = new Float(0.00f);
-    objClass.setVersion(objClassVersion);
-		String oclName = checkForNull(dataElementConceptsViewRowImpl.getOclName());    
-    objClass.setName(oclName);
-		String objClassQualifier =
-			checkForNull(dataElementConceptsViewRowImpl.getObjClassQualifier());
-    objClass.setQualifier(objClassQualifier);
-    setObjectClass(objClass);
+        ObjectClass objClass = new ObjectClassTransferObject();
+        objClass.setLongName(checkForNull(dataElementConceptsViewRowImpl.getObjectClassLongName()));
+        String objClassPrefName =
+          checkForNull(objectClassPrefName);
+        objClass.setPreferredName(objClassPrefName);
+        Number objClassPublicId = dataElementConceptsViewRowImpl.getObjectClassPublicId();
+        if (objClassPublicId != null)
+        {
+          objClass.setPublicId(objClassPublicId.intValue());
+        }    
+        String objClassContextName =
+          checkForNull(dataElementConceptsViewRowImpl.getObjectClassContext());
+        Context objContext = new ContextTransferObject();
+        objContext.setName(objClassContextName);
+        objClass.setContext(objContext);
+        Float objClassVersion = null;
+        if (dataElementConceptsViewRowImpl.getObjectClassVersion() != null)
+          objClassVersion =
+            new Float(
+              dataElementConceptsViewRowImpl.getObjectClassVersion().floatValue());
+        else
+          objClassVersion = new Float(0.00f);
+        objClass.setVersion(objClassVersion);
+        String oclName = checkForNull(dataElementConceptsViewRowImpl.getOclName());    
+        objClass.setName(oclName);
+        String objClassQualifier =
+          checkForNull(dataElementConceptsViewRowImpl.getObjClassQualifier());
+        objClass.setQualifier(objClassQualifier);
+        setObjectClass(objClass);
+    }
   
     //Property Info
-    Property prop = new PropertyTransferObject();
-		String propertyPrefName =
-			checkForNull(dataElementConceptsViewRowImpl.getPropertyPrefName());
-    prop.setPreferredName(propertyPrefName);
-    Number propPublicId = dataElementConceptsViewRowImpl.getPropertyPublicId();
-    if(propPublicId!=null)
-    {
-      prop.setPublicId(propPublicId.intValue());
+    String propPrefName = dataElementConceptsViewRowImpl.getPropertyPrefName();
+    if(propPrefName!=null&&!propPrefName.equals(""))
+    {    
+        Property prop = new PropertyTransferObject();
+        String propertyPrefName =
+          checkForNull(propPrefName);
+        prop.setPreferredName(propertyPrefName);
+        prop.setLongName(checkForNull(dataElementConceptsViewRowImpl.getPropertyLongName()));
+        Number propPublicId = dataElementConceptsViewRowImpl.getPropertyPublicId();
+        if(propPublicId!=null)
+        {
+          prop.setPublicId(propPublicId.intValue());
+        }
+        
+        String propertyContextName =
+          checkForNull(dataElementConceptsViewRowImpl.getPropertyContextName()); 
+        Context propContext = new ContextTransferObject();
+        propContext.setName(propertyContextName);
+        prop.setContext(propContext);
+        String proplName = checkForNull(dataElementConceptsViewRowImpl.getProplName());
+        prop.setName(proplName);
+        Float propertyVersion = null;
+        if (dataElementConceptsViewRowImpl.getPropertyVersion() != null)
+          propertyVersion =
+            new Float(
+              dataElementConceptsViewRowImpl.getPropertyVersion().floatValue());
+        else
+          propertyVersion = new Float(0.00f);
+        prop.setVersion(propertyVersion);
+        String propertyQualifier =
+          checkForNull(dataElementConceptsViewRowImpl.getPropertyQualifier());  
+        prop.setQualifier(propertyQualifier);
+        setProperty(prop);
     }
     
-		String propertyContextName =
-			checkForNull(dataElementConceptsViewRowImpl.getPropertyContextName()); 
-    Context propContext = new ContextTransferObject();
-    propContext.setName(propertyContextName);
-    prop.setContext(propContext);
-		String proplName = checkForNull(dataElementConceptsViewRowImpl.getProplName());
-    prop.setName(proplName);
-    Float propertyVersion = null;
-		if (dataElementConceptsViewRowImpl.getPropertyVersion() != null)
-			propertyVersion =
-				new Float(
-					dataElementConceptsViewRowImpl.getPropertyVersion().floatValue());
-		else
-			propertyVersion = new Float(0.00f);
-    prop.setVersion(propertyVersion);
-		String propertyQualifier =
-			checkForNull(dataElementConceptsViewRowImpl.getPropertyQualifier());  
-    prop.setQualifier(propertyQualifier);
-    setProperty(prop);
-
 		conteName = dataElementConceptsViewRowImpl.getContextName();
 		cdPrefName = dataElementConceptsViewRowImpl.getCDPrefName();
 		cdContextName = dataElementConceptsViewRowImpl.getCDContextName();

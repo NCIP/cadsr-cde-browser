@@ -201,6 +201,10 @@ function goPage(pageInfo) {
             <td class="OraFieldText"><%=objClass.getPublicId()%></td>
          </tr>
          <tr class="OraTabledata"> 
+            <td class="TableRowPromptText"  width="20%" >Long Name:</td>
+            <td class="OraFieldText"><%=objClass.getLongName()%> </td>
+         </tr>         
+         <tr class="OraTabledata"> 
             <td class="TableRowPromptText"  width="20%" >Preferred Name:</td>
             <td class="OraFieldText"><%=objClass.getPreferredName()%> </td>
          </tr>
@@ -296,6 +300,10 @@ function goPage(pageInfo) {
              <td class="OraFieldText"><%=prop.getPublicId()%></td>
           </tr>
           <tr class="OraTabledata"> 
+             <td class="TableRowPromptText"  width="20%" >Long Name:</td>
+             <td class="OraFieldText"><%=prop.getLongName()%> </td>
+          </tr>          
+          <tr class="OraTabledata"> 
              <td class="TableRowPromptText"  width="20%" >Preferred Name:</td>
              <td class="OraFieldText"><%=prop.getPreferredName()%> </td>
           </tr>
@@ -359,7 +367,7 @@ function goPage(pageInfo) {
                            <td class="OraTableColumnHeader">Definition Source</td>
                            <td class="OraTableColumnHeader">EVS Source</td>                      
                          </tr>   
-                        <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.resource.ComponentConcept" property="dataElementConcept.objectClass.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
+                        <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.resource.ComponentConcept" property="dataElementConcept.property.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
                          <tr class="OraTabledata">
                             <td class="OraFieldText"><%=comp.getConcept().getLongName()%> </td>
                             <td class="OraFieldText">

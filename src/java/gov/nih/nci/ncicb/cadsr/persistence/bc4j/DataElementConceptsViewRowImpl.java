@@ -629,6 +629,18 @@ public class DataElementConceptsViewRowImpl extends ViewRowImpl {
       return "";
     }
   }
+  
+    /**
+   * Gets the associated Object Class Preferred Name
+   */
+  public String getObjectClassLongName() {
+    if (getOcIdseq() != null) {
+      return (String) getObjectClassesExtRow().getAttribute("LongName");
+    }
+    else {
+      return "";
+    }
+  }
 
   /**
    * Gets the associated Object Class Context Name
@@ -677,6 +689,18 @@ public class DataElementConceptsViewRowImpl extends ViewRowImpl {
       return "";
     }
   }
+  
+  /**
+   * Gets the associated Property Preferred Name
+   */
+  public String getPropertyLongName() {
+    if (getPropIdseq() != null) {
+      return (String) getPropertiesExtRow().getAttribute("LongName");
+    }
+    else {
+      return "";
+    }
+  }  
 
   /**
    * Gets the associated Property Context Name
