@@ -108,15 +108,13 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
-    
     //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
     // type, classificationIdseq
     formTest.getAllForms(
       "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "",
       "99BA9DC8-A622-4E69-E034-080020C9C0E0");
-
     formTest.getAllForms(
-      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", "");
+      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", null);
     
     formTest.getModulesInAForm("99CD59C5-A9A0-3FA4-E034-080020C9C0E0");
 
@@ -218,8 +216,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       String where = "";
       StringBuffer whereBuffer = new StringBuffer("");
       boolean hasWhere = false;
-
-      if (!formName.equals("")) {
+      if (StringUtils.doesValueExist(formName)) {
         String temp = StringUtils.strReplace(formName, "*", "%");
 
         if (hasWhere) {
@@ -233,7 +230,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
         }
       }
 
-      if (!protocol.equals("")) {
+      if (StringUtils.doesValueExist(protocol)) {
         if (hasWhere) {
           whereBuffer.append(" AND PROTO_IDSEQ ='" + protocol + "'");
         }
@@ -243,7 +240,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
         }
       }
 
-      if (!context.equals("")) {
+      if (StringUtils.doesValueExist(context)) {
         if (hasWhere) {
           whereBuffer.append(" AND CONTE_IDSEQ ='" + context + "'");
         }
@@ -253,7 +250,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
         }
       }
 
-      if (!workflow.equals("")) {
+      if (StringUtils.doesValueExist(workflow)) {
         if (hasWhere) {
           whereBuffer.append(" AND WORKFLOW ='" + workflow + "'");
         }
@@ -263,7 +260,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
         }
       }
 
-      if (!category.equals("")) {
+      if (StringUtils.doesValueExist(category)) {
         if (hasWhere) {
           whereBuffer.append(" AND CATEGORY_NAME ='" + category + "'");
         }
@@ -273,7 +270,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
         }
       }
 
-      if (!type.equals("")) {
+      if (StringUtils.doesValueExist(type)) {
         if (hasWhere) {
           whereBuffer.append(" AND TYPE ='" + type + "'");
         }
@@ -283,7 +280,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
         }
       }
 
-      if (!classificationIdseq.equals("")) {
+      if (StringUtils.doesValueExist(classificationIdseq)) {
         if (hasWhere) {
           whereBuffer.append(
             " AND QC_IDSEQ in (select ac_idseq from ac_csi where CS_CSI_IDSEQ ='" +
