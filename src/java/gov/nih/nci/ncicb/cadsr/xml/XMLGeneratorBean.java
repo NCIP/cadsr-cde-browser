@@ -30,6 +30,7 @@ public class XMLGeneratorBean  {
   private Connection cn = null;
   private ResultSet rset = null;
   private Statement stmt = null;
+  private boolean jndiDatasource = false;
 
 
   public XMLGeneratorBean() {
@@ -42,8 +43,12 @@ public class XMLGeneratorBean  {
     
     buildQuery();
     //System.out.println("Sql Stmt: " + sqlQuery);
-    connHelper = new ConnectionHelper(dataSource);
-    cn = connHelper.getConnection();
+    
+    /*connHelper = new ConnectionHelper(dataSource);
+    cn = connHelper.getConnection();*/
+    
+    initializeDBConnection();
+    
     xmlQuery = new OracleXMLQuery(cn,sqlQuery);
     xmlQuery.setEncoding("UTF-8");
     if (!rowset.equals("")) {
@@ -64,8 +69,7 @@ public class XMLGeneratorBean  {
       log.error("getXMLString()", e);
     }
     finally {
-      if (connHelper != null)
-      connHelper.closeConnection();
+      closeResources();
     }
     return xmlString;
   }
@@ -73,8 +77,10 @@ public class XMLGeneratorBean  {
     try {
       buildQuery();
       //System.out.println("Sql Stmt: " + sqlQuery);
-      ConnectionHelper connHelper = new ConnectionHelper(dataSource);
-      cn = connHelper.getConnection();
+      /*ConnectionHelper connHelper = new ConnectionHelper(dataSource);
+      cn = connHelper.getConnection();*/
+      
+      initializeDBConnection();
       stmt = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                                 ResultSet.CONCUR_READ_ONLY);
       rset = stmt.executeQuery(sqlQuery);
@@ -194,6 +200,14 @@ public class XMLGeneratorBean  {
     }
   }
   
+  private void initializeDBConnection () {
+    if (jndiDatasource) {
+      ConnectionHelper connHelper = new ConnectionHelper(dataSource);
+      cn = connHelper.getConnection();
+    }
+    
+  }
+  
   public static void main(String[] args) {
     try {
       String filename = "c:\\cadsr\\cdebrowser\\download\\xml\\cadsr.xml";
@@ -234,5 +248,19 @@ public class XMLGeneratorBean  {
     }
     
     
+  }
+
+
+  public void setJndiDatasource(boolean jndiDatasource) {
+    this.jndiDatasource = jndiDatasource;
+  }
+
+
+  public boolean isJndiDatasource() {
+    return jndiDatasource;
+  }
+  
+  public void setConnection (Connection conn) {
+    cn = conn;
   }
 }
