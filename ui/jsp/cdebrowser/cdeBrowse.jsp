@@ -20,6 +20,12 @@
   try{
   	cachedDeList = (List)currInfoBean.getInfo(ProcessConstants.ALL_DATA_ELEMENTS);
   	showCached = (Boolean)session.getAttribute("showCached");
+  	if(showCached!=null)
+  	    if(!showCached.booleanValue())
+  	    {
+  	      cachedDeList=null;
+  	      showCached=null;
+  	    }
   	
   }
   catch(Exception ex){}

@@ -213,7 +213,12 @@ function done() {
   top.location.href = "<%=doneURL%>";
 }
 
+function newSearch()
+{
+  
+  document.location.href="search"
 
+}
 //-->
 </SCRIPT>
 <%@ include  file="cdebrowserCommon_html/tab_include_search.html" %>
@@ -336,8 +341,13 @@ function done() {
   if ("".equals(src)) {
 %>
  <TR>
-    <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a></td>
-    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=i/clear.gif border=0></a></td>
+   <td colspan="4" align="center" nowrap> 
+   <table >
+    <td colspan="1" align="center" nowrap><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a></td>
+    <td colspan="1" align="center nowrap><a href="javascript:clearForm()"><img src=i/clear.gif border=0></a></td>
+    <td colspan="1" align="center" nowrap><a href="javascript:newSearch()"><img src=i/newSearchButton.gif border=0></a></td>
+    </table>
+    </td>
  </TR>
 <%
   }
@@ -346,6 +356,7 @@ function done() {
   <TR>
     <td  nowrap colspan="4" align="center"><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a>
     &nbsp;<a href="javascript:clearForm()"><img src=i/clear.gif border=0></a>
+    &nbsp; <a href="javascript:newSearch()"><img src=i/newSearchButton.gif border=0></a>
     &nbsp;<a href="javascript:done()"><img src=i/backButton.gif border=0></a>
     &nbsp;
     </td>
