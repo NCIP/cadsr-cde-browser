@@ -308,9 +308,9 @@ public class GetDataElements extends BasePersistingProcess {
         System.out.println(
           getCurrentTimestamp() + "- Query executed successfully");
 
-        createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER);
+        createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER, myRequest.getContextPath());
         createPageScroller(
-          dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER);
+          dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, myRequest.getContextPath());
 
         System.out.println(
           getCurrentTimestamp() + "- Created both page scrollers successfully");
@@ -339,9 +339,10 @@ public class GetDataElements extends BasePersistingProcess {
           dh.findDataElementsFromQueryClause(
             queryStmt, orderBy, getSessionId(), dePageIterator);
 
-        createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER);
-        createPageScroller(
-          dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER);
+        createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER,
+        myRequest.getContextPath());
+        createPageScroller(dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, 
+        myRequest.getContextPath());
       }
 
       else if (performQuery.equals("addToCart")) {
@@ -501,10 +502,10 @@ public class GetDataElements extends BasePersistingProcess {
 
   private void createPageScroller(
     PageIterator pageIterator,
-    String location) throws Exception {
+    String location, String cPath) throws Exception {
     if (ProcessConstants.BOTTOM_PAGE_SCROLLER.equals(location)) {
       HTMLPageScroller dePageScroller =
-        dePageScroller = new HTMLPageScroller(pageIterator);
+        dePageScroller = new HTMLPageScroller(pageIterator, cPath);
       dePageScroller.setPageListName("dePages");
       dePageScroller.setExtraURLInfo("&performQuery=no");
       dePageScroller.generateHTML();
@@ -512,7 +513,7 @@ public class GetDataElements extends BasePersistingProcess {
     }
     else if (ProcessConstants.TOP_PAGE_SCROLLER.equals(location)) {
       HTMLPageScroller dePageScroller =
-        dePageScroller = new HTMLPageScroller(pageIterator);
+        dePageScroller = new HTMLPageScroller(pageIterator, cPath);
       dePageScroller.setPageListName("dePagesTop");
       dePageScroller.setExtraURLInfo("&performQuery=no");
       dePageScroller.setOnChangeJSFunctionName("topListChanged");

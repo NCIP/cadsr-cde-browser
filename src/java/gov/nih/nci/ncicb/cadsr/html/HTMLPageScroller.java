@@ -13,9 +13,11 @@ public class HTMLPageScroller  {
   private String extraURLInfo = "";
   private String listName = "";
   private String onChangeJSFunctionName = "listChanged";
+  private String contextPath = "";
 
-  public HTMLPageScroller(PageIterator pgIterator)throws Exception {
+  public HTMLPageScroller(PageIterator pgIterator, String cPath)throws Exception {
     pageIterator = pgIterator;
+    contextPath = cPath;
     
   }
 
@@ -41,26 +43,26 @@ public class HTMLPageScroller  {
                                   ,null);
       pagesListHTML = pagesBuffer.toString();
       if (pageIterator.isFirstPage()){
-        prevPageIconHTML = "<img src=\"i/prev_off.gif\" border=\"0\" "+
+        prevPageIconHTML = "<img src=\"" + contextPath + "/i/prev_off.gif\" border=\"0\" "+
                            "alt=\"Previous Page\">";
       }
       else {
         prevPageIconHTML = "<a href=\"javascript:goPage('"+
                            pageIterator.getPreviousPageNumber()
                            +"','"+extraURLInfo +
-                           "')\"><img src=\"i/prev_on.gif\" border=\"0\" "+
+                           "')\"><img src=\""+ contextPath +"/i/prev_on.gif\" border=\"0\" "+
                            "alt=\"Previous Page\">&nbsp;Previous "+prevblockSize+"</a>";
       }
 
       if (pageIterator.isLastPage()){
-        nextPageIconHTML = "<img src=\"i/next_off.gif\" border=\"0\" "+
+        nextPageIconHTML = "<img src=\""+ contextPath +"/i/next_off.gif\" border=\"0\" "+
                            "alt=\"Next Page\">";
       }
       else {
         nextPageIconHTML = "<a href=\"javascript:goPage('"+
                            pageIterator.getNextPageNumber()
                            +"','"+extraURLInfo +
-                           "')\">Next "+nextblockSize+"&nbsp;<img src=\"i/next_on.gif\" border=\"0\" "+
+                           "')\">Next "+nextblockSize+"&nbsp;<img src=\""+ contextPath +"/i/next_on.gif\" border=\"0\" "+
                            "alt=\"Next Page\"></a>";
       }
       /*tableBuf.append("<table><tr>");
@@ -98,4 +100,9 @@ public class HTMLPageScroller  {
   public String getOnChangeJSFunctionName() {
     return onChangeJSFunctionName;
   }
+
+
+   public void setContextPath(String contextPath) {
+      this.contextPath = contextPath;
+   }
 }

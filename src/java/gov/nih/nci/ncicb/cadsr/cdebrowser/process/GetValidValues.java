@@ -119,7 +119,7 @@ public class GetValidValues extends BasePersistingProcess{
           vvIterator.setCurrentPage(0);
 
           //Creating page scroller drop down
-          scroller = new HTMLPageScroller(vvIterator);
+          scroller = new HTMLPageScroller(vvIterator, myRequest.getContextPath());
           scroller.setPageListName("vv_pages");
           
         }

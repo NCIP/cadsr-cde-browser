@@ -96,6 +96,7 @@ public class GetClassificationSchemes extends BasePersistingProcess
     
 		try{
       DataElement de = (DataElement)getInfoObject("de");
+      myRequest = (HttpServletRequest)getInfoObject("HTTPRequest");
     
       String deIdseq = de.getDeIdseq();
       Object sessionId = getSessionId();
@@ -110,7 +111,7 @@ public class GetClassificationSchemes extends BasePersistingProcess
         csIterator.setCurrentPage(0);
 
         //Creating page scroller drop down
-        scroller = new HTMLPageScroller(csIterator);
+        scroller = new HTMLPageScroller(csIterator, myRequest.getContextPath());
         scroller.setPageListName("cs_pages");
         scrollerHTML = "";
       }
@@ -134,7 +135,6 @@ public class GetClassificationSchemes extends BasePersistingProcess
       scrollerHTML = scroller.getScrollerHTML();
 
       tib = new TabInfoBean("cdebrowser_details_tabs");
-      myRequest = (HttpServletRequest)getInfoObject("HTTPRequest");
       tib.processRequest(myRequest);
       int tabNum = tib.getMainTabNum();
       if (tabNum != 3) {

@@ -107,7 +107,7 @@ public class GetProtocols extends BasePersistingProcess {
         usagesIterator.setCurrentPage(0);
 
         //Creating page scroller drop down
-        scroller = new HTMLPageScroller(usagesIterator);
+        scroller = new HTMLPageScroller(usagesIterator, myRequest.getContextPath());
         scroller.setPageListName("usages_pages");
       }
       else {
