@@ -112,7 +112,7 @@ public class FormCreateAction extends FormBuilderBaseDispatchAction {
     newForm.setFormType((String)dynaForm.get(FORM_TYPE));
     newForm.setFormCategory((String)dynaForm.get(FORM_CATEGORY));
     newForm.setAslName("DRAFT NEW");
-    newForm.setVersion(new Float(1.0));
+    newForm.setVersion((Float)dynaForm.get(FORM_VERSION));
     newForm.setCreatedBy(request.getRemoteUser());
 
     // assemble a new form instruction for having form header.
