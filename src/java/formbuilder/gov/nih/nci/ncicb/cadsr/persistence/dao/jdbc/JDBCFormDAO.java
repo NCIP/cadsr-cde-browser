@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.sql.Timestamp;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -191,6 +192,20 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     return myForm;
   }
 
+  public Form findFormByTimestamp(String formId, Timestamp ts) throws DMLException {
+    Form myForm = null;
+    FormByTimestamp query = new FormByTimestamp();
+    query.setDataSource(getDataSource());
+    query.setSql();
+    List result= (List)query.execute(new Object [] {ts,formId});
+    if (result.size() != 0)
+      myForm = (Form)(query.execute(new Object [] {ts,formId}).get(0));
+    else
+      throw new DMLException("No matching record found");
+
+    return myForm;
+  }
+
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
 
@@ -233,7 +248,10 @@ try{
 
     String formId = "9E343E83-5FEB-119F-E034-080020C9C0E0";
     try {
-      System.out.println(formTest.findFormByPrimaryKey(formId));
+      Form test = formTest.findFormByPrimaryKey(formId);
+      //System.out.println(formTest.findFormByPrimaryKey(formId));
+
+      System.out.println(formTest.findFormByTimestamp(formId, test.getDateModified()));
     }
     catch (DMLException e) {
       System.out.println("Failed to get a form for " + formId);
@@ -311,6 +329,24 @@ try{
     public void setSql() {
       super.setSql("SELECT * FROM FB_FORMS_VIEW where QC_IDSEQ = ? ");
       declareParameter(new SqlParameter("QC_IDSEQ", Types.VARCHAR));
+    }
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      return new JDBCFormTransferObject(rs);
+    }
+  }
+
+  class FormByTimestamp extends MappingSqlQuery {
+    FormByTimestamp() {
+      super();
+    }
+
+    public void setSql() {
+      super.setSql("SELECT * FROM FB_FORMS_VIEW where DATE_MODIFIED = ? AND QC_IDSEQ = ?");
+      declareParameter(new SqlParameter("date_modified", Types.TIMESTAMP));
+      declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
     }
 
     protected Object mapRow(
