@@ -305,7 +305,7 @@ function updateCart() {
  </tr>
  <TR>
     <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a></td>
-    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=i/Clear.gif border=0></a></td>
+    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=i/clear.gif border=0></a></td>
  </TR>
 </table>
 <br>
