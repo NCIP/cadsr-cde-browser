@@ -129,11 +129,11 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
     JDBCQuestionDAO test = new JDBCQuestionDAO(locator);
-
+    /*
     Collection result =
       test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
     System.out.println(test);
-    
+    */
     /*
     Iterator iterator = result.iterator();
 
@@ -199,8 +199,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     catch (DMLException de) {
       de.printStackTrace();
     }
-    
-    
+        
     // test for updateDisplayOrder
     /*try {
       int res = test.updateDisplayOrder("D458E178-32A5-7522-E034-0003BA0B1A09", 7);
@@ -209,12 +208,12 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     catch (DMLException de) {
       de.printStackTrace();
     }*/
-    /*
+    
     // test for updateLongNameDisplayOrderDeIdseq
-    DataElementTransferObject deto = new DataElementTransferObject();
-    deto.setDeIdseq("29A8FB2C-0AB1-11D6-A42F-0010A4C1E842");
+    //DataElementTransferObject deto = new DataElementTransferObject();
+    //deto.setDeIdseq("29A8FB2C-0AB1-11D6-A42F-0010A4C1E842");
     QuestionTransferObject qto = new QuestionTransferObject();
-    qto.setDataElement(deto);
+    //qto.setDataElement(deto);
     qto.setLongName("long name test");
     qto.setQuesIdseq("D68C9BC5-BDAB-2F02-E034-0003BA0B1A09");
     qto.setDisplayOrder(2);
@@ -225,7 +224,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     catch (DMLException de) {
       de.printStackTrace();
     }
-    */
+    
   }
 
   /**
@@ -574,9 +573,14 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     protected int updateQuestion(
       Question question) {
 
+      String deIdseq = null;
+      if (question.getDataElement() != null) {
+        deIdseq = question.getDataElement().getDeIdseq();
+      }
+      
       Object[] obj =
         new Object[] {
-          question.getDataElement().getDeIdseq(),
+          deIdseq,
           question.getLongName(),
           question.getQuesIdseq()
         };
