@@ -317,7 +317,7 @@
       <fileset dir="${config.home}">
         <patternset>
           <include name="WEB-INF/*.tld"/>
-          <include name="WEB-INF/struts-config.xml"/>
+          <include name="WEB-INF/struts-config*.xml"/>
           <include name="WEB-INF/orion-web.xml"/>
         </patternset>
       </fileset>    
