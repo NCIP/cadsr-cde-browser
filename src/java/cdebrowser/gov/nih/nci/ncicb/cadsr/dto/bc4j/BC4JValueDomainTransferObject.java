@@ -163,8 +163,9 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
    {
      return null;
    }
+   
    public void setValidValues(List validValues)
    {
-     
+     this.validValues = validValues;
    }
 }
