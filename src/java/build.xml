@@ -210,11 +210,16 @@
          <fileset dir="${FORMBUILDER_JAVA_SRC_DIR}">
            <patternset>
              <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/common/*.properties"/>
-             <include name="gov/nih/nci/ncicb/cadsr/persistence/**/*.xml"/>
            </patternset>
          </fileset>      
       </copy>
-      
+     <copy todir="${CLASSES_BUILD_DIR}/WEB-INF/classes">      
+         <fileset dir="${CDEBROWSER_JAVA_SRC_DIR}">
+           <patternset>
+             <include name="gov/nih/nci/ncicb/cadsr/persistence/**/*.xml"/>
+           </patternset>
+         </fileset>      
+      </copy>      
       <!-- copy application classes -->
       <copy todir="${CLASSES_BUILD_DIR}/WEB-INF/classes">
         <fileset dir="${CLASSES_BUILD_DIR}">
