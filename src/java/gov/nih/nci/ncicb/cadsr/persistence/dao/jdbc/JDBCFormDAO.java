@@ -655,6 +655,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
       if (StringUtils.doesValueExist(formName)) {
         String temp = StringUtils.strReplace(formName, "*", "%");
+        temp = StringUtils.strReplace(temp, "'", "''");
 
         if (hasWhere) {
           whereBuffer.append(
