@@ -92,6 +92,7 @@ public class ManageClassificationsAction
 
     String[] ids = (String[]) dynaForm.get(CS_CSI_ID);
 
+    boolean success = true;
     try {
       Form crf = (Form) getSessionObject(request, CRF);
       FormBuilderServiceDelegate service = getFormBuilderService();
@@ -109,6 +110,7 @@ public class ManageClassificationsAction
             }
 
             saveError(exp.getErrorCode(), request);
+	    success = false;
           }
            // end of try-catch
         }
@@ -130,7 +132,8 @@ public class ManageClassificationsAction
       return mapping.findForward("failure");
     }
 
-    saveMessage("cadsr.formbuilder.classification.add.success", request);
+    if(success)
+      saveMessage("cadsr.formbuilder.classification.add.success", request);
 
     return mapping.findForward("success");
   }

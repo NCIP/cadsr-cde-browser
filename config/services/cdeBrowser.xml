@@ -5,7 +5,7 @@
 ]>
 <service name="CDEBrowser" class="oracle.cle.process.Service" initial="SearchRouter">
     <process name="SearchRouter" class="oracle.clex.process.ProcessRouter" end="false">
-        <argument type="Integer" value="13"/>
+        <argument type="Integer" value="14"/>
         <argument type="Boolean" value="false"/>
         <argument type="String" value="success"/>
         <infoalias local="pp1" global="searchDataElements"/>
@@ -21,6 +21,7 @@
         <infoalias local="pp11" global="valueDomainsLOV"/>
         <infoalias local="pp12" global="dataElementConceptsLOV"/>
         <infoalias local="pp13" global="dataElementConceptDetails"/>
+        <infoalias local="pp14" global="dataElementDerivations"/>    
     </process>
     <processgroup name="DataElementsGroup" class="oracle.cle.process.DisplayGroup" end="true" initial="DataElementsRouter">
     <process name="ResetParameters" class="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ResetParameters" end="false">
@@ -230,6 +231,25 @@
 <transition src="GetDataElementConceptDetails" condition="failure" dest="FailurePage"/>
 <transition src="DataElementConceptDetailsRouter" condition="tc1" dest="GetDataElementConceptDetails"/>
     </processgroup>
+<processgroup name="DataElementDerivationGroup" class="oracle.cle.process.DisplayGroup" end="true" initial="DataElementDerivationRouter">
+    <process name="GetDataElementDerivation" class="gov.nih.nci.ncicb.cadsr.cdebrowser.process.GetDataElementDerivation" end="false">
+    </process>
+    <process name="DataElementDerivationPage" class="oracle.clex.process.CreateJSPPage" end="true">
+        <argument type="String" value="&docpath;dataElementDerivation.jsp"/>
+    </process>
+    <process name="FailurePage" class="oracle.clex.process.CreateJSPPage" end="true">
+        <argument type="String" value="&docpath;FailurePage.jsp"/>
+    </process>
+    <process name="DataElementDerivationRouter" class="oracle.clex.process.ProcessRouter" end="false">
+        <argument type="Integer" value="1"/>
+        <argument type="Boolean" value="true"/>
+        <argument type="String" value="success"/>
+        <infoalias local="pp1" global="dataElementDerivations"/>
+    </process>
+<transition src="GetDataElementDerivation" condition="success" dest="DataElementDerivationPage"/>
+<transition src="GetDataElementDerivation" condition="failure" dest="FailurePage"/>
+<transition src="DataElementDerivationRouter" condition="tc1" dest="GetDataElementDerivation"/>
+    </processgroup>
 <transition src="SearchRouter" condition="success" dest="DataElementsGroup"/>
 <transition src="SearchRouter" condition="tc1" dest="DataElementsGroup"/>
 <transition src="SearchRouter" condition="tc2" dest="DataElementsGroup"/>
@@ -245,6 +265,7 @@
 <transition src="SearchRouter" condition="tc11" dest="ListOfValuesGroup"/>
 <transition src="SearchRouter" condition="tc12" dest="ListOfValuesGroup"/>
 <transition src="SearchRouter" condition="tc13" dest="DataElementConceptDetails"/>
+<transition src="SearchRouter" condition="tc14" dest="DataElementDerivationGroup"/>
 <grouptransition srcgroup="DataElementsGroup" srcprocess="DataElementsPage" dest="SearchRouter"/>
 <grouptransition srcgroup="DataElementsGroup" srcprocess="FailurePage" dest="SearchRouter"/>
 <grouptransition srcgroup="DisplayFailureGroup" srcprocess="FailurePage" dest="SearchRouter"/>
@@ -266,4 +287,6 @@
 <grouptransition srcgroup="ProtocolsGroup" srcprocess="ProtocolsListPage" dest="SearchRouter"/>
 <grouptransition srcgroup="DataElementConceptDetails" srcprocess="DataElementConceptDetailsPage" dest="SearchRouter"/>
 <grouptransition srcgroup="DataElementConceptDetails" srcprocess="FailurePage" dest="SearchRouter"/>
+<grouptransition srcgroup="DataElementDerivationGroup" srcprocess="FailurePage" dest="SearchRouter"/>
+<grouptransition srcgroup="DataElementDerivationGroup" srcprocess="DataElementDerivationPage" dest="SearchRouter"/>
 </service>

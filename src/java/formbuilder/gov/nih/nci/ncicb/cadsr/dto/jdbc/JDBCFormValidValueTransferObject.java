@@ -11,6 +11,7 @@ public class JDBCFormValidValueTransferObject extends FormValidValueTransferObje
     setVpIdseq(rs.getString(8));        // VP_IDSEQ
     setLongName(rs.getString(9));       // LONG_NAME
     setDisplayOrder(rs.getInt(14));     // DISPLAY_ORDER
+    setShortMeaning(rs.getString(15));    // Meaning
   }
 
 }

@@ -10,6 +10,7 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
   private Question term;
   private String vpIdseq;
   private int dispOrder;
+  private String shortMeaning;
 
   public FormValidValueTransferObject() {
   }
@@ -52,6 +53,12 @@ public class FormValidValueTransferObject extends AdminComponentTransferObject
     this.dispOrder = dispOrder;
   }
   
+  public String getShortMeaning(){
+    return shortMeaning;
+  }
+  public void setShortMeaning(String newShortMeaning){
+    shortMeaning=newShortMeaning;
+  }
   /**
    * Clones the object
    * Makes a deep copy of the Valivalues

@@ -150,5 +150,7 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .ErrorText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#cc0000}
 .MessageText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#009900}
 .OraTableColumnHeaderVV {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; background-color:#CCCCFF; color:#336699; text-indent:1}
+.OraTableColumnHeaderVVNOBold {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight: text-align:left; background-color:#CCCCFF; color:#336699; text-indent:1}
 .OraTableColumnHeaderModule {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; background-color:#CCCC99; color:#336699; text-indent:1}
 .FreeDropdown {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; BACKGROUND-COLOR: #CFCFCF; text-align: left}
+.OraFieldTextVV {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color:#CCCCFF; color:#000000}

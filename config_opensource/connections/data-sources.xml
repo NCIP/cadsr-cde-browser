@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'windows-1252'?>
+<!DOCTYPE data-sources PUBLIC "Orion data-sources" "http://xmlns.oracle.com/ias/dtds/data-sources.dtd">
+<data-sources>
+
+
+   <data-source
+     class="com.evermind.sql.DriverManagerDataSource" 
+     connection-driver="oracle.jdbc.driver.OracleDriver" 
+     ejb-location="jdbc/ejb/FormBuilderDS" inactivity-timeout="30"
+     location="jdbc/FormBuilderCoreDS" 
+     name="SBREXT_FB_CBDEVDS" password="sbrext_passwd" 
+     pooled-location="jdbc/pooled/FormBuilderDS"
+     url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV" 
+     username="sbrext" xa-location="jdbc/xa/SBREXT_FB_CBDEVXADS"
+     max-connections="5" 
+     min-connections="1" 
+     >
+     <property name="cacheScheme"
+       value="1"/>
+   </data-source>
+
+   <data-source 
+     class="com.evermind.sql.DriverManagerDataSource"
+     connection-driver="oracle.jdbc.driver.OracleDriver" 
+     ejb-location="jdbc/SBR_CBDEVDS"
+     inactivity-timeout="30"
+     location="jdbc/SBR_CBDEVCoreDS" 
+     name="jdev-connection:SBR_CBDEV"
+     password="sbr_password"
+     pooled-location="jdbc/SBR_CBDEVPooledDS"
+     url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV"
+     username="sbr" 
+     xa-location="jdbc/xa/SBR_CBDEVXADS"
+     />
+
+   <data-source 
+     class="oracle.jdbc.pool.OracleConnectionPoolDataSource" 
+     connection-driver="oracle.jdbc.driver.OracleDriver"
+     ejb-location="jdbc/SBREXT_CBDEVDS"
+     inactivity-timeout="30" 
+     location="jdbc/SBREXT_CBDEVCoreDS" 
+     name="jdev-connection:SBREXT_CBDEV" 
+     password="sbrext_passwd" 
+     pooled-location="jdbc/SBREXT_CBDEVPooledDS"
+     url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV"
+     username="sbrext" xa-location="jdbc/xa/SBREXT_CBDEVXADS"
+     />
+   
+</data-sources>

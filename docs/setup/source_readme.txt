@@ -1,9 +1,9 @@
 
 ===============================================================================
-			CDBrowser 2.1
+			CDBrowser 2.1.1
 ===============================================================================
 
-Contains the complete application source for CDEBrowser 2.1.
+Contains the complete application source for CDEBrowser 2.1.1
 
 The Content of the zip file by directory
 	

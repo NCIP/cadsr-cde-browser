@@ -50,8 +50,8 @@ public class ProtocolsLOVBean extends Object {
       // pass the following parameters to CommonListCntrlBean
       String[] searchParm ={"proto.long_name","Keyword"};
       String[] jspLinkParm={ "proto.proto_idseq","P_ID"};
-      String[] displayParm={"proto.preferred_name","Preferred Name" ,
-                            "proto.long_name","Long Name",
+      String[] displayParm={"proto.long_name","Long Name",
+			    "proto.preferred_name","Preferred Name" ,
                             "proto_conte.name","Context",
                             "proto.asl_name","Workflow Status",
                             "proto.preferred_definition","Definition",

@@ -119,7 +119,14 @@ function clearClassSchemeItem() {
   document.forms[0].txtClassSchemeItem.value = "";
 }
 function submitForm() {
-  document.forms[0].submit();
+  if ((document.forms[0].jspAltName.value != "") &&
+    (document.forms[0].altName.selectedIndex <=0))
+    {
+       alert("Please select Alternate Name Type(s) for Alternate Name search");
+    }
+  else {
+     document.forms[0].submit();
+  }
 }
 
 function clearForm() {
@@ -128,9 +135,12 @@ function clearForm() {
   clearDataElementConcept();
   clearClassSchemeItem();
   document.forms[0].jspKeyword.value = "";
+  document.forms[0].jspAltName.value = "";
   document.forms[0].jspCdeId.value = "";
   document.forms[0].jspValidValue.value = "";
   document.forms[0].jspStatus.options[document.forms[0].jspStatus.selectedIndex].value = "ALL";
+  document.forms[0].regStatus.options[document.forms[0].regStatus.selectedIndex].value = "ALL";
+  document.forms[0].altName.options[document.forms[0].altName.selectedIndex].value = "ALL";
     
 }
 
@@ -258,10 +268,23 @@ function newSearch(){
       <input type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="20"> 
     </td>
 
-    <td class="OraFieldtitlebold" nowrap>Permissible Value:</td>
+    <td class="OraFieldtitlebold" nowrap>Alternate Name:</td>
+    <td class="OraFieldText" nowrap>
+      <input type="text" name="jspAltName" value="<%=desb.getAltName()%>" size ="20"> 
+    </td>
+ </tr>
+ <tr>
+    <td class="OraFieldtitlebold" nowrap>Search Field(s):</td>
+    <td class="OraFieldText"><%=desb.getSearchInList()%></td>
+    <td class="OraFieldtitlebold" nowrap>Alternate Name Type(s):</td>
+    <td class="OraFieldText"><%=desb.getAltNameList()%></td>
+</tr>
+ <tr>
+     <td class="OraFieldtitlebold" nowrap>Permissible Value:</td>
     <td class="OraFieldText" nowrap>
       <input type="text" name="jspValidValue" value="<%=desb.getValidValue()%>" size ="20"> 
     </td>
+
  </tr>
  <tr>
     <td class="OraFieldtitlebold" nowrap>Value Domain:</td>
@@ -315,6 +338,13 @@ function newSearch(){
       <table>
         <tr>
 <%
+
+  if((paramType!=null)&&(paramType.equals("CRF")||paramType.equals("TEMPLATE")))
+    {
+       if (latestVer.equals(""))
+          latestVer = "No";
+    }
+    
   if (latestVer.equals("Yes") || latestVer.equals("")) {
 %>
           <td class="OraFieldText" nowrap>Latest Version<input type="radio" name="jspLatestVersion" value="Yes" checked></td>
@@ -340,9 +370,9 @@ function newSearch(){
  <tr>
     <td class="OraFieldtitlebold" nowrap>Workflow Status:</td>
     <td class="OraFieldText"><%=desb.getWorkflowList()%></td>
-    <td class="OraFieldtitlebold" nowrap>Search Field(s):</td>
-    <td class="OraFieldText"><%=desb.getSearchInList()%></td>
- </tr>
+    <td class="OraFieldtitlebold" nowrap>Registration Status:</td>
+    <td class="OraFieldText"><%=desb.getRegStatusList()%></td>
+</tr>
  
  <TR>
    <td colspan="4" align="center" nowrap> 
@@ -478,7 +508,7 @@ function newSearch(){
   }
 %>
 </FORM>
-<%@ include  file="cdebrowserCommon_html/bottom_border.html" %>
+<%@ include file="common/common_bottom_border.jsp"%>
 
 </BODY>
 </HTML>

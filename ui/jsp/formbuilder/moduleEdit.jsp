@@ -360,6 +360,7 @@ function clearProtocol() {
                       </tr>  
                       
                       <logic:present name="question">
+                      <!-- Empty ValidValues -->
                       <logic:empty name="question" property="validValues">                           
                           <tr class="OraTabledata">
                             <td class="OraTabledata" width="50">&nbsp;</td>
@@ -374,7 +375,7 @@ function clearProtocol() {
                                               questionBeanId="question"
                                               availableValidValusMapId="<%=FormConstants.AVAILABLE_VALID_VALUES_MAP%>"
                                               selectClassName="FreeDropdown"
-                                              selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX+questionIndex%>"/>
+                                              selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX+questionIndex+0%>"/>
                                           </td>
                                           <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                            <td align="left" width="4%">
@@ -395,6 +396,7 @@ function clearProtocol() {
                             </td>
                           </tr> 
                         </logic:empty>
+                      <!-- ValidValues not Empty -->
                       <logic:notEmpty name="question" property="validValues">                           
                           <tr class="OraTabledata">
                             <td class="OraFieldText" width="50">&nbsp;</td>
@@ -414,7 +416,7 @@ function clearProtocol() {
                                                       questionBeanId="question"
                                                       availableValidValusMapId="<%=FormConstants.AVAILABLE_VALID_VALUES_MAP%>"
                                                       selectClassName="FreeDropdown"
-                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX+questionIndex%>"/>
+                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX+questionIndex+validValueIndex%>"/>
                                                   </td>
                                                   <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                                     <td align="left" width="4%">
@@ -435,8 +437,8 @@ function clearProtocol() {
                                     <td class="OraTabledata" width="50">&nbsp;</td>
                                     <td class="OraFieldText" align="right" width="90%">                                                                        
                                         <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                                          <tr class="OraTableColumnHeaderVV" >
-                                           <td width="86%"><bean:write name="validValue" property="longName"/></td>
+                                          <tr class="OraTableColumnHeaderVVNOBold" >
+                                           <td class="OraFieldText" width="86%"><bean:write name="validValue" property="longName"/></td>
                                             <td align="center">
                                               <logic:notEqual value="<%= String.valueOf(validValueSize.intValue()-1) %>" name="validValueIndex">
                                                 <a href="javascript:submitValidValueEdit('<%=NavigationConstants.MOVE_VALID_VALUE_DOWN%>','<%=questionIndex%>','<%=validValueIndex%>')">
@@ -463,6 +465,18 @@ function clearProtocol() {
                                               </a>
                                             </td>
                                           </tr>
+                                          <logic:present name="question" property="dataElement">
+                                          <tr class="OraFieldText" >
+                                           <td colspan="4"> 
+                                           <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                                            <tr>
+                                             <td width="30%" class="OraTableColumnHeaderVV" ><bean:message key="cadsr.formbuilder.valueMeaning.name" /></td>
+                                             <td class="OraFieldTextVV" >:<bean:write name="validValue" property="shortMeaning"/></td>                                          
+                                            </tr>
+                                           </table>
+                                           </td>
+                                          </tr>
+                                          </logic:present >
                                         </table>                                                                                                            
                                     </td>
                                   </tr> 
@@ -480,7 +494,7 @@ function clearProtocol() {
                                                       questionBeanId="question"
                                                       availableValidValusMapId="<%=FormConstants.AVAILABLE_VALID_VALUES_MAP%>"
                                                       selectClassName="FreeDropdown"
-                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX+questionIndex%>"/>
+                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX+questionIndex+validValueSize%>"/>
                                                   </td>
                                                   <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                                     <td align="left" width="4%">

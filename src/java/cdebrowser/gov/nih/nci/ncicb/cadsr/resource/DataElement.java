@@ -30,4 +30,7 @@ public interface DataElement extends AdminComponent{
    public String getUsingContexts();
    public void setUsingContexts(String usingContexts);
 
+   public DerivedDataElement getDerivedDataElement();
+   public void setDerivedDataElement(DerivedDataElement dataElementDerivation);
+
 }

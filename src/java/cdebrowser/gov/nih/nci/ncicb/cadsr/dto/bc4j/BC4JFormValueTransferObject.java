@@ -67,4 +67,11 @@ public class BC4JFormValueTransferObject extends AdminComponentTransferObject
 
   public void setDisplayOrder(int dispOrder) {
   }
+  public String getShortMeaning(){
+  //dummy implementation
+    return null;
+  }
+  public void setShortMeaning(String shortMeaning){
+  //dummy implementation
+  }
 }

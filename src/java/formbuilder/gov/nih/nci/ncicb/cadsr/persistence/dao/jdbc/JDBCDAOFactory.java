@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DAOCreateException;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.DerivedDataElementDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormCategoryDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormInstructionDAO;
@@ -196,7 +197,19 @@ public class JDBCDAOFactory extends AbstractDAOFactory
 
     return myDAO;
   }
+  
+  public DerivedDataElementDAO getDerivedDataElementDAO () {
+    DerivedDataElementDAO myDAO =
+      (DerivedDataElementDAO) daoCache.get(JDBC_DERIVED_DATA_ELEMENT_DAO);
 
+    if (myDAO == null) {
+      myDAO = new JDBCDerivedDataElementDAO(serviceLocator);
+      daoCache.put(JDBC_DERIVED_DATA_ELEMENT_DAO, myDAO);
+    }
+
+    return myDAO;
+  }
+  
   public static void main(String[] args) {
     /**
      * JDBCDAOFactory factory = (JDBCDAOFactory)new

@@ -125,7 +125,7 @@ public class GetXMLDownload extends BasePersistingProcess {
         where = "DE_IDSEQ IN (" + where + ")";
       }
       else if ("cdeCart".equals(source)) {
-        HttpServletRequest myRequest = 
+        HttpServletRequest myRequest =
           (HttpServletRequest) getInfoObject("HTTPRequest");
         HttpSession userSession = myRequest.getSession(false);
         CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
@@ -140,11 +140,11 @@ public class GetXMLDownload extends BasePersistingProcess {
             whereBuffer.append("'" +item.getId()+"'");
             firstOne = false;
           }
-          else 
+          else
             whereBuffer.append(",'" +item.getId()+"'");
         }
         where = "DE_IDSEQ IN (" + whereBuffer.toString() + ")";
-        
+
       }
       else {
         throw new Exception("No result set to download");
@@ -165,6 +165,7 @@ public class GetXMLDownload extends BasePersistingProcess {
                         ", \"ReferenceDocumentsList\" " +
                         ", \"ClassificationsList\" " +
                         ", \"DesignationsList\" " +
+                        ", \"DataElementDerivation\" " +
                    " FROM sbrext.DE_XML_GENERATOR_VIEW ";
 
       xmlBean = new XMLGeneratorBean();

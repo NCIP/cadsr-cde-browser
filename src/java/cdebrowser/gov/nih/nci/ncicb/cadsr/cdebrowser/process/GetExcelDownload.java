@@ -1,35 +1,32 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 // java imports
-import java.util.*;
-import java.io.*;
-import javax.servlet.http.*;
-import java.sql.*;
-import javax.sql.*;
-import oracle.sql.*;
-import oracle.jdbc.*;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.base.process.*;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.resource.*;
+import gov.nih.nci.ncicb.cadsr.util.*;
 
-// Framework imports
+import java.io.*;
+
+import java.sql.*;
+
+import java.util.*;
+
+import javax.servlet.http.*;
+
+import oracle.cle.process.ProcessInfoException;
+import oracle.cle.process.Service;
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
-import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.PersistingProcess;
-import oracle.cle.process.ProcessParameter;
-import oracle.cle.process.ProcessResult;
-import oracle.cle.process.ProcessInfo;
-import oracle.cle.process.Service;
+
+import oracle.jdbc.*;
+
+import oracle.sql.*;
+// Framework imports
 //import oracle.cle.process.ProcessConstants;
-import oracle.cle.persistence.HandlerFactory;
-
 //CDE Browser Application Imports
-
-import gov.nih.nci.ncicb.cadsr.util.*;
-import gov.nih.nci.ncicb.cadsr.database.*;
-import gov.nih.nci.ncicb.cadsr.base.process.*;
-import gov.nih.nci.ncicb.cadsr.resource.*;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
-import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 /**
  *
@@ -247,6 +244,7 @@ public class GetExcelDownload extends BasePersistingProcess{
       List clasStrList = null;
       List desStrList = null;
       List refStrList = null;
+      List ddeStrList = null; // Derived data elements
       
       while (rs.next()){
         List deList = new ArrayList(18);
@@ -366,7 +364,6 @@ public class GetExcelDownload extends BasePersistingProcess{
         
         // print reference docs
          List refList = new ArrayList(11);
-
         ARRAY refArray = ((OracleResultSet)rs).getARRAY ("reference_docs");
         ResultSet nestedRefRs = refArray.getResultSet();
         
@@ -390,16 +387,67 @@ public class GetExcelDownload extends BasePersistingProcess{
         }
         
         refStrList=this.getReferenceDocsStr(refList); 
-
-        pw.println(deStr);
-        printMultipleValus(validValueStrList,clasStrList,desStrList,refStrList,pw);
         
+        List ddeList = new ArrayList(11);
+         
+        STRUCT ddeStruct = ((OracleResultSet)rs).getSTRUCT ("DE_DERIVATION");
+        Object[] dde = ddeStruct.getAttributes();
+        String controlName = (String)dde[0];
+        String description = (String)dde[1];
+        String method = (String)dde[2];
+        String rule = (String) dde[3];
+        String concatChar = (String) dde[4];
+        
+        // Skip all the other multiple value columns
+        deStr += getEmptyStrings(15);
+        String ddeInfoString = "\""+checkForNull(controlName)+"\"" +"," +
+               "\""+checkForNull(method)+"\"" +"," +
+               "\""+checkForNull(rule)+"\"" +"," +
+               "\""+checkForNull(concatChar)+"\"";
+        deStr += ddeInfoString;
+        
+        Array ddeArray = (ARRAY) dde[5];
+        if (ddeArray != null) {
+        Object[] ddeArray2 = (Object[]) ddeArray.getArray();
+        for (int i=0; i< ddeArray2.length; i++) {
+           List arrList = new ArrayList(8);
+           STRUCT dedStruct = (STRUCT)ddeArray2[i];
+           Datum ded[] = dedStruct.getOracleAttributes();
+                            
+           NUMBER deId = (NUMBER)ded[0];
+           CHAR longName = (CHAR)ded[1];
+           CHAR preferredName = (CHAR)ded[2];
+           CHAR preferredDefinition = (CHAR)ded[3];         
+           NUMBER verion = (NUMBER)ded[4];
+           CHAR aslName = (CHAR)ded[5];
+           CHAR contextName = (CHAR)ded[6];
+           NUMBER displayOrder = (NUMBER)ded[7];
+          
+           arrList.add(convertToString(deId));
+           arrList.add(convertToString(longName));
+           //arrList.add(convertToString(preferredName));
+           //arrList.add(convertToString(preferredDefinition));
+           arrList.add(convertToString(verion));
+           arrList.add(convertToString(aslName));
+           arrList.add(convertToString(contextName));
+           arrList.add(convertToString(displayOrder));
+           ddeList.add(arrList);
+        }
+        
+        ddeStrList=this.getDdeStr(ddeList);
+        }
+
+        // write out single values first
+        pw.println(deStr);
+        printMultipleValus(validValueStrList,clasStrList,desStrList,refStrList, ddeStrList, pw);
         
         vvList = null;
         clasList = null;
         refList=null;
         desList=null;
         deList = null;
+        ddeList = null;
+        ddeStrList = null;
 
       }
       
@@ -484,6 +532,19 @@ public class GetExcelDownload extends BasePersistingProcess{
                   +"Document,"
                   +"Document Name,"
                   +"Document Type,"
+                  
+                  + "Derivation Type,"
+                  + "Derivation Rule,"
+                  + "Derivation Method,"
+                  + "Concatenation Character,"
+                  
+                  + "DDE Public ID,"
+                  + "DDE Long Name,"
+                  + "DDE Version,"
+                  + "DDE Workflow Status,"
+                  + "DDE Context,"
+                  + "DDE Display Order,"
+                  
                   );
   }
 
@@ -521,8 +582,8 @@ public class GetExcelDownload extends BasePersistingProcess{
                "\""+checkForNull((String)l.get(30))+"\"" +"," +   //Workflow Status
                "\""+checkForNull((String)l.get(31))+"\"" +"," +   //Registration Status
                "\""+checkForNull((String)l.get(16))+"\"" +"," +   //Begin Date
-               "\""+checkForNull((String)l.get(17))+"\"" +"," +   //Source            
-               "\""+EMPTY_STRING+"\"";
+               "\""+checkForNull((String)l.get(17))+"\"" +",";   //Source            
+    //           "\""+EMPTY_STRING+"\"";
     return excelRow;
   }
 
@@ -552,7 +613,23 @@ public class GetExcelDownload extends BasePersistingProcess{
     }
     return arrList;
   }
-
+  
+    private List getDdeStr(List l) {
+    List arrList = new ArrayList(8);
+    for(int i=0; i<l.size(); i++){
+      String excelRow = "";
+      List dedAttr = (ArrayList)l.get(i);     
+      excelRow =  "\""+(String)dedAttr.get(0)+"\""+"," +
+                 "\""+(String)dedAttr.get(1)+"\""+"," +
+                 "\""+(String)dedAttr.get(2)+"\""+"," +
+                 "\""+(String)dedAttr.get(3)+"\""+"," +
+                 "\""+(String)dedAttr.get(4)+"\""+"," +
+                 "\""+(String)dedAttr.get(5)+"\""+"," ;    
+      arrList.add(excelRow);
+    }
+    return arrList;
+  }
+  
   private List getDesignationStr(List l) {
         List arrList = new ArrayList(9);
     for(int i=0; i<l.size(); i++){
@@ -573,11 +650,14 @@ public class GetExcelDownload extends BasePersistingProcess{
       List vvAttr = (ArrayList)l.get(i);  
       excelRow = "\""+(String)vvAttr.get(0)+"\""+"," +
                  "\""+(String)vvAttr.get(1)+"\""+"," +
-                 "\""+(String)vvAttr.get(2)+"\"";    
+                 "\""+(String)vvAttr.get(2)+"\""+",";    
     arrList.add(excelRow);
     }
     return arrList;
-  }  
+  } 
+
+
+ 
     private String getEmptyStrings(int n)
     {
       String str = "";
@@ -588,11 +668,13 @@ public class GetExcelDownload extends BasePersistingProcess{
       return str;
     }
 
-   public void  printMultipleValus(List vvList,List clList,List desList,List refList,PrintWriter pw)
+   public void  printMultipleValus(List vvList,List clList,List desList,List refList, List ddeList, PrintWriter pw)
     {
       int temp1 = Math.max(vvList.size(),clList.size());
       int temp2 = Math.max(desList.size(),refList.size());
       int maxSize = Math.max(temp1,temp2);
+      if (ddeList != null)
+         maxSize = Math.max(maxSize, ddeList.size());
       
       for (int i=0;i<maxSize;++i)
       {
@@ -624,6 +706,17 @@ public class GetExcelDownload extends BasePersistingProcess{
         if(refList.size()>i)
           {
             str=str+refList.get(i);
+          }  
+        else
+        {
+            str=str+getEmptyStrings(3);
+        }
+        //skip 4 columns for dde info
+        str=str+getEmptyStrings(4);
+        
+        if(ddeList != null && ddeList.size()>i)
+          {
+            str=str+ddeList.get(i);
           }  
         pw.println(str);
       }

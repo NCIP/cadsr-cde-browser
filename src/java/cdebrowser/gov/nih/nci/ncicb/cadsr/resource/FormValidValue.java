@@ -12,4 +12,7 @@ public interface FormValidValue extends AdminComponent,Orderable {
   
   
   public Object clone() throws CloneNotSupportedException ;
+  
+  public String getShortMeaning();
+  public void setShortMeaning(String shortMeaning);
 }

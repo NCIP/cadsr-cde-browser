@@ -25,7 +25,7 @@ import oracle.jdbc.OraclePreparedStatement;
 import java.net.URLEncoder;
 
 public class ContextNode extends BaseTreeNode  {
-  
+
 
   final String templateTypesQueryStmt = "SELECT distinct qcdl_name "
                                        +"FROM   quest_contents_ext "
@@ -68,11 +68,11 @@ public class ContextNode extends BaseTreeNode  {
                                     +"AND   latest_version_ind = 'Yes' "
                                     +"AND   qtl_name = 'TEMPLATE' "
                                     +"ORDER BY long_name ";
-                                    
+
   Context myContext = null;
   DefaultMutableTreeNode myContextNode = null;
   List templateTypes;
-  
+
   /**
    * Constructor creates DefaultMutableTreeNode object based on info provided
    * by Context resource.
@@ -84,7 +84,7 @@ public class ContextNode extends BaseTreeNode  {
     myContext = pContext;
     myContextNode = new DefaultMutableTreeNode
     (new WebNode(myContext.getConteIdseq()
-                ,myContext.getDescription()+ " ("+myContext.getName()+")"
+                ,myContext.getName()+ " ("+myContext.getDescription()+")"
                 ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CONTEXT&P_IDSEQ="+
                 myContext.getConteIdseq()+"&P_CONTE_IDSEQ="+myContext.getConteIdseq()
                 +getExtraURLParameters()+"')"
@@ -93,14 +93,14 @@ public class ContextNode extends BaseTreeNode  {
     if ("CTEP".equals(myContext.getName())) {
       templateTypes = this.getTemplateTypes();
     }
-     
+
   }
 
   /**
-   * This method returns a list of DefaultMutableTreeNode objects. Each 
-   * DefaultMutableTreeNode object in the list represents a classification scheme 
-   * node for this context in the tree.  
-   *  
+   * This method returns a list of DefaultMutableTreeNode objects. Each
+   * DefaultMutableTreeNode object in the list represents a classification scheme
+   * node for this context in the tree.
+   *
    */
 
   public List getClassificationNodes() throws Exception {
@@ -120,7 +120,7 @@ public class ContextNode extends BaseTreeNode  {
                                     +"ORDER BY long_name ";
 
     try {
-      pstmt =  
+      pstmt =
          (OraclePreparedStatement)myConn.prepareStatement(classSchemeQueryStmt);
       pstmt.defineColumnType(1,Types.VARCHAR);
       pstmt.defineColumnType(2,Types.VARCHAR);
@@ -131,7 +131,7 @@ public class ContextNode extends BaseTreeNode  {
       rs = pstmt.executeQuery();
       ClassificationScheme csVO = new ClassSchemeValueObject();
       csNodes = new ArrayList(11);
-      
+
       while (rs.next()){
         csVO.setCsIdseq(rs.getString(1));
         csVO.setPreferredName(rs.getString(2));
@@ -149,20 +149,20 @@ public class ContextNode extends BaseTreeNode  {
         }
         csNodes.add(csNode);
       }
-    } 
+    }
     catch (Exception ex) {
       ex.printStackTrace();
       throw ex;
-    } 
+    }
     finally {
       try {
         if (rs != null) rs.close();
-        if (pstmt != null) pstmt.close();  
-      } 
+        if (pstmt != null) pstmt.close();
+      }
       catch (Exception ex) {
         ex.printStackTrace();
-      } 
-            
+      }
+
     }
     return csNodes;
   }
@@ -175,9 +175,9 @@ public class ContextNode extends BaseTreeNode  {
   }
 
   /**
-   * This method returns a DefaultMutableTreeNode. It displays Protocol Form 
+   * This method returns a DefaultMutableTreeNode. It displays Protocol Form
    * templates by disease.
-   *  
+   *
    */
   public DefaultMutableTreeNode getDataTemplateNodesByDisease()throws Exception {
     OraclePreparedStatement pstmt = null;
@@ -190,7 +190,7 @@ public class ContextNode extends BaseTreeNode  {
     ClassSchemeItem csiTO = new CSITransferObject();
     try {
       //Getting the CRF Disease types
-      pstmt1 =  
+      pstmt1 =
          (OraclePreparedStatement)myDbUtil.getConnection().
                             prepareStatement(csiQueryStmt);
       pstmt1.defineColumnType(1,Types.VARCHAR);
@@ -204,7 +204,7 @@ public class ContextNode extends BaseTreeNode  {
 
       diseaseLabelNode = new DefaultMutableTreeNode
               (new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR),"Disease"));
-      
+
       TemplateNode tmp;
       List tmpList = null;
       Iterator tmpIter = null;
@@ -213,13 +213,13 @@ public class ContextNode extends BaseTreeNode  {
       while (rs1.next()){
         DefaultMutableTreeNode diseaseNode = new DefaultMutableTreeNode
           (new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR),rs1.getString(2)));
-        
+
         csiTO.setCsiIdseq(rs1.getString(1));
         csiTO.setClassSchemeItemName(rs1.getString(2));
         csiTO.setClassSchemeItemType(rs1.getString(3));
         csiTO.setCsCsiIdseq(rs1.getString(5));
         csiTO.setClassSchemeLongName("Disease");
-        
+
         //tmpNodes = this.getDataTemplatesForADisease(rs1.getString(5));
         tmpNodes = this.getDataTemplatesForACSI(csiTO);
         Iterator tempNodeIter = tmpNodes.iterator();
@@ -227,30 +227,30 @@ public class ContextNode extends BaseTreeNode  {
           diseaseNode.add((DefaultMutableTreeNode)tempNodeIter.next());
         }
         diseaseLabelNode.add(diseaseNode);
-      }    
-    } 
+      }
+    }
     catch (Exception ex) {
       ex.printStackTrace();
       throw ex;
-    } 
+    }
     finally {
       try {
         if (rs1 != null) rs1.close();
-        if (pstmt1 != null) pstmt1.close();  
-      } 
+        if (pstmt1 != null) pstmt1.close();
+      }
       catch (Exception ex) {
         ex.printStackTrace();
-      } 
-            
+      }
+
     }
-    
+
     return diseaseLabelNode;
   }
 
   /**
-   * This method returns a DefaultMutableTreeNode. It displays Protocol Form 
+   * This method returns a DefaultMutableTreeNode. It displays Protocol Form
    * templates by Phase.
-   *  
+   *
    */
   public DefaultMutableTreeNode getDataTemplateNodesByPhase()throws Exception {
     OraclePreparedStatement pstmt = null;
@@ -263,7 +263,7 @@ public class ContextNode extends BaseTreeNode  {
     ClassSchemeItem csiTO = new CSITransferObject();
     try {
       //Getting the CRF Disease types
-      pstmt1 =  
+      pstmt1 =
          (OraclePreparedStatement)myDbUtil.getConnection().
                             prepareStatement(csiQueryStmt);
       pstmt1.defineColumnType(1,Types.VARCHAR);
@@ -277,7 +277,7 @@ public class ContextNode extends BaseTreeNode  {
 
       phaseLabelNode = new DefaultMutableTreeNode
               (new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR),"Phase"));
-      
+
       TemplateNode tmp;
       List tmpList = null;
       Iterator tmpIter = null;
@@ -285,52 +285,52 @@ public class ContextNode extends BaseTreeNode  {
       while (rs1.next()){
         DefaultMutableTreeNode phaseNode = new DefaultMutableTreeNode
           (new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR),rs1.getString(2)));
-        
+
         csiTO.setCsiIdseq(rs1.getString(1));
         csiTO.setClassSchemeItemName(rs1.getString(2));
         csiTO.setClassSchemeItemType(rs1.getString(3));
         csiTO.setCsCsiIdseq(rs1.getString(5));
         csiTO.setClassSchemeLongName("Phase");
-        
+
         tmpNodes = this.getDataTemplatesForACSI(csiTO);
         Iterator tempNodeIter = tmpNodes.iterator();
         while(tempNodeIter.hasNext()) {
           phaseNode.add((DefaultMutableTreeNode)tempNodeIter.next());
         }
         phaseLabelNode.add(phaseNode);
-      }    
-    } 
+      }
+    }
     catch (Exception ex) {
       ex.printStackTrace();
       throw ex;
-    } 
+    }
     finally {
       try {
         if (rs1 != null) rs1.close();
-        if (pstmt1 != null) pstmt1.close();  
-      } 
+        if (pstmt1 != null) pstmt1.close();
+      }
       catch (Exception ex) {
         ex.printStackTrace();
-      } 
-            
+      }
+
     }
-    
+
     return phaseLabelNode;
   }
 
 
   /**
-   * This method returns a list of DefaultMutableTreeNode objects. Each 
-   * DefaultMutableTreeNode object in the list represents a Protocol 
-   * node for this context in the tree.  
-   *  
+   * This method returns a list of DefaultMutableTreeNode objects. Each
+   * DefaultMutableTreeNode object in the list represents a Protocol
+   * node for this context in the tree.
+   *
    */
   public List getProtocolNodes() throws SQLException {
     OraclePreparedStatement pstmt = null;
     ResultSet rs = null;
     List protoNodes = new ArrayList(11);
     try {
-      pstmt =  
+      pstmt =
          (OraclePreparedStatement)myConn.prepareStatement(protoQueryStmt);
       pstmt.defineColumnType(1,Types.VARCHAR);
       pstmt.defineColumnType(2,Types.VARCHAR);
@@ -343,7 +343,7 @@ public class ContextNode extends BaseTreeNode  {
       DefaultMutableTreeNode protoNode;
       ProtocolNode pn;
       List crfNodes;
-      
+
       while (rs.next()){
         proto.setProtoIdseq(rs.getString(1));
         proto.setLongName(rs.getString(3));
@@ -351,7 +351,7 @@ public class ContextNode extends BaseTreeNode  {
         proto.setPreferredDefinition(rs.getString(4));
         proto.setConteIdseq(myContext.getConteIdseq());
         pn = new ProtocolNode(proto,myDbUtil,treeParams);
-        
+
         protoNode = pn.getTreeNode();
         crfNodes = pn.getCRFs();
         for (Iterator it = crfNodes.iterator(); it.hasNext();){
@@ -359,21 +359,21 @@ public class ContextNode extends BaseTreeNode  {
         }
         protoNodes.add(protoNode);
       }
-    } 
+    }
     catch (SQLException ex) {
       ex.printStackTrace();
       throw ex;
-    } 
+    }
     finally {
       try {
         if (rs != null) rs.close();
-        if (pstmt != null) pstmt.close();  
-      } 
+        if (pstmt != null) pstmt.close();
+      }
       catch (Exception ex) {
         ex.printStackTrace();
-      } 
+      }
     }
-    
+
     return protoNodes;
   }
 
@@ -408,17 +408,17 @@ public class ContextNode extends BaseTreeNode  {
         }
         tmpNodes.add(tmpTypeNode);
       }
-      
-    } 
+
+    }
     catch (Exception ex) {
       ex.printStackTrace();
       throw ex;
     }
     finally {
-               
+
     }
     return tmpNodes;
-        
+
   }
 
 
@@ -426,9 +426,9 @@ public class ContextNode extends BaseTreeNode  {
     OraclePreparedStatement pstmt = null;
     ResultSet rs = null;
     List tmpTypes = new ArrayList(11);
-    
+
     try {
-      pstmt =  
+      pstmt =
          (OraclePreparedStatement)myConn.prepareStatement(templateTypesQueryStmt);
       pstmt.defineColumnType(1,Types.VARCHAR);
       pstmt.setString(1,myContext.getConteIdseq());
@@ -436,36 +436,36 @@ public class ContextNode extends BaseTreeNode  {
       while (rs.next()){
         tmpTypes.add(rs.getString(1));
       }
-        
-    } 
+
+    }
     catch (Exception ex) {
       ex.printStackTrace();
-    } 
+    }
     finally {
       try {
         if (rs != null) rs.close();
-        if (pstmt != null) pstmt.close();  
-      } 
+        if (pstmt != null) pstmt.close();
+      }
       catch (Exception ex) {
         ex.printStackTrace();
-      } 
-            
+      }
+
     }
     return tmpTypes;
   }
 
   /**
-   * This method returns a list of DefaultMutableTreeNode objects. Each 
-   * DefaultMutableTreeNode object in the list represents a Protocol Form Template 
-   * node for a context other than CTEP.  
-   *  
+   * This method returns a list of DefaultMutableTreeNode objects. Each
+   * DefaultMutableTreeNode object in the list represents a Protocol Form Template
+   * node for a context other than CTEP.
+   *
    */
   public List getDataTemplateNodes() throws SQLException {
     OraclePreparedStatement pstmt = null;
     ResultSet rs = null;
     List templateNodes = new ArrayList(11);
     try {
-      pstmt =  
+      pstmt =
          (OraclePreparedStatement)myConn.prepareStatement(templateQueryStmt);
       pstmt.defineColumnType(1,Types.VARCHAR);
       pstmt.defineColumnType(2,Types.VARCHAR);
@@ -474,8 +474,8 @@ public class ContextNode extends BaseTreeNode  {
       pstmt.setFetchSize(25);
       pstmt.setString(1,myContext.getConteIdseq());
       rs = pstmt.executeQuery();
-      
-        
+
+
       while (rs.next()){
         DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode(
           new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
@@ -488,24 +488,24 @@ public class ContextNode extends BaseTreeNode  {
                      ,rs.getString(4)));
         templateNodes.add(tmpNode);
       }
-    } 
+    }
     catch (SQLException ex) {
       ex.printStackTrace();
       throw ex;
-    } 
+    }
     finally {
       try {
         if (rs != null) rs.close();
-        if (pstmt != null) pstmt.close();  
-      } 
+        if (pstmt != null) pstmt.close();
+      }
       catch (Exception ex) {
         ex.printStackTrace();
-      } 
+      }
     }
-    
+
     return templateNodes;
   }
 
 
-  
+
 }

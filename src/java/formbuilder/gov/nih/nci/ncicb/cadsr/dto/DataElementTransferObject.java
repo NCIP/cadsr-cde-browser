@@ -2,6 +2,8 @@ package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.DataElementConcept;
+import gov.nih.nci.ncicb.cadsr.resource.DataElementDerivation;
+import gov.nih.nci.ncicb.cadsr.resource.DerivedDataElement;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 
@@ -20,6 +22,7 @@ public class DataElementTransferObject extends AdminComponentTransferObject
   private String decName;
   //private String conteName;
   private String usingContexts;
+  private DerivedDataElement derivedDataElement;
 
   public DataElementTransferObject() {
   }
@@ -158,4 +161,14 @@ public class DataElementTransferObject extends AdminComponentTransferObject
     super.setPublicId(id);
     this.cDEId = String.valueOf(id);
   }
+
+
+   public void setDerivedDataElement(DerivedDataElement dataElementDerivation) {
+      this.derivedDataElement = dataElementDerivation;
+   }
+
+
+   public DerivedDataElement getDerivedDataElement() {
+      return derivedDataElement;
+   }
 }

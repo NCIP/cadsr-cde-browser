@@ -57,6 +57,10 @@ public class GetDataElementDetails extends BasePersistingProcess {
       registerStringResult("cdeId");
       registerStringResult("version");
       registerResultObject("uem");
+      
+      // TT #257 added support for derived data element
+      registerParameterObject("derivedDe");
+      registerResultObject("derivedDe");
     }
     catch (ProcessInfoException pie) {
       reportException(pie, true);
@@ -118,6 +122,7 @@ public class GetDataElementDetails extends BasePersistingProcess {
       setResult("queryDE", "no");
       setResult("cdeId", null);
       setResult("version", null);
+      setResult("derivedDe", null);
       setCondition(SUCCESS);
     }
     catch (IllegalURLParametersException iex) {

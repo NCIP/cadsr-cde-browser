@@ -1,3 +1,7 @@
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@page import="javax.servlet.http.* " %>
 <%@page import="javax.servlet.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
@@ -131,8 +135,8 @@ function goPage(pageInfo) {
 %>
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Preferred Name</th>
     <th class="OraTableColumnHeader">Long Name</th>
+    <th class="OraTableColumnHeader">Preferred Name</th>
     <th class="OraTableColumnHeader">Context</th>
     <th class="OraTableColumnHeader">Version</th>
     <th class="OraTableColumnHeader">Workflow Status</th>
@@ -149,6 +153,6 @@ function goPage(pageInfo) {
 </center>
 </form>
 
-<%@ include  file="cdebrowserCommon_html/bottom_border_lov.html" %>
+<%@ include file="common/common_bottom_border.jsp"%>
 </BODY>
 </HTML>

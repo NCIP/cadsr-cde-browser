@@ -42,14 +42,21 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
         List questionVVList = currQuestion.getValidValues();
         String questionIdSeq = currQuestion.getQuesIdseq();
         List availableVVs = (List)availableVVMap.get(questionIdSeq);
+        List nonListedVVs = (List)pageContext.getAttribute(questionIdSeq+"NotListedValidValues");
+        
+        if(nonListedVVs==null&&(availableVVs!=null&&!availableVVs.isEmpty()))
+         {
+          nonListedVVs = getNotListedValidValues(currQuestion.getValidValues(),availableVVs);
+          pageContext.setAttribute(questionIdSeq+"NotListedValidValues",nonListedVVs);
+         }
         
         if(availableVVs!=null&&!availableVVs.isEmpty())
         {
 
-           List nonListedVVs = getNotListedValidValues(currQuestion.getValidValues(),availableVVs);
+           //List nonListedVVs = getNotListedValidValues(currQuestion.getValidValues(),availableVVs);
              if(!nonListedVVs.isEmpty())
              {
-               String html = generateHtml(nonListedVVs,availableVVs);
+               String html = generateHtml(nonListedVVs,availableVVs,questionIdSeq);
                out.print(html); 
                pageContext.setAttribute(AVAILABLE_VALID_VALUE_PRESENT,"Yes");
                
@@ -90,17 +97,31 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
     return nonListedVVs;
   }
   
-  public String generateHtml(List nonListedVVs,List availableValidVaues)
+  public String generateHtml(List nonListedVVs,List availableValidVaues,String questionIdSeq)
   {
-    StringBuffer sb = new StringBuffer("<select class=\""+selectClassName+"\" name=\""+selectName+"\"> \n");
+    StringBuffer selectHtml = new StringBuffer("<select class=\""+selectClassName+"\" name=\""+selectName+"\"> \n");
+    
+    StringBuffer optionHtml = (StringBuffer)pageContext.getAttribute(questionIdSeq+"validValueOptionBuffer");
+    //
+    //The options are cached since they dont change for the same question
+    //
+    if(optionHtml!=null)
+    {              
+       return selectHtml.toString()+optionHtml.toString();
+    }
+    optionHtml = new StringBuffer();
+    
     ListIterator avalilableVVsListIterate = nonListedVVs.listIterator();
      while (avalilableVVsListIterate.hasNext()) {
       FormValidValue fvv = (FormValidValue) avalilableVVsListIterate.next();
       int index = availableValidVaues.indexOf(fvv);
-      sb.append("<option value=\""+index+"\">"+fvv.getLongName()+"</option> \n" );
+      optionHtml.append("<option value=\""+index+"\">"+fvv.getLongName()+"</option> \n" );
      }
-    sb.append("</select>");
-    return sb.toString();
+    optionHtml.append("</select>");
+
+    pageContext.setAttribute(questionIdSeq+"validValueOptionBuffer",optionHtml);
+    
+    return selectHtml.toString()+optionHtml.toString();
   }
 
   public String getQuestionBeanId()

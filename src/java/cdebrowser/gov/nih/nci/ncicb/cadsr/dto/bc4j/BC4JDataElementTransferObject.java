@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.dto.base.AdminComponentTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsViewRowImpl;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.DataElementConcept;
+import gov.nih.nci.ncicb.cadsr.resource.DerivedDataElement;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 
 import java.io.Serializable;
@@ -26,6 +27,7 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
   protected String cdeId;
   protected String contextName;
   protected String usingContexts = "";
+  protected DerivedDataElement dde;
 
   public BC4JDataElementTransferObject() {
   }
@@ -160,4 +162,14 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
     deIdseq = pDeIdseq;
     idseq = pDeIdseq;
   }
+
+
+   public void setDerivedDataElement(DerivedDataElement derivedDe) {
+      this.dde = derivedDe;
+   }
+
+
+   public DerivedDataElement getDerivedDataElement() {
+      return dde;
+   }
 }

@@ -14,6 +14,8 @@ public class DataElementSearchBean extends Object {
   private String whereClause = "";
   private String[] strArray = null;
   private StringBuffer workflowList = null;
+  private StringBuffer regStatusList = null;
+  private StringBuffer altNameList = null;
   private String xmlQueryStmt = "";
   private String vdPrefName = "";
   private String csiName = "";
@@ -22,6 +24,8 @@ public class DataElementSearchBean extends Object {
   private StringBuffer usageList = new StringBuffer("");
   private String searchText;
   private String[] aslName;
+  private String[] regStatus;
+  private String[] altNames;
   private String vdIdseq;
   private String decIdseq;
   private String cdeId;
@@ -29,6 +33,7 @@ public class DataElementSearchBean extends Object {
   private String latVersionInd;
   private StringBuffer searchInList;
   private String validValue;
+  private String altName;
 
   public DataElementSearchBean(
     HttpServletRequest request,
@@ -41,6 +46,8 @@ public class DataElementSearchBean extends Object {
     csiName = request.getParameter("txtClassSchemeItem");
     searchText = request.getParameter("jspKeyword");
     aslName = request.getParameterValues("jspStatus");
+    regStatus = request.getParameterValues("regStatus");
+    altNames = request.getParameterValues("altName");
     vdIdseq = request.getParameter("jspValueDomain");
     decIdseq = request.getParameter("jspDataElementConcept");
     csCsiIdseq = request.getParameter("jspClassification");
@@ -48,6 +55,7 @@ public class DataElementSearchBean extends Object {
     latVersionInd = request.getParameter("jspLatestVersion");
     contextUse = request.getParameter("contextUse");
     validValue = request.getParameter("jspValidValue");
+    altName = request.getParameter("jspAltName");
 
     if (contextUse == null) {
       contextUse = "";
@@ -56,6 +64,8 @@ public class DataElementSearchBean extends Object {
     String selIndex = null;
 
     buildWorkflowList(aslName, dbUtil);
+    buildRegStatusList(regStatus,dbUtil);
+    buildAlternateNameList(altNames, dbUtil);
     buildContextUseList(contextUse);
     searchInList = new StringBuffer("");
 
@@ -86,6 +96,36 @@ public class DataElementSearchBean extends Object {
         "jspStatus", dbUtil, where, false, 4, true, true, false, true,
         "LOVField");
   }
+  
+  public StringBuffer getRegStatusList() {
+    return regStatusList;
+  }
+  
+  public void buildRegStatusList(
+    String[] selectedIndex,
+    DBUtil dbUtil) {
+    String where = null;
+    regStatusList =
+      GenericPopListBean.buildList(
+        "sbr.REG_STATUS_LOV", "REGISTRATION_STATUS", "REGISTRATION_STATUS", selectedIndex,
+        "regStatus", dbUtil, where, false, 4, true, true, false, true,
+        "LOVField");
+  }
+  public StringBuffer getAltNameList() {
+    return altNameList;
+  }
+  
+
+  public void buildAlternateNameList(
+    String[] selectedIndex,
+    DBUtil dbUtil) {
+    String where = null;
+    altNameList =
+      GenericPopListBean.buildList(
+        "sbr.DESIGNATION_TYPES_LOV", "DETL_NAME", "DETL_NAME", selectedIndex,
+        "altName", dbUtil, where, true, 4, false, true, false, true,
+        "LOVField");
+  }
 
   public String getVDPrefName() {
     return StringUtils.replaceNull(vdPrefName);
@@ -105,6 +145,10 @@ public class DataElementSearchBean extends Object {
 
   public String getAslName() {
     return StringUtils.replaceNull(aslName);
+  }
+  
+  public String getRegStatus() {
+    return StringUtils.replaceNull(regStatus);
   }
 
   public String getVdIdseq() {
@@ -226,5 +270,9 @@ public class DataElementSearchBean extends Object {
 
   public String getValidValue() {
     return StringUtils.replaceNull(validValue);
+  }
+  
+  public String getAltName() {
+    return StringUtils.replaceNull(altName);
   }
 }

@@ -1,12 +1,12 @@
 =============================================================================
-CDE Browser 2.1 Installation Document for Oracle 9ias
+CDE Browser 2.1.1 Installation Document for Oracle 9ias
 =============================================================================
 
 Pre-requisites
 ---------------
 
 1. 9ias 90223  installed. Available from http://otn.oracle.com
-2. caDSR 2.1 repository installed. Please refer to caDSR installation document
+2. caDSR 2.1.1 repository installed. Please refer to caDSR installation document
 
 Installation steps
 ------------------
@@ -29,7 +29,7 @@ Please replace the following references with your environment specific informati
   1.2  To deploy the application enter the following:
 
      deployApplication -f <INSTALL_HOME>\cdebrowser.ear 
-      		-a CDEBrowser -rc /CDEBrowser -co <OC4J_INSTANCE> -v
+      		-a CDEBrowser  -co <OC4J_INSTANCE> -v
 
 
 
@@ -48,36 +48,51 @@ Please replace the following references with your environment specific informati
    each deployment could have its own caDSR repository. Datasources used in the application 
    and that are needed to be configured are SBR_DS, SBREXT_DS and SBREXT_FB_DS.
    Below is sample datasource information. Please create these datasources using
-   Enterprise Manager for your OC4J instance. The connection  information should reflect your
-   caDAR repository connection.
+   Enterprise Manager for your OC4J instance.
+   The connection  url and password should reflect your caDSR repository connection.
    
-  <data-source class="com.evermind.sql.DriverManagerDataSource"
-               connection-driver="oracle.jdbc.driver.OracleDriver"
-               ejb-location="jdbc/ejb/FormBuilderDS" inactivity-timeout="30"
-               location="jdbc/FormBuilderCoreDS" name="SBREXT_FB_DS"
-               password="i1sn0w" pooled-location="jdbc/pooled/FormBuilderDS"
-               url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest"
-               username="sbrext" xa-location="jdbc/xa/SBREXT_FB_XADS"
-               min-connections="5">
-    <property name="cacheScheme" value="1"/>
-  </data-source>
+   <data-source
+     class="com.evermind.sql.DriverManagerDataSource" 
+     connection-driver="oracle.jdbc.driver.OracleDriver" 
+     ejb-location="jdbc/ejb/FormBuilderDS" inactivity-timeout="30"
+     location="jdbc/FormBuilderCoreDS" 
+     name="SBREXT_FB_CBDEVDS" password="sbrext_passwd" 
+     pooled-location="jdbc/pooled/FormBuilderDS"
+     url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV" 
+     username="sbrext" xa-location="jdbc/xa/SBREXT_FB_CBDEVXADS"
+     max-connections="5" 
+     min-connections="1" 
+     >
+     <property name="cacheScheme"
+       value="1"/>
+   </data-source>
 
-  <data-source class="com.evermind.sql.DriverManagerDataSource"
-               connection-driver="oracle.jdbc.driver.OracleDriver"
-               ejb-location="jdbc/SBR_CBTESTDS" inactivity-timeout="30"
-               location="jdbc/SBR_CBTESTCoreDS"
-               name="jdev-connection:SBR_CBTEST" password="i1sn0w"
-               pooled-location="jdbc/SBR_CBTESTPooledDS"
-               url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest"
-               username="SBR" xa-location="jdbc/xa/SBR_CBTESTXADS"/>
-  <data-source class="com.evermind.sql.DriverManagerDataSource"
-               connection-driver="oracle.jdbc.driver.OracleDriver"
-               ejb-location="jdbc/SBREXT_CBTESTDS" inactivity-timeout="30"
-               location="jdbc/SBREXT_CBTESTCoreDS"
-               name="jdev-connection:SBREXT_CBTEST" password="i1sn0w"
-               pooled-location="jdbc/SBREXT_CBTESTPooledDS"
-               url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest"
-               username="sbrext" xa-location="jdbc/xa/SBREXT_CBTESTXADS"/>
+   <data-source 
+     class="com.evermind.sql.DriverManagerDataSource"
+     connection-driver="oracle.jdbc.driver.OracleDriver" 
+     ejb-location="jdbc/SBR_CBDEVDS"
+     inactivity-timeout="30"
+     location="jdbc/SBR_CBDEVCoreDS" 
+     name="jdev-connection:SBR_CBDEV"
+     password="sbr_password"
+     pooled-location="jdbc/SBR_CBDEVPooledDS"
+     url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV"
+     username="sbr" 
+     xa-location="jdbc/xa/SBR_CBDEVXADS"
+     />
+
+   <data-source 
+     class="oracle.jdbc.pool.OracleConnectionPoolDataSource" 
+     connection-driver="oracle.jdbc.driver.OracleDriver"
+     ejb-location="jdbc/SBREXT_CBDEVDS"
+     inactivity-timeout="30" 
+     location="jdbc/SBREXT_CBDEVCoreDS" 
+     name="jdev-connection:SBREXT_CBDEV" 
+     password="sbrext_passwd" 
+     pooled-location="jdbc/SBREXT_CBDEVPooledDS"
+     url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV"
+     username="sbrext" xa-location="jdbc/xa/SBREXT_CBDEVXADS"
+     />
    
 3. <ORACLE_HOME>\j2ee\<OC4J_INSTANCE>\applications\CDEBrowser\CDEBrowser
     \WEB-INF\classes\cle_providers.xml contains the connection information 

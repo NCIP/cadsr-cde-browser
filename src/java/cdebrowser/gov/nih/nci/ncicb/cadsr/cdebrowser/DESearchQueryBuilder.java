@@ -53,6 +53,7 @@ public class DESearchQueryBuilder extends Object {
     String searchStr4 = "";
     String searchStr5 = "";
     String searchStr6 = "";
+    String searchStr8 = "";
     String latestWhere = "";
     String csiWhere = "";
     String fromClause = "";
@@ -68,12 +69,21 @@ public class DESearchQueryBuilder extends Object {
       searchStr = "";
       whereClause = "";
       selIndex = "";
-      latestWhere = " and de.latest_version_ind = 'Yes' ";
+      if((treeParamType!=null)&&(treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")))
+      {
+        latestWhere = "";
+      }
+      else
+      {
+        latestWhere = " and de.latest_version_ind = 'Yes' ";
+      }
       whereBuffer.append(latestWhere);
     }
     else {
       searchStr0 = StringUtils.replaceNull(request.getParameter("jspKeyword"));
       String [] searchStr1 = request.getParameterValues("jspStatus");
+      String[] searchStr7 = request.getParameterValues("regStatus");;
+      String[] searchStr9 = request.getParameterValues("altName");;
       String [] searchIn = request.getParameterValues("jspSearchIn");
       String validValue =
         StringUtils.replaceNull(request.getParameter("jspValidValue"));
@@ -83,6 +93,16 @@ public class DESearchQueryBuilder extends Object {
           doStatusSearch = true;
         }
       }
+
+      boolean doRegStatusSearch = false;
+      //check if registration status is selected
+      if (searchStr7 != null) {
+        if (!StringUtils.containsKey(searchStr7,"ALL")) {
+          doRegStatusSearch = true;
+        }
+      }
+
+
       searchStr2 =
         StringUtils.replaceNull(request.getParameter("jspValueDomain"));
       searchStr3 = StringUtils.replaceNull(request.getParameter("jspCdeId"));
@@ -92,6 +112,8 @@ public class DESearchQueryBuilder extends Object {
         StringUtils.replaceNull(request.getParameter("jspClassification"));
       searchStr6 =
         StringUtils.replaceNull(request.getParameter("jspLatestVersion"));
+      searchStr8 =
+        StringUtils.replaceNull(request.getParameter("jspAltName"));
 
       if (searchStr6.equals("Yes")||searchStr6.equals("")) {
         //latestWhere = " and de.latest_version_ind = '"+searchStr6+"'";
@@ -100,6 +122,13 @@ public class DESearchQueryBuilder extends Object {
       else {
         latestWhere = "";
       }
+
+      if((treeParamType!=null)&&(treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")))
+      {
+        if(!searchStr6.equals("Yes")||searchStr6.equals(""))
+          latestWhere = "";
+      }
+
       if (searchStr5.equals("")) {
             csiWhere = "";
             fromClause = "";
@@ -109,6 +138,8 @@ public class DESearchQueryBuilder extends Object {
                        " and acs.cs_csi_idseq = '"+searchStr5+"'";
             fromClause = " ,sbr.ac_csi acs ";
       }
+
+
       String wkFlow = "";
       String wkFlowWhere = "";
       String cdeIdWhere = "";
@@ -117,23 +148,23 @@ public class DESearchQueryBuilder extends Object {
       String searchWhere ="";
       String docWhere = "";
       String vvWhere = "";
+      String regStatusWhere = "";
+      String altNameWhere = "";
 
       if (doStatusSearch){
         wkFlowWhere = this.buildStatusWhereClause(searchStr1);
       }
+      if (doRegStatusSearch){
+        regStatusWhere = this.buildRegStatusWhereClause(searchStr7);
+      }
       //if (!getSearchStr(3).equals("")){
       if (!searchStr3.equals("")){
         String newCdeStr = StringReplace.strReplace(searchStr3,"*","%");
-        cdeIdWhere =  " and de.de_idseq IN "
-                     +"(SELECT de_idseq "
-                     +"FROM   data_elements "
-					           +"WHERE  cde_id = "+newCdeStr
-                     +" UNION "
-                     +"SELECT ac_idseq "
-                     +"FROM designations "
-                     +"WHERE detl_name = 'HISTORICAL_CDE_ID' "
-                     +"AND to_char(to_number(ltrim(substr(name,1,7)))) like '"+newCdeStr+"')";
+        cdeIdWhere =  " and (to_char(de.cde_id) like '"+newCdeStr + "')";
       }
+
+
+
       //if (!getSearchStr(2).equals("")){
       if (!searchStr2.equals("")){
         //vdWhere = " and vd.vd_idseq = '"+searchStr2+"'";
@@ -152,11 +183,15 @@ public class DESearchQueryBuilder extends Object {
       if (!searchStr0.equals("")){
         docWhere = this.buildSearchTextWhere(searchStr0,searchIn);
       }
+      if (!searchStr8.equals("")){
+        altNameWhere = this.buildAltNamesWhere(searchStr8, searchStr9);
+      }
       if (!validValue.equals("")){
         vvWhere = this.buildValidValueWhere(validValue);
       }
 
       whereBuffer.append(wkFlowWhere);
+      whereBuffer.append(regStatusWhere);
       whereBuffer.append(cdeIdWhere);
       whereBuffer.append(decWhere);
       whereBuffer.append(vdWhere);
@@ -164,6 +199,7 @@ public class DESearchQueryBuilder extends Object {
       whereBuffer.append(docWhere);
       whereBuffer.append(usageWhere);
       whereBuffer.append(vvWhere);
+      whereBuffer.append(altNameWhere);
     }
 
     if (treeConteIdSeq != null) {
@@ -504,6 +540,26 @@ public class DESearchQueryBuilder extends Object {
 
     return wkFlowWhere;
   }
+  private String buildRegStatusWhereClause(String [] regStatusList) {
+    String regStatWhere = "";
+    String regStatus = "";
+    if (regStatusList.length == 1) {
+      regStatus = regStatusList[0];
+      regStatWhere = " and acr.registration_status = '"+ regStatus + "'";
+    }
+    else {
+      for (int i=0; i<regStatusList.length; i++) {
+        if (i==0)
+          regStatus = "'"+regStatusList[0]+"'";
+        else
+          regStatus = regStatus + ","+ "'"+ regStatusList[i]+"'";
+      }
+      regStatWhere = " and acr.registration_status IN ("+regStatus+")";
+
+    }
+
+    return regStatWhere;
+  }
 
   private String buildSearchTextWhere(String text, String[] searchDomain) {
     String docWhere = "";
@@ -757,6 +813,7 @@ public class DESearchQueryBuilder extends Object {
 
   private String buildValidValueWhere(String value) {
     String newSearchStr = StringReplace.strReplace(value,"*","%");
+    newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
     String vvWhere = " and de.vd_idseq IN( "+
                      " select distinct vd.vd_idseq " +
                      " from   sbr.value_domains vd, "+
@@ -769,4 +826,42 @@ public class DESearchQueryBuilder extends Object {
     return vvWhere;
 
   }
+
+    private String buildAltNamesWhere(String text, String[] altNameTypes) {
+    String altWhere = "";
+    String newSearchStr = "";
+    String typeWhere = "";
+    String altTypeStr = "";
+    String searchWhere = "";
+
+    newSearchStr = StringReplace.strReplace(text,"*","%");
+    newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
+    if (altNameTypes == null ||
+      StringUtils.containsKey(altNameTypes,"ALL"))
+       typeWhere = "";
+    else if (altNameTypes.length == 1) {
+      altTypeStr = altNameTypes[0];
+      typeWhere = " and dsn.detl_name = '"+ altTypeStr + "'";
+    }
+    else {
+      for (int i=0; i<altNameTypes.length; i++) {
+        if (i==0)
+          altTypeStr = "'"+altNameTypes[0]+"'";
+        else
+          altTypeStr = altTypeStr + ","+ "'"+ altNameTypes[i]+"'";
+      }
+      typeWhere = " and dsn.detl_name IN ("+altTypeStr+")";
+
+    }
+
+    searchWhere = " and upper (nvl(dsn.name,'%')) like upper ('"+newSearchStr+"') ";
+
+    altWhere = " and de.de_idseq IN "
+                  +"(select de_idseq "
+                  +" from sbr.designations dsn,sbr.data_elements de1 "
+                  +" where  de1.de_idseq  = dsn.ac_idseq (+) "
+                  + typeWhere
+                  + searchWhere+ " ) ";
+    return altWhere;
+    }
 }

@@ -33,10 +33,7 @@
   <property name="web.app.name" value="${app.name}-web" />
   <property name="ear.name" value="${app.name}" />
   <property name="war.name" value="${app.name}-web" />
-  <property name="ejb.name" value="formbuilder-ejb" />
-  <property name="open.source.file.name.windows" value="CDEBrowser_src_2.1(Windows)" />
-  <property name="open.source.file.name.unix" value="CDEBrowser_src_2.1(Unix)" />
-  
+  <property name="ejb.name" value="formbuilder-ejb" />  
     
   <!-- Java Source Directories -->
   <property name="cdebrowser.java.src.dir" value="${project.home}/src/java/cdebrowser"/>
@@ -60,18 +57,25 @@
   <property name="java.lib.dir" value="${project.home}/lib/java"/>
  
   <property name="config.home" value="${project.home}/config"/>
-  <property name="config.test" value="${project.home}/config_test"/>
+  <property name="config.qa" value="${project.home}/config_qa"/>
+  <property name="config.stage" value="${project.home}/config_stage"/>  
   <property name="config.prod" value="${project.home}/config_prod"/>
+  <property name="config.opensource" value="${project.home}/config_opensource"/>
   <property name="ejb.descriptor.home" value="${project.home}/config/ejb"/>  
   
   <property name="app.docs.dir" value="${project.home}/docs" /> 
   <property name="app.docs.setup.dir" value="${project.home}/docs/setup" />  
   <property name="app.setup.oc4j.install.name" value="Install_CDBrowser_9ias.txt" />
   <property name="app.setup.9ias.install.name" value="Install_CDBrowser_on_OC4J.txt" />
-  <property name="app.setup.oc4j.install.out.name" value="Install_CDBrowser_2.1_9ias.txt" />
-  <property name="app.setup.9ias.install.out.name" value="Install_CDBrowser_2.1_on_OC4J.txt" />  
-  <property name="download.file.name.unix" value="CDEBrowser_Unix_2.1" />
-  <property name="download.file.name.windows" value="CDEBrowser_Windows_2.1" />
+
+  
+   <!-- Open Source file names This need to updated by release-->
+  <property name="app.setup.oc4j.install.out.name" value="Install_CDBrowser_2.1.1_9ias.txt" />
+  <property name="app.setup.9ias.install.out.name" value="Install_CDBrowser_2.1.1_on_OC4J.txt" />  
+  <property name="download.file.name.unix" value="CDEBrowser_Unix_2.1.1" />
+  <property name="download.file.name.windows" value="CDEBrowser_Windows_2.1.1" />
+  <property name="open.source.file.name.windows" value="CDEBrowser_src_2.1.1(Windows)" />
+  <property name="open.source.file.name.unix" value="CDEBrowser_src_2.1.1(Unix)" />  
   
   
     <!-- Open source directoris -->
@@ -92,8 +96,12 @@
     <target name="clean">
           <delete dir="${classes.build.dir}" quiet="false"/>
           <delete dir="${build.dir}" quiet="false"/>   
-          <delete dir="${PROD_BUILD_DIR}" quiet="false"/>
           <delete dir="${dist.dir}" quiet="false"/>          
+    </target>
+    
+    <target name="clean_build_dir">
+          <delete dir="${classes.build.dir}" quiet="false"/>
+          <delete dir="${build.dir}" quiet="false"/>           
     </target>
  <!-- =========== END CLEAN BUILD AREA ======================= -->
  
@@ -249,6 +257,8 @@
            <fileset dir="${config.home}/META-INF">
              <patternset>
                <include name="application.xml"/>
+               <include name="orion-application.xml"/>
+               <include name="principals.xml"/>                 
              </patternset>
            </fileset>      
         </copy>       
@@ -287,37 +297,37 @@
   <!-- =========== END DEV CONFIG ======================= -->
   
   <!-- =========== TEST CONFIG ======================= -->
-    <target name="test_config" depends="init,dev_config">    
+    <target name="qa_config" depends="init,dev_config">    
        <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
-           <fileset dir="${config.test}/connections">
+           <fileset dir="${config.qa}/connections">
              <patternset>
                <include name="data-sources.xml"/>
              </patternset>
            </fileset>      
         </copy> 
        <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
-           <fileset dir="${config.test}/META-INF">
+           <fileset dir="${config.qa}/META-INF">
              <patternset>
                <include name="application.xml"/>
              </patternset>
            </fileset>      
         </copy>         
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.test}/connections">
+         <fileset dir="${config.qa}/connections">
            <patternset>
              <include name="cle-providers.xml"/>
            </patternset>
          </fileset>
       </copy>   
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.test}/properties">
+         <fileset dir="${config.qa}/properties">
            <patternset>
              <include name="cdebrowser.properties"/>
            </patternset>
          </fileset>
       </copy>   
      <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
-         <fileset dir="${config.test}/properties">
+         <fileset dir="${config.qa}/properties">
            <patternset>
              <include name="log4j.properties"/>
            </patternset>
@@ -325,6 +335,46 @@
       </copy>         
     </target>
   <!-- =========== END TEST CONFIG ======================= -->
+  
+  <!-- =========== Stage CONFIG ======================= -->
+    <target name="stage_config" depends="init,dev_config">    
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.stage}/connections">
+             <patternset>
+               <include name="data-sources.xml"/>
+             </patternset>
+           </fileset>      
+        </copy> 
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.stage}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy>         
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.stage}/connections">
+           <patternset>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.stage}/properties">
+           <patternset>
+             <include name="cdebrowser.properties"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
+         <fileset dir="${config.stage}/properties">
+           <patternset>
+             <include name="log4j.properties"/>
+           </patternset>
+         </fileset>
+      </copy>         
+    </target>
+  <!-- =========== END TEST CONFIG ======================= -->  
   
   <!-- =========== PROD CONFIG ======================= -->
     <target name="prod_config" depends="init,dev_config">    
@@ -366,55 +416,49 @@
     </target>
   <!-- =========== END PROD CONFIG ======================= -->  
   
-    <!-- =========== DOWNLOAD CONFIG ======================= -->
+    <!-- =========== Opensource CONFIG ======================= -->
     
-    <target name="download_config" depends="init,dev_config">    
+    <target name="opensource_config" depends="init,dev_config">    
       <delete file="${classes.build.dir}/META-INF/data-sources.xml" failonerror="false"/>
        <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
-           <fileset dir="${config.prod}/META-INF">
+           <fileset dir="${config.opensource}/META-INF">
              <patternset>
-               <include name="application.xml"/>
+               <include name="orion-application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy>       
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.opensource}/connections">
+             <patternset>
+               <include name="data-sources.xml"/>
              </patternset>
            </fileset>      
         </copy>         
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.prod}/connections">
+         <fileset dir="${config.opensource}/connections">
            <patternset>
              <include name="cle-providers.xml"/>
            </patternset>
          </fileset>
       </copy>   
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.prod}/properties">
+         <fileset dir="${config.opensource}/properties">
            <patternset>
              <include name="cdebrowser.properties"/>
            </patternset>
          </fileset>
       </copy>   
      <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
-         <fileset dir="${config.prod}/properties">
+         <fileset dir="${config.opensource}/properties">
            <patternset>
              <include name="log4j.properties"/>
            </patternset>
          </fileset>
       </copy>         
     </target>
-  <!-- =========== END PROD CONFIG ======================= -->  
+  <!-- =========== END OpenSource CONFIG ======================= -->  
   
-  <!-- =========== STAGE CONFIG ======================= -->
-    <target name="stage_config" depends="init">    
-     <copy todir="${classes.build.dir}/META-INF">      
-         <fileset dir="${config.home}/connections">
-           <patternset>
-             <include name="data-sources.xml"/>
-           </patternset>
-         </fileset>      
-      </copy>   
-    </target>  
-  <!-- =========== END STAGE CONFIG ======================= -->
-  
-  
-  
+
   <!-- =========== START WAR PROCESS ======================= -->
   
    <target name="war_cdebrowser" depends="compile,jar_security">  
@@ -635,15 +679,11 @@
         <fileset dir="${classes.build.dir}">
           <patternset>
              <include name="META-INF/data-sources.xml"/>
+             <include name="META-INF/orion-application.xml"/>
+             <include name="META-INF/principals.xml"/>             
           </patternset>
         </fileset>
         
-        <fileset dir="${config.home}">
-          <patternset>
-             <include name="META-INF/orion-application.xml"/>
-             <include name="META-INF/principals.xml"/>
-          </patternset>
-        </fileset>
         <patternset>
           <exclude name="*.*"/>
         </patternset>
@@ -914,44 +954,47 @@
   <!-- =========== DEV DISTRIBUTION============== -->
   
   <!-- =========== DEV DISTRIBUTION============== -->
-   <target name="dist_dev" depends="clean,dev_config,ear_cdebrowser,dist_ear_copy">      
+   <target name="dist_dev" depends="clean_build_dir,dev_config,ear_cdebrowser,dist_ear_copy">      
    </target>      
   <!-- =========== END DEV DISTRIBUTION ======================= -->
   
   <!-- =========== QA DISTRIBUTION============== -->
-      <target name="dist_qa" depends="clean,dev_config,ear_cdebrowser,dist_ear_copy">  
-      </target>      
-  <!-- =========== END QA DISTRIBUTION ======================= -->
-  
-  <!-- =========== STAGE DISTRIBUTION============== -->
-       <target name="dist_stage" depends="clean,dev_config,ear_cdebrowser,dist_ear_copy">  
-        </target>      
-  <!-- =========== END STAGE DISTRIBUTION ======================= -->
-  
-  <!-- =========== TEST DISTRIBUTION============== -->
-        <target name="dist_test" depends="clean,test_config,ear_cdebrowser,dist_ear_copy">  
+        <target name="dist_qa" depends="clean_build_dir,qa_config,ear_cdebrowser,dist_ear_copy">  
         </target>      
   <!-- =========== END TEST DISTRIBUTION ======================= -->
   
+  <!-- =========== STAGE DISTRIBUTION============== -->
+       <target name="dist_stage" depends="clean_build_dir,stage_config,ear_cdebrowser,dist_ear_copy">  
+        </target>      
+  <!-- =========== END STAGE DISTRIBUTION ======================= -->
+  
   <!-- =========== PROD DISTRIBUTION============== -->
-        <target name="dist_prod" depends="clean,prod_config,ear_cdebrowser,dist_ear_copy">  
+        <target name="dist_prod" depends="clean_build_dir,prod_config,ear_cdebrowser,dist_ear_copy">  
         </target>      
   <!-- =========== END PROD DISTRIBUTION ======================= -->
   
   <!-- =========== PROD DISTRIBUTION Complete============== -->
-        <target name="dist_prod_full" depends="clean,prod_config
-                ,ear_cdebrowser,dist_ear_copy,dist_download,opensource_windows,
-                opensource_unix">  
+        <target name="dist_prod_full" depends="dist_prod,dist_download,
+                                                             dist_opensource ">  
                <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
                includes="${app.docs.setup.readme.name}.txt"               
                />        
         </target>      
   <!-- =========== END PROD DISTRIBUTION ======================= -->
-    
+
+  <!-- =========== PROD DISTRIBUTION Complete============== -->
+        <target name="dist_opensource" depends="clean_build_dir,opensource_config,opensource_windows,
+                opensource_unix">  
+               <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
+               includes="${app.docs.setup.readme.name}.txt"               
+               />        
+        </target>      
+  <!-- =========== END PROD DISTRIBUTION ======================= --> 
+  
   <!-- =========== Download distribution============== -->
-        <target name="dist_download" depends="clean,download_config,ear_cdebrowser"> 
+        <target name="dist_download" depends="clean_build_dir,opensource_config,ear_cdebrowser"> 
             <mkdir dir="${build.dir}/download"/>
-             <copy todir="${build.dir}/download">      
+             <copy todir="${build.dir}/download" >      
                  <fileset dir="${build.dir}">
                    <patternset>
                      <include name="${ear.name}.ear"/>
@@ -1013,7 +1056,6 @@
        clean_build_redeploy_restart - clean_build_redeploy,oc4j_start(Developement)
        
        dist_dev		      - Creates Developement Clean distribution.
-       dist_test	      - Creates Test Clean distribution.
        dist_qa		      - Creates QA Clean distribution.
        dist_stage	      - Creates Stage Clean distribution.
        dist_prod	      - Creates Prod Clean distribution.

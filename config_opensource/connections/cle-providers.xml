@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE cle-providers SYSTEM "http://xmlns.oracle.com/ias/mvc/cle-providers.dtd">
+<cle-providers>
+  <provider name="cdebrowser_bc4j" class="oracle.clex.persistence.bc4j.ApplicationModuleProvider">
+    <property name="user" value="sbr"/>
+    <property name="password" value="sbr_passwd"/>
+    <property name="modulename" value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule"/>
+    <property name="connectionstring" value="jdbc:oracle:thin:sbr/sbr_passwd@cbiodb2-d.nci.nih.gov:1521:cbdev"/>
+    <property name="host" value="cbiodb2-d.nci.nih.gov"/>
+    <property name="sid" value="cbdev"/>
+    <property name="persistencebase" value="gov.nih.nci.ncicb.cadsr.persistence.bc4j"/>
+    <property name="failover" value=""/>
+  </provider>
+</cle-providers>

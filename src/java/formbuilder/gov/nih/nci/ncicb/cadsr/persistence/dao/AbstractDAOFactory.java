@@ -43,6 +43,8 @@ public abstract class AbstractDAOFactory implements PersistenceConstants {
   
   public abstract ValueDomainDAO getValueDomainDAO ();
   
+  public abstract DerivedDataElementDAO getDerivedDataElementDAO ();
+  
   public static AbstractDAOFactory getDAOFactory(ServiceLocator locator)
     throws DAOCreateException {
     AbstractDAOFactory factory = null;
