@@ -272,12 +272,12 @@ function findFrame(doc, strName) {
 
 function listChanged(urlInfo) {
   var pgNum = document.forms[0].dePages.options[document.forms[0].dePages.selectedIndex].value
-  document.location.href= "search?searchDataElements=9&performQuery=no&deSearchPageNum="+pgNum+"<%= pageUrl %>"+urlInfo;
+  document.location.href= "<%=request.getContextPath()%>/search?searchDataElements=9&performQuery=no&deSearchPageNum="+pgNum+"<%= pageUrl %>"+urlInfo;
 }
 
 function topListChanged(urlInfo) {
   var pgNum = document.forms[0].dePagesTop.options[document.forms[0].dePagesTop.selectedIndex].value
-  document.location.href= "search?searchDataElements=9&performQuery=no&deSearchPageNum="+pgNum+"<%= pageUrl %>"+urlInfo;
+  document.location.href= "<%=request.getContextPath()%>/search?searchDataElements=9&performQuery=no&deSearchPageNum="+pgNum+"<%= pageUrl %>"+urlInfo;
 }
 
 function ToggleAll(e){
