@@ -157,15 +157,19 @@ function submitForm() {
 }
 
 function submitSimpleForm() {
-     document.forms[0].submit();
      if(document.forms[0].jspPublicIdInd.checked==1)
      {
         document.forms[0].jspCdeId.value=document.forms[0].jspSimpleKeyword.value;
+        document.forms[0].jspKeyword.value="";
+        
      }
      else
      {
        document.forms[0].jspKeyword.value=document.forms[0].jspSimpleKeyword.value;
+       document.forms[0].jspCdeId.value="";
      }
+     
+     document.forms[0].submit();
   }
 
 
