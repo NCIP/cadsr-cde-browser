@@ -3,19 +3,18 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 import gov.nih.nci.ncicb.cadsr.dto.AttachmentTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ReferenceDocumentTransferObject;
+import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.ReferenceDocFormBean;
-import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
-import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,8 +24,8 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -162,7 +161,8 @@ public class ReferenceDocumentAction
 
     String mimeType = rs.getString(2);
     response.setContentType(mimeType);
-    theBlob = ((OracleResultSet)rs).getBLOB(1);
+    //theBlob = ((OracleResultSet)rs).getBLOB(1);
+    theBlob = rs.getBlob(1);
     is = theBlob.getBinaryStream();
 
     //Writing to the OutputStream
