@@ -8,6 +8,9 @@
       <form-property name="selectDE" type="java.lang.String[]"/>
       <form-property name="cdeCompareDisplayOrder" type="java.lang.String[]"/>
       <form-property name="cdeToRemove" type="java.lang.String[]"/> 
+      <form-property name="src" type="java.lang.String"/> 
+      <form-property name="moduleIndex" type="java.lang.String"/>
+      <form-property name="questionIndex" type="java.lang.String"/>
     </form-bean>
 </form-beans>
   <action-mappings>

@@ -81,7 +81,7 @@
   if ((src != null) && (!"".equals(src))) {
     modIndex = request.getParameter("moduleIndex");
     quesIndex = request.getParameter("questionIndex");
-    doneURL= src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
+    doneURL= request.getContextPath()+"/"+src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
     urlParams = "&src="+src+"&method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
     newSearchURL += urlParams;
   }
@@ -432,7 +432,7 @@ function newSearch(){
   	 <th class="OraTableColumnHeader" nowrap>
  		        <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl + urlParams %>'
      	   	  columnHeader="Long Name" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -442,7 +442,7 @@ function newSearch(){
     <th class="OraTableColumnHeader">
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl + urlParams %>'
      	   	  columnHeader="Document Text" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -453,7 +453,7 @@ function newSearch(){
     <th class="OraTableColumnHeader">
      	      <cde:sortableColumnHeader
                   sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-     	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+     	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl + urlParams %>'
          	   	  columnHeader="Owned By" 
                   orderParamId="sortOrder" 
          	   	  sortFieldId="sortField"
@@ -463,7 +463,7 @@ function newSearch(){
     <th class="OraTableColumnHeader">
          	      <cde:sortableColumnHeader
                       sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-         	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+         	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl+ urlParams%>'
              	   	  columnHeader="Used By Context" 
                       orderParamId="sortOrder" 
              	   	  sortFieldId="sortField"
@@ -475,7 +475,7 @@ function newSearch(){
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl + urlParams%>'
      	   	  columnHeader="Registration Status" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -485,7 +485,7 @@ function newSearch(){
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl + urlParams %>'
      	   	  columnHeader="Workflow Status" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -495,7 +495,7 @@ function newSearch(){
     <th class="OraTableColumnHeader">
   	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl + urlParams %>'
      	   	  columnHeader="Public ID" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -506,7 +506,7 @@ function newSearch(){
     <th class="OraTableColumnHeader">
   	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl + urlParams %>'
      	   	  columnHeader="Version" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
