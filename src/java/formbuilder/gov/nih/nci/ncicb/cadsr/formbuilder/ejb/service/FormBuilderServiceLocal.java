@@ -7,11 +7,15 @@ import gov.nih.nci.ncicb.cadsr.resource.Module;
 import java.util.Collection;
 
 
-public interface FormBuilderServiceLocal {
+public interface FormBuilderServiceLocal extends FormBuilderServiceRemote {
+  public Collection getAllForms(
+    String formLongName,
+    String protocolIdSeq,
+    String contextIdSeq,
+    String workflow,
+    String categoryName,
+    String type) throws DMLException;
 
-  public Collection getAllForms(String formLongName, String protocolIdSeq, String contextIdSeq, 
-    String workflow, String categoryName, String type) throws DMLException;
-  
   public Form getFormDetails(String formPK) throws DMLException;
 
   public Form getFormRow(String formPK) throws DMLException;
@@ -57,4 +61,19 @@ public interface FormBuilderServiceLocal {
   public Form copyValidValues(
     String modulePK,
     Collection validValues) throws DMLException;
+
+  public Collection getAllContexts() throws DMLException;
+
+  public Collection getAllFormCategories() throws DMLException;
+
+  public Collection getStatusesForACType(String acType)
+    throws DMLException;
+
+  public boolean validateUser(
+    String username,
+    String password) throws DMLException;
+
+  public Collection getContextsForUserAndRole(
+    String username,
+    String role) throws DMLException;
 }
