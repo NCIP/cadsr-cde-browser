@@ -48,7 +48,7 @@
       String contextId = ((gov.nih.nci.ncicb.cadsr.resource.Form)session.getAttribute(FormConstants.CRF)).getContext().getConteIdseq();
 
       for(int i=0; i<nbOfClassifications; i++) 
-      csLOVUrl[i] = "javascript:newWin('"+contextPath+"/search?classificationsLOV=1&P_CONTE_IDSEQ=" + contextId +"&idVar=jspClassification[" + i + "]&nameVar=txtClassSchemeItem" + i + pageUrl + "','csLOV',700,600)";
+      csLOVUrl[i] = "javascript:newWin('"+contextPath+"/search?chkContext=always&classificationsLOV=1&P_CONTE_IDSEQ=" + contextId +"&idVar=jspClassification[" + i + "]&nameVar=txtClassSchemeItem" + i + pageUrl + "','csLOV',700,600)";
 
       %>
 
