@@ -27,6 +27,8 @@
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
 
+      <%@ include file="/formbuilder/copyButton_inc.jsp"%>    
+
 
     <logic:present name="<%=FormConstants.CRF%>">
       <html:form action='<%="/formToCopyAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.FORM_COPY%>'>
@@ -62,9 +64,18 @@
 
           <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
           <td class="OraFieldText" nowrap>
+            <html:text 
+              property="<%= FormConstants.WORKFLOW %>"
+              readonly="true" 
+              size="19"
+              styleClass="LOVField"
+              onfocus="this.blur();"
+              />
+            <!--
             <html:select styleClass = "Dropdown" property="<%=FormConstants.WORKFLOW%>">
               <html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
             </html:select>        
+-->
           </td>      
         </tr>
         <tr>
@@ -129,7 +140,6 @@
 
       </table>
       
-      <%@ include file="/formbuilder/copyButton_inc.jsp"%>    
 
       </html:form>
 
@@ -218,5 +228,11 @@
 </logic:notEmpty>
 </logic:present>
 <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
+
+      <%@ include file="/formbuilder/copyButton_inc.jsp"%>    
+
+
+    <%@ include file="/common/common_bottom_border.jsp"%>
+
 </BODY>
 </HTML>

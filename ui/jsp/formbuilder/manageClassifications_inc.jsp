@@ -10,9 +10,10 @@
         <html:img src='<%=urlPrefix+"i/add_button.gif"%>' border="0" alt="Add"/>
       </html:link>
     </td>           
+
     <td >
-      <html:link action='<%="/formSearchAction"%>'>				
-        <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Done"/>
+      <html:link action='<%= "/cancelAction?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_FORM_TO_EDIT %>'>
+        <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
       </html:link>             
     </td>                
   </tr> 

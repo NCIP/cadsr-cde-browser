@@ -134,10 +134,11 @@
     <br>
 
       <%@ include file="addQuestion_inc.jsp" %>
-    <table width="50%" align="center" cellpadding="1" cellspacing="1" border="0" >
+    <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
+
       <tr >
-        <td >
-          <html:link href="">Add More Data Elements to Cart</html:link>
+        <td>
+          <a href='<%= "/cdebrowser/?moduleIndex=" +  request.getParameter("moduleIndex") + "&amp;questionIndex=" + request.getParameter("questionIndex") %>'><html:img src='<%=urlPrefix+"i/add_more_data_elements.gif"%>' border="0" alt="Add more data elements"/></a>
         </td>
       </tr>
     </table>    

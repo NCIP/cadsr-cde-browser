@@ -127,10 +127,11 @@
 
       <table width="80%" align="center" cellpadding="1" cellspacing="1" bgcolor="#999966">
         <tr class="OraTableColumnHeader">
-          <th>CS* Preferred Name</th>
-          <th>CS* Definition</th>
-          <th>CSI* Name</th>
-          <th>CSI* Type</th>
+          <th scope="col">CS* Preferred Name</th>
+          <th scope="col">CS* Definition</th>
+          <th scope="col">CSI* Name</th>
+          <th scope="col">CSI* Type</th>
+          <th scope="col">DEL</th>
         </tr>
 
         <logic:present name="<%= FormConstants.CLASSIFICATIONS %>">
