@@ -22,7 +22,7 @@ public interface NavigationConstants
   public static final String GET_FORM_DETAILS="getFormDetails";
   public static final String GET_FORM_TO_COPY="getFormToCopy";
   public static final String GET_FORM_TO_PRINT="getPrinterVersion";
-  
+  public static final String FORM_COPY = "formCopy";
   //Edit
   public static final String GET_FORM_TO_EDIT="getFormToEdit";
   public static final String DELETE_FORM="deleteForm";  
@@ -32,8 +32,6 @@ public interface NavigationConstants
   public static final String ADD_FROM_DELETED_LIST="addFromDeletedList";
   public static final String SAVE_FORM="saveForm";
   
-
-
   public static final String GET_PROTOCOL_LOV_METHOD="getProtocolsLOV";
 
 
