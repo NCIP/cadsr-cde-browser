@@ -281,7 +281,7 @@ function listChanged(urlInfo) {
                      </table>
                      <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                        <tr class="OraTabledata">
-                          <td   width="20%" >Value Domain does have any Concepts.</td>
+                          <td   width="20%" >Value Domain does not have any Concepts.</td>
                        </tr>
                        </tr>                 
                      </table>      
@@ -296,7 +296,7 @@ function listChanged(urlInfo) {
              </table>
              <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                <tr class="OraTabledata">
-                  <td   width="20%" >Value Domain does have any Concepts.</td>
+                  <td   width="20%" >Value Domain does not have any Concepts.</td>
                </tr>
                </tr>                 
              </table>      
