@@ -1,0 +1,1074 @@
+<!DOCTYPE project>
+<!--
+  CDEBrowser Ant build 
+  =============================================
+
+  Author: Shaji Kakkodi
+  
+
+  This build script was created using Ant version 1.6 and Java 1.3.1_06
+-->
+
+<project name="formbuilder" default="init" basedir=".">
+  
+  <!-- Project Settings -->
+  <!-- Use your own build.properties 
+       Properties in build.properties overide properties in build.xml
+       -->
+  <property file="build.properties"/>
+  
+   <!-- Make sure these are correct for your instance -->
+   <property name="deploy.ormi" value="ormi://localhost" />
+   <property name="deploy.username" value="admin" />
+   <property name="deploy.password" value="oracle" /> 
+   <property name="oc4j.j2ee.home" value="D:/tools/oracle/oc4j/902_FB/j2ee/home" /> 
+   <property name="oc4j.start.script.name" value="debugoc4j.bat" />
+   <property name="oc4j.admin.jar.name" value="admin" /> 
+  
+  
+  
+  <property name="project.home" value="${basedir}/../.."/>
+  
+  <property name="app.name" value="cdebrowser" />
+  <property name="web.app.name" value="${app.name}-web" />
+  <property name="ear.name" value="${app.name}" />
+  <property name="war.name" value="${app.name}-web" />
+  <property name="ejb.name" value="formbuilder-ejb" />  
+    
+  <!-- Java Source Directories -->
+  <property name="java.src.dir" value="${project.home}/src/java"/>
+    
+  <!-- ui Directories -->
+  <property name="ui.dir" value="${project.home}/ui"/>  
+  <property name="jsp.dir" value="${ui.dir}/jsp"/>  
+  <property name="html.dir" value="${ui.dir}/html"/>   
+  <property name="formbuilder.jsp.dir" value="${jsp.dir}/formbuilder"/>  
+  <property name="build.dir" value="${project.home}/build"/>
+  <property name="dist.dir" value="${project.home}/dist"/>
+  <property name="classes.build.dir" value="${build.dir}/classes"/>
+  <property name="java.lib.dir" value="${project.home}/lib/java"/>
+ 
+  <property name="config.home" value="${project.home}/config"/>
+  <property name="config.qa" value="${project.home}/config_qa"/>
+  <property name="config.stage" value="${project.home}/config_stage"/>  
+  <property name="config.prod" value="${project.home}/config_prod"/>
+  <property name="config.opensource" value="${project.home}/config_opensource"/>
+  <property name="ejb.descriptor.home" value="${project.home}/config/ejb"/>
+  
+  <property name="web.descriptor.home" value="${project.home}/config/WEB-INF/jboss"/>  
+  
+  <property name="app.docs.dir" value="${project.home}/docs" /> 
+  <property name="app.docs.setup.dir" value="${project.home}/docs/setup" />  
+  <property name="app.setup.oc4j.install.name" value="Install_CDBrowser_9ias.txt" />
+  <property name="app.setup.9ias.install.name" value="Install_CDBrowser_on_OC4J.txt" />
+
+  
+   <!-- Open Source file names This need to updated by release-->
+  <property name="app.setup.oc4j.install.out.name" value="Install_CDBrowser_2.1.1_9ias.txt" />
+  <property name="app.setup.9ias.install.out.name" value="Install_CDBrowser_2.1.1_on_OC4J.txt" />  
+  <property name="download.file.name.unix" value="CDEBrowser_Unix_2.1.1" />
+  <property name="download.file.name.windows" value="CDEBrowser_Windows_2.1.1" />
+  <property name="open.source.file.name.windows" value="CDEBrowser_src_2.1.1(Windows)" />
+  <property name="open.source.file.name.unix" value="CDEBrowser_src_2.1.1(Unix)" />  
+  
+  
+    <!-- Open source directoris -->
+  <property name="open.source.dir" value="${build.dir}/opensource" />  
+  <property name="open.source.dir.raw" value="${open.source.dir}/raw" />
+  <property name="open.source.dir.raw.config" value="${open.source.dir.raw}/config" />
+  <property name="open.source.dir.raw.lib" value="${open.source.dir.raw}/lib" />
+  <property name="open.source.dir.raw.src" value="${open.source.dir.raw}/src" />
+  <property name="open.source.dir.raw.ui" value="${open.source.dir.raw}/ui" />
+  <property name="app.docs.setup.readme.name" value="Readme" /> 
+  <property name="open.source.readme.name" value="source_readme" /> 
+  
+  <!-- base dir in the zip file -->
+  <property name="open.source.dir.base.name" value="cdebrowser2_1" />    
+
+  <!-- =========== CLEAN BUILD AREA ======================= -->
+    
+    <target name="clean">
+          <delete dir="${classes.build.dir}" quiet="false"/>
+          <delete dir="${build.dir}" quiet="false"/>   
+          <delete dir="${dist.dir}" quiet="false"/>          
+    </target>
+    
+    <target name="clean_build_dir">
+          <delete dir="${classes.build.dir}" quiet="false"/>
+          <delete dir="${build.dir}" quiet="false"/>           
+    </target>
+ <!-- =========== END CLEAN BUILD AREA ======================= -->
+ 
+ 
+ <!-- =========== CONFIGURATION ======================= -->
+   <!-- Initialize the system -->
+   
+ 
+   <target name="init">
+     <!-- Create build dir -->
+     <!-- Create time stamp -->
+     <tstamp/>
+     <mkdir dir="${build.dir}"/>
+     <mkdir dir="${classes.build.dir}"/>
+     <mkdir dir="${dist.dir}"/>
+   </target>
+   <!-- end init -->
+ <!-- =========== END CONFIGURATION ======================= -->
+
+
+   <!--Set the lib classpath-->
+   <path id="classpath">
+      <!--browser libs -->
+
+      <pathelement location="${java.lib.dir}/classes12.jar"/>
+      <pathelement location="${java.lib.dir}/cle20.jar"/>
+      <pathelement location="${java.lib.dir}/collections.jar"/>
+      <pathelement location="${java.lib.dir}/healthtoolkit.zip"/>
+      <pathelement location="${java.lib.dir}/jdev-cm.jar"/>
+      <pathelement location="${java.lib.dir}/jdev-rt.jar"/>
+      <pathelement location="${java.lib.dir}/nls_charset12.jar"/>
+      <pathelement location="${java.lib.dir}/ssosdk307.jar"/>
+      <pathelement location="${java.lib.dir}/xmlcomp.jar"/>      
+      <pathelement location="${java.lib.dir}/xmlparserv2.jar"/>    
+      <pathelement location="${java.lib.dir}/xsu12.jar"/> 
+      
+      <!--BC4J libs -->
+      <pathelement location="${java.lib.dir}/bc4jct.jar"/>
+      <pathelement location="${java.lib.dir}/bc4jdatum.jar"/>
+      <pathelement location="${java.lib.dir}/bc4jdomorcl.jar"/>
+      <pathelement location="${java.lib.dir}/bc4jmt.jar"/>   
+      
+      <!-- Struts libs -->
+      <pathelement location="${java.lib.dir}/struts-1.1.jar"/>
+      <pathelement location="${java.lib.dir}/commons-beanutils.jar"/>
+      <pathelement location="${java.lib.dir}/commons-collections.jar"/>
+      <pathelement location="${java.lib.dir}/commons-fileupload.jar"/>
+      <pathelement location="${java.lib.dir}/commons-digester.jar"/>
+      <pathelement location="${java.lib.dir}/commons-lang.jar"/>
+      <pathelement location="${java.lib.dir}/commons-logging.jar"/>
+      <pathelement location="${java.lib.dir}/commons-validator.jar"/>
+      <pathelement location="${java.lib.dir}/jakarta-oro.jar"/> 
+      
+      <!-- Springframework libs -->
+      <pathelement location="${java.lib.dir}/spring.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-jdbc.jar"/> 
+            
+      <!--J2EE  libs -->
+      <pathelement location="${java.lib.dir}/servlet.jar"/>
+      <pathelement location="${java.lib.dir}/jndi.jar"/>   
+      <pathelement location="${java.lib.dir}/jta.jar"/>  
+      <pathelement location="${java.lib.dir}/jdbc.jar"/>
+      <pathelement location="${java.lib.dir}/oc4j.jar"/>
+      <pathelement location="${java.lib.dir}/ejb.jar"/>
+      <pathelement location="${java.lib.dir}/jms.jar"/>
+      
+      <!--JBoss JAAS lib -->
+      <pathelement location="${java.lib.dir}/jbosssx.jar"/>
+      
+      <!-- Apache POI  libs -->
+      <pathelement location="${java.lib.dir}/poi-2.5.1-final-20040804.jar"/>
+   </path>
+   
+   <path id="srcpath">
+         <pathelement location="${java.src.dir}"/>
+   </path>
+   
+   <target name="compile" depends="init">
+      <javac destdir="${classes.build.dir}" debug="on" >
+         <classpath refid="classpath"/>
+         <src refid="srcpath"/>
+      </javac>  
+   </target>
+   
+
+  <!-- ============ CREATE FORM PERSISTENCE JAR FILE ================== -->
+    <target name="jar_persistence_form" depends="compile">
+        <jar jarfile="${classes.build.dir}/persistence_form.jar">
+          <fileset dir="${classes.build.dir}">
+            <patternset>
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/base/**"/> 
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/dao/**"/> 
+            </patternset>
+          </fileset>
+          <manifest>
+	    <attribute name="Built-By" value="${user.name}"/>
+	    <attribute name="Class-Path" value="classes12.jar spring.jar spring-jdbc.jar"/>
+          </manifest>           
+        </jar>
+      </target>
+  <!-- =========== END FORM PERSISTENCE JAR PROCESS ======================= -->
+  
+  <!-- ============ CREATE COMMON JAR FILE ================== -->
+    <target name="jar_common" depends="compile">
+        <jar jarfile="${classes.build.dir}/common.jar">
+          <fileset dir="${classes.build.dir}">
+            <patternset>
+              <include name="gov/nih/nci/ncicb/cadsr/resource/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/resource/impl/*"/>              
+              <include name="gov/nih/nci/ncicb/cadsr/cdecart/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/dto/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/dto/base/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/dto/jdbc/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/exception/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/servicelocator/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/StringUtils.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/logging/LogFactory.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/logging/Log.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/logging/CaDSRLogImpl.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/SessionUtils.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/DebugStringBuffer.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/CaDSRConstants.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/PersistenceConstants.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/ErrorCodeConstants.class"/>
+            </patternset>
+          </fileset>           
+        </jar>
+      </target>
+  <!-- =========== END COMMON JAR PROCESS ======================= -->
+
+  <!-- ============ CREATE SECURITY JAR FILE ================== -->
+    <target name="jar_security" depends="compile,jar_common,jar_persistence_form">
+        <jar jarfile="${classes.build.dir}/security.jar">
+          <fileset dir="${classes.build.dir}">
+            <patternset>
+              <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/BaseUserManager.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/DBUserManager.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/OC4JUserObject.class"/>
+            </patternset>
+          </fileset>  
+            <manifest>
+        	<attribute name="Built-By" value="${user.name}"/>
+               <attribute name="Class-Path" 
+                  value="common.jar persistence_form.jar spring.jar spring-jdbc.jar"/>
+            </manifest>           
+        </jar>
+      </target>
+  <!-- =========== END COMMON JAR PROCESS ======================= -->    
+  
+  <!-- =========== DEV CONFIG ======================= -->
+    <target name="dev_config" depends="init">    
+     <copy todir="${classes.build.dir}/META-INF">      
+         <fileset dir="${config.home}/connections">
+           <patternset>
+             <include name="data-sources.xml"/>
+           </patternset>
+         </fileset>      
+      </copy>   
+      <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.home}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+               <include name="orion-application.xml"/>
+               <include name="principals.xml"/>                 
+             </patternset>
+           </fileset>      
+        </copy>       
+     <copy todir="${classes.build.dir}/WEB-INF/classes">
+         <fileset dir="${config.home}/properties">
+           <patternset>
+             <include name="*.properties"/>
+             <exclude name="log4j.properties"/>
+             <exclude name="cdebrowser.properties"/>
+           </patternset>
+         </fileset>
+       </copy>
+     <copy todir="${classes.build.dir}/WEB-INF/classes">
+              <fileset dir="${config.home}/properties/jboss">
+                <patternset>
+                  <include name="cdebrowser.properties"/>
+                </patternset>
+              </fileset>
+     </copy>
+   
+     <copy todir="${classes.build.dir}/WEB-INF/classes">    
+         <fileset dir="${config.home}/connections">
+           <patternset>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>
+        
+     <copy todir="${classes.build.dir}/WEB-INF/classes">      
+         <fileset dir="${config.home}/services">
+           <patternset>
+             <include name="cdeBrowser.xml"/>
+             <include name="crfBuilder.xml"/>
+           </patternset>
+         </fileset>      
+      </copy>    
+   </target>
+  <!-- =========== END DEV CONFIG ======================= -->
+  
+  <!-- =========== TEST CONFIG ======================= -->
+    <target name="qa_config" depends="init,dev_config">    
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.qa}/connections">
+             <patternset>
+               <include name="data-sources.xml"/>
+             </patternset>
+           </fileset>      
+        </copy> 
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.qa}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy>         
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.qa}/connections">
+           <patternset>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.qa}/properties">
+           <patternset>
+             <include name="cdebrowser.properties"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
+         <fileset dir="${config.qa}/properties">
+           <patternset>
+             <include name="log4j.properties"/>
+           </patternset>
+         </fileset>
+      </copy>         
+    </target>
+  <!-- =========== END TEST CONFIG ======================= -->
+  
+  <!-- =========== Stage CONFIG ======================= -->
+    <target name="stage_config" depends="init,dev_config">    
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.stage}/connections">
+             <patternset>
+               <include name="data-sources.xml"/>
+             </patternset>
+           </fileset>      
+        </copy> 
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.stage}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy>         
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.stage}/connections">
+           <patternset>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.stage}/properties">
+           <patternset>
+             <include name="cdebrowser.properties"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
+         <fileset dir="${config.stage}/properties">
+           <patternset>
+             <include name="log4j.properties"/>
+           </patternset>
+         </fileset>
+      </copy>         
+    </target>
+  <!-- =========== END TEST CONFIG ======================= -->  
+  
+  <!-- =========== PROD CONFIG ======================= -->
+    <target name="prod_config" depends="init,dev_config">    
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.prod}/connections">
+             <patternset>
+               <include name="data-sources.xml"/>
+             </patternset>
+           </fileset>      
+        </copy> 
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.prod}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy>         
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.prod}/connections">
+           <patternset>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.prod}/properties">
+           <patternset>
+             <include name="cdebrowser.properties"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
+         <fileset dir="${config.prod}/properties">
+           <patternset>
+             <include name="log4j.properties"/>
+           </patternset>
+         </fileset>
+      </copy>         
+    </target>
+  <!-- =========== END PROD CONFIG ======================= -->  
+  
+    <!-- =========== Opensource CONFIG ======================= -->
+    
+    <target name="opensource_config" depends="init,dev_config">    
+      <delete file="${classes.build.dir}/META-INF/data-sources.xml" failonerror="false"/>
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.opensource}/META-INF">
+             <patternset>
+               <include name="orion-application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy>       
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.opensource}/connections">
+             <patternset>
+               <include name="data-sources.xml"/>
+             </patternset>
+           </fileset>      
+        </copy>         
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.opensource}/connections">
+           <patternset>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.opensource}/properties">
+           <patternset>
+             <include name="cdebrowser.properties"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
+         <fileset dir="${config.opensource}/properties">
+           <patternset>
+             <include name="log4j.properties"/>
+           </patternset>
+         </fileset>
+      </copy>         
+    </target>
+  <!-- =========== END OpenSource CONFIG ======================= -->  
+  
+
+  <!-- =========== START WAR PROCESS ======================= -->
+  
+   <target name="war_cdebrowser" depends="compile,jar_security">  
+
+     <copy todir="${classes.build.dir}/WEB-INF/classes">      
+         <fileset dir="${java.src.dir}">
+           <patternset>
+             <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/common/*.properties"/>
+           </patternset>
+         </fileset>      
+      </copy>
+     <copy todir="${classes.build.dir}/WEB-INF/classes">      
+         <fileset dir="${java.src.dir}">
+           <patternset>
+             <include name="gov/nih/nci/ncicb/cadsr/persistence/**/*.xml"/>
+           </patternset>
+         </fileset>      
+      </copy>      
+      <!-- copy application classes -->
+      <copy todir="${classes.build.dir}/WEB-INF/classes">
+        <fileset dir="${classes.build.dir}">
+           <patternset>
+             <include name="gov/nih/nci/ncicb/cadsr/base/process/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/cdebrowser/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/struts/common/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/crfbuilder/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/database/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/security/jboss/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/security/LogoutServlet.class"/>
+           </patternset>
+       </fileset>
+       <fileset dir="${classes.build.dir}">
+            <patternset>
+              <include name="gov/nih/nci/ncicb/cadsr/common/bc4j/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/bc4j/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/dto/bc4j/**"/>
+            </patternset>
+        </fileset>
+ 	<fileset dir="${classes.build.dir}">
+            <patternset>
+              <include name="gov/nih/nci/ncicb/cadsr/html/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/lov/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/resource/handler/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/xml/**"/>
+              <include name="gov/nih/nci/ncicb/oracle/mvc/**"/>
+              <include name="gov/nih/nci/ncicb/webtree/**"/>
+            </patternset>
+        </fileset>                   
+        <fileset dir="${classes.build.dir}">
+              <patternset>
+                <include name="gov/nih/nci/ncicb/cadsr/formbuilder/common/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/formbuilder/service/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/jsp/**"/>
+              </patternset>
+        </fileset>       
+     </copy>
+     
+    <war warfile="${build.dir}/${war.name}.war" webxml="${web.descriptor.home}/web.xml">
+       
+      <fileset dir="${config.home}">
+        <patternset>
+          <include name="WEB-INF/*.tld"/>
+          <include name="WEB-INF/struts-config*.xml"/>
+          <include name="WEB-INF/validat*.xml"/>
+          <include name="WEB-INF/orion-web.xml"/>
+          <include name="WEB-INF/jboss-web.xml"/>
+        </patternset>
+      </fileset>
+      
+      <fileset dir="${classes.build.dir}">
+        <patternset>
+          <include name="WEB-INF/classes/**/*.*"/>
+        </patternset>
+      </fileset>        
+ 
+      <fileset dir="${jsp.dir}/">
+        <patternset>
+          <include name="formbuilder/**/*.*"/>  
+  <!-- release 3.0, reorganze ui directory -->
+          <include name="cdebrowser/**/*.*"/>  
+          <include name="*.jsp"/>
+        </patternset>
+      </fileset>
+      
+      <fileset dir="${jsp.dir}/">
+              <patternset>
+                <include name="common/**/*.*"/>  
+                <include name="*.jsp"/>
+              </patternset>
+      </fileset>
+      
+  <!-- release 3.0, reorganze ui directory -->
+      <fileset dir="${html.dir}/">
+        <patternset>
+          <include name="common/**/*.*"/>   
+        </patternset>         
+      </fileset>
+
+      <fileset dir="${ui.dir}/">
+        <patternset>
+          <include name="i/**/*.*"/>   
+        </patternset>
+      </fileset>
+
+      <fileset dir="${ui.dir}/">
+        <patternset>
+          <include name="jsLib/**/*.*"/>   
+          <!-- release 3.0, moved css to its own directory -->
+          <include name="css/**/*.*"/>   
+        </patternset>      
+      </fileset>
+
+      <lib dir="${java.lib.dir}">
+       	<include name="classes12.jar"/>
+      	<include name="cle20.jar"/>
+      	<include name="collections.jar"/>
+      	<include name="healthtoolkit.zip"/>
+      	<include name="jdev-cm.jar"/>
+      	<include name="jdev-rt.jar"/>
+      	<include name="nls_charset12.jar"/>
+      	<include name="ssosdk307.jar"/>
+      	<include name="xmlcomp.jar"/>      
+      	<include name="xmlparserv2.jar"/>    
+      	<include name="xsu12.jar"/> 
+      	
+      	<!--BC4J libs -->
+      	<include name="bc4jct.jar"/>
+      	<include name="bc4jdatum.jar"/>
+      	<include name="bc4jdomorcl.jar"/>
+      	<include name="bc4jmt.jar"/>   
+      	
+      	<!-- Struts libs -->
+      	<include name="struts-1.1.jar"/>
+      	<include name="commons-beanutils.jar"/>
+      	<include name="commons-collections.jar"/>
+      	<include name="commons-fileupload.jar"/>
+      	<include name="commons-digester.jar"/>
+      	<include name="commons-lang.jar"/>
+      	<include name="commons-validator.jar"/>
+      	<include name="jakarta-oro.jar"/>
+      	
+      	<!-- POI libs -->
+      	<include name="poi-2.5.1-final-20040804.jar"/>
+      	
+      </lib>
+       
+      <manifest>
+        <attribute name="Built-By" value="${user.name}"/>
+        <attribute name="Class-Path" value="persistence_form.jar common.jar"/>
+      </manifest>  
+    </war>
+  </target>
+   
+  <!-- =========== END CREATE WAR FILE ======================= -->
+   
+  
+  <!-- =========== CREATE EJB JAR ======================= -->
+      <target name="jar_ejb" depends="compile,jar_persistence_form,jar_common">
+        <copy todir="${classes.build.dir}/ejb/META-INF/">      
+         <fileset dir="${config.home}/ejb">
+           <patternset>
+            <include name="ejb-jar.xml"/> 
+            <include name="orion-ejb-jar.xml"/>
+            <include name="jboss.xml"/>
+           </patternset>
+         </fileset>      
+       </copy>  
+      
+       <jar jarfile="${build.dir}/${ejb.name}.jar">
+           <fileset dir="${classes.build.dir}">
+              <patternset>
+                <include name="gov/nih/nci/ncicb/cadsr/formbuilder/ejb/**/*.*"/>
+                <include name="gov/nih/nci/ncicb/cadsr/ejb/common/**/*.*"/>
+              </patternset>
+            </fileset>          
+	    <fileset dir="${classes.build.dir}/ejb" includes="META-INF/ejb-jar.xml"/>
+	    <fileset dir="${classes.build.dir}/ejb" includes="META-INF/orion-ejb-jar.xml"/>
+      <fileset dir="${classes.build.dir}/ejb" includes="META-INF/jboss.xml"/>
+            <manifest>
+               <attribute name="Built-By" value="${user.name}"/>
+               <attribute name="Class-Path" 
+                  value="persistence_form.jar common.jar spring.jar
+                              spring-jdbc.jar commons-logging.jar log4j-1.2.8.jar properties/"/>
+            </manifest>  	    
+         </jar>         
+      </target>
+  <!-- =========== END JAR PROCESS ======================= -->  
+
+  <!-- =========== CREATE EAR FILE ======================= -->
+    <target name="ear_cdebrowser" depends="jar_ejb,war_cdebrowser">
+            
+      <!-- Create ear file -->      
+      <ear earfile="${build.dir}/${ear.name}.ear" appxml="${classes.build.dir}/META-INF/application.xml">
+        <fileset dir="${build.dir}">
+          <patternset>
+            <include name="*.war"/>
+            <include name="*.jar"/>
+          </patternset>
+        </fileset>
+
+        <fileset dir="${classes.build.dir}/META-INF">
+          <patternset>
+            <include name="properties/log4j.properties"/>
+          </patternset>
+        </fileset>
+        
+        <fileset dir="${classes.build.dir}">
+          <patternset>
+            <include name="persistence_form.jar"/>
+            <include name="common.jar"/>
+          </patternset>
+        </fileset>
+        
+        <fileset dir="${classes.build.dir}">
+          <patternset>
+             <include name="META-INF/data-sources.xml"/>
+             <include name="META-INF/orion-application.xml"/>
+             <include name="META-INF/principals.xml"/>             
+          </patternset>
+        </fileset>
+        
+        <patternset>
+          <exclude name="*.*"/>
+        </patternset>
+      </ear>
+    </target>
+  <!-- =========== END CREATE EAR FILE ======================= -->
+
+
+ <!-- ===========  OPEN SOURCE ======================= -->
+   <target name="opensource_init" depends="init">
+     <mkdir dir="${open.source.dir}"/>
+     <mkdir dir="${open.source.dir.raw}"/>
+     <mkdir dir="${open.source.dir.raw.config}"/>
+     <mkdir dir="${open.source.dir.raw.lib}"/>
+     <mkdir dir="${open.source.dir.raw.src}"/>
+     <mkdir dir="${open.source.dir.raw.ui}"/>
+     
+     <!-- copy ui -->
+     <copy todir="${open.source.dir.raw.ui}/">      
+         <fileset dir="${ui.dir}">
+           <patternset>
+             <include name="**/*.*"/>
+             <exclude name="**/images/*.*"/>
+             <exclude name="**/i/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy> 
+      
+     <!-- copy src -->
+     <copy todir="${open.source.dir.raw.src}">      
+         <fileset dir="${java.src.dir}">
+           <patternset>
+             <include name="**/*.xml"/>
+             <include name="**/*.java"/>
+           </patternset>
+         </fileset>      
+         <fileset dir="${common.java.src.dir}">
+           <patternset>
+             <include name="**/*.xml"/>
+             <include name="**/*.java"/>
+           </patternset>
+         </fileset>   
+         <fileset dir="${java.src.dir}">
+           <patternset>
+             <include name="**/*.xml"/>
+             <include name="**/*.properties"/>
+             <include name="**/*.java"/>
+           </patternset>
+         </fileset>            
+      </copy>    
+    <!-- copy config -->
+     <copy todir="${open.source.dir.raw.config}">      
+         <fileset dir="${config.home}">
+           <patternset>
+             <include name="connections/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy>   
+     <copy todir="${open.source.dir.raw.config}">      
+         <fileset dir="${config.home}">
+           <patternset>
+             <include name="ejb/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy>   
+     <copy todir="${open.source.dir.raw.config}">      
+         <fileset dir="${config.home}">
+           <patternset>
+             <include name="META-INF/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy>  
+     <copy todir="${open.source.dir.raw.config}">      
+         <fileset dir="${config.home}">
+           <patternset>
+             <include name="WEB-INF/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy>             
+     <copy todir="${open.source.dir.raw.config}">      
+         <fileset dir="${config.home}">
+           <patternset>
+             <include name="properties/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy>         
+     <copy todir="${open.source.dir.raw.config}">      
+         <fileset dir="${config.home}">
+           <patternset>
+             <include name="services/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy>   
+     
+   </target>
+
+ <target name="opensource_to_accii" depends="opensource_init">
+  <native2ascii src="${open.source.dir.raw}" dest="${open.source.dir}/ascii/${open.source.dir.base.name}/"
+      includes="**/*.*" />        
+ </target>
+ 
+
+  <target name="opensource_unit" depends="opensource_to_accii">
+      <!-- copy libs -->
+     <copy todir="${open.source.dir}/ascii/${open.source.dir.base.name}/lib">      
+         <fileset dir="${java.lib.dir}">
+           <patternset>
+             <include name="**/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy>       
+     <!-- copy images -->
+     <copy todir="${open.source.dir}/ascii/${open.source.dir.base.name}/ui">      
+         <fileset dir="${ui.dir}/i">
+           <patternset>
+             <include name="**/i/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy>  
+      <native2ascii src="${app.docs.setup.dir}" 
+                    dest="${open.source.dir}/ascii/${open.source.dir.base.name}"
+               includes="${open.source.readme.name}.txt"               
+               />        
+  </target>
+  
+ <target name="opensource_windows" depends="opensource_unit">
+   <zip destfile="${dist.dir}/${open.source.file.name.windows}.zip"
+       basedir="${open.source.dir}/ascii"
+       update="true" />
+ </target>
+
+  
+  <target name="opensource_unix" depends="opensource_unit">
+    <tar tarfile="${build.dir}/${open.source.file.name.unix}.tar"
+        basedir="${open.source.dir}/ascii"
+        longfile="gnu"/>
+   <gzip zipfile="${dist.dir}/${open.source.file.name.unix}.tar.gz" 
+      src="${build.dir}/${open.source.file.name.unix}.tar"
+       />
+ </target> 
+
+
+<!-- ===========  End OPEN SOURCE ======================= -->
+
+ <!-- =========== Deployment targets below ======================= -->
+ 
+   <target  name="ear_undeploy" depends="init">       
+     <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
+       <arg value="${deploy.ormi}" /> 
+       <arg value="${deploy.username}" /> 
+       <arg value="${deploy.password}" /> 
+       <arg value="-undeploy" /> 
+       <arg value="${app.name}" /> 
+       <arg value="-remove" /> 
+       <classpath> 
+         <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
+       </classpath> 
+     </java> 
+   </target>  
+   
+   <target  name="oc4j_stop" depends="init">       
+        <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
+          <arg value="${deploy.ormi}" /> 
+          <arg value="${deploy.username}" /> 
+          <arg value="${deploy.password}" /> 
+          <arg value="-shutdown" /> 
+          <classpath> 
+            <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
+          </classpath> 
+        </java> 
+   </target>    
+   
+   <target  name="clean_oc4j" depends="init">       
+	<delete dir="${oc4j.j2ee.home}/applications/${app.name}" failonerror="false"/>
+	<delete dir="${oc4j.j2ee.home}/application-deployments/${app.name}" failonerror="false"/>
+	<delete file="${oc4j.j2ee.home}/applications/${ear.name}.ear" failonerror="false"/>
+   </target>    
+   
+   <target  name="ear_deploy" depends="dev_config,ear_cdebrowser"> 
+        <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
+          <arg value="${deploy.ormi}" /> 
+          <arg value="${deploy.username}" /> 
+          <arg value="${deploy.password}" /> 
+          <arg value="-deploy" /> 
+          <arg value="-file" /> 
+          <arg value="${build.dir}/${ear.name}.ear" /> 
+          <arg value="-deploymentName" /> 
+          <arg value="${app.name}" /> 
+          <classpath> 
+            <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
+          </classpath> 
+        </java> 
+   </target> 
+   
+   <target name="bind_web_app" depends="ear_deploy"> 
+       <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
+         <arg value="${deploy.ormi}" /> 
+         <arg value="${deploy.username}" /> 
+         <arg value="${deploy.password}" /> 
+         <arg value="-bindWebApp" /> 
+         <arg value="${app.name}" /> 
+         <arg value="${web.app.name}" /> 
+         <arg value="http-web-site" /> 
+         <arg value="/${app.name}" /> 
+         <classpath> 
+              <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
+         </classpath> 
+       </java> 
+   </target> 
+
+  <target  name="deploy_cdebrowser" depends="ear_deploy,bind_web_app"> 
+  </target>   
+   
+  <target  name="copy_ear_oc4j" depends="dev_config,ear_cdebrowser"> 
+     <copy todir="${oc4j.j2ee.home}/applications">      
+         <fileset dir="${build.dir}">
+           <patternset>
+             <include name="${ear.name}.ear"/>
+           </patternset>
+         </fileset>    
+      </copy>           
+  </target>
+  
+  <target  name="clean_build" depends="clean,dev_config,ear_cdebrowser"> 
+  </target>
+  
+  <target  name="clean_build_redeploy" depends="clean,dev_config,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j"> 
+  </target>
+  
+  <target  name="clean_build_redeploy_restart" depends="clean_build_redeploy,oc4j_start"> 
+  </target>
+  
+  <target name="oc4j_start">
+        <exec executable="cmd.exe" spawn="true" os="Windows 2000">
+                        <arg value="/C"/>
+                        <arg value="start"/>
+                        <arg value="${oc4j.j2ee.home}/${oc4j.start.script.name}"/>
+        </exec>
+  </target>
+
+<!-- =========== End Deployment targets  ======================= -->
+
+<!-- =========== Test Targets ========================== -->
+
+<!-- Use to test a bootable class.
+     use -Dtest.class=your.full.class.Name 
+     -->
+  <target name="test-class" depends="compile">
+    <java fork="true" classname="${test.class}">
+      <classpath refid="classpath"/>
+      <classpath> 
+        <pathelement location="${build.dir}/classes" /> 
+      </classpath>
+    </java>
+  </target>
+<!-- =========== End Test Targets ====================== -->
+
+<!-- =========== Copy DISTRIBUTION EAR============== -->
+  <target name="dist_ear_copy" depends="dev_config,ear_cdebrowser">  
+     <copy todir="${dist.dir}">      
+         <fileset dir="${build.dir}">
+           <patternset>
+             <include name="${ear.name}.ear"/>
+           </patternset>
+         </fileset>    
+      </copy>          
+   </target>   
+  <!-- =========== DEV DISTRIBUTION============== -->
+  
+  <!-- =========== DEV DISTRIBUTION============== -->
+   <target name="dist_dev" depends="clean_build_dir,dev_config,ear_cdebrowser,dist_ear_copy">      
+   </target>      
+  <!-- =========== END DEV DISTRIBUTION ======================= -->
+  
+  <!-- =========== QA DISTRIBUTION============== -->
+        <target name="dist_qa" depends="clean_build_dir,qa_config,ear_cdebrowser,dist_ear_copy">  
+        </target>      
+  <!-- =========== END TEST DISTRIBUTION ======================= -->
+  
+  <!-- =========== STAGE DISTRIBUTION============== -->
+       <target name="dist_stage" depends="clean_build_dir,stage_config,ear_cdebrowser,dist_ear_copy">  
+        </target>      
+  <!-- =========== END STAGE DISTRIBUTION ======================= -->
+  
+  <!-- =========== PROD DISTRIBUTION============== -->
+        <target name="dist_prod" depends="clean_build_dir,prod_config,ear_cdebrowser,dist_ear_copy">  
+        </target>      
+  <!-- =========== END PROD DISTRIBUTION ======================= -->
+  
+  <!-- =========== PROD DISTRIBUTION Complete============== -->
+        <target name="dist_prod_full" depends="dist_prod,dist_download,
+                                                             dist_opensource ">  
+               <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
+               includes="${app.docs.setup.readme.name}.txt"               
+               />        
+        </target>      
+  <!-- =========== END PROD DISTRIBUTION ======================= -->
+
+  <!-- =========== PROD DISTRIBUTION Complete============== -->
+        <target name="dist_opensource" depends="clean_build_dir,opensource_config,opensource_windows,
+                opensource_unix">  
+               <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
+               includes="${app.docs.setup.readme.name}.txt"               
+               />        
+        </target>      
+  <!-- =========== END PROD DISTRIBUTION ======================= --> 
+  
+  <!-- =========== Download distribution============== -->
+        <target name="dist_download" depends="clean_build_dir,opensource_config,ear_cdebrowser"> 
+            <mkdir dir="${build.dir}/download"/>
+             <copy todir="${build.dir}/download" >      
+                 <fileset dir="${build.dir}">
+                   <patternset>
+                     <include name="${ear.name}.ear"/>
+                   </patternset>
+                 </fileset>    
+              </copy> 
+                              
+               <native2ascii src="${app.docs.setup.dir}" dest="${build.dir}/download/"
+               includes="${app.setup.oc4j.install.name}"               
+               />     
+               <move file="${build.dir}/download/${app.setup.oc4j.install.name}"
+                    tofile="${build.dir}/download/${app.setup.oc4j.install.out.name}"/>
+               <native2ascii src="${app.docs.setup.dir}" dest="${build.dir}/download/"
+               includes="${app.setup.9ias.install.name}"               
+               />    
+               <move file="${build.dir}/download/${app.setup.9ias.install.name}" 
+                    tofile="${build.dir}/download/${app.setup.9ias.install.out.name}"/>
+            <zip destfile="${dist.dir}/${download.file.name.windows}.zip"
+                 basedir="${build.dir}/download"
+                 update="true" />      
+                 
+            <tar tarfile="${dist.dir}/${download.file.name.unix}.tar"
+                 basedir="${build.dir}/download"
+                 longfile="gnu"/>
+            <gzip zipfile="${dist.dir}/${download.file.name.unix}.tar.gz" 
+                src="${dist.dir}/${download.file.name.unix}.tar"
+                />                               
+        </target>      
+  <!-- =========== END Download DISTRIBUTION ======================= -->  
+  
+ <!-- =========== BUILD HELPERS ======================= -->
+   <target name="help" depends="init">
+     <echo>
+ 
+       ===================================================================
+       edoc Build System - Help
+       ===================================================================
+ 
+       Targets:
+ 
+       clean                  - Cleans the buid area.
+       ear_cdebrowser	      - Create ear file for cdebrowser
+       war_cdebrowser	      - Create war file for cdebrowser
+       jar_formbuilder_ejb    - Create formbuilder ejb
+       jar_persistence_form   - Creates form builder persistence jar
+       jar_common	      - Creates common jar
+       jar_security	      - Create security jar
+       oc4j_stop	      - Stop the oc4j instance
+       clean_oc4j	      - Clean oc4j application deployment directories
+       ear_deploy	      - Deploy the application ear(Developement)
+       bind_web_app	      - Binds the web app(Developement)
+       deploy_cdebrowser      - Deploy the application and binds the web app(Developement)
+       ear_undeploy	      - Undeploy the application(Developement)
+       copy_ear_oc4j	      - Copy application ear to oc4j(Developement)
+       oc4j_start	      - start oc4j(Developement)
+       clean_build_redeploy   - Does the following targets clean
+       				,dev_config,ear_cdebrowser,oc4j_stop
+       				,clean_oc4j, oc4j_copy_ear (Developement)
+       clean_build_redeploy_restart - clean_build_redeploy,oc4j_start(Developement)
+       
+       dist_dev		      - Creates Developement Clean distribution.
+       dist_qa		      - Creates QA Clean distribution.
+       dist_stage	      - Creates Stage Clean distribution.
+       dist_prod	      - Creates Prod Clean distribution.
+
+       help                   - This help screen.
+ 
+       Settings:
+           Project Home:    ${project.home}
+ 
+       ===================================================================
+ 
+     </echo>
+   </target>
+   <!-- end help -->  
+</project>
