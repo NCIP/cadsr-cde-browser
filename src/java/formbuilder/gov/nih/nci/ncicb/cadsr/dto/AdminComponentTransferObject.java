@@ -3,7 +3,8 @@ package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 
-import java.sql.Date;
+import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
+import java.util.Date;
 
 import java.util.List;
 
@@ -131,19 +132,42 @@ public class AdminComponentTransferObject extends BaseTransferObject
   public void setOrigin(String source) {
     origin = source;
   }
-
+  
+  /**
+   * Clone the AdminComponent
+   * Does a deep Copy of the Context
+   * @return 
+   */
+  public Object clone()throws CloneNotSupportedException {
+    AdminComponent copy = null;
+    try {
+      copy = (AdminComponent)super.clone();
+      // make the copy a little deeper
+      if(this.getContext()!=null)
+      {
+        Context contextCopy = getContext();
+        copy.setContext((Context)contextCopy.clone());
+        refDocs=null;
+        designations=null;
+      }
+      return copy;
+    }
+    catch(CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
+    return copy;
+  }
   public String toString() {
-    StringBuffer sb = new StringBuffer();
-    sb.append(ATTR_SEPARATOR + "preferredName=" + getPreferredName());
-    sb.append(ATTR_SEPARATOR + "longName=" + getLongName());
-    sb.append(ATTR_SEPARATOR + "version=" + getVersion());
-    sb.append(
-      ATTR_SEPARATOR + "preferredDefinition=" + getPreferredDefinition());
-    sb.append(ATTR_SEPARATOR + "aslName=" + getAslName());
-    sb.append(ATTR_SEPARATOR + "latestVersionInd=" + getLatestVersionInd());
-    sb.append(ATTR_SEPARATOR + "deletedInd=" + getDeletedInd());
+    DebugStringBuffer sb = new DebugStringBuffer();
+    sb.append(ATTR_SEPARATOR + "preferredName=" + getPreferredName(),getPreferredName());
+    sb.append(ATTR_SEPARATOR + "longName=" + getLongName(),getLongName());
+    sb.append(ATTR_SEPARATOR + "version=" + getVersion(),getVersion());
+    sb.append(ATTR_SEPARATOR + "preferredDefinition=" + getPreferredDefinition(),getPreferredDefinition());
+    sb.append(ATTR_SEPARATOR + "aslName=" + getAslName(),getAslName());
+    sb.append(ATTR_SEPARATOR + "latestVersionInd=" + getLatestVersionInd(),getLatestVersionInd());
+    sb.append(ATTR_SEPARATOR + "deletedInd=" + getDeletedInd(),getDeletedInd());
     sb.append(ATTR_SEPARATOR + "publicId=" + getPublicId());
-    sb.append(ATTR_SEPARATOR + "origin=" + getOrigin());
+    sb.append(ATTR_SEPARATOR + "origin=" + getOrigin(),getOrigin());
 
     Context context = getContext();
 
