@@ -3,7 +3,8 @@ import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import java.util.List;
 
-public class ReferenceDocumentTransferObject implements ReferenceDocument{
+public class ReferenceDocumentTransferObject extends BaseTransferObject
+  implements ReferenceDocument{
   private String docName;
   private String docType;
   private String docText;
@@ -12,6 +13,7 @@ public class ReferenceDocumentTransferObject implements ReferenceDocument{
   private String language;
   private List attachments;
   private Context context;
+  private int displayOrder;
   
   public ReferenceDocumentTransferObject() {
   }
@@ -94,4 +96,16 @@ public class ReferenceDocumentTransferObject implements ReferenceDocument{
   {
     attachments=newAttachments;
   }  
+
+
+  public void setDisplayOrder(int displayOrder)
+  {
+    this.displayOrder = displayOrder;
+  }
+
+
+  public int getDisplayOrder()
+  {
+    return displayOrder;
+  }
 }

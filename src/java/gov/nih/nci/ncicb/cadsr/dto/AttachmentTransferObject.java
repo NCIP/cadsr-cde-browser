@@ -1,7 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 
-public class AttachmentTransferObject implements Attachment
+public class AttachmentTransferObject extends BaseTransferObject 
+implements Attachment
 {
   private String name;
   private String mimeType;
@@ -44,4 +45,6 @@ public class AttachmentTransferObject implements Attachment
   {
     return docSize;
   }
+
+
 }
