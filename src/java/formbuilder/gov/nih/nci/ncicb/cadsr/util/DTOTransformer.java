@@ -78,6 +78,7 @@ public class DTOTransformer {
     de.setVersion(bc4jDE.getVersion());
     de.setContextName(bc4jDE.getContextName());
     de.setUsingContexts(bc4jDE.getUsingContexts());
+    de.setRegistrationStatus(bc4jDE.getRegistrationStatus());
 
     return de;
   }

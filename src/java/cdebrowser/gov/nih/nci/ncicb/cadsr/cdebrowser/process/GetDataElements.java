@@ -75,7 +75,7 @@ public class GetDataElements extends BasePersistingProcess {
   public void registerInfo() {
     try {
       registerResultObject("desb");
-      registerResultObject("tib");
+      registerResultObject("tibSearchDE");
       registerStringParameter("P_PARAM_TYPE");
       registerStringParameter("P_IDSEQ");
       registerStringParameter("P_CS_CSI_IDSEQ");
@@ -387,7 +387,7 @@ public class GetDataElements extends BasePersistingProcess {
       setResult(ProcessConstants.DE_SEARCH_PAGE_ITERATOR, dePageIterator);
       setResult(ProcessConstants.DE_SEARCH_QUERY_BUILDER, queryBuilder);
       setResult(ProcessConstants.ALL_DATA_ELEMENTS, queryResults);
-      setResult("tib", tib);
+      setResult("tibSearchDE", tib);
       setResult("performQuery", null);
 
       setCondition(SUCCESS);
@@ -412,7 +412,7 @@ public class GetDataElements extends BasePersistingProcess {
         uem.setMsgTechnical(
           "<b>System administrator:</b> Here is the stack " +
           "trace from the Exception.<BR><BR>" + ex.toString() + "<BR><BR>");
-        setResult("tib", tib);
+        setResult("tibSearchDE", tib);
         setResult("uem", uem);
         setCondition(FAILURE);
         dbUtil.returnConnection();

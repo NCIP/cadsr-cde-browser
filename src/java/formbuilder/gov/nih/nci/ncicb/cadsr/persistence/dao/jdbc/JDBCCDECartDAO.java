@@ -150,6 +150,7 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
       de.setPreferredDefinition(rs.getString(11));
       de.setLongCDEName(rs.getString(12));
       de.setValueDomain(vd);
+      de.setRegistrationStatus(rs.getString(27));
       item.setPersistedInd(true);
       item.setDeletedInd(false);
       item.setItem(de);

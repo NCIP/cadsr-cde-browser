@@ -2,19 +2,25 @@ package gov.nih.nci.ncicb.cadsr.resource.impl;
 import java.util.Collection;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.cdecart.CDECartItemComparator;
 import java.util.*;
 import java.io.Serializable;
 
 public class CDECartImpl implements CDECart, Serializable  {
   private Map deCart;
   private Map formCart;
+  private CDECartItemComparator itemComparator;
   public CDECartImpl() {
     deCart = new HashMap();
     formCart = new HashMap();
+    itemComparator = new CDECartItemComparator ();
   }
 
   public Collection getDataElements() {
-    return deCart.values();
+    Collection items = deCart.values();
+    List itemList = new ArrayList(items);
+    Collections.sort(itemList,itemComparator);
+    return itemList;
   }
 
   public void setDataElements(Collection items) {
