@@ -17,6 +17,16 @@ import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.object.SqlUpdate;
 import org.springframework.jdbc.object.StoredProcedure;
 
+import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCQuestionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ModuleInstructionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
+
 public class JDBCModuleInstructionDAO extends JDBCInstructionDAO
   implements ModuleInstructionDAO {
   public JDBCModuleInstructionDAO(ServiceLocator locator) {
@@ -113,6 +123,33 @@ public class JDBCModuleInstructionDAO extends JDBCInstructionDAO
     catch (DMLException de) {
       de.printStackTrace();
     }
+    // test for createModuleInstructionComponent
+    try {
+      
+      Form form = new FormTransferObject();
+      form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
+      form.setProtocol(new ProtocolTransferObject(""));
+      Module module = new ModuleTransferObject();
+      module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
+      module.setForm(form);
+      
+      ModuleInstruction moduleInst = new ModuleInstructionTransferObject();
+      moduleInst.setModule(module);
+      moduleInst.setVersion(new Float(2.31));
+      moduleInst.setLongName("Test Mod Instr Long Name 030204 1");
+      moduleInst.setPreferredDefinition("Test Mod instr pref def");
+      moduleInst.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+      moduleInst.setAslName("DRAFT NEW");
+      moduleInst.setCreatedBy("Hyun Kim");
+      moduleInst.setDisplayOrder(7);
+
+      int res = test.createModuleInstructionComponent(moduleInst);
+      System.out.println("\n*****Create Module Instruction Result 1: " + res);
+    }
+    catch (DMLException de) {
+      de.printStackTrace();
+    }
+
   } 
 
   /**

@@ -145,7 +145,7 @@ public class JDBCFormValidValueDAO extends JDBCBaseDAO
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
     JDBCFormValidValueDAO test = new JDBCFormValidValueDAO(locator);
-    /*
+    
     try {
       // test createValidValueComponent method.
       // for each test, change long name(preferred name generated from long name)
@@ -158,7 +158,7 @@ public class JDBCFormValidValueDAO extends JDBCBaseDAO
       module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
       module.setForm(form);
       Question question = new QuestionTransferObject();
-      question.setQuesIdseq("D45B4B3B-8D15-0D0C-E034-0003BA0B1A09");
+      question.setQuesIdseq("D4A91DCA-3567-0D59-E034-0003BA0B1A09");
       question.setModule(module);
       
       formValidValue.setQuestion(question);
@@ -177,7 +177,7 @@ public class JDBCFormValidValueDAO extends JDBCBaseDAO
     catch (DMLException de) {
       de.printStackTrace();
     }
-    */
+    
     /*     
     // test for deleteQuestion
     try {

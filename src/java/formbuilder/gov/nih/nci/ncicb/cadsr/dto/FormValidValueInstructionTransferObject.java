@@ -13,7 +13,7 @@ public class FormValidValueInstructionTransferObject
   }
 
   public FormValidValue getFormValidValue() {
-    return null;
+    return formValidValue;
   }
 
   public void setFormValidValue(FormValidValue value) {

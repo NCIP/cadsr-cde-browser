@@ -129,24 +129,23 @@ public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
       test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
     Iterator iterator = result.iterator();
 
-    /*
        try {
          // test createQuestionComponent method.
          // for each test, change long name(preferred name generated from long name)
-         Question question = new QuestionTransferObject();
     
          Form form = new FormTransferObject();
          form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
-         question.setForm(form);
          Module module = new ModuleTransferObject();
          module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
+         module.setForm(form);
+         Question question = new QuestionTransferObject();
          question.setModule(module);
          DataElement dataElement = new DataElementTransferObject();
          dataElement.setDeIdseq("29A8FB2C-0AB1-11D6-A42F-0010A4C1E842");
          question.setDataElement(dataElement);
     
          question.setVersion(new Float(2.31));
-         question.setLongName("Test Ques Long Name 022704 3");
+         question.setLongName("Test Ques Long Name 030204 2");
          question.setPreferredDefinition("Test Ques pref def");
          question.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
          form.setProtocol(new ProtocolTransferObject(""));  // template does not have protocol
@@ -161,7 +160,7 @@ public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
          de.printStackTrace();
          System.out.println("******Finishing printing DMLException*******");
        }
-
+    /*
     // test for deleteQuestion
     try {
       int res = test.deleteQuestion("D45B4B3B-8D15-0D0C-E034-0003BA0B1A09");
@@ -284,7 +283,7 @@ public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
           qcIdseq, sm.getVersion().toString(),
           generatePreferredName(sm.getLongName()), sm.getLongName(),
           sm.getPreferredDefinition(), sm.getConteIdseq(),
-          sm.getForm().getProtoIdseq(), sm.getAslName(), sm.getCreatedBy(),
+          sm.getModule().getForm().getProtoIdseq(), sm.getAslName(), sm.getCreatedBy(),
           "QUESTION", sm.getDataElement().getDeIdseq()
         };
 

@@ -7,6 +7,17 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueInstructionTransferObject;
 
+import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
+import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+
 import java.util.Collection;
 import javax.sql.DataSource;
 import java.sql.Types;
@@ -123,9 +134,28 @@ public class JDBCFormValidValueInstructionDAO extends JDBCInstructionDAO
     try {
       FormValidValueInstruction formValidValueInstr = 
         new FormValidValueInstructionTransferObject();
-        
-      // need to set other values;
+    
+      Form form = new FormTransferObject();
+      form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
+      form.setProtocol(new ProtocolTransferObject(""));
+      Module module = new ModuleTransferObject();
+      module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
+      module.setForm(form);
+      Question question = new QuestionTransferObject();
+      question.setQuesIdseq("D4A91DCA-3567-0D59-E034-0003BA0B1A09");
+      question.setModule(module);
+      FormValidValue formValidValue = new FormValidValueTransferObject();
+      formValidValue.setValueIdseq("D4AA6D94-3345-1C0E-E034-0003BA0B1A09");
+      formValidValue.setQuestion(question);
+      formValidValueInstr.setFormValidValue(formValidValue);
       
+      formValidValueInstr.setVersion(new Float(2.31));
+      formValidValueInstr.setLongName("Test Valid Value Instr Long Name 030204 1");
+      formValidValueInstr.setPreferredDefinition("Test Valid Value Instr pref def");
+      formValidValueInstr.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+      formValidValueInstr.setAslName("DRAFT NEW");
+      formValidValueInstr.setCreatedBy("Hyun Kim");
+      formValidValueInstr.setDisplayOrder(101);
       int res = test.createValueInstructionComponent(formValidValueInstr);
       System.out.println("\n*****Create Valid Value Instruction Result 1: " + res);
     }
@@ -164,7 +194,7 @@ public class JDBCFormValidValueInstructionDAO extends JDBCInstructionDAO
     protected int createContent(
       FormValidValueInstruction sm,
       String qcIdseq) {
-      Object[] obj =
+       Object[] obj =
         new Object[] {
           qcIdseq, sm.getVersion().toString(),
           generatePreferredName(sm.getLongName()), sm.getLongName(),

@@ -13,6 +13,16 @@ import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.object.SqlUpdate;
 import org.springframework.jdbc.object.StoredProcedure;
 
+import gov.nih.nci.ncicb.cadsr.dto.QuestionInstructionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
+import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+
 import java.util.Collection;
 import javax.sql.DataSource;
 import java.sql.Types;
@@ -114,8 +124,37 @@ public class JDBCQuestionInstructionDAO extends JDBCInstructionDAO
     catch (DMLException de) {
       de.printStackTrace();
     }
-  }
+    
+    // test for createQuestionInstructionComponent
+    try {
+      Form form = new FormTransferObject();
+      form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
+      form.setProtocol(new ProtocolTransferObject(""));
+      Module module = new ModuleTransferObject();
+      module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
+      module.setForm(form);
+      Question question = new QuestionTransferObject();
+      question.setQuesIdseq("D4A91DCA-3567-0D59-E034-0003BA0B1A09");
+      question.setModule(module);
+      
+      QuestionInstruction questionInst = new QuestionInstructionTransferObject();
+      questionInst.setQuestion(question);
+      questionInst.setVersion(new Float(2.31));
+      questionInst.setLongName("Test Question Instr Long Name 030204 1");
+      questionInst.setPreferredDefinition("Test Question instr pref def");
+      questionInst.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+      questionInst.setAslName("DRAFT NEW");
+      questionInst.setCreatedBy("Hyun Kim");
+      questionInst.setDisplayOrder(7);
 
+      int res = test.createQuestionInstructionComponent(questionInst);
+      System.out.println("\n*****Create Question Instruction Result 1: " + res);
+    }
+    catch (DMLException de) {
+      de.printStackTrace();
+    }
+  }
+ 
   /**
    * Inner class to create a question instruction record in the
    * quest_contents_ext table.
@@ -152,7 +191,7 @@ public class JDBCQuestionInstructionDAO extends JDBCInstructionDAO
           qcIdseq, sm.getVersion().toString(),
           generatePreferredName(sm.getLongName()), sm.getLongName(),
           sm.getPreferredDefinition(), sm.getConteIdseq(),
-          sm.getQuestion().getForm().getProtoIdseq(), sm.getAslName(), sm.getCreatedBy(),
+          sm.getQuestion().getModule().getForm().getProtoIdseq(), sm.getAslName(), sm.getCreatedBy(),
           "QUESTION_INSTR"
         };
 
