@@ -36,7 +36,9 @@ public class LogoutServlet extends HttpServlet
         Iterator it  = keys.iterator();
         while(it.hasNext())
         {
-          objMap.put(it.next(),session.getAttribute((String)it.next()));
+          String key = (String)it.next();
+          Object obj = session.getAttribute(key);
+          objMap.put(obj,key);
         }
       }
       session.invalidate();
@@ -48,7 +50,8 @@ public class LogoutServlet extends HttpServlet
         while(keyIt.hasNext())
         {
           String key = (String)keyIt.next();
-          newSession.setAttribute(key,objMap.get(key));
+          Object obj = objMap.get(key);
+          newSession.setAttribute(key,obj);
         }
       }      
       response.sendRedirect(logoutHome);
