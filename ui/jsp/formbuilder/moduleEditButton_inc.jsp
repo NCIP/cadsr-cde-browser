@@ -1,4 +1,4 @@
-      <table width="25%" align="center" cellpadding="1" cellspacing="1" border="0" >
+      <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
         <tr >
           <td >
             <html:link action='<%="/cancelModuleEditAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CANCEL_MODULE_EDIT%>' >            
