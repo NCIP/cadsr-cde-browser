@@ -93,18 +93,34 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
         DefaultMutableTreeNode disLabelNode;
         DefaultMutableTreeNode phaseLabelNode;
         DefaultMutableTreeNode[] templateNodes;
+        List otherTempNodes;
 
         if ("CTEP".equals(rs.getString(2))) {
           tmpLabelNode =
             new DefaultMutableTreeNode(
               new WebNode(
                 dbHelper.getUniqueId(IDSEQ_GENERATOR), "Protocol Form Templates"));
-          templateNodes = ctxNode.getDataTemplateNodes();
+          templateNodes = ctxNode.getCTEPDataTemplateNodes();
           phaseLabelNode = templateNodes[0];
           disLabelNode = templateNodes[1];
           tmpLabelNode.add(disLabelNode);
           tmpLabelNode.add(phaseLabelNode);
           ctxTreeNode.add(tmpLabelNode);
+        }
+        else {
+          otherTempNodes = ctxNode.getDataTemplateNodes();
+          if (otherTempNodes.size() > 0) {
+            tmpLabelNode =
+            new DefaultMutableTreeNode(
+              new WebNode(
+                dbHelper.getUniqueId(IDSEQ_GENERATOR), "Protocol Form Templates"));
+
+            Iterator tempIter = otherTempNodes.iterator();
+            while (tempIter.hasNext()) {
+              tmpLabelNode.add((DefaultMutableTreeNode) tempIter.next());
+            }
+            ctxTreeNode.add(tmpLabelNode);
+          }
         }
 
         List csNodes = ctxNode.getClassificationNodes();

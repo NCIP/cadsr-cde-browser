@@ -22,6 +22,7 @@ import java.util.Hashtable;
 import javax.swing.tree.DefaultMutableTreeNode;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import oracle.jdbc.OraclePreparedStatement;
+import java.net.URLEncoder;
 
 public class ContextNode extends BaseTreeNode  {
   
@@ -56,16 +57,22 @@ public class ContextNode extends BaseTreeNode  {
                                +"AND csc.cs_idseq = cs.cs_idseq "
                                +"AND   cs.preferred_name = ? "
                                +"ORDER BY csi.csi_name ";
-  //Connection myConn = null;
+
+  final String templateQueryStmt =  "SELECT  qc_idseq "
+                                    +"      ,preferred_name "
+                                    +"      ,long_name "
+                                    +"      ,preferred_definition "
+                                    +"FROM  sbrext.quest_contents_ext "
+                                    +"WHERE conte_idseq = ? "
+                                    +"AND   deleted_ind = 'No' "
+                                    +"AND   latest_version_ind = 'Yes' "
+                                    +"AND   qtl_name = 'TEMPLATE' "
+                                    +"ORDER BY long_name ";
+                                    
   Context myContext = null;
   DefaultMutableTreeNode myContextNode = null;
-  //DBUtil myDbUtil = null;
   List templateTypes;
-  //private String jsFunctionName = "performAction";
-  /*private String extraURLParameters = 
-    "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
-  private Hashtable treeParams;*/
-
+  
   /**
    * Constructor creates DefaultMutableTreeNode object based on info provided
    * by Context resource.
@@ -75,9 +82,6 @@ public class ContextNode extends BaseTreeNode  {
                     ,Hashtable params) {
     super(dbUtil,params);
     myContext = pContext;
-    //myDbUtil = dbUtil;
-    //myConn = dbUtil.getConnection();
-    //treeParams = params;
     myContextNode = new DefaultMutableTreeNode
     (new WebNode(myContext.getConteIdseq()
                 ,myContext.getDescription()+ " ("+myContext.getName()+")"
@@ -163,7 +167,7 @@ public class ContextNode extends BaseTreeNode  {
     return csNodes;
   }
 
-  public DefaultMutableTreeNode[] getDataTemplateNodes()throws Exception {
+  public DefaultMutableTreeNode[] getCTEPDataTemplateNodes()throws Exception {
     DefaultMutableTreeNode[] templateNodes = new DefaultMutableTreeNode[2];
     templateNodes[0] = getDataTemplateNodesByDisease();
     templateNodes[1] = getDataTemplateNodesByPhase();
@@ -383,50 +387,6 @@ public class ContextNode extends BaseTreeNode  {
     //ContextNode contextNode = new ContextNode();
   }
 
-  /*private List getDataTemplatesForADisease(ClassSchemeItem csiTO) throws Exception {
-    OraclePreparedStatement pstmt = null;
-    ResultSet rs = null;
-    List tmpNodes = new ArrayList(11);
-    List tmpTypes = null;
-    TemplateNode tmp;
-    List tmpList = null;
-    Iterator tmpIter = null;
-    try {
-      pstmt =  
-         (OraclePreparedStatement)myConn.prepareStatement(templateTypesQueryStmt);
-      pstmt.defineColumnType(1,Types.VARCHAR);
-      pstmt.setString(1,myContext.getConteIdseq());
-      rs = pstmt.executeQuery();
-        while (rs.next()){
-          //tmp = new TemplateNode(myContext,rs.getString(1),diseaseId,myDbUtil);
-          tmp = new TemplateNode(myContext,rs.getString(1),csiTO,myDbUtil);
-          DefaultMutableTreeNode tmpTypeNode = tmp.getTreeNode();
-          tmpList = tmp.getDataTemplateNodes();
-          tmpIter = tmpList.iterator();
-          while(tmpIter.hasNext()){
-            tmpTypeNode.add((DefaultMutableTreeNode)tmpIter.next());
-          }
-          tmpNodes.add(tmpTypeNode);
-        }
-    } 
-    catch (Exception ex) {
-      ex.printStackTrace();
-      throw ex;
-    }
-    finally {
-      try {
-        if (rs != null) rs.close();
-        if (pstmt != null) pstmt.close();  
-      } 
-      catch (Exception ex) {
-        ex.printStackTrace();
-      } 
-            
-    }
-    return tmpNodes;
-        
-  }*/
-
   private List getDataTemplatesForACSI(ClassSchemeItem csiTO) throws Exception {
     List tmpNodes = new ArrayList(11);
     List tmpTypes = null;
@@ -494,22 +454,58 @@ public class ContextNode extends BaseTreeNode  {
     return tmpTypes;
   }
 
-  /*private String getJsFunctionName() {
-    String functionName = (String)treeParams.get("functionName");
-    if (functionName == null) functionName = "performAction";
-    return functionName;
+  /**
+   * This method returns a list of DefaultMutableTreeNode objects. Each 
+   * DefaultMutableTreeNode object in the list represents a Protocol Form Template 
+   * node for a context other than CTEP.  
+   *  
+   */
+  public List getDataTemplateNodes() throws SQLException {
+    OraclePreparedStatement pstmt = null;
+    ResultSet rs = null;
+    List templateNodes = new ArrayList(11);
+    try {
+      pstmt =  
+         (OraclePreparedStatement)myConn.prepareStatement(templateQueryStmt);
+      pstmt.defineColumnType(1,Types.VARCHAR);
+      pstmt.defineColumnType(2,Types.VARCHAR);
+      pstmt.defineColumnType(3,Types.VARCHAR);
+      pstmt.defineColumnType(4,Types.VARCHAR);
+      pstmt.setFetchSize(25);
+      pstmt.setString(1,myContext.getConteIdseq());
+      rs = pstmt.executeQuery();
+      
+        
+      while (rs.next()){
+        DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode(
+          new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
+                     ,rs.getString(2)
+                     ,"javascript:"+getFormJsFunctionName()+"('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
+                       rs.getString(1)+"&P_CONTE_IDSEQ="+myContext.getConteIdseq()+
+                       "&templateName="+URLEncoder.encode(rs.getString(2))+
+                       "&contextName="+URLEncoder.encode(myContext.getName())+
+                       getExtraURLParameters()+"')"
+                     ,rs.getString(4)));
+        templateNodes.add(tmpNode);
+      }
+    } 
+    catch (SQLException ex) {
+      ex.printStackTrace();
+      throw ex;
+    } 
+    finally {
+      try {
+        if (rs != null) rs.close();
+        if (pstmt != null) pstmt.close();  
+      } 
+      catch (Exception ex) {
+        ex.printStackTrace();
+      } 
+    }
+    
+    return templateNodes;
   }
 
-  private String getTreeType() {
-    String treeType = (String)treeParams.get("treeType");
-    if (treeType == null) treeType = DE_SEARCH_TREE;
-    return treeType;
-  }
-  public String getExtraURLParameters() {
-    return extraURLParameters;
-  }
 
-  public void setExtraURLParameters(String newExtraURLParameters) {
-    extraURLParameters = newExtraURLParameters;
-  }*/
+  
 }

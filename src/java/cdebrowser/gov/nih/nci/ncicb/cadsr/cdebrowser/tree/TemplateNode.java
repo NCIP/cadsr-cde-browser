@@ -94,6 +94,7 @@ public class TemplateNode extends BaseTreeNode  {
                        "&diseaseName="+URLEncoder.encode(csiTO.getClassSchemeItemName())+
                        "&templateType="+URLEncoder.encode(myTemplateGroup)+
                        "&templateName="+URLEncoder.encode(rs.getString(2))+
+                       "&contextName="+URLEncoder.encode(myContext.getName())+
                        getExtraURLParameters()+"')"
                      ,rs.getString(4)));
         tmpNodes.add(tmpNode);

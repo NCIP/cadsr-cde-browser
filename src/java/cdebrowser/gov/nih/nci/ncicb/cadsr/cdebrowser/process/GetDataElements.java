@@ -92,6 +92,7 @@ public class GetDataElements extends BasePersistingProcess {
       registerStringParameter("diseaseName");
       registerStringParameter("templateType");
       registerStringParameter("templateName");
+      registerStringParameter("contextName");
       registerStringParameter("csName");
       registerStringResult("P_PROTOCOL");
       registerParameterObject("SEARCH");
@@ -184,6 +185,7 @@ public class GetDataElements extends BasePersistingProcess {
       String templateType = getStringInfo("templateType");
       String csName = getStringInfo("csName");
       String templateName = getStringInfo("templateName");
+      String conteName = getStringInfo("contextName");
 
       System.out.println(
         getCurrentTimestamp() + "- Retrieved request parameters successfully");
@@ -215,7 +217,7 @@ public class GetDataElements extends BasePersistingProcess {
           treeParam.setTemplateGrpName(templateType);
           treeParam.setCDETemplateName(templateName);
           treeParam.setConteIdseq(treeConteIdseq);
-
+          treeParam.setContextName(conteName);
           /*pc = (CDEBrowserPageContext)ph
              .findPageContext(paramType, paramCsCsiIdSeq, sessionId);*/
           pc = new PageContextValueObject(treeParam);
