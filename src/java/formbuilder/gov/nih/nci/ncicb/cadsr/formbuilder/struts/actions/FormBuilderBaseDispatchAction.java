@@ -28,6 +28,7 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -151,6 +152,15 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
 	    Collection types = Arrays.asList(FORM_TYPE_VALUES);
 	    setSessionObject(req, ALL_FORM_TYPES, types);
 	}
+
+	obj = getSessionObject(req, USER_CONTEXTS);
+
+	if (obj == null) {
+	    NCIUser nciUser = (NCIUser)getSessionObject(req, USER_KEY);
+	    Collection contexts = (Collection)((Map)nciUser.getContextsByRole()).get(CDE_MANAGER);
+	    setSessionObject(req, USER_CONTEXTS, contexts);
+	}
+	
     }
 
     /**

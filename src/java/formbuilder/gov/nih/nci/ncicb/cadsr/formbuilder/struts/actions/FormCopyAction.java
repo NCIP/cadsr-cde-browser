@@ -34,7 +34,9 @@ import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 public class FormCopyAction extends FormBuilderBaseDispatchAction {
 
@@ -67,6 +69,11 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
 		dynaForm.set(PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
 		dynaForm.set(PROTOCOLS_LOV_ID_FIELD, crf.getProtocol().getProtoIdseq());
 		dynaForm.set(WORKFLOW, "DRAFT NEW");
+
+		NCIUser nciUser = (NCIUser)getSessionObject(request, CaDSRConstants.USER_KEY);
+		Map contexts = nciUser.getContextsByRole(); 
+		
+
 	    }
 	catch (FormBuilderException exp)
 	    {
