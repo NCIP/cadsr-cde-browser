@@ -17,12 +17,12 @@
   if (pageId == null) {
    //String treeURL = "WebTree.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree&skin=CDEBrowser1";
     //treeURL = "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree&treeParams=treeType:DE;functionName:performAction&skin=CDEBrowser1";
-    browserURL = "search";
+    browserURL = "search?FirstTimer=0";
   }
   else {
     //treeURL = "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree&skin=CDEBrowser1&PageId="+pageId;
     treeURL = treeURL + "&PageId="+pageId;
-    browserURL = "search?PageId="+pageId;
+    browserURL = "search?PageId="+pageId+"&FirstTimer=0";
   }
 %>
 <HTML>
