@@ -22,6 +22,7 @@ public class QuestionTransferObject extends AdminComponentTransferObject
   protected DataElement dataElement;
 
   public QuestionTransferObject() {
+    idseq = quesIdseq;
   }
 
   public String getQuesIdseq() {
