@@ -47,14 +47,13 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
         if(questionVdIdSeq!=null)
         {
            vdVVList = (List)vdMap.get(questionVdIdSeq);
+           List avalilableVVs = getAvailableValidValues(questionVVList,vdVVList);
+           if(!avalilableVVs.isEmpty())
+           {
+             String html = generateHtml(avalilableVVs);
+             out.print(html);         
+           }           
         }
-        List avalilableVVs = getAvailableValidValues(questionVVList,vdVVList);
-        if(!avalilableVVs.isEmpty())
-        {
-           String html = generateHtml(avalilableVVs);
-           out.print(html);         
-        }
-
       } catch(Exception ioe ) {
           throw new JspException( "I/O Error : " + ioe.getMessage() );
       }//end try/catch
