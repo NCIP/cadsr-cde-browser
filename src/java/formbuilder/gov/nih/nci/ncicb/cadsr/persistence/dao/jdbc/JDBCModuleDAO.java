@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -125,7 +126,36 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
   public int updateDisplayOrder(
     String moduleId,
     int newDisplayOrder) throws DMLException {
-    return 0;
+    // first, get the original display order of module which to be updated
+    // with new display order
+    ParentIdseq query = new ParentIdseq();
+    query.setDataSource(getDataSource());
+    query.setSql();
+    List result = (List)query.execute(moduleId);
+    if (result.size() <= 0){
+      throw new DMLException("No matching module record found whose " +
+        "display order to be updated.");
+    }
+    Map rec = (Map)(result.get(0));
+    String qrIdseq = (String) rec.get("QR_IDSEQ");
+    String pQcIdseq = (String) rec.get("P_QC_IDSEQ");
+    int originalDisplayOrder = 
+      Integer.parseInt(rec.get("DISPLAY_ORDER").toString());
+
+    // now, update the display order of the swapped record with the original 
+    // display order
+    UpdateSwappedRecDispOrder updateRec1 = 
+      new UpdateSwappedRecDispOrder(getDataSource());
+    int updateCount1 = 
+      updateRec1.executeUpdate (originalDisplayOrder, pQcIdseq, newDisplayOrder); 
+
+    // now update the display order of the indicated record with the new display
+    // order
+    UpdateRecDispOrder updateRec2 = new UpdateRecDispOrder(getDataSource());
+    int updateCount2 = 
+      updateRec2.executeUpdate (newDisplayOrder, qrIdseq); 
+     
+    return 1;  // success
   }
 
   public Module addQuestion(
@@ -150,11 +180,9 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
     System.out.println(
       test.getQuestionsInAModule("99CD59C5-A9C3-3FA4-E034-080020C9C0E0"));
 
-    int res;
-
     /*
     try {
-      res = test.deleteModule("99CD59C5-B206-3FA4-E034-080020C9C0E0");
+      int res = test.deleteModule("99CD59C5-B206-3FA4-E034-080020C9C0E0");
       System.out.println("\n*****Delete Module Result 1: " + res);
     }
     catch (DMLException de) {
@@ -179,7 +207,7 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       module.setCreatedBy("Hyun");
       module.setDisplayOrder(4);
    
-      res = test.createModuleComponentStoredProc(module);
+      int res = test.createModuleComponentStoredProc(module);
       System.out.println("\n*****Create Module Result 1: " + res);
     }
     catch (DMLException de) {
@@ -188,7 +216,7 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       System.out.println("******Finishing printing DMLException*******");
     }
     */
-
+    /*
     try {
       // test createModuleComponent method.
       // for each test, change long name(preferred name generated from long name)
@@ -206,13 +234,20 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       module.setCreatedBy("Hyun Kim");
       module.setDisplayOrder(7);
 
-      res = test.createModuleComponent(module);
+      int res = test.createModuleComponent(module);
       System.out.println("\n*****Create Module Result 1: " + res);
     }
     catch (DMLException de) {
-      System.out.println("******Printing DMLException*******");
       de.printStackTrace();
-      System.out.println("******Finishing printing DMLException*******");
+    }
+    */
+    // test for updateDisplayOrder
+    try {
+      int res = test.updateDisplayOrder("D458E178-32A5-7522-E034-0003BA0B1A09", 5);
+      System.out.println("\n*****Update Display Order 1: " + res);
+    }
+    catch (DMLException de) {
+      de.printStackTrace();
     }
   }
 
@@ -389,6 +424,91 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       ResultSet rs,
       int rownum) throws SQLException {
       return new JDBCQuestionTransferObject(rs);
+    }
+  }
+
+  /**
+   * Inner class that accesses database to get the display order, parent idseq, and
+   * primary key of the record whose display oder is to be updated.
+   */
+  private class ParentIdseq extends MappingSqlQuery {
+    ParentIdseq() {
+      super();
+    }
+
+    public void setSql() {
+      super.setSql("select QR_IDSEQ, P_QC_IDSEQ, DISPLAY_ORDER from QC_RECS_EXT " +
+        " where C_QC_IDSEQ = ? and RL_NAME = 'FORM_MODULE' ");
+      declareParameter(new SqlParameter("C_QC_IDSEQ", Types.VARCHAR));
+    }
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+
+      Map out = new HashMap();
+      out.put("QR_IDSEQ", rs.getString(1));  // QR_IDSEQ
+      out.put("P_QC_IDSEQ", rs.getString(2));  // P_QC_IDSEQ
+      out.put("DISPLAY_ORDER", new Integer(rs.getString(3)));  // DISPLAY_ORDER
+      return out;
+    }
+  }
+
+  /**
+   * Inner class that accesses database to update the display order of the
+   * display order swapped record.
+   */
+  private class UpdateSwappedRecDispOrder extends SqlUpdate {
+    public UpdateSwappedRecDispOrder(DataSource ds) {
+      String updateSql = 
+      " update qc_recs_ext set display_order = ? where p_qc_idseq = ? and " + 
+      " display_order = ? ";
+      this.setDataSource(ds);
+      this.setSql(updateSql);
+      declareParameter(new SqlParameter("original_display_order", Types.INTEGER));
+      declareParameter(new SqlParameter("p_qc_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("new_display_order", Types.INTEGER));
+      compile();
+    }
+    protected int executeUpdate (int originalDisplayOrder, String pQcIdseq, 
+      int newDisplayOrder) 
+    {
+      Object [] obj = 
+        new Object[]
+          {new Integer(originalDisplayOrder), 
+           pQcIdseq,
+           new Integer(newDisplayOrder)
+          };
+      
+	    int res = update(obj);
+      return res;
+    }
+  }
+
+  /**
+   * Inner class that accesses database to update the display order of the
+   * selected record.
+   */
+  private class UpdateRecDispOrder extends SqlUpdate {
+    public UpdateRecDispOrder(DataSource ds) {
+      String updateSql = 
+      " update qc_recs_ext set display_order = ? where qr_idseq = ? ";
+      this.setDataSource(ds);
+      this.setSql(updateSql);
+      declareParameter(new SqlParameter("display_order", Types.INTEGER));
+      declareParameter(new SqlParameter("qr_idseq", Types.VARCHAR));
+      compile();
+    }
+    protected int executeUpdate (int displayOrder, String qrIdseq)
+    {
+      Object [] obj = 
+        new Object[]
+          {new Integer(displayOrder), 
+           qrIdseq
+          };
+      
+	    int res = update(obj);
+      return res;
     }
   }
 }
