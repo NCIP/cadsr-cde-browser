@@ -163,5 +163,32 @@
     <required>true</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute>     
-  </tag>   
+  </tag> 
+  
+  <tag>
+    <name>availableValidValues</name>
+    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.AvailableValidValue</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>AvailableValidValue</info>  
+    <attribute>
+    <name>questionBeanId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>valueDomainMapId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>selectClassName</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>selectName</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>        
+  </tag>  
 </taglib>
