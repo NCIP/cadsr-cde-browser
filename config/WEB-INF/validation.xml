@@ -26,11 +26,6 @@
         depends="required, maxlength">
         <arg0 key="cadsr.formbuilder.form.longName"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
-        
-        <var>
-          <var-name>mask</var-name>
-          <var-value>^\w+$</var-value>
-        </var>
         <var>
           <var-name>maxlength</var-name>
           <var-value>255</var-value>
@@ -42,14 +37,43 @@
         <arg0 key="cadsr.formbuilder.form.definition"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
         <var>
-          <var-name>mask</var-name>
-          <var-value>^\w+$</var-value>
+          <var-name>maxlength</var-name>
+          <var-value>255</var-value>
         </var>
+      </field>
+    </form>
+
+    <form name="/createForm">
+      <field   property="formLongName"
+        depends="required, maxlength">
+        <arg0 key="cadsr.formbuilder.form.longName"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
         <var>
           <var-name>maxlength</var-name>
           <var-value>255</var-value>
         </var>
       </field>
+
+      <field   property="preferredDefinition"
+        depends="required, maxlength">
+        <arg0 key="cadsr.formbuilder.form.definition"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>255</var-value>
+        </var>
+      </field>
+
+      <!-- not in struts until 1.2
+      <field   property="protocolIdSeq"
+        depends="required, validwhen">
+        <arg0 key="cadsr.formbuilder.form.protocol"/>
+        <var>
+          <var-name>test</var-name>
+          <var-value>(formType == "CRF")</var-value>
+        </var>
+      </field>
+      -->
     </form>
 
     
@@ -58,11 +82,6 @@
         depends="required, maxlength">
         <arg0 key="cadsr.formbuilder.form.longName"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
-        
-        <var>
-          <var-name>mask</var-name>
-          <var-value>^\w+$</var-value>
-        </var>
         <var>
           <var-name>maxlength</var-name>
           <var-value>255</var-value>
@@ -73,10 +92,6 @@
         depends="required, maxlength">
         <arg0 key="cadsr.formbuilder.form.definition"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
-        <var>
-          <var-name>mask</var-name>
-          <var-value>^\w+$</var-value>
-        </var>
         <var>
           <var-name>maxlength</var-name>
           <var-value>255</var-value>
@@ -93,10 +108,6 @@
         depends="required, maxlength">
         <arg0 key="cadsr.formbuilder.form.comments"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
-        <var>
-          <var-name>mask</var-name>
-          <var-value>^\w+$</var-value>
-        </var>
         <var>
           <var-name>maxlength</var-name>
           <var-value>255</var-value>

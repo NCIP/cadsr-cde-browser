@@ -21,24 +21,6 @@
       dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
     </form-bean>
-    <form-bean name="createForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
-      dynamic="true">
-      <form-property name="formLongName" type="java.lang.String"/>
-      <form-property name="formIdSeq" type="java.lang.String"/>
-      <form-property name="preferredDefinition" type="java.lang.String"/>
-      <form-property name="conteIdseq" type="java.lang.String"/>
-      <form-property name="contextIdSeq" type="java.lang.String"/>
-      <form-property name="protocolLongName" type="java.lang.String"/>
-      <form-property name="protocolIdSeq" type="java.lang.String"/>
-      <form-property name="formCategory" type="java.lang.String"/>
-      <form-property name="formType" type="java.lang.String"/>
-      <form-property name="gotoEdit" type="java.lang.Boolean"/>
-      <form-property name="formVersion" type="java.lang.Float"/>
-      <form-property name="formComments" type="java.lang.String"/>
-      <form-property name="formHeader" type="java.lang.String"/>
-      <form-property name="formFooter" type="java.lang.String"/>      
-    </form-bean>
     <form-bean name="protocolLOVForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
@@ -139,22 +121,6 @@
       <forward name="success" path="/formbuilder/formDetails.jsp"
         redirect="false"/>
     </action>
-    <action name="createForm" path="/formCreate" parameter="method"
-      scope="request"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCreateAction"
-      validate="false">
-      <forward name="gotoEdit" path="/formToEditAction.do?method=getFormToEdit"/>
-      <forward name="toCreateForm" path="/formbuilder/formCreate.jsp"/>
-      <forward name="toSearch" path="/formbuilder/formSearch.jsp"/>
-    </action>
-    <action name="createForm" path="/cancelFormCreateAction" parameter="method"
-      scope="session"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCreateAction"
-      validate="false">
-      <forward name="success"
-        path="/formSearchAction.do?method=getAllForms"
-        redirect="false"/>
-    </action>      
     <action name="formEditForm" path="/formToEditAction" parameter="method"
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
