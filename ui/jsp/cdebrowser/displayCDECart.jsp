@@ -101,13 +101,13 @@ function retrieveSavedItems() {
     <logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
       <th><input type="checkbox" name="allChk" value="yes" onClick="ToggleAll(this)"/></th>
     </logic:notEmpty>
-      <th>Public Id</th>
-      <th>Preferred Name</th>
       <th>Long Name</th>
       <th>Doc Text</th>
       <th>Context</th>
-      <th>Version</th>
+      <th>Registration Status</th>
       <th>Workflow Status</th>
+      <th>Public Id</th>
+      <th>Version</th>
     </tr>
   <logic:empty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
     <tr class="OraTabledata">
@@ -140,12 +140,6 @@ function retrieveSavedItems() {
           <input type="checkbox" name="selectedItems" value="<%=de.getId()%>"/>
         </td>
         <td class="OraFieldText">
-          <bean:write name="de" property="item.publicId"/>
-        </td>
-        <td class="OraFieldText">
-          <bean:write name="de" property="item.preferredName"/>
-        </td>
-        <td class="OraFieldText">
           <bean:write name="de" property="item.longName"/>
         </td>
         <td class="OraFieldText">
@@ -155,10 +149,16 @@ function retrieveSavedItems() {
           <bean:write name="de" property="item.contextName"/>
         </td>
         <td class="OraFieldText">
-          <bean:write name="de" property="item.version"/>
+          <bean:write name="de" property="item.registrationStatus"/>
         </td>
         <td class="OraFieldText">
           <bean:write name="de" property="item.aslName"/>
+        </td>
+        <td class="OraFieldText">
+          <bean:write name="de" property="item.publicId"/>
+        </td>
+        <td class="OraFieldText">
+          <bean:write name="de" property="item.version"/>
         </td>
       </tr>
     </logic:iterate>

@@ -118,13 +118,13 @@ function details(linkParms ){
       <th>Save<input type="checkbox" name="saveAllChk" value="yes" onClick="ToggleSaveAll(this)"/> </th>
       <th>Delete<input type="checkbox" name="deleteAllChk" value="yes" onClick="ToggleDeleteAll(this)"/></th>
     </logic:notEmpty>
-      <th>Public Id</th>
-      <th>Preferred Name</th>
       <th>Long Name</th>
       <th>Doc Text</th>
       <th>Context</th>
-      <th>Version</th>
+      <th>Registration Status</th>
       <th>Workflow Status</th>
+      <th>Public Id</th>
+      <th>Version</th>
     </tr>
   <logic:empty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
     <tr class="OraTabledata">
@@ -153,15 +153,9 @@ function details(linkParms ){
           <input type="checkbox" name="selectedDeleteItems" value="<%=de.getId()%>"/>
         </td>
         <td class="OraFieldText">
-          <bean:write name="de" property="item.publicId"/>
-        </td>
-        <td class="OraFieldText">
           <a href="<%=detailsURL%>">
-            <bean:write name="de" property="item.preferredName"/>
+            <bean:write name="de" property="item.longName"/>
           </a>
-        </td>
-        <td class="OraFieldText">
-          <bean:write name="de" property="item.longName"/>
         </td>
         <td class="OraFieldText">
           <bean:write name="de" property="item.longCDEName"/>
@@ -170,10 +164,16 @@ function details(linkParms ){
           <bean:write name="de" property="item.contextName"/>
         </td>
         <td class="OraFieldText">
-          <bean:write name="de" property="item.version"/>
+	  <bean:write name="de" property="item.registrationStatus"/>
         </td>
         <td class="OraFieldText">
           <bean:write name="de" property="item.aslName"/>
+        </td>
+        <td class="OraFieldText">
+	  <bean:write name="de" property="item.publicId"/>
+        </td>
+        <td class="OraFieldText">
+	  <bean:write name="de" property="item.version"/>
         </td>
       </tr>
     </logic:iterate>
