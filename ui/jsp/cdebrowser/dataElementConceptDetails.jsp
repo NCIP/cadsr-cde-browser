@@ -144,7 +144,7 @@ function goPage(pageInfo) {
 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Workflow Status:</td>
-    <td class="OraFieldText"><%=de.getAslName()%> </td>
+    <td class="OraFieldText"><%=dec.getAslName()%> </td>
  </tr>
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Version:</td>
