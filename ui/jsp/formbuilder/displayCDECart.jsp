@@ -85,7 +85,7 @@ function details(linkParms ){
     doneURL="cdeBrowse.jsp?PageId=DataElementsGroup";
   }
 %>
-<jsp:include page="../common/common_header_inc.jsp" flush="true">
+<jsp:include page="../common/common_header_jsp_inc.jsp" flush="true">
   <jsp:param name="loginDestination" value="formCDECartAction.do?method=displayCDECart"/>
 </jsp:include>
 <jsp:include page="../common/tab_inc.jsp" flush="true">
