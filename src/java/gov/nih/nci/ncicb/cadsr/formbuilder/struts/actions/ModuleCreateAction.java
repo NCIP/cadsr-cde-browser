@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.dto.FormInstructionTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.InstructionTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
@@ -127,7 +128,9 @@ public class ModuleCreateAction extends FormBuilderSecureBaseDispatchAction {
     } else {
       modules.add(newModule);
     }
-
+    // Jump to the update location on the screen
+    request.setAttribute(CaDSRConstants.ANCHOR,"M"+displayOrder);
+        
     saveMessage("cadsr.formbuilder.module.add.success", request);
     return mapping.findForward("toFormEdit");
 

@@ -10,11 +10,9 @@
         <html:img src='<%=urlPrefix+"i/subset_validvalues.gif"%>' border="0" alt="Subset ValidValues and Add"/>
       </a>
     </td -->            
-    <td >
-      <html:link action='<%= "/cancelAction?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_MODULE_TO_EDIT %>'>
-        <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
-      </html:link>             
-    </td>                
+          <td >
+            <a href="javascript:submitCancelForm()"><html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="cancel"/></a>
+          </td>                 
   </tr> 
   <tr >
     <td >

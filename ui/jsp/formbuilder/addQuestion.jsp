@@ -89,6 +89,12 @@
        }
   }
   
+<bean:define id="qIndex" name="addQuestionForm" property="<%= FormConstants.QUESTION_INDEX %>"/> 
+
+  function submitCancelForm() {
+          document.location.href= '<%=request.getContextPath()+"/cancelAction.do?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_MODULE_TO_EDIT+"&"+FormConstants.QUESTION_INDEX +"="+qIndex%>'
+      }     
+  
 function details(linkParms ){
   var urlString="search?dataElementDetails=9" + linkParms + "&PageId=DataElementsGroup"+"&queryDE=yes";
   newBrowserWin(urlString,'deDetails',800,600)
@@ -200,11 +206,9 @@ function details(linkParms ){
         <a href='<%= "cdeBrowse.jsp?src=gotoAddQuestion&amp;moduleIndex=" +  request.getParameter("moduleIndex") + "&amp;questionIndex=" + request.getParameter("questionIndex")+"&PageId=DataElementsGroup" %>'><html:img src='<%=urlPrefix+"i/add_more_data_elements.gif"%>' border="0" alt="Add more data elements"/></a>
       </td>
       <logic:empty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
-        <td>
-          <html:link action='<%= "/cancelAction?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_MODULE_TO_EDIT %>'>
-            <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
-          </html:link>             
-        </td>
+          <td >
+            <a href="javascript:submitCancelForm()"><html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="cancel"/></a>
+          </td>           
       </logic:empty>
     </tr>
   </table>    

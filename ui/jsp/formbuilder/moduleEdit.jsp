@@ -140,9 +140,17 @@ function clearProtocol() {
         }
   }
 -->
+<%
+  // To jum to the correct location on the screen
+  String jumpto = (String)request.getAttribute(CaDSRConstants.ANCHOR);
+  String jumptoStr ="";
+  
+  if(jumpto!=null)
+    jumptoStr = "onload=\"location.hash='#"+jumpto+"'\"";  
+ %>
 </SCRIPT>
   </HEAD>
-  <BODY topmargin=0 bgcolor="#ffffff">
+  <BODY topmargin=0 bgcolor="#ffffff" <%=jumptoStr%> >
     <% String urlPrefix = "";
 
       // Prepare parameter map for add and edit linx
@@ -284,7 +292,8 @@ function clearProtocol() {
              %>
             <logic:iterate id="question" name="module" indexId="questionIndex" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">
              <bean:size id="questionSize" name="module" property="questions"/>
-
+            <!-- and anchor -->
+            <A NAME="<%="Q"+questionIndex%>"></A>            
         <!-- If the Question Collection is empty and deleted Questions Exists -->
              <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">                   
               <tr align="right">

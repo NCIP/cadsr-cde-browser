@@ -22,7 +22,7 @@
   String jumptoStr ="";
   
   if(jumpto!=null)
-    jumptoStr = "onload=\"location.hash='#"+jumpto+"'";
+    jumptoStr = "onload=\"location.hash='#"+jumpto+"'\"";
 %>
 </HEAD>
 <BODY topmargin=0 bgcolor="#ffffff" <%=jumptoStr%> ">

@@ -4,9 +4,8 @@
             <a href="javascript:submitForm()"><html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Save"/></a>
           </td>           
           <td >
-            <html:link action='<%= "/cancelAction?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_FORM_TO_EDIT %>'>
-              <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
-            </html:link>             
-          </td>                
+          <td >
+            <a href="javascript:submitCancelForm()"><html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="cancel"/></a>
+          </td>                           
         </tr>             
       </table>

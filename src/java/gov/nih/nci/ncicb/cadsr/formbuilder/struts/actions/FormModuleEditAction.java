@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueChangeTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueChangesTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
@@ -197,6 +198,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
+    // Jump to the update location on the screen
+      if(questionIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()-1));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
+        
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -257,6 +264,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
+    // Jump to the update location on the screen
+      if(questionIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()+1));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
+        
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -324,6 +337,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
+    // Jump to the update location on the screen
+      if(questionIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
+        
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -411,6 +430,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
+    // Jump to the update location on the screen
+      if(questionIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
+        
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -476,6 +501,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
+    // Jump to the update location on the screen
+      if(questionIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
+        
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -542,6 +573,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
+    // Jump to the update location on the screen
+      if(questionIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
+        
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -605,6 +642,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
+    // Jump to the update location on the screen
+      if(questionIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
+        
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -672,6 +715,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
+    // Jump to the update location on the screen
+      if(questionIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
+        
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -765,7 +814,13 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
-
+    
+    // Jump to the update location on the screen
+      if(questionIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
+        
     return mapping.findForward(MODULE_EDIT);
   }
 

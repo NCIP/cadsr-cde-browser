@@ -20,6 +20,11 @@
         if(validateCreateModuleForm(createModuleForm))
           document.forms[0].submit();
       }
+      function submitCancelForm() {
+          document.forms[0].action= '<%=request.getContextPath()+"/cancelAction.do?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_FORM_TO_EDIT%>'
+          document.forms[0].submit();
+      }      
+      
     </SCRIPT>
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff">

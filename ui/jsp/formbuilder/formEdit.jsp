@@ -41,20 +41,27 @@ function clearProtocol() {
 }
 
 -->
-</SCRIPT>
-  </HEAD>
-  <BODY topmargin=0 bgcolor="#ffffff">
-    <% String urlPrefix = "";
+<% String urlPrefix = "";
     String startIndex="0";
     pageContext.setAttribute("startIndex", startIndex); 
   String contextPath = request.getContextPath();
   String pageUrl = "&PageId=DataElementsGroup";
   // HSK
-
+  // To jum to the correct location on the screen
+  String jumpto = (String)request.getAttribute(CaDSRConstants.ANCHOR);
+  String jumptoStr ="";
+  
+  if(jumpto!=null)
+    jumptoStr = "onload=\"location.hash='#"+jumpto+"'\"";  
+    
   String protoLOVUrl= 
     "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&chkContext=true&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
 
 %>
+</SCRIPT>
+  </HEAD>
+  <BODY topmargin=0 bgcolor="#ffffff" <%=jumptoStr%>>
+
 
       
     <html:form action="/formSaveAction.do">
@@ -259,7 +266,8 @@ function clearProtocol() {
         <logic:notEmpty name="<%=FormConstants.CRF%>" property="modules">
           <logic:iterate id="module" indexId="moduleIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
             <bean:size id="moduleSize" name="<%=FormConstants.CRF%>" property="modules"/>            
-            
+            <!-- and anchor -->
+            <A NAME="<%="M"+moduleIndex%>"></A>
             <!-- Add for delete and new Module -->
              <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
               <tr align="right">

@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormInstructionChangesTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
@@ -169,7 +170,11 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       modules.remove(currModuleIndex);
       modules.add(currModuleIndex - 1, currModule);
     }
-
+    // Jump to the update location on the screen
+      if(moduleIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"M"+(moduleIndex.intValue()-1));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"M"+0);
     if (log.isDebugEnabled()) {
       log.debug("Move up Module ");
     }
@@ -219,7 +224,12 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     if (log.isDebugEnabled()) {
       log.debug("Move Down Module ");
     }
-
+    // Jump to the update location on the screen
+      if(moduleIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"M"+(moduleIndex.intValue()+1));
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"M"+1);
+        
     return mapping.findForward(FORM_EDIT);
   }
 
@@ -270,7 +280,11 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     }
 
     setSessionObject(request, DELETED_MODULES, deletedModules,true);
-
+    // Jump to the update location on the screen
+      if(moduleIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"M"+moduleIndex.intValue());
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"M"+0);
 
     return mapping.findForward(FORM_EDIT);
   }
@@ -333,6 +347,10 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         moduleToAdd.setDisplayOrder(newDisplayOrder);
         modules.add(moduleToAdd);
       }
+      if(moduleIndex!=null)
+        request.setAttribute(CaDSRConstants.ANCHOR,"M"+moduleIndex.intValue());
+      else
+        request.setAttribute(CaDSRConstants.ANCHOR,"M"+0);
     }
 
     return mapping.findForward(FORM_EDIT);

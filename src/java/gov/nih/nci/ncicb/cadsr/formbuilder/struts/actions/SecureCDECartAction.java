@@ -111,6 +111,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
         questions.add(q);
       }
     }
+    // Jump to the update location on the screen
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+displayOrder);    
+        
     saveMessage("cadsr.formbuilder.question.add.success",request);
     return mapping.findForward("success");
   }
@@ -164,7 +167,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     }
 
     q.setDataElement(de);
-    
+
+    // Jump to the update location on the screen
+        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+questionIndex);     
 
     return mapping.findForward("success");
   }
