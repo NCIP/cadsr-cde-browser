@@ -1,26 +1,20 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
-
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
-import java.util.List;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 
 public class FormAction extends FormBuilderBaseDispatchAction {
@@ -42,7 +36,6 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-
     //Set the lookup values in the session
     setInitLookupValues(request);
 
@@ -54,21 +47,25 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     String workflow = (String) searchForm.get(this.WORKFLOW);
     String categoryName = (String) searchForm.get(this.CATEGORY_NAME);
     String type = (String) searchForm.get(this.FORM_TYPE);
-    String classificationId = (String)searchForm.get(this.CS_CSI_ID);
+    String classificationIdSeq = (String) searchForm.get(this.CS_CSI_ID);
 
     Collection forms = null;
 
-     forms = service.getAllForms(
-        formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type);
+    forms =
+      service.getAllForms(
+        formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type,classificationIdSeq);
     setSessionObject(request, this.FORM_SEARCH_RESULTS, forms);
+
     PaginationBean pb = new PaginationBean();
-    if(forms!=null)
+
+    if (forms != null) {
       pb.setListSize(forms.size());
+    }
+
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb);
-   
+
     return mapping.findForward(SUCCESS);
   }
-
 
   /**
    * Returns all forms for the search criteria specified by clicking on a tree
@@ -93,13 +90,16 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     String nodeType = request.getParameter("P_PARAM_TYPE");
     String nodeIdSeq = request.getParameter("P_IDSEQ");
     String contextIdSeq = request.getParameter("P_CONTE_IDSEQ");
-    if ("PROTOCOL".equals(nodeType))
-      protocolIdSeq = nodeIdSeq;
-    DynaActionForm searchForm = (DynaActionForm) form;
-    searchForm.set(this.PROTOCOL_ID_SEQ,protocolIdSeq);
-    searchForm.set(this.CONTEXT_ID_SEQ,contextIdSeq);
 
-    return this.getAllForms(mapping,form,request,response);
+    if ("PROTOCOL".equals(nodeType)) {
+      protocolIdSeq = nodeIdSeq;
+    }
+
+    DynaActionForm searchForm = (DynaActionForm) form;
+    searchForm.set(this.PROTOCOL_ID_SEQ, protocolIdSeq);
+    searchForm.set(this.CONTEXT_ID_SEQ, contextIdSeq);
+
+    return this.getAllForms(mapping, form, request, response);
   }
 
   /**
@@ -120,7 +120,8 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-     setInitLookupValues(request);
+    setInitLookupValues(request);
+
     return mapping.findForward(DEFAULT_HOME);
   }
 }
