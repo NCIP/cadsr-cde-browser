@@ -52,6 +52,7 @@
           	<td class="OraFieldText">
  			<html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
  				paramName="form" paramProperty="formIdseq">
+ 				target="_parent"
 			<bean:write name="form" property="longName"/>
 			</html:link>          		    
           	</td>
