@@ -179,7 +179,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       Form form = new FormTransferObject();
       form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
       Protocol prot = new ProtocolTransferObject();
-      prot.setProtoIdseq("B175A671-B163-5E06-E034-0003BA12F5E7");
+      prot.setProtoIdseq("B1EACF79-3F60-3053-E034-0003BA12F5E7");
       form.setProtocol(prot);  
       Module module = new ModuleTransferObject();
       module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
@@ -363,11 +363,11 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       declareParameter(new SqlParameter("p_created_by", Types.VARCHAR));
       declareParameter(new SqlOutParameter("p_display_order", Types.NUMERIC));
       
-      declareParameter(new SqlOutParameter("p_ques_idseq", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_val_idseq", Types.VARCHAR));
       declareParameter(new SqlOutParameter("p_qr_idseq", Types.VARCHAR));
       declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
       declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
-      
+          
       
       compile();
     }

@@ -4,9 +4,11 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormInstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.ModuleChanges;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
@@ -28,12 +30,9 @@ public interface FormBuilderServiceDelegate {
 
     public Form updateForm(String formIdSeq, Form formHeader, Collection updatedModules,
         Collection deletedModules,Collection addedModules
-         ,InstructionChanges instructionChanges) throws FormBuilderException;
+         ,FormInstructionChanges instructionChanges) throws FormBuilderException;
 
-    public Module updateModule(String moduleIdSeq, Module moduleHeader,
-        Collection updatedQuestions, Collection deletedQuestions,
-        Collection newQuestions, Map updatedValidValues, Map addedValidValues,
-        Map deletedValidValues,InstructionChanges instructionChanges) throws FormBuilderException;
+    public Module updateModule(String moduleIdSeq, ModuleChanges moduleChanges) throws FormBuilderException;
 
     public Form getFormRow(String formPK) throws FormBuilderException;
 

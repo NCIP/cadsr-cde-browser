@@ -4,9 +4,11 @@ import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormInstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.ModuleChanges;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
@@ -26,12 +28,9 @@ public interface FormBuilderServiceRemote {
 
     public Form updateForm(String formIdSeq, Form formHeader, Collection updatedModules,
         Collection deletedModules,Collection addedModules
-        ,InstructionChanges instructionChanges) throws RemoteException;
+        ,FormInstructionChanges instructionChanges) throws RemoteException;
 
-    public Module updateModule(String moduleIdSeq, Module moduleHeader,
-        Collection updatedQuestions, Collection deletedQuestions,
-        Collection newQuestions, Map updatedValidValues, Map addedValidValues,
-        Map deletedValidValues,InstructionChanges instructionChanges) throws RemoteException;
+    public Module updateModule(String moduleIdSeq,ModuleChanges moduleChanges) throws RemoteException;
 
     public Form getFormRow(String formPK) throws RemoteException;
 

@@ -1,41 +1,22 @@
 package gov.nih.nci.ncicb.cadsr.resource;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 public interface InstructionChanges extends Serializable
 {
 
-  public static final String DELETED_INSTRUCTIONS="deletedInstructions";
-  public static final String NEW_INSTRUCTION_MAP="newInstructionMap";
-  public static final String UPDATED_INSTRUCTIONS="updatedInstructions";  
+  public String getParentId();
+  public void setParentId(String parentId);
   
-  public void setModuleInstructionChanges(Map moduleInstructionChanges);
+  public Instruction getUpdatedInstruction();
+  public void setUpdatedInstruction(Instruction instructions);
 
-
-  public Map getModuleInstructionChanges();
-
-
-  public void setValidValueInstructionChanges(Map validValueInstructionChanges);
-
-
-  public Map getValidValueInstructionChanges();
-
-
-  public void setQuestionInstructionChanges(Map questionInstructionChanges);
-
-
-  public Map getQuestionInstructionChanges();
+  public Instruction getNewInstruction();
+  public void setNewInstruction(Instruction instructions);
   
-  public void setFormHeaderInstructionChanges(Map formHeaderInstructionChanges);
-
-
-  public Map getFormHeaderInstructionChanges();
-
-
-  public void setFormFooterInstructionChanges(Map formFooterInstructionChanges);
-
-
-  public Map getFormFooterInstructionChanges();
+  public Instruction getDeletedInstruction();
+  public void setDeletedInstruction(Instruction instructions);
   
   public boolean isEmpty();
 }

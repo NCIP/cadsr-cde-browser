@@ -123,11 +123,13 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
 
     JDBCConceptDAO cTest = new JDBCConceptDAO(locator);
     //ConceptDerivationRule rule = cTest.findConceptDerivationRule("EAEA6FFC-5948-24B5-E034-0003BA0B1A09");
+    
+    ConceptDerivationRule rule =  cTest.getObjectClassConceptDerivationRuleForDEC("EF115993-2433-5E0F-E034-0003BA0B1A09");
     //System.out.println(rule);
-    List list = new ArrayList();
-    list.add("EAEA6FFC-5948-24B5-E034-0003BA0B1A09");
-    Map rules = cTest.getAllDerivationRulesForIds(list);
-    System.out.println(rules);
+    //List list = new ArrayList();
+    //list.add("EAEA6FFC-5948-24B5-E034-0003BA0B1A09");
+    //Map rules = cTest.getAllDerivationRulesForIds(list);
+    System.out.println(rule);
 
   }
 

@@ -1,9 +1,13 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.dto.FormValidValueChangeTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.FormValidValueChangesTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.InstructionChangesTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.InstructionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ModuleChangesTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.QuestionChangeTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
@@ -14,11 +18,15 @@ import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.FormValidValueChange;
+import gov.nih.nci.ncicb.cadsr.resource.FormValidValueChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.ModuleChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Orderable;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.QuestionChange;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 
@@ -93,9 +101,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     Module selectedModule = (Module) modules.get(moduleIndex.intValue());
     String[] questionArr = getQuestionsAsArray(selectedModule.getQuestions());
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
-    
+
     moduleEditForm.set(MODULE_LONG_NAME, selectedModule.getLongName());
-    
+
     if(selectedModule.getInstruction()!=null)
     {
       moduleEditForm.set(
@@ -157,18 +165,18 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     //Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
-        
+
     String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
     setQuestionInstructionsFromArray(module,questionInstructionsArr);
-    
+
     String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
-    setValidValueInstructionsFromArray(module,vvInstructionsArr);    
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);
 
     List questions = module.getQuestions();
-    FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+    FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
-                                      
+
     if ((questions != null) && (questions.size() > 1)) {
       Question currQuestion = (Question) questions.get(currQuestionIndex);
       Question prvQuestion = (Question) questions.get(currQuestionIndex - 1);
@@ -178,16 +186,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       questions.remove(currQuestionIndex);
       questions.add(currQuestionIndex - 1, currQuestion);
     }
-    
+
     //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
     questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
     vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
-    
-    
+
+
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
-    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);    
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -214,21 +222,21 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
     int currQuestionIndex = questionIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
-    
+
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
     String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
     setQuestionInstructionsFromArray(module,questionInstructionsArr);
-    
+
     String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
     setValidValueInstructionsFromArray(module,vvInstructionsArr);
-    
+
     List questions = module.getQuestions();
-    FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+    FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
-                                      
+
     if ((questions != null) && (questions.size() > 1)) {
       Question currQuestion = (Question) questions.get(currQuestionIndex);
       Question nextQuestion = (Question) questions.get(currQuestionIndex + 1);
@@ -238,13 +246,13 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       questions.remove(currQuestionIndex);
       questions.add(currQuestionIndex + 1, currQuestion);
     }
-    
+
         //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
     questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
     vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
-    
-    
+
+
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
@@ -282,10 +290,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
     setQuestionInstructionsFromArray(module,questionInstructionsArr);
-    
+
     String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
     setValidValueInstructionsFromArray(module,vvInstructionsArr);
-    
+
 
     if (deletedQuestions == null) {
       deletedQuestions = new ArrayList();
@@ -293,28 +301,28 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     List questions = module.getQuestions();
 
-                                      
+
     if ((questions != null) && (questions.size() > 0)) {
       Question deletedQuestion =
         (Question) questions.remove(questionIndex.intValue());
       //FormActionUtil.decrementDisplayOrder(questions, questionIndex.intValue());
       // instead of incrementing /decrementing reset all display orders in sequencial order
         FormActionUtil.setInitDisplayOrders(questions);
-        
+
       deletedQuestions.add(deletedQuestion);
     }
 
     setSessionObject(request, DELETED_QUESTIONS, deletedQuestions,true);
-    
+
     //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
     questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
     vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
-    
-    
+
+
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
-    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -345,18 +353,18 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     Module module = (Module) getSessionObject(request, MODULE);
     List deletedQuestions = (List) getSessionObject(request, DELETED_QUESTIONS);
-    
+
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
-    
+
     String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
     setQuestionInstructionsFromArray(module,questionInstructionsArr);
-    
+
     String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
-    setValidValueInstructionsFromArray(module,vvInstructionsArr);    
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);
 
     List questions = module.getQuestions();
-    //FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+    //FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
     if (
@@ -371,9 +379,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         Question currQuestion =
           (Question) questions.get(questionIndex.intValue());
         int displayOrder = currQuestion.getDisplayOrder();
-        //FormActionUtil.incrementDisplayOrder(questions, questionIndex.intValue());        
+        //FormActionUtil.incrementDisplayOrder(questions, questionIndex.intValue());
         questionToAdd.setDisplayOrder(displayOrder);
-        questions.add((questionIndex.intValue()), questionToAdd);      
+        questions.add((questionIndex.intValue()), questionToAdd);
       }
       else {
         int newDisplayOrder = 0;
@@ -384,24 +392,24 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
           newDisplayOrder = lastQuestion.getDisplayOrder() + 1;
         }
         questionToAdd.setDisplayOrder(newDisplayOrder);
-        questions.add(questionToAdd);      
+        questions.add(questionToAdd);
       }
         // instead of incrementing /decrementingreset all display orders in sequencial order
-        FormActionUtil.setInitDisplayOrders(questions);          
+        FormActionUtil.setInitDisplayOrders(questions);
     }
 
     setSessionObject(request, DELETED_QUESTIONS, deletedQuestions,true);
-    
-    
+
+
     //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
     questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
     vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
-    
-    
+
+
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
-    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);    
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -430,20 +438,20 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     int currQuestionIndex = questionIndex.intValue();
     int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
-    
+
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
-    
+
     String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
     setQuestionInstructionsFromArray(module,questionInstructionsArr);
-    
+
     String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
-    setValidValueInstructionsFromArray(module,vvInstructionsArr);    
+    setValidValueInstructionsFromArray(module,vvInstructionsArr);
 
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
-    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order 
+    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
     if ((validValues != null) && (validValues.size() > 1)) {
@@ -462,11 +470,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     questionArr = getQuestionsAsArray(module.getQuestions());
     questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
     vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
-    
-    
+
+
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
-    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -495,23 +503,23 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     int currQuestionIndex = questionIndex.intValue();
     int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
-    
+
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
     String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
     setQuestionInstructionsFromArray(module,questionInstructionsArr);
-    
+
     String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
     setValidValueInstructionsFromArray(module,vvInstructionsArr);
-    
+
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
-    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order 
+    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
-                                      
+
     if ((validValues != null) && (validValues.size() > 1)) {
       FormValidValue currValidValue =
         (FormValidValue) validValues.get(currValidValueIndex);
@@ -528,11 +536,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     questionArr = getQuestionsAsArray(module.getQuestions());
     questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
     vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
-    
-    
+
+
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
-    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -568,17 +576,17 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
     setQuestionInstructionsFromArray(module,questionInstructionsArr);
-    
+
     String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
     setValidValueInstructionsFromArray(module,vvInstructionsArr);
-    
+
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
-    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order 
+    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
-                                      
+
     if ((validValues != null) && (validValues.size() > 0)) {
       FormValidValue deletedValidValue =
         (FormValidValue) validValues.remove(currValidValueIndex);
@@ -591,15 +599,15 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     questionArr = getQuestionsAsArray(module.getQuestions());
     questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
     vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
-    
-    
+
+
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
-    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
     return mapping.findForward(MODULE_EDIT);
   }
-  
+
     /**
    * Deletes the Multiple ValidValue of specified index.
    *
@@ -621,9 +629,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     DynaActionForm moduleEditForm = (DynaActionForm) form;
 
     Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
-    
+
     String[] selectedVVIndexes = (String[])request.getParameterValues(SELECTED_ITEMS+questionIndex);
-     
+
     int currQuestionIndex = questionIndex.intValue();
 
     Module module = (Module) getSessionObject(request, MODULE);
@@ -633,36 +641,36 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
     setQuestionInstructionsFromArray(module,questionInstructionsArr);
-    
+
     String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
     setValidValueInstructionsFromArray(module,vvInstructionsArr);
-    
+
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
 
-                                      
+
     for(int i=selectedVVIndexes.length-1;i>-1;--i)
     {
       int currValidValueIndex = (new Integer(selectedVVIndexes[i])).intValue();
       if ((validValues != null) && (validValues.size() > 0)) {
         FormValidValue deletedValidValue =
           (FormValidValue) validValues.remove(currValidValueIndex);
-        //FormActionUtil.decrementDisplayOrder(validValues, currValidValueIndex);      
+        //FormActionUtil.decrementDisplayOrder(validValues, currValidValueIndex);
       }
     }
     // instead of incrementing /decrementingreset all display orders in sequencial order
-    FormActionUtil.setInitDisplayOrders(validValues);      
-    
+    FormActionUtil.setInitDisplayOrders(validValues);
+
     //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
     questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
     vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
-    
-    
+
+
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
-    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -705,10 +713,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
     setQuestionInstructionsFromArray(module,questionInstructionsArr);
-    
+
     String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
     setValidValueInstructionsFromArray(module,vvInstructionsArr);
-    
+
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
 
@@ -720,11 +728,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       return mapping.findForward(MODULE_EDIT);
 
     List validValues = currQuestion.getValidValues();
-    FormActionUtil.setInitDisplayOrders(validValues); 
-    //This is done to set display order in a sequential order 
+    FormActionUtil.setInitDisplayOrders(validValues);
+    //This is done to set display order in a sequential order
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
-                                      
+
     if (currValidValueIndex < validValues.size()) {
       FormValidValue currValidValue =
         (FormValidValue) validValues.get(currValidValueIndex);
@@ -733,7 +741,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       validValues.add(currValidValueIndex, formValidValueToAdd);
       //FormActionUtil.incrementDisplayOrder(validValues, currValidValueIndex+1);
       // instead of incrementing /decrementingreset all display orders in sequencial order
-        FormActionUtil.setInitDisplayOrders(validValues);      
+        FormActionUtil.setInitDisplayOrders(validValues);
     }
     else {
       int newDisplayOrder = 0;
@@ -752,11 +760,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     questionArr = getQuestionsAsArray(module.getQuestions());
     questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
     vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
-    
-    
+
+
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
-    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -787,9 +795,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     module.setForm(crf);
     module.setContext(crf.getContext());//This is done so that all new Element created will have this Context
     Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
-    String longName = (String) moduleEditForm.get(MODULE_LONG_NAME);    
+    String longName = (String) moduleEditForm.get(MODULE_LONG_NAME);
     module.setLongName(longName);
-    
+
     String moduleInstruction = (String) moduleEditForm.get(MODULE_INSTRUCTION);
     if(moduleInstruction!=null&&!moduleInstruction.trim().equalsIgnoreCase(""))
     {
@@ -815,39 +823,41 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
     setQuestionInstructionsFromArray(module,questionInstructionsArr);
-    
+
     String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
     setValidValueInstructionsFromArray(module,vvInstructionsArr);
-    
-    Map changes = getUpdatedNewDeletedQuestions(module,orgModule.getQuestions(),module.getQuestions());
-    InstructionChanges instructionChanges = getUpdatedNewDeletedInstructions(module,orgModule);
-    
+
+    //Check if the module longName has changed
     Module moduleHeader = null;
+    ModuleChanges moduleChanges = new ModuleChangesTransferObject();
     if(!longName.equals(orgModule.getLongName()))
     {
       moduleHeader = new ModuleTransferObject();
       moduleHeader.setLongName(longName);
       moduleHeader.setModuleIdseq(module.getModuleIdseq());
+      moduleChanges.setUpdatedModule(moduleHeader);
     }
-    if(instructionChanges.isEmpty()&&changes.isEmpty()&&moduleHeader==null)
+    InstructionChanges modInstrChanges = getInstructionChanges(orgModule.getInstruction(),module.getInstruction(),module.getModuleIdseq());
+    modInstrChanges.setParentId(module.getModuleIdseq());
+
+    if(!modInstrChanges.isEmpty())
+      moduleChanges.setInstructionChanges(modInstrChanges);
+    //Get all the changes for the modules questions
+    ModuleChanges changes = getUpdatedNewDeletedQuestions(moduleChanges,module,orgModule.getQuestions(),module.getQuestions());
+
+
+    if(changes.isEmpty())
     {
       saveMessage("cadsr.formbuilder.form.edit.nochange", request);
       return mapping.findForward(MODULE_EDIT);
     }
 
     FormBuilderServiceDelegate service = getFormBuilderService();
-    Module updatedModule = null;
+    Module updatedModule = orgModule;
     try{
     //TODO move the method param to a transfer object
-      updatedModule = service.updateModule(module.getModuleIdseq(),
-                            moduleHeader,
-                            (Collection)changes.get(UPDATED_QUESTION_LIST),
-                           (Collection)changes.get(DELETED_QUESTION_LIST),
-                           (Collection)changes.get(NEW_QUESTION_LIST),
-                           (Map)changes.get(UPDATED_VV_MAP),
-                           (Map)changes.get(NEW_VV_MAP),
-                           (Map)changes.get(DELETED_VV_MAP),
-                            instructionChanges);                              
+     updatedModule = service.updateModule(module.getModuleIdseq(),
+                            moduleChanges);
     }
     catch(FormBuilderException exp)
     {
@@ -932,7 +942,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     return mapping.findForward(SUCCESS);
 
     }
-    
+
   /**
    * Get all related VDs and prepare for display
    *
@@ -946,13 +956,13 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
    * @throws IOException
    * @throws ServletException
    */
-  public ActionForward viewSubsettedVDs(    
+  public ActionForward viewSubsettedVDs(
       ActionMapping mapping,
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     FormBuilderBaseDynaFormBean moduleEditForm = (FormBuilderBaseDynaFormBean) form;
-    
+
     Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
     int currQuestionIndex = questionIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
@@ -984,12 +994,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     List vvList1 = (List)validValueMap1.get(cde.getValueDomain().getVdIdseq());
     List vvList2 = (List)validValueMap2.get(cde.getValueDomain().getVdIdseq());
     List vvList3 = (List)validValueMap3.get(cde.getValueDomain().getVdIdseq());
-    
+
     ValueDomain vd = cde.getValueDomain();
     ValueDomain vd1 = new ValueDomainTransferObject();
     ValueDomain vd2 = new ValueDomainTransferObject();
     ValueDomain vd3 = new ValueDomainTransferObject();
-    
+
     if(vvList1.size()>4)
     {
 
@@ -1000,18 +1010,18 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       while( vvList2.size()>3)
       {
         vvList2.remove(0);
-      }      
+      }
       while( vvList3.size()>4)
       {
         vvList3.remove(0);
-      }  
+      }
 
       vd1.setValidValues(vvList1);
-      
+
       vd2.setValidValues(vvList2);
-      
+
       vd3.setValidValues(vvList3);
-      
+
       Collection subsettedVDs = new ArrayList();
       subsettedVDs.add(vd1);
       subsettedVDs.add(vd2);
@@ -1022,11 +1032,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       //request.setAttribute("currentQuestion",currQuestion);
       setSessionObject(request,"currentQuestion",currQuestion,true);
       setSessionObject(request,"nextQuestion",nextQuestion,true);
-      
+
      }
      return mapping.findForward("viewSubsets");
     }
-    
+
   /**
    * Get all related VDs and prepare for display
    *
@@ -1040,7 +1050,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
    * @throws IOException
    * @throws ServletException
    */
-  public ActionForward addSelectedVDSubset(    
+  public ActionForward addSelectedVDSubset(
       ActionMapping mapping,
     ActionForm form,
     HttpServletRequest request,
@@ -1049,17 +1059,17 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     Question currQuestion = (Question) getSessionObject(request, "currentQuestion");
     List subsettedVDs = (List)getSessionObject(request, "subsettedVDs");
     Integer vdIndex = (Integer)subsetForm.get("selectedSubsetIndex");
-    
+
     ValueDomain selectedVD = (ValueDomain)subsettedVDs.get(vdIndex.intValue());
-    
+
     List newValidValues = DTOTransformer.toFormValidValueList(
                     selectedVD.getValidValues(), currQuestion);
-    currQuestion.setValidValues(newValidValues);               
+    currQuestion.setValidValues(newValidValues);
 
      return mapping.findForward(MODULE_EDIT);
      //return mapping.findForward("useSubsets");
     }
-  
+
   /**
    * This need to rewritten
    *
@@ -1073,15 +1083,15 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
    * @throws IOException
    * @throws ServletException
    */
-  public ActionForward subsetSave(    
+  public ActionForward subsetSave(
       ActionMapping mapping,
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-            
+
      return mapping.findForward("useSubsets");
     }
-    
+
  private Map getAvailableValidValuesForQuestions(Module module,List questions, Map vdvvMap)
  {
    ListIterator questionIterator = questions.listIterator();
@@ -1171,26 +1181,18 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
        return copyVVList;
  }
   /**
-   * The Map that is return
-   * Has new, updated,deleted questions by respective key
-   * the validValue changes are keyed by questionIdseq whose vale
-   * is a map containg new, updated,deleted validValues with respective
-   * keys
-   *
+   * Methods returns a map containing Changes to the questions ina module
    * @param orgQuestionsList
    * @param editedQuestionList
    *
-   * @return the Map Containing the Changes
+   * @return the Contains all changes to the questions of the module
    */
- private Map getUpdatedNewDeletedQuestions(Module currModule, List orgQuestionList, List editedQuestionList)
+ private ModuleChanges getUpdatedNewDeletedQuestions(ModuleChanges moduleChanges,Module currModule, List orgQuestionList, List editedQuestionList)
  {
    ListIterator editedQuestionIterate = editedQuestionList.listIterator();
    List newQuestionList = new ArrayList();
    List updatedQuestionList = new ArrayList();
    List deletedQuestionList = new ArrayList();
-   Map newValidValuesMap = new HashMap();
-   Map updatedValidValuesMap = new HashMap();
-   Map deletedValidValuesMap = new HashMap();
 
 
    Map resultMap = new HashMap();
@@ -1221,120 +1223,63 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
          fvv.setQuestion(currQuestion);
        }
        newQuestionList.add(currQuestion);
-
      }
      else// Get edited Questions
      {
        int orgQuestionIndex= orgQuestionList.indexOf(currQuestion);
        Question orgQuestion = (Question)orgQuestionList.get(orgQuestionIndex);
-       DataElement orgQusetionDE = orgQuestion.getDataElement();
-       DataElement currQusetionDE = currQuestion.getDataElement();
-       boolean hasDEAssosiationChanged = true;
-       //Check If DE association has Changed
-       if(orgQusetionDE==null&&currQusetionDE==null)
-       {
-         hasDEAssosiationChanged=false;
-       }
-       else
-       {
-         if(orgQusetionDE==null||currQusetionDE==null)
-         {
-           hasDEAssosiationChanged=true;
-         }
-         else
-         {
-           if(orgQusetionDE.equals(currQusetionDE))
-           {
-             hasDEAssosiationChanged=false;
-           }
-           else
-           {
-             hasDEAssosiationChanged = true;
-           }
-         }
-       }
+       //Check to see if the CDE association of the question has changed
+       boolean hasDEAssosiationChanged = this.hasAssociationChanged(orgQuestion,currQuestion);
+       QuestionChange questionChange = new QuestionChangeTransferObject();
+       questionChange.setQuestionId(currQuestion.getQuesIdseq());
+
        //  if the LongName or DE Association or
        // DisplayOrder has been updated add the Question to Edited List.
        if(!orgQuestion.getLongName().equals(currQuestion.getLongName())||
          orgQuestion.getDisplayOrder()!=currQuestion.getDisplayOrder()||
          hasDEAssosiationChanged)
        {
-         updatedQuestionList.add(currQuestion);
+          questionChange.setUpdatedQuestion(currQuestion);
        }
+       //Check to see if the questions instruction has changed
+       InstructionChanges instructionChangesForQ = getInstructionChanges(orgQuestion.getInstruction(),currQuestion.getInstruction(),currQuestion.getQuesIdseq());
+       instructionChangesForQ.setParentId(currQuestion.getQuesIdseq());
 
+       if(instructionChangesForQ!=null&&!instructionChangesForQ.isEmpty())
+       {
+         questionChange.setInstrctionChanges(instructionChangesForQ);
+       }
      // Check if there is change in ValidValues
-     Map validValuesChanges = null;
-     //Get ValidValue changes when there is no DE association Change
-     if(!hasDEAssosiationChanged)
-      {
-         validValuesChanges =
+      FormValidValueChanges validValuesChanges =
             getNewDeletedUpdatedValidValues(currQuestion,orgQuestion.getValidValues(),
-                                            currQuestion.getValidValues());
-      }
-      //Get ValidValue changes when there is a DE association Change
-      else if(hasDEAssosiationChanged)
-      {
+                                            currQuestion.getValidValues(),hasDEAssosiationChanged);
+      validValuesChanges.setQuestionId(currQuestion.getQuesIdseq());
 
-        List newVVList = currQuestion.getValidValues();
-        List oldVVList = orgQuestion.getValidValues();
-        if(oldVVList!=null&&!oldVVList.isEmpty())
-        {
-          if(validValuesChanges==null)
-            validValuesChanges = new HashMap();
-          validValuesChanges.put(this.DELETED_VV_LIST,oldVVList);
-        }  
-        if(newVVList!=null&&!newVVList.isEmpty())
-        {
-          if(validValuesChanges==null)
-            validValuesChanges = new HashMap();
-          setAttributesForNewFormValidValues(currQuestion,newVVList);
-          validValuesChanges.put(this.NEW_VV_LIST,newVVList);
-        }
-      
-      }
       if(validValuesChanges!=null&&!validValuesChanges.isEmpty())
       {
-        List newvvList = (List)validValuesChanges.get(NEW_VV_LIST);
-        if(newvvList!=null)
-          newValidValuesMap.put(currQuestion.getQuesIdseq(), newvvList);
-
-        List deletedList = (List)validValuesChanges.get(DELETED_VV_LIST);
-        if(deletedList!=null)
-          deletedValidValuesMap.put(currQuestion.getQuesIdseq(), deletedList);
-
-        List updatedvvList = (List)validValuesChanges.get(UPDATED_VV_LIST);
-        if(updatedvvList!=null)
-          updatedValidValuesMap.put(currQuestion.getQuesIdseq(), updatedvvList);
-
+         questionChange.setFormValidValueChanges(validValuesChanges);
+      }
+      if(questionChange!=null&&!questionChange.isEmpty())
+      {
+         updatedQuestionList.add(questionChange);
       }
      }
    }
 
    if(!newQuestionList.isEmpty())
    {
-     resultMap.put(NEW_QUESTION_LIST,newQuestionList);
+     moduleChanges.setNewQuestions(newQuestionList);
    }
    if(!updatedQuestionList.isEmpty())
    {
-     resultMap.put(UPDATED_QUESTION_LIST,updatedQuestionList);
+     moduleChanges.setUpdatedQuestions(updatedQuestionList);
    }
    if(!deletedQuestionList.isEmpty())
    {
-     resultMap.put(this.DELETED_QUESTION_LIST,deletedQuestionList);
+     moduleChanges.setDeletedQuestions(deletedQuestionList);
    }
-   if(!updatedValidValuesMap.isEmpty())
-   {
-     resultMap.put(UPDATED_VV_MAP,updatedValidValuesMap);
-   }
-   if(!deletedValidValuesMap.isEmpty())
-   {
-     resultMap.put(DELETED_VV_MAP,deletedValidValuesMap);
-   }
-   if(!newValidValuesMap.isEmpty())
-   {
-     resultMap.put(NEW_VV_MAP,newValidValuesMap);
-   }
-   return resultMap;
+
+   return moduleChanges;
  }
 
 
@@ -1343,26 +1288,27 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
   *  If no changes returns a empty Map
   * Only Changes are present in the Map
   * */
-  private Map getNewDeletedUpdatedValidValues(Question currQuestion, List orgValidValueList,
-                                            List editedValidValueList)
+  private FormValidValueChanges getNewDeletedUpdatedValidValues(Question currQuestion, List orgValidValueList,
+                                            List editedValidValueList,boolean hasDEAssosiationChanged)
     {
-       Map resultMap = new HashMap();
        ListIterator orgIterator =  null;
        if(orgValidValueList!=null)
           orgIterator = orgValidValueList.listIterator();
        List deletedValidValueList = new ArrayList();
        List newVVList = new ArrayList();
        List updatedVVList = new ArrayList();
-       // get the deleted Valid Values first
+       FormValidValueChanges fvvChanges = new FormValidValueChangesTransferObject();
+       fvvChanges.setQuestionId(currQuestion.getQuesIdseq());
+
        while(orgIterator!=null&&orgIterator.hasNext())
        {
           FormValidValue currVV = (FormValidValue)orgIterator.next();
           currVV.setQuestion(currQuestion);
-          if(editedValidValueList!=null&&!editedValidValueList.contains(currVV))
+          if((editedValidValueList!=null&&!editedValidValueList.contains(currVV))||hasDEAssosiationChanged)
           {
             deletedValidValueList.add(currVV);
           }
-          if(editedValidValueList==null)
+          else if(editedValidValueList==null||hasDEAssosiationChanged)
           {
             deletedValidValueList.add(currVV);
           }
@@ -1376,136 +1322,89 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
          FormValidValue editedVV = (FormValidValue)editedIterator.next();
          editedVV.setQuestion(currQuestion);
          // get new valid Values
-         if(!orgValidValueList.contains(editedVV))
+         if(!orgValidValueList.contains(editedVV)||hasDEAssosiationChanged)
          {
            newVVList.add(editedVV);
          }
          else
-         { // get updated(Displayorder) VVs
+         { // updated changes for this FVV
+           FormValidValueChange vvChange = new FormValidValueChangeTransferObject();
+           vvChange.setValidValueId(editedVV.getValueIdseq());
            int orgIndex = orgValidValueList.indexOf(editedVV);
            FormValidValue orgVV = (FormValidValue)orgValidValueList.get(orgIndex);
            if(editedVV.getDisplayOrder()!= orgVV.getDisplayOrder())
            {
-             updatedVVList.add(editedVV);
+             vvChange.setUpdatedValidValue(editedVV);
+           }
+           InstructionChanges instructionChanges = getInstructionChanges(orgVV.getInstruction(),editedVV.getInstruction(),editedVV.getValueIdseq());
+           if(instructionChanges!=null&&!instructionChanges.isEmpty())
+           {
+              vvChange.setInstrctionChanges(instructionChanges);
+           }
+           if(vvChange!=null&&!vvChange.isEmpty())
+           {
+             updatedVVList.add(vvChange);
            }
          }// contained in orgValidValues
        }
        if(!newVVList.isEmpty())
-          resultMap.put(NEW_VV_LIST,newVVList);
+          fvvChanges.setNewValidValues(newVVList);
        if(!updatedVVList.isEmpty())
-          resultMap.put(UPDATED_VV_LIST,updatedVVList);
+          fvvChanges.setUpdatedValidValues(updatedVVList);
        if(!deletedValidValueList.isEmpty())
-          resultMap.put(DELETED_VV_LIST,deletedValidValueList);
-      return resultMap;
+          fvvChanges.setDeletedValidValues(deletedValidValueList);
+
+      return fvvChanges;
     }
 
 
-  /**
-   * Get all the changes to Instructions
-   *  
-   * @param orgQuestionsList
-   * @param editedQuestionList
-   *
-   * @return the TO Containing the Changes 
-   */
- private InstructionChanges getUpdatedNewDeletedInstructions(Module currModule, Module orgModule)
+
+
+ // Used to get the changes to instructions
+
+ private InstructionChanges getInstructionChanges( Instruction orgInstr,Instruction currInstr, String parentId)
  {
-  InstructionChanges changes =  new InstructionChangesTransferObject();
-  
-  Map modChanges = getKeyValueForInstructionChanges(changes.getModuleInstructionChanges(),orgModule.getInstruction(),currModule.getInstruction(),orgModule.getModuleIdseq());
-  changes.setModuleInstructionChanges(modChanges);
-  List currQuestions = currModule.getQuestions();
-  List orgQuestions = orgModule.getQuestions();
-  if(currQuestions!=null&&!currQuestions.isEmpty())
-  {
-    ListIterator currQuestionsIt = currQuestions.listIterator();
-    while(currQuestionsIt.hasNext())
-    {
-      Question currQuestion = (Question)currQuestionsIt.next();
-      if(orgQuestions!=null&&orgQuestions.contains(currQuestion))
-      {
-        int index = orgQuestions.indexOf(currQuestion);
-        Question orgQuestion = (Question)orgQuestions.get(index);
-        
-        Map quesChanges = getKeyValueForInstructionChanges(changes.getQuestionInstructionChanges(),orgQuestion.getInstruction(),currQuestion.getInstruction(),currQuestion.getQuesIdseq());
-        changes.setQuestionInstructionChanges(quesChanges);
-        
-        List vvOrgList = orgQuestion.getValidValues();
-        List vvCurrList = currQuestion.getValidValues();
-        ListIterator currVVIt = vvCurrList.listIterator();
-        while(currVVIt.hasNext())
-        {
-          FormValidValue currVV = (FormValidValue)currVVIt.next();
-          if(vvOrgList!=null&&vvOrgList.contains(currVV))
-          {
-            int vvindex = vvOrgList.indexOf(currVV);
-            FormValidValue orgVV = (FormValidValue)vvOrgList.get(vvindex);
-            Map vvChanges = getKeyValueForInstructionChanges(changes.getValidValueInstructionChanges(),orgVV.getInstruction(),currVV.getInstruction(),currVV.getValueIdseq());            
-            changes.setValidValueInstructionChanges(vvChanges);
-          }
-        }
-      }      
-    }
-  }
-  
-  return changes;
+      InstructionChanges  changes = new InstructionChangesTransferObject();
+      changes.setParentId(parentId);
+      return getInstructionChanges(changes,orgInstr,currInstr,parentId);
  }
- 
- private Map getKeyValueForInstructionChanges(Map mainMap, Instruction orgInstr,Instruction currInstr, String parentId)
- {   
-  if(mainMap==null)
-       mainMap = new HashMap(); 
+
+ private InstructionChanges getInstructionChanges(InstructionChanges changes, Instruction orgInstr,Instruction currInstr, String parentId)
+ {
+
+   if(changes==null)
+   {
+     changes= new InstructionChangesTransferObject();
+   }
+   changes.setParentId(parentId);
+
    if(currInstr==null&&orgInstr!=null)
    {
-     List toDelete = (List)mainMap.get(InstructionChanges.DELETED_INSTRUCTIONS);
-     if(toDelete==null)
-     {
-        toDelete = new ArrayList();       
-     }
-     toDelete.add(orgInstr);
-     mainMap.put(InstructionChanges.DELETED_INSTRUCTIONS,toDelete);
-     return mainMap;
+     changes.setDeletedInstruction(orgInstr);
+     return changes;
    }
    if(currInstr!=null&&orgInstr==null)
    {
      if (!currInstr.getLongName().trim().equals(""))
      {
-       Map newInstrs = (Map)mainMap.get(InstructionChanges.NEW_INSTRUCTION_MAP);
-       if(newInstrs==null)
-       {
-          newInstrs = new HashMap();       
-       }
-       newInstrs.put(parentId,currInstr);
-       mainMap.put(InstructionChanges.NEW_INSTRUCTION_MAP,newInstrs);
-       return mainMap;     
+       changes.setNewInstruction(currInstr);
+       return changes;
      }
    }
    if(currInstr!=null&&orgInstr!=null)
    {
      if(!currInstr.equals(orgInstr)&&!currInstr.getLongName().trim().equals(""))
        {
-         List updatedInstrs = (List)mainMap.get(InstructionChanges.UPDATED_INSTRUCTIONS);
-         if(updatedInstrs==null)
-         {
-            updatedInstrs = new ArrayList();       
-         }
-         updatedInstrs.add(currInstr);
-         mainMap.put(InstructionChanges.UPDATED_INSTRUCTIONS,updatedInstrs);
-         return mainMap;     
+         changes.setUpdatedInstruction(currInstr);
+         return changes;
        }
        else if(!currInstr.equals(orgInstr)&&currInstr.getLongName().trim().equals(""))
        {
-         List toDelete = (List)mainMap.get(InstructionChanges.DELETED_INSTRUCTIONS);
-         if(toDelete==null)
-         {
-            toDelete = new ArrayList();       
-         }
-         toDelete.add(orgInstr);
-         mainMap.put(InstructionChanges.DELETED_INSTRUCTIONS,toDelete);
-         return mainMap;       
+         changes.setDeletedInstruction(currInstr);
+         return changes;
        }
-   }   
-   return mainMap;
+   }
+   return changes;
  }
   /**
    * Removes the Question given by "quesIdSeq" from the question list
@@ -1639,11 +1538,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     Module module,
     String[] questionInstructionArr) {
     List questions = module.getQuestions();
-    if(questions==null) 
+    if(questions==null)
     {
       questions = new ArrayList();
     }
-    
+
 
     for (int i = 0; i < questionInstructionArr.length; i++) {
       String instrStr = questionInstructionArr[i];
@@ -1653,6 +1552,8 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         if(instrStr!=null&&!instrStr.trim().equals(""))
         {
           currQuestion.getInstruction().setLongName(instrStr);
+          initNullValues(currQuestion.getInstruction(),module);// this is done to take care
+                                             // incase the attributes are null
         }
         else
         {
@@ -1666,13 +1567,13 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         instr.setDisplayOrder(0);
         instr.setVersion(new Float(1));
         instr.setAslName("DRAFT NEW");
-        instr.setContext(module.getContext());        
-        instr.setPreferredDefinition(instrStr);        
+        instr.setContext(module.getContext());
+        instr.setPreferredDefinition(instrStr);
         currQuestion.setInstruction(instr);
       }
     }
   }
-  
+
   private String[] getValidValueInstructionsAsArray(List questions) {
     if (questions == null) {
       return null;
@@ -1699,7 +1600,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
           else
           {
             validValueInstructionsArr[vvIndex] = "";
-          } 
+          }
          ++vvIndex;
         }
        }
@@ -1711,31 +1612,34 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     Module module,
     String[] validValueInstructionArr) {
     List questions = module.getQuestions();
-    if(questions==null) 
+    if(questions==null)
     {
       questions = new ArrayList();
-    }    
+    }
     int index=0;
     for (int i = 0; i < questions.size(); i++) {
-        Question currQuestion = (Question) questions.get(i);  
+        Question currQuestion = (Question) questions.get(i);
         List vvList = currQuestion.getValidValues();
-        if(vvList==null) 
+        if(vvList==null)
         {
           vvList = new ArrayList();
-        }            
-       for (int j = 0; j < vvList.size(); j++) {  
+        }
+       for (int j = 0; j < vvList.size(); j++) {
             String instrStr = validValueInstructionArr[index];
-            FormValidValue currVV = (FormValidValue) vvList.get(j); 
+            FormValidValue currVV = (FormValidValue) vvList.get(j);
             if(currVV.getInstruction()!=null)
             {
               if(instrStr!=null&&!instrStr.trim().equals(""))
               {
                 currVV.getInstruction().setLongName(instrStr);
+                 initNullValues(currVV.getInstruction(),module);
+                                             // this is done to take care
+                                             // incase the attributes are null                
               }
               else
               {
                 currVV.setInstruction(null);
-              }              
+              }
             }
             else if((instrStr!=null)&&(!instrStr.equals("")))
             {
@@ -1743,16 +1647,27 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
               instr.setLongName(instrStr);
               instr.setDisplayOrder(0);
               instr.setVersion(new Float(1));
-              instr.setAslName("DRAFT NEW");    
-              instr.setContext(module.getContext());              
-              instr.setPreferredDefinition(instrStr);                     
+              instr.setAslName("DRAFT NEW");
+              instr.setContext(module.getContext());
+              instr.setPreferredDefinition(instrStr);
               currVV.setInstruction(instr);
             }
           ++index;
        }
     }
   }
-  
+  private void initNullValues(Instruction instr, Module module)
+  {
+      if(instr.getVersion()==null)
+              instr.setVersion(new Float(1));
+      if(instr.getAslName()==null)
+              instr.setAslName("DRAFT NEW");
+      if(instr.getContext()==null)
+              instr.setContext(module.getContext());
+      if(instr.getPreferredDefinition()==null)
+              instr.setPreferredDefinition(instr.getLongName());
+
+  }
   private Collection getAllVDsForQuestions(List questions) {
     ListIterator iterate = questions.listIterator();
     Collection vdIds = new ArrayList();
@@ -1774,7 +1689,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     return vdIds;
   }
-  
+
   private int getMaxVVSize(List questions)
   {
     if(questions==null)
@@ -1789,9 +1704,42 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         if(vvList!=null)
           maxSize=maxSize+vvList.size();
        }
-      }    
+      }
     return maxSize;
   }
-  
 
+  private void addAssocChangeInstrToDelete(List deleteList, List vvList)
+  {
+    if(deleteList==null)
+      deleteList = new ArrayList();
+    if(vvList==null)return;
+    if(vvList.size()<1) return;
+    ListIterator it = vvList.listIterator();
+    while(it.hasNext())
+    {
+      FormValidValue fvv = (FormValidValue)it.next();
+      Instruction ins = fvv.getInstruction();
+      if(ins!=null)
+        deleteList.add(ins);
+    }
+
+  }
+
+ private boolean hasAssociationChanged(Question orgQuestion,Question currQuestion)
+ {
+   DataElement orgDE = orgQuestion.getDataElement();
+   DataElement currDE = currQuestion.getDataElement();
+   if(orgDE==null&&currDE==null)
+      return false;
+   if(orgDE==null||currDE==null)
+    return true;
+   if(orgDE.getDeIdseq().equalsIgnoreCase(currDE.getDeIdseq()))
+   {
+     return false;
+   }
+   else
+   {
+     return true;
+   }
+ }
 }
