@@ -1,18 +1,16 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser;
 
 import gov.nih.nci.ncicb.cadsr.util.*;
-import gov.nih.nci.ncicb.cadsr.database.*;
-import java.sql.*;
-import java.util.*;
-import javax.servlet.http.*;
-import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
+import java.sql.*;
 
 /**
  * A Bean class.
  * <P>
  * @author Ram Chilukuri 
- * @version: $Id: ProtocolsForCdeBean.java,v 1.2 2004-08-17 13:12:13 jiangja Exp $
+ * @version: $Id: ProtocolsForCdeBean.java,v 1.3 2004-08-17 13:14:05 jiangja Exp $
  * 
  */
 public class ProtocolsForCdeBean extends Object {
