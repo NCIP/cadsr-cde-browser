@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.service;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.*;
 
 import java.util.Collection;
 
@@ -67,6 +68,12 @@ public interface FormBuilderServiceDelegate {
   public boolean validateUser(
     String username,
     String password) throws FormBuilderException;
+
+  public CDECart retrieveCDECart(String username) throws FormBuilderException;
+
+  public int addToCDECart(CDECartItem item) throws FormBuilderException;
+
+  public int removeFromCDECart(String itemId) throws FormBuilderException;
 
  /** public Collection getContextsForUserAndRole(
     String username,

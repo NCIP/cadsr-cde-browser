@@ -1,5 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.impl;
 
+import com.evermind.sql.OrionCMTDataSource;
+
+import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECart;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.ejb.common.SessionBeanAdapter;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service.FormBuilderServiceRemote;
@@ -12,6 +16,8 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 
 import java.rmi.RemoteException;
 
+import java.sql.Connection;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -21,9 +27,7 @@ import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
 
-import com.evermind.sql.OrionCMTDataSource;
 
 public class FormBuilderEJB extends SessionBeanAdapter
   implements FormBuilderServiceRemote {
@@ -31,15 +35,13 @@ public class FormBuilderEJB extends SessionBeanAdapter
   AbstractDAOFactory daoFactory;
 
   /**
-   * Uses the ServiceLoactor returned by  ServiceLocatorFactory.getEJBLocator()
+   * Uses the ServiceLocator returned by  ServiceLocatorFactory.getEJBLocator()
    * to instantiate the daoFactory. It could also be changed so that the
    * ServiceLocator be a input param to the ejbCreate.
    */
   public void ejbCreate() {
     locator = ServiceLocatorFactory.getEJBLocator();
     daoFactory = AbstractDAOFactory.getDAOFactory(locator);
-    
-    
   }
 
   /**
@@ -64,7 +66,6 @@ public class FormBuilderEJB extends SessionBeanAdapter
     String categoryName,
     String type,
     String classificationIdSeq) throws DMLException {
-    //        JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory((ServiceLocator)new TestServiceLocatorImpl());
     FormDAO dao = daoFactory.getFormDAO();
     Collection forms = null;
 
@@ -77,6 +78,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     catch (Exception ex) {
       throw new DMLException("Cannot get Forms", ex);
     }
+
     return forms;
   }
 
@@ -215,6 +217,21 @@ public class FormBuilderEJB extends SessionBeanAdapter
     String username,
     String password) throws DMLException {
     return false;
+  }
+
+  public CDECart retrieveCDECart(String username)
+    throws DMLException, RemoteException {
+    return null;
+  }
+
+  public int addToCDECart(CDECartItem item)
+    throws DMLException, RemoteException {
+    return 0;
+  }
+
+  public int removeFromCDECart(String itemId)
+    throws DMLException, RemoteException {
+    return 0;
   }
 
   /**

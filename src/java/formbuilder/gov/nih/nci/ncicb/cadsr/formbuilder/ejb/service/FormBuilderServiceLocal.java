@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.*;
 
 import java.util.Collection;
 
@@ -78,4 +79,10 @@ public interface FormBuilderServiceLocal  {
     String username,
     String role) throws DMLException;
     **/
+
+  public CDECart retrieveCDECart(String username) throws DMLException;
+
+  public int addToCDECart(CDECartItem item) throws DMLException;
+
+  public int removeFromCDECart(String itemId) throws DMLException;
 }

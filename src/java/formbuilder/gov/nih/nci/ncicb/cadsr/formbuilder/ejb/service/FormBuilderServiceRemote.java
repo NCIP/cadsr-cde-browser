@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.*;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
@@ -77,8 +78,17 @@ public interface FormBuilderServiceRemote {
     String username,
     String password) throws DMLException, RemoteException;
 
- /** public Collection getContextsForUserAndRole(
-    String username,
-    String role) throws DMLException, RemoteException;
-    **/
+  public CDECart retrieveCDECart(String username)
+    throws DMLException, RemoteException;
+
+  public int addToCDECart(CDECartItem item)
+    throws DMLException, RemoteException;
+
+  public int removeFromCDECart(String itemId)
+    throws DMLException, RemoteException;
+
+  /**
+   * public Collection getContextsForUserAndRole( String username, String role)
+   * throws DMLException, RemoteException;
+   */
 }
