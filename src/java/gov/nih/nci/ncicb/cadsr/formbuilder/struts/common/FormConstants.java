@@ -70,6 +70,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String DELETED_REFDOCS = "deletedRefDocs";
   public static final String DELETED_ATTACHMENTS = "deletedAttachments";
   public static final String REFDOCS_CLONED = "clonedRefDocs";
+  public static final String REFDOCS_TEMPLATE_ATT_NAME = "attachmentTemplateName";
   public static final String ADD_DELETED_REFDOC_IDSEQ = "addDeletedRefDocIdSeq";
   public static final String REFDOC_INDEX = "selectedRefDocId";
   public static final String REFDOC_ATTACHMENT_MAP = "refDocAttachmentMap";

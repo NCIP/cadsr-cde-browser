@@ -546,9 +546,10 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
   class ReferenceAttachmentsQuery extends MappingSqlQuery {
     ReferenceAttachmentsQuery(DataSource ds) {
     super( ds,
-      "SELECT refb.name, refb.mime_type, refb.doc_size " +
+      "SELECT refb.name, refb.mime_type, refb.doc_size, refb.DATE_CREATED" +
         " FROM reference_blobs refb" +
-        " WHERE refb.rd_idseq = ?");
+        " WHERE refb.rd_idseq = ?" +
+        " order by date_created " );
       declareParameter(new SqlParameter("refDocId", Types.VARCHAR));
       compile();
     }
@@ -561,6 +562,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       attachment.setName(rs.getString(1));
       attachment.setMimeType(rs.getString(2));
       attachment.setDocSize(rs.getLong(3));
+      attachment.setDateCreated(rs.getTimestamp(4));
       return attachment;
     }
   }

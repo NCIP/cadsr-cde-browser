@@ -9,6 +9,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.ReferenceDocFormBean;
+import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
@@ -26,6 +27,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -93,6 +95,8 @@ public class ReferenceDocumentAction
   List clonedRefDocs = orgCRF.getRefereceDocs();
   setSessionObject(request, REFDOCS_CLONED, clonedRefDocs);
 
+  setSessionObject(request, REFDOCS_TEMPLATE_ATT_NAME, linkedAttachmentName(crf.getRefereceDocs()));
+
   return mapping.findForward(SUCCESS);
  }
 
@@ -112,7 +116,8 @@ public class ReferenceDocumentAction
  public ActionForward viewReferenceDocs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                         HttpServletResponse response) throws IOException, ServletException {
   Form crf = (Form)getSessionObject(request, CRF);
-
+  
+  setSessionObject(request, REFDOCS_TEMPLATE_ATT_NAME, linkedAttachmentName(crf.getRefereceDocs()));
   return mapping.findForward(SUCCESS);
  }
 
@@ -302,10 +307,12 @@ public class ReferenceDocumentAction
   FormFile file = refForm.getUploadedFile();
   //retrieve the file representation
   // append a random number at the end to be unique
-  String name = file.getFileName();
+  int dotIndex = file.getFileName().lastIndexOf(".");
+  String name = file.getFileName().substring(0, dotIndex -1);
+  String extension = file.getFileName().substring(dotIndex);
   name = name + "__" + (new Random()).nextInt();
   Attachment attachment = new AttachmentTransferObject();
-  attachment.setName(name);
+  attachment.setName(name + extension);
   
   attachment.setMimeType(file.getContentType());
   attachment.setDocSize(file.getFileSize());
@@ -457,6 +464,7 @@ public class ReferenceDocumentAction
   removeSessionObject(request, DELETED_REFDOCS);
   removeSessionObject(request, REFDOC_ATTACHMENT_MAP);
   removeSessionObject(request, DELETED_ATTACHMENTS);
+  removeSessionObject(request, REFDOCS_TEMPLATE_ATT_NAME);
   saveMessage("cadsr.formbuilder.refdoc.save.success", request);
   return mapping.findForward("gotoEdit");
  }
@@ -1123,5 +1131,26 @@ public class ReferenceDocumentAction
   return false;
  }
 
- 
+ private String linkedAttachmentName (List refDocs) 
+ {
+     // find out which attachment is first uploaded
+  Iterator refIter = refDocs.iterator();
+  String attachmentName = "";
+  ReferenceDocument ref = null;
+  
+  //first find the first reference document of type IMAGE_FILE
+  while (refIter.hasNext()) 
+  {
+    ref = (ReferenceDocument) refIter.next();
+    if (ref.getDocType().equalsIgnoreCase(AdminComponent.REF_DOC_TYPE_IMAGE)) 
+      break;
+  }
+    
+  //then find its first uploaded attachment  
+  if (ref !=null && ref.getAttachments()!=null && ref.getAttachments().size() >0){
+        Attachment attachment = (Attachment) ref.getAttachments().get(0);
+        attachmentName = attachment.getName();
+  } 
+  return attachmentName;
+ }
 }
