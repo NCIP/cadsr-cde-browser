@@ -26,6 +26,9 @@ public class SessionUtils {
  public static void setPreviousSessionValues(HttpServletRequest request)
  {
       String previousSessionId = request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
+    
+    synchronized(sessionObjectCache)
+    {
        if(previousSessionId!=null)
        {
           Map map = (Map)SessionUtils.sessionObjectCache.get(previousSessionId);
@@ -41,7 +44,8 @@ public class SessionUtils {
             request.getSession().setAttribute(key,obj);
           }
         }
-       }  
+       } 
+    }
  }
  /**
   public static void addGlobalSessionKey(
