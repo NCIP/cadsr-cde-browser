@@ -1,15 +1,17 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
-import java.util.Hashtable;
-import javax.naming.*;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpServletRequest;
-import oracle.jbo.*;
-import java.sql.*;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
 import java.util.Enumeration;
-import healthtoolkit.beans.dbservice.*;
-import healthtoolkit.utils.*;
-import gov.nih.nci.ncicb.cadsr.database.*;
+import java.util.Hashtable;
+
+import javax.naming.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import oracle.jbo.*;
 
 //import oracle.jbo.client.*;
 //import oracle.jbo.http.*;
@@ -17,6 +19,7 @@ import gov.nih.nci.ncicb.cadsr.database.*;
 
 public class SessionHelper 
 {
+  private static Log log = LogFactory.getLog(SessionHelper.class.getName());
   public static void cleanSession(HttpServletRequest request)
   {
     HttpSession session = SessionHelper.getExistingSession(request);
@@ -24,7 +27,7 @@ public class SessionHelper
     {
       for (Enumeration e = session.getAttributeNames() ; e.hasMoreElements() ;) {
          session.removeAttribute((String)e.nextElement());
-         //System.out.println("Removing " + (String)e.nextElement() + "from the session.");
+         //log.trace("Removing " + (String)e.nextElement() + "from the session.");
      }
     }
   }
@@ -55,20 +58,19 @@ public class SessionHelper
         if (createSession)
         {
           session = request.getSession(true);
-          //System.out.println("Session being created.");
+          //log.trace("Session being created.");
         }
         else
         {
-          //System.out.println("Session doesn't exist, not created.");
+          //log.trace("Session doesn't exist, not created.");
         }
       }
       else {
-        //System.out.println("Session already exists.");
+        //log.trace("Session already exists.");
       }
     }
     catch (Exception e) {
-      System.err.println("Failure in controller --- request get session section.");
-      e.printStackTrace();
+      log.error("Failure in controller --- request get session section.", e);
     }
     return session;
   }
@@ -110,14 +112,13 @@ public class SessionHelper
             ccrrAM = home.create();
             String unameAndPwd = (String)SessionHelper.getValue(request,"username") +
               "/" + (String)SessionHelper.getValue(request,"password");
-            System.out.println("user/pwd = " + unameAndPwd);
+            log.info("user/pwd = " + unameAndPwd);
             ccrrAM.getTransaction().connect("jdbc:oracle:thin:" + unameAndPwd + "cbiodb2-d.nci.nih.gov:1521:CBDEV");
             SessionHelper.putValue(request,"ccrrAM",ccrrAM);
       }
       catch(Exception e)
       {
-        e.printStackTrace();
-        System.out.println("message: " + e.getMessage());
+        log.error("Exception occurred in initApplicationModule", e);
         String errorMsg = e.getMessage();
         if (errorMsg.indexOf("JBO-26061") >= 0)
         {
@@ -137,7 +138,7 @@ public class SessionHelper
       SessionHelper.putValue(request,"sbrextDBBroker",sbrextDBBroker);
     }
     catch(Exception e) {
-      System.out.println("Error occured in initDBBroker(): " + e.getMessage());
+      log.trace("Error occured in initDBBroker(): " + e.getMessage());
       throw new Exception("Error initializing universal DBBroker");
     }
   }*/

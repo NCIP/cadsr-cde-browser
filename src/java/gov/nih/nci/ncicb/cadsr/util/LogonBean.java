@@ -1,16 +1,20 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
-import java.sql.*;
-import java.util.Vector;
-import javax.servlet.http.*;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
 import healthtoolkit.beans.dbservice.*;
-import healthtoolkit.utils.*;
+
+import java.sql.*;
+
+import javax.servlet.http.*;
 
 /**
  *
  * @author Alan M. Levine, Oracle Corporation
  */
 public class LogonBean extends Object {
+  private static Log log = LogFactory.getLog(LogonBean.class.getName());
 
   private String targetJsp = null;
   private String logonMsg = "";
@@ -76,7 +80,7 @@ public class LogonBean extends Object {
     
     boolean connectionStatus = myDBBroker.connectDB("jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBTEST",username,password);
     Connection myConn = myDBBroker.getConnection();
-    System.out.println("Connection Status " + connectionStatus);
+    log.info("Connection Status " + connectionStatus);
 
     if (connectionStatus){
       validFlag = true;
@@ -84,11 +88,11 @@ public class LogonBean extends Object {
       SessionHelper.putValue(request,"password",password);
       try{
         myConn.close();
-        System.out.println("Connection closed Successfully");
+        log.info("Connection closed Successfully");
         validFlag = true;
       }
       catch (SQLException sqle) {
-        System.out.println("Exception in closing DB Connection");
+        log.error("Exception in closing DB Connection", sqle);
         this.logonMsg = "Internal error occured while communicating with the database. Please try again";
       }
       
