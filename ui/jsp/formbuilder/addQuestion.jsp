@@ -59,6 +59,32 @@
 	}
 	fo.toggleAll.checked = false;
     }
+
+  function validate(fo) {
+	var len = fo.elements.length;
+        var oneChecked = false;
+	for (var i = 0; i < len; i++) {
+	    var e = fo.elements[i];
+            if (e.name == "<%= FormConstants.SELECTED_ITEMS %>") {
+              if(e.checked == true) {
+                 oneChecked=true;
+                 i = len;
+              }
+            }            
+        }    
+        if(oneChecked == true) {
+          return true;
+        } else {
+          alert("Please Select at least one Data Element");
+          return false;
+        }
+  }
+
+  function submitForm() {
+     var f = document.forms[0];
+     if(validate(f) == true)
+       f.submit();
+  }
   
 </SCRIPT>
 </HEAD>
@@ -73,7 +99,8 @@
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
 
-<html:form action='<%= "/addQuestion?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.ADD_QUESTION %>' >
+<html:form action='<%= "/addQuestion?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.ADD_QUESTION %>' 
+  onsubmit="validate(this)">
 
 <%@ include file="addQuestion_inc.jsp" %>
 
@@ -155,3 +182,5 @@
 <%@ include file="../common/common_bottom_border.jsp"%>
 </body>
 </html:html>
+
+
