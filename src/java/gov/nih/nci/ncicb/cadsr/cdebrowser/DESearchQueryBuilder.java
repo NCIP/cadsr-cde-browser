@@ -68,7 +68,7 @@ public class DESearchQueryBuilder extends Object {
 
     // release 3.0 updated to add display order for registration status
     String registrationFrom = " , sbr.ac_registrations acr , sbr.reg_status_lov rsl";
-    String registrationWhere = " and de.de_idseq = acr.ac_idseq (+) and acr.registration_status = rsl.registration_status ";
+    String registrationWhere = " and de.de_idseq = acr.ac_idseq (+) and acr.registration_status = rsl.registration_status (+) ";
     if (strArray == null) {
       searchStr = "";
       whereClause = "";
@@ -388,30 +388,25 @@ public class DESearchQueryBuilder extends Object {
           csiWhere = "";
         else
           csiWhere = " and acs.cs_csi_idseq = '"+searchStr5+"'";
+        
+        String csWhere = this.getCSWhere(treeParamIdSeq);
 
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +
-                               " sbr.contexts conte, " +
-                               //" sbrext.de_cde_id_view dc, " +
-                               " sbr.ac_csi acs, " +
-                               " sbr.cs_csi csc " +
-                               //" sbr.value_domains vd, "+
-                               //" sbr.data_element_concepts dec " +
+                               " sbr.contexts conte " +
+                               //" sbr.ac_csi acs, " +
+                               //" sbr.cs_csi csc " +
                                vdFrom +
                                decFrom +
                                registrationFrom +
                          " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
-                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                          " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
-                         //" and de.de_idseq = dc.ac_idseq (+) " +
-                         " and csc.cs_idseq = '"+treeParamIdSeq+"'" +
-                         " and csc.cs_csi_idseq = acs.cs_csi_idseq " +
-                         " and acs.ac_idseq = de.de_idseq " +
-                         //" and vd.vd_idseq = de.vd_idseq " +
-                         //" and dec.dec_idseq = de.dec_idseq " +
-                         csiWhere + whereClause+ registrationWhere;
+                         //" and csc.cs_idseq = '"+treeParamIdSeq+"'" +
+                         //" and csc.cs_csi_idseq = acs.cs_csi_idseq " +
+                         //" and acs.ac_idseq = de.de_idseq " +
+                         csiWhere + whereClause+ registrationWhere + csWhere;
 
       }
       else if (treeParamType.equals("CORE")) {
@@ -998,5 +993,18 @@ public class DESearchQueryBuilder extends Object {
 
    public SortableColumnHeader getSortColumnHeader() {
       return sortColumnHeader;
+   }
+   
+   private String getCSWhere(String csId) {
+    String csWhere =  " and de.de_idseq IN ( " +
+                      " select de_idseq " +
+                      " from  sbr.data_elements de , " +
+                      "       sbr.ac_csi acs, " +
+                      "       sbr.cs_csi csc " +
+                      " where csc.cs_idseq = '"+csId+"'" +
+                      " and   csc.cs_csi_idseq = acs.cs_csi_idseq " +
+                      " and   acs.ac_idseq = de_idseq ) ";
+    return csWhere;
+                         
    }
 }
