@@ -54,6 +54,7 @@ public class FormActionUtil
 
   public static void setInitDisplayOrders(List orderables)
   {
+    if(orderables==null) return;
     int displayOrder = 0;
     for (Iterator it = orderables.iterator(); it.hasNext();) {
         Orderable element = (Orderable)it.next();

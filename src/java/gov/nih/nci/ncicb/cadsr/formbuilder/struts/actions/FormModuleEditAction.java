@@ -178,9 +178,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       questions.remove(currQuestionIndex);
       questions.add(currQuestionIndex - 1, currQuestion);
     }
-
+    
+    //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
+    questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
+    vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
+    
+    
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);    
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -231,9 +238,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       questions.remove(currQuestionIndex);
       questions.add(currQuestionIndex + 1, currQuestion);
     }
-
+    
+        //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
+    questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
+    vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
+    
+    
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -287,8 +301,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
 
     setSessionObject(request, DELETED_QUESTIONS, deletedQuestions,true);
+    
+    //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
+    questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
+    vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
+    
+    
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -364,8 +386,17 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
 
     setSessionObject(request, DELETED_QUESTIONS, deletedQuestions,true);
+    
+    
+    //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
+    questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
+    vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
+    
+    
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);    
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -422,8 +453,15 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       validValues.add(currValidValueIndex - 1, currValidValue);
     }
 
+    //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
+    questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
+    vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
+    
+    
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -481,8 +519,15 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       validValues.add(currValidValueIndex + 1, currValidValue);
     }
 
+    //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
+    questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
+    vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
+    
+    
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -525,15 +570,25 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
-
+    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
+                                      
     if ((validValues != null) && (validValues.size() > 0)) {
       FormValidValue deletedValidValue =
         (FormValidValue) validValues.remove(currValidValueIndex);
       FormActionUtil.decrementDisplayOrder(validValues, currValidValueIndex);
     }
 
+    //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
+    questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
+    vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
+    
+    
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -578,7 +633,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
-
+    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
+                                      
     for(int i=selectedVVIndexes.length-1;i>-1;--i)
     {
       int currValidValueIndex = (new Integer(selectedVVIndexes[i])).intValue();
@@ -589,8 +647,15 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       }
     }
     
+    //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
+    questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
+    vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
+    
+    
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
 
     return mapping.findForward(MODULE_EDIT);
   }
@@ -648,7 +713,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       return mapping.findForward(MODULE_EDIT);
 
     List validValues = currQuestion.getValidValues();
-
+    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
                                       
     if (currValidValueIndex < validValues.size()) {
       FormValidValue currValidValue =
@@ -671,8 +738,15 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       validValues.add(formValidValueToAdd);
     }
 
+    //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
+    questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
+    vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
+    
+    
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+    moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
+    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr); 
 
     return mapping.findForward(MODULE_EDIT);
   }
