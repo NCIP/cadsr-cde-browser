@@ -163,15 +163,20 @@ public class FormBuilderEJB extends SessionBeanAdapter
          ModuleDAO moduleDao = daoFactory.getModuleDAO();
          QuestionDAO questionDao = daoFactory.getQuestionDAO();
          FormValidValueDAO formValidValueDao = daoFactory.getFormValidValueDAO();
-
+         
          if(moduleHeader!=null)
+         {
+           moduleHeader.setModifiedBy(getUserName());
            moduleDao.updateModuleLongName(moduleHeader.getModuleIdseq(),moduleHeader.getLongName());
+         }
+           
          if(updatedQuestions!=null&&!updatedQuestions.isEmpty())
          {
            Iterator updatedIt = updatedQuestions.iterator();
            while(updatedIt.hasNext())
            {
              Question currQuestion = (Question)updatedIt.next();
+             currQuestion.setModifiedBy(getUserName());
              questionDao.updateQuestionLongNameDispOrderDeIdseq(currQuestion);
            }
          }
@@ -190,6 +195,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
            while(newIt.hasNext())
            {
              Question currQuestion = (Question)newIt.next();
+             currQuestion.setCreatedBy(getUserName());
              questionDao.createQuestionComponent(currQuestion);
            }
          }
@@ -205,6 +211,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
              while(vvListIt.hasNext())
              {
                FormValidValue fvv = (FormValidValue)vvListIt.next();
+               fvv.setModifiedBy(getUserName());
                formValidValueDao.updateDisplayOrder(fvv.getValueIdseq(),fvv.getDisplayOrder());
              }
            }
@@ -221,9 +228,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
              while(vvListIt.hasNext())
              {
                FormValidValue fvv = (FormValidValue)vvListIt.next();
-               Question question = new QuestionTransferObject();
-               question.setQuesIdseq(questionIdSeq);
-               fvv.setQuestion(question);
+               fvv.setCreatedBy(getUserName());
                formValidValueDao.createFormValidValueComponent(fvv);
              }
            }
@@ -245,8 +250,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
            }
          }
 
-         return this.getModule(moduleHeader.getModuleIdseq());
-
+         //return this.getModule(moduleHeader.getModuleIdseq());
+         return null;
        }
 
   public Form updateForm(
@@ -425,7 +430,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
     while (it.hasNext()) {
       itemId = (String) it.next();
-      myDAO.deleteCartItem(itemId,getUserName());
+      //myDAO.deleteCartItem(itemId,getUserName());
       count++;
     }
 

@@ -37,10 +37,14 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
  
   private static final String UPDATED_QUESTION_LIST="updatedQuestionList";
   private static final String NEW_QUESTION_LIST="newQuestionList";
+  private static final String DELETED_QUESTION_LIST="deletedQuestionList";
   private static final String DELETED_VV_LIST="deletedVVList";
   private static final String NEW_VV_LIST="newVVList";
   private static final String UPDATED_VV_LIST="updatedVVList";
-  private static final String DELETED_QUESTION_LIST="deletedQuestionList";
+  private static final String DELETED_VV_MAP="deletedVVMap";
+  private static final String NEW_VV_MAP="newVVMap";
+  private static final String UPDATED_VV_MAP="updatedVVMap";  
+
   private static final String VALID_VALUE_CHANGES="validValueChanges";
   /**
    * Sets Module given an Id for Edit.
@@ -554,12 +558,14 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     HttpServletResponse response) throws IOException, ServletException {
     DynaActionForm moduleEditForm = (DynaActionForm) form;  
     Module module = (Module) getSessionObject(request, MODULE);
+    Form crf = (Form) getSessionObject(request, CRF);
+    module.setForm(crf);
     Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
 
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
-    Map changes = getUpdatedNewDeletedQuestions(orgModule.getQuestions(),module.getQuestions());
+    Map changes = getUpdatedNewDeletedQuestions(module,orgModule.getQuestions(),module.getQuestions());
     if(changes.isEmpty())
     {
       saveMessage("cadsr.formbuilder.form.edit.nochange", request);
@@ -572,9 +578,9 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     service.updateModule(module,(Collection)changes.get(UPDATED_QUESTION_LIST),
                          (Collection)changes.get(DELETED_QUESTION_LIST),
                          (Collection)changes.get(NEW_QUESTION_LIST),
-                         (Map)changes.get(UPDATED_VV_LIST),
-                         (Map)changes.get(NEW_VV_LIST),
-                         (Map)changes.get(DELETED_QUESTION_LIST));
+                         (Map)changes.get(UPDATED_VV_MAP),
+                         (Map)changes.get(NEW_VV_MAP),
+                         (Map)changes.get(DELETED_VV_MAP));
     }
     catch(FormBuilderException exp)
     {
@@ -589,9 +595,9 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
                          
     saveMessage("cadsr.formbuilder.module.edit.save.success", request);
     
-    removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
+    //removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
     removeSessionObject(request,CLONED_MODULE);
-    removeSessionObject(request,MODULE);
+    //removeSessionObject(request,MODULE);
     return mapping.findForward(SUCCESS);
   }
   
@@ -696,7 +702,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    *
    * @return the Map Containing the Changes
    */
- private Map getUpdatedNewDeletedQuestions(List orgQuestionList, List editedQuestionList)
+ private Map getUpdatedNewDeletedQuestions(Module currModule, List orgQuestionList, List editedQuestionList)
  {
    ListIterator editedQuestionIterate = editedQuestionList.listIterator();
    List newQuestionList = new ArrayList();
@@ -705,7 +711,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    Map newValidValuesMap = new HashMap();
    Map updatedValidValuesMap = new HashMap();
    Map deletedValidValuesMap = new HashMap();
-   Map validValueChangesMap = new HashMap();
+
    
    Map resultMap = new HashMap();
    
@@ -713,6 +719,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    while(iterate.hasNext())
    {
      Question currQuestion = (Question)iterate.next();
+     currQuestion.setModule(currModule);
      if(!editedQuestionList.contains(currQuestion))
      {
        deletedQuestionList.add(currQuestion);
@@ -722,6 +729,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    while(editedQuestionIterate.hasNext())
    {
      Question currQuestion = (Question)editedQuestionIterate.next();
+     currQuestion.setModule(currModule);
      if(!orgQuestionList.contains(currQuestion))
      {
        newQuestionList.add(currQuestion);
@@ -770,7 +778,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
      if(!hasDEAssosiationChanged&&(orgQusetionDE!=null&&currQusetionDE!=null))
       {
          validValuesChanges =  
-            getNewDeletedUpdatedValidValues(orgQuestion.getValidValues(),
+            getNewDeletedUpdatedValidValues(currQuestion,orgQuestion.getValidValues(),
                                             currQuestion.getValidValues());        
       }
       else if(hasDEAssosiationChanged)
@@ -812,23 +820,25 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    }
    if(!updatedValidValuesMap.isEmpty())
    {
-     resultMap.put(UPDATED_VV_LIST,updatedValidValuesMap);
+     resultMap.put(UPDATED_VV_MAP,updatedValidValuesMap);
    }
    if(!deletedValidValuesMap.isEmpty())
    {
-     resultMap.put(DELETED_VV_LIST,deletedValidValuesMap);
+     resultMap.put(DELETED_VV_MAP,deletedValidValuesMap);
    }
    if(!newValidValuesMap.isEmpty())
    {
-     resultMap.put(NEW_VV_LIST,newValidValuesMap);
+     resultMap.put(NEW_VV_MAP,newValidValuesMap);
    }   
    return resultMap;
  }
   
-  //Gets the validvalue Changes in a map
-  //If no changes returns a empty Map
-  // Only Changes are present in tha Map
-  private Map getNewDeletedUpdatedValidValues(List orgValidValueList,
+  /**
+  * Gets the validvalue Changes in a map
+  *  If no changes returns a empty Map
+  * Only Changes are present in the Map
+  * */
+  private Map getNewDeletedUpdatedValidValues(Question currQuestion, List orgValidValueList,
                                             List editedValidValueList)
     {
        Map resultMap = new HashMap();
@@ -840,6 +850,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
        while(orgIterator.hasNext())
        {
           FormValidValue currVV = (FormValidValue)orgIterator.next();
+          currVV.setQuestion(currQuestion);
           if(!editedValidValueList.contains(currVV))
           {
             deletedValidValueList.add(currVV);
@@ -850,6 +861,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
        while(editedIterator.hasNext())
        {
          FormValidValue editedVV = (FormValidValue)editedIterator.next();
+         editedVV.setQuestion(currQuestion);
          // get new valid Values 
          if(!orgValidValueList.contains(editedVV))
          {
@@ -861,7 +873,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
            FormValidValue orgVV = (FormValidValue)orgValidValueList.get(orgIndex);
            if(editedVV.getDisplayOrder()!= orgVV.getDisplayOrder())
            {
-             updatedVVList.add(orgVV);
+             updatedVVList.add(editedVV);
            }
          }// contained in orgValidValues
        }

@@ -86,7 +86,8 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     else {
       DMLException dml =  new DMLException("Did not succeed creating question value relationship " +  
         "record in the quest_recs_ext table.");
-      dml.setErrorCode(this.ERROR_CREATEING_VALID_VALUE);
+       dml.setErrorCode(this.ERROR_CREATEING_VALID_VALUE);
+      throw  dml;
     }
   }
 
@@ -131,12 +132,14 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
 
     String returnCode = (String) out.get("p_return_code");
     String returnDesc = (String) out.get("p_return_desc");
+    
     if (!StringUtils.doesValueExist(returnCode)) {
       return 1;
     }
     else{
       DMLException dml =  new DMLException(returnDesc);
       dml.setErrorCode(this.ERROR_DELETEING_VALID_VALUE);
+      throw dml;
     }
   }
 
