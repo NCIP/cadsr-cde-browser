@@ -10,6 +10,20 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants" %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.resource.Form"%>
+
+<%
+   // TO DO : Replace this with appropriate struts tags
+   boolean isPublished = false;
+   Object o = session.getAttribute(FormConstants.CRF);
+   if (o != null) {
+      Form myCRF = (Form)o;
+      isPublished = myCRF.getIsPublished();
+   }
+
+%>
+
+
 <HTML>
   <HEAD>
     <TITLE>Formbuilder: Form Details</TITLE>

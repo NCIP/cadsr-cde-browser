@@ -51,34 +51,45 @@ if(confirm(message)) location.href = url;
           </td>       
           <!-- Publish Change Request -->
           <logic:notEqual value="GUEST" name="<%=CaDSRConstants.USER_KEY%>" property="username">
-           <td >
-              <logic:equal value="<%= Boolean.FALSE%>" name="<%=FormConstants.CRF%>" property="isPublished">
-               <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
-                formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
-                activeImageSource="i/publish.gif" 
-                  activeUrl='<%="/formPublishAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.PUBLISH_FORM%>' 
-                role="<%=CaDSRConstants.CDE_MANAGER%>" 
-                urlPrefix="<%=urlPrefix%>"
-                paramId = "<%=FormConstants.FORM_ID_SEQ%>"
-                paramProperty="formIdseq"
-                altMessage="Publish"
-                target="_parent"            
-                />		 
-               </logic:equal>
-              <logic:equal value="<%= Boolean.TRUE%>" name="<%=FormConstants.CRF%>" property="isPublished">
-               <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
-                formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
-                activeImageSource="i/unpublish.gif" 
-                  activeUrl='<%="/formPublishAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.UNPUBLISH_FORM%>' 
-                role="<%=CaDSRConstants.CDE_MANAGER%>" 
-                urlPrefix="<%=urlPrefix%>"
-                paramId = "<%=FormConstants.FORM_ID_SEQ%>"
-                paramProperty="formIdseq"
-                altMessage="Publish"
-                target="_parent"            
-                />		
-               </logic:equal>         
-           </td>    
+	             <td >
+	  <%
+	  	   	if (!isPublished) {
+	  	   
+	  %>
+	                
+	                 <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
+	                  formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
+	                  activeImageSource="i/publish.gif" 
+	                    activeUrl='<%="/formPublishAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.PUBLISH_FORM%>' 
+	                  role="<%=CaDSRConstants.CDE_MANAGER%>" 
+	                  urlPrefix="<%=urlPrefix%>"
+	                  paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+	                  paramProperty="formIdseq"
+	                  altMessage="Publish"
+	                  target="_parent"            
+	                  />		 
+	                 
+	   <%
+	  	   	} else {
+	  	   
+	  %>  
+	                
+	                 <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
+	                  formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
+	                  activeImageSource="i/unpublish.gif" 
+	                    activeUrl='<%="/formPublishAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.UNPUBLISH_FORM%>' 
+	                  role="<%=CaDSRConstants.CDE_MANAGER%>" 
+	                  urlPrefix="<%=urlPrefix%>"
+	                  paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+	                  paramProperty="formIdseq"
+	                  altMessage="Publish"
+	                  target="_parent"            
+	                  />		
+	      <%
+	  	   	} 
+	  	   
+	  %>                    
+	             </td>    
          </logic:notEqual>          
           <td >
 		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
