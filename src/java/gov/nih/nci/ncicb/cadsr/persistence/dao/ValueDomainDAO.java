@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.List;
 
-public interface ValueDomainDAO {
+public interface ValueDomainDAO extends AdminComponentDAO {
   /**
    * Gets all Value Domains and their Valid Values
    *
