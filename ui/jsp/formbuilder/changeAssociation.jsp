@@ -146,6 +146,13 @@ function details(linkParms ){
         <td>
           <a href='<%= "cdeBrowse.jsp?src=gotoChangeAssociation&amp;moduleIndex=" +  request.getParameter("moduleIndex") + "&amp;questionIndex=" + request.getParameter("questionIndex") %>'><html:img src='<%=urlPrefix+"i/add_more_data_elements.gif"%>' border="0" alt="Add more data elements"/></a>
           </td>
+      <logic:empty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
+        <td>
+          <html:link action='<%= "/cancelAction?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_MODULE_TO_EDIT %>'>
+            <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+          </html:link>             
+        </td>
+      </logic:empty>
         </tr>
       </table>    
 </logic:present>
