@@ -14,15 +14,17 @@ public class FormTransferObject extends AdminComponentTransferObject
   private Protocol protocol = null;
   private String formType = null;
   private List modules;
+  private String formIdseq = null;
 
   public FormTransferObject() {
   }
 
   public String getFormIdseq() {
-    return null;
+    return formIdseq;
   }
 
-  public void setFormIdseq(String p0) {
+  public void setFormIdseq(String formIdseq) {
+    this.formIdseq = formIdseq;
   }
 
   public String getFormType() {
