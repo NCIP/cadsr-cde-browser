@@ -101,7 +101,7 @@
       <!--J2EE  libs -->
       <pathelement location="${JAVA_LIB_DIR}/servlet.jar"/>
       <pathelement location="${JAVA_LIB_DIR}/jndi.jar"/>   
-      <pathelement location="${JAVA_LIB_DIR}/jndi.jar"/>  
+      <pathelement location="${JAVA_LIB_DIR}/jta.jar"/>  
       <pathelement location="${JAVA_LIB_DIR}/jdbc.jar"/>
       <pathelement location="${JAVA_LIB_DIR}/oc4j.jar"/>
       <pathelement location="${JAVA_LIB_DIR}/ejb.jar"/>
@@ -147,16 +147,39 @@
               <include name="gov/nih/nci/ncicb/cadsr/dto/jdbc/*"/>
               <include name="gov/nih/nci/ncicb/cadsr/exception/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/servicelocator/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/StringUtils.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/CaDSRConstants.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/PersistenceContants.class"/>
             </patternset>
           </fileset>           
         </jar>
       </target>
   <!-- =========== END COMMON JAR PROCESS ======================= -->
-    
+
+  <!-- ============ CREATE SECURITY JAR FILE ================== -->
+    <target name="jar_security" depends="compile,jar_common,jar_persistence_form">
+        <jar jarfile="${CLASSES_BUILD_DIR}/security.jar">
+          <fileset dir="${CLASSES_BUILD_DIR}">
+            <patternset>
+              <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/BaseUserManager.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/DBUserManager.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/security/oc4j/OC4JUserObject.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/security/*"/>
+            </patternset>
+          </fileset>  
+            <manifest>
+        	<attribute name="Built-By" value="${user.name}"/>
+               <attribute name="Class-Path" 
+                  value="common.jar persistence_form.jar spring.jar
+                              spring-jdbc.jar commons-logging.jar"/>
+            </manifest>           
+        </jar>
+      </target>
+  <!-- =========== END COMMON JAR PROCESS ======================= -->    
   
   <!-- =========== START WAR PROCESS ======================= -->
   
-   <target name="war_cdebrowser" depends="compile">  
+   <target name="war_cdebrowser" depends="compile,jar_security">  
      <copy todir="${CLASSES_BUILD_DIR}/WEB-INF/classes">
          <fileset dir="${CONFIG_HOME}/properties">
            <patternset>
@@ -246,7 +269,8 @@
  
       <fileset dir="${JSP_DIR}/">
         <patternset>
-          <include name="formbuilder/**/*.*"/>   
+          <include name="formbuilder/**/*.*"/>  
+          <include name="*.jsp"/>
         </patternset>
       </fileset>
         
@@ -363,10 +387,9 @@
 
         <fileset dir="${CLASSES_BUILD_DIR}">
           <patternset>
-            <include name="spring.jar"/>
-            <include name="spring-jdbc.jar"/>
             <include name="persistence_form.jar"/>
             <include name="common.jar"/>
+            <include name="security.jar"/>
           </patternset>
         </fileset>
         
@@ -387,7 +410,7 @@
         <fileset dir="${CONFIG_HOME}">
           <patternset>
              <include name="META-INF/orion-application.xml"/>
-             <include name="META-INF/data-sources.xml"/>
+             <include name="META-INF/principals.xml"/>
           </patternset>
         </fileset>
         <patternset>
@@ -413,6 +436,7 @@
        jar_formbuilder_ejb    - Create formbuilder ejb
        jar_persistence_form   - Creates form builder persistence jar
        jar_common	      - Creates common jar
+       jar_security	      - Create security jar
 
        help                   - This help screen.
  
