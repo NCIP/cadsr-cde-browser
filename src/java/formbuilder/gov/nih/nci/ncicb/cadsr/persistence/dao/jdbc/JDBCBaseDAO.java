@@ -33,6 +33,7 @@ import javax.sql.DataSource;
 
 
 public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
+  GUIDGenerator idGen = null;
   public JDBCBaseDAO(ServiceLocator locator) {
     super(locator);
     log = LogFactory.getLog(JDBCBaseDAO.class.getName());
@@ -128,8 +129,8 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
    */
   public String generateGUID() {
     String guid = null;
-    GUIDGenerator gen = new GUIDGenerator(this.getDataSource());
-    guid = gen.getGUID();
+    //GUIDGenerator gen = new GUIDGenerator(this.getDataSource());
+    guid = this.getGUIDGenerator().getGUID();
 
     return guid;
   }
@@ -148,6 +149,12 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     prefName = gen.getPreferredName(longName);
 
     return prefName;
+  }
+
+  public synchronized GUIDGenerator getGUIDGenerator (){
+    if (idGen ==null) 
+      idGen = new GUIDGenerator (this.getDataSource());
+    return idGen;
   }
 
   /**
