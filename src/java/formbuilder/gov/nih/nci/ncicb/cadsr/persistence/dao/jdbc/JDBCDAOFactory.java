@@ -15,6 +15,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.WorkFlowStatusDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.*;
 
 import java.util.Collection;
@@ -166,6 +167,18 @@ public class JDBCDAOFactory extends AbstractDAOFactory
     if (myDAO == null) {
       myDAO = new JDBCQuestionInstructionDAO(serviceLocator);
       daoCache.put(JDBC_QUESTION_INSTR_DAO, myDAO);
+    }
+
+    return myDAO;
+  }
+
+  public CDECartDAO getCDECartDAO () {
+    CDECartDAO myDAO =
+      (JDBCCDECartDAO) daoCache.get(JDBC_CDE_CART_DAO);
+
+    if (myDAO == null) {
+      myDAO = new JDBCCDECartDAO(serviceLocator);
+      daoCache.put(JDBC_CDE_CART_DAO, myDAO);
     }
 
     return myDAO;

@@ -10,6 +10,8 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
+import gov.nih.nci.ncicb.cadsr.dto.*;
+import gov.nih.nci.ncicb.cadsr.resource.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,20 +32,20 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
   
   public JDBCCDECartDAO(ServiceLocator locator) {
     super(locator);
-    deCartQuery = new DataElementsInCartQuery();
-    frmCartQuery = new FormsInCartQuery();
+    deCartQuery = new DataElementsInCartQuery(this.getDataSource());
+    frmCartQuery = new FormsInCartQuery(this.getDataSource());
   }
 
   public CDECart findCDECart(String username) throws DMLException  {
     CDECart cart = new CDECartTransferObject();
     List deList = deCartQuery.execute(username);
     cart.setDataElements(deList);
-    List formList = frmCartQuery.execute(username);
+    //List formList = frmCartQuery.execute(username);
     //cart.setForms(formList);
     return cart;
   }
 
-  public int insertCartItem(CDECartItem item) throws DMLException {   // check if the user has the privilege to create module
+  public int insertCartItem(CDECartItem item) throws DMLException {
      InsertCartItem  cartItem  = 
       new InsertCartItem (this.getDataSource());
     String ccmIdseq = generateGUID(); 
@@ -100,12 +102,8 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
    * Inner class
    */
   class DataElementsInCartQuery extends MappingSqlQuery {
-    DataElementsInCartQuery() {
-      super();
-    }
-
-    public void setSql() {
-      super.setSql("SELECT * FROM FB_CART_DE_VIEW where UA_NAME = ? ");
+    DataElementsInCartQuery(DataSource ds) {
+      super(ds,"SELECT * FROM FB_CART_DE_VIEW where UA_NAME = ? ");
       declareParameter(new SqlParameter("ua_name", Types.VARCHAR));
     }
 
@@ -114,6 +112,22 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
       int rownum) throws SQLException {
       CDECartItem item = new CDECartItemTransferObject();
       DataElement de = new DataElementTransferObject();
+      /*Context conte = new ContextTransferObject();
+      ValueDomain vd = new ValueDomainTransferObject();
+      DataElementConcept dec = new DataElementConceptTransferObject();*/
+      de.setDeIdseq((String)rs.getString(3));
+      de.setPublicId(rs.getInt(4));
+      de.setVersion(new Float(rs.getFloat(5)));
+      de.setContextName(rs.getString(6));
+      de.setAslName(rs.getString(8));
+      de.setPreferredName(rs.getString(9));
+      de.setLongName(rs.getString(10));
+      de.setPreferredDefinition(rs.getString(11));
+      de.setLongCDEName(rs.getString(12));
+      //de.setV
+      item.setPersistedInd(true);
+      item.setDeletedInd(false);
+      item.setItem(de);
       return item;
     }
   }
@@ -122,12 +136,8 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
    * Inner class
    */
   class FormsInCartQuery extends MappingSqlQuery {
-    FormsInCartQuery() {
-      super();
-    }
-
-    public void setSql() {
-      super.setSql("SELECT * FROM FB_FORM_CART_VIEW where UA_NAME = ? ");
+    FormsInCartQuery(DataSource ds) {
+      super(ds,"SELECT * FROM FB_FORM_CART_VIEW where UA_NAME = ? ");
       declareParameter(new SqlParameter("ua_name", Types.VARCHAR));
     }
 
@@ -166,7 +176,7 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
         new Object[]
           {ccmIdseq, 
            sm.getId(),
-           sm.getCreatedBy(),
+           sm.getCreatedBy().toUpperCase(),
            sm.getType(),
            sm.getCreatedBy(),
            sm.getCreatedDate()
