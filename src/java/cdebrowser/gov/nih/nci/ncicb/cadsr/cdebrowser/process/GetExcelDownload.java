@@ -36,7 +36,7 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
  */
 public class GetExcelDownload extends BasePersistingProcess{
 	private static final String EMPTY_STRING = "";
-  private static final int NUMBER_OF_DE_COLUMNS = 20;
+  private static final int NUMBER_OF_DE_COLUMNS = 28;
     
 	public GetExcelDownload(){
 		this(null);
@@ -238,8 +238,16 @@ public class GetExcelDownload extends BasePersistingProcess{
         deList.add(convertToString(rs.getDate("BEGIN_DATE")));
         deList.add(rs.getString("ORIGIN"));
         //Added in 2.0.1
-        deList.add(Integer.toString(rs.getInt("DEC_ID")));
-        deList.add(Integer.toString(rs.getInt("VD_ID")));
+        deList.add(Integer.toString(rs.getInt("DEC_ID"))); //18
+        deList.add(Integer.toString(rs.getInt("VD_ID"))); //19
+        deList.add(rs.getString("VD_TYPE")); //20
+        deList.add(rs.getString("DTL_NAME")); //21
+        deList.add(Integer.toString(rs.getInt("MIN_LENGTH_NUM"))); //22
+        deList.add(Integer.toString(rs.getInt("MAX_LENGTH_NUM"))); //23
+        deList.add(rs.getString("LOW_VALUE_NUM")); //24
+        deList.add(rs.getString("HIGH_VALUE_NUM")); //25
+        deList.add(Integer.toString(rs.getInt("DECIMAL_PLACE"))); //26
+        deList.add(rs.getString("FORML_NAME")); //27
         
         deStr= getDataElementStr(deList);
 
@@ -403,6 +411,14 @@ public class GetExcelDownload extends BasePersistingProcess{
                   +"Value Domain Version,"
                   +"Value Domain Context Name,"
                   +"Value Domain Context Version,"
+                  +"Value Domain Type,"
+                  +"Value Domain Datatype,"
+                  +"Value Domain Min Length,"
+                  +"Value Domain Max Length,"
+                  +"Value Domain Min Value,"
+                  +"Value Domain Max Value,"
+                  +"Value Domain Decimal Place,"
+                  +"Value Domain Format,"
                   +"Data Element Concept Public ID,"
                   +"Data Element Concept Preferred Name,"
                   +"Data Element Concept Version,"
@@ -447,6 +463,14 @@ public class GetExcelDownload extends BasePersistingProcess{
                "\""+checkForNull((String)l.get(8))+"\"" +"," +
                "\""+checkForNull((String)l.get(9))+"\"" +"," +
                "\""+checkForNull((String)l.get(10))+"\"" +"," +
+               "\""+checkForNull((String)l.get(20))+"\"" +"," +
+               "\""+checkForNull((String)l.get(21))+"\"" +"," +
+               "\""+checkForNull((String)l.get(22))+"\"" +"," +
+               "\""+checkForNull((String)l.get(23))+"\"" +"," +
+               "\""+checkForNull((String)l.get(24))+"\"" +"," +
+               "\""+checkForNull((String)l.get(25))+"\"" +"," +
+               "\""+checkForNull((String)l.get(26))+"\"" +"," +
+               "\""+checkForNull((String)l.get(27))+"\"" +"," +
                "\""+checkForNull((String)l.get(18))+"\"" +"," +
                "\""+checkForNull((String)l.get(11))+"\"" +"," +
                "\""+checkForNull((String)l.get(12))+"\"" +"," +
