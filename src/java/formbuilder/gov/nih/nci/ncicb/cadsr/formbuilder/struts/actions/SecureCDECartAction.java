@@ -3,15 +3,24 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.CDECartFormBean;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,221 +37,209 @@ import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import gov.nih.nci.ncicb.cadsr.resource.Module;
-import gov.nih.nci.ncicb.cadsr.resource.Question;
-import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
-import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
-import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 
-import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 
 public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
+  public ActionForward addQuestion(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    DynaActionForm dynaForm = (DynaActionForm) form;
+    String[] selectedItems = (String[]) dynaForm.get(SELECTED_ITEMS);
 
-    public ActionForward addQuestion(
-					   ActionMapping mapping,
-					   ActionForm form,
-					   HttpServletRequest request,
-					   HttpServletResponse response) throws IOException, ServletException {
+    CDECart sessionCart =
+      (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 
-	DynaActionForm dynaForm = (DynaActionForm)form;
-	String[] selectedItems = (String[])dynaForm.get(SELECTED_ITEMS);
+    Form crf = (Form) getSessionObject(request, CRF);
+    Module module = (Module) getSessionObject(request, MODULE);
+    List questions = module.getQuestions();
 
-	CDECart sessionCart =
-	    (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+    Collection col = sessionCart.getDataElements();
+    ArrayList al = new ArrayList(col);
 
-	Form crf = (Form)getSessionObject(request, CRF);
-	Module module = (Module)getSessionObject(request, MODULE);
+    int displayOrder = Integer.parseInt((String) dynaForm.get(QUESTION_INDEX));
 
-	List questions = module.getQuestions();
-	
-	Collection col = sessionCart.getDataElements();
-	ArrayList al = new ArrayList(col);
+    for (int i = 0; i < selectedItems.length; i++) {
+      DataElement de =
+        (DataElement) ((CDECartItem) al.get(Integer.parseInt(selectedItems[i]))).getItem();
 
-	int displayOrder = Integer.parseInt((String)dynaForm.get(QUESTION_INDEX));
+      Question q = new QuestionTransferObject();
+      module.setForm(crf);
+      q.setModule(module);
 
-	for(int i=0; i<selectedItems.length; i++) {
-	    DataElement de = (DataElement)((CDECartItem)al.get(Integer.parseInt(selectedItems[i]))).getItem();
-	    
-	    Question q = new QuestionTransferObject();
-	    module.setForm(crf);
-	    q.setModule(module);
-	    List values = de.getValueDomain().getValidValues();
-	    List newValidValues = DTOTransformer.toFormValidValueList(values,q);
-	    
-	    // set temporary ID used used to discriminate questions in editModule. This is is discarded before going to the DB.
-	    q.setQuesIdseq(new Date().getTime() + "" + i);
+      List values = de.getValueDomain().getValidValues();
+      List newValidValues = DTOTransformer.toFormValidValueList(values, q);
 
-	    q.setValidValues(newValidValues);
-	    q.setDataElement(de);
-	    q.setLongName(de.getLongName());
-	    q.setVersion(crf.getVersion());
-	    q.setAslName(crf.getAslName());
-	    q.setPreferredDefinition(de.getPreferredDefinition());
-	    q.setContext(crf.getContext());
-	    
-	    q.setDisplayOrder(displayOrder);
-	    
-	    if(displayOrder < questions.size()) {
-		questions.add(displayOrder, q);
-		
-		FormActionUtil.incrementDisplayOrder(questions, displayOrder+1);
-	    } else {
-		questions.add(q);
-	    }
-	    
-	}
+      q.setValidValues(newValidValues);
+      q.setDataElement(de);
+      q.setLongName(de.getLongName());
+      q.setVersion(crf.getVersion());
+      q.setAslName(crf.getAslName());
+      q.setPreferredDefinition(de.getPreferredDefinition());
+      q.setContext(crf.getContext());
 
-	return mapping.findForward("success");
+      q.setDisplayOrder(displayOrder);
 
+      if (displayOrder < questions.size()) {
+        questions.add(displayOrder, q);
+
+        FormActionUtil.incrementDisplayOrder(questions, displayOrder + 1);
+      }
+      else {
+        questions.add(q);
+      }
     }
 
-    public ActionForward changeAssociation(
-					   ActionMapping mapping,
-					   ActionForm form,
-					   HttpServletRequest request,
-					   HttpServletResponse response) throws IOException, ServletException {
+    return mapping.findForward("success");
+  }
 
-	CDECart cart = new CDECartTransferObject();
-	    
-	DynaActionForm dynaForm = (DynaActionForm)form;
-	String selectedText = (String)dynaForm.get("selectedText");
+  public ActionForward changeAssociation(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    CDECart cart = new CDECartTransferObject();
 
- 	DataElement de = null;
-	List newValidValues = null;
+    DynaActionForm dynaForm = (DynaActionForm) form;
+    String selectedText = (String) dynaForm.get("selectedText");
 
-	int questionIndex = Integer.parseInt((String)dynaForm.get("questionIndex"));
+    DataElement de = null;
+    List newValidValues = null;
 
-	List questions = ((Module)getSessionObject(request, MODULE)).getQuestions();
-	CDECart sessionCart =
-	    (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
-	Question q = (Question)questions.get(questionIndex);
+    int questionIndex =
+      Integer.parseInt((String) dynaForm.get("questionIndex"));
 
-	if((selectedText == null) | (selectedText.length() == 0)) {
-	    
-	} else {
-	    int ind = selectedText.indexOf(',');
-	    int deIndex = Integer.parseInt(selectedText.substring(0, ind).trim());
-	    String newLongName = "";
+    List questions =
+      ((Module) getSessionObject(request, MODULE)).getQuestions();
+    CDECart sessionCart =
+      (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+    Question q = (Question) questions.get(questionIndex);
 
-	    if(selectedText.length() > ind)
-		newLongName = selectedText.substring(ind+1).trim();
+    if ((selectedText == null) | (selectedText.length() == 0)) {
+    }
+    else {
+      int ind = selectedText.indexOf(',');
+      int deIndex = Integer.parseInt(selectedText.substring(0, ind).trim());
+      String newLongName = "";
 
-	    Collection col = sessionCart.getDataElements();
-	    ArrayList al = new ArrayList(col);
-	    
-	    de = (DataElement)((CDECartItem)al.get(deIndex)).getItem();
+      if (selectedText.length() > ind) {
+        newLongName = selectedText.substring(ind + 1).trim();
+      }
 
-	    List values = de.getValueDomain().getValidValues();
-	    newValidValues = DTOTransformer.toFormValidValueList(values,q);
-	    
-	    q.setLongName(newLongName);
-	    
-	}
-	
- 	q.setDataElement(de);
-	q.setValidValues(newValidValues);
+      Collection col = sessionCart.getDataElements();
+      ArrayList al = new ArrayList(col);
 
-	return mapping.findForward("success");
+      de = (DataElement) ((CDECartItem) al.get(deIndex)).getItem();
+
+      List values = de.getValueDomain().getValidValues();
+      newValidValues = DTOTransformer.toFormValidValueList(values, q);
+
+      q.setLongName(newLongName);
     }
 
-    /**
-     * Displays CDE Cart.
-     *
-     * @param mapping The ActionMapping used to select this instance.
-     * @param form The optional ActionForm bean for this request.
-     * @param request The HTTP Request we are processing.
-     * @param response The HTTP Response we are processing.
-     *
-     * @return
-     *
-     * @throws IOException
-     * @throws ServletException
-     */
-    public ActionForward displayCDECart(
-					ActionMapping mapping,
-					ActionForm form,
-					HttpServletRequest request,
-					HttpServletResponse response) throws IOException, ServletException {
-	//CDECart cart = new CDECartTransferObject();
-  CDECart cart = null;
+    q.setDataElement(de);
+    q.setValidValues(newValidValues);
 
-	try {
-	    FormBuilderServiceDelegate service = getFormBuilderService();
-	    NCIUser user =
-		(NCIUser) this.getSessionObject(request, CaDSRConstants.USER_KEY);
+    return mapping.findForward("success");
+  }
 
-	    //Get the cart in the session
-	    CDECart sessionCart =
-		(CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+  /**
+   * Displays CDE Cart.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward displayCDECart(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    //CDECart cart = new CDECartTransferObject();
+    CDECart cart = null;
 
-	    cart = service.retrieveCDECart();
+    try {
+      FormBuilderServiceDelegate service = getFormBuilderService();
+      NCIUser user =
+        (NCIUser) this.getSessionObject(request, CaDSRConstants.USER_KEY);
 
-	    //Merge two carts
-	    //sessionCart.mergeCart(cart);
-	    if (sessionCart != null)
-		cart.mergeCart(sessionCart);
+      //Get the cart in the session
+      CDECart sessionCart =
+        (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 
-	    sessionCart = null;
-	    this.setSessionObject(request,CaDSRConstants.CDE_CART,cart);
-	}
-	catch (FormBuilderException exp) {
-	    if (log.isDebugEnabled()) {
-		log.debug("Exception on displayCDECart =  " + exp);
-	    }
-	}
+      cart = service.retrieveCDECart();
 
-	return mapping.findForward(SUCCESS);
+      //Merge two carts
+      //sessionCart.mergeCart(cart);
+      if (sessionCart != null) {
+        cart.mergeCart(sessionCart);
+      }
+
+      sessionCart = null;
+      this.setSessionObject(request, CaDSRConstants.CDE_CART, cart);
+    }
+    catch (FormBuilderException exp) {
+      if (log.isDebugEnabled()) {
+        log.debug("Exception on displayCDECart =  " + exp);
+      }
     }
 
-    /**
-     * Adds items to CDE Cart.
-     *
-     * @param mapping The ActionMapping used to select this instance.
-     * @param form The optional ActionForm bean for this request.
-     * @param request The HTTP Request we are processing.
-     * @param response The HTTP Response we are processing.
-     *
-     * @return
-     *
-     * @throws IOException
-     * @throws ServletException
-     */
-    public ActionForward addItems(
-				  ActionMapping mapping,
-				  ActionForm form,
-				  HttpServletRequest request,
-				  HttpServletResponse response) throws IOException, ServletException {
-	try {
-	    FormBuilderServiceDelegate service = getFormBuilderService();
-	    CDECartFormBean myForm = (CDECartFormBean) form;
-	    String[] selectedSaveItems = myForm.getSelectedSaveItems();
-	    Collection items = new ArrayList();
+    return mapping.findForward(SUCCESS);
+  }
 
-	    for (int i = 0; i < selectedSaveItems.length; i++) {
-		CDECartItem cartItem = new CDECartItemTransferObject();
-		cartItem.setId(selectedSaveItems[i]);
-		cartItem.setType("DATAELEMENT");
-		items.add(cartItem);
-	    }
+  /**
+   * Adds items to CDE Cart.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward addItems(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    try {
+      FormBuilderServiceDelegate service = getFormBuilderService();
+      CDECartFormBean myForm = (CDECartFormBean) form;
+      String[] selectedSaveItems = myForm.getSelectedSaveItems();
+      Collection items = new ArrayList();
 
-	    service.addToCDECart(items);
+      for (int i = 0; i < selectedSaveItems.length; i++) {
+        CDECartItem cartItem = new CDECartItemTransferObject();
+        cartItem.setId(selectedSaveItems[i]);
+        cartItem.setType("DATAELEMENT");
+        items.add(cartItem);
+      }
 
-	    CDECart cart =
-		(CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
-	}
-	catch (FormBuilderException exp) {
-	    if (log.isDebugEnabled()) {
-		log.debug("Exception on addItems =  " + exp);
-	    }
-	}
+      service.addToCDECart(items);
 
-	return mapping.findForward("addDeleteSuccess");
+      CDECart cart =
+        (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+    }
+    catch (FormBuilderException exp) {
+      if (log.isDebugEnabled()) {
+        log.debug("Exception on addItems =  " + exp);
+      }
     }
 
-    /**
+    return mapping.findForward("addDeleteSuccess");
+  }
+
+  /**
    * Delete items from the CDE Cart.
    *
    * @param mapping The ActionMapping used to select this instance.
@@ -265,18 +262,25 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
       CDECartFormBean myForm = (CDECartFormBean) form;
       String[] selectedDeleteItems = myForm.getSelectedDeleteItems();
       Collection savedItems = new ArrayList();
+
       //Collection unsavedItems = new ArrayList();
       Collection items = new ArrayList();
+
       //Get the cart in the session
       CDECart sessionCart =
         (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
       CDECartItem item = null;
+
       for (int i = 0; i < selectedDeleteItems.length; i++) {
         item = sessionCart.findDataElement(selectedDeleteItems[i]);
-        if (item.getPersistedInd())
+
+        if (item.getPersistedInd()) {
           savedItems.add(selectedDeleteItems[i]);
+        }
+
         items.add(selectedDeleteItems[i]);
       }
+
       service.removeFromCDECart(savedItems);
       sessionCart.removeDataElements(items);
     }

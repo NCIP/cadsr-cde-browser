@@ -29,6 +29,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.object.SqlUpdate;
+import org.springframework.dao.DataIntegrityViolationException;
 
 
 public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
@@ -47,7 +48,7 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
     insertItemQuery  = new InsertCartItem (this.getDataSource());
   }
 
-  public CDECart findCDECart(String username) throws DMLException  {
+  public CDECart findCDECart(String username) {
     //CDECart cart = new CDECartTransferObject();
     CDECart cart = new CDECartImpl();
     List deList = deCartQuery.execute(username.toUpperCase());
@@ -57,17 +58,21 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
     return cart;
   }
 
-  public int insertCartItem(CDECartItem item) throws DMLException {
-    String ccmIdseq = generateGUID(); 
-    int res = insertItemQuery.createItem(item, ccmIdseq);
-    if (res != 1) {
-      throw new DMLException("Did not succeed creating item in the " + 
-        " cde_cart_items table.");
+  public int insertCartItem(CDECartItem item) {
+    int res = 0;
+    try {
+      String ccmIdseq = generateGUID(); 
+      res = insertItemQuery.createItem(item, ccmIdseq);
+    } 
+    catch (DataIntegrityViolationException dex) {
+      if (log.isInfoEnabled()) {
+        log.info("Unique constraint voilated in creating cart item", dex);
+      }
     }
-    return 1;
+    return res;
   }
 
-  public int deleteCartItem(String itemId, String username) throws DMLException {
+  public int deleteCartItem(String itemId, String username) {
     int res = deleteItemQuery.deleteItem(itemId,username.toUpperCase());
     if (res != 1) {
       throw new DMLException("Did not succeed in deleting  the " + 
