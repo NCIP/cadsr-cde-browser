@@ -144,7 +144,8 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
 
   public void setCDEId(String pCDEId) {
     cdeId = pCDEId;
-    publicId = Integer.parseInt(pCDEId);
+    if (pCDEId != null && !"".equals(pCDEId))
+      publicId = Integer.parseInt(pCDEId);
   }
 
   public void setContextName(String pConteName) {

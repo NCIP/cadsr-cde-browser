@@ -135,6 +135,7 @@ function goPage(pageInfo) {
     <th class="OraTableColumnHeader">Document Name</th>
     <th class="OraTableColumnHeader">Document Type</th>
     <th class="OraTableColumnHeader">Document Text</th>
+    <th class="OraTableColumnHeader">URL</th>
   </tr>
 <%
   ReferenceDocument rd;
@@ -148,6 +149,7 @@ function goPage(pageInfo) {
         <td class="OraFieldText"><%=rd.getDocName()%> </td>
         <td class="OraFieldText"><%=rd.getDocType()%> </td>
         <td class="OraFieldText"><%=rd.getDocText()%> </td>
+        <td class="OraFieldText"><%=rd.getUrl()%> </td>
       </tr>
 <%
     }
@@ -155,7 +157,7 @@ function goPage(pageInfo) {
   else {
 %>
        <tr class="OraTabledata">
-         <td colspan="3">There are no reference documents for the selected CDE.</td>
+         <td colspan="4">There are no reference documents for the selected CDE.</td>
        </tr>
 <%
   }

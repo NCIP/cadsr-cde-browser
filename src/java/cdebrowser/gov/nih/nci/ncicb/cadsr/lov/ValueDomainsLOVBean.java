@@ -67,11 +67,11 @@ public class ValueDomainsLOVBean extends Object {
                             "vd.long_name","Long Name",
                             "vd_conte.name","Context",
                             "vd.asl_name","Workflow Status",
-                            "vd.preferred_definition","Definition"};
+                            "vd.preferred_definition","Definition",
+                            "vd.version", "Version"};
       String[] sqlStmtParm = new String[2];
       sqlStmtParm[0] = " from sbr.value_domains vd,sbr.contexts vd_conte " +
                            " where vd.conte_idseq = vd_conte.conte_idseq " +
-                           " and vd.latest_version_ind = 'Yes' " +
                            " and vd.deleted_ind = 'No' " +
                            " and vd.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + whereClause;
       sqlStmtParm[1] = " order by vd.preferred_name ";

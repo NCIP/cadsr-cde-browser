@@ -73,11 +73,11 @@ public class DataElementConceptsLOVBean extends Object {
                             "dec.long_name","Long Name",
                             "dec_conte.name","Context",
                             "dec.asl_name","Workflow Status",
-                            "dec.preferred_definition","Definition"};
+                            "dec.preferred_definition","Definition",
+                            "dec.version", "Version"};
       String[] sqlStmtParm = new String[2];
       sqlStmtParm[0] = " from sbr.data_element_concepts dec,sbr.contexts dec_conte " +
                            " where dec.conte_idseq = dec_conte.conte_idseq " +
-                           " and dec.latest_version_ind = 'Yes' " +
                            " and dec.deleted_ind = 'No' " +
                            " and dec.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + whereClause;
       sqlStmtParm[1] = " order by dec.preferred_name ";
