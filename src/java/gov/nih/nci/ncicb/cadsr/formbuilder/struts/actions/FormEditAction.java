@@ -250,7 +250,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     }
 
     List modules = crf.getModules();
-    FormActionUtil.setInitDisplayOrders(modules); //This is done to set display order in a sequential order 
+    //FormActionUtil.setInitDisplayOrders(modules); //This is done to set display order in a sequential order 
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
                                       
@@ -260,8 +260,11 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       }
 
       Module deletedModule = (Module) modules.remove(moduleIndex.intValue());
-      FormActionUtil.decrementDisplayOrder(modules, moduleIndex.intValue());
+      //FormActionUtil.decrementDisplayOrder(modules, moduleIndex.intValue());
       deletedModules.add(deletedModule);
+      
+      // instead of incrementing /decrementing reset all display orders in sequencial order
+      FormActionUtil.setInitDisplayOrders(modules);        
     }
 
     setSessionObject(request, DELETED_MODULES, deletedModules,true);
@@ -311,9 +314,11 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       if ((moduleIndex.intValue() < modules.size()) && (moduleToAdd != null)) {
         Module currModule = (Module) modules.get(moduleIndex.intValue());
         int displayOrder = currModule.getDisplayOrder();
-        FormActionUtil.incrementDisplayOrder(modules, moduleIndex.intValue());
+        //FormActionUtil.incrementDisplayOrder(modules, moduleIndex.intValue());        
         moduleToAdd.setDisplayOrder(displayOrder);
         modules.add((moduleIndex.intValue()), moduleToAdd);
+      // instead of incrementing /decrementing reset all display orders in sequencial order
+        FormActionUtil.setInitDisplayOrders(modules);        
       }
       else {
         int newDisplayOrder = 0;

@@ -73,7 +73,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
     Form crf = (Form) getSessionObject(request, CRF);
     Module module = (Module) getSessionObject(request, MODULE);
-    List questions = module.getQuestions();
+    List questions = module.getQuestions();   
 
     Collection col = sessionCart.getDataElements();
     ArrayList al = new ArrayList(col);
@@ -103,8 +103,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
       if (displayOrder < questions.size()) {
         questions.add(displayOrder, q);
-
-        FormActionUtil.incrementDisplayOrder(questions, displayOrder + 1);
+        FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136 
       }
       else {
         questions.add(q);

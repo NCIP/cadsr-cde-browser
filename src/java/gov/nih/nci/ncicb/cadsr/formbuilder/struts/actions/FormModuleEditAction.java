@@ -292,14 +292,15 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
 
     List questions = module.getQuestions();
-    FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
-                                      // in case  they are  incorrect in database
-                                      //Bug #tt 1136
+
                                       
     if ((questions != null) && (questions.size() > 0)) {
       Question deletedQuestion =
         (Question) questions.remove(questionIndex.intValue());
-      FormActionUtil.decrementDisplayOrder(questions, questionIndex.intValue());
+      //FormActionUtil.decrementDisplayOrder(questions, questionIndex.intValue());
+      // instead of incrementing /decrementing reset all display orders in sequencial order
+        FormActionUtil.setInitDisplayOrders(questions);
+        
       deletedQuestions.add(deletedQuestion);
     }
 
@@ -370,9 +371,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         Question currQuestion =
           (Question) questions.get(questionIndex.intValue());
         int displayOrder = currQuestion.getDisplayOrder();
-        FormActionUtil.incrementDisplayOrder(questions, questionIndex.intValue());
+        //FormActionUtil.incrementDisplayOrder(questions, questionIndex.intValue());        
         questionToAdd.setDisplayOrder(displayOrder);
-        questions.add((questionIndex.intValue()), questionToAdd);
+        questions.add((questionIndex.intValue()), questionToAdd);      
       }
       else {
         int newDisplayOrder = 0;
@@ -382,10 +383,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
             (Question) questions.get(questions.size() - 1);
           newDisplayOrder = lastQuestion.getDisplayOrder() + 1;
         }
-
         questionToAdd.setDisplayOrder(newDisplayOrder);
-        questions.add(questionToAdd);
+        questions.add(questionToAdd);      
       }
+        // instead of incrementing /decrementingreset all display orders in sequencial order
+        FormActionUtil.setInitDisplayOrders(questions);          
     }
 
     setSessionObject(request, DELETED_QUESTIONS, deletedQuestions,true);
@@ -580,7 +582,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     if ((validValues != null) && (validValues.size() > 0)) {
       FormValidValue deletedValidValue =
         (FormValidValue) validValues.remove(currValidValueIndex);
-      FormActionUtil.decrementDisplayOrder(validValues, currValidValueIndex);
+     // FormActionUtil.decrementDisplayOrder(validValues, currValidValueIndex);
+      // instead of incrementing /decrementingreset all display orders in sequencial order
+        FormActionUtil.setInitDisplayOrders(validValues);
     }
 
     //Bug TT 1196
@@ -636,9 +640,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     List questions = module.getQuestions();
     Question currQuestion = (Question) questions.get(currQuestionIndex);
     List validValues = currQuestion.getValidValues();
-    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order 
-                                      // in case  they are  incorrect in database
-                                      //Bug #tt 1136
+
                                       
     for(int i=selectedVVIndexes.length-1;i>-1;--i)
     {
@@ -646,9 +648,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       if ((validValues != null) && (validValues.size() > 0)) {
         FormValidValue deletedValidValue =
           (FormValidValue) validValues.remove(currValidValueIndex);
-        FormActionUtil.decrementDisplayOrder(validValues, currValidValueIndex);
+        //FormActionUtil.decrementDisplayOrder(validValues, currValidValueIndex);      
       }
     }
+    // instead of incrementing /decrementingreset all display orders in sequencial order
+    FormActionUtil.setInitDisplayOrders(validValues);      
     
     //Bug TT 1196
     questionArr = getQuestionsAsArray(module.getQuestions());
@@ -716,7 +720,8 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       return mapping.findForward(MODULE_EDIT);
 
     List validValues = currQuestion.getValidValues();
-    FormActionUtil.setInitDisplayOrders(validValues); //This is done to set display order in a sequential order 
+    FormActionUtil.setInitDisplayOrders(validValues); 
+    //This is done to set display order in a sequential order 
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
                                       
@@ -726,7 +731,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       int displayOrder = currValidValue.getDisplayOrder();
       formValidValueToAdd.setDisplayOrder(displayOrder);
       validValues.add(currValidValueIndex, formValidValueToAdd);
-     FormActionUtil.incrementDisplayOrder(validValues, currValidValueIndex+1);
+      //FormActionUtil.incrementDisplayOrder(validValues, currValidValueIndex+1);
+      // instead of incrementing /decrementingreset all display orders in sequencial order
+        FormActionUtil.setInitDisplayOrders(validValues);      
     }
     else {
       int newDisplayOrder = 0;
