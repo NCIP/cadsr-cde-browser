@@ -1,7 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
-public class NCIUserTransferObject implements NCIUser 
+public class NCIUserTransferObject implements NCIUser
 {
   private String username=null;
   public NCIUserTransferObject(String newUsername)
@@ -13,8 +13,8 @@ public class NCIUserTransferObject implements NCIUser
   {
     return username;
   }
-  
-  public boolean hasRoleAccess(String role, String ContextId)
+
+  public boolean hasRoleAccess(String role, String contextId)
   {
     return true;
   }
