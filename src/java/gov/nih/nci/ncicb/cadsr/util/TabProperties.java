@@ -1,10 +1,13 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
 public class TabProperties
 {
+  private static Log log = LogFactory.getLog(TabProperties.class.getName());
   private String curRecLabel = null;
   private String leftRecDelim = null;
   private String rightRecDelim = null;
@@ -38,7 +41,7 @@ public class TabProperties
     int index = 0;
     try
     {
-      System.out.println("*** Resource File Name ***: " + propFilename);
+      log.info("*** Resource File Name ***: " + propFilename);
       ResourceBundle b = ResourceBundle.getBundle(propFilename, java.util.Locale.getDefault());
 
       index++;
@@ -93,15 +96,13 @@ public class TabProperties
     }
     catch (java.util.MissingResourceException mre)
     {
-      System.out.println("Error getting init parameters, missing resource values");
-      System.out.println("Property missing index: " + index);
-      System.out.println(mre.getMessage());
+      log.error("Error getting init parameters, missing resource values");
+      log.error("Property missing index: " + index, mre);
       result = false;
     }
     catch (Exception e)
     {
-      System.out.println("Error getting init parameters");
-      System.out.println(e.getMessage());
+      log.error("Error getting init parameters", e);
       result = false;
     }
     return result;

@@ -1,11 +1,15 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
-import java.util.Vector;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import java.util.Hashtable;
+import java.util.Vector;
+
 import javax.servlet.http.*;
 
 public class TabInfoBean
 {
+  private static Log log = LogFactory.getLog(TabInfoBean.class.getName());
   private static Hashtable retrievedPropertiesHT = new Hashtable();
 
   private static Hashtable shareLabelWithAllTabsHT = new Hashtable();
@@ -50,7 +54,7 @@ public class TabInfoBean
   private synchronized void retrieveProperties(String propFilename) throws Exception {
 
     if (!retrievedPropertiesHT.containsKey(propFilename)) {
-      System.out.println("Retrieving tab properties ...");
+      log.info("Retrieving tab properties ...");
       TabProperties tp = new TabProperties();
       boolean result = tp.InitParameters(propFilename);
       if (!result) {

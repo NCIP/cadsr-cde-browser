@@ -1,10 +1,15 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
-import java.sql.*;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
+import healthtoolkit.beans.dbservice.DBBroker;
+
+import java.sql.SQLException;
+
 import java.util.Vector;
-import javax.servlet.http.*;
-import healthtoolkit.beans.dbservice.*;
-import healthtoolkit.utils.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * A Bean class.
@@ -12,6 +17,7 @@ import healthtoolkit.utils.*;
  * @author Oracle Corporation
  */
 public class UserInfoBean {
+  private static Log log = LogFactory.getLog(UserInfoBean.class.getName());
 
   private String username = null;
   private boolean authenticated = false;
@@ -48,7 +54,7 @@ public class UserInfoBean {
       "from sbr.organizations ogn,sbr.user_accounts uac " +
       "where ogn.org_idseq = uac.org_idseq " +
       "and ua_name = '" + username.toUpperCase() + "' " ;
-    System.out.println(sqlStmt);
+    log.info(sqlStmt);
 
     rsVector = dBBroker.retrieveRecordDB(sqlStmt);
     SQLException e = dBBroker.getSQLException();

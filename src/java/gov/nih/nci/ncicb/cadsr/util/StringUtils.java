@@ -1,13 +1,15 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
-import java.sql.Date;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
-import java.text.DateFormat;
+import java.sql.Date;
 
 import java.util.Arrays;
 
 
 public class StringUtils {
+  private static Log log = LogFactory.getLog(StringUtils.class.getName());
   public static boolean toBoolean(String inString) {
     boolean retVal = false;
     if (
@@ -147,8 +149,7 @@ public class StringUtils {
       curDate = java.sql.Date.valueOf(currDateStr);
     }
     catch (Exception e) {
-      System.out.println(e.getMessage());
-      e.printStackTrace();
+      log.error(e.getMessage(), e);
     }
 
     return curDate;
