@@ -1,12 +1,16 @@
 package gov.nih.nci.ncicb.cadsr.database;
 
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
 
 public abstract class AbstractSqlQuery  {
+  private static Log log = LogFactory.getLog(AbstractSqlQuery.class.getName());
   protected long startRowNum;
   protected long endRowNum;
   protected long totalRowCount;
@@ -26,7 +30,7 @@ public abstract class AbstractSqlQuery  {
       
     } 
     catch (Exception ex) {
-      ex.printStackTrace();
+      log.error("Exception caught executing query", ex);
     } 
     finally {
     }
@@ -58,8 +62,7 @@ public abstract class AbstractSqlQuery  {
       if (pstmt != null) pstmt.close();
     } 
     catch (Exception ex) {
-      System.out.println("Exception occured in releaseResources(): "+ex.getMessage());
-      ex.printStackTrace();
+      log.error("Exception occured in releaseResources(): ", ex);
     } 
     
   }

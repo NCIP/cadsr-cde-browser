@@ -4,8 +4,8 @@ package gov.nih.nci.ncicb.cadsr.security.oc4j;
 import com.evermind.security.AbstractUserManager;
 import com.evermind.security.User;
 import com.evermind.security.Group;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
 
 /**
@@ -53,8 +53,7 @@ public abstract class BaseUserManager extends AbstractUserManager {
    */ 
   public User getUser(String username) {
 
-    if(log.isInfoEnabled())
-      log.info("Geting User with username= "+username);
+    log.info("Geting User with username= "+username);
     if(username != null && userExists(username)) {
       OC4JUserObject user = new OC4JUserObject(username);
       user.setUserManager(this);

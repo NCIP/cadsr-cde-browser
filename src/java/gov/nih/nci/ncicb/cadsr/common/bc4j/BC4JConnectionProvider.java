@@ -2,19 +2,21 @@ package gov.nih.nci.ncicb.cadsr.common.bc4j;
 
 import gov.nih.nci.ncicb.cadsr.util.BC4JHelper;
 
-import oracle.jbo.ApplicationModule;
-
-import oracle.jbo.common.ampool.ApplicationPool;
-import oracle.jbo.common.ampool.SessionCookie;
-
 import java.util.Hashtable;
 import java.util.Properties;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import oracle.jbo.ApplicationModule;
+import oracle.jbo.common.ampool.ApplicationPool;
+import oracle.jbo.common.ampool.SessionCookie;
+
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
 public class BC4JConnectionProvider implements HttpSessionListener {
+  private static Log log = LogFactory.getLog(BC4JConnectionProvider.class.getName());
   private static Hashtable existingSessionCookies = new Hashtable(29);
   private String providerName;
   private Hashtable providerInfo;
@@ -66,7 +68,7 @@ public class BC4JConnectionProvider implements HttpSessionListener {
     ApplicationModule am = null;
     SessionCookie cookie = this.findSessionCookie(sessionId);
     am = BC4JHelper.getApplicationModuleFromPool(cookie);
-    System.out.println("Available instance count in pool after check out is " +
+    log.info("Available instance count in pool after check out is " +
       amPool.getAvailableInstanceCount());
 
     return am;
@@ -76,7 +78,7 @@ public class BC4JConnectionProvider implements HttpSessionListener {
     throws Exception {
     SessionCookie cookie = this.getSessionCookie(sessionId);
     amPool.releaseApplicationModule(cookie, releaseMode);
-    System.out.println("Available instance count in pool after check in is " +
+    log.info("Available instance count in pool after check in is " +
       amPool.getAvailableInstanceCount());
   }
 
@@ -94,8 +96,7 @@ public class BC4JConnectionProvider implements HttpSessionListener {
     try {
       removeSessionCookie(sessionId);
     } catch (Exception ex) {
-      System.out.println("Exception occured in removing session cookie");
-      ex.printStackTrace();
+      log.error("Exception occured in removing session cookie", ex);
     }
   }
 }

@@ -6,6 +6,8 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +18,6 @@ import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import com.evermind.security.User;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
 
 public class DBUserManager extends BaseUserManager implements PersistenceConstants, CaDSRConstants {
 
@@ -36,18 +36,14 @@ public class DBUserManager extends BaseUserManager implements PersistenceConstan
     {
       log = LogFactory.getLog(DBUserManager.class.getName());
       
-      if(log.isDebugEnabled())
-        log.debug("Initializing DBUserManager"+this);
+      log.debug("Initializing DBUserManager"+this);
       //String daoFactoryClassName = properties.getProperty(DAO_FACTORY_CLASS_KEY);
       String serviceLocatorClassName = properties.getProperty(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
       //String dsLookupKeyVal = properties.getProperty(DATASOURCE_KEY);
       
-      if(log.isDebugEnabled())
-      {
         //log.debug("daoFactoryClassName ="+daoFactoryClassName);  
-        log.debug("serviceLocatorClassName ="+serviceLocatorClassName);  
+      log.debug("serviceLocatorClassName ="+serviceLocatorClassName);  
         //log.debug("dsLookupKey ="+dsLookupKeyVal);   
-      }
       locator = ServiceLocatorFactory.getLocator(serviceLocatorClassName);
       
       //log.debug("test*** ="+locator.getString(daoFactoryClassName)); 
@@ -60,12 +56,7 @@ public class DBUserManager extends BaseUserManager implements PersistenceConstan
     }
     catch (Exception e)
     {
-      System.out.println(e.getMessage());
-       if(log.isFatalEnabled())
-      {
-        e.printStackTrace();
-        log.fatal("Error Initializing DBUserManaber ="+e.getMessage());   
-      }     
+      log.fatal("Error Initializing DBUserManaber", e);   
     }
   }
 
@@ -93,15 +84,14 @@ public class DBUserManager extends BaseUserManager implements PersistenceConstan
    */
   protected boolean checkPassword(String username, String password) {
     boolean result = false;
-    if(log.isDebugEnabled())
-        log.debug("Check password for user ="+username);
+
+    log.debug("Check password for user ="+username);
     if(daoFactory==null)
       setAbstractDAOFactory();
     if(userManagerDAO==null)
         userManagerDAO = daoFactory.getUserManagerDAO();
     result =  userManagerDAO.validUser(username,password);
-    if(log.isDebugEnabled())
-        log.debug("User validation= ="+result);    
+    log.debug("User validation= ="+result);    
     return result;
   }
 
@@ -116,24 +106,20 @@ public class DBUserManager extends BaseUserManager implements PersistenceConstan
    */
   protected boolean inGroup(String username, String groupname) {
     boolean result = false;
-    if(log.isDebugEnabled())
-        log.debug("Check if user = "+username+" in group = "+groupname);
+
+    log.debug("Check if user = "+username+" in group = "+groupname);
     if(daoFactory==null)
       setAbstractDAOFactory();
     if(userManagerDAO==null)
         userManagerDAO = daoFactory.getUserManagerDAO();       
     result =  userManagerDAO.userInGroup(username,groupname);
-    if(log.isDebugEnabled())
-        log.debug("User  in group = "+result);  
+    log.debug("User  in group = "+result);  
     return result;
   }
   
   private void setAbstractDAOFactory()
   {
     daoFactory=AbstractDAOFactory.getDAOFactory(locator);
-    if(log.isDebugEnabled())
-      {
         log.debug("Set AbstractDAOFactory ="+daoFactory);  
-      }    
   }
 }

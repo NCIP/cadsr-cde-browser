@@ -3,14 +3,14 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser;
 import gov.nih.nci.ncicb.cadsr.util.*;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
-
+import javax.servlet.http.*;
 import java.sql.*;
 
 /**
  * A Bean class.
  * <P>
  * @author Ram Chilukuri 
- * @version: $Id: ProtocolsForCdeBean.java,v 1.3 2004-08-17 13:14:05 jiangja Exp $
+ * @version: $Id: ProtocolsForCdeBean.java,v 1.4 2004-08-17 18:02:12 jiangja Exp $
  * 
  */
 public class ProtocolsForCdeBean extends Object {

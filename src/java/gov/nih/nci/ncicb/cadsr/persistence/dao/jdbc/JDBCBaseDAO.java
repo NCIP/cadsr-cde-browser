@@ -11,8 +11,8 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 
-import org.apache.commons.logging.LogFactory;
 
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.SqlFunction;

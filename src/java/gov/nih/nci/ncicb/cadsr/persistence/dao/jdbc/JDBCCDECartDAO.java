@@ -65,9 +65,7 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
       res = insertItemQuery.createItem(item, ccmIdseq);
     } 
     catch (DataIntegrityViolationException dex) {
-      if (log.isInfoEnabled()) {
-        log.info("Unique constraint voilated in creating cart item", dex);
-      }
+       log.info("Unique constraint voilated in creating cart item", dex);
     }
     return res;
   }
