@@ -26,7 +26,7 @@ public class DESearchQueryBuilder extends Object {
   private String treeConteIdSeq = "";
   private Object[] queryParams = new Object[]{"%","%","%","%","%"};
   private String contextUse = "";
-  private String orderBy = " de_preferred_name, de_version ";
+  private String orderBy = " de.long_name, de_version ";
   private String sqlWithoutOrderBy;
 
   public DESearchQueryBuilder(HttpServletRequest request,
