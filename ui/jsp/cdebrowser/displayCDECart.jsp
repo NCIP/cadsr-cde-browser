@@ -79,7 +79,7 @@ function retrieveSavedItems() {
   <jsp:param name="label" value="CDE&nbsp;Cart"/>
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
-<%@ include file="showMessages.jsp" %>
+<%@ include file="formbuilder/showMessages.jsp" %>
 <html:form action="/cdeCartAction.do">
 <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
 <logic:present name="<%=CaDSRConstants.CDE_CART%>">
@@ -115,7 +115,7 @@ function retrieveSavedItems() {
           CDE Cart is empty. 
         </td>
     </tr>
-    <table width="40%" align="center" cellpadding="1" cellspacing="1" border="0">
+    <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0">
       <TR>
         <td>&nbsp;</td>
       </TR>
@@ -195,6 +195,15 @@ function retrieveSavedItems() {
 <logic:notPresent name="<%=CaDSRConstants.CDE_CART%>">
 
 </logic:notPresent>
+
+<table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
+  <tr >
+    <td>
+      <a href='<%= "cdeBrowse.jsp?src=gotoAddQuestion&PageId=DataElementsGroup" %>'><html:img src="i/add_more_data_elements.gif" border="0" alt="Add more data elements"/></a>
+    </td>
+  </tr>
+</table>    
+
 </html:form>
 <%@ include file="common/common_bottom_border.jsp"%>
 </body>

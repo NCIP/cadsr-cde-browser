@@ -205,6 +205,16 @@ function details(linkParms ){
 <logic:notPresent name="<%=CaDSRConstants.CDE_CART%>">
 
 </logic:notPresent>
+
+<table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
+  
+  <tr >
+    <td>
+      <a href='<%= "cdeBrowse.jsp?src=gotoAddQuestion&PageId=DataElementsGroup" %>'><html:img src="i/add_more_data_elements.gif" border="0" alt="Add more data elements"/></a>
+    </td>
+  </tr>
+</table>    
+
 </html:form>
 <%@ include file="../common/common_bottom_border.jsp"%>
 </body>
