@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans;
+import java.util.HashMap;
 import org.apache.struts.action.DynaActionForm;
 
 /**
@@ -6,5 +7,8 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class FormBuilderBaseDynaFormBean extends DynaActionForm 
 {
-
+  public void clear()
+  {
+    dynaValues = new HashMap();
+  }
 }

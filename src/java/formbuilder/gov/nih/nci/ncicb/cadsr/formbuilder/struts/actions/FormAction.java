@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 
@@ -140,7 +141,8 @@ public class FormAction extends FormBuilderBaseDispatchAction {
       protocolIdSeq = nodeIdSeq;
     }
 
-    DynaActionForm searchForm = (DynaActionForm) form;
+    FormBuilderBaseDynaFormBean searchForm = (FormBuilderBaseDynaFormBean) form;
+    searchForm.clear();
     searchForm.set(this.PROTOCOL_ID_SEQ, protocolIdSeq);
     searchForm.set(this.CONTEXT_ID_SEQ, contextIdSeq);
 
