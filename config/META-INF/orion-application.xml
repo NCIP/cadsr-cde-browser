@@ -5,6 +5,7 @@
  	<property name="ServiceLocatorClassName" value="gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl"/>
  </user-manager>
  
+    	    
    <library path="security.jar" />
    <library path="common.jar" />
    <library path="spring-jdbc.jar" />
