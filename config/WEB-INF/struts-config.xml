@@ -154,15 +154,45 @@
         redirect="false"/>
       <forward name="failure" path="/formbuilder/formEdit.jsp" redirect="false"/>
       <forward name="moduleEdit" path="/moduleToEditAction.do?method=getModuleToEdit" redirect="false"/>
-      <forward name="saveConfirm" path="/formbuilder/formSaveConfirm.jsp" redirect="false"/>
-      <forward name="saveFormModuleEdit" path="/formSaveAction.do?method=saveFormModuleEdit" redirect="false"/>
+      <forward name="saveConfirmModuleEdit" path="/formbuilder/formSaveConfirmModuleEdit.jsp" redirect="false"/>
+      <forward name="saveConfirmDone" path="/formbuilder/formSaveConfirm.jsp" redirect="false"/>
+      <forward name="searchResults" path="/cancelFormEditAction.do?method=cancelFormEdit"
+        redirect="false"/>     
     </action>
-    <action name="formEditForm" path="/cancelFormEditAction" parameter="method"
+    <action name="formEditForm" path="/saveFormModuleEditAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
+      validate="false">
+      <forward name="success"
+        path="/moduleToEditAction.do?method=getModuleToEdit"
+        redirect="false"/>
+      <forward name="failure"
+        path="/formbuilder/formEdit.jsp"
+        redirect="false"/>  
+      <forward name="formEdit" path="/formbuilder/formEdit.jsp" redirect="false"/>
+      <forward name="searchResults" path="/formbuilder/formbuilder.jsp"
+        redirect="false"/>            
+    </action>     
+    <action name="searchForm" path="/saveFormDoneAction" parameter="method"
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
       validate="false">
       <forward name="success"
         path="/formSearchFramedAction.do?method=getAllForms"
+        redirect="false"/>
+      <forward name="failure"
+        path="/formbuilder/formEdit.jsp"
+        redirect="false"/>
+      <forward name="formEdit" path="/formbuilder/formEdit.jsp" redirect="false"/>
+      <forward name="searchResults" path="/formbuilder/formbuilder.jsp"
+        redirect="false"/>        
+    </action>      
+    <action name="searchForm" path="/cancelFormEditAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
+      validate="false">
+      <forward name="success"
+        path="/formbuilder/formbuilder.jsp"
         redirect="false"/>
     </action>    
     
@@ -204,6 +234,16 @@
       <forward name="failure" path="/formbuilder/formDetails.jsp"
         redirect="false"/>
     </action>
+    <action name="hrefCRFForm" path="/formEditDeleteAction" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
+      validate="false">
+      <forward name="success"
+        path="/formSearchFramedAction.do?method=getAllForms"
+        redirect="false"/>
+      <forward name="failure" path="/formbuilder/formEdit.jsp"
+        redirect="false"/>
+    </action>    
     <action name="hrefCRFForm" path="/formEditDeleteAction" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"

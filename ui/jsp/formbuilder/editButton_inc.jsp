@@ -1,3 +1,10 @@
+  <script LANGUAGE="Javascript">
+<!---
+function actionConfirm(message, url){
+if(confirm(message)) location.href = url;
+}
+// --->
+</SCRIPT>
       <table width="25%" align="center" cellpadding="1" cellspacing="1" border="0" >
         <tr >
          <td>
@@ -15,15 +22,23 @@
            </html:link>
           </td>      
           <td > 
-            <html:link action='<%="/cancelFormEditAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CANCEL_FORM_EDIT%>'>
-              <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
-	          </html:link>               
+            <a href="javascript:submitFormToSave('<%=NavigationConstants.CHECK_CHANGES_DONE%>')">
+               <img src=<%=urlPrefix%>i/backButton.gif border=0 alt="Done">
+            </a>              
           </td>                
           <td >
-            <html:link action='<%="/formEditDeleteAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
-                paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">
-              <html:img src='<%=urlPrefix+"i/deleteButton.gif"%>' border="0" alt="Delete"/>
-	          </html:link>             
+		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
+           formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
+           activeImageSource="i/deleteButton.gif" 
+		       		activeUrl='<%="/formEditDeleteAction.do?"
+                         +NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>'
+		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		   	   	urlPrefix="<%=urlPrefix%>"
+		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+		   	   	paramProperty="formIdseq"
+		   	   	altMessage="Delete"  
+            confirmMessageKey="cadsr.formbuilder.form.delete.confirm"
+		   	   	/>		                
           </td>            
         </tr> 
                 

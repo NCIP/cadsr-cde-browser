@@ -69,6 +69,7 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     DynaActionForm searchForm = (DynaActionForm) form;
     String formLongName = (String) searchForm.get(this.FORM_LONG_NAME);
     String protocolIdSeq = (String) searchForm.get(this.PROTOCOL_ID_SEQ);
+    String proptocolName = (String)searchForm.get(this.PROTOCOLS_LOV_NAME_FIELD);
     String contextIdSeq = (String) searchForm.get(this.CONTEXT_ID_SEQ);
     String workflow = (String) searchForm.get(this.WORKFLOW);
     String categoryName = (String) searchForm.get(this.CATEGORY_NAME);

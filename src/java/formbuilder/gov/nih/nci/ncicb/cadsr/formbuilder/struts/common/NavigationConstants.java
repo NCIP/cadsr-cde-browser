@@ -49,8 +49,13 @@ public interface NavigationConstants
   public static final String CHECK_FOR_UPDATE="checkForUpdate";
   public static final String SAVE_FORM="saveForm";
   public static final String SAVE_FORM_MODULE_EDIT="saveFormModuleEdit";
+  public static final String SAVE_FORM_CHANGES="saveFormChanges";
   public static final String CHECK_CHANGES_MODULE_EDIT="checkChangesModuleEdit";
+  public static final String CHECK_CHANGES_DONE="checkChangesDone";
   public static final String CANCEL_FORM_CHANGES_MODULE_EDIT="cancelFormChangesModuleEdit";
+  public static final String SAVE_CONFIRM_MODULE_EDIT="saveConfirmModuleEdit";
+  public static final String SAVE_CONFIRM_DONE="saveConfirmDone";
+
 
 
   public static final String CREATE_MODULE = "createModule";

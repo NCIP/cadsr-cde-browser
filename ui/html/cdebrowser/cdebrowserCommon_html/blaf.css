@@ -139,7 +139,7 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .AbbreviatedText {FONT-SIZE: 8pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; text-align: left; }
 .OraFieldtitlebold {FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: right}
 .InputFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000;text-align: left}
-.Dropdown {font-family:Arial, Helvetica, Geneva, sans-serif; width:39mm ; font-size:10pt; color:#000000; text-align: center}
+.Dropdown {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; BACKGROUND-COLOR: #CFCFCF; text-align: left; width:39mm }
 .UnderlineOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; border-bottom:1px solid #999966;}
 .PrinterOraTableColumnHeader {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; background-color:#FFFFFF; color:#000000; text-indent:1}
 .PrinterOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000}
@@ -150,4 +150,4 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .MessageText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#009900}
 .OraTableColumnHeaderVV {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; background-color:#CCCCCC; color:#336699; text-indent:1}
 .OraTableColumnHeaderModule {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; background-color:#CCCC99; color:#336699; text-indent:1}
-.FreeDropdown {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; text-align: center}
+.FreeDropdown {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; BACKGROUND-COLOR: #CFCFCF; text-align: left}

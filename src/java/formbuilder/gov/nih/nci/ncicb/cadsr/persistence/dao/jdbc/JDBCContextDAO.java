@@ -69,7 +69,7 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
     }
     
     public void setSql(){
-      super.setSql("select conte_idseq, name from contexts order by name");
+      super.setSql("select conte_idseq, name from contexts order by upper(name)");
     }
           
     protected Object mapRow(ResultSet rs, int rownum) throws SQLException {

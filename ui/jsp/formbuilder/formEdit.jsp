@@ -89,7 +89,7 @@ function clearProtocol() {
         <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="20%" nowrap>
-              <bean:message key="cadsr.formbuilder.form.name"/>
+              <bean:message key="cadsr.formbuilder.form.longName"/>
             </td>
             <td  class="OraFieldText" width="80%" nowrap>
               <html:text size="100" property="<%=FormConstants.FORM_LONG_NAME%>"

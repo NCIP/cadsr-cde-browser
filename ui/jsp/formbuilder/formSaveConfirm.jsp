@@ -41,9 +41,8 @@ function submitFormToSave(methodName) {
 	<jsp:param name="urlPrefix" value="" />
 </jsp:include>
 <%@ include file="showMessages.jsp" %>
-<html:form action="/formSaveAction.do">
+<html:form action="/saveFormDoneAction.do">
    <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
-   <html:hidden property="moduleIndex"/>
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >      
         <tr >
           <td align="center" class="OraTipLabel">
@@ -59,12 +58,12 @@ function submitFormToSave(methodName) {
       <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >      
         <tr >
          <td align="center">
-            <a href="javascript:submitFormToSave('<%=NavigationConstants.SAVE_FORM_MODULE_EDIT%>')">
+            <a href="javascript:submitFormToSave('<%=NavigationConstants.SAVE_FORM_CHANGES%>')">
                 <html:img src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
              </a> 
           </td>   
          <td align="center">
-            <a href="javascript:submitFormToSave('<%=NavigationConstants.CANCEL_FORM_CHANGES_MODULE_EDIT%>')">
+            <a href="javascript:submitFormToSave('<%=NavigationConstants.CANCEL_FORM_EDIT%>')">
                 <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
              </a> 
           </td>            

@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=windows-1252"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.resource.Context"%>
 <%@page import="java.util.HashMap " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -31,8 +33,12 @@ FormBuilder
   <jsp:useBean id="requestMap" scope="request" class="java.util.HashMap" />
   
   </jsp:useBean>
-
-
+  <cde:checkAccess
+  role="<%=CaDSRConstants.CDE_MANAGER%>"
+  key="accessValue"
+  contextName="<%=Context.CTEP%>"
+  />
+  
   <frameset cols="25%,*">
     <frameset rows="15%,*">
        <html:frame page="/cdebrowserCommon_html/tree_hdr.html"

@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.resource;
 public interface Context extends Audit
 {
 
+  public static final String CTEP="CTEP";
   public String getConteIdseq();
   public void setConteIdseq(String aConteIdseq);
   

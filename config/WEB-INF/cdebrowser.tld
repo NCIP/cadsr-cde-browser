@@ -216,4 +216,25 @@
     <rtexprvalue>true</rtexprvalue>
     </attribute>        
   </tag>  
+  <tag>
+    <name>checkAccess</name>
+    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.CheckAccess</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>Check User Access</info>  
+    <attribute>
+    <name>role</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>contextName</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>key</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>        
+  </tag>   
 </taglib>

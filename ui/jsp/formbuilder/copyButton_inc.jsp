@@ -7,7 +7,7 @@
           </td>           
           <td >
             <a href="javascript:clearForm()">
-              <html:img src='<%=urlPrefix+"i/clearAllButton.gif"%>' border="0" alt="Clear All"/>
+              <html:img src='<%=urlPrefix+"i/clear.gif"%>' border="0" alt="Clear All"/>
             </a>
           </td>                
           <td >

@@ -64,7 +64,7 @@ function submitForm() {
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.longName" />:</td>
           <td class="OraFieldText" nowrap>
             <html:text 
               property="<%= FormConstants.FORM_LONG_NAME %>"

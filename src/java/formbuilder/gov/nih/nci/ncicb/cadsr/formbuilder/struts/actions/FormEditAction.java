@@ -424,13 +424,14 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     boolean hasUpdate  = setValuesForUpdate(mapping,form,request);
       if(hasUpdate)
       {
-        return mapping.findForward("saveConfirm");
+        return mapping.findForward(SAVE_CONFIRM_MODULE_EDIT);
       }
       else
       {
-        return mapping.findForward("moduleEdit");
+        return mapping.findForward(MODULE_EDIT);
       }
     }
+    
   /**
    * Save Changes Module Edit
    *
@@ -444,7 +445,36 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
    * @throws IOException
    * @throws ServletException
    */
-  public ActionForward saveFormModuleEdit(
+  public ActionForward checkChangesDone(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    boolean hasUpdate  = setValuesForUpdate(mapping,form,request);
+      if(hasUpdate)
+      {
+        return mapping.findForward(SAVE_CONFIRM_DONE);
+      }
+      else
+      {
+        return mapping.findForward(SEARCH_RESULTS);
+      }
+    }
+    
+  /**
+   * Save Changes Module Edit
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward saveFormChanges(
     ActionMapping mapping,
     ActionForm form,
     HttpServletRequest request,
@@ -468,18 +498,18 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           }
           saveError(ERROR_FORM_SAVE_FAILED, request);
           saveError(exp.getErrorCode(), request);
-          return mapping.findForward(FORM_EDIT);
+          return mapping.findForward(FAILURE);
         }
         catch (CloneNotSupportedException exp) {
           saveError(ERROR_FORM_SAVE_FAILED, request);
           if (log.isErrorEnabled()) {
             log.error("On save, Exception on cloneing crf " + crf,exp);
           }
-          return mapping.findForward(FORM_EDIT);
+          return mapping.findForward(FAILURE);
         }
         saveMessage("cadsr.formbuilder.form.edit.save.success", request);
         removeSessionObject(request, DELETED_MODULES);
-        return mapping.findForward(MODULE_EDIT);
+        return mapping.findForward(SUCCESS);
 
     }
   /**

@@ -26,7 +26,7 @@
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentBlack">
         <tr >
           <td  class="PrinterOraTableColumnHeader" width="20%">
-            <bean:message key="cadsr.formbuilder.form.name" />
+            <bean:message key="cadsr.formbuilder.form.longName" />
           </td>                
           <td  class="PrinterOraTableColumnHeader">
             <bean:write name="<%=FormConstants.CRF%>" property="longName"/>

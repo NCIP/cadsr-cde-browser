@@ -26,6 +26,7 @@ if(confirm(message)) location.href = url;
           <tr class="OraTableColumnHeader">
           	<th class="OraTableColumnHeader" nowrap>Action</th>
           	<th class="OraTableColumnHeader" nowrap>Long Name</th>
+            <th class="OraTableColumnHeader" nowrap>Context</th>
           	<th class="OraTableColumnHeader" nowrap>Type</th>
             <th class="OraTableColumnHeader" nowrap>Protocol</th>
           	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	
@@ -99,6 +100,9 @@ if(confirm(message)) location.href = url;
 			</html:link>          		    
           	</td>
           	<td class="OraFieldText">
+          		<bean:write name="form" property="context.name"/><br>
+          	</td>            
+          	<td class="OraFieldText">
           		<bean:write name="form" property="formType"/><br>
           	</td>
           	<td class="OraFieldText">
@@ -131,6 +135,7 @@ if(confirm(message)) location.href = url;
   	      <tr class="OraTableColumnHeader">
           	<th class="OraTableColumnHeader" nowrap>Action</th>
           	<th class="OraTableColumnHeader" nowrap>Long Name</th>
+            <th class="OraTableColumnHeader" nowrap>Context</th>
           	<th class="OraTableColumnHeader" nowrap>Type</th>
             <th class="OraTableColumnHeader" nowrap>Protocol</th>
           	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	

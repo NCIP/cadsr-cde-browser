@@ -18,7 +18,7 @@ public class JDBCFormCategoryDAO extends JDBCBaseDAO implements FormCategoryDAO 
   public JDBCFormCategoryDAO(ServiceLocator locator) {
     super(locator);
   }
-
+ 
   /**
    * Gets all the form/template categories. This info is maintained in
    * Table:QC_DISPLAY_LOV_EXT  Column:QCDL_NAME
@@ -59,7 +59,7 @@ public class JDBCFormCategoryDAO extends JDBCBaseDAO implements FormCategoryDAO 
     }
 
     public void setSql() {
-      super.setSql("select QCDL_NAME from QC_DISPLAY_LOV_EXT");
+      super.setSql("select QCDL_NAME from QC_DISPLAY_LOV_EXT order by upper(QCDL_NAME)");
     }
 
     protected Object mapRow(

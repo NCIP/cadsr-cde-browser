@@ -56,6 +56,21 @@ function gotoClassificationsLOV() {
 
   <logic:present name="searchForm" property="<%=FormConstants.CONTEXT_NAME%>">
    <logic:notEqual name="searchForm" property="<%=FormConstants.CONTEXT_NAME%>" value='<%=""%>'>
+     <logic:present name="searchForm" property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>">
+      <logic:notEqual name="searchForm" property="<%=FormConstants.CONTEXT_NAME%>" value='<%=""%>'>
+      <table width="100%">
+	      <tr>
+	      <td align="center">
+	      <h3 class="CDEBrowserPageContext">
+		 caDSRContext >> <bean:write name="searchForm" property="<%=FormConstants.CONTEXT_NAME%>" />
+                  >> <bean:write name="searchForm" property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" />
+	      </h3>
+	      </td>
+	      </tr>
+      </table>      
+      </logic:notEqual>
+     </logic:present>
+     <logic:notPresent name="searchForm" property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>">
       <table width="100%">
 	      <tr>
 	      <td align="center">
@@ -65,6 +80,7 @@ function gotoClassificationsLOV() {
 	      </td>
 	      </tr>
       </table>
+     </logic:notPresent>
      </logic:notEqual>
   </logic:present>
   

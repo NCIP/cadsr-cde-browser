@@ -1,4 +1,4 @@
-</SCRIPT>
+
 
  <script LANGUAGE="Javascript">
 <!---
@@ -47,7 +47,7 @@ if(confirm(message)) location.href = url;
 		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
            formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
            activeImageSource="i/deleteButton.gif" 
-		       		activeUrl='<%="/formHrefDeleteAction.do?"
+		       		activeUrl='<%="/formViewDeleteAction.do?"
                          +NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>'
 		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
 		   	   	urlPrefix="<%=urlPrefix%>"
