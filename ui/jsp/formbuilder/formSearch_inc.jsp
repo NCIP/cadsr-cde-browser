@@ -109,6 +109,13 @@ function clearProtocol() {
  <TR>
     <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=<%=urlPrefix%>i/searchButton.gif border=0></a></td>
     <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=urlPrefix%>i/clearAllButton.gif border=0></a></td>
+ </TR>
+ <TR>
+    <td colspan="3" align="right" nowrap>
+      <html:link action='<%="/formCreate?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_FORM%>'>
+        <html:img src='<%=urlPrefix+"i/create_new_form_template.gif"%>' border="0" alt="Create New Form"/>
+      </html:link>&nbsp;
+    </td>  
  </TR>    
     <tr>
       <td>&nbsp;</td>
