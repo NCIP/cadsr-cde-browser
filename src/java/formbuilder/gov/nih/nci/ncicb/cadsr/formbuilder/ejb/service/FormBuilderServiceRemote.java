@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 
 import java.rmi.RemoteException;
@@ -18,7 +19,7 @@ import java.util.Map;
 public interface FormBuilderServiceRemote {
     public Collection getAllForms(String formLongName, String protocolIdSeq,
         String contextIdSeq, String workflow, String categoryName, String type,
-        String classificationIdSeq) throws RemoteException;
+        String classificationIdSeq,NCIUser user) throws RemoteException;
 
     public Form getFormDetails(String formPK) throws RemoteException;
 

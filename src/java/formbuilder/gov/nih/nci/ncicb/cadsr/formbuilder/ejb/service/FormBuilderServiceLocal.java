@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service;
 
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
@@ -19,7 +20,8 @@ public interface FormBuilderServiceLocal  {
     String workflow,
     String categoryName,
     String type,
-    String classificationIdSeq) throws DMLException;
+    String classificationIdSeq,
+    NCIUser user) throws DMLException;
 
   public Form getFormDetails(String formPK) throws DMLException;
 

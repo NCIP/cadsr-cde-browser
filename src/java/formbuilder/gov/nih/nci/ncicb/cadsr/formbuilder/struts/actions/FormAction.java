@@ -5,6 +5,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
 import java.util.List;
@@ -87,7 +88,7 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     forms =
       service.getAllForms(
         formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type,
-        classificationIdSeq);
+        classificationIdSeq,(NCIUser)getSessionObject(request,this.USER_KEY));
     setSessionObject(request, this.FORM_SEARCH_RESULTS, forms,true);
 
     //Initialize and add the PagenationBean to the Session

@@ -7,6 +7,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
 import java.util.Collection;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.Map;
 public interface FormBuilderServiceDelegate {
     public Collection getAllForms(String formName, String protocol,
         String context, String workflow, String category, String type,
-        String classificationIdSeq);
+        String classificationIdSeq,NCIUser user);
 
     public Form getFormDetails(String formPK) throws FormBuilderException;
 

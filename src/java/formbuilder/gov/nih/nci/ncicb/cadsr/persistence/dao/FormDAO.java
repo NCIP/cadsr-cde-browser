@@ -16,7 +16,8 @@ public interface FormDAO extends AdminComponentDAO {
     String workflow,
     String categoryName,
     String type,
-    String classificationIdseq);
+    String classificationIdseq,
+    String contextRestriction);
 
   /**
    * Gets all the modules in a form

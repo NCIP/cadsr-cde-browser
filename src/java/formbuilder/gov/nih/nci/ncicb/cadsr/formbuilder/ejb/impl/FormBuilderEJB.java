@@ -2,16 +2,33 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.impl;
 
 import com.evermind.sql.OrionCMTDataSource;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.ejb.common.SessionBeanAdapter;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service.FormBuilderServiceRemote;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.*;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
-import gov.nih.nci.ncicb.cadsr.resource.*;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.FormInstructionDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.FormValidValueDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleInstructionDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
+import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
@@ -65,13 +82,22 @@ public class FormBuilderEJB extends SessionBeanAdapter
      */
     public Collection getAllForms(String formLongName, String protocolIdSeq,
         String contextIdSeq, String workflow, String categoryName, String type,
-        String classificationIdSeq) {
+        String classificationIdSeq,NCIUser user) {
         FormDAO dao = daoFactory.getFormDAO();
+        ContextDAO contextDao = daoFactory.getContextDAO();
+        
         Collection forms = null;
-
+        
         try {
+            Context ctep = contextDao.getContextByName(ContextDAO.CTEP);
+            String contextRestriction =null;
+            if(user!=null&&!user.hasRoleAccess(CaDSRConstants.CDE_MANAGER,ctep))
+            {
+               contextRestriction= ctep.getConteIdseq();
+            }
             forms = dao.getAllForms(formLongName, protocolIdSeq, contextIdSeq,
-                    workflow, categoryName, type, classificationIdSeq);
+                    workflow, categoryName, type, classificationIdSeq,
+                    contextRestriction);
         } catch (Exception ex) {
             throw new DMLException("Cannot get Forms", ex);
         }

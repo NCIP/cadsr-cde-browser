@@ -1,8 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.resource;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
-public interface NCIUser 
+public interface NCIUser extends Serializable
 {
   public String getUsername();
   public boolean hasRoleAccess(String role, Context context);

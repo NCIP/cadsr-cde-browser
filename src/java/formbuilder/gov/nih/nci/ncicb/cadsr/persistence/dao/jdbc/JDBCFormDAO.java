@@ -60,12 +60,13 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     String workflow,
     String categoryName,
     String type,
-    String classificationIdseq) {
+    String classificationIdseq,
+    String contextRestriction) {
     FormQuery query = new FormQuery();
     query.setDataSource(getDataSource());
     query.setSql(
       formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type,
-      classificationIdseq);
+      classificationIdseq,contextRestriction);
 
     return query.execute();
   }
@@ -464,11 +465,12 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       String workflow,
       String categoryName,
       String type,
-      String classificationIdseq) {
+      String classificationIdseq,
+      String contextRestriction) {
       String whereClause =
         makeWhereClause(
           formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
-          type, classificationIdseq);
+          type, classificationIdseq,contextRestriction);
       super.setSql("SELECT * FROM FB_FORMS_VIEW " + whereClause);
     }
 
@@ -487,7 +489,8 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       String workflow,
       String category,
       String type,
-      String classificationIdseq) {
+      String classificationIdseq,
+      String contextRestriction) {
       String where = "";
       StringBuffer whereBuffer = new StringBuffer("");
       boolean hasWhere = false;
@@ -566,6 +569,16 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
           whereBuffer.append(
             " WHERE QC_IDSEQ in (select ac_idseq from ac_csi where CS_CSI_IDSEQ ='" +
             classificationIdseq + "')");
+          hasWhere = true;
+        }
+      }
+      
+      if (StringUtils.doesValueExist(contextRestriction)) {  
+        if (hasWhere) {
+          whereBuffer.append(" AND CONTE_IDSEQ !='" + contextRestriction + "'");
+        }
+        else {
+          whereBuffer.append(" WHERE NOT CONTE_IDSEQ !='" + contextRestriction + "'");
           hasWhere = true;
         }
       }
