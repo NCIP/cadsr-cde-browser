@@ -31,6 +31,7 @@
       <forward name="success" path="/formbuilder/manageReferenceDocs.jsp"/>
       <forward name="gotoUpload" path="/formbuilder/uploadDocument.jsp"/>
       <forward name="gotoEdit" path="/formToEditAction.do?method=getFormToEdit"/>
+      <forward name="backtoRefDocEdit" path="/manageReferenceDocs.do?method=manageReferenceDocs"/>
       <forward name="gotoConfirmCancel" path="/formbuilder/refDocConfirmCancel.jsp"/>
     </action>
 

@@ -466,7 +466,7 @@ public class ReferenceDocumentAction
   removeSessionObject(request, DELETED_ATTACHMENTS);
   removeSessionObject(request, REFDOCS_TEMPLATE_ATT_NAME);
   saveMessage("cadsr.formbuilder.refdoc.save.success", request);
-  return mapping.findForward("gotoEdit");
+  return mapping.findForward("backtoRefDocEdit");
  }
  
   /**
