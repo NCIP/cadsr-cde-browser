@@ -21,6 +21,7 @@ public class DataElementTransferObject extends AdminComponentTransferObject
   private String usingContexts;
 
   public DataElementTransferObject() {
+    idseq = deIdseq;
   }
 
   public String getDeIdseq() {

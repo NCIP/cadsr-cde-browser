@@ -17,6 +17,7 @@ public class ModuleTransferObject extends AdminComponentTransferObject
   private int dispOrder;
 
   public ModuleTransferObject() {
+    idseq = moduleIdseq;
   }
 
   public String getModuleIdseq() {

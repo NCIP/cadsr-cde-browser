@@ -7,7 +7,6 @@ import java.sql.Date;
 
 import java.util.List;
 
-
 public class AdminComponentTransferObject extends BaseTransferObject
   implements AdminComponent {
   protected String preferredName;
@@ -23,6 +22,7 @@ public class AdminComponentTransferObject extends BaseTransferObject
   protected List designations;
   protected int publicId;
   protected String origin;
+  protected String idseq;
 
   public AdminComponentTransferObject() {
   }
@@ -156,5 +156,13 @@ public class AdminComponentTransferObject extends BaseTransferObject
     sb.append(super.toString());
 
     return sb.toString();
+  }
+
+  public String getIdseq() {
+    return idseq;
+  }
+
+  public void setIdseq(String idseq) {
+    this.idseq = idseq;
   }
 }
