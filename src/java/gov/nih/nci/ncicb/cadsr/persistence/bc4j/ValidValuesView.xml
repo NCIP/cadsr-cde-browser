@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
 
 <ViewObject
@@ -24,8 +24,9 @@ WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = Permissible
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.10.62" />
-      <Attr Name="_CodeGenFlagNew" Value="36" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
    </DesignTime>
    <EntityUsage
       Name="VdPvs"
@@ -98,82 +99,61 @@ WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = Permissible
       Name="ShortMeaning"
       IsUpdateable="false"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="ShortMeaning"
       EntityUsage="ValueMeaningsLov"
-      AliasName="SHORT_MEANING"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="SHORT_MEANING" >
    </ViewAttribute>
    <ViewAttribute
       Name="Description"
       IsUpdateable="false"
+      PrecisionRule="false"
       EntityAttrName="Description"
       EntityUsage="ValueMeaningsLov"
-      AliasName="DESCRIPTION"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="DESCRIPTION" >
    </ViewAttribute>
    <ViewAttribute
       Name="Value"
       IsUpdateable="false"
       IsUnique="true"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="Value"
       EntityUsage="PermissibleValues"
-      AliasName="VALUE"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="VALUE" >
    </ViewAttribute>
    <ViewAttribute
       Name="PvIdseq"
       IsUpdateable="false"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="PvIdseq"
       EntityUsage="PermissibleValues"
-      AliasName="PV_IDSEQ"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="PV_IDSEQ" >
    </ViewAttribute>
    <ViewAttribute
       Name="VdIdseq"
       IsUpdateable="false"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="VdIdseq"
       EntityUsage="ValueDomains"
-      AliasName="VD_IDSEQ"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="VD_IDSEQ" >
    </ViewAttribute>
    <ViewAttribute
       Name="MeaningDescription"
       IsUpdateable="false"
+      PrecisionRule="false"
       EntityAttrName="MeaningDescription"
       EntityUsage="PermissibleValues"
-      AliasName="MEANING_DESCRIPTION"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="MEANING_DESCRIPTION" >
    </ViewAttribute>
    <ViewAttribute
       Name="VpIdseq"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="VpIdseq"
       EntityUsage="VdPvs"
-      AliasName="VP_IDSEQ"
-      ColumnType="VARCHAR2" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="VP_IDSEQ" >
    </ViewAttribute>
 </ViewObject>

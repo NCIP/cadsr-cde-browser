@@ -37,8 +37,9 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
   GUIDGenerator idGen = null;
   public JDBCBaseDAO(ServiceLocator locator) {
     super(locator);
-    idGen = new GUIDGenerator (this.getDataSource());
     log = LogFactory.getLog(JDBCBaseDAO.class.getName());
+    idGen = new GUIDGenerator (this.getDataSource());
+    
   }
 
   public DataSource getDataSource(String key) {

@@ -7,24 +7,24 @@ import oracle.jbo.domain.Date;
 //  ---------------------------------------------------------------
 
 public class AcRegistrationsViewRowImpl extends ViewRowImpl  {
-  protected static final int ARIDSEQ = 0;
 
 
-  protected static final int ACIDSEQ = 1;
-  protected static final int ORGIDSEQ = 2;
-  protected static final int SUBIDSEQ = 3;
-  protected static final int REGISIDSEQ = 4;
-  protected static final int REGISTRATIONSTATUS = 5;
-  protected static final int UNRESOLVEDISSUE = 6;
-  protected static final int ORIGIN = 7;
-  protected static final int LASTCHANGE = 8;
-  protected static final int DATAIDENTIFIER = 9;
-  protected static final int VERSIONIDENTIFIER = 10;
-  protected static final int IRDI = 11;
-  protected static final int DATECREATED = 12;
-  protected static final int CREATEDBY = 13;
-  protected static final int DATEMODIFIED = 14;
-  protected static final int MODIFIEDBY = 15;
+  public static final int ARIDSEQ = 0;
+  public static final int ACIDSEQ = 1;
+  public static final int ORGIDSEQ = 2;
+  public static final int SUBIDSEQ = 3;
+  public static final int REGISIDSEQ = 4;
+  public static final int REGISTRATIONSTATUS = 5;
+  public static final int UNRESOLVEDISSUE = 6;
+  public static final int ORIGIN = 7;
+  public static final int LASTCHANGE = 8;
+  public static final int DATAIDENTIFIER = 9;
+  public static final int VERSIONIDENTIFIER = 10;
+  public static final int IRDI = 11;
+  public static final int DATECREATED = 12;
+  public static final int CREATEDBY = 13;
+  public static final int DATEMODIFIED = 14;
+  public static final int MODIFIEDBY = 15;
   /**
    * 
    * This is the default constructor (do not remove)

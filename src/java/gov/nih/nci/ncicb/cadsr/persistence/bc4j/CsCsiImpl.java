@@ -12,24 +12,25 @@ import oracle.jbo.Key;
 
 public class CsCsiImpl extends EntityImpl 
 {
-  protected static final int CSCSIIDSEQ = 0;
-  protected static final int CSIDSEQ = 1;
-  protected static final int CSIIDSEQ = 2;
-  protected static final int PCSCSIIDSEQ = 3;
-  protected static final int LINKCSCSIIDSEQ = 4;
-  protected static final int LABEL = 5;
-  protected static final int DISPLAYORDER = 6;
-  protected static final int DATECREATED = 7;
-  protected static final int CREATEDBY = 8;
-  protected static final int DATEMODIFIED = 9;
-  protected static final int MODIFIEDBY = 10;
-  protected static final int LINKCSCSIIDSEQCSCSI = 11;
-  protected static final int PCSCSIIDSEQCSCSI = 12;
-  protected static final int CLASSSCHEMEITEMS = 13;
-  protected static final int CLASSIFICATIONSCHEMES = 14;
-  protected static final int CSCSI = 15;
-  protected static final int CSCSI1 = 16;
-  protected static final int ACCSI = 17;
+  public static final int CSCSIIDSEQ = 0;
+  public static final int CSIDSEQ = 1;
+  public static final int CSIIDSEQ = 2;
+  public static final int PCSCSIIDSEQ = 3;
+  public static final int LINKCSCSIIDSEQ = 4;
+  public static final int LABEL = 5;
+  public static final int DISPLAYORDER = 6;
+  public static final int DATECREATED = 7;
+  public static final int CREATEDBY = 8;
+  public static final int DATEMODIFIED = 9;
+  public static final int MODIFIEDBY = 10;
+  public static final int LINKCSCSIIDSEQCSCSI = 11;
+  public static final int PCSCSIIDSEQCSCSI = 12;
+  public static final int CLASSSCHEMEITEMS = 13;
+  public static final int CLASSIFICATIONSCHEMES = 14;
+  public static final int CSCSI = 15;
+  public static final int CSCSI1 = 16;
+  public static final int ACCSI = 17;
+
 
 
 
@@ -49,7 +50,7 @@ public class CsCsiImpl extends EntityImpl
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
   public static synchronized EntityDefImpl getDefinitionObject()
   {
@@ -59,6 +60,7 @@ public class CsCsiImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -456,12 +458,13 @@ public class CsCsiImpl extends EntityImpl
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
   public static Key createPrimaryKey(String csCsiIdseq)
   {
     return new Key(new Object[] {csCsiIdseq});
   }
+
 
 
 

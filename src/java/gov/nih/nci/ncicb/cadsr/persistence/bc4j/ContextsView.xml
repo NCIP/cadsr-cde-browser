@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
 
 <ViewObject
@@ -27,8 +27,9 @@
    UseGlueCode="false" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.10.62" />
-      <Attr Name="_CodeGenFlagNew" Value="36" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
    </DesignTime>
    <EntityUsage
       Name="Contexts"
@@ -41,122 +42,89 @@
    <ViewAttribute
       Name="ConteIdseq"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="ConteIdseq"
       EntityUsage="Contexts"
-      AliasName="CONTE_IDSEQ"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="CONTE_IDSEQ" >
    </ViewAttribute>
    <ViewAttribute
       Name="Name"
       IsUnique="true"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="Name"
       EntityUsage="Contexts"
-      AliasName="NAME"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="NAME" >
    </ViewAttribute>
    <ViewAttribute
       Name="LlName"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="LlName"
       EntityUsage="Contexts"
-      AliasName="LL_NAME"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="LL_NAME" >
    </ViewAttribute>
    <ViewAttribute
       Name="PalName"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="PalName"
       EntityUsage="Contexts"
-      AliasName="PAL_NAME"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="PAL_NAME" >
    </ViewAttribute>
    <ViewAttribute
       Name="Description"
+      PrecisionRule="false"
       EntityAttrName="Description"
       EntityUsage="Contexts"
-      AliasName="DESCRIPTION"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="DESCRIPTION" >
    </ViewAttribute>
    <ViewAttribute
       Name="Language"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="Language"
       EntityUsage="Contexts"
-      AliasName="LANGUAGE"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="LANGUAGE" >
    </ViewAttribute>
    <ViewAttribute
       Name="Version"
       IsUnique="true"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="Version"
       EntityUsage="Contexts"
-      AliasName="VERSION"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="VERSION" >
    </ViewAttribute>
    <ViewAttribute
       Name="CreatedBy"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="CreatedBy"
       EntityUsage="Contexts"
-      AliasName="CREATED_BY"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="CREATED_BY" >
    </ViewAttribute>
    <ViewAttribute
       Name="DateCreated"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="DateCreated"
       EntityUsage="Contexts"
-      AliasName="DATE_CREATED"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="DATE_CREATED" >
    </ViewAttribute>
    <ViewAttribute
       Name="ModifiedBy"
+      PrecisionRule="false"
       EntityAttrName="ModifiedBy"
       EntityUsage="Contexts"
-      AliasName="MODIFIED_BY"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="MODIFIED_BY" >
    </ViewAttribute>
    <ViewAttribute
       Name="DateModified"
+      PrecisionRule="false"
       EntityAttrName="DateModified"
       EntityUsage="Contexts"
-      AliasName="DATE_MODIFIED"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="DATE_MODIFIED" >
    </ViewAttribute>
    <ViewLinkAccessor
       Name="DataElementsView"

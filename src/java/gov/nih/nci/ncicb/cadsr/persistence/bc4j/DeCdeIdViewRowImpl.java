@@ -10,8 +10,8 @@ import oracle.jbo.domain.Number;
 public class DeCdeIdViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int ACIDSEQ = 0;
-  protected static final int MINCDEID = 1;
+  public static final int ACIDSEQ = 0;
+  public static final int MINCDEID = 1;
   /**
    * 
    * This is the default constructor (do not remove)

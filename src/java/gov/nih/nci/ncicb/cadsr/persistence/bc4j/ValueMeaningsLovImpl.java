@@ -11,16 +11,17 @@ import oracle.jbo.Key;
 
 public class ValueMeaningsLovImpl extends EntityImpl 
 {
-  protected static final int SHORTMEANING = 0;
-  protected static final int DESCRIPTION = 1;
-  protected static final int COMMENTS = 2;
-  protected static final int BEGINDATE = 3;
-  protected static final int ENDDATE = 4;
-  protected static final int DATECREATED = 5;
-  protected static final int CREATEDBY = 6;
-  protected static final int DATEMODIFIED = 7;
-  protected static final int MODIFIEDBY = 8;
-  protected static final int PERMISSIBLEVALUES = 9;
+  public static final int SHORTMEANING = 0;
+  public static final int DESCRIPTION = 1;
+  public static final int COMMENTS = 2;
+  public static final int BEGINDATE = 3;
+  public static final int ENDDATE = 4;
+  public static final int DATECREATED = 5;
+  public static final int CREATEDBY = 6;
+  public static final int DATEMODIFIED = 7;
+  public static final int MODIFIEDBY = 8;
+  public static final int PERMISSIBLEVALUES = 9;
+
 
 
 
@@ -36,7 +37,7 @@ public class ValueMeaningsLovImpl extends EntityImpl
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
   public static synchronized EntityDefImpl getDefinitionObject()
   {
@@ -46,6 +47,7 @@ public class ValueMeaningsLovImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -293,12 +295,13 @@ public class ValueMeaningsLovImpl extends EntityImpl
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
   public static Key createPrimaryKey(String shortMeaning)
   {
     return new Key(new Object[] {shortMeaning});
   }
+
 
 
 

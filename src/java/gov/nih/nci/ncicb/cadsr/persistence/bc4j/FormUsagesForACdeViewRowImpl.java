@@ -8,15 +8,15 @@ import oracle.jbo.server.AttributeDefImpl;
 public class FormUsagesForACdeViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int PROTOCOLNUMBER = 0;
-  protected static final int LEADORG = 1;
-  protected static final int CRFLONGNAME = 2;
-  protected static final int USAGETYPE = 3;
-  protected static final int CRFIDSEQ = 4;
-  protected static final int PROTOIDSEQ = 5;
-  protected static final int DEIDSEQ = 6;
-  protected static final int QUELONGNAME = 7;
-  protected static final int QUEDEIDSEQ = 8;
+  public static final int PROTOCOLNUMBER = 0;
+  public static final int LEADORG = 1;
+  public static final int CRFLONGNAME = 2;
+  public static final int USAGETYPE = 3;
+  public static final int CRFIDSEQ = 4;
+  public static final int PROTOIDSEQ = 5;
+  public static final int DEIDSEQ = 6;
+  public static final int QUELONGNAME = 7;
+  public static final int QUEDEIDSEQ = 8;
   /**
    * 
    * This is the default constructor (do not remove)

@@ -12,18 +12,19 @@ import oracle.jbo.Key;
 //  ---------------------------------------------------------------
 
 public class DesignationsImpl extends EntityImpl  {
-  protected static final int DESIGIDSEQ = 0;
-  protected static final int ACIDSEQ = 1;
-  protected static final int CONTEIDSEQ = 2;
-  protected static final int NAME = 3;
-  protected static final int DETLNAME = 4;
-  protected static final int DATECREATED = 5;
-  protected static final int CREATEDBY = 6;
-  protected static final int DATEMODIFIED = 7;
-  protected static final int MODIFIEDBY = 8;
-  protected static final int LAENAME = 9;
-  protected static final int ADMINISTEREDCOMPONENTS = 10;
-  protected static final int CONTEXTS = 11;
+  public static final int DESIGIDSEQ = 0;
+  public static final int ACIDSEQ = 1;
+  public static final int CONTEIDSEQ = 2;
+  public static final int NAME = 3;
+  public static final int DETLNAME = 4;
+  public static final int DATECREATED = 5;
+  public static final int CREATEDBY = 6;
+  public static final int DATEMODIFIED = 7;
+  public static final int MODIFIEDBY = 8;
+  public static final int LAENAME = 9;
+  public static final int ADMINISTEREDCOMPONENTS = 10;
+  public static final int CONTEXTS = 11;
+
 
 
 
@@ -43,14 +44,17 @@ public class DesignationsImpl extends EntityImpl  {
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
-  public static synchronized EntityDefImpl getDefinitionObject() {
-    if (mDefinitionObject == null) {
+  public static synchronized EntityDefImpl getDefinitionObject()
+  {
+    if (mDefinitionObject == null)
+    {
       mDefinitionObject = (EntityDefImpl)EntityDefImpl.findDefObject("gov.nih.nci.ncicb.cadsr.persistence.bc4j.Designations");
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -367,11 +371,13 @@ public class DesignationsImpl extends EntityImpl  {
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
-  public static Key createPrimaryKey(String desigIdseq) {
+  public static Key createPrimaryKey(String desigIdseq)
+  {
     return new Key(new Object[] {desigIdseq});
   }
+
 
 
 

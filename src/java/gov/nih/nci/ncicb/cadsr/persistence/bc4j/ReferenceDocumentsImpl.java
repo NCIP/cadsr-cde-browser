@@ -12,25 +12,26 @@ import oracle.jbo.Key;
 
 public class ReferenceDocumentsImpl extends EntityImpl 
 {
-  protected static final int RDIDSEQ = 0;
-  protected static final int NAME = 1;
-  protected static final int ORGIDSEQ = 2;
-  protected static final int DCTLNAME = 3;
-  protected static final int ACIDSEQ = 4;
-  protected static final int ACHIDSEQ = 5;
-  protected static final int ARIDSEQ = 6;
-  protected static final int RDTLNAME = 7;
-  protected static final int DOCTEXT = 8;
-  protected static final int DATECREATED = 9;
-  protected static final int CREATEDBY = 10;
-  protected static final int DATEMODIFIED = 11;
-  protected static final int MODIFIEDBY = 12;
-  protected static final int URL = 13;
-  protected static final int LAENAME = 14;
-  protected static final int DISPLAYORDER = 15;
-  protected static final int ADMINISTEREDCOMPONENTS = 16;
-  protected static final int ACREGISTRATIONS = 17;
-  protected static final int REFERENCEBLOBS = 18;
+  public static final int RDIDSEQ = 0;
+  public static final int NAME = 1;
+  public static final int ORGIDSEQ = 2;
+  public static final int DCTLNAME = 3;
+  public static final int ACIDSEQ = 4;
+  public static final int ACHIDSEQ = 5;
+  public static final int ARIDSEQ = 6;
+  public static final int RDTLNAME = 7;
+  public static final int DOCTEXT = 8;
+  public static final int DATECREATED = 9;
+  public static final int CREATEDBY = 10;
+  public static final int DATEMODIFIED = 11;
+  public static final int MODIFIEDBY = 12;
+  public static final int URL = 13;
+  public static final int LAENAME = 14;
+  public static final int DISPLAYORDER = 15;
+  public static final int ADMINISTEREDCOMPONENTS = 16;
+  public static final int ACREGISTRATIONS = 17;
+  public static final int REFERENCEBLOBS = 18;
+
 
 
   private static EntityDefImpl mDefinitionObject;
@@ -45,14 +46,17 @@ public class ReferenceDocumentsImpl extends EntityImpl
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
-  public static synchronized EntityDefImpl getDefinitionObject() {
-    if (mDefinitionObject == null) {
+  public static synchronized EntityDefImpl getDefinitionObject()
+  {
+    if (mDefinitionObject == null)
+    {
       mDefinitionObject = (EntityDefImpl)EntityDefImpl.findDefObject("gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments");
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -494,11 +498,13 @@ public class ReferenceDocumentsImpl extends EntityImpl
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
-  public static Key createPrimaryKey(String rdIdseq) {
+  public static Key createPrimaryKey(String rdIdseq)
+  {
     return new Key(new Object[] {rdIdseq});
   }
+
 
 
 }

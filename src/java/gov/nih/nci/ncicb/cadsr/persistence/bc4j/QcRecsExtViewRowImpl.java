@@ -9,17 +9,17 @@ import oracle.jbo.domain.Date;
 
 public class QcRecsExtViewRowImpl extends ViewRowImpl 
 {
-  protected static final int QRIDSEQ = 0;
 
 
-  protected static final int PQCIDSEQ = 1;
-  protected static final int CQCIDSEQ = 2;
-  protected static final int DISPLAYORDER = 3;
-  protected static final int RLNAME = 4;
-  protected static final int DATECREATED = 5;
-  protected static final int CREATEDBY = 6;
-  protected static final int DATEMODIFIED = 7;
-  protected static final int MODIFIEDBY = 8;
+  public static final int QRIDSEQ = 0;
+  public static final int PQCIDSEQ = 1;
+  public static final int CQCIDSEQ = 2;
+  public static final int DISPLAYORDER = 3;
+  public static final int RLNAME = 4;
+  public static final int DATECREATED = 5;
+  public static final int CREATEDBY = 6;
+  public static final int DATEMODIFIED = 7;
+  public static final int MODIFIEDBY = 8;
   /**
    * 
    * This is the default constructor (do not remove)

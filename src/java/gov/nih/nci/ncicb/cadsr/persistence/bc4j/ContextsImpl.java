@@ -12,29 +12,30 @@ import oracle.jbo.Key;
 
 public class ContextsImpl extends EntityImpl 
 {
-  protected static final int CONTEIDSEQ = 0;
-  protected static final int NAME = 1;
-  protected static final int LLNAME = 2;
-  protected static final int PALNAME = 3;
-  protected static final int DESCRIPTION = 4;
-  protected static final int LANGUAGE = 5;
-  protected static final int VERSION = 6;
-  protected static final int CREATEDBY = 7;
-  protected static final int DATECREATED = 8;
-  protected static final int MODIFIEDBY = 9;
-  protected static final int DATEMODIFIED = 10;
-  protected static final int DATAELEMENTS = 11;
-  protected static final int DATAELEMENTCONCEPTS = 12;
-  protected static final int VALUEDOMAINS = 13;
-  protected static final int VDPVS = 14;
-  protected static final int ADMINISTEREDCOMPONENTS = 15;
-  protected static final int CLASSIFICATIONSCHEMES = 16;
-  protected static final int QUESTCONTENTSEXT = 17;
-  protected static final int OBJECTCLASSESEXT = 18;
-  protected static final int PROPERTIESEXT = 19;
-  protected static final int CONCEPTUALDOMAINS = 20;
-  protected static final int DESIGNATIONS = 21;
-  protected static final int PROTOCOL = 22;
+  public static final int CONTEIDSEQ = 0;
+  public static final int NAME = 1;
+  public static final int LLNAME = 2;
+  public static final int PALNAME = 3;
+  public static final int DESCRIPTION = 4;
+  public static final int LANGUAGE = 5;
+  public static final int VERSION = 6;
+  public static final int CREATEDBY = 7;
+  public static final int DATECREATED = 8;
+  public static final int MODIFIEDBY = 9;
+  public static final int DATEMODIFIED = 10;
+  public static final int DATAELEMENTS = 11;
+  public static final int DATAELEMENTCONCEPTS = 12;
+  public static final int VALUEDOMAINS = 13;
+  public static final int VDPVS = 14;
+  public static final int ADMINISTEREDCOMPONENTS = 15;
+  public static final int CLASSIFICATIONSCHEMES = 16;
+  public static final int QUESTCONTENTSEXT = 17;
+  public static final int OBJECTCLASSESEXT = 18;
+  public static final int PROPERTIESEXT = 19;
+  public static final int CONCEPTUALDOMAINS = 20;
+  public static final int DESIGNATIONS = 21;
+  public static final int PROTOCOL = 22;
+
 
 
 
@@ -62,14 +63,17 @@ public class ContextsImpl extends EntityImpl
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
-  public static synchronized EntityDefImpl getDefinitionObject() {
-    if (mDefinitionObject == null) {
+  public static synchronized EntityDefImpl getDefinitionObject()
+  {
+    if (mDefinitionObject == null)
+    {
       mDefinitionObject = (EntityDefImpl)EntityDefImpl.findDefObject("gov.nih.nci.ncicb.cadsr.persistence.bc4j.Contexts");
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -491,11 +495,13 @@ public class ContextsImpl extends EntityImpl
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
-  public static Key createPrimaryKey(String conteIdseq) {
+  public static Key createPrimaryKey(String conteIdseq)
+  {
     return new Key(new Object[] {conteIdseq});
   }
+
 
 
 

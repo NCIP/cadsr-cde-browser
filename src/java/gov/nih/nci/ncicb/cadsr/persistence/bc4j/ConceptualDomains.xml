@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
 
 <Entity
@@ -8,11 +8,11 @@
    AliasName="ConceptualDomains"
    BindingStyle="Oracle"
    UseGlueCode="false"
-   CodeGenFlag="79"
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConceptualDomainsImpl" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Init|Delete|Access|DML|Val" />
       <AttrArray Name="_publishEvents">
       </AttrArray>
    </DesignTime>
@@ -20,8 +20,8 @@
       Name="CdIdseq"
       IsNotNull="true"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="CD_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS"
@@ -38,22 +38,19 @@
       IsNotNull="true"
       Precision="4"
       Scale="2"
-      Type="oracle.jbo.domain.Number"
       ColumnName="VERSION"
+      Type="oracle.jbo.domain.Number"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
       TableName="CONCEPTUAL_DOMAINS" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="PreferredName"
       IsUnique="true"
       IsNotNull="true"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="PREFERRED_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -66,8 +63,8 @@
       IsUnique="true"
       IsNotNull="true"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="CONTE_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS"
@@ -81,8 +78,8 @@
       Name="PreferredDefinition"
       IsNotNull="true"
       Precision="2000"
-      Type="java.lang.String"
       ColumnName="PREFERRED_DEFINITION"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -93,8 +90,8 @@
    <Attribute
       Name="Dimensionality"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="DIMENSIONALITY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -105,8 +102,8 @@
    <Attribute
       Name="LongName"
       Precision="255"
-      Type="java.lang.String"
       ColumnName="LONG_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -118,8 +115,8 @@
       Name="AslName"
       IsNotNull="true"
       Precision="20"
-      Type="java.lang.String"
       ColumnName="ASL_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -130,20 +127,17 @@
    <Attribute
       Name="DateCreated"
       IsNotNull="true"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="CONCEPTUAL_DOMAINS" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="LatestVersionInd"
       Precision="3"
-      Type="java.lang.String"
       ColumnName="LATEST_VERSION_IND"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -154,8 +148,8 @@
    <Attribute
       Name="DeletedInd"
       Precision="3"
-      Type="java.lang.String"
       ColumnName="DELETED_IND"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -167,8 +161,8 @@
       Name="CreatedBy"
       IsNotNull="true"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="CREATED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -178,20 +172,17 @@
    </Attribute>
    <Attribute
       Name="DateModified"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="CONCEPTUAL_DOMAINS" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ModifiedBy"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -201,31 +192,25 @@
    </Attribute>
    <Attribute
       Name="BeginDate"
-      Type="oracle.jbo.domain.Date"
       ColumnName="BEGIN_DATE"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="CONCEPTUAL_DOMAINS" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="EndDate"
-      Type="oracle.jbo.domain.Date"
       ColumnName="END_DATE"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="CONCEPTUAL_DOMAINS" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ChangeNote"
       Precision="2000"
-      Type="java.lang.String"
       ColumnName="CHANGE_NOTE"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -236,8 +221,8 @@
    <Attribute
       Name="Origin"
       Precision="240"
-      Type="java.lang.String"
       ColumnName="ORIGIN"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="CONCEPTUAL_DOMAINS" >
@@ -247,8 +232,8 @@
    </Attribute>
    <Attribute
       Name="CdId"
-      Type="oracle.jbo.domain.Number"
       ColumnName="CD_ID"
+      Type="oracle.jbo.domain.Number"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
       TableName="CONCEPTUAL_DOMAINS" >

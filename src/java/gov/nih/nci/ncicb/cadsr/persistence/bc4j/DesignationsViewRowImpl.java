@@ -10,17 +10,17 @@ import oracle.jbo.domain.Date;
 public class DesignationsViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int DESIGIDSEQ = 0;
-  protected static final int ACIDSEQ = 1;
-  protected static final int CONTEIDSEQ = 2;
-  protected static final int NAME = 3;
-  protected static final int DETLNAME = 4;
-  protected static final int DATECREATED = 5;
-  protected static final int CREATEDBY = 6;
-  protected static final int DATEMODIFIED = 7;
-  protected static final int MODIFIEDBY = 8;
-  protected static final int LAENAME = 9;
-  protected static final int CONTEXTSROW = 10;
+  public static final int DESIGIDSEQ = 0;
+  public static final int ACIDSEQ = 1;
+  public static final int CONTEIDSEQ = 2;
+  public static final int NAME = 3;
+  public static final int DETLNAME = 4;
+  public static final int DATECREATED = 5;
+  public static final int CREATEDBY = 6;
+  public static final int DATEMODIFIED = 7;
+  public static final int MODIFIEDBY = 8;
+  public static final int LAENAME = 9;
+  public static final int CONTEXTSROW = 10;
   /**
    * 
    * This is the default constructor (do not remove)

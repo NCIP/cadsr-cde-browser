@@ -9,12 +9,12 @@ import oracle.jbo.domain.Number;
 public class FormModuleRelViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int QRIDSEQ = 0;
-  protected static final int PQCIDSEQ = 1;
-  protected static final int CQCIDSEQ = 2;
-  protected static final int DISPLAYORDER = 3;
-  protected static final int RLNAME = 4;
-  protected static final int FORM = 5;
+  public static final int QRIDSEQ = 0;
+  public static final int PQCIDSEQ = 1;
+  public static final int CQCIDSEQ = 2;
+  public static final int DISPLAYORDER = 3;
+  public static final int RLNAME = 4;
+  public static final int FORM = 5;
   /**
    * 
    * This is the default constructor (do not remove)

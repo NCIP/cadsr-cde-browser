@@ -9,14 +9,14 @@ import oracle.jbo.domain.Number;
 public class DataElementSearchViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int DEIDSEQ = 0;
-  protected static final int PREFERREDNAME = 1;
-  protected static final int LONGNAME = 2;
-  protected static final int DOCTEXT = 3;
-  protected static final int NAME = 4;
-  protected static final int ASLNAME = 5;
-  protected static final int CDEID = 6;
-  protected static final int VERSION = 7;
+  public static final int DEIDSEQ = 0;
+  public static final int PREFERREDNAME = 1;
+  public static final int LONGNAME = 2;
+  public static final int DOCTEXT = 3;
+  public static final int NAME = 4;
+  public static final int ASLNAME = 5;
+  public static final int CDEID = 6;
+  public static final int VERSION = 7;
   /**
    * 
    * This is the default constructor (do not remove)

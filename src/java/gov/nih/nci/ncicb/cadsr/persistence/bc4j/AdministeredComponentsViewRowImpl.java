@@ -12,28 +12,28 @@ public class AdministeredComponentsViewRowImpl extends ViewRowImpl
 {
 
 
-  protected static final int ACIDSEQ = 0;
-  protected static final int ACTLNAME = 1;
-  protected static final int VERSION = 2;
-  protected static final int BEGINDATE = 3;
-  protected static final int PREFERREDNAME = 4;
-  protected static final int ENDDATE = 5;
-  protected static final int CONTEIDSEQ = 6;
-  protected static final int PREFERREDDEFINITION = 7;
-  protected static final int STEWAIDSEQ = 8;
-  protected static final int CMSLNAME = 9;
-  protected static final int CHANGENOTE = 10;
-  protected static final int ASLNAME = 11;
-  protected static final int LONGNAME = 12;
-  protected static final int UNRESOLVEDISSUE = 13;
-  protected static final int ORIGIN = 14;
-  protected static final int LATESTVERSIONIND = 15;
-  protected static final int DELETEDIND = 16;
-  protected static final int DATECREATED = 17;
-  protected static final int CREATEDBY = 18;
-  protected static final int DATEMODIFIED = 19;
-  protected static final int MODIFIEDBY = 20;
-  protected static final int REFERENCEDOCUMENTSVIEW = 21;
+  public static final int ACIDSEQ = 0;
+  public static final int ACTLNAME = 1;
+  public static final int VERSION = 2;
+  public static final int BEGINDATE = 3;
+  public static final int PREFERREDNAME = 4;
+  public static final int ENDDATE = 5;
+  public static final int CONTEIDSEQ = 6;
+  public static final int PREFERREDDEFINITION = 7;
+  public static final int STEWAIDSEQ = 8;
+  public static final int CMSLNAME = 9;
+  public static final int CHANGENOTE = 10;
+  public static final int ASLNAME = 11;
+  public static final int LONGNAME = 12;
+  public static final int UNRESOLVEDISSUE = 13;
+  public static final int ORIGIN = 14;
+  public static final int LATESTVERSIONIND = 15;
+  public static final int DELETEDIND = 16;
+  public static final int DATECREATED = 17;
+  public static final int CREATEDBY = 18;
+  public static final int DATEMODIFIED = 19;
+  public static final int MODIFIEDBY = 20;
+  public static final int REFERENCEDOCUMENTSVIEW = 21;
   /**
    * 
    * This is the default constructor (do not remove)

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE JboPackage SYSTEM "jbo_03_01.dtd">
 
 <JboPackage
@@ -6,7 +6,7 @@
    SeparateXMLFiles="true"
    PackageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j" >
    <DesignTime>
-      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
       <Attr Name="_ejbPackage" Value="false" />
    </DesignTime>
    <Containee
@@ -672,6 +672,36 @@
    <Containee
       Name="AcRegistrationsView"
       FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="CdeIdView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CdeIdView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="Classifications"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Classifications"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ModulesForAFormView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModulesForAFormView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ProtocolsExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="ProtocolsExtView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExtView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="QuestionsDMLView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionsDMLView"
       ObjectType="ViewObject" >
    </Containee>
 </JboPackage>

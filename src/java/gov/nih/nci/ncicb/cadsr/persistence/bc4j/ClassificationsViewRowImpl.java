@@ -11,16 +11,16 @@ public class ClassificationsViewRowImpl extends ViewRowImpl
 {
 
 
-  protected static final int ACIDSEQ = 0;
-  protected static final int ACTLNAME = 1;
-  protected static final int VERSION = 2;
-  protected static final int CONTEIDSEQ = 3;
-  protected static final int CSIIDSEQ = 4;
-  protected static final int CSINAME = 5;
-  protected static final int CSITLNAME = 6;
-  protected static final int CSIDSEQ = 7;
-  protected static final int PREFERREDNAME = 8;
-  protected static final int PREFERREDDEFINITION = 9;
+  public static final int ACIDSEQ = 0;
+  public static final int ACTLNAME = 1;
+  public static final int VERSION = 2;
+  public static final int CONTEIDSEQ = 3;
+  public static final int CSIIDSEQ = 4;
+  public static final int CSINAME = 5;
+  public static final int CSITLNAME = 6;
+  public static final int CSIDSEQ = 7;
+  public static final int PREFERREDNAME = 8;
+  public static final int PREFERREDDEFINITION = 9;
   /**
    * 
    * This is the default constructor (do not remove)

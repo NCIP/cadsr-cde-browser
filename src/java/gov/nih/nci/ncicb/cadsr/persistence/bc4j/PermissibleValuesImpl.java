@@ -12,20 +12,21 @@ import oracle.jbo.Key;
 
 public class PermissibleValuesImpl extends EntityImpl 
 {
-  protected static final int PVIDSEQ = 0;
-  protected static final int VALUE = 1;
-  protected static final int SHORTMEANING = 2;
-  protected static final int MEANINGDESCRIPTION = 3;
-  protected static final int BEGINDATE = 4;
-  protected static final int ENDDATE = 5;
-  protected static final int HIGHVALUENUM = 6;
-  protected static final int LOWVALUENUM = 7;
-  protected static final int DATECREATED = 8;
-  protected static final int CREATEDBY = 9;
-  protected static final int DATEMODIFIED = 10;
-  protected static final int MODIFIEDBY = 11;
-  protected static final int VALUEMEANINGSLOV = 12;
-  protected static final int VDPVS = 13;
+  public static final int PVIDSEQ = 0;
+  public static final int VALUE = 1;
+  public static final int SHORTMEANING = 2;
+  public static final int MEANINGDESCRIPTION = 3;
+  public static final int BEGINDATE = 4;
+  public static final int ENDDATE = 5;
+  public static final int HIGHVALUENUM = 6;
+  public static final int LOWVALUENUM = 7;
+  public static final int DATECREATED = 8;
+  public static final int CREATEDBY = 9;
+  public static final int DATEMODIFIED = 10;
+  public static final int MODIFIEDBY = 11;
+  public static final int VALUEMEANINGSLOV = 12;
+  public static final int VDPVS = 13;
+
 
 
 
@@ -43,7 +44,7 @@ public class PermissibleValuesImpl extends EntityImpl
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
   public static synchronized EntityDefImpl getDefinitionObject()
   {
@@ -53,6 +54,7 @@ public class PermissibleValuesImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -391,12 +393,13 @@ public class PermissibleValuesImpl extends EntityImpl
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
   public static Key createPrimaryKey(String pvIdseq)
   {
     return new Key(new Object[] {pvIdseq});
   }
+
 
 
 

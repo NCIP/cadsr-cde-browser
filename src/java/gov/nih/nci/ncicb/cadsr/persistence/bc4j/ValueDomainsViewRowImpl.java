@@ -12,41 +12,41 @@ import oracle.jbo.domain.Date;
 
 public class ValueDomainsViewRowImpl extends ViewRowImpl  {
 
+  public static final int VDIDSEQ = 0;
+  public static final int VERSION = 1;
+  public static final int PREFERREDNAME = 2;
+  public static final int CONTEIDSEQ = 3;
+  public static final int PREFERREDDEFINITION = 4;
+  public static final int DTLNAME = 5;
+  public static final int BEGINDATE = 6;
+  public static final int CDIDSEQ = 7;
+  public static final int ENDDATE = 8;
+  public static final int VDTYPEFLAG = 9;
+  public static final int ASLNAME = 10;
+  public static final int CHANGENOTE = 11;
+  public static final int UOMLNAME = 12;
+  public static final int LONGNAME = 13;
+  public static final int FORMLNAME = 14;
+  public static final int MAXLENGTHNUM = 15;
+  public static final int MINLENGTHNUM = 16;
+  public static final int DECIMALPLACE = 17;
+  public static final int LATESTVERSIONIND = 18;
+  public static final int DELETEDIND = 19;
+  public static final int DATECREATED = 20;
+  public static final int CREATEDBY = 21;
+  public static final int DATEMODIFIED = 22;
+  public static final int MODIFIEDBY = 23;
+  public static final int CHARSETNAME = 24;
+  public static final int HIGHVALUENUM = 25;
+  public static final int LOWVALUENUM = 26;
+  public static final int QUALIFIERNAME = 27;
+  public static final int ORIGIN = 28;
+  public static final int VDID = 29;
+  public static final int CONCEPTUALDOMAINSROW = 30;
+  public static final int DATAELEMENTSVIEW = 31;
+  public static final int VDPVSVIEW = 32;
   private static Log log = LogFactory.getLog(ValueDomainsViewRowImpl.class.getName());
 
-  protected static final int VDIDSEQ = 0;
-  protected static final int VERSION = 1;
-  protected static final int PREFERREDNAME = 2;
-  protected static final int CONTEIDSEQ = 3;
-  protected static final int PREFERREDDEFINITION = 4;
-  protected static final int DTLNAME = 5;
-  protected static final int BEGINDATE = 6;
-  protected static final int CDIDSEQ = 7;
-  protected static final int ENDDATE = 8;
-  protected static final int VDTYPEFLAG = 9;
-  protected static final int ASLNAME = 10;
-  protected static final int CHANGENOTE = 11;
-  protected static final int UOMLNAME = 12;
-  protected static final int LONGNAME = 13;
-  protected static final int FORMLNAME = 14;
-  protected static final int MAXLENGTHNUM = 15;
-  protected static final int MINLENGTHNUM = 16;
-  protected static final int DECIMALPLACE = 17;
-  protected static final int LATESTVERSIONIND = 18;
-  protected static final int DELETEDIND = 19;
-  protected static final int DATECREATED = 20;
-  protected static final int CREATEDBY = 21;
-  protected static final int DATEMODIFIED = 22;
-  protected static final int MODIFIEDBY = 23;
-  protected static final int CHARSETNAME = 24;
-  protected static final int HIGHVALUENUM = 25;
-  protected static final int LOWVALUENUM = 26;
-  protected static final int QUALIFIERNAME = 27;
-  protected static final int ORIGIN = 28;
-  protected static final int VDID = 29;
-  protected static final int CONCEPTUALDOMAINSROW = 30;
-  protected static final int DATAELEMENTSVIEW = 31;
-  protected static final int VDPVSVIEW = 32;
   /**
    * 
    * This is the default constructor (do not remove)

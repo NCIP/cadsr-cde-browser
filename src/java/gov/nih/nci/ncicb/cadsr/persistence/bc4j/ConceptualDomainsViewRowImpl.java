@@ -11,28 +11,28 @@ import oracle.jbo.domain.Date;
 public class ConceptualDomainsViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int CDIDSEQ = 0;
-  protected static final int VERSION = 1;
-  protected static final int PREFERREDNAME = 2;
-  protected static final int CONTEIDSEQ = 3;
-  protected static final int PREFERREDDEFINITION = 4;
-  protected static final int DIMENSIONALITY = 5;
-  protected static final int LONGNAME = 6;
-  protected static final int ASLNAME = 7;
-  protected static final int DATECREATED = 8;
-  protected static final int LATESTVERSIONIND = 9;
-  protected static final int DELETEDIND = 10;
-  protected static final int CREATEDBY = 11;
-  protected static final int DATEMODIFIED = 12;
-  protected static final int MODIFIEDBY = 13;
-  protected static final int BEGINDATE = 14;
-  protected static final int ENDDATE = 15;
-  protected static final int CHANGENOTE = 16;
-  protected static final int ORIGIN = 17;
-  protected static final int CDID = 18;
-  protected static final int CONTEXTSROW = 19;
-  protected static final int DATAELEMENTCONCEPTSROWS = 20;
-  protected static final int VALUEDOMAINSROWS = 21;
+  public static final int CDIDSEQ = 0;
+  public static final int VERSION = 1;
+  public static final int PREFERREDNAME = 2;
+  public static final int CONTEIDSEQ = 3;
+  public static final int PREFERREDDEFINITION = 4;
+  public static final int DIMENSIONALITY = 5;
+  public static final int LONGNAME = 6;
+  public static final int ASLNAME = 7;
+  public static final int DATECREATED = 8;
+  public static final int LATESTVERSIONIND = 9;
+  public static final int DELETEDIND = 10;
+  public static final int CREATEDBY = 11;
+  public static final int DATEMODIFIED = 12;
+  public static final int MODIFIEDBY = 13;
+  public static final int BEGINDATE = 14;
+  public static final int ENDDATE = 15;
+  public static final int CHANGENOTE = 16;
+  public static final int ORIGIN = 17;
+  public static final int CDID = 18;
+  public static final int CONTEXTSROW = 19;
+  public static final int DATAELEMENTCONCEPTSROWS = 20;
+  public static final int VALUEDOMAINSROWS = 21;
   /**
    * 
    * This is the default constructor (do not remove)

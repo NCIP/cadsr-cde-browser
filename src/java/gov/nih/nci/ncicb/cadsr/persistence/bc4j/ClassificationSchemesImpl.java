@@ -12,29 +12,30 @@ import oracle.jbo.Key;
 
 public class ClassificationSchemesImpl extends EntityImpl 
 {
-  protected static final int CSIDSEQ = 0;
-  protected static final int VERSION = 1;
-  protected static final int PREFERREDNAME = 2;
-  protected static final int PREFERREDDEFINITION = 3;
-  protected static final int CONTEIDSEQ = 4;
-  protected static final int ASLNAME = 5;
-  protected static final int CSTLNAME = 6;
-  protected static final int LABELTYPEFLAG = 7;
-  protected static final int CMSLNAME = 8;
-  protected static final int LONGNAME = 9;
-  protected static final int LATESTVERSIONIND = 10;
-  protected static final int DELETEDIND = 11;
-  protected static final int BEGINDATE = 12;
-  protected static final int ENDDATE = 13;
-  protected static final int CHANGENOTE = 14;
-  protected static final int DATECREATED = 15;
-  protected static final int CREATEDBY = 16;
-  protected static final int DATEMODIFIED = 17;
-  protected static final int MODIFIEDBY = 18;
-  protected static final int ORIGIN = 19;
-  protected static final int CSID = 20;
-  protected static final int CONTEXTS = 21;
-  protected static final int CSCSI = 22;
+  public static final int CSIDSEQ = 0;
+  public static final int VERSION = 1;
+  public static final int PREFERREDNAME = 2;
+  public static final int PREFERREDDEFINITION = 3;
+  public static final int CONTEIDSEQ = 4;
+  public static final int ASLNAME = 5;
+  public static final int CSTLNAME = 6;
+  public static final int LABELTYPEFLAG = 7;
+  public static final int CMSLNAME = 8;
+  public static final int LONGNAME = 9;
+  public static final int LATESTVERSIONIND = 10;
+  public static final int DELETEDIND = 11;
+  public static final int BEGINDATE = 12;
+  public static final int ENDDATE = 13;
+  public static final int CHANGENOTE = 14;
+  public static final int DATECREATED = 15;
+  public static final int CREATEDBY = 16;
+  public static final int DATEMODIFIED = 17;
+  public static final int MODIFIEDBY = 18;
+  public static final int ORIGIN = 19;
+  public static final int CSID = 20;
+  public static final int CONTEXTS = 21;
+  public static final int CSCSI = 22;
+
 
 
 
@@ -50,7 +51,7 @@ public class ClassificationSchemesImpl extends EntityImpl
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
   public static synchronized EntityDefImpl getDefinitionObject()
   {
@@ -60,6 +61,7 @@ public class ClassificationSchemesImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -603,12 +605,13 @@ public class ClassificationSchemesImpl extends EntityImpl
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
   public static Key createPrimaryKey(String csIdseq)
   {
     return new Key(new Object[] {csIdseq});
   }
+
 
 
 }

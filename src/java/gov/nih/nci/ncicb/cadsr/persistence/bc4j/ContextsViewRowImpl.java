@@ -11,28 +11,28 @@ import oracle.jbo.domain.Date;
 public class ContextsViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int CONTEIDSEQ = 0;
-  protected static final int NAME = 1;
-  protected static final int LLNAME = 2;
-  protected static final int PALNAME = 3;
-  protected static final int DESCRIPTION = 4;
-  protected static final int LANGUAGE = 5;
-  protected static final int VERSION = 6;
-  protected static final int CREATEDBY = 7;
-  protected static final int DATECREATED = 8;
-  protected static final int MODIFIEDBY = 9;
-  protected static final int DATEMODIFIED = 10;
-  protected static final int DATAELEMENTSVIEW = 11;
-  protected static final int DATAELEMENTCONCEPTSROWS = 12;
-  protected static final int VALUEDOMAINSVIEW = 13;
-  protected static final int VDPVSVIEW = 14;
-  protected static final int CLASSIFICATIONSCHEMESVIEW = 15;
-  protected static final int QUESTCONTENTSEXTROWS = 16;
-  protected static final int OBJECTCLASSESEXTROWS = 17;
-  protected static final int PROPERTIESEXTROWS = 18;
-  protected static final int CONCEPTUALDOMAINSROWS = 19;
-  protected static final int DESIGNATIONSROWS = 20;
-  protected static final int PROTOCOLS = 21;
+  public static final int CONTEIDSEQ = 0;
+  public static final int NAME = 1;
+  public static final int LLNAME = 2;
+  public static final int PALNAME = 3;
+  public static final int DESCRIPTION = 4;
+  public static final int LANGUAGE = 5;
+  public static final int VERSION = 6;
+  public static final int CREATEDBY = 7;
+  public static final int DATECREATED = 8;
+  public static final int MODIFIEDBY = 9;
+  public static final int DATEMODIFIED = 10;
+  public static final int DATAELEMENTSVIEW = 11;
+  public static final int DATAELEMENTCONCEPTSROWS = 12;
+  public static final int VALUEDOMAINSVIEW = 13;
+  public static final int VDPVSVIEW = 14;
+  public static final int CLASSIFICATIONSCHEMESVIEW = 15;
+  public static final int QUESTCONTENTSEXTROWS = 16;
+  public static final int OBJECTCLASSESEXTROWS = 17;
+  public static final int PROPERTIESEXTROWS = 18;
+  public static final int CONCEPTUALDOMAINSROWS = 19;
+  public static final int DESIGNATIONSROWS = 20;
+  public static final int PROTOCOLS = 21;
   protected static final int DATAELEMENTCONCEPTSVIEW = 12;
   /**
    * 

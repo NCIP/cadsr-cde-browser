@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
 
 <Entity
@@ -8,11 +8,11 @@
    AliasName="QuestContentsExt"
    BindingStyle="Oracle"
    UseGlueCode="false"
-   CodeGenFlag="79"
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExtImpl" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Init|Delete|Access|DML|Val" />
       <AttrArray Name="_publishEvents">
       </AttrArray>
    </DesignTime>
@@ -20,8 +20,8 @@
       Name="QcIdseq"
       IsUpdateable="false"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="QC_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -37,21 +37,18 @@
       IsNotNull="true"
       Precision="4"
       Scale="2"
-      Type="oracle.jbo.domain.Number"
       ColumnName="VERSION"
+      Type="oracle.jbo.domain.Number"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
       TableName="QUEST_CONTENTS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="QtlName"
       IsNotNull="true"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="QTL_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -63,8 +60,8 @@
       Name="ConteIdseq"
       IsNotNull="true"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="CONTE_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -78,8 +75,8 @@
       Name="AslName"
       IsNotNull="true"
       Precision="20"
-      Type="java.lang.String"
       ColumnName="ASL_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -91,8 +88,8 @@
       Name="PreferredName"
       IsNotNull="true"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="PREFERRED_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -104,8 +101,8 @@
       Name="PreferredDefinition"
       IsNotNull="true"
       Precision="2000"
-      Type="java.lang.String"
       ColumnName="PREFERRED_DEFINITION"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -116,8 +113,8 @@
    <Attribute
       Name="ProtoIdseq"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="PROTO_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -130,8 +127,8 @@
    <Attribute
       Name="DeIdseq"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="DE_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -144,8 +141,8 @@
    <Attribute
       Name="VpIdseq"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="VP_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -158,8 +155,8 @@
    <Attribute
       Name="QcMatchIdseq"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="QC_MATCH_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -172,8 +169,8 @@
    <Attribute
       Name="QcIdentifier"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="QC_IDENTIFIER"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -184,8 +181,8 @@
    <Attribute
       Name="QcdlName"
       Precision="20"
-      Type="java.lang.String"
       ColumnName="QCDL_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -196,8 +193,8 @@
    <Attribute
       Name="LongName"
       Precision="255"
-      Type="java.lang.String"
       ColumnName="LONG_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -208,8 +205,8 @@
    <Attribute
       Name="LatestVersionInd"
       Precision="3"
-      Type="java.lang.String"
       ColumnName="LATEST_VERSION_IND"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -222,8 +219,8 @@
    <Attribute
       Name="DeletedInd"
       Precision="3"
-      Type="java.lang.String"
       ColumnName="DELETED_IND"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -235,31 +232,25 @@
    </Attribute>
    <Attribute
       Name="BeginDate"
-      Type="oracle.jbo.domain.Date"
       ColumnName="BEGIN_DATE"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="QUEST_CONTENTS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="EndDate"
-      Type="oracle.jbo.domain.Date"
       ColumnName="END_DATE"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="QUEST_CONTENTS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="MatchInd"
       Precision="1"
-      Type="java.lang.String"
       ColumnName="MATCH_IND"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -270,8 +261,8 @@
    <Attribute
       Name="NewQcInd"
       Precision="3"
-      Type="java.lang.String"
       ColumnName="NEW_QC_IND"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -282,8 +273,8 @@
    <Attribute
       Name="HighlightInd"
       Precision="3"
-      Type="java.lang.String"
       ColumnName="HIGHLIGHT_IND"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -294,8 +285,8 @@
    <Attribute
       Name="ReviewerFeedbackAction"
       Precision="240"
-      Type="java.lang.String"
       ColumnName="REVIEWER_FEEDBACK_ACTION"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -306,8 +297,8 @@
    <Attribute
       Name="ReviewerFeedbackInternal"
       Precision="240"
-      Type="java.lang.String"
       ColumnName="REVIEWER_FEEDBACK_INTERNAL"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -318,8 +309,8 @@
    <Attribute
       Name="ReviewerFeedbackExternal"
       Precision="240"
-      Type="java.lang.String"
       ColumnName="REVIEWER_FEEDBACK_EXTERNAL"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -330,8 +321,8 @@
    <Attribute
       Name="SystemMsgs"
       Precision="2000"
-      Type="java.lang.String"
       ColumnName="SYSTEM_MSGS"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -342,8 +333,8 @@
    <Attribute
       Name="ReviewedBy"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="REVIEWED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -353,20 +344,17 @@
    </Attribute>
    <Attribute
       Name="ReviewedDate"
-      Type="oracle.jbo.domain.Date"
       ColumnName="REVIEWED_DATE"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="QUEST_CONTENTS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ApprovedBy"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="APPROVED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -376,47 +364,38 @@
    </Attribute>
    <Attribute
       Name="ApprovedDate"
-      Type="oracle.jbo.domain.Date"
       ColumnName="APPROVED_DATE"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="QUEST_CONTENTS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="CdeDictionaryId"
       Precision="10"
       Scale="0"
-      Type="oracle.jbo.domain.Number"
       ColumnName="CDE_DICTIONARY_ID"
+      Type="oracle.jbo.domain.Number"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
       TableName="QUEST_CONTENTS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="DateCreated"
       IsUpdateable="false"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="QUEST_CONTENTS_EXT"
       RetrievedOnInsert="true" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="CreatedBy"
       IsUpdateable="false"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="CREATED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -427,21 +406,18 @@
    </Attribute>
    <Attribute
       Name="DateModified"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="QUEST_CONTENTS_EXT"
       RetrievedOnUpdate="true" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ModifiedBy"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -453,8 +429,8 @@
    <Attribute
       Name="ChangeNote"
       Precision="2000"
-      Type="java.lang.String"
       ColumnName="CHANGE_NOTE"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -465,8 +441,8 @@
    <Attribute
       Name="SubmittedLongCdeName"
       Precision="4000"
-      Type="java.lang.String"
       ColumnName="SUBMITTED_LONG_CDE_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -477,8 +453,8 @@
    <Attribute
       Name="GroupComments"
       Precision="4000"
-      Type="java.lang.String"
       ColumnName="GROUP_COMMENTS"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -489,8 +465,8 @@
    <Attribute
       Name="SrcName"
       Precision="100"
-      Type="java.lang.String"
       ColumnName="SRC_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -501,8 +477,8 @@
    <Attribute
       Name="PModIdseq"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="P_MOD_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -515,8 +491,8 @@
    <Attribute
       Name="PQstIdseq"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="P_QST_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -529,8 +505,8 @@
    <Attribute
       Name="PValIdseq"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="P_VAL_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -543,8 +519,8 @@
    <Attribute
       Name="DnCrfIdseq"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="DN_CRF_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -557,8 +533,8 @@
    <Attribute
       Name="DnVdIdseq"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="DN_VD_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT"
@@ -571,8 +547,8 @@
    <Attribute
       Name="DisplayInd"
       Precision="3"
-      Type="java.lang.String"
       ColumnName="DISPLAY_IND"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -583,8 +559,8 @@
    <Attribute
       Name="GroupAction"
       Precision="240"
-      Type="java.lang.String"
       ColumnName="GROUP_ACTION"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -595,8 +571,8 @@
    <Attribute
       Name="DeLongName"
       Precision="255"
-      Type="java.lang.String"
       ColumnName="DE_LONG_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -607,8 +583,8 @@
    <Attribute
       Name="VdLongName"
       Precision="255"
-      Type="java.lang.String"
       ColumnName="VD_LONG_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -619,8 +595,8 @@
    <Attribute
       Name="DecLongName"
       Precision="255"
-      Type="java.lang.String"
       ColumnName="DEC_LONG_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="QUEST_CONTENTS_EXT" >
@@ -632,20 +608,17 @@
       Name="DisplayOrder"
       Precision="5"
       Scale="0"
-      Type="oracle.jbo.domain.Number"
       ColumnName="DISPLAY_ORDER"
+      Type="oracle.jbo.domain.Number"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
       TableName="QUEST_CONTENTS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="Origin"
       Precision="240"
-      Type="java.lang.String"
       ColumnName="ORIGIN"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.QUEST_CONTENTS_EXT" >
@@ -655,8 +628,8 @@
    </Attribute>
    <Attribute
       Name="QcId"
-      Type="oracle.jbo.domain.Number"
       ColumnName="QC_ID"
+      Type="oracle.jbo.domain.Number"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
       TableName="SBREXT.QUEST_CONTENTS_EXT" >
@@ -709,28 +682,6 @@
       IsUpdateable="false" >
    </AccessorAttribute>
    <Key
-      Name="SysC0062331" >
-      <AttrArray Name="Attributes">
-         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.DateCreated" />
-      </AttrArray>
-      <DesignTime>
-         <Attr Name="_DBObjectName" Value="SYS_C0062331" />
-         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
-         <Attr Name="_isCheck" Value="true" />
-      </DesignTime>
-   </Key>
-   <Key
-      Name="SysC0062332" >
-      <AttrArray Name="Attributes">
-         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.CreatedBy" />
-      </AttrArray>
-      <DesignTime>
-         <Attr Name="_DBObjectName" Value="SYS_C0062332" />
-         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
-         <Attr Name="_isCheck" Value="true" />
-      </DesignTime>
-   </Key>
-   <Key
       Name="QcePk" >
       <AttrArray Name="Attributes">
          <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QcIdseq" />
@@ -739,6 +690,17 @@
          <Attr Name="_DBObjectName" Value="QCE_PK" />
          <Attr Name="_isPrimary" Value="true" />
          <Attr Name="_isDisabledConstraint" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062317" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QcIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062317" />
+         <Attr Name="_checkCondition" Value="&#34;QC_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
       </DesignTime>
    </Key>
    <Key
@@ -808,13 +770,24 @@
       </DesignTime>
    </Key>
    <Key
-      Name="SysC0062317" >
+      Name="SysC0062331" >
       <AttrArray Name="Attributes">
-         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QcIdseq" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.DateCreated" />
       </AttrArray>
       <DesignTime>
-         <Attr Name="_DBObjectName" Value="SYS_C0062317" />
-         <Attr Name="_checkCondition" Value="&#34;QC_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_DBObjectName" Value="SYS_C0062331" />
+         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062332" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062332" />
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
          <Attr Name="_isCheck" Value="true" />
       </DesignTime>
    </Key>

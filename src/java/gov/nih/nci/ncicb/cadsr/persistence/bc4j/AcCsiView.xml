@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
 
 <ViewObject
    Name="AcCsiView"
-   TimeStamp="1028903552840"
    SelectList="AcCsi.AC_CSI_IDSEQ, 
        AcCsi.CS_CSI_IDSEQ, 
        AcCsi.AC_IDSEQ, 
@@ -16,17 +15,18 @@
    CustomQuery="false"
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiViewRowImpl"
    ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
    UseGlueCode="false" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.2.7.99" />
-      <Attr Name="_CodeGenFlagNew" Value="36" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
    </DesignTime>
    <EntityUsage
       Name="AcCsi"
       Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsi" >
       <DesignTime>
-         <Attr Name="_ReadOnly" Value="false" />
          <Attr Name="_EntireObjectTable" Value="false" />
          <Attr Name="_queryClause" Value="false" />
       </DesignTime>
@@ -34,71 +34,57 @@
    <ViewAttribute
       Name="AcCsiIdseq"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="AcCsiIdseq"
       EntityUsage="AcCsi"
       AliasName="AC_CSI_IDSEQ" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="CsCsiIdseq"
       IsUnique="true"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="CsCsiIdseq"
       EntityUsage="AcCsi"
       AliasName="CS_CSI_IDSEQ" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="AcIdseq"
       IsUnique="true"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="AcIdseq"
       EntityUsage="AcCsi"
       AliasName="AC_IDSEQ" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="DateCreated"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="DateCreated"
       EntityUsage="AcCsi"
       AliasName="DATE_CREATED" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="CreatedBy"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="CreatedBy"
       EntityUsage="AcCsi"
       AliasName="CREATED_BY" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="DateModified"
+      PrecisionRule="false"
       EntityAttrName="DateModified"
       EntityUsage="AcCsi"
       AliasName="DATE_MODIFIED" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="ModifiedBy"
+      PrecisionRule="false"
       EntityAttrName="ModifiedBy"
       EntityUsage="AcCsi"
       AliasName="MODIFIED_BY" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
 </ViewObject>

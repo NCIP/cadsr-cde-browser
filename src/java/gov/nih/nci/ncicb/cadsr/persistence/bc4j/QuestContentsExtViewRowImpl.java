@@ -11,59 +11,59 @@ import oracle.jbo.domain.Date;
 public class QuestContentsExtViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int QCIDSEQ = 0;
-  protected static final int VERSION = 1;
-  protected static final int QTLNAME = 2;
-  protected static final int CONTEIDSEQ = 3;
-  protected static final int ASLNAME = 4;
-  protected static final int PREFERREDNAME = 5;
-  protected static final int PREFERREDDEFINITION = 6;
-  protected static final int PROTOIDSEQ = 7;
-  protected static final int DEIDSEQ = 8;
-  protected static final int VPIDSEQ = 9;
-  protected static final int QCMATCHIDSEQ = 10;
-  protected static final int QCIDENTIFIER = 11;
-  protected static final int QCDLNAME = 12;
-  protected static final int LONGNAME = 13;
-  protected static final int LATESTVERSIONIND = 14;
-  protected static final int DELETEDIND = 15;
-  protected static final int BEGINDATE = 16;
-  protected static final int ENDDATE = 17;
-  protected static final int MATCHIND = 18;
-  protected static final int NEWQCIND = 19;
-  protected static final int HIGHLIGHTIND = 20;
-  protected static final int REVIEWERFEEDBACKACTION = 21;
-  protected static final int REVIEWERFEEDBACKINTERNAL = 22;
-  protected static final int REVIEWERFEEDBACKEXTERNAL = 23;
-  protected static final int SYSTEMMSGS = 24;
-  protected static final int REVIEWEDBY = 25;
-  protected static final int REVIEWEDDATE = 26;
-  protected static final int APPROVEDBY = 27;
-  protected static final int APPROVEDDATE = 28;
-  protected static final int CDEDICTIONARYID = 29;
-  protected static final int DATECREATED = 30;
-  protected static final int CREATEDBY = 31;
-  protected static final int DATEMODIFIED = 32;
-  protected static final int MODIFIEDBY = 33;
-  protected static final int CHANGENOTE = 34;
-  protected static final int SUBMITTEDLONGCDENAME = 35;
-  protected static final int GROUPCOMMENTS = 36;
-  protected static final int SRCNAME = 37;
-  protected static final int PMODIDSEQ = 38;
-  protected static final int PQSTIDSEQ = 39;
-  protected static final int PVALIDSEQ = 40;
-  protected static final int DNCRFIDSEQ = 41;
-  protected static final int DNVDIDSEQ = 42;
-  protected static final int DISPLAYIND = 43;
-  protected static final int GROUPACTION = 44;
-  protected static final int DELONGNAME = 45;
-  protected static final int VDLONGNAME = 46;
-  protected static final int DECLONGNAME = 47;
-  protected static final int DISPLAYORDER = 48;
-  protected static final int ORIGIN = 49;
-  protected static final int QCID = 50;
-  protected static final int CONTEXTSROW = 51;
-  protected static final int PROTOCOL = 52;
+  public static final int QCIDSEQ = 0;
+  public static final int VERSION = 1;
+  public static final int QTLNAME = 2;
+  public static final int CONTEIDSEQ = 3;
+  public static final int ASLNAME = 4;
+  public static final int PREFERREDNAME = 5;
+  public static final int PREFERREDDEFINITION = 6;
+  public static final int PROTOIDSEQ = 7;
+  public static final int DEIDSEQ = 8;
+  public static final int VPIDSEQ = 9;
+  public static final int QCMATCHIDSEQ = 10;
+  public static final int QCIDENTIFIER = 11;
+  public static final int QCDLNAME = 12;
+  public static final int LONGNAME = 13;
+  public static final int LATESTVERSIONIND = 14;
+  public static final int DELETEDIND = 15;
+  public static final int BEGINDATE = 16;
+  public static final int ENDDATE = 17;
+  public static final int MATCHIND = 18;
+  public static final int NEWQCIND = 19;
+  public static final int HIGHLIGHTIND = 20;
+  public static final int REVIEWERFEEDBACKACTION = 21;
+  public static final int REVIEWERFEEDBACKINTERNAL = 22;
+  public static final int REVIEWERFEEDBACKEXTERNAL = 23;
+  public static final int SYSTEMMSGS = 24;
+  public static final int REVIEWEDBY = 25;
+  public static final int REVIEWEDDATE = 26;
+  public static final int APPROVEDBY = 27;
+  public static final int APPROVEDDATE = 28;
+  public static final int CDEDICTIONARYID = 29;
+  public static final int DATECREATED = 30;
+  public static final int CREATEDBY = 31;
+  public static final int DATEMODIFIED = 32;
+  public static final int MODIFIEDBY = 33;
+  public static final int CHANGENOTE = 34;
+  public static final int SUBMITTEDLONGCDENAME = 35;
+  public static final int GROUPCOMMENTS = 36;
+  public static final int SRCNAME = 37;
+  public static final int PMODIDSEQ = 38;
+  public static final int PQSTIDSEQ = 39;
+  public static final int PVALIDSEQ = 40;
+  public static final int DNCRFIDSEQ = 41;
+  public static final int DNVDIDSEQ = 42;
+  public static final int DISPLAYIND = 43;
+  public static final int GROUPACTION = 44;
+  public static final int DELONGNAME = 45;
+  public static final int VDLONGNAME = 46;
+  public static final int DECLONGNAME = 47;
+  public static final int DISPLAYORDER = 48;
+  public static final int ORIGIN = 49;
+  public static final int QCID = 50;
+  public static final int CONTEXTSROW = 51;
+  public static final int PROTOCOL = 52;
   /**
    * 
    * This is the default constructor (do not remove)
@@ -990,9 +990,6 @@ public class QuestContentsExtViewRowImpl extends ViewRowImpl  {
   protected void setAttrInvokeAccessor(int index, Object value, AttributeDefImpl attrDef) throws Exception {
     switch (index)
       {
-      case QCIDSEQ:
-        setQcIdseq((String)value);
-        return;
       case VERSION:
         setVersion((Number)value);
         return;
@@ -1079,12 +1076,6 @@ public class QuestContentsExtViewRowImpl extends ViewRowImpl  {
         return;
       case CDEDICTIONARYID:
         setCdeDictionaryId((Number)value);
-        return;
-      case DATECREATED:
-        setDateCreated((Date)value);
-        return;
-      case CREATEDBY:
-        setCreatedBy((String)value);
         return;
       case DATEMODIFIED:
         setDateModified((Date)value);

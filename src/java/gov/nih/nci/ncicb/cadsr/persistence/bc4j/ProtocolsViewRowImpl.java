@@ -10,37 +10,37 @@ import oracle.jbo.domain.Date;
 public class ProtocolsViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int PROTOIDSEQ = 0;
-  protected static final int VERSION = 1;
-  protected static final int CONTEIDSEQ = 2;
-  protected static final int PREFERREDNAME = 3;
-  protected static final int PREFERREDDEFINITION = 4;
-  protected static final int ASLNAME = 5;
-  protected static final int LONGNAME = 6;
-  protected static final int LATESTVERSIONIND = 7;
-  protected static final int DELETEDIND = 8;
-  protected static final int BEGINDATE = 9;
-  protected static final int ENDDATE = 10;
-  protected static final int PROTOCOLID = 11;
-  protected static final int TYPE = 12;
-  protected static final int PHASE = 13;
-  protected static final int LEADORG = 14;
-  protected static final int CHANGETYPE = 15;
-  protected static final int CHANGENUMBER = 16;
-  protected static final int REVIEWEDDATE = 17;
-  protected static final int REVIEWEDBY = 18;
-  protected static final int APPROVEDDATE = 19;
-  protected static final int APPROVEDBY = 20;
-  protected static final int DATECREATED = 21;
-  protected static final int CREATEDBY = 22;
-  protected static final int DATEMODIFIED = 23;
-  protected static final int MODIFIEDBY = 24;
-  protected static final int CHANGENOTE = 25;
-  protected static final int ORIGIN = 26;
-  protected static final int PROTOID = 27;
-  protected static final int CONTEXT = 28;
-  protected static final int CRFS = 29;
-  protected static final int FORMS = 30;
+  public static final int PROTOIDSEQ = 0;
+  public static final int VERSION = 1;
+  public static final int CONTEIDSEQ = 2;
+  public static final int PREFERREDNAME = 3;
+  public static final int PREFERREDDEFINITION = 4;
+  public static final int ASLNAME = 5;
+  public static final int LONGNAME = 6;
+  public static final int LATESTVERSIONIND = 7;
+  public static final int DELETEDIND = 8;
+  public static final int BEGINDATE = 9;
+  public static final int ENDDATE = 10;
+  public static final int PROTOCOLID = 11;
+  public static final int TYPE = 12;
+  public static final int PHASE = 13;
+  public static final int LEADORG = 14;
+  public static final int CHANGETYPE = 15;
+  public static final int CHANGENUMBER = 16;
+  public static final int REVIEWEDDATE = 17;
+  public static final int REVIEWEDBY = 18;
+  public static final int APPROVEDDATE = 19;
+  public static final int APPROVEDBY = 20;
+  public static final int DATECREATED = 21;
+  public static final int CREATEDBY = 22;
+  public static final int DATEMODIFIED = 23;
+  public static final int MODIFIEDBY = 24;
+  public static final int CHANGENOTE = 25;
+  public static final int ORIGIN = 26;
+  public static final int PROTOID = 27;
+  public static final int CONTEXT = 28;
+  public static final int CRFS = 29;
+  public static final int FORMS = 30;
   /**
    * 
    * This is the default constructor (do not remove)

@@ -12,19 +12,19 @@ public class CsCsiViewRowImpl extends ViewRowImpl
 {
 
 
-  protected static final int CSCSIIDSEQ = 0;
-  protected static final int CSIDSEQ = 1;
-  protected static final int CSIIDSEQ = 2;
-  protected static final int PCSCSIIDSEQ = 3;
-  protected static final int LINKCSCSIIDSEQ = 4;
-  protected static final int LABEL = 5;
-  protected static final int DISPLAYORDER = 6;
-  protected static final int DATECREATED = 7;
-  protected static final int CREATEDBY = 8;
-  protected static final int DATEMODIFIED = 9;
-  protected static final int MODIFIEDBY = 10;
-  protected static final int CLASSIFICATIONSCHEMESVIEW = 11;
-  protected static final int CLASSSCHEMEITEMSVIEW = 12;
+  public static final int CSCSIIDSEQ = 0;
+  public static final int CSIDSEQ = 1;
+  public static final int CSIIDSEQ = 2;
+  public static final int PCSCSIIDSEQ = 3;
+  public static final int LINKCSCSIIDSEQ = 4;
+  public static final int LABEL = 5;
+  public static final int DISPLAYORDER = 6;
+  public static final int DATECREATED = 7;
+  public static final int CREATEDBY = 8;
+  public static final int DATEMODIFIED = 9;
+  public static final int MODIFIEDBY = 10;
+  public static final int CLASSIFICATIONSCHEMESVIEW = 11;
+  public static final int CLASSSCHEMEITEMSVIEW = 12;
   /**
    * 
    * This is the default constructor (do not remove)

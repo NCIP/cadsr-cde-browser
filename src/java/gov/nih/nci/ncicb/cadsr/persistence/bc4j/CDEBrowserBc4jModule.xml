@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
 
 <AppModule
@@ -6,9 +6,9 @@
    ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModuleImpl" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
       <Attr Name="_deployType" Value="0" />
-      <Attr Name="_exportName" Value="CDEBrowserBc4jModule" />
+      <Attr Name="_ejbAppModule" Value="false" />
    </DesignTime>
    <ViewUsage
       Name="ContextsView"
@@ -193,7 +193,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementsView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -203,7 +203,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementsView2" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -213,7 +213,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementConceptsView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -223,7 +223,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementsView3" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -233,7 +233,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ValueDomainsView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -243,7 +243,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.PermissibleValuesView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -253,7 +253,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.VdPvsView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -263,7 +263,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.VdPvsView2" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -273,7 +273,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.VdPvsView3" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -283,7 +283,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.PropertiesExtView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -293,7 +293,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ObjectClassesExtView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -303,7 +303,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.QuestContentsExtView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -313,7 +313,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ClassificationSchemesView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -323,7 +323,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ConceptualDomainsView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -333,7 +333,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementConceptsView2" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -343,7 +343,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ValueDomainsView2" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -353,7 +353,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DesignationsView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
 </AppModule>

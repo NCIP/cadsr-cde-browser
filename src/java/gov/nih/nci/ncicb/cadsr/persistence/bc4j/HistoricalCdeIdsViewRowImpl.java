@@ -9,9 +9,9 @@ import oracle.jbo.domain.Number;
 public class HistoricalCdeIdsViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int DEIDSEQ = 0;
-  protected static final int NAME = 1;
-  protected static final int VERSION = 2;
+  public static final int DEIDSEQ = 0;
+  public static final int NAME = 1;
+  public static final int VERSION = 2;
   /**
    * 
    * This is the default constructor (do not remove)

@@ -1,30 +1,29 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
 
 <Entity
    Name="VdPvs"
-   TimeStamp="1027698992216"
    DBObjectType="table"
    DBObjectName="VD_PVS"
    AliasName="VdPvs"
    BindingStyle="Oracle"
    UseGlueCode="false"
-   CodeGenFlag="4"
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvsImpl" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.2.7.99" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access" />
       <AttrArray Name="_publishEvents">
       </AttrArray>
    </DesignTime>
    <Attribute
       Name="VpIdseq"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="36"
       ColumnName="VP_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="CHAR"
-      Precision="36"
       TableName="VD_PVS"
       PrimaryKey="true"
       RetrievedOnUpdate="true"
@@ -37,11 +36,11 @@
       Name="VdIdseq"
       IsUnique="true"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="36"
       ColumnName="VD_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="CHAR"
-      Precision="36"
       TableName="VD_PVS"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -53,11 +52,11 @@
       Name="PvIdseq"
       IsUnique="true"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="36"
       ColumnName="PV_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="CHAR"
-      Precision="36"
       TableName="VD_PVS"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -68,11 +67,11 @@
    <Attribute
       Name="ConteIdseq"
       IsUnique="true"
-      Type="java.lang.String"
+      Precision="36"
       ColumnName="CONTE_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="CHAR"
-      Precision="36"
       TableName="VD_PVS"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -83,23 +82,20 @@
    <Attribute
       Name="DateCreated"
       IsNotNull="true"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="VD_PVS" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="CreatedBy"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="30"
       ColumnName="CREATED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="VD_PVS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -107,22 +103,19 @@
    </Attribute>
    <Attribute
       Name="DateModified"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="VD_PVS" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ModifiedBy"
-      Type="java.lang.String"
+      Precision="30"
       ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="VD_PVS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -148,6 +141,14 @@
       AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkAssoc.ValueDomains"
       AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkAssoc.VdPvs"
       Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomainsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="QuestContentsExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcVpvFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcVpvFkAssoc.QuestContentsExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcVpvFkAssoc.VdPvs"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
    </AccessorAttribute>
    <Key
       Name="SysC0062879" >

@@ -12,31 +12,32 @@ import oracle.jbo.Key;
 
 public class DataElementsImpl extends EntityImpl 
 {
-  protected static final int DEIDSEQ = 0;
-  protected static final int VERSION = 1;
-  protected static final int CONTEIDSEQ = 2;
-  protected static final int PREFERREDNAME = 3;
-  protected static final int VDIDSEQ = 4;
-  protected static final int DECIDSEQ = 5;
-  protected static final int PREFERREDDEFINITION = 6;
-  protected static final int ASLNAME = 7;
-  protected static final int LONGNAME = 8;
-  protected static final int LATESTVERSIONIND = 9;
-  protected static final int DELETEDIND = 10;
-  protected static final int DATECREATED = 11;
-  protected static final int BEGINDATE = 12;
-  protected static final int CREATEDBY = 13;
-  protected static final int ENDDATE = 14;
-  protected static final int DATEMODIFIED = 15;
-  protected static final int MODIFIEDBY = 16;
-  protected static final int CHANGENOTE = 17;
-  protected static final int ORIGIN = 18;
-  protected static final int CDEID = 19;
-  protected static final int QUESTION = 20;
-  protected static final int CONTEXTS = 21;
-  protected static final int DATAELEMENTCONCEPTS = 22;
-  protected static final int VALUEDOMAINS = 23;
-  protected static final int QUESTCONTENTSEXT = 24;
+  public static final int DEIDSEQ = 0;
+  public static final int VERSION = 1;
+  public static final int CONTEIDSEQ = 2;
+  public static final int PREFERREDNAME = 3;
+  public static final int VDIDSEQ = 4;
+  public static final int DECIDSEQ = 5;
+  public static final int PREFERREDDEFINITION = 6;
+  public static final int ASLNAME = 7;
+  public static final int LONGNAME = 8;
+  public static final int LATESTVERSIONIND = 9;
+  public static final int DELETEDIND = 10;
+  public static final int DATECREATED = 11;
+  public static final int BEGINDATE = 12;
+  public static final int CREATEDBY = 13;
+  public static final int ENDDATE = 14;
+  public static final int DATEMODIFIED = 15;
+  public static final int MODIFIEDBY = 16;
+  public static final int CHANGENOTE = 17;
+  public static final int ORIGIN = 18;
+  public static final int CDEID = 19;
+  public static final int QUESTION = 20;
+  public static final int CONTEXTS = 21;
+  public static final int DATAELEMENTCONCEPTS = 22;
+  public static final int VALUEDOMAINS = 23;
+  public static final int QUESTCONTENTSEXT = 24;
+
 
 
 
@@ -57,7 +58,7 @@ public class DataElementsImpl extends EntityImpl
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
   public static synchronized EntityDefImpl getDefinitionObject()
   {
@@ -67,6 +68,7 @@ public class DataElementsImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -658,12 +660,13 @@ public class DataElementsImpl extends EntityImpl
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
   public static Key createPrimaryKey(String deIdseq)
   {
     return new Key(new Object[] {deIdseq});
   }
+
 
 
 

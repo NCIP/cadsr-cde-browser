@@ -11,15 +11,16 @@ import oracle.jbo.Key;
 
 public class AcCsiImpl extends EntityImpl 
 {
-  protected static final int ACCSIIDSEQ = 0;
-  protected static final int CSCSIIDSEQ = 1;
-  protected static final int ACIDSEQ = 2;
-  protected static final int DATECREATED = 3;
-  protected static final int CREATEDBY = 4;
-  protected static final int DATEMODIFIED = 5;
-  protected static final int MODIFIEDBY = 6;
-  protected static final int ADMINISTEREDCOMPONENTS = 7;
-  protected static final int CSCSI = 8;
+  public static final int ACCSIIDSEQ = 0;
+  public static final int CSCSIIDSEQ = 1;
+  public static final int ACIDSEQ = 2;
+  public static final int DATECREATED = 3;
+  public static final int CREATEDBY = 4;
+  public static final int DATEMODIFIED = 5;
+  public static final int MODIFIEDBY = 6;
+  public static final int ADMINISTEREDCOMPONENTS = 7;
+  public static final int CSCSI = 8;
+
 
 
   private static EntityDefImpl mDefinitionObject;
@@ -34,7 +35,7 @@ public class AcCsiImpl extends EntityImpl
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
   public static synchronized EntityDefImpl getDefinitionObject()
   {
@@ -44,6 +45,7 @@ public class AcCsiImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -272,12 +274,13 @@ public class AcCsiImpl extends EntityImpl
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
   public static Key createPrimaryKey(String acCsiIdseq)
   {
     return new Key(new Object[] {acCsiIdseq});
   }
+
 
 
 }

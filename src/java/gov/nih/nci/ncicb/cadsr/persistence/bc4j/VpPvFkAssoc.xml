@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE Association SYSTEM "jbo_03_01.dtd">
 
 <Association
-   Name="VpPvFkAssoc"
-   TimeStamp="1027698987770" >
+   Name="VpPvFkAssoc" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.2.7.99" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
    </DesignTime>
    <AssociationEnd
       Name="PermissibleValues"

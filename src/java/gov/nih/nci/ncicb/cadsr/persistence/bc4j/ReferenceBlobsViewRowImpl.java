@@ -12,18 +12,18 @@ import oracle.jbo.domain.BlobDomain;
 public class ReferenceBlobsViewRowImpl extends ViewRowImpl  {
 
 
-  protected static final int RDIDSEQ = 0;
-  protected static final int NAME = 1;
-  protected static final int MIMETYPE = 2;
-  protected static final int DOCSIZE = 3;
-  protected static final int DADCHARSET = 4;
-  protected static final int LASTUPDATED = 5;
-  protected static final int CONTENTTYPE = 6;
-  protected static final int BLOBCONTENT = 7;
-  protected static final int CREATEDBY = 8;
-  protected static final int DATECREATED = 9;
-  protected static final int MODIFIEDBY = 10;
-  protected static final int DATEMODIFIED = 11;
+  public static final int RDIDSEQ = 0;
+  public static final int NAME = 1;
+  public static final int MIMETYPE = 2;
+  public static final int DOCSIZE = 3;
+  public static final int DADCHARSET = 4;
+  public static final int LASTUPDATED = 5;
+  public static final int CONTENTTYPE = 6;
+  public static final int BLOBCONTENT = 7;
+  public static final int CREATEDBY = 8;
+  public static final int DATECREATED = 9;
+  public static final int MODIFIEDBY = 10;
+  public static final int DATEMODIFIED = 11;
   /**
    * 
    * This is the default constructor (do not remove)

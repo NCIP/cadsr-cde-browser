@@ -11,16 +11,16 @@ public class ClassSchemeItemsViewRowImpl extends ViewRowImpl
 {
 
 
-  protected static final int CSIIDSEQ = 0;
-  protected static final int CSINAME = 1;
-  protected static final int CSITLNAME = 2;
-  protected static final int DESCRIPTION = 3;
-  protected static final int COMMENTS = 4;
-  protected static final int DATECREATED = 5;
-  protected static final int CREATEDBY = 6;
-  protected static final int DATEMODIFIED = 7;
-  protected static final int MODIFIEDBY = 8;
-  protected static final int CSCSIVIEW = 9;
+  public static final int CSIIDSEQ = 0;
+  public static final int CSINAME = 1;
+  public static final int CSITLNAME = 2;
+  public static final int DESCRIPTION = 3;
+  public static final int COMMENTS = 4;
+  public static final int DATECREATED = 5;
+  public static final int CREATEDBY = 6;
+  public static final int DATEMODIFIED = 7;
+  public static final int MODIFIEDBY = 8;
+  public static final int CSCSIVIEW = 9;
   /**
    * 
    * This is the default constructor (do not remove)

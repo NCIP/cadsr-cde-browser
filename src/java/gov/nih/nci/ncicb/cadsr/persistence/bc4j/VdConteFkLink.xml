@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE ViewLink SYSTEM "jbo_03_01.dtd">
 
 <ViewLink
@@ -6,7 +6,7 @@
    EntityAssociation="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdConteFkAssoc" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
    </DesignTime>
    <ViewLinkDefEnd
       Name="ContextsView"

@@ -1,30 +1,29 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
 
 <Entity
    Name="CsCsi"
-   TimeStamp="1028903707452"
    DBObjectType="table"
    DBObjectName="CS_CSI"
    AliasName="CsCsi"
    BindingStyle="Oracle"
    UseGlueCode="false"
-   CodeGenFlag="4"
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiImpl" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.2.7.99" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access" />
       <AttrArray Name="_publishEvents">
       </AttrArray>
    </DesignTime>
    <Attribute
       Name="CsCsiIdseq"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="36"
       ColumnName="CS_CSI_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="CHAR"
-      Precision="36"
       TableName="CS_CSI"
       PrimaryKey="true"
       RetrievedOnUpdate="true"
@@ -37,11 +36,11 @@
       Name="CsIdseq"
       IsUnique="true"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="36"
       ColumnName="CS_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="CHAR"
-      Precision="36"
       TableName="CS_CSI"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -53,11 +52,11 @@
       Name="CsiIdseq"
       IsUnique="true"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="36"
       ColumnName="CSI_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="CHAR"
-      Precision="36"
       TableName="CS_CSI"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -68,11 +67,11 @@
    <Attribute
       Name="PCsCsiIdseq"
       IsUnique="true"
-      Type="java.lang.String"
+      Precision="36"
       ColumnName="P_CS_CSI_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="CHAR"
-      Precision="36"
       TableName="CS_CSI"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -82,11 +81,11 @@
    </Attribute>
    <Attribute
       Name="LinkCsCsiIdseq"
-      Type="java.lang.String"
+      Precision="36"
       ColumnName="LINK_CS_CSI_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="CHAR"
-      Precision="36"
       TableName="CS_CSI"
       RetrievedOnUpdate="true"
       RetrievedOnInsert="true" >
@@ -97,11 +96,11 @@
    <Attribute
       Name="Label"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="30"
       ColumnName="LABEL"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="CS_CSI" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -109,37 +108,31 @@
    </Attribute>
    <Attribute
       Name="DisplayOrder"
-      Type="oracle.jbo.domain.Number"
-      ColumnName="DISPLAY_ORDER"
-      ColumnType="NUMBER"
-      SQLType="NUMERIC"
       Precision="2"
       Scale="0"
+      ColumnName="DISPLAY_ORDER"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
       TableName="CS_CSI" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="DateCreated"
       IsNotNull="true"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="CS_CSI" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="CreatedBy"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="30"
       ColumnName="CREATED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="CS_CSI" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -147,22 +140,19 @@
    </Attribute>
    <Attribute
       Name="DateModified"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="CS_CSI" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ModifiedBy"
-      Type="java.lang.String"
+      Precision="30"
       ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="CS_CSI" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -309,17 +299,6 @@
       </DesignTime>
    </Key>
    <Key
-      Name="CsCsiCsiFk" >
-      <AttrArray Name="Attributes">
-         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsiIdseq" />
-      </AttrArray>
-      <DesignTime>
-         <Attr Name="_DBObjectName" Value="CS_CSI_CSI_FK" />
-         <Attr Name="_referencedKey" Value="CSI_PK" />
-         <Attr Name="_isForeign" Value="true" />
-      </DesignTime>
-   </Key>
-   <Key
       Name="CsCsiCsFk" >
       <AttrArray Name="Attributes">
          <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsIdseq" />
@@ -327,6 +306,17 @@
       <DesignTime>
          <Attr Name="_DBObjectName" Value="CS_CSI_CS_FK" />
          <Attr Name="_referencedKey" Value="CS_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="CsCsiCsiFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsiIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="CS_CSI_CSI_FK" />
+         <Attr Name="_referencedKey" Value="CSI_PK" />
          <Attr Name="_isForeign" Value="true" />
       </DesignTime>
    </Key>

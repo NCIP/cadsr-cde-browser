@@ -12,8 +12,9 @@ import oracle.jbo.Key;
 //  ---------------------------------------------------------------
 
 public class DeCdeIdImpl extends EntityImpl  {
-  protected static final int ACIDSEQ = 0;
-  protected static final int MINCDEID = 1;
+  public static final int ACIDSEQ = 0;
+  public static final int MINCDEID = 1;
+
 
 
 
@@ -31,14 +32,17 @@ public class DeCdeIdImpl extends EntityImpl  {
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
-  public static synchronized EntityDefImpl getDefinitionObject() {
-    if (mDefinitionObject == null) {
+  public static synchronized EntityDefImpl getDefinitionObject()
+  {
+    if (mDefinitionObject == null)
+    {
       mDefinitionObject = (EntityDefImpl)EntityDefImpl.findDefObject("gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeCdeId");
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -149,11 +153,13 @@ public class DeCdeIdImpl extends EntityImpl  {
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
-  public static Key createPrimaryKey(String acIdseq) {
+  public static Key createPrimaryKey(String acIdseq)
+  {
     return new Key(new Object[] {acIdseq});
   }
+
 
 
 

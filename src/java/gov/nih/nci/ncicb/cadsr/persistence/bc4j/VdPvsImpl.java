@@ -11,17 +11,19 @@ import oracle.jbo.Key;
 
 public class VdPvsImpl extends EntityImpl 
 {
-  protected static final int VPIDSEQ = 0;
-  protected static final int VDIDSEQ = 1;
-  protected static final int PVIDSEQ = 2;
-  protected static final int CONTEIDSEQ = 3;
-  protected static final int DATECREATED = 4;
-  protected static final int CREATEDBY = 5;
-  protected static final int DATEMODIFIED = 6;
-  protected static final int MODIFIEDBY = 7;
-  protected static final int CONTEXTS = 8;
-  protected static final int PERMISSIBLEVALUES = 9;
-  protected static final int VALUEDOMAINS = 10;
+  public static final int VPIDSEQ = 0;
+  public static final int VDIDSEQ = 1;
+  public static final int PVIDSEQ = 2;
+  public static final int CONTEIDSEQ = 3;
+  public static final int DATECREATED = 4;
+  public static final int CREATEDBY = 5;
+  public static final int DATEMODIFIED = 6;
+  public static final int MODIFIEDBY = 7;
+  public static final int CONTEXTS = 8;
+  public static final int PERMISSIBLEVALUES = 9;
+  public static final int VALUEDOMAINS = 10;
+  public static final int QUESTCONTENTSEXT = 11;
+
 
 
 
@@ -41,7 +43,7 @@ public class VdPvsImpl extends EntityImpl
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
   public static synchronized EntityDefImpl getDefinitionObject()
   {
@@ -51,6 +53,7 @@ public class VdPvsImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -224,6 +227,8 @@ public class VdPvsImpl extends EntityImpl
         return getDateModified();
       case MODIFIEDBY:
         return getModifiedBy();
+      case QUESTCONTENTSEXT:
+        return getQuestContentsExt();
       case CONTEXTS:
         return getContexts();
       case PERMISSIBLEVALUES:
@@ -326,9 +331,19 @@ public class VdPvsImpl extends EntityImpl
     setAttributeInternal(VALUEDOMAINS, value);
   }
 
+
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Gets the associated entity oracle.jbo.RowIterator
+   */
+  public RowIterator getQuestContentsExt()
+  {
+    return (RowIterator)getAttributeInternal(QUESTCONTENTSEXT);
+  }
+
+  /**
+   * 
+   *  Creates a Key object based on given key constituents
    */
   public static Key createPrimaryKey(String vpIdseq)
   {

@@ -29,42 +29,4 @@
          <ApplicationName>gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService</ApplicationName>
       </AppModuleConfig>
    </AppModuleConfigBag>
-   <ConnectionDefinition name="SBREXT_CBTEST">
-      <ENTRY name="JDBC_PORT" value="1521"/>
-      <ENTRY name="ConnectionType" value="JDBC"/>
-      <ENTRY name="HOSTNAME" value="cbiodb2-d.nci.nih.gov"/>
-      <ENTRY name="DeployPassword" value="true"/>
-      <ENTRY name="user" value="sbrext"/>
-      <ENTRY name="ConnectionName" value="SBREXT_CBTEST"/>
-      <ENTRY name="SID" value="cbtest"/>
-      <ENTRY name="password" value="i1sn0w"/>
-      <ENTRY name="JdbcDriver" value="oracle.jdbc.driver.OracleDriver"/>
-      <ENTRY name="ORACLE_JDBC_TYPE" value="thin"/>
-   </ConnectionDefinition>
-   <ConnectionDefinition name="SBR_CBTEST">
-      <ENTRY name="JDBC_PORT" value="1521"/>
-      <ENTRY name="ConnectionType" value="JDBC"/>
-      <ENTRY name="HOSTNAME" value="cbiodb2-d.nci.nih.gov"/>
-      <ENTRY name="DeployPassword" value="true"/>
-      <ENTRY name="user" value="SBR"/>
-      <ENTRY name="ConnectionName" value="SBR_CBTEST"/>
-      <ENTRY name="SID" value="cbtest"/>
-      <ENTRY name="JdbcDriver" value="oracle.jdbc.driver.OracleDriver"/>
-      <ENTRY name="password" value="i1sn0w"/>
-      <ENTRY name="ORACLE_JDBC_TYPE" value="thin"/>
-      <ENTRY name="DeployPassword" value="true"/>
-   </ConnectionDefinition>
-   <ConnectionDefinition name="SBR_D">
-      <ENTRY name="JDBC_PORT" value="1521"/>
-      <ENTRY name="ConnectionType" value="JDBC"/>
-      <ENTRY name="HOSTNAME" value="cbiodb2-d.nci.nih.gov"/>
-      <ENTRY name="DeployPassword" value="true"/>
-      <ENTRY name="user" value="sbr"/>
-      <ENTRY name="ConnectionName" value="SBR_D"/>
-      <ENTRY name="SID" value="cbdev"/>
-      <ENTRY name="JdbcDriver" value="oracle.jdbc.driver.OracleDriver"/>
-      <ENTRY name="password" value="jjsbr"/>
-      <ENTRY name="ORACLE_JDBC_TYPE" value="thin"/>
-      <ENTRY name="DeployPassword" value="true"/>
-   </ConnectionDefinition>
 </BC4JConfig>

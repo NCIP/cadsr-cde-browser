@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
 
 <AppModule
@@ -6,9 +6,9 @@
    ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderServiceImpl" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
       <Attr Name="_deployType" Value="0" />
-      <Attr Name="_exportName" Value="FormBuilderService" />
+      <Attr Name="_ejbAppModule" Value="false" />
    </DesignTime>
    <ViewUsage
       Name="QuestContentsExtView"
@@ -109,7 +109,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService.ModulesView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -119,7 +119,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService.QuestionsView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -129,7 +129,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService.FormModuleRelView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -139,7 +139,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService.ModuleQuestionRecsView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -149,7 +149,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService.FormValidValuesView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -159,7 +159,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService.QuestionFormVVRecsView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -170,7 +170,7 @@
       Reversed="true" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -181,7 +181,7 @@
       Reversed="true" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -192,7 +192,7 @@
       Reversed="true" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -203,7 +203,7 @@
       Reversed="true" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -213,7 +213,7 @@
       DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService.FormsView1" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
    <ViewLinkUsage
@@ -224,7 +224,7 @@
       Reversed="true" >
       <DesignTime>
          <Attr Name="_isCodegen" Value="true" />
-         <Attr Name="_version" Value="9.0.3.10.62" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
       </DesignTime>
    </ViewLinkUsage>
 </AppModule>

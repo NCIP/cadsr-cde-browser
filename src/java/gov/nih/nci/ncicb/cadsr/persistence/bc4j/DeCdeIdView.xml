@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
 
 <ViewObject
    Name="DeCdeIdView"
-   TimeStamp="1044296914997"
    SelectList="DeCdeId.AC_IDSEQ, 
        DeCdeId.MIN_CDE_ID"
    FromList="SBREXT.DE_CDE_ID_VIEW DeCdeId"
@@ -15,8 +14,9 @@
    UseGlueCode="false" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.9.62" />
-      <Attr Name="_CodeGenFlagNew" Value="36" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
    </DesignTime>
    <EntityUsage
       Name="DeCdeId"
@@ -29,20 +29,16 @@
    <ViewAttribute
       Name="AcIdseq"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="AcIdseq"
       EntityUsage="DeCdeId"
       AliasName="AC_IDSEQ" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
    <ViewAttribute
       Name="MinCdeId"
+      PrecisionRule="false"
       EntityAttrName="MinCdeId"
       EntityUsage="DeCdeId"
       AliasName="MIN_CDE_ID" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </ViewAttribute>
 </ViewObject>

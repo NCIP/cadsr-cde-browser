@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
 
 <Entity
@@ -8,11 +8,11 @@
    AliasName="Protocol"
    BindingStyle="Oracle"
    UseGlueCode="false"
-   CodeGenFlag="4"
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolImpl" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access" />
       <AttrArray Name="_publishEvents">
       </AttrArray>
    </DesignTime>
@@ -20,8 +20,8 @@
       Name="ProtoIdseq"
       IsNotNull="true"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="PROTO_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT"
@@ -38,22 +38,19 @@
       IsNotNull="true"
       Precision="4"
       Scale="2"
-      Type="oracle.jbo.domain.Number"
       ColumnName="VERSION"
+      Type="oracle.jbo.domain.Number"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
       TableName="SBREXT.PROTOCOLS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ConteIdseq"
       IsUnique="true"
       IsNotNull="true"
       Precision="36"
-      Type="java.lang.String"
       ColumnName="CONTE_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT"
@@ -68,8 +65,8 @@
       IsUnique="true"
       IsNotNull="true"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="PREFERRED_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -81,8 +78,8 @@
       Name="PreferredDefinition"
       IsNotNull="true"
       Precision="2000"
-      Type="java.lang.String"
       ColumnName="PREFERRED_DEFINITION"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -94,8 +91,8 @@
       Name="AslName"
       IsNotNull="true"
       Precision="20"
-      Type="java.lang.String"
       ColumnName="ASL_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -106,8 +103,8 @@
    <Attribute
       Name="LongName"
       Precision="255"
-      Type="java.lang.String"
       ColumnName="LONG_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -118,8 +115,8 @@
    <Attribute
       Name="LatestVersionInd"
       Precision="3"
-      Type="java.lang.String"
       ColumnName="LATEST_VERSION_IND"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -130,8 +127,8 @@
    <Attribute
       Name="DeletedInd"
       Precision="3"
-      Type="java.lang.String"
       ColumnName="DELETED_IND"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -141,31 +138,25 @@
    </Attribute>
    <Attribute
       Name="BeginDate"
-      Type="oracle.jbo.domain.Date"
       ColumnName="BEGIN_DATE"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="SBREXT.PROTOCOLS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="EndDate"
-      Type="oracle.jbo.domain.Date"
       ColumnName="END_DATE"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="SBREXT.PROTOCOLS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ProtocolId"
       Precision="50"
-      Type="java.lang.String"
       ColumnName="PROTOCOL_ID"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -176,8 +167,8 @@
    <Attribute
       Name="Type"
       Precision="240"
-      Type="java.lang.String"
       ColumnName="TYPE"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -188,8 +179,8 @@
    <Attribute
       Name="Phase"
       Precision="3"
-      Type="java.lang.String"
       ColumnName="PHASE"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -200,8 +191,8 @@
    <Attribute
       Name="LeadOrg"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="LEAD_ORG"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -212,8 +203,8 @@
    <Attribute
       Name="ChangeType"
       Precision="10"
-      Type="java.lang.String"
       ColumnName="CHANGE_TYPE"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -223,31 +214,25 @@
    </Attribute>
    <Attribute
       Name="ChangeNumber"
-      Type="oracle.jbo.domain.Number"
       ColumnName="CHANGE_NUMBER"
+      Type="oracle.jbo.domain.Number"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
       TableName="SBREXT.PROTOCOLS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ReviewedDate"
-      Type="oracle.jbo.domain.Date"
       ColumnName="REVIEWED_DATE"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="SBREXT.PROTOCOLS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ReviewedBy"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="REVIEWED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -257,20 +242,17 @@
    </Attribute>
    <Attribute
       Name="ApprovedDate"
-      Type="oracle.jbo.domain.Date"
       ColumnName="APPROVED_DATE"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="SBREXT.PROTOCOLS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ApprovedBy"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="APPROVED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -281,21 +263,18 @@
    <Attribute
       Name="DateCreated"
       IsNotNull="true"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="SBREXT.PROTOCOLS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="CreatedBy"
       IsNotNull="true"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="CREATED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -305,20 +284,17 @@
    </Attribute>
    <Attribute
       Name="DateModified"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="SBREXT.PROTOCOLS_EXT" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ModifiedBy"
       Precision="30"
-      Type="java.lang.String"
       ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -329,8 +305,8 @@
    <Attribute
       Name="ChangeNote"
       Precision="2000"
-      Type="java.lang.String"
       ColumnName="CHANGE_NOTE"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -341,8 +317,8 @@
    <Attribute
       Name="Origin"
       Precision="240"
-      Type="java.lang.String"
       ColumnName="ORIGIN"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -352,8 +328,8 @@
    </Attribute>
    <Attribute
       Name="ProtoId"
-      Type="oracle.jbo.domain.Number"
       ColumnName="PROTO_ID"
+      Type="oracle.jbo.domain.Number"
       ColumnType="NUMBER"
       SQLType="NUMERIC"
       TableName="SBREXT.PROTOCOLS_EXT" >
@@ -432,6 +408,16 @@
       </DesignTime>
    </Key>
    <Key
+      Name="ProPk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Protocol.ProtoIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PRO_PK" />
+         <Attr Name="_isPrimary" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
       Name="ProtoUk" >
       <AttrArray Name="Attributes">
          <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Protocol.Version" />
@@ -441,16 +427,6 @@
       <DesignTime>
          <Attr Name="_DBObjectName" Value="PROTO_UK" />
          <Attr Name="_isUnique" Value="true" />
-      </DesignTime>
-   </Key>
-   <Key
-      Name="ProPk" >
-      <AttrArray Name="Attributes">
-         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Protocol.ProtoIdseq" />
-      </AttrArray>
-      <DesignTime>
-         <Attr Name="_DBObjectName" Value="PRO_PK" />
-         <Attr Name="_isPrimary" Value="true" />
       </DesignTime>
    </Key>
    <Key

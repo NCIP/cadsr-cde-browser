@@ -11,17 +11,18 @@ import oracle.jbo.Key;
 
 public class QcRecsExtImpl extends EntityImpl 
 {
-  protected static final int QRIDSEQ = 0;
-  protected static final int PQCIDSEQ = 1;
-  protected static final int CQCIDSEQ = 2;
-  protected static final int DISPLAYORDER = 3;
-  protected static final int RLNAME = 4;
-  protected static final int DATECREATED = 5;
-  protected static final int CREATEDBY = 6;
-  protected static final int DATEMODIFIED = 7;
-  protected static final int MODIFIEDBY = 8;
-  protected static final int QUESTCONTENTSEXT = 9;
-  protected static final int QUESTCONTENTSEXT1 = 10;
+  public static final int QRIDSEQ = 0;
+  public static final int PQCIDSEQ = 1;
+  public static final int CQCIDSEQ = 2;
+  public static final int DISPLAYORDER = 3;
+  public static final int RLNAME = 4;
+  public static final int DATECREATED = 5;
+  public static final int CREATEDBY = 6;
+  public static final int DATEMODIFIED = 7;
+  public static final int MODIFIEDBY = 8;
+  public static final int QUESTCONTENTSEXT = 9;
+  public static final int QUESTCONTENTSEXT1 = 10;
+
 
 
 
@@ -39,14 +40,17 @@ public class QcRecsExtImpl extends EntityImpl
 
   /**
    * 
-   * Retrieves the definition object for this instance class.
+   *  Retrieves the definition object for this instance class.
    */
-  public static synchronized EntityDefImpl getDefinitionObject() {
-    if (mDefinitionObject == null) {
+  public static synchronized EntityDefImpl getDefinitionObject()
+  {
+    if (mDefinitionObject == null)
+    {
       mDefinitionObject = (EntityDefImpl)EntityDefImpl.findDefObject("gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcRecsExt");
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -323,11 +327,13 @@ public class QcRecsExtImpl extends EntityImpl
 
   /**
    * 
-   * Creates a Key object based on given key constituents
+   *  Creates a Key object based on given key constituents
    */
-  public static Key createPrimaryKey(String qrIdseq) {
+  public static Key createPrimaryKey(String qrIdseq)
+  {
     return new Key(new Object[] {qrIdseq});
   }
+
 
 
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
 
 <ViewObject
@@ -43,8 +43,9 @@
    UseGlueCode="false" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.3.10.62" />
-      <Attr Name="_CodeGenFlagNew" Value="36" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
    </DesignTime>
    <EntityUsage
       Name="ClassificationSchemes"
@@ -57,225 +58,162 @@
    <ViewAttribute
       Name="CsIdseq"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="CsIdseq"
       EntityUsage="ClassificationSchemes"
-      AliasName="CS_IDSEQ"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="CS_IDSEQ" >
    </ViewAttribute>
    <ViewAttribute
       Name="Version"
       IsUnique="true"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="Version"
       EntityUsage="ClassificationSchemes"
-      AliasName="VERSION"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="VERSION" >
    </ViewAttribute>
    <ViewAttribute
       Name="PreferredName"
       IsUnique="true"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="PreferredName"
       EntityUsage="ClassificationSchemes"
-      AliasName="PREFERRED_NAME"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="PREFERRED_NAME" >
    </ViewAttribute>
    <ViewAttribute
       Name="PreferredDefinition"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="PreferredDefinition"
       EntityUsage="ClassificationSchemes"
-      AliasName="PREFERRED_DEFINITION"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="PREFERRED_DEFINITION" >
    </ViewAttribute>
    <ViewAttribute
       Name="ConteIdseq"
       IsUnique="true"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="ConteIdseq"
       EntityUsage="ClassificationSchemes"
-      AliasName="CONTE_IDSEQ"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="CONTE_IDSEQ" >
    </ViewAttribute>
    <ViewAttribute
       Name="AslName"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="AslName"
       EntityUsage="ClassificationSchemes"
-      AliasName="ASL_NAME"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="ASL_NAME" >
    </ViewAttribute>
    <ViewAttribute
       Name="CstlName"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="CstlName"
       EntityUsage="ClassificationSchemes"
-      AliasName="CSTL_NAME"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="CSTL_NAME" >
    </ViewAttribute>
    <ViewAttribute
       Name="LabelTypeFlag"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="LabelTypeFlag"
       EntityUsage="ClassificationSchemes"
-      AliasName="LABEL_TYPE_FLAG"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="LABEL_TYPE_FLAG" >
    </ViewAttribute>
    <ViewAttribute
       Name="CmslName"
+      PrecisionRule="false"
       EntityAttrName="CmslName"
       EntityUsage="ClassificationSchemes"
-      AliasName="CMSL_NAME"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="CMSL_NAME" >
    </ViewAttribute>
    <ViewAttribute
       Name="LongName"
+      PrecisionRule="false"
       EntityAttrName="LongName"
       EntityUsage="ClassificationSchemes"
-      AliasName="LONG_NAME"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="LONG_NAME" >
    </ViewAttribute>
    <ViewAttribute
       Name="LatestVersionInd"
+      PrecisionRule="false"
       EntityAttrName="LatestVersionInd"
       EntityUsage="ClassificationSchemes"
-      AliasName="LATEST_VERSION_IND"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="LATEST_VERSION_IND" >
    </ViewAttribute>
    <ViewAttribute
       Name="DeletedInd"
+      PrecisionRule="false"
       EntityAttrName="DeletedInd"
       EntityUsage="ClassificationSchemes"
-      AliasName="DELETED_IND"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="DELETED_IND" >
    </ViewAttribute>
    <ViewAttribute
       Name="BeginDate"
+      PrecisionRule="false"
       EntityAttrName="BeginDate"
       EntityUsage="ClassificationSchemes"
-      AliasName="BEGIN_DATE"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="BEGIN_DATE" >
    </ViewAttribute>
    <ViewAttribute
       Name="EndDate"
+      PrecisionRule="false"
       EntityAttrName="EndDate"
       EntityUsage="ClassificationSchemes"
-      AliasName="END_DATE"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="END_DATE" >
    </ViewAttribute>
    <ViewAttribute
       Name="ChangeNote"
+      PrecisionRule="false"
       EntityAttrName="ChangeNote"
       EntityUsage="ClassificationSchemes"
-      AliasName="CHANGE_NOTE"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="CHANGE_NOTE" >
    </ViewAttribute>
    <ViewAttribute
       Name="DateCreated"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="DateCreated"
       EntityUsage="ClassificationSchemes"
-      AliasName="DATE_CREATED"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="DATE_CREATED" >
    </ViewAttribute>
    <ViewAttribute
       Name="CreatedBy"
       IsNotNull="true"
+      PrecisionRule="false"
       EntityAttrName="CreatedBy"
       EntityUsage="ClassificationSchemes"
-      AliasName="CREATED_BY"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="CREATED_BY" >
    </ViewAttribute>
    <ViewAttribute
       Name="DateModified"
+      PrecisionRule="false"
       EntityAttrName="DateModified"
       EntityUsage="ClassificationSchemes"
-      AliasName="DATE_MODIFIED"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="DATE_MODIFIED" >
    </ViewAttribute>
    <ViewAttribute
       Name="ModifiedBy"
+      PrecisionRule="false"
       EntityAttrName="ModifiedBy"
       EntityUsage="ClassificationSchemes"
-      AliasName="MODIFIED_BY"
-      ColumnType="$none$" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="MODIFIED_BY" >
    </ViewAttribute>
    <ViewAttribute
       Name="Origin"
+      PrecisionRule="false"
       EntityAttrName="Origin"
       EntityUsage="ClassificationSchemes"
-      AliasName="ORIGIN"
-      ColumnType="VARCHAR2" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="ORIGIN" >
    </ViewAttribute>
    <ViewAttribute
       Name="CsId"
+      PrecisionRule="false"
       EntityAttrName="CsId"
       EntityUsage="ClassificationSchemes"
-      AliasName="CS_ID"
-      ColumnType="VARCHAR2" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
+      AliasName="CS_ID" >
    </ViewAttribute>
    <ViewLinkAccessor
       Name="ContextsView"

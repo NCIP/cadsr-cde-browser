@@ -63,7 +63,7 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for ModuleFormLink1
    */
   public ViewLinkImpl getModuleFormLink1() {
-    return (ViewLinkImpl) findViewLink("ModuleFormLink1");
+    return (ViewLinkImpl)findViewLink("ModuleFormLink1");
   }
 
   /**
@@ -91,7 +91,7 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for QuestionModuleLink1
    */
   public ViewLinkImpl getQuestionModuleLink1() {
-    return (ViewLinkImpl) findViewLink("QuestionModuleLink1");
+    return (ViewLinkImpl)findViewLink("QuestionModuleLink1");
   }
 
   /**
@@ -112,7 +112,7 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for ModuleFormRelLink1
    */
   public ViewLinkImpl getModuleFormRelLink1() {
-    return (ViewLinkImpl) findViewLink("ModuleFormRelLink1");
+    return (ViewLinkImpl)findViewLink("ModuleFormRelLink1");
   }
 
   /**
@@ -135,7 +135,7 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for ModuleQuestionRecLink1
    */
   public ViewLinkImpl getModuleQuestionRecLink1() {
-    return (ViewLinkImpl) findViewLink("ModuleQuestionRecLink1");
+    return (ViewLinkImpl)findViewLink("ModuleQuestionRecLink1");
   }
 
   /**
@@ -236,7 +236,7 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for FormVVQuestionLink1
    */
   public ViewLinkImpl getFormVVQuestionLink1() {
-    return (ViewLinkImpl) findViewLink("FormVVQuestionLink1");
+    return (ViewLinkImpl)findViewLink("FormVVQuestionLink1");
   }
 
   /**
@@ -259,7 +259,7 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for FormVVQuesRecsLink1
    */
   public ViewLinkImpl getFormVVQuesRecsLink1() {
-    return (ViewLinkImpl) findViewLink("FormVVQuesRecsLink1");
+    return (ViewLinkImpl)findViewLink("FormVVQuesRecsLink1");
   }
 
   /**
@@ -280,7 +280,7 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for formConteFkLink1
    */
   public ViewLinkImpl getformConteFkLink1() {
-    return (ViewLinkImpl) findViewLink("formConteFkLink1");
+    return (ViewLinkImpl)findViewLink("formConteFkLink1");
   }
 
   /**
@@ -294,7 +294,7 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for moduleConteFkLink1
    */
   public ViewLinkImpl getmoduleConteFkLink1() {
-    return (ViewLinkImpl) findViewLink("moduleConteFkLink1");
+    return (ViewLinkImpl)findViewLink("moduleConteFkLink1");
   }
 
   /**
@@ -308,7 +308,7 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for QuestionConteFkLink1
    */
   public ViewLinkImpl getQuestionConteFkLink1() {
-    return (ViewLinkImpl) findViewLink("QuestionConteFkLink1");
+    return (ViewLinkImpl)findViewLink("QuestionConteFkLink1");
   }
 
   /**
@@ -322,7 +322,7 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for FormValueContextFkLink1
    */
   public ViewLinkImpl getFormValueContextFkLink1() {
-    return (ViewLinkImpl) findViewLink("FormValueContextFkLink1");
+    return (ViewLinkImpl)findViewLink("FormValueContextFkLink1");
   }
 
   /**
@@ -350,13 +350,13 @@ public class FormBuilderServiceImpl extends ApplicationModuleImpl {
    * Container's getter for FormProtocolFkLink1
    */
   public ViewLinkImpl getFormProtocolFkLink1() {
-    return (ViewLinkImpl) findViewLink("FormProtocolFkLink1");
+    return (ViewLinkImpl)findViewLink("FormProtocolFkLink1");
   }
 
   /**
    * Container's getter for FormProtocolFkLink2
    */
   public ViewLinkImpl getFormProtocolFkLink2() {
-    return (ViewLinkImpl) findViewLink("FormProtocolFkLink2");
+    return (ViewLinkImpl)findViewLink("FormProtocolFkLink2");
   }
 }

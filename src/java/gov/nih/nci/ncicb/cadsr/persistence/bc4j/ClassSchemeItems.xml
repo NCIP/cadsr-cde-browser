@@ -1,30 +1,29 @@
-<?xml version="1.0" encoding='windows-1252'?>
+<?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
 
 <Entity
    Name="ClassSchemeItems"
-   TimeStamp="1028903705790"
    DBObjectType="table"
    DBObjectName="CLASS_SCHEME_ITEMS"
    AliasName="ClassSchemeItems"
    BindingStyle="Oracle"
    UseGlueCode="false"
-   CodeGenFlag="4"
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassSchemeItemsImpl" >
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.2.7.99" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access" />
       <AttrArray Name="_publishEvents">
       </AttrArray>
    </DesignTime>
    <Attribute
       Name="CsiIdseq"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="36"
       ColumnName="CSI_IDSEQ"
+      Type="java.lang.String"
       ColumnType="CHAR"
       SQLType="CHAR"
-      Precision="36"
       TableName="CLASS_SCHEME_ITEMS"
       PrimaryKey="true"
       RetrievedOnUpdate="true"
@@ -37,11 +36,11 @@
       Name="CsiName"
       IsUnique="true"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="20"
       ColumnName="CSI_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="20"
       TableName="CLASS_SCHEME_ITEMS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="20" />
@@ -51,11 +50,11 @@
       Name="CsitlName"
       IsUnique="true"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="20"
       ColumnName="CSITL_NAME"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="20"
       TableName="CLASS_SCHEME_ITEMS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="20" />
@@ -63,11 +62,11 @@
    </Attribute>
    <Attribute
       Name="Description"
-      Type="java.lang.String"
+      Precision="60"
       ColumnName="DESCRIPTION"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="60"
       TableName="CLASS_SCHEME_ITEMS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="60" />
@@ -75,11 +74,11 @@
    </Attribute>
    <Attribute
       Name="Comments"
-      Type="java.lang.String"
+      Precision="2000"
       ColumnName="COMMENTS"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="2000"
       TableName="CLASS_SCHEME_ITEMS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="2000" />
@@ -88,23 +87,20 @@
    <Attribute
       Name="DateCreated"
       IsNotNull="true"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="CLASS_SCHEME_ITEMS" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="CreatedBy"
       IsNotNull="true"
-      Type="java.lang.String"
+      Precision="30"
       ColumnName="CREATED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="CLASS_SCHEME_ITEMS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />
@@ -112,22 +108,19 @@
    </Attribute>
    <Attribute
       Name="DateModified"
-      Type="oracle.jbo.domain.Date"
       ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
       ColumnType="DATE"
       SQLType="DATE"
       TableName="CLASS_SCHEME_ITEMS" >
-      <DesignTime>
-         <Attr Name="_DisplaySize" Value="0" />
-      </DesignTime>
    </Attribute>
    <Attribute
       Name="ModifiedBy"
-      Type="java.lang.String"
+      Precision="30"
       ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
-      Precision="30"
       TableName="CLASS_SCHEME_ITEMS" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="30" />

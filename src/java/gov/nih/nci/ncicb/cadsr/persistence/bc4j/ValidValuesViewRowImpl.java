@@ -10,13 +10,13 @@ public class ValidValuesViewRowImpl extends ViewRowImpl
 {
 
 
-  protected static final int SHORTMEANING = 0;
-  protected static final int DESCRIPTION = 1;
-  protected static final int VALUE = 2;
-  protected static final int PVIDSEQ = 3;
-  protected static final int VDIDSEQ = 4;
-  protected static final int MEANINGDESCRIPTION = 5;
-  protected static final int VPIDSEQ = 6;
+  public static final int SHORTMEANING = 0;
+  public static final int DESCRIPTION = 1;
+  public static final int VALUE = 2;
+  public static final int PVIDSEQ = 3;
+  public static final int VDIDSEQ = 4;
+  public static final int MEANINGDESCRIPTION = 5;
+  public static final int VPIDSEQ = 6;
   /**
    * 
    * This is the default constructor (do not remove)
