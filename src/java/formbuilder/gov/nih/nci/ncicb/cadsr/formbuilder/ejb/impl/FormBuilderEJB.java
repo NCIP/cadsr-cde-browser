@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.impl;
 import com.evermind.sql.OrionCMTDataSource;
 
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.ejb.common.SessionBeanAdapter;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service.FormBuilderServiceRemote;
@@ -24,7 +25,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
@@ -126,6 +129,126 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return myForm;
   }
 
+  public Module getModule(String modulePK) {
+
+    ModuleDAO mdao = daoFactory.getModuleDAO();
+    QuestionDAO qdao = daoFactory.getQuestionDAO();
+    FormValidValueDAO vdao = daoFactory.getFormValidValueDAO();
+
+    List questions = (List) mdao.getQuestionsInAModule(modulePK);
+    Iterator qIter = questions.iterator();
+    Question term =null;
+    Module module = null;
+    while (qIter.hasNext()) {
+        term = (Question) qIter.next();
+        String termId = term.getQuesIdseq();
+        List values = (List) qdao.getValidValues(termId);
+        term.setValidValues(values);
+      }
+
+    module.setQuestions(questions);
+
+    return module;
+  }
+
+  public Module updateModule(
+       Module moduleHeader,
+       Collection updatedQuestions,
+       Collection deletedQuestions,
+       Collection newQuestions,
+       Map updatedValidValues,
+       Map addedValidValues,
+       Map deletedValidValues)
+       {
+         ModuleDAO moduleDao = daoFactory.getModuleDAO();
+         QuestionDAO questionDao = daoFactory.getQuestionDAO();
+         FormValidValueDAO formValidValueDao = daoFactory.getFormValidValueDAO();
+
+         if(moduleHeader!=null)
+           moduleDao.updateModuleLongName(moduleHeader.getModuleIdseq(),moduleHeader.getLongName());
+         if(updatedQuestions!=null&&!updatedQuestions.isEmpty())
+         {
+           Iterator updatedIt = updatedQuestions.iterator();
+           while(updatedIt.hasNext())
+           {
+             Question currQuestion = (Question)updatedIt.next();
+             questionDao.updateQuestionLongNameDispOrderDeIdseq(currQuestion);
+           }
+         }
+         if(deletedQuestions!=null&&!deletedQuestions.isEmpty())
+         {
+           Iterator deletedIt = deletedQuestions.iterator();
+           while(deletedIt.hasNext())
+           {
+             Question currQuestion = (Question)deletedIt.next();
+             questionDao.deleteQuestion(currQuestion.getQuesIdseq());
+           }
+         }
+         if(newQuestions!=null&&!newQuestions.isEmpty())
+         {
+           Iterator newIt = newQuestions.iterator();
+           while(newIt.hasNext())
+           {
+             Question currQuestion = (Question)newIt.next();
+             questionDao.createQuestionComponent(currQuestion);
+           }
+         }
+         if(updatedValidValues!=null&&!updatedValidValues.isEmpty())
+         {
+           Set keySet = updatedValidValues.keySet();
+           Iterator keyIt = keySet.iterator();
+           while(keyIt.hasNext())
+           {
+             String questionIdSeq = (String)keyIt.next();
+             List validValueList = (List)updatedValidValues.get(questionIdSeq);
+             ListIterator vvListIt = validValueList.listIterator();
+             while(vvListIt.hasNext())
+             {
+               FormValidValue fvv = (FormValidValue)vvListIt.next();
+               formValidValueDao.updateDisplayOrder(fvv.getValueIdseq(),fvv.getDisplayOrder());
+             }
+           }
+         }
+         if(addedValidValues!=null&&!addedValidValues.isEmpty())
+         {
+           Set keySet = addedValidValues.keySet();
+           Iterator keyIt = keySet.iterator();
+           while(keyIt.hasNext())
+           {
+             String questionIdSeq = (String)keyIt.next();
+             List validValueList = (List)addedValidValues.get(questionIdSeq);
+             ListIterator vvListIt = validValueList.listIterator();
+             while(vvListIt.hasNext())
+             {
+               FormValidValue fvv = (FormValidValue)vvListIt.next();
+               Question question = new QuestionTransferObject();
+               question.setQuesIdseq(questionIdSeq);
+               fvv.setQuestion(question);
+               formValidValueDao.createFormValidValueComponent(fvv);
+             }
+           }
+         }
+         if(deletedValidValues!=null&&!deletedValidValues.isEmpty())
+         {
+           Set keySet = deletedValidValues.keySet();
+           Iterator keyIt = keySet.iterator();
+           while(keyIt.hasNext())
+           {
+             String questionIdSeq = (String)keyIt.next();
+             List validValueList = (List)deletedValidValues.get(questionIdSeq);
+             ListIterator vvListIt = validValueList.listIterator();
+             while(vvListIt.hasNext())
+             {
+               FormValidValue fvv = (FormValidValue)vvListIt.next();
+               formValidValueDao.deleteFormValidValue(fvv.getValueIdseq());
+             }
+           }
+         }
+
+         return this.getModule(moduleHeader.getModuleIdseq());
+
+       }
+
   public Form updateForm(
     Form formHeader,
     Collection updatedModules,
@@ -172,7 +295,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
     return fdao.deleteForm(formPK);
   }
-  
+
   /**
   * @inheritDoc
   */
@@ -333,7 +456,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
     return ret;
   }
-  
+
   public Map getValidValues(Collection vdIdSeqs)
   {
     ValueDomainDAO myDAO = daoFactory.getValueDomainDAO();
