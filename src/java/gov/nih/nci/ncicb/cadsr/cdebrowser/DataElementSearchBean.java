@@ -36,6 +36,8 @@ public class DataElementSearchBean extends Object {
   private String validValue;
   private String altName;
   private String basicSearchType="";
+  private String conceptName = "";
+  private String conceptCode = "";
 
   public DataElementSearchBean(
     HttpServletRequest request,
@@ -60,6 +62,8 @@ public class DataElementSearchBean extends Object {
     validValue = request.getParameter("jspValidValue");
     altName = request.getParameter("jspAltName");
     basicSearchType = request.getParameter("jspBasicSearchType");
+    conceptName = request.getParameter("jspConceptName");
+    conceptCode = request.getParameter("jspConceptCode");
 
     if (contextUse == null) {
       contextUse = "";
@@ -298,5 +302,15 @@ public class DataElementSearchBean extends Object {
   public void setSimpleSearchStr(String simpleSearchStr)
   {
     this.simpleSearchStr = simpleSearchStr;
+  }
+
+
+  public String getConceptName() {
+    return StringUtils.replaceNull(conceptName);
+  }
+
+
+  public String getConceptCode() {
+    return StringUtils.replaceNull(conceptCode);
   }
 }

@@ -61,9 +61,9 @@ public class DESearchQueryBuilder extends Object {
     String csiWhere = "";
     String fromClause = "";
     String vdFrom = "";
-    //String vdWhere = "";
     String decFrom = "";
-    //String decWhere = "";
+    String conceptName = "";
+    String conceptCode = "";
     StringBuffer whereBuffer = new StringBuffer();
 
     String registrationFrom = " , sbr.ac_registrations acr ";
@@ -117,6 +117,10 @@ public class DESearchQueryBuilder extends Object {
         StringUtils.replaceNull(request.getParameter("jspLatestVersion"));
       searchStr8 =
         StringUtils.replaceNull(request.getParameter("jspAltName"));
+      conceptName = 
+        StringUtils.replaceNull(request.getParameter("jspConceptName"));
+      conceptCode =
+        StringUtils.replaceNull(request.getParameter("jspConceptCode"));
 
       if (searchStr6.equals("Yes")||searchStr6.equals("")) {
         //latestWhere = " and de.latest_version_ind = '"+searchStr6+"'";
@@ -153,7 +157,7 @@ public class DESearchQueryBuilder extends Object {
       String vvWhere = "";
       String regStatusWhere = "";
       String altNameWhere = "";
-
+      
       if (doStatusSearch){
         wkFlowWhere = this.buildStatusWhereClause(searchStr1);
       }
@@ -192,6 +196,9 @@ public class DESearchQueryBuilder extends Object {
       if (!validValue.equals("")){
         vvWhere = this.buildValidValueWhere(validValue);
       }
+      // Check to see if a WHERE clause for concepts needs to be added
+      String conceptWhere = this.buildConceptWhere(conceptName,conceptCode);
+      
 
       whereBuffer.append(wkFlowWhere);
       whereBuffer.append(regStatusWhere);
@@ -203,6 +210,7 @@ public class DESearchQueryBuilder extends Object {
       whereBuffer.append(usageWhere);
       whereBuffer.append(vvWhere);
       whereBuffer.append(altNameWhere);
+      whereBuffer.append(conceptWhere);
     }
 
     if (treeConteIdSeq != null) {
@@ -916,6 +924,72 @@ public class DESearchQueryBuilder extends Object {
                   + typeWhere
                   + searchWhere+ " ) ";
     return altWhere;
+    }
+    
+    private String buildConceptWhere (String conceptName, String conceptCode) {
+      String conceptWhere = "";
+      String conceptCodeWhere = "";
+      String conceptNameWhere = "";
+      if (!"".equals(conceptName)) {
+        String newConceptName = StringReplace.strReplace(conceptName,"*","%");
+        conceptNameWhere = " where upper(long_name) like upper('"+newConceptName+"')";
+      }
+      if (!"".equals(conceptCode)) {
+        String newConceptCode = StringReplace.strReplace(conceptCode,"*","%");
+        if (!"".equals(conceptName)) {
+          conceptCodeWhere = " and upper(preferred_name) like upper('"+newConceptCode+"')";
+        }
+        else {
+          conceptCodeWhere = " where upper(preferred_name) like upper('"+newConceptCode+"')";
+        }
+      }
+      if ((!"".equals(conceptName)) || (!"".equals(conceptCode))) {
+        conceptWhere = "and    de.de_idseq IN ("
+                      +"select de_idseq "
+                      +"from   data_elements "
+                      +"where  dec_idseq IN (select dec.dec_idseq "
+					                                 +"from   data_element_concepts dec, "
+                                           +"       object_classes_ext oc "
+					                                 +"where  oc.oc_idseq = dec.oc_idseq "
+					                                 +"and    oc.condr_idseq in(select cdr.condr_idseq "
+											                                              +"from   con_derivation_rules_ext cdr, "
+                                                                    +"       component_concepts_ext cc "
+											                                              +"where  cdr.condr_idseq = cc.condr_idseq "
+											                                              +"and    cc.con_idseq in (select con_idseq "
+											                                                                      +"from   concepts_ext "
+																	                                                          +conceptNameWhere+conceptCodeWhere+")) "
+                                           +"UNION "
+                                           +"select dec.dec_idseq "
+                                           +"from   data_element_concepts dec, properties_ext pc "
+                                           +"where  pc.prop_idseq = dec.prop_idseq "
+					                                 +"and    pc.condr_idseq in(select cdr.condr_idseq "
+											                                              +"from   con_derivation_rules_ext cdr, "
+                                                                    +"       component_concepts_ext cc "
+											                                              +"where  cdr.condr_idseq = cc.condr_idseq "
+											                                              +"and    cc.con_idseq in (select con_idseq "
+											                                                                      +"from   concepts_ext "
+																	                                                          +conceptNameWhere+conceptCodeWhere+"))) "
+                    +"UNION "
+                    +"select de_idseq "
+                    +"from   data_elements "
+                    +"where  vd_idseq IN (select vd.vd_idseq "
+                                        +"from   sbr.value_domains vd, "
+                                        +"       sbr.vd_pvs vp, "
+                                        +"       sbr.permissible_values pv, "
+                                        +"       sbr.value_meanings_lov vm "
+                                        +"where  vd.vd_idseq = vp.vd_idseq "
+                                        +"and    pv.pv_idseq = vp.pv_idseq "
+                                        +"and    vm.short_meaning = pv.short_meaning "
+                                        +"and     vm.condr_idseq in(select cdr.condr_idseq "
+                                                                 +"from   con_derivation_rules_ext cdr, "
+                                                                 +"       component_concepts_ext cc "
+                                                                 +"where  cdr.condr_idseq = cc.condr_idseq "
+                                                                 +"and    cc.con_idseq in (select con_idseq "
+                                                                                         +"from   concepts_ext "
+                                                                                         +conceptNameWhere+conceptCodeWhere+")))) ";
+
+      }
+      return conceptWhere;
     }
 
 

@@ -94,7 +94,7 @@
             <table  width="100%" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">  
              <tr >
                <td width="40%" class="OraTableColumnHeaderNoBG" nowrap>Concept Name</td>
-               <td width="60%" class="OraTabledata"><input type="text"  value=""  size="30" ></td>
+               <td width="60%" class="OraTabledata"><input type="text"  name="jspConceptName" value="<%=desb.getConceptName()%>"  size="30" ></td>
              </tr>               
             </table>           
            </td>
@@ -103,7 +103,7 @@
              <tr >
               <td width="40%" class="OraTableColumnHeaderNoBG" nowrap>Concept Code </td>
               <td  width="60%" class="OraTabledata" nowrap>
-               <input type="text"  value=""  size="20"> 
+               <input type="text"  name="jspConceptCode" value="<%=desb.getConceptCode()%>"  size="20"> 
               </td>
              </tr>                
             </table>  
