@@ -1,8 +1,12 @@
 package gov.nih.nci.ncicb.cadsr.jsp.tag.handler;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+import java.util.ListIterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -18,8 +22,12 @@ import org.apache.commons.beanutils.PropertyUtils;
  *   <cde:questionAltText questionBeanId= "question" 
  *                 htmlObjectRef="questionInputText"
  *                 deProperty = "longName"
+ *                 questionProperty="longName"
  *                 formIndex="0"
  *                 questionIndex="2" /> 
+ *  deProperty and questionPropery are options if both are set question property is used
+ *  the property value for the question is from the orgQuestionBeanId bean in session. When
+ *  questionProperty is specified orgModuleBeanId,questionBeanId also need to be defined
  *                             
  */
 public class AltQuestionText extends TagSupport implements CaDSRConstants,FormConstants
@@ -29,6 +37,8 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
   private String htmlObjectRef;
   private String formIndex;
   private String questionIndex;
+  private String questionProperty;
+  private String orgModuleBeanId;
 
 
   public AltQuestionText()
@@ -44,7 +54,40 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
         Question currQuestion = (Question)pageContext.getAttribute(questionBeanId);
         String longName = currQuestion.getLongName();
         DataElement de = currQuestion.getDataElement();
-        if(de!=null)
+        if(questionProperty!=null&&orgModuleBeanId!=null)
+        {
+          // Get the property from the Question in the orgModule
+          // If its a new Question the get the property value from 
+          // the DataElement for deProperty if deProperty is defined
+          Module orgModule = (Module)pageContext.getSession().getAttribute(orgModuleBeanId);
+          if(orgModule==null)
+            throw new JspException( "No Bean by name "+orgModuleBeanId+"in session");
+          List orgQuestions = orgModule.getQuestions();
+          String propValue =null;
+          if(orgQuestions.contains(currQuestion))
+          {
+            Question orgQuestion = getQuestionFromList(currQuestion.getQuesIdseq(),orgQuestions);
+            propValue = (String)PropertyUtils.getProperty(orgQuestion,questionProperty);
+          }
+          else// get the value from the de
+          {
+            if(deProperty!=null)
+            {
+            if(de!=null)
+              propValue = (String)PropertyUtils.getProperty(de,deProperty);
+            }
+          }
+          
+          if(propValue==null)
+              return Tag.SKIP_BODY;          
+          String script  = generateJavaScript("question",formIndex,questionIndex,questionProperty,propValue);            
+          StringBuffer linkStr = new StringBuffer("<a href=\"javascript:question"+questionIndex+questionProperty+"populate()\">");
+          linkStr.append(propValue);
+          linkStr.append("</a>");
+          out.print(script);
+          out.print(linkStr.toString());              
+        }
+        else if(de!=null)
           {
             String propValue = (String)PropertyUtils.getProperty(de,deProperty);
             if(propValue==null)
@@ -55,8 +98,8 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
             }
             else
             {
-              String script  = generateJavaScript(formIndex,questionIndex,deProperty,propValue);            
-              StringBuffer linkStr = new StringBuffer("<a href=\"javascript:question"+questionIndex+deProperty+"populate()\">");
+              String script  = generateJavaScript("questionde",formIndex,questionIndex,deProperty,propValue);            
+              StringBuffer linkStr = new StringBuffer("<a href=\"javascript:questionde"+questionIndex+deProperty+"populate()\">");
               linkStr.append(propValue);
               linkStr.append("</a>");
               out.print(script);
@@ -71,11 +114,11 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
 
     }//end doStartTag()  
 
-  private String generateJavaScript(String formIndex,String questionIndex
+  private String generateJavaScript(String methodPrefix, String formIndex,String questionIndex
                                     , String property, String propValue)
   {
     StringBuffer script = new StringBuffer("\n<SCRIPT LANGUAGE=\"JavaScript\"><!--");
-    script.append(" \nfunction  "+"question"+questionIndex+property+"populate() \n") ;
+    script.append(" \nfunction  "+methodPrefix+questionIndex+property+"populate() \n") ;
     script.append("\n {");
     script.append("\n var objForm"+questionIndex+" = document.forms["+formIndex+"];");
     script.append("\n var objQuestion"+questionIndex+" = objForm"+questionIndex+"['"+htmlObjectRef+"'];");
@@ -85,6 +128,20 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
     return script.toString();
   }
   
+  private Question getQuestionFromList(
+    String questionIdSeq,
+    List questions) {
+    ListIterator iterate = questions.listIterator();
+
+    while (iterate.hasNext()) {
+      Question question = (Question) iterate.next();
+
+      if (question.getQuesIdseq().equals(questionIdSeq)) {
+        return question;
+      }
+    }
+    return null;
+    }
   public String getQuestionBeanId()
   {
     return questionBeanId;
@@ -138,6 +195,26 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
   public String getQuestionIndex()
   {
     return questionIndex;
+  }
+
+  public String getQuestionProperty()
+  {
+    return questionProperty;
+  }
+
+  public void setQuestionProperty(String newQuestionProperty)
+  {
+    questionProperty = newQuestionProperty;
+  }
+
+  public String getOrgModuleBeanId()
+  {
+    return orgModuleBeanId;
+  }
+
+  public void setOrgModuleBeanId(String newOrgModuleBeanId)
+  {
+    orgModuleBeanId = newOrgModuleBeanId;
   }
   
 }

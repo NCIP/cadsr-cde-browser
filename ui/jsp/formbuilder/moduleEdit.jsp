@@ -106,6 +106,21 @@ function clearProtocol() {
         </tr>
       </table>
         <bean:define id="module" name="<%=FormConstants.MODULE%>"></bean:define>
+        
+      <table cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr >
+          <td >
+            &nbsp;
+          </td>
+        </tr>         
+        <tr>
+          <td class="OraHeaderSubSub" width="100%">Module Header</td>
+        </tr>
+        <tr>
+          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+        </tr>
+      </table>       
+      
         <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="20%" nowrap>
@@ -125,14 +140,22 @@ function clearProtocol() {
           </tr>
         </table>
         
+      <table cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr >
+          <td >
+            &nbsp;
+          </td>
+        </tr>         
+        <tr>
+          <td class="OraHeaderSubSub" width="100%">Questions</td>
+        </tr>
+        <tr>
+          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+        </tr>
+      </table>          
         <!-- If the Question Collection is empty and deleted Question Exists -->
             <logic:empty name="module" property="questions">
-             <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">
-             <tr >
-                <td >
-                  &nbsp;
-                </td>
-              </tr>         
+             <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">     
               <tr align="right">                      
                 <td align="right" width="3%">
                   <%
@@ -280,22 +303,10 @@ function clearProtocol() {
               </tr>           
               <tr class="OraTabledata">
                 <td>
-                  <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                  <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">                  
                       <logic:present name="question" property="dataElement">
                       <logic:present name="question" property="dataElement.longName">
-                      <tr class="OraTabledata">
-                          <td class="OraFieldText" nowrap align="left" >
-                            <bean:message key="cadsr.formbuilder.form.longName" />
-                          </td>                       
-                          <td class="OraFieldText">
-                             : <cde:questionAltText questionBeanId= "question" 
-                                                  htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
-                                                  deProperty = "longName"
-                                                  formIndex="0"
-                                                  questionIndex="<%=questionIndex%>" /> 
-                              
-                          </td>
-                      </tr>
+
                       </logic:present>
                       <logic:present name="question" property="dataElement.longCDEName">
                       <tr class="OraTabledata">
@@ -310,8 +321,30 @@ function clearProtocol() {
                                                   questionIndex="<%=questionIndex%>" /> 
                           </td>
                       </tr>
+                       <tr class="OraTabledata">
+                          <td class="OraFieldText" nowrap align="left">
+                            &nbsp;
+                          </td> 
+                          <td class="OraFieldText" nowrap align="left">
+                            &nbsp;
+                          </td>                           
+                      </tr>                      
                       </logic:present>                      
                       </logic:present>
+                       <tr class="OraTabledata">
+                          <td class="OraFieldText" nowrap align="left">
+                            <bean:message key="cadsr.formbuilder.question.orginalValue" />
+                          </td>                      
+                          <td class="OraFieldText">
+                             : <cde:questionAltText questionBeanId= "question" 
+                                                  htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
+                                                  questionProperty = "longName"
+                                                  deProperty = "longName"
+                                                  orgModuleBeanId= '<%=FormConstants.CLONED_MODULE%>'
+                                                  formIndex="0"
+                                                  questionIndex="<%=questionIndex%>" /> 
+                          </td>
+                      </tr>                        
                       <logic:present name="question">
                       <logic:empty name="question" property="validValues">                           
                           <tr class="OraTabledata">

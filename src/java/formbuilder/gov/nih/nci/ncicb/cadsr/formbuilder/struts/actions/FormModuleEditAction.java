@@ -1010,13 +1010,14 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
   }
 
   /**
+   * TODO REmove  not used skakkodi
    * Gets the module given by "moduleIdSeq" from the module list
    *
    * @param moduleIdSeq
    * @param modules
    *
    * @return the  module else returns null;
-   */
+  
   private Question getQuestionFromList(
     String moduleIdSeq,
     List questions) {
@@ -1032,7 +1033,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
 
     return null;
   }
-
+*/
   private String[] getQuestionsAsArray(List questions) {
     if (questions == null) {
       return null;

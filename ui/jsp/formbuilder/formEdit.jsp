@@ -89,6 +89,21 @@ function clearProtocol() {
     
       <logic:present name="<%=FormConstants.CRF%>">
        <html:hidden property="<%=FormConstants.FORM_ID_SEQ%>"/>
+
+      <table cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr >
+          <td >
+            &nbsp;
+          </td>
+        </tr>         
+        <tr>
+          <td class="OraHeaderSubSub" width="100%">Form Header</td>
+        </tr>
+        <tr>
+          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+        </tr>
+      </table>       
+       
         <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="20%" nowrap>
@@ -103,7 +118,7 @@ function clearProtocol() {
               <bean:message key="cadsr.formbuilder.form.definition"/>
             </td>
             <td  class="OraFieldText" width="80%" >
-              <html:textarea  rows="3" cols="77" property="<%=FormConstants.PREFERRED_DEFINITION%>"></html:textarea>
+              <html:textarea  styleClass="OraFieldText" rows="3" cols="102" property="<%=FormConstants.PREFERRED_DEFINITION%>"></html:textarea>
             </td>
           </tr>
           <tr class="OraTabledata">
@@ -135,7 +150,7 @@ function clearProtocol() {
               <bean:message key="cadsr.formbuilder.form.workflow" />
             </td>
             <td class="OraFieldText" nowrap>
-            <html:select styleClass = "Dropdown" property="<%=FormConstants.WORKFLOW%>">        	
+            <html:select styleClass = ".FreeDropdown" property="<%=FormConstants.WORKFLOW%>">        	
                <html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
               </html:select>        
             </td>   
@@ -151,7 +166,7 @@ function clearProtocol() {
             </td>
           </tr>         
           <tr class="OraTabledata" >
-              <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
+              <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" /></td>  
               <td class="OraFieldText" nowrap>
                <html:select styleClass = "Dropdown" property="<%=FormConstants.FORM_TYPE%>"> 
                   <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
@@ -159,16 +174,23 @@ function clearProtocol() {
               </td>        
           </tr>       
         </table>
-        
+      <table cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr >
+          <td >
+            &nbsp;
+          </td>
+        </tr>         
+        <tr>
+          <td class="OraHeaderSubSub" width="100%">Form Details</td>
+        </tr>
+        <tr>
+          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+        </tr>
+      </table>        
         <!-- If the Modules Collection is empty and deleted modules Exists -->
 
             <logic:empty name="<%=FormConstants.CRF%>" property="modules">
-             <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">
-             <tr >
-                <td >
-                  &nbsp;
-                </td>
-              </tr>         
+             <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
               <tr align="right">
                 <logic:notEmpty name="<%=FormConstants.DELETED_MODULES%>">
                   <td align="right"   class="OraFieldText" nowrap>    

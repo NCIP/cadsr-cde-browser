@@ -155,9 +155,19 @@
     </attribute>  
     <attribute>
     <name>deProperty</name>
-    <required>true</required>
+    <required>false</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute> 
+    <attribute>
+    <name>questionProperty</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>     
+    <attribute>
+    <name>orgModuleBeanId</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>       
     <attribute>
     <name>htmlObjectRef</name>
     <required>true</required>
