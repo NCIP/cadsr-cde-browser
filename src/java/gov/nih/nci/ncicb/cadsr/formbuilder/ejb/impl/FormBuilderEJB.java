@@ -21,6 +21,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionInstructionDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ReferenceDocumentDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
@@ -34,6 +35,7 @@ import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.resource.Classification;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
@@ -839,5 +841,32 @@ public class FormBuilderEJB extends SessionBeanAdapter
              dao.deleteInstruction(instr.getIdseq());
            }
     }
+  }
+
+  public ReferenceDocument createReferenceDocument (ReferenceDocument refDoc, String acIdseq)
+  {
+        ReferenceDocumentDAO myDAO = daoFactory.getReferenceDocumentDAO();
+        return myDAO.createReferenceDoc(refDoc, acIdseq);
+
+  }
+  public void deleteReferenceDocument (String rdIdseq)
+  {
+        ReferenceDocumentDAO myDAO = daoFactory.getReferenceDocumentDAO();
+        myDAO.deleteReferenceDocument(rdIdseq);
+
+  }
+
+  public void updateReferenceDocument (ReferenceDocument refDoc)
+  {
+        ReferenceDocumentDAO myDAO = daoFactory.getReferenceDocumentDAO();
+        myDAO.updateReferenceDocument(refDoc);
+
+  }
+
+  public void deleteAttachment (String name)
+  {
+        ReferenceDocumentDAO myDAO = daoFactory.getReferenceDocumentDAO();
+        myDAO.deleteAttachment(name);
+
   }
 }

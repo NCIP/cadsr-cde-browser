@@ -66,6 +66,14 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String PROTOCOLS_LOV_CONTEXT_CHECK = "chkContext";
   public static final String CSI_NAME = "txtClassSchemeItem";
   public static final String CS_CSI_ID = "jspClassification";
+  public static final String DELETED_REFDOCS = "deletedRefDocs";
+  public static final String DELETED_ATTACHMENTS = "deletedAttachments";
+  public static final String REFDOCS_CLONED = "clonedRefDocs";
+  public static final String ADD_DELETED_REFDOC_IDSEQ = "addDeletedRefDocIdSeq";
+  public static final String REFDOC_INDEX = "selectedRefDocId";
+  public static final String REFDOC_ATTACHMENT_MAP = "refDocAttachmentMap";
+
+  
     //Publish Change Order
   public static final String CS_ID = "csIdseq";
   

@@ -23,6 +23,13 @@
        f.submit();
 
   }      
+
+  function submitFormEdit(methodName,refDocIndexValue) {
+    document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+    document.forms[0].<%=FormConstants.REFDOC_INDEX%>.value=refDocIndexValue;
+    document.forms[0].submit();
+ }
+
   
     </SCRIPT>
   </HEAD>
@@ -39,6 +46,7 @@
     <%@ include file="showMessages.jsp"%>
     <html:form action="/manageReferenceDocs.do">
     <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
+     <html:hidden value="" property="<%=FormConstants.REFDOC_INDEX%>"/>
       
     <%@ include file="/formbuilder/refDocsButton_inc.jsp"%>
          
@@ -136,13 +144,58 @@
         </tr>
       </table>
       
-
-      
+        <logic:empty name="<%=FormConstants.CRF%>" property="refereceDocs">
+            <table width="77%" align="center" cellpadding="0" cellspacing="0" border="0" >
+               <tr >
+                <logic:notEmpty name="<%=FormConstants.DELETED_REFDOCS%>">
+                  <td align="right"   class="OraFieldText" nowrap>    
+                      <html:select styleClass="Dropdown" property="<%=FormConstants.ADD_DELETED_REFDOC_IDSEQ%>">
+                        <html:options collection="<%=FormConstants.DELETED_REFDOCS%>" 
+                            property="docIDSeq" labelProperty="docName" />
+                      </html:select >
+                  </td>
+                  <td align="left" width="25">
+                      <a href="javascript:submitFormEdit('<%=NavigationConstants.UNDELETE_REFDOC%>', '0')">
+                         <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
+                      </a>                          
+                  </td>   
+                  </logic:notEmpty>
+                  <logic:empty name="<%=FormConstants.DELETED_REFDOCS%>">
+                  <td >
+                    &nbsp;
+                  </td>  
+                </logic:empty>                        
+                       <td   align="right">
+                     <html:link action='<%="/createReferenceDoc.do?"+NavigationConstants.METHOD_PARAM+"=gotoCreateReferenceDoc&selectedRefDocId=0"%>'>
+                       <html:img src='<%="i/add.gif"%>' border="0" alt="Add new Reference Document"/>
+                     </html:link>                                    
+                 </td>  
+                 </tr>
+                 </table>
+        </logic:empty>
         <logic:notEmpty name="<%=FormConstants.CRF%>" property="refereceDocs">
           <logic:iterate id="refDoc" indexId="refDocIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument" property="refereceDocs">
             <bean:size id="refDocSize" name="<%=FormConstants.CRF%>" property="refereceDocs"/>            
             <table width="77%" align="center" cellpadding="0" cellspacing="0" border="0" >
                <tr >
+                <logic:notEmpty name="<%=FormConstants.DELETED_REFDOCS%>">
+                  <td align="right"   class="OraFieldText" nowrap>    
+                      <html:select styleClass="Dropdown" property="<%=FormConstants.ADD_DELETED_REFDOC_IDSEQ%>">
+                        <html:options collection="<%=FormConstants.DELETED_REFDOCS%>" 
+                            property="docIDSeq" labelProperty="docName" />
+                      </html:select >
+                  </td>
+                  <td align="left" width="25">
+                      <a href="javascript:submitFormEdit('<%=NavigationConstants.UNDELETE_REFDOC%>', '<%=refDocIndex%>')">
+                         <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
+                      </a>                          
+                  </td>   
+                  </logic:notEmpty>
+                  <logic:empty name="<%=FormConstants.DELETED_REFDOCS%>">
+                  <td >
+                    &nbsp;
+                  </td>  
+                </logic:empty>                        
                 <td   align="right">
                      <html:link action='<%="/createReferenceDoc.do?"+NavigationConstants.METHOD_PARAM+"=gotoCreateReferenceDoc"%>'
                        paramId = '<%="selectedRefDocId"%>'
@@ -159,31 +212,47 @@
                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                      <tr class="OraTabledata" >
                       <td  class="OraHeaderBlack" width="90%">
-                        <html:text size="80" name="refDoc" property="docName">
-                           maxlength="<%= Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH)%>">
-                        </html:text>                        
+                        <bean:write name="refDoc" property="docName"/>
+
                       </td>
                       <td class="OraTableColumnHeader">
                         <table align="center" width="100%" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                             <tr class="OraTableColumnHeader">
                              <td  align="center">
                                 <logic:notEqual value="<%= String.valueOf(refDocSize.intValue()-1) %>" name="refDocIndex">
-                                  <a href="javascript:submitFormEdit('<%=NavigationConstants.MOVE_MODULE_DOWN%>','<%=refDocIndex%>')">
-                                     <img src=i/down.gif border=0 alt="Down">
-                                  </a>                                  
+                      <html:link action='<%="/manageReferenceDocs.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.MOVE_REFDOC_DOWN%>'
+                       paramId = '<%="selectedRefDocId"%>'
+                       paramName="refDocIndex"
+                       >
+                       <html:img src='<%="i/down.gif"%>' border="0" alt="Up"/>
+                     </html:link>                                    
                                 </logic:notEqual>
                              </td>
                              <td  align="center">
                                 <logic:notEqual value="<%= String.valueOf(0) %>" name="refDocIndex">
-                                  <a href="javascript:submitFormEdit('<%=NavigationConstants.MOVE_MODULE_UP%>','<%=refDocIndex%>')">
-                                     <img src=i/up.gif border=0 alt="Up">
-                                  </a>                           
+                      <html:link action='<%="/manageReferenceDocs.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.MOVE_REFDOC_UP%>'
+                       paramId = '<%="selectedRefDocId"%>'
+                       paramName="refDocIndex"
+                       >
+                       <html:img src='<%="i/up.gif"%>' border="0" alt="Up"/>
+                     </html:link>                                    
                                 </logic:notEqual> 
                               </td>
+                              <td align="center">
+                      <html:link action='<%="/editReferenceDoc.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.EDIT_REFDOC%>'
+                       paramId = '<%="selectedRefDocId"%>'
+                       paramName="refDocIndex"
+                       >
+                       <html:img src='<%="i/edit.gif"%>' border="0" alt="Edit"/>
+                     </html:link>                                    
+                                </td>
                               <td  align="center">
-                                    <a href="javascript:submitFormEdit('<%=NavigationConstants.DELETE_MODULE%>','<%=1%>')">
-                                       <img src=<%=urlPrefix%>i/delete.gif border=0 alt="Delete">
-                                    </a>
+                      <html:link action='<%="/manageReferenceDocs.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_REFDOC%>'
+                       paramId = '<%="selectedRefDocId"%>'
+                       paramName="refDocIndex"
+                       >
+                       <html:img src='<%="i/delete.gif"%>' border="0" alt="Delete"/>
+                     </html:link>                                    
                                </td>                              
                               </tr>
                          </table>
@@ -198,9 +267,9 @@
                     <bean:message key="cadsr.formbuilder.form.context"/> 
                   </td>
                   <td class="OraFieldText" nowrap>
-              <html:select styleClass="Dropdown" name="refDoc" property="context.conteIdseq" >               
-                <html:options collection="<%=CaDSRConstants.USER_CONTEXTS%>" property="conteIdseq" labelProperty="name"/>
-              </html:select>
+		       <html:select styleClass="Dropdown" name="refDoc" property="context.conteIdseq" disabled="true">               
+			<html:options collection="<%=CaDSRConstants.USER_CONTEXTS%>" property="conteIdseq" labelProperty="name"/>
+		       </html:select>
                   </td>
                </tr>  
                <tr class="OraTabledata">
@@ -208,9 +277,7 @@
                     URL 
                   </td>
                   <td class="OraFieldText" nowrap>
-                    <html:text size="80"  name="refDoc" property="url">
-                       maxlength="<%= Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH)%>">
-                    </html:text>
+                        <bean:write name="refDoc" property="url"/>
                   </td>
                </tr>    
                <tr class="OraTabledata">
@@ -219,9 +286,7 @@
                   </td
                   <td class="OraFieldText" nowrap>
                   <td  class="OraFieldText" size="80%" nowrap>
-                    <html:text size="80" name="refDoc" property="docText">
-                       maxlength="<%= Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH)%>">
-                   </html:text>
+                        <bean:write name="refDoc" property="docText"/>
                   </td>
                   </td>
                </tr>                  
@@ -246,10 +311,10 @@
                                </td> 
                               <logic:notEmpty name="refDoc" property="attachments">
                                 <td align="center">
-                                      <a href="javascript:submitFormEdit('<%=NavigationConstants.DELETE_MODULE%>','<%=1%>')">
-                                         <img src=<%=urlPrefix%>i/delete.gif border=0 alt="Delete">
-                                      </a>
-                                 </td>
+                      <a href="javascript:submitFormEdit('<%=NavigationConstants.DELETE_ATTACHMENT%>', '<%=refDocIndex%>')">
+                         <img src=<%=urlPrefix%>i/delete.gif border=0 alt="Delete Attachments">
+                      </a>                          
+                            </td>
                               </logic:notEmpty>
                               </tr>
                            </table>                                  
@@ -258,13 +323,15 @@
                       <logic:iterate id="attachment" indexId="attachmentIndex" name="refDoc" type="gov.nih.nci.ncicb.cadsr.resource.Attachment" property="attachments">
                         <tr class="OraTabledata">
                           <td width="5%" align="center" class="OraFieldText">
-                            <input type="checkbox" />
+                            <input type="checkbox" name="selectedItems" value="<%=attachmentIndex%>"/>
                           </td>                        
                           <td class="OraFieldText" align="left">
-                            <a href=" " target="_blank"
-                              alt="View Document" >
-                              <bean:write name="attachment" property="name"/>
-                            </a>	                          
+			      <html:link action='<%="/viewReferenceDocAttchment.do?"+NavigationConstants.METHOD_PARAM+"=viewReferenceDocAttchment"%>' 
+				paramId = "<%=FormConstants.REFERENCE_DOC_ATTACHMENT_NAME%>"
+				paramName="attachment" paramProperty="name"
+				target="_parent" >
+				<bean:write name="attachment" property="name"/>
+			      </html:link>                 
                           </td>
                         </tr>
                       </logic:iterate>                    

@@ -18,6 +18,9 @@ public class ReferenceDocFormBean extends ActionForm
    private String name;
    private String selectedRefDocId;
    private FormFile uploadedFile;
+   private String addDeletedRefDocIdSeq;
+   private String [] selectedItems;
+
   
   public ReferenceDocFormBean()
   {
@@ -93,6 +96,25 @@ public class ReferenceDocFormBean extends ActionForm
     this.description = description;
   }
 
+
+  public void setAddDeletedRefDocIdSeq(String addDeletedRefDocIdSeq)
+  {
+    this.addDeletedRefDocIdSeq = addDeletedRefDocIdSeq;
+  }
+
+
+  public String getAddDeletedRefDocIdSeq()
+  {
+    return addDeletedRefDocIdSeq;
+  }
+
+  public String[] getSelectedItems() {
+    return selectedItems;
+  }
+
+  public void setSelectedItems(String[] newSelectedItems) {
+    selectedItems = newSelectedItems;
+  }
 
 
 }

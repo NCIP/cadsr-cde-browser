@@ -511,11 +511,12 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       super.setSql(
         "SELECT ref.name, ref.dctl_name, ref.ac_idseq, " +
         "       ref.rd_idseq, ref.url, ref.doc_text, " +
-        " ref.conte_idseq, con.name" +
+        " ref.conte_idseq, con.name, ref.display_order" +
         " FROM reference_documents ref, contexts con" +
         " WHERE ref.ac_idseq = '" +adminCompId+"'"+
 //        " AND   ref.DCTL_NAME = '"+ docType+"'" +
-        " AND ref.conte_idseq = con.conte_idseq "
+        " AND ref.conte_idseq = con.conte_idseq " +
+        " order by ref.display_order"
         );
     }
 
@@ -529,6 +530,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       refDoc.setDocIDSeq(rs.getString(4));
       refDoc.setUrl(rs.getString(5));
       refDoc.setDocText(rs.getString(6));
+      refDoc.setDisplayOrder(rs.getInt(9));
 
       ContextTransferObject contextTransferObject = new ContextTransferObject();
       contextTransferObject.setConteIdseq(rs.getString(7)); //CONTE_IDSEQ

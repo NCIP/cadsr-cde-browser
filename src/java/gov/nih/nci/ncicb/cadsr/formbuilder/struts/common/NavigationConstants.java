@@ -61,7 +61,13 @@ public interface NavigationConstants
   public static final String SAVE_CONFIRM_MODULE_EDIT="saveConfirmModuleEdit";
   public static final String SAVE_CONFIRM_DONE="saveConfirmDone";
 
-
+  public static final String MOVE_REFDOC_UP="moveRefDocUp";
+  public static final String MOVE_REFDOC_DOWN="moveRefDocDown";
+  public static final String DELETE_REFDOC="deleteRefDoc";
+  public static final String UNDELETE_REFDOC="unDeleteRefDoc";
+  public static final String EDIT_REFDOC="getFormToEdit";
+  public static final String CREATE_REFDOC="gotoCreateReferenceDoc";
+  public static final String DELETE_ATTACHMENT="deleteAttachment";
 
   public static final String CREATE_MODULE = "createModule";
   public static final String GO_TO_CREATE_MODULE = "goToCreateModule";
