@@ -27,11 +27,11 @@
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
 
-      <%@ include file="/formbuilder/copyButton_inc.jsp"%>    
 
 
     <logic:present name="<%=FormConstants.CRF%>">
       <html:form action='<%="/formToCopyAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.FORM_COPY%>'>
+      <%@ include file="/formbuilder/copyButton_inc.jsp"%>    
       <table cellspacing="2" cellpadding="3" border="0" width="100%">
         <tr>
           <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
@@ -140,9 +140,6 @@
 
       </table>
       
-
-      </html:form>
-
       <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
         <logic:iterate id="module" indexId="moduleIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
           <bean:size id="moduleSize" name="<%=FormConstants.CRF%>" property="modules"  />
@@ -226,11 +223,12 @@
   
 </logic:iterate><!-- Module-->
 </logic:notEmpty>
+
+<%@ include file="/formbuilder/copyButton_inc.jsp"%>    
+</html:form>
+
 </logic:present>
 <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
-
-      <%@ include file="/formbuilder/copyButton_inc.jsp"%>    
-
 
     <%@ include file="/common/common_bottom_border.jsp"%>
 
