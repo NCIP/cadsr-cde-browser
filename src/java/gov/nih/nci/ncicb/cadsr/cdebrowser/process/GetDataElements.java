@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.13 2005-03-10 00:01:28 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.14 2005-03-10 00:27:56 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -632,6 +632,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         {
           desb.setAslNameExcludeList(oldDesb.getAslNameExcludeList());
           desb.setExcludeTestContext(oldDesb.isExcludeTestContext());
+          desb.setExcludeTrainingContext(oldDesb.isExcludeTrainingContext());
           desb.setRegStatusExcludeList(oldDesb.getRegStatusExcludeList());
         }
    }
