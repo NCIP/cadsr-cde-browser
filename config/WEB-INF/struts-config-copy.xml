@@ -24,8 +24,17 @@
     <action name="copyForm" path="/formToCopyAction" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCopyAction"
-      validate="false">
+      validate="false"
+      >
       <forward name="showSuccess" path="/formbuilder/formCopy.jsp"/>
+    </action>
+
+    <action name="copyForm" path="/formCopyAction" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCopyAction"
+      validate="true"
+      input="/formbuilder/formCopy.jsp"
+      >
       <forward name="gotoEdit" path="/formToEditAction.do?method=getFormToEdit"/>
       <forward name="gotoView" path="/formbuilder/formDetails.jsp"/>
     </action>
