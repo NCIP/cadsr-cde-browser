@@ -16,6 +16,8 @@ public interface NavigationConstants
   public static final String GET_FORM_TO_EDIT="getFormToEdit";
   public static final String DELETE_FORM="deleteForm";
   public static final String GET_FORM_TO_COPY="getFormToCopy";
+  public static final String GET_FORM_TO_PRINT="getPrinterVersion";
+  
 
   public static final String GET_PROTOCOL_LOV_METHOD="getProtocolsLOV";
 

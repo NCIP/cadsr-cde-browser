@@ -49,7 +49,22 @@
     <name>urlPrefix</name>
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>paramId</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>paramProperty</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
     </attribute>    
+    <attribute>
+    <name>target</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>      
   </tag> 
   <tag>
     <name>pagination</name>

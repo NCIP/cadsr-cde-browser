@@ -21,44 +21,38 @@
   <BODY bgcolor="#ffffff">
     <% String urlPrefix = "";
 
-%>
-    <%@ include file="/formbuilder/common_header_inc.jsp"%>
-    <jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
-      <jsp:param name="label" value="View&nbsp;Form"/>
-      <jsp:param name="urlPrefix" value=""/>
-    </jsp:include>
-    <%@ include file="/formbuilder/viewButton_inc.jsp"%>
+	%>
     <logic:present name="<%=FormConstants.CRF%>">
-      <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-        <tr class="OraTabledata">
-          <td class="TableRowPromptTextLeft" width="20%">
+      <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentBlack">
+        <tr >
+          <td  class="PrinterOraTableColumnHeader" width="20%">
             <bean:message key="cadsr.formbuilder.form.name" />
           </td>                
-          <td  class="OraFieldText">
+          <td  class="PrinterOraTableColumnHeader">
             <bean:write name="<%=FormConstants.CRF%>" property="longName"/>
           </td>
         </tr>
-        <tr class="OraTabledata">
-          <td  class="TableRowPromptTextLeft" width="20%">
-            <bean:message key="cadsr.formbuilder.form.definition"/>
+        <tr class="PrinterOraTableColumnHeader">
+          <td  width="20%">
+            <bean:message key="cadsr.formbuilder.form.definition" />
           </td>                
-          <td  class="OraFieldText">
+          <td  class="PrinterOraTableColumnHeader">
             <bean:write name="<%=FormConstants.CRF%>" property="preferredDefinition"/>
           </td>
         </tr>
-        <tr class="OraTabledata">
-          <td  class="TableRowPromptTextLeft" width="20%">
-            <bean:message key="cadsr.formbuilder.form.context"/>
+        <tr class="PrinterOraTableColumnHeader">
+          <td  width="20%">
+            <bean:message key="cadsr.formbuilder.form.context" />
           </td>                
-          <td  class="OraFieldText">
+          <td  class="PrinterOraTableColumnHeader">
             <bean:write name="<%=FormConstants.CRF%>" property="context.name"/>
           </td>
         </tr>
-        <tr class="OraTabledata">
-          <td class="TableRowPromptTextLeft"  width="20%">
-            <bean:message key="cadsr.formbuilder.form.protocol"/>
+        <tr class="PrinterOraTableColumnHeader">
+          <td  width="20%">
+            <bean:message key="cadsr.formbuilder.form.protocol" />
           </td>                
-          <td  class="OraFieldText">
+          <td  class="PrinterOraTableColumnHeader">
             <bean:write name="<%=FormConstants.CRF%>" property="protocol.longName"/>
           </td>
         </tr>   
@@ -72,39 +66,39 @@
       </table>      
             <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
               <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
-                <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
-                 <tr class="OraTableColumnHeader">                 
-                    <td class="OraTableColumnHeader">
+                <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentBlack">               
+                 <tr class="PrinterOraTableColumnHeader">                 
+                    <td class="PrinterOraTableColumnHeader">
                       <bean:write name="module" property="longName"/>
                     </td>
                   </tr>
                   <logic:present name="module">
                   <logic:notEmpty name="module" property = "questions">
-                    <tr class="OraTabledata">
+                    <tr class="PrinterOraTabledata">
                       <td>
-                        <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">      
+                        <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentBlack">      
                           <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">                           
-                            <tr class="OraTabledata">
-                              <td class="OraFieldText" width="50">&nbsp;</td>
-                              <td height="1"  bgcolor="#F7F7E7" bordercolor="#C0C087">                               
+                            <tr class="PrinterOraTabledata">
+                              <td class="PrinterOraFieldText" width="50">&nbsp;</td>
+                              <td height="1"  >                               
                               </td>
                             </tr>                             
-                            <tr class="OraTabledata">
-                              <td class="OraFieldText" width="50">&nbsp;</td>
-                              <td class="UnderlineOraFieldText">
+                            <tr class="PrinterOraTabledata">
+                              <td class="PrinterOraFieldText" width="50">&nbsp;</td>
+                              <td class="PrinterUnderlineOraFieldText">
                                 <bean:write name="question" property="longName"/>
                               </td>
                             </tr>                                                     
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">
-                              <tr class="OraTabledata">
-                                <td class="OraFieldText" width="50">&nbsp;</td>
+                              <tr class="PrinterOraTabledata">
+                                <td class="PrinterOraFieldText" width="50">&nbsp;</td>
                                 <td>
-                                  <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                                  <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentBlack">
                                     <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
-                                      <tr class="OraTabledata">
-                                        <td class="OraFieldText" width="50">&nbsp;</td>
-                                        <td class="OraFieldText">
+                                      <tr class="PrinterOraTabledata">
+                                        <td class="PrinterOraFieldText" width="50">&nbsp;</td>
+                                        <td class="PrinterOraFieldText">
                                           <bean:write name="validValue" property="longName"/>
                                         </td>
                                       </tr>
@@ -134,6 +128,5 @@
             </logic:notEmpty>
     </logic:present>
     <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
-    <%@ include file="/formbuilder/viewButton_inc.jsp"%>
   </BODY>
 </HTML>

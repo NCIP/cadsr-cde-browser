@@ -11,6 +11,8 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .OraBGGrayMedium {background-color:#999999}
 .OraBGGrayLight {background-color:#cccccc}
 .OraBGAccentVeryDark {background-color:#999966}
+.OraBGAccentWhite {background-color:#FFFFFF}
+.OraBGAccentBlack {background-color:#000000}
 .OraBGAccentDark {background-color:#cccc99}
 .OraBGAccentMedium {background-color:#ffffcc}
 .OraBGAccentLight {background-color:#f7f7e7}
@@ -139,3 +141,8 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .InputFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000;text-align: left}
 .Dropdown {font-family:Arial, Helvetica, Geneva, sans-serif; width:39mm ; font-size:10pt; color:#000000; text-align: center}
 .UnderlineOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; border-bottom:1px solid #999966;}
+.PrinterOraTableColumnHeader {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; font-weight:bold; text-align:left; background-color:#FFFFFF; color:#000000; text-indent:1}
+.PrinterOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000}
+.PrinterOraTabledata {FONT-SIZE: 10pt; BACKGROUND: #FFFFFF; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif}
+.PrinterUnderlineOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; border-bottom:1px solid #000000;}
+.TableRowPromptTextLeft {FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #cccc99; text-align: left; }

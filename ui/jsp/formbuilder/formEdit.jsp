@@ -30,14 +30,14 @@
     <%@ include file="/formbuilder/editButton_inc.jsp"%>    
     <logic:present name="<%=FormConstants.CRF%>">
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-        <tr class="OraTableColumnHeader">
-          <td  width="20%">
+        <tr class="OraTabledata">
+          <td  class="TableRowPromptTextLeft" width="20%">
             <bean:message key="cadsr.formbuilder.form.name" />
           </td>                
-          <td class="OraTableColumnHeader">
+          <td class="OraFieldText">
               <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                  <tr class="OraTableColumnHeader" >
-                    <td>
+                  <tr class="OraTabledata" >
+                    <td class="OraFieldText" >
                        <bean:write name="<%=FormConstants.CRF%>" property="longName"/>
                     </td>
                     <td align="right">
@@ -56,27 +56,27 @@
 		</table>
 	  </td>
         </tr>
-        <tr class="OraTableColumnHeader">
-          <td  width="20%">
+        <tr class="OraTabledata">
+          <td  class="TableRowPromptTextLeft" width="20%">
             <bean:message key="cadsr.formbuilder.form.definition" />
           </td>                
-          <td  class="OraTableColumnHeader">
+          <td  class="OraFieldText">
             <bean:write name="<%=FormConstants.CRF%>" property="preferredDefinition"/>
           </td>
         </tr>
-        <tr class="OraTableColumnHeader">
-          <td  width="20%">
+        <tr class="OraTabledata">
+          <td  class="TableRowPromptTextLeft" width="20%">
             <bean:message key="cadsr.formbuilder.form.context" />
           </td>                
-          <td  class="OraTableColumnHeader">
+          <td  class="OraFieldText">
             <bean:write name="<%=FormConstants.CRF%>" property="context.name"/>
           </td>
         </tr>
-        <tr class="OraTableColumnHeader">
-          <td  width="20%">
+        <tr class="OraTabledata">
+          <td  class="TableRowPromptTextLeft" width="20%">
             <bean:message key="cadsr.formbuilder.form.protocol" />
           </td>                
-          <td  class="OraTableColumnHeader">
+          <td  class="OraFieldText">
             <bean:write name="<%=FormConstants.CRF%>" property="protocol.longName"/>
           </td>
         </tr>   
@@ -145,7 +145,8 @@
                               <td class="OraFieldText" width="50">&nbsp;</td>
                               <td height="1"  bgcolor="#F7F7E7" bordercolor="#C0C087">                               
                               </td>
-                            </tr>                             <tr class="OraTabledata">
+                            </tr>                             
+                            <tr class="OraTabledata">
                               <td class="OraFieldText" width="50">&nbsp;</td>
                               <td class="UnderlineOraFieldText">
                                 <bean:write name="question" property="longName"/>

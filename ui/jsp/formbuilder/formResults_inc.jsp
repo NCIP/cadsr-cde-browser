@@ -36,22 +36,34 @@
 			</html:link>  			
                   </td>
 		  <td align=center>
-		       <cde:secureIcon  formId="form" activeImageSource="i/copy.gif" activeUrl="test" 
+		       <cde:secureIcon  formId="form" activeImageSource="i/copy.gif" 
+		       		activeUrl='<%="/formToCopyAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_COPY%>' 
 		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
 		   	   	urlPrefix="<%=urlPrefix%>"
-		   	   	altMessage="Copy"/>
+		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+		   	   	paramProperty="formIdseq"
+		   	   	altMessage="Copy"
+		   	   	target="_parent"/>
 		 </td>                  
 		  <td align=center>
-		       	<cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" 
-		            role="<%=CaDSRConstants.CDE_MANAGER%>" 
-		            urlPrefix="<%=urlPrefix%>"
-		            altMessage="Edit"/>
+		       <cde:secureIcon  formId="form" activeImageSource="i/edit.gif" 
+		       		activeUrl='<%="/formToEditAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_EDIT%>' 
+		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		   	   	urlPrefix="<%=urlPrefix%>"
+		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+		   	   	paramProperty="formIdseq"
+		   	   	altMessage="Edit"
+		   	   	target="_parent"/>		            
 		  </td>
 		 <td align=center>
-		        <cde:secureIcon  formId="form" activeImageSource="i/delete.gif" activeUrl="test"
-		           	role="<%=CaDSRConstants.CDE_MANAGER%>"
-		           	urlPrefix="<%=urlPrefix%>"
-		           	altMessage="Delete"/>
+		       <cde:secureIcon  formId="form" activeImageSource="i/delete.gif" 
+		       		activeUrl='<%="/formDeleteAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>' 
+		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		   	   	urlPrefix="<%=urlPrefix%>"
+		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+		   	   	paramProperty="formIdseq"
+		   	   	altMessage="Delete"
+		   	   	target="_parent"/>		           	
 		</td>                
           	<td class="OraFieldText">
  			<html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"

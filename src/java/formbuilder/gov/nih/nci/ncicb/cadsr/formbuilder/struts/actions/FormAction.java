@@ -93,23 +93,16 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    FormBuilderServiceDelegate service = getFormBuilderService();
-    DynaActionForm searchForm = (DynaActionForm) form;
-    String formIdSeq = (String) searchForm.get(FORM_ID_SEQ);
-
-    Form crf = null;
-
-    try {
-      crf = service.getFormDetails(formIdSeq);
+    try
+    {
+      setFormForAction(form,request);
     }
-    catch (FormBuilderException ex) {
+    catch (FormBuilderException exp)
+    {
       if (log.isDebugEnabled()) {
-        log.debug("Exception on getFormBy Id =  " + ex);
-      }
+        log.debug("Exception on getFormBy Id =  " + exp);
+      }      
     }
-
-    setSessionObject(request, CRF, crf);
-
     return mapping.findForward(SUCCESS);
   }
 
@@ -131,25 +124,109 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    FormBuilderServiceDelegate service = getFormBuilderService();
-    DynaActionForm searchForm = (DynaActionForm) form;
-    
-    Form crf = (Form)getSessionObject(request, CRF);
-    if(crf==null)
+    try
     {
-      String formIdSeq = (String) searchForm.get(FORM_ID_SEQ);
-      try {
-        crf = service.getFormDetails(formIdSeq);
-      }
-      catch (FormBuilderException ex) {
-        if (log.isDebugEnabled()) {
-          log.debug("Exception on getFormBy Id =  " + ex);
-        }
+      setFormForAction(form,request);
+    }
+    catch (FormBuilderException exp)
+    {
+      if (log.isDebugEnabled()) {
+        log.debug("Exception on getFormForEdit =  " + exp);
       }      
     }
-    setSessionObject(request, CRF, crf);
     return mapping.findForward(SUCCESS);
   }
+
+  /**
+   * Returns Complete form given an Id for Copy.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward getFormToCopy(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    try
+    {
+      setFormForAction(form,request);
+    }
+    catch (FormBuilderException exp)
+    {
+      if (log.isDebugEnabled()) {
+        log.debug("Exception on getFormForEdit =  " + exp);
+      }      
+    }
+    return mapping.findForward(SUCCESS);
+  }
+
+  /**
+   * Delete Form.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward deleteForm(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    DynaActionForm hrefCRFForm = (DynaActionForm) form;
+    String formIdSeq = (String) hrefCRFForm.get(FORM_ID_SEQ);
+    
+    if (log.isDebugEnabled())
+        log.info("Delete Form With Id "+formIdSeq);
+    return mapping.findForward(SUCCESS);
+  }
+
+  /**
+   * Returns Complete form given an Id for Copy.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward getPrinterVersion(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    try
+    {
+      Form crf = (Form)this.getSessionObject(request,CRF);
+      if(form==null)
+        setFormForAction(form,request);
+    }
+    catch (FormBuilderException exp)
+    {
+      if (log.isDebugEnabled()) {
+        log.debug("Exception on getFormForEdit =  " + exp);
+      }      
+    }
+    return mapping.findForward(SUCCESS);
+  }
+
   /**
    * Returns all forms for the search criteria specified by clicking on a tree
    * node.
@@ -207,5 +284,23 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     setInitLookupValues(request);
 
     return mapping.findForward(DEFAULT_HOME);
+  }
+  /**
+   * If a iconForm(DynaForm) exist then get the FormDetails for the
+   * formIdSeq is retrived. Otherwise it is assumed the specific form in session
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.* 
+   */
+  private void setFormForAction(ActionForm form,HttpServletRequest request) throws FormBuilderException
+  {
+    FormBuilderServiceDelegate service = getFormBuilderService();
+    DynaActionForm hrefCRFForm = (DynaActionForm) form;
+    Form crf = null;
+
+    if (hrefCRFForm != null) {
+      String formIdSeq = (String) hrefCRFForm.get(FORM_ID_SEQ);
+      crf = service.getFormDetails(formIdSeq);
+      setSessionObject(request, CRF, crf);  
+    }
   }
 }
