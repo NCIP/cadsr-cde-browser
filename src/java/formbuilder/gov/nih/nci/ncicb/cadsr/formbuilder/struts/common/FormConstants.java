@@ -32,6 +32,10 @@ public interface FormConstants extends FormBuilderConstants
     public static final String FORM_VERSION = "formVersion";
     public static final String FORM_COMMENTS = "formComments";
     public static final String FORM_GOTO_EDIT = "gotoEdit";
+    
+    public static final String CHANGED_FORM_HEADER = "gotoEdit";
+    public static final String CHANGED_FORM_UPDATED_MODULES = "gotoEdit";
+    public static final String CHANGED_FORM_DELETED_MODULES = "gotoEdit";   
 
     public static final String MODULE_LONG_NAME = "moduleLongName";
     public static final String MODULE_INSTRUCTION_LONG_NAME = "moduleInstructionLongName";
@@ -79,6 +83,8 @@ public interface FormConstants extends FormBuilderConstants
     public static final String ADD_AVAILABLE_VALID_VALUE_INDEX="addAvailableValidValueIndex";
     public static final String  VALUE_DOMAIN_VALID_VALUES_MAP ="valueDomainValidValueMap";
     public static final String  AVAILABLE_VALID_VALUES_MAP ="AvailableValidValuesMap";
+    
+
 
     public static final String SELECTED_ITEMS = "selectedItems";
 
