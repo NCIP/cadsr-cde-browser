@@ -32,7 +32,7 @@
     <table>
       <tr>
         <td class="OraErrorHeader">
-        	Opps !!  System Error has Occured <br><br>
+        	Unexpected System Error has Occured <br><br>
       <logic:messagesPresent message="true">
        <table width="80%" align="center">
         <html:messages id="message" 
