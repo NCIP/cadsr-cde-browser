@@ -66,8 +66,9 @@ public class DESearchQueryBuilder extends Object {
     String conceptCode = "";
     StringBuffer whereBuffer = new StringBuffer();
 
-    String registrationFrom = " , sbr.ac_registrations acr ";
-    String registrationWhere = " and de.de_idseq = acr.ac_idseq (+) ";
+    // release 3.0 updated to add display order for registration status
+    String registrationFrom = " , sbr.ac_registrations acr , sbr.reg_status_lov rsl";
+    String registrationWhere = " and de.de_idseq = acr.ac_idseq (+) and acr.registration_status = rsl.registration_status ";
     if (strArray == null) {
       searchStr = "";
       whereClause = "";
@@ -327,7 +328,7 @@ public class DESearchQueryBuilder extends Object {
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " +
                          csiWhere + whereClause + registrationWhere;
-      }         
+      }
       else if (treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")){
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +
@@ -466,20 +467,22 @@ public class DESearchQueryBuilder extends Object {
       //String orderBy = " order by de.preferred_name, de.version ";
       StringBuffer finalSqlStmt = new StringBuffer ();
 
+//release 3.0, added display_order of registration status
       String selectClause = "SELECT de.de_idseq "
                            +"      ,de.preferred_name de_preferred_name"
                            +"      ,de.long_name "
                            +"      ,rd.doc_text "
                            +"      ,conte.name "
                            +"      ,de.asl_name "
-                           +"      ,to_char(de.cde_id) "
+                           +"      ,to_char(de.cde_id) de_cdeid"
                            +"      ,de.version de_version "
-                           +"      ,meta_config_mgmt.get_usedby(de.de_idseq) "
+                           +"      ,meta_config_mgmt.get_usedby(de.de_idseq) de_usedby "
                            +"      ,de.vd_idseq "
                            +"      ,de.dec_idseq "
                            +"      ,de.conte_idseq "
                            +"      ,de.preferred_definition "
-                           +"      ,acr.registration_status ";
+                           +"      ,acr.registration_status "
+                           +"      ,rsl.display_order ";
       finalSqlStmt.append(selectClause);
       finalSqlStmt.append(fromWhere);
       sqlWithoutOrderBy = finalSqlStmt.toString();
@@ -490,7 +493,7 @@ public class DESearchQueryBuilder extends Object {
 
       //release 3.0, sort search result by column
       sortColumnHeader = new SimpleSortableColumnHeader();
-      sortColumnHeader.setPrimary("registration_status");
+      sortColumnHeader.setPrimary("display_order");
       sortColumnHeader.setSecondary("asl_name");
       sortColumnHeader.setTertiary("long_name");
       sortColumnHeader.setDefaultOrder(true);
