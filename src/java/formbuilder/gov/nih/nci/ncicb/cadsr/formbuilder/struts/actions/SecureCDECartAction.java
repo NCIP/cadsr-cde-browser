@@ -70,7 +70,7 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
 
       List values = de.getValueDomain().getValidValues();
       List newValidValues = DTOTransformer.toFormValidValueList(values, q);
-
+      q.setQuesIdseq(new Date().getTime() + "" + i);
       q.setValidValues(newValidValues);
       q.setDataElement(de);
       q.setLongName(de.getLongName());
