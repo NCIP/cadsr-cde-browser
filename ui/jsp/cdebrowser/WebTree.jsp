@@ -84,7 +84,7 @@
             "&skin=CDEBrowser1";
       %>
 
-      <td><a href="<%= treeURL %>">Refresh this tree</a></td>
+      <td><a href="<%= treeURL %>">Refresh tree</a></td>
   </tr>
 <%    // render display tree
 
