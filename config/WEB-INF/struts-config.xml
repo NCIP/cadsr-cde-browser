@@ -66,6 +66,8 @@
       <form-property name="protocolIdSeq" type="java.lang.String"/>
       <form-property name="categoryName" type="java.lang.String"/>
       <form-property name="protocolLongName" type="java.lang.String"/>
+      <form-property name="workflow" type="java.lang.String"/>      
+      <form-property name="formType" type="java.lang.String"/>
       <form-property name="moduleIdSeq" type="java.lang.String"/>
       <form-property name="addDeletedModuleIdSeq" type="java.lang.String"/>
       <form-property name="moduleIndex" type="java.lang.Integer"/>
