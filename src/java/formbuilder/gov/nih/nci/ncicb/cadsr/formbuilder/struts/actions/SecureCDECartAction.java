@@ -23,18 +23,19 @@ import org.apache.struts.action.DynaActionForm;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
-import java.util.Iterator;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
-import java.util.List;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
 
+import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
 
 public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
 
@@ -48,27 +49,41 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
 	    
 	DynaActionForm dynaForm = (DynaActionForm)form;
 	String selectedText = (String)dynaForm.get("selectedText");
-	    
-	int ind = selectedText.indexOf(',');
-	int deIndex = Integer.parseInt(selectedText.substring(0, ind).trim());
-	String newLongName = "";
-	if(selectedText.length() > ind)
-	    newLongName = selectedText.substring(ind+1).trim();
+
+ 	DataElement de = null;
+	List newValidValues = null;
 
 	int questionIndex = Integer.parseInt((String)dynaForm.get("questionIndex"));
 
 	List questions = ((Module)getSessionObject(request, MODULE)).getQuestions();
 	CDECart sessionCart =
 	    (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
-
-	Collection col = sessionCart.getDataElements();
-	ArrayList al = new ArrayList(col);
- 	DataElement de = (DataElement)((CDECartItem)al.get(deIndex)).getItem();
-
 	Question q = (Question)questions.get(questionIndex);
+
+	if((selectedText == null) | (selectedText.length() == 0)) {
 	    
+	} else {
+	    int ind = selectedText.indexOf(',');
+	    int deIndex = Integer.parseInt(selectedText.substring(0, ind).trim());
+	    String newLongName = "";
+
+	    if(selectedText.length() > ind)
+		newLongName = selectedText.substring(ind+1).trim();
+
+	    Collection col = sessionCart.getDataElements();
+	    ArrayList al = new ArrayList(col);
+	    
+	    de = (DataElement)((CDECartItem)al.get(deIndex)).getItem();
+
+	    List values = de.getValueDomain().getValidValues();
+	    newValidValues = DTOTransformer.toFormValidValueList(values);
+	    
+	    q.setLongName(newLongName);
+	    
+	}
+	
  	q.setDataElement(de);
-	q.setLongName(newLongName);
+	q.setValidValues(newValidValues);
 
 	return mapping.findForward("success");
     }
