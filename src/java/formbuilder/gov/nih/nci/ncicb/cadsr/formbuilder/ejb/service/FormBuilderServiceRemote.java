@@ -22,7 +22,7 @@ public interface FormBuilderServiceRemote {
 
     public Form getFormDetails(String formPK) throws RemoteException;
 
-    public Form updateForm(Form formHeader, Collection updatedModules,
+    public Form updateForm(String formIdSeq, Form formHeader, Collection updatedModules,
         Collection deletedModules) throws RemoteException;
 
     public Module updateModule(String moduleIdSeq, Module moduleHeader,
@@ -129,6 +129,6 @@ public interface FormBuilderServiceRemote {
         throws RemoteException;
 
     public Form createForm(Form form, FormInstruction formHeaderInstruction,
-        FormInstruction formFooterInstruction) 
+        FormInstruction formFooterInstruction)
 	throws RemoteException;
 }

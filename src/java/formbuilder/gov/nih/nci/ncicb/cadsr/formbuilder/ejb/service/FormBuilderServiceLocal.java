@@ -26,6 +26,7 @@ public interface FormBuilderServiceLocal  {
   public Form getFormRow(String formPK) ;
 
   public Form updateForm(
+    String formIdSeq,
     Form formHeader,
     Collection updatedModules,
     Collection deletedModules) ;
@@ -106,7 +107,7 @@ public interface FormBuilderServiceLocal  {
     String deId,
     String newLongName,
     String username);
-    
+
   public Map getValidValues(Collection vdIdSeqs);
 
   public Form createForm(

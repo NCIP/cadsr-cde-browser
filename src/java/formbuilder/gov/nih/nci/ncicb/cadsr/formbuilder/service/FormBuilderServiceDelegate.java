@@ -19,7 +19,7 @@ public interface FormBuilderServiceDelegate {
 
     public Form getFormDetails(String formPK) throws FormBuilderException;
 
-    public Form updateForm(Form formHeader, Collection updatedModules,
+    public Form updateForm(String formIdSeq, Form formHeader, Collection updatedModules,
         Collection deletedModules) throws FormBuilderException;
 
     public Module updateModule(String moduleIdSeq, Module moduleHeader,
