@@ -193,7 +193,7 @@ function details(linkParms ){
         </td> 
         <td >
           <html:link href="<%=doneURL%>">				
-            <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Back"/>
+            <html:img src='<%="i/backButton.gif"%>' border="0" alt="Back"/>
           </html:link>             
         </td> 
       </tr>
