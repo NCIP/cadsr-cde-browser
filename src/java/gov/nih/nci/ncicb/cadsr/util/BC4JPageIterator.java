@@ -1,17 +1,21 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
-import oracle.jbo.ViewObject;
-import oracle.jbo.ApplicationModule;
-import oracle.jbo.Row;
-import oracle.jbo.common.ampool.ApplicationPool;
-import oracle.jbo.common.ampool.SessionCookie;
-import java.util.List;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
+import oracle.jbo.ApplicationModule;
+import oracle.jbo.Row;
 import oracle.jbo.RowIterator;
-import gov.nih.nci.ncicb.cadsr.html.HTMLPageScroller;
+import oracle.jbo.ViewObject;
+import oracle.jbo.common.ampool.ApplicationPool;
+import oracle.jbo.common.ampool.SessionCookie;
 
 public class BC4JPageIterator implements PageIterator  {
+  private static Log log = LogFactory.getLog(BC4JPageIterator.class.getName());
   protected int   rangeSize = 10;
   protected long  rangeStart = 0;
   protected long  leftOver;
@@ -54,7 +58,7 @@ public class BC4JPageIterator implements PageIterator  {
       totalRecordCount = myViewObject.getEstimatedRowCount();
     }
     else {
-      //System.out.println("Row count provided not computed by Page Iterator");
+      //log.debug("Row count provided not computed by Page Iterator");
     }
     computePageCount();
     populatePagesList();
@@ -69,10 +73,10 @@ public class BC4JPageIterator implements PageIterator  {
       myViewObject.setIterMode(RowIterator.ITER_MODE_LAST_PAGE_PARTIAL);
       myViewObject.setRangeSize(rangeSize);
       myViewObject.setRangeStart((int)rangeStart);
-      //System.out.println("Range start is " + rangeStart);
+      //log.trace("Range start is " + rangeStart);
       
       activeRows = myViewObject.getAllRowsInRange();
-      //System.out.println("Range record count is "+myViewObject.getRowCountInRange());
+      //log.trace("Range record count is "+myViewObject.getRowCountInRange());
       lastPage = myViewObject.isRangeAtBottom();
       firstPage = myViewObject.isRangeAtTop();
       computeNextPageRecordCount();
@@ -182,7 +186,7 @@ public class BC4JPageIterator implements PageIterator  {
     int nextPageNumber = currentPage;
     if (!this.isLastPage()) {
       nextPageNumber = currentPage + 1;
-      //System.out.println("Next page number is "+nextPageNumber);
+      log.trace("Next page number is "+nextPageNumber);
     }
     return nextPageNumber;
   }
@@ -190,7 +194,7 @@ public class BC4JPageIterator implements PageIterator  {
     int prevPageNumber = currentPage;
     if (!this.isFirstPage()) {
       prevPageNumber = currentPage - 1;
-      //System.out.println("Previous page number is "+prevPageNumber);
+      log.trace("Previous page number is "+prevPageNumber);
     }
     return prevPageNumber;
   }
@@ -216,13 +220,12 @@ public class BC4JPageIterator implements PageIterator  {
       BC4JPageIterator bpi = new BC4JPageIterator(10);
       amPool = BC4JHelper
           .getApplicationPool("myPool","gov.nih.nci.ncicb.cadsr.persistence.bc4j","CDEBrowserBc4jModuleLocal",null);
-      //System.out.println("Application pool name "+amPool.getPoolName());
+      log.trace("Application pool name "+amPool.getPoolName());
       SessionCookie cookie1 = BC4JHelper
                     .createSessionCookie(amPool,"100","Test App",null);
       SessionCookie cookie2 = BC4JHelper
                     .createSessionCookie(amPool,"101","Test App",null);
-      System.out.println
-      ("Application pool size before checkout "+amPool.getAvailableInstanceCount());
+      log.debug("Application pool size before checkout "+amPool.getAvailableInstanceCount());
       am1 = BC4JHelper
           .getApplicationModuleFromPool(cookie1);
       String sqlStmt = "SELECT preferred_name AS PreferredName " +
@@ -235,27 +238,26 @@ public class BC4JPageIterator implements PageIterator  {
       vo.setIterMode(RowIterator.ITER_MODE_LAST_PAGE_PARTIAL);
       vo.setRangeSize(10);
       vo.setRangeStart(110);
-      System.out.println("Total Record count "+vo.getEstimatedRowCount());
+      log.debug("Total Record count "+vo.getEstimatedRowCount());
       
-      System.out.println("Record count in range "+vo.getRowCountInRange());
+      log.debug("Record count in range "+vo.getRowCountInRange());
       
       BC4JHelper.returnApplicationModuleToPool(cookie1, false);
      
-      System.out.println
-      ("Application pool size after checkin "+amPool.getAvailableInstanceCount());
+      log.debug("Application pool size after checkin "+amPool.getAvailableInstanceCount());
 
       /*am1 = BC4JHelper
           .getApplicationModuleFromPool(cookie1);
       vo = am1.findViewObject("DataElementsView");
-      //System.out.println("Record count after second check out " + vo.getRowCount());
-      System.out.println("Where clause after second check out "+vo.getWhereClause());
+      log.trace("Record count after second check out " + vo.getRowCount());
+      log.trace("Where clause after second check out "+vo.getWhereClause());
       BC4JHelper.returnApplicationModuleToPool(cookie1,false);*/
       
 
       
     } 
     catch (Exception ex) {
-      ex.printStackTrace();
+      log.error("Exception occurred", ex);
     } 
     finally {
     }
