@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
 import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCQuestionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
@@ -181,12 +182,16 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCModuleDAO test = new JDBCModuleDAO(locator);
-
+    /*
     //System.out.println(
     //  test.getQuestionsInAModule("99CD59C5-B13D-3FA4-E034-080020C9C0E0"));
     System.out.println(
       test.getQuestionsInAModule("99CD59C5-A9C3-3FA4-E034-080020C9C0E0"));
-
+    */
+    
+    System.out.println(
+      test.findModuleByPrimaryKey("99CD59C5-B04A-3FA4-E034-080020C9C0E0"));
+      
     /*
     try {
       int res = test.deleteModule("99CD59C5-B206-3FA4-E034-080020C9C0E0");
@@ -248,6 +253,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       de.printStackTrace();
     }
     */
+    /*
     // test for updateDisplayOrder
     try {
       int res = test.updateDisplayOrder("D458E178-32A5-7522-E034-0003BA0B1A09", 5);
@@ -256,6 +262,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     catch (DMLException de) {
       de.printStackTrace();
     }
+    */
   }
 
   /**
@@ -433,5 +440,56 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       return new JDBCQuestionTransferObject(rs);
     }
   }
+
+  /**
+   * Finds a module based on the primary key.
+   *
+   * @param <b>moduleId</b> Idseq of the form component.
+   *
+   * @return <b>Module</b> Module object representing the module.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public Module findModuleByPrimaryKey(String moduleId) throws DMLException {
+
+    Module myModule = null;
+    ModuleByPrimaryKey query = new ModuleByPrimaryKey();
+    query.setDataSource(getDataSource());
+    query.setSql();
+
+    List result = (List) query.execute(moduleId);
+
+    if (result.size() != 0) {
+      myModule = (Module) (query.execute(moduleId).get(0));
+    }
+    else
+    {
+      throw new DMLException("No matching module record found");
+    }
+
+    return myModule;
+  }
+
+  /**
+   * Inner class that to get a module using the module idseq
+   */
+  class ModuleByPrimaryKey extends MappingSqlQuery {
+    ModuleByPrimaryKey() {
+      super();
+    }
+
+    public void setSql() {
+      super.setSql("SELECT * FROM FB_MODULES_VIEW where MOD_IDSEQ = ? ");
+      declareParameter(new SqlParameter("MOD_IDSEQ", Types.VARCHAR));
+    }
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      return new JDBCModuleTransferObject(rs);
+    }
+  }
+
+
 
 }

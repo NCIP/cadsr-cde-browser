@@ -101,4 +101,18 @@ public interface ModuleDAO {
   public int updateModuleLongName(
     String moduleId,
     String newLongName) throws DMLException;
+
+  /**
+   * Finds a module based on the primary key.
+   *
+   * @param <b>moduleId</b> Idseq of the form component.
+   *
+   * @return <b>Module</b> Module object representing the module.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public Module findModuleByPrimaryKey(String moduleId) throws DMLException;
+
+
+
 }
