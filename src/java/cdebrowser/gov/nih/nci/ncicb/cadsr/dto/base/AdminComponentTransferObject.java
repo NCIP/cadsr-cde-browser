@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto.base;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import gov.nih.nci.ncicb.cadsr.resource.*;
 import gov.nih.nci.ncicb.cadsr.persistence.base.BaseValueObject;
 import java.util.List;
@@ -16,9 +17,9 @@ public class AdminComponentTransferObject extends BaseValueObject
 	protected String deletedInd;
 	protected String latestVerInd;
 	protected String createdBy;
-	protected Date createdDate;
+	protected Timestamp createdDate;
 	protected String modifiedBy;
-	protected Date modifiedDate;
+	protected Timestamp modifiedDate;
 	protected String conteIdseq;
 	protected Context context;
 	protected List refDocs;
@@ -49,7 +50,7 @@ public class AdminComponentTransferObject extends BaseValueObject
 		return createdBy;
 	}
 
-	public Date getDateCreated() {
+	public Timestamp getDateCreated() {
 		return createdDate;
 	}
 
@@ -57,7 +58,7 @@ public class AdminComponentTransferObject extends BaseValueObject
 		return modifiedBy;
 	}
 
-	public Date getDateModified() {
+	public Timestamp getDateModified() {
 		return modifiedDate;
 	}
 
@@ -139,7 +140,7 @@ public class AdminComponentTransferObject extends BaseValueObject
 		createdBy = pCreatedBy;
 	}
 
-	public void setDateCreated(Date pCreatedDate) {
+	public void setDateCreated(Timestamp pCreatedDate) {
 		createdDate = pCreatedDate;
 	}
 
@@ -147,7 +148,7 @@ public class AdminComponentTransferObject extends BaseValueObject
 		modifiedBy = pModifiedBy;
 	}
 
-	public void setDateModified(Date pModifiedDate) {
+	public void setDateModified(Timestamp pModifiedDate) {
 		modifiedDate = pModifiedDate;
 	}
 

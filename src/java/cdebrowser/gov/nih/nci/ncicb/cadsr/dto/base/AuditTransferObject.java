@@ -1,13 +1,14 @@
 package gov.nih.nci.ncicb.cadsr.dto.base;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class AuditTransferObject {
 
 	protected String createdBy;
-	protected Date createdDate;
+	protected Timestamp createdDate;
 	protected String modifiedBy;
-	protected Date modifiedDate;
+	protected Timestamp modifiedDate;
 
 	public AuditTransferObject() {
 	}
@@ -16,7 +17,7 @@ public class AuditTransferObject {
 		return createdBy;
 	}
 
-	public Date getDateCreated() {
+	public Timestamp getDateCreated() {
 		return createdDate;
 	}
 
@@ -24,7 +25,7 @@ public class AuditTransferObject {
 		return modifiedBy;
 	}
 
-	public Date getDateModified() {
+	public Timestamp getDateModified() {
 		return modifiedDate;
 	}
 
@@ -32,7 +33,7 @@ public class AuditTransferObject {
 		createdBy = pCreatedBy;
 	} //end method 
 
-	public void setDateCreated(Date pCreatedDate) {
+	public void setDateCreated(Timestamp pCreatedDate) {
 		createdDate = pCreatedDate;
 	} //end method 
 
@@ -40,7 +41,7 @@ public class AuditTransferObject {
 		modifiedBy = pModifiedBy;
 	} //end method 
 
-	public void setDateModified(Date pModifiedDate) {
+	public void setDateModified(Timestamp pModifiedDate) {
 		modifiedDate = pModifiedDate;
 	} //end method 
 
