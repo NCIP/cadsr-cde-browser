@@ -112,7 +112,7 @@ function clearProtocol() {
  </TR>
  <TR>
     <td colspan="3" align="right" nowrap>
-      <html:link action='<%="/formCreate?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_FORM%>' target="_parent" >
+      <html:link action='<%="/gotoFormCreate?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_FORM%>' target="_parent" >
         <html:img src='<%=urlPrefix+"i/create_new_form_template.gif"%>' border="0" alt="Create New Form"/>
       </html:link>&nbsp;
     </td>  

@@ -3,7 +3,8 @@
 <!--
 
 function submitForm() {
-  document.forms[0].submit();
+  if(validateCreateForm(createForm))
+    document.forms[0].submit();
 }
 
 function clearClassSchemeItem() {
@@ -42,7 +43,9 @@ function clearProtocol() {
     </tr>
   </table>
 
-  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <%@ include file="showValidationErrors.jsp" %>
+
+  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
     <tr class="OraTabledata">
       
       <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.longName" />:</td>
@@ -83,17 +86,15 @@ function clearProtocol() {
         <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
         <td class="OraFieldText" nowrap>
           <html:select styleClass = "Dropdown" property="<%=FormConstants.CONTEXT_ID_SEQ%>">
-        	   <html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
-		         <html:options collection="<%=FormConstants.ALL_CONTEXTS%>" 
-		           property="<%=FormConstants.CRF_CONTEXT_ID_SEQ%>" labelProperty="name" />
-	        </html:select>
+            <html:options collection="<%=CaDSRConstants.USER_CONTEXTS%>" 
+              property="<%=FormConstants.CRF_CONTEXT_ID_SEQ%>" labelProperty="name" />
+          </html:select>
         </td>
         <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
         <td class="OraFieldText" nowrap>
         <html:select styleClass = "Dropdown" property="<%=FormConstants.FORM_CATEGORY%>">
-        	<html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
-		      <html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> 
-	      </html:select> 
+          <html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> 
+        </html:select> 
         </td>
     </tr>
 
@@ -153,11 +154,12 @@ function clearProtocol() {
     <TR>
       <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=<%=urlPrefix%>i/save.gif border=0></a></td>
       <td >
-            <html:link action='<%="/cancelFormCreateAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CANCEL_FORM_CREATE%>'>
-              <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
-	          </html:link>            
+        <html:link action='<%="/formSearchAction"%>'>				
+          <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+        </html:link>             
       </td>                
     </TR>    
   </table>
 
+<html:javascript formName="createForm"/>
 

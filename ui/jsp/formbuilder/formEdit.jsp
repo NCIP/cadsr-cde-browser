@@ -104,7 +104,7 @@ function clearProtocol() {
             </td>
             <td class="OraFieldText" nowrap>
               <html:select styleClass="Dropdown" property="<%=FormConstants.CONTEXT_ID_SEQ%>" >               
-                <html:options collection="<%=FormConstants.ALL_CONTEXTS%>" property="conteIdseq" labelProperty="name"/>
+                <html:options collection="<%=CaDSRConstants.USER_CONTEXTS%>" property="conteIdseq" labelProperty="name"/>
               </html:select>
             </td>
           </tr>

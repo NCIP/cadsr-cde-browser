@@ -27,6 +27,16 @@
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
 
+    <SCRIPT>
+<!--
+
+function submitForm() {
+  if(validateCopyForm(copyForm))
+     document.forms[0].submit();
+}
+
+-->
+</SCRIPT>
 
     <logic:messagesPresent>
       <ul>
@@ -74,7 +84,7 @@
             <bean:define id="context" scope="session" name="<%= FormConstants.CRF %>" property="<%= FormConstants.CRF_CONTEXT %>" toScope="page"/>
 
             <html:select styleClass="Dropdown" name="context" property="<%=FormConstants.CRF_CONTEXT_ID_SEQ%>">
-              <html:options collection="<%=FormConstants.ALL_CONTEXTS%>" 
+              <html:options collection="<%=CaDSRConstants.USER_CONTEXTS%>" 
                 property="conteIdseq" labelProperty="name" />
             </html:select>
           </td>

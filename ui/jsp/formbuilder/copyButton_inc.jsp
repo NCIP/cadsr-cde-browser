@@ -1,7 +1,9 @@
       <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
         <tr >
           <td >
-            <html:image src='<%=urlPrefix+"i/copyButton.gif"%>' border="0" alt="Copy"/>
+            <a href="javascript:submitForm()">
+              <img src='<%=urlPrefix+"i/copyButton.gif"%>' border="0" alt="Copy"/>
+            </a>
           </td>           
           <td >
             <a href="javascript:clearForm()">
