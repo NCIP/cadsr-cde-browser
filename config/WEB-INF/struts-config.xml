@@ -85,7 +85,7 @@
       key="error.system.message"/>      
   </global-exceptions>
   <global-forwards>
-    <forward name="cdebrowserHome" path="/cdebrowser" redirect="true"/>
+    <forward name="cdebrowserHome" path="/cdeBrowse.jsp?PageId=DataElementsGroup" redirect="true"/>
     <forward name="printerVersion" path="/formbuilder/printerVersion.jsp"
       redirect="true"/>
     <forward name="framedSearchResultsPage" path="/formbuilder/formbuilder.jsp"
