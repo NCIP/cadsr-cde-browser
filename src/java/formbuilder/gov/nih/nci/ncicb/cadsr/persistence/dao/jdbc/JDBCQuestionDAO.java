@@ -156,7 +156,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
        question.setLongName("Test Ques Long Name 030204 2");
        question.setPreferredDefinition("Test Ques pref def");
        question.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
-       form.setProtocol(new ProtocolTransferObject(""));  // template does not have protocol
+       //form.setProtocol(new ProtocolTransferObject(""));  // template does not have protocol
        question.setAslName("DRAFT NEW");
        question.setCreatedBy("Hyun Kim");
        question.setDisplayOrder(101);
@@ -372,8 +372,8 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       String contentInsertSql =
         " INSERT INTO quest_contents_ext " +
         " (qc_idseq, version, preferred_name, long_name, preferred_definition, " +
-        "  conte_idseq, proto_idseq, asl_name, created_by, qtl_name, de_idseq) " +
-        " VALUES " + " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+        "  conte_idseq, asl_name, created_by, qtl_name, de_idseq) " +
+        " VALUES " + " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
       this.setDataSource(ds);
       this.setSql(contentInsertSql);
@@ -384,7 +384,6 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       declareParameter(
         new SqlParameter("p_preferred_definition", Types.VARCHAR));
       declareParameter(new SqlParameter("p_conte_idseq", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_proto_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("p_asl_name", Types.VARCHAR));
       declareParameter(new SqlParameter("p_created_by", Types.VARCHAR));
       declareParameter(new SqlParameter("p_qtl_name", Types.VARCHAR));
@@ -400,7 +399,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
           qcIdseq, sm.getVersion().toString(),
           generatePreferredName(sm.getLongName()), sm.getLongName(),
           sm.getPreferredDefinition(), sm.getConteIdseq(),
-          sm.getModule().getForm().getProtoIdseq(), sm.getAslName(), sm.getCreatedBy(),
+          sm.getAslName(), sm.getCreatedBy(),
           "QUESTION", sm.getDataElement().getDeIdseq()
         };
 
