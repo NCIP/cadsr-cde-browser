@@ -65,12 +65,12 @@ if (parent.frames[1])
       <tr><td>&nbsp;</td></tr>   
       <tr><td>&nbsp;</td></tr>
       <tr><td>&nbsp;</td></tr>
-      <tr class="OraTipLabel">
-          <td align="center" class="OraTipLabel">Invalid username/password combination. <a href="LoginForm.jsp"> Retry Login </a>
+      <tr class="OraErrorText">
+          <td align="center" class="OraErrorText">Invalid username/password combination. <a href="LoginForm.jsp"> Retry Login </a>
           </td>
       </tr>
       <tr><td>&nbsp;</td></tr>
-      <tr><td class="OraTipLabel"></td></tr>   
+      <tr><td class="OraErrorText"></td></tr>   
       <tr><td>&nbsp;</td></tr>
       </table>
 
