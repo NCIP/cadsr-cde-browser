@@ -1,11 +1,13 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 
+import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 
+import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 import java.sql.Date;
 
@@ -188,6 +190,35 @@ public class FormTransferObject extends AdminComponentTransferObject
        }
        copy.setFooterInstructions(instructionsCopy);
      } 
+
+     if(getRefereceDocs()!=null)
+     {
+       List refDocCopy = new ArrayList();
+       ListIterator it = getRefereceDocs().listIterator();
+       while(it.hasNext())
+       {
+         ReferenceDocument refDoc = (ReferenceDocument) it.next();
+         ReferenceDocument refDocClone = (ReferenceDocument)refDoc.clone();   
+         if (refDoc.getAttachments() !=null) 
+         {
+           List attachmentCopy = new ArrayList();
+           ListIterator itAtt = refDoc.getAttachments().listIterator();
+           while (itAtt.hasNext()) 
+           {
+             Attachment attchment = (Attachment) itAtt.next();
+             Attachment attClone = (Attachment) attchment.clone();
+             attachmentCopy.add(attClone);
+           }
+          refDocClone.setAttachments(attachmentCopy); 
+         }
+         refDocCopy.add(refDocClone);
+       }
+       
+       
+       copy.setReferenceDocs(refDocCopy);
+     } 
+     
+     
                 
       return copy;
   }
