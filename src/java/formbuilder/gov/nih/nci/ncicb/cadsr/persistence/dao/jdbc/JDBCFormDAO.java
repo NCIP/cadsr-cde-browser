@@ -216,7 +216,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     try {
       Form newForm = new FormTransferObject();
       newForm.setVersion(new Float(2.31));
-      newForm.setLongName("Test Form Long Name 022904 1");
+      newForm.setLongName("Test Form Long Name 030104 1");
       newForm.setPreferredDefinition("Test Form pref def");
       newForm.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
       Protocol protocol = new ProtocolTransferObject("TEST");
@@ -225,6 +225,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       newForm.setAslName("DRAFT NEW");
       newForm.setCreatedBy("Hyun Kim");
       newForm.setFormCategory("Registration");
+      newForm.setFormType("CRF");
 
       int res = formTest.createFormComponent(newForm);
       System.out.println("\n*****Create Form Result 1: " + res);
@@ -457,7 +458,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
            sm.getProtoIdseq(),
            sm.getAslName(),
            sm.getCreatedBy(),
-           "CRF",
+           sm.getFormType(),
            sm.getFormCategory()
           };
       

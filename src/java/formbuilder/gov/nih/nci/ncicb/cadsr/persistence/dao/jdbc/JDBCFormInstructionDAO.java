@@ -115,7 +115,7 @@ public class JDBCFormInstructionDAO extends JDBCInstructionDAO
     }
     catch (DMLException de) {
       de.printStackTrace();
-    }
+    }  
     // test createFormInstructionComponent method.
     // for each test, change long name(preferred name generated from long name)
     try {
@@ -126,7 +126,7 @@ public class JDBCFormInstructionDAO extends JDBCInstructionDAO
       FormInstruction newFormInstr = new FormInstructionTransferObject();
       newFormInstr.setForm(aForm);
       newFormInstr.setVersion(new Float(2.31));
-      newFormInstr.setLongName("Test Form Instruction Long Name 022904 1");
+      newFormInstr.setLongName("Test Form Instruction Long Name 022904 2");
       newFormInstr.setPreferredDefinition("Test Form instr pref def");
       newFormInstr.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
       newFormInstr.setAslName("DRAFT NEW");
