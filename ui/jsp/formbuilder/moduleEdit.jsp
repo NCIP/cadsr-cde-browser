@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@ page import="oracle.clex.process.jsp.GetInfoBean "%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%> 
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
@@ -45,6 +45,71 @@ function clearProtocol() {
   document.forms[0].protocolLongName.value = "";
 }
 
+
+
+  function switchAll(e)
+  {
+	if (e.checked) {
+	    CheckAll();
+	}
+	else {
+	    ClearAll();
+	}
+  }
+  function Check(e)
+    {
+	e.checked = true;
+    }
+
+  function Clear(e)
+    {
+	e.checked = false;
+    }  
+
+  function CheckAll(checkSetName)
+    {
+	var fo = document.forms[0];
+	var len = fo.elements.length;
+	for (var i = 0; i < len; i++) {
+	    var e = fo.elements[i];
+	    if (e.name == checkSetName) {
+		Check(e);
+	    }
+	}
+
+    }
+  
+  function ClearAll(checkSetName)
+    {
+	var fo = document.forms[0];
+	var len = fo.elements.length;
+	for (var i = 0; i < len; i++) {
+	    var e = fo.elements[i];
+            if (e.name == checkSetName) {
+		Clear(e);
+	    }
+	}
+    }
+
+  function validate(fo) {
+	var len = fo.elements.length;
+        var oneChecked = false;
+	for (var i = 0; i < len; i++) {
+	    var e = fo.elements[i];
+            if (e.name == "<%= FormConstants.SELECTED_ITEMS %>") {
+              if(e.checked == true) {
+                 oneChecked=true;
+                 i = len;
+              }
+            }            
+        }    
+        if(oneChecked == true) {
+          return true;
+        } else {
+          alert("Please Select at least one Data Element");
+          return false;
+        }
+  }
 -->
 </SCRIPT>
   </HEAD>
@@ -405,15 +470,29 @@ function clearProtocol() {
                             
                             <td  colspan="2" width="90%">
                               <table width="100%" align="center" cellpadding="1" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                                  <tr class="OraTabledata">
+                                    <td class="OraTabledata" >&nbsp;</td>
+                                    <td class="OraTabledata" align="left" width="90%"> 
+                                        <a href="javascript:CheckAll('<%= FormConstants.SELECTED_ITEMS+questionIndex %>')">Check All
+                                        </a>&nbsp; &nbsp;
+                                        <a href="javascript:ClearAll('<%= FormConstants.SELECTED_ITEMS+questionIndex %>')">Clear All
+                                        </a>     
+                                         &nbsp; &nbsp;
+                                        <a href="javascript:submitValidValueEdit()">                                              
+                                            <img src="<%=urlPrefix%>i/delete.gif" border="0" alt="Delete"/>
+                                        </a>
+                                    </td>
+                                
                                 <logic:iterate id="validValue" name="question" indexId="validValueIndex" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
                                 <bean:size id="validValueSize" name="question" property="validValues"/>                                  
                                   <tr class="OraTabledata">
                                     <td class="OraTabledata" >&nbsp;</td>
                                     <td class="OraTabledata" align="right" width="90%">                                                                        
-                                        <table width="79%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                                        <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                           <tr class="OraTabledata" >
-                                           <td >&nbsp;</td>
+                                           <td align="left" ><INPUT TYPE=CHECKBOX NAME="<%= FormConstants.SELECTED_ITEMS+questionIndex%>" value="<%= validValueIndex %>"></td>
                                                <!-- Adding from available vv list -->
+                                                  
                                                   <td align="right"   class="OraFieldText" nowrap width="90%">    
                                                     <cde:availableValidValues
                                                       questionBeanId="question"
