@@ -13,7 +13,7 @@
 
     <td >
       <html:link action='<%= "/cancelAction?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_FORM_TO_EDIT %>'>
-        <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+        <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Done"/>
       </html:link>             
     </td>                
   </tr> 
