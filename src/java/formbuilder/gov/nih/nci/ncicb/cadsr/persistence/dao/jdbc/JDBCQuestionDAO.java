@@ -110,7 +110,13 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
   public int updateQuestionLongName(
     String questionId,
     String newLongName) throws DMLException {
-    return 0;
+  UpdateQuestionLongName  questionLongName  = new UpdateQuestionLongName (this.getDataSource());
+    int res = questionLongName.updateLongName(questionId,newLongName);
+    System.out.println("result = " +res);
+    if (res != 1) {
+      throw new DMLException("Did not succeed in updateing the long name");
+    }
+    return 1;
   }
 
   /**
@@ -156,12 +162,22 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
          System.out.println("******Finishing printing DMLException*******");
        }*/
 
-       try
+      /* try
        {
          int res = test.updateQuestionDEAssociation("A65D6B91-7ADE-4288-E034-0003BA0B1A09"
                        ,"A67221F9-BDCF-4BFB-E034-0003BA0B1A09"
                        ,"Adjacent viscera/vessel"
                        ,"sbrext");
+      System.out.println("\n*****Update DE Result 1: " + res);
+       }
+    catch (DMLException de) {
+      de.printStackTrace();
+    }*/
+
+    try
+       {
+         int res = test.updateQuestionLongName("99CD59C6-2583-3FA4-E034-080020C9C0E0"
+                       ,"Lab Unit Type");
       System.out.println("\n*****Update DE Result 1: " + res);
        }
     catch (DMLException de) {
@@ -176,7 +192,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     catch (DMLException de) {
       de.printStackTrace();
     }
-    */
+    
     
     // test for updateDisplayOrder
     /*try {
@@ -246,7 +262,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       username.toUpperCase());
 
     if ((out.get("p_return_code")) == null) {
-      return 0;
+      return 1;
     }
     else {
       throw new DMLException((String) out.get("p_return_desc"));
@@ -264,19 +280,19 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     ret_val = updateQuestionDEAssociation(questionId,newDEId,username);
     }
     catch (DMLException de) {
-      ret_val = 1;
+      ret_val = 0;
       de.printStackTrace();
     }
-    
+    System.out.println("After DE"+ret_val);
     try{
     ret_val = updateQuestionLongName(questionId,newLongName);
     }
     catch (DMLException de) {
-      ret_val = 1;
+      ret_val = 0;
       de.printStackTrace();
     }
-
-    if (ret_val == 0) {
+   System.out.println("After LN"+ret_val);
+    if (ret_val == 1) {
       return ret_val;
     }
    else
@@ -443,10 +459,37 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       in.put("p_de_idseq", p_de_idseq);
       in.put("p_created_by", p_created_by);
       
-     System.out.println("start in");
       Map out = execute(in);
-     System.out.println("start out");
       return out;
     }
   } 
+/**
+   * Inner class that accesses database to update an longname.
+   */
+ private class UpdateQuestionLongName extends SqlUpdate {
+    public UpdateQuestionLongName(DataSource ds) {
+      String longNameUpdateSql = 
+      " UPDATE Quest_contents_view_ext " +
+      " SET long_name = ?" +
+      " WHERE qc_idseq =  ?" ;
+
+      this.setDataSource(ds);
+      this.setSql(longNameUpdateSql);
+      declareParameter(new SqlParameter("p_long_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_qc_idseq", Types.VARCHAR));
+      compile();
+    }
+    protected int updateLongName (String questionId, String newLongName) 
+    {
+      Object [] obj = 
+        new Object[]
+          {
+          newLongName,
+          questionId
+          };
+      
+	    int res = update(obj);
+      return res;
+    }
+  }
 }
