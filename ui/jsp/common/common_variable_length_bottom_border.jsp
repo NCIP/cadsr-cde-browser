@@ -25,7 +25,7 @@
 </td>
 
 <td width="30%" align="right">
- <FONT color="white" size=-2 face=arial>Version 3.0&nbsp;&nbsp;Build 10</FONT>
+ <FONT color="white" size=-2 face=arial>Version 3.0&nbsp;&nbsp;Build 11</FONT>
 </TD>
 
 <td td width="70%" align="right">
