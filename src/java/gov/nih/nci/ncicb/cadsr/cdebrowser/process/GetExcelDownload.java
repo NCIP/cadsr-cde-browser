@@ -48,7 +48,7 @@ import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 /**
  *
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.4 2005-02-17 15:36:13 jiangja Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.5 2005-02-17 19:42:19 jiangja Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess{
    private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -156,7 +156,7 @@ public class GetExcelDownload extends BasePersistingProcess{
     try {
       PrintWriter out
           = new PrintWriter(new BufferedWriter(new FileWriter(fn)));
-      out.println("Preferred Name,Long Name,Doc Text,Context,Workflow Status,CDE ID,Version");
+      out.println("Data Element Preferred Name,Data Element Long Name,Data Element Doc Text,Data Element Context,Data Element Workflow Status,CDE ID,Data Element Version");
       Vector deVec = new Vector();
       String excelRow = new String();
       for (int i = 0; i < resultsVector.size(); i++)  {
@@ -502,13 +502,13 @@ public class GetExcelDownload extends BasePersistingProcess{
     return pw;
   }
   private void printHeader(PrintWriter pw) {
-    pw.println("Preferred Name,"
-                  +"Long Name,"
-                  +"Document Text,"
-                  +"Preferred Definition,"
-                  +"Version,"
-                  +"Context Name,"
-                  +"Context Version,"
+    pw.println("Data Element Preferred Name,"
+                  +"Data Element Long Name,"
+                  +"Data Element Document Text,"
+                  +"Data Element Preferred Definition,"
+                  +"Data Element Version,"
+                  +"Data Element Context Name,"
+                  +"Data Element Context Version,"
                   +"Value Domain Public ID,"
                   +"Value Domain Preferred Name,"
                   +"Value Domain Long Name,"
