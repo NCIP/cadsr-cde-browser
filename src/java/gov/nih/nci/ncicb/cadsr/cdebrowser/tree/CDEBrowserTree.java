@@ -91,11 +91,11 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
 
       if(!treeType.equals(TreeConstants.DE_SEARCH_TREE) || contextExcludeListStr==null)
       {
-        contextQueryStmt = contextQueryStmt +" ORDER BY name ";
+        contextQueryStmt = contextQueryStmt +" ORDER BY upper(name) ";
       }
       else
       {
-        contextQueryStmt = contextQueryStmt +" where name NOT IN ( " +contextExcludeListStr + ") ORDER BY name ";
+        contextQueryStmt = contextQueryStmt +" where upper(name) NOT IN ( " +contextExcludeListStr + ") ORDER BY upper(name) ";
       }
 
       pstmt = (PreparedStatement) conn.prepareStatement(contextQueryStmt);

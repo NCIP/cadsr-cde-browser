@@ -6,6 +6,8 @@ public interface CaDSRConstants {
   //Publish Chamge Order Oct 24/04
   public static final String CONTEXT_ADMIN = "CONTEXT ADMIN";
   public static final String CONTEXT_CABIG = "caBIG";
+  public static final String CONTEXT_TEST = "TEST";
+  public static final String CONTEXT_TRAINING = "TRAINING";
 
   public static final String SESSION_SCOPE = "sessionScope";
   public static final String PAGE_SCOPE = "pageScope";

@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.util.SimpleSortableColumnHeader;
 import gov.nih.nci.ncicb.cadsr.util.SortableColumnHeader;
 import gov.nih.nci.ncicb.cadsr.util.StringReplace;
@@ -103,22 +104,22 @@ public class DESearchQueryBuilder extends Object {
     String contextExludeToExclude ="";
     if(searchBean.isExcludeTestContext())
     {
-      contextExludeToExclude=" 'TEST'";
+      contextExludeToExclude=" '"+CaDSRConstants.CONTEXT_TEST+"'";
     }
     if(searchBean.isExcludeTrainingContext())
     {
        if(contextExludeToExclude.equals(""))
        {
-         contextExludeToExclude=" 'TRAINING'";
+         contextExludeToExclude=" '"+CaDSRConstants.CONTEXT_TRAINING+"'";
        }
        else
        {
-         contextExludeToExclude = contextExludeToExclude+", 'TRAINING' ";
+         contextExludeToExclude = contextExludeToExclude+", '"+CaDSRConstants.CONTEXT_TRAINING+"' ";
        }
     }
     if(!contextExludeToExclude.equals(""))
     {
-      contextExludeWhere = " and conte.name NOT IN ("+contextExludeToExclude+" )";
+      contextExludeWhere = " and upper(conte.name) NOT IN ("+contextExludeToExclude+" )";
     }
     
     if (strArray == null) {

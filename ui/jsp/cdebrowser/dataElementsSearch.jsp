@@ -67,7 +67,7 @@
   String queryFlag = request.getParameter("performQuery");
   if (queryFlag == null) queryFlag = "";
 
-  String loadAnchor = (String)request.getAttribute("anchor");
+  String loadAnchor = (String)request.getAttribute(CaDSRConstants.ANCHOR);
   if (loadAnchor == null) loadAnchor = "";
 
   String doneURL = "";

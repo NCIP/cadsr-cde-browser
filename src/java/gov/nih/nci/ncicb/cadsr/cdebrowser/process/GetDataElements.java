@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.14 2005-03-10 00:27:56 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.15 2005-03-15 21:57:29 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -303,7 +303,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER, myRequest.getContextPath());
         createPageScroller(
           dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, myRequest.getContextPath());
-        myRequest.setAttribute("anchor", "results");
+        myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
 
         log.trace("Created both page scrollers successfully");
       }
@@ -335,7 +335,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         myRequest.getContextPath());
         createPageScroller(dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, 
         myRequest.getContextPath());
-        myRequest.setAttribute("anchor", "results");
+        myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
       }
 
       else if (performQuery.equals("addToCart")) {
@@ -468,7 +468,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         createPageScroller(
           dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, myRequest.getContextPath());
         
-        myRequest.setAttribute("anchor", "results");
+        myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
         log.trace("Created both page scrollers successfully");
       }
       setResult("desb", desb);

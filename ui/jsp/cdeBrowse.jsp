@@ -59,21 +59,40 @@
   
   //Search Pref
   boolean excludeTestContext = false;
+  boolean excludeTrainingContext = false;
   if(searchBean==null)
   {
     excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
+    excludeTrainingContext = new Boolean(params.getExcludeTrainingContext()).booleanValue();
   }
   else
   {
     excludeTestContext = searchBean.isExcludeTestContext();
-    
+    excludeTrainingContext = searchBean.isExcludeTrainingContext();
   }
+   String contextToExclude = "";
+ 
+    if(excludeTestContext)
+    {
+      contextToExclude=" '"+CaDSRConstants.CONTEXT_TEST+"'";
+    }
+    if(excludeTrainingContext)
+    {
+       if(contextToExclude.equals(""))
+       {
+         contextToExclude=" '"+CaDSRConstants.CONTEXT_TRAINING+"'";
+       }
+       else
+       {
+         contextToExclude = contextToExclude+", '"+CaDSRConstants.CONTEXT_TRAINING+"' ";
+       }
+    }  
   
   String brContextExcludeListParamStr = "";
-  if(excludeTestContext)
+  if(excludeTestContext||excludeTrainingContext)
   {
      brContextExcludeListParamStr =  TreeConstants.BR_CONTEXT_EXCLUDE_LIST_STR+":" 
-                     + "'TEST' ;" ;
+                     + contextToExclude+";" ;
   }
 
 
