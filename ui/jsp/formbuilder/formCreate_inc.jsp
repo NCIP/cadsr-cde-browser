@@ -134,10 +134,6 @@ function clearProtocol() {
 	          </html:link>            
       </td>                
     </TR>    
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>
   </table>
 
 
