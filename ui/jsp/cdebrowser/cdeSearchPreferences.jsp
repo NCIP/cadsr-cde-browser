@@ -143,9 +143,7 @@ function setDefaults() {
    </tr> 
  </table>             
     <%@ include file="cdeSearchPreferences_inc.jsp"%>
-      <jsp:include page="../common/common_variable_length_bottom_border.jsp" flush="true">
-        <jsp:param name="width" value="<%=100%>" />
-      </jsp:include>       
+       <%@ include file="../common/common_bottom_border.jsp"%>  
     </html:form>
 
 </body>

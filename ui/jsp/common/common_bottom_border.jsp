@@ -6,7 +6,8 @@
 </TABLE>
 <TABLE width=100% cellspacing=0 cellpadding=0 bgcolor="#336699" border=0>
 <TR>
-<TD width="60%" align="LEFT">
+<TD width="20%" align="LEFT">
+&nbsp;
 <FONT face="Arial" color="WHITE" size="-2">User: </FONT>
 <FONT face="Arial" size="-1" color="#CCCC99">
   <logic:present name="nciUser">
@@ -16,14 +17,21 @@
     Public User    
   </logic:notPresent>
 </FONT>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<FONT color="white" size=-2 face=arial>Version 3.0 Build 1</FONT>
+</td>
+<td width="30%" align="right">
+ <FONT color="white" size=-2 face=arial>Version 3.0&nbsp;&nbsp;Build 2</FONT>
 </TD>
 
+<td td width="70%" align="right">
+  <FONT color="white" size=-3 face=arial>
+     Please send comments and suggestions to 
+         <A href="mailto:ncicb@pop.nci.nih.gov">ncicb@pop.nci.nih.gov</A>
+      
+  </FONT>
+   &nbsp; &nbsp;
+</td>
 </TR>
 <TR>
-<TD colspan=2><html:img page="/i/bottom_middle.gif" height="6" width="100%" /></TD>
+<TD colspan=3><html:img page="/i/bottom_middle.gif" height="6" width="100%" /></TD>
 </TR>
 </TABLE>
