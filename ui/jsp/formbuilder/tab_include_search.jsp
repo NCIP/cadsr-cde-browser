@@ -1,17 +1,3 @@
-<SCRIPT LANGUAGE="JavaScript">
-<!--
-
-function tabClicked(tabNum,urlParams) {
-   document.location.href=urlParams + "&tabClicked=" + tabNum +"= pageUrl ";
-}
-
-function subTabClicked(tabNum,urlParams) {
-   document.location.href=urlParams + "&subTabClicked=" + tabNum + "pageUrl ";
-}
-
-
-//-->
-</SCRIPT>
 
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/newWinJS.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/helpWinJS.js"></SCRIPT>
@@ -54,23 +40,11 @@ function subTabClicked(tabNum,urlParams) {
         <tr>
 
 
-<%
-  for (int i = 0; i < tib.getMainTabCount(); i++) {
-    if (tib.getMainTabNum() == i) { %>
-
 <TD bgcolor="#336699" width="1%" align=LEFT valign=TOP><IMG SRC="<%=urlPrefix%>i/ctab_open.gif" height=21 width=18 border=0></TD>
 <TD width=1% bgcolor="#336699"><b><font size="-1" face="Arial" color="#FFFFFF"><%= "Form&nbsp;Search"%></font></b></TD>
 <TD bgcolor="#336699" width="1%" align=RIGHT valign=TOP><IMG SRC="<%=urlPrefix%>i/ctab_close.gif" height=21 width=12 border=0></TD>
-<%  }
-    else { %>
-<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><IMG SRC="<%=urlPrefix%>i/tab_open.gif" height=21 width=13 border=0></TD>
-<TD width=1% bgcolor="#B6B687"><A HREF="javascript:tabClicked(<%= i %>, '<%= tib.getMainTabURLParams(i) %>')"><font size="-1" face="Arial" color="#000000"><%= "Form Search" %></font></A></TD>
-<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><IMG SRC="<%=urlPrefix%>i/tab_close.gif" height=21 width=10 border=0></TD>
 
-<%
-    }
-  }
-%>
+
 
 </table>
 </td>

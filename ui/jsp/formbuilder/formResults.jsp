@@ -22,10 +22,8 @@ function submitForm() {
 </SCRIPT>
 </HEAD>
 <BODY bgcolor="#ffffff">
-<jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
-<jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
+
 <%
-  TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
    String urlPrefix = "";
   %>
 <%@ include  file="/formbuilder/tab_include_search.jsp" %>
