@@ -63,7 +63,7 @@ public class FormModuleEditAction extends FormEditAction {
     Map validValueMap = null; 
     try
     {
-      validValueMap = service.getValidValule(allVdIds);
+      validValueMap = service.getValidValues(allVdIds);
     }
     catch(FormBuilderException exp)
     {
