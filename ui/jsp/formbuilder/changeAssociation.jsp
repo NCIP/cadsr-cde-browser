@@ -32,6 +32,8 @@
 
 <html:hidden property="<%= FormConstants.QUESTION_INDEX %>"/>
 
+<%@ include file="changeAssociation_inc.jsp" %>
+
 <logic:present name="<%=CaDSRConstants.CDE_CART%>">
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
     <tr class="OraTableColumnHeader">
