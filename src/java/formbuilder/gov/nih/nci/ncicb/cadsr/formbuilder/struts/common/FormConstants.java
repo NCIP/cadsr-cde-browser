@@ -20,6 +20,8 @@ public interface FormConstants
     public static final String PROTOCOLS_LOV_ID_FIELD = "protocolIdSeq";
     public static final String PROTOCOLS_LOV_NAME_FIELD = "protocolLongName";
 
+    public static final String PROTOCOLS_LOV_PROTO_LONG_NAME = "SEARCH";
+    public static final String PROTOCOLS_LOV_CONTEXT_CHECK = "chkContext";
 
 
 }
