@@ -18,6 +18,7 @@ import java.util.Iterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -250,13 +251,23 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     return crf;
   }
 
+  protected void saveError(
+      String key,
+       HttpServletRequest request) {
+    if (key != null) {
+      ActionMessage errorMessage = new ActionMessage(key);
+      ActionErrors errorMessages = new ActionErrors();
+      errorMessages.add(errorMessages.GLOBAL_MESSAGE, errorMessage);
+      saveErrors(request,errorMessages);
+    }
+  }
   protected void saveMessage(
     String key,
     HttpServletRequest request) {
     if (key != null) {
-      ActionMessage errorMessage = new ActionMessage(key);
+      ActionMessage message = new ActionMessage(key);
       ActionMessages messages = new ActionMessages();
-      messages.add(messages.GLOBAL_MESSAGE, errorMessage);
+      messages.add(messages.GLOBAL_MESSAGE, message);
       saveMessages(request, messages);
     }
   }
@@ -326,7 +337,7 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
           session.removeAttribute((String)it.next());
         }
       }
-      saveMessage(ERROR_FATAL, request);
+      saveError(ERROR_FATAL, request);
       throw new FatalException(throwable);
     }
   }

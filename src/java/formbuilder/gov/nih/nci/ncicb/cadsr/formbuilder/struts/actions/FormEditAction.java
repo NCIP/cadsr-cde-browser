@@ -338,8 +338,8 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
         if (log.isDebugEnabled()) {
           log.debug("Exception on delete  " + exp);
         }
-        saveMessage(ERROR_FORM_DELETE_FAILED, request);
-        saveMessage(exp.getErrorCode(), request);
+        saveError(ERROR_FORM_DELETE_FAILED, request);
+        saveError(exp.getErrorCode(), request);
         return mapping.findForward(FAILURE);
       }    
     removeSessionObject(request, DELETED_MODULES);
@@ -390,8 +390,8 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
             log.debug("Exception on service.updateForm=  " + exp);
           }
   
-          saveMessage(ERROR_FORM_SAVE_FAILED, request);
-          saveMessage(exp.getErrorCode(), request);
+          saveError(ERROR_FORM_SAVE_FAILED, request);
+          saveError(exp.getErrorCode(), request);
           return mapping.findForward(FAILURE);
         }
         catch (CloneNotSupportedException exp) {
@@ -476,8 +476,8 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
             log.debug("Exception on service.updateForm=  " + exp);
           }
   
-          saveMessage(ERROR_FORM_SAVE_FAILED, request);
-          saveMessage(exp.getErrorCode(), request);
+          saveError(ERROR_FORM_SAVE_FAILED, request);
+          saveError(exp.getErrorCode(), request);
           return mapping.findForward(FORM_EDIT);
         }
         catch (CloneNotSupportedException exp) {

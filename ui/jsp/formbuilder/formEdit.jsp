@@ -66,26 +66,9 @@ function clearProtocol() {
         <jsp:param name="urlPrefix" value=""/>
       </jsp:include>
       <%@ include file="/formbuilder/editButton_inc.jsp"%>
-
+    <%@ include file="showMessages.jsp" %>
     <%@ include file="showValidationErrors.jsp" %>
-    
-      <logic:messagesPresent message="true">
-       <table width="80%" align="center">
-        <html:messages id="message" 
-          message="true">
-            <tr align="center" >
-               <td  align="left" class="OraErrorText" >
-                <b><bean:write  name="message"/></b><br>
-              </td>
-            </tr>
-        </html:messages> 
-           <tr align="center" >
-             <td>
-                &nbsp;
-            </td>
-           </tr>        
-       </table>
-      </logic:messagesPresent>  
+
     
       <logic:present name="<%=FormConstants.CRF%>">
        <html:hidden property="<%=FormConstants.FORM_ID_SEQ%>"/>
@@ -110,7 +93,9 @@ function clearProtocol() {
               <bean:message key="cadsr.formbuilder.form.name"/>
             </td>
             <td  class="OraFieldText" width="80%" nowrap>
-              <html:text size="100" property="<%=FormConstants.FORM_LONG_NAME%>"></html:text>
+              <html:text size="100" property="<%=FormConstants.FORM_LONG_NAME%>"
+              maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>">
+             </html:text>
             </td>
           </tr>
           <tr class="OraTabledata">
@@ -220,7 +205,7 @@ function clearProtocol() {
                   <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
-                  </html:link>&nbsp;
+                  </html:link>
                 </td>
               </tr>
               </table> 
@@ -235,12 +220,7 @@ function clearProtocol() {
             <bean:size id="moduleSize" name="<%=FormConstants.CRF%>" property="modules"/>            
             
             <!-- Add for delete and new Module -->
-             <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">
-             <tr >
-                <td >
-                  &nbsp;
-                </td>
-              </tr>         
+             <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
               <tr align="right">
                 <logic:notEmpty name="<%=FormConstants.DELETED_MODULES%>">
                   <td align="right"   class="OraFieldText" nowrap>    

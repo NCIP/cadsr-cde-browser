@@ -30,23 +30,8 @@
     </jsp:include>
     <%@ include file="/formbuilder/viewButton_inc.jsp"%>
    
-      <logic:messagesPresent message="true">
-       <table width="80%" align="center">
-        <html:messages id="message" 
-          message="true">
-            <tr align="center" >
-               <td  align="left" class="OraErrorText" >
-                <b><bean:write  name="message"/></b><br>
-              </td>
-            </tr>
-        </html:messages> 
-           <tr align="center" >
-             <td>
-                &nbsp;
-            </td>
-           </tr>        
-       </table>
-      </logic:messagesPresent>  
+    <%@ include file="showMessages.jsp" %>
+          
     
     <logic:present name="<%=FormConstants.CRF%>">
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">

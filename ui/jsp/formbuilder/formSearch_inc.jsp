@@ -121,10 +121,7 @@ function clearForm() {
       </html:link>&nbsp;
     </td>  
  </TR>    
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>
+
   </table>
   <P>
     

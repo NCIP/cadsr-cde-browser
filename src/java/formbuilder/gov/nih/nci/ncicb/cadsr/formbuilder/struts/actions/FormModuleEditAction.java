@@ -606,8 +606,8 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
           log.debug("Exception on service.updateModule=  " + exp);
         }
 
-        saveMessage(ERROR_MODULE_SAVE_FAILED, request);
-        saveMessage(exp.getErrorCode(), request);
+        saveError(ERROR_MODULE_SAVE_FAILED, request);
+        saveError(exp.getErrorCode(), request);
         return mapping.findForward(FAILURE);
     }
                          

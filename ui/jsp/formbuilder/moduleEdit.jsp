@@ -71,22 +71,9 @@ function clearProtocol() {
         <jsp:param name="urlPrefix" value=""/>
       </jsp:include>
       <%@ include file="/formbuilder/moduleEditButton_inc.jsp"%>
-
+        <%@ include file="showMessages.jsp" %>
         <%@ include file="showValidationErrors.jsp" %>
-
-      <logic:messagesPresent message="true">
-        <table width="80%" align="center">
-          <html:messages id="message" message="true">
-            <tr align="center">
-              <td align="left" class="OraErrorText"><b>
-                  <bean:write name="message"/>
-                </b>
-                <br/>
-              </td>
-            </tr>
-          </html:messages>
-        </table>
-      </logic:messagesPresent>
+    
       <logic:present name="<%=FormConstants.MODULE%>">
       <table  width="80%">
         <tr>
@@ -127,7 +114,9 @@ function clearProtocol() {
               <bean:message key="cadsr.formbuilder.module.name"/>
             </td>
             <td class="OraFieldText" nowrap>
-              <html:text size="100" property="<%=FormConstants.MODULE_LONG_NAME%>"></html:text>
+              <html:text size="100" property="<%=FormConstants.MODULE_LONG_NAME%>"
+                  maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>">
+              </html:text>
             </td>
           </tr>
           <!--TODO moved to 1.3 release
@@ -168,7 +157,7 @@ function clearProtocol() {
                     scope="page"
                     >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add Question"/>
-                  </html:link>&nbsp;
+                  </html:link>
                 </td>
               </tr>
               </table> 
@@ -180,12 +169,7 @@ function clearProtocol() {
              <bean:size id="questionSize" name="module" property="questions"/>
              
         <!-- If the Question Collection is empty and deleted Questions Exists -->
-             <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">              
-             <tr >
-                <td >
-                  &nbsp;
-                </td>
-              </tr>         
+             <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">                   
               <tr align="right">
                 <logic:notEmpty name="<%=FormConstants.DELETED_QUESTIONS%>">
                   <td align="right"   class="OraFieldText" nowrap width="90%">    
@@ -279,7 +263,9 @@ function clearProtocol() {
                                 <tr class="OraTableColumnHeaderModule">
                                  
                                  <td >
-                                  <html:text size="100%"  property='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'></html:text>
+                                  <html:text size="100%"  property='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'>
+                                    maxlength="<%= FormConstants.LONG_NAME_MAX_LENGTH %>"
+                                  </html:text>
                                  </td>
                                 <logic:present name="question" property="dataElement">
                                   <td align="center" width="70" >

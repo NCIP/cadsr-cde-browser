@@ -1,15 +1,4 @@
-  <logic:messagesPresent message="true">
-       <table width="100%" align="center">
-        <html:messages id="message" 
-          message="true">
-            <tr align="center" >
-               <td  align="left" class="OraErrorText" >
-                <b><bean:write  name="message"/></b><br>
-              </td>
-            </tr>
-        </html:messages>      
-       </table>
-   </logic:messagesPresent> 
+<%@ include file="showMessages.jsp" %>
    
    <logic:notEmpty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
         <bean:define id="pageBean" name="<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 

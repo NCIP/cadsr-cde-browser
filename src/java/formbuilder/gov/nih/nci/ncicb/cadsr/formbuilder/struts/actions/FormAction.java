@@ -193,7 +193,7 @@ public class FormAction extends FormBuilderBaseDispatchAction {
         log.debug("Exception on getFormBy Id =  " + exp);
       }
 
-      saveMessage(exp.getErrorCode(), request);
+      saveError(exp.getErrorCode(), request);
     }
 
     return mapping.findForward(SUCCESS);
@@ -225,7 +225,7 @@ public class FormAction extends FormBuilderBaseDispatchAction {
       }
     }
     catch (FormBuilderException exp) {
-      saveMessage(exp.getErrorCode(), request);
+      saveError(exp.getErrorCode(), request);
 
       if (log.isDebugEnabled()) {
         log.debug("Exception on getFormForEdit =  " + exp);
