@@ -65,7 +65,8 @@ public class ProtocolsLOVBean extends Object {
                            " where proto.conte_idseq = proto_conte.conte_idseq " +
                            " and proto.latest_version_ind = 'Yes' " +
                            " and proto.deleted_ind = 'No' " +
-                           " and proto.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + whereClause;
+                           //" and proto.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') ";
+                            + whereClause;
       sqlStmtParm[1] = " order by proto.preferred_name ";
       int[] lovPassbackCols = {0};
 
