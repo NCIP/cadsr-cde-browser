@@ -26,6 +26,7 @@
   <property name="project.home" value="${basedir}/../.."/>
   
   <property name="app.name" value="cdebrowser" />
+  <property name="web.app.name" value="${app.name}-web" />
   <property name="ear.name" value="${app.name}" />
   <property name="war.name" value="${app.name}-web" />
   <property name="ejb.name" value="formbuilder-ejb" />
@@ -509,7 +510,25 @@
         </java> 
    </target> 
    
-  
+   <target name="bind_web_app" depends="init"> 
+       <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
+         <arg value="${deploy.ormi}" /> 
+         <arg value="${deploy.username}" /> 
+         <arg value="${deploy.password}" /> 
+         <arg value="-bindWebApp" /> 
+         <arg value="${app.name}" /> 
+         <arg value="${web.app.name}" /> 
+         <arg value="http-web-site" /> 
+         <arg value="/${app.name}" /> 
+         <classpath> 
+              <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
+         </classpath> 
+       </java> 
+   </target> 
+
+  <target  name="deploy_cdebrowser" depends="ear_deploy,bind_web_app"> 
+  </target>   
+   
   <target  name="copy_ear_oc4j" depends="ear_cdebrowser"> 
      <copy todir="${oc4j.j2ee.home}/applications">      
          <fileset dir="${build.dir}">
@@ -554,7 +573,9 @@
        jar_security	      - Create security jar
        oc4j_stop	      - Stop the oc4j instance
        clean_oc4j	      - Clean oc4j application deployment directories
-       ear_deploy	      - Deploy the application
+       ear_deploy	      - Deploy the application ear
+       bind_web_app	      - Binds the web app
+       deploy_cdebrowser      - Deploy the application and binds the web app
        ear_undeploy	      - Undeploy the application
        copy_ear_oc4j	      - Copy application ear to oc4j
        oc4j_start	      - start oc4j
