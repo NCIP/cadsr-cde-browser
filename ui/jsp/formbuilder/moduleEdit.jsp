@@ -294,7 +294,19 @@ function clearProtocol() {
                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">                  
                       <logic:present name="question" property="dataElement">
                       <logic:present name="question" property="dataElement.longName">
-
+                        <tr class="OraTabledata">
+                            <td class="OraFieldText" nowrap align="left" >
+                              <bean:message key="cadsr.formbuilder.form.longName" />
+                            </td>                       
+                            <td class="OraFieldText">
+                               : <cde:questionAltText questionBeanId= "question" 
+                                                    htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
+                                                    deProperty = "longName"
+                                                    formIndex="0"
+                                                    questionIndex="<%=questionIndex%>" /> 
+                                
+                            </td>
+                        </tr>
                       </logic:present>
                       <logic:present name="question" property="dataElement.longCDEName">
                       <tr class="OraTabledata">
