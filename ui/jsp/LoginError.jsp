@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%  
 
   request.setAttribute("msg", "Login Failed, please try again. ");
