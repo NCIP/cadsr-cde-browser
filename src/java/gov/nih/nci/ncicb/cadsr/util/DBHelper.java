@@ -1,11 +1,15 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBHelper  {
+  private static Log log = LogFactory.getLog(DBHelper.class.getName());
   public DBHelper() {
   }
 
@@ -28,8 +32,7 @@ public class DBHelper  {
       id = rs.getString(1);
     }
     catch(SQLException sqle) {
-      System.out.println("Exception in DBHelper.getUniqueId()");
-      sqle.printStackTrace();
+      log.error("Exception in getUniqueId()", sqle);
       throw sqle;
     }
     finally {

@@ -1,5 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +16,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class DBUtil  {
+  private static Log log = LogFactory.getLog(DBUtil.class.getName());
 
   private static final int INSERT_ERROR = -1;
   private static final int UPDATE_ERROR = -1;
@@ -37,16 +41,16 @@ public class DBUtil  {
         conn = ds.getConnection();
         //conn.setAutoCommit(true);
         isConnected = true;
-        System.out.println
+        log.info
         ("Connected to the database successfully using datasource "+dataSourceName);
       }
       catch (NamingException ne) {
-        ne.printStackTrace();
+        log.error("Exception occurred in getConnectionFromContainer", ne);
         throw new NamingException
                 ("Failed to lookup JDBC datasource. Check the datasource name");
       }
       catch (Exception e) {
-        e.printStackTrace();
+        log.error("Exception occurred in getConnectionFromContainer", e);
         throw new Exception("Exception in ConnectionHelper.getConnection()");
       }
     }
@@ -81,9 +85,9 @@ public class DBUtil  {
 			}
 		}
     catch (SQLException sqle) {
-			System.out.println("  Exception in DBUtil.retrieveMultipleRecordsDB(String )");
-			System.out.println("  The statement executed : " + sqlStmt );
-      sqle.printStackTrace();
+			log.error("Exception in DBUtil.retrieveMultipleRecordsDB(String )");
+			log.error("The statement executed : " + sqlStmt, sqle);
+         
       throw sqle;
 		}
     finally {
@@ -127,7 +131,7 @@ public class DBUtil  {
   			}
 	  	}
 
-   		System.out.println(stmt_str);
+   		log.debug("statement" + stmt_str);
       rs = stmt.executeQuery(stmt_str);
 	  	isThereResult = rs.next();
       while (isThereResult) {
@@ -143,9 +147,8 @@ public class DBUtil  {
 		}
 
     catch (SQLException sqle) {
-			System.out.println("  Exception in DBUtil.retrieveMultipleRecordsDB()");
-			System.out.println("  The statement executed : " + stmt_str );
-      sqle.printStackTrace();
+			log.error("  Exception in DBUtil.retrieveMultipleRecordsDB()");
+			log.error("  The statement executed : " + stmt_str, sqle);
       throw sqle;
 		}
     finally {
@@ -186,9 +189,8 @@ public class DBUtil  {
 			}
 		}
     catch (SQLException sqle) {
-			System.out.println("  Exception in DBUtil.retrieveRecordDB(String)");
-			System.out.println("  The statement executed : " + sqlStmt );
-			sqle.printStackTrace();
+			log.error("  Exception in DBUtil.retrieveRecordDB(String)");
+			log.error("  The statement executed : " + sqlStmt, sqle);
       throw sqle;
 		}
     finally {
@@ -241,9 +243,8 @@ public class DBUtil  {
 
 		}
     catch (SQLException sqle) {
-			System.out.println("  Exception in DBUtil.retrieveRecordDB()");
-			System.out.println("  The statement executed : " + stmt_str );
-      sqle.printStackTrace();
+			log.error("  Exception in DBUtil.retrieveRecordDB()");
+			log.error("  The statement executed : " + stmt_str, sqle);
       throw sqle;
 		}
     finally {
@@ -277,8 +278,7 @@ public class DBUtil  {
       id = rs.getString(1);
 		}
     catch(SQLException sqle) {
-			System.out.println("Exception in DBUtil.getUniqueId()");
-      sqle.printStackTrace();
+			log.error("Exception in getUniqueId()", sqle);
       throw sqle;
 		}
     finally {
@@ -301,11 +301,10 @@ public class DBUtil  {
         conn.close();
         isConnected = false;
       }
-      System.out.println("Closing the Database connection ... ");
+      log.error("Closing the Database connection ... ");
     } 
     catch (SQLException sqle) {
-      System.out.println("Error occured in returing DB connection to the container");
-      sqle.printStackTrace();
+      log.error("Error occured in returing DB connection to the container", sqle);
       throw sqle;
     } 
   }
@@ -323,7 +322,7 @@ public class DBUtil  {
       rs = stmt.executeQuery(sqlStmt);
     } 
     catch (SQLException ex) {
-      ex.printStackTrace();
+      log.error("Exception occurred in executeQuery " + sqlStmt, ex);
       throw ex;
     } 
     return rs;
