@@ -1,0 +1,465 @@
+A:link {
+	FONT-SIZE: 10pt; COLOR: #663300; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+A:active {
+	FONT-SIZE: 10pt; COLOR: #ff6600; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+A:visited {
+	FONT-SIZE: 10pt; COLOR: #996633; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraBGColorVeryDark {
+	BACKGROUND-COLOR: #003366
+}
+.OraBGColorDark {
+	BACKGROUND-COLOR: #336699
+}
+.OraBGColorMedium {
+	BACKGROUND-COLOR: #6699cc
+}
+.OraBGColorLight {
+	BACKGROUND-COLOR: #99ccff
+}
+.OraBGGrayVeryDark {
+	BACKGROUND-COLOR: #333333
+}
+.OraBGGrayDark {
+	BACKGROUND-COLOR: #666666
+}
+.OraBGGrayMedium {
+	BACKGROUND-COLOR: #999999
+}
+.OraBGGrayLight {
+	BACKGROUND-COLOR: #cccccc
+}
+.OraBGAccentVeryDark {
+	BACKGROUND-COLOR: #999966
+}
+.OraBGAccentWhite {
+	BACKGROUND-COLOR: #ffffff
+}
+.OraBGAccentBlack {
+	BACKGROUND-COLOR: #000000
+}
+.OraBGAccentDark {
+	BACKGROUND-COLOR: #cccc99
+}
+.OraBGAccentMedium {
+	BACKGROUND-COLOR: #ffffcc
+}
+.OraBGAccentLight {
+	BACKGROUND-COLOR: #f7f7e7
+}
+.OraBody {
+	BACKGROUND-COLOR: #ffffff
+}
+.OraPromptText {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: right
+}
+.OraDataText {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraFieldText {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraFieldTextDisabled {
+	FONT-SIZE: 10pt; COLOR: #999999; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraFieldNumber {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: right
+}
+.OraFieldNumberDisabled {
+	FONT-SIZE: 10pt; COLOR: #999999; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: right
+}
+.OraInstructionText {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraInstructionTextStrong {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraButtonText {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #f7f7e7
+}
+.OraButtonTextDisabled {
+	FONT-SIZE: 10pt; COLOR: #999966; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #f7f7e7
+}
+.OraGlobalButtonText {
+	FONT-SIZE: 8pt; COLOR: #663300; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraGlobalButtonTextSelected {
+	FONT-SIZE: 8pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraGlobalButtonTextDisabled {
+	FONT-SIZE: 8pt; COLOR: #999966; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraGlobalButtonIcon {
+	COLOR: #999966; BACKGROUND-COLOR: #ffffff
+}
+.OraGlobalButtonIconSelected {
+	COLOR: #336699; BACKGROUND-COLOR: #99ccff
+}
+.OraGlobalButtonIconDisabled {
+	COLOR: #cccc99; BACKGROUND-COLOR: #f7f7e7
+}
+.OraLinkText {
+	FONT-SIZE: 10pt; COLOR: #663300; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraVLinkText {
+	FONT-SIZE: 10pt; COLOR: #996633; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraALinkText {
+	FONT-SIZE: 10pt; COLOR: #ff6600; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraTipLabel {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraTipText {
+	FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraInlineInfoText {
+	FONT-SIZE: 8pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraErrorText {
+	FONT-SIZE: 10pt; COLOR: #cc0000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraErrorNameText {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #cc0000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraInlineErrorText {
+	FONT-SIZE: 8pt; COLOR: #cc0000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraHeader {
+	FONT-SIZE: 16pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraHeaderSub {
+	FONT-WEIGHT: bold; FONT-SIZE: 14pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraHeaderSubSub {
+	FONT-WEIGHT: bold; FONT-SIZE: 12pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraDarkHeader {
+	FONT-SIZE: 16pt; COLOR: #003366; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraDarkHeaderSub {
+	FONT-WEIGHT: bold; FONT-SIZE: 14pt; COLOR: #003366; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraDarkHeaderSubSub {
+	FONT-WEIGHT: bold; FONT-SIZE: 11pt; COLOR: #003366; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraLightHeader {
+	FONT-SIZE: 16pt; COLOR: #6699cc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraLightHeaderSub {
+	FONT-WEIGHT: bold; FONT-SIZE: 14pt; COLOR: #6699cc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraLightHeaderSubSub {
+	FONT-WEIGHT: bold; FONT-SIZE: 11pt; COLOR: #6699cc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraColorHeader {
+	FONT-SIZE: 16pt; COLOR: #ffffcc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraColorHeaderSub {
+	FONT-WEIGHT: bold; FONT-SIZE: 14pt; COLOR: #ffffcc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraColorHeaderSubSub {
+	FONT-WEIGHT: bold; FONT-SIZE: 11pt; COLOR: #ffffcc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraPortletHeader {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraDarkPortletHeader {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraErrorHeader {
+	FONT-SIZE: 16pt; COLOR: #cc0000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraGlobalPageTitle {
+	FONT-WEIGHT: bold; FONT-SIZE: 14pt; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraNav1Selected {
+	FONT-WEIGHT: bold; FONT-SIZE: 11pt; COLOR: #99ccff; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #336699; TEXT-DECORATION: none
+}
+.OraNav1Enabled {
+	FONT-SIZE: 11pt; COLOR: #003366; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-DECORATION: none
+}
+.OraNav1Disabled {
+	FONT-SIZE: 11pt; COLOR: #ffffcc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-DECORATION: none
+}
+.OraNav2Selected {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-DECORATION: none
+}
+.OraNav2Enabled {
+	FONT-SIZE: 10pt; COLOR: #cccc99; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-DECORATION: none
+}
+.OraNav2Disabled {
+	FONT-SIZE: 10pt; COLOR: #6699cc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-DECORATION: none
+}
+.OraNav3Selected {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #336699; TEXT-DECORATION: none
+}
+.OraNav3Enabled {
+	FONT-SIZE: 10pt; COLOR: #003366; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99
+}
+.OraNav3Disabled {
+	FONT-SIZE: 10pt; COLOR: #ffffcc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-DECORATION: none
+}
+.OraTextInline {
+	FONT-SIZE: 8pt; COLOR: #6699cc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraTableTitle {
+	FONT-SIZE: 14pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+.OraTableControlBarText {
+	FONT-WEIGHT: bold; FONT-SIZE: 11pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99
+}
+.OraTableColumnHeader {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: left
+}
+.OraTableSortableColumnHeader {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; CURSOR: hand; COLOR: #336699; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: left
+}
+.OraTableRowHeader {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: right
+}
+.OraTableColumnFooter {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-WEIGHT: bold; FONT-SIZE: 10pt; PADDING-BOTTOM: 2px; COLOR: #336699; TEXT-INDENT: 1px; PADDING-TOP: 2px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: left
+}
+.OraTableTotal {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; PADDING-TOP: 2px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: right
+}
+.OraTableAddTotal {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; PADDING-TOP: 2px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: left
+}
+.OraTableTotalNumber {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; VERTICAL-ALIGN: baseline; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: right
+}
+.OraTableTotalText {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; VERTICAL-ALIGN: baseline; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: left
+}
+.OraTableCellText {
+	FONT-SIZE: 10pt; COLOR: #000000; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #f7f7e7
+}
+.OraTableCellTextBand {
+	FONT-SIZE: 10pt; COLOR: #000000; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+.OraTableCellNumber {
+	FONT-SIZE: 10pt; COLOR: #000000; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #f7f7e7; TEXT-ALIGN: right
+}
+.OraTableCellNumberBand {
+	FONT-SIZE: 10pt; COLOR: #000000; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: right
+}
+.OraTableCellIconButton {
+	FONT-SIZE: 10pt; COLOR: #000000; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #f7f7e7; TEXT-ALIGN: center
+}
+.OraTableCellIconButtonBand {
+	FONT-SIZE: 10pt; COLOR: #000000; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: center
+}
+.OraTableCellSelect {
+	FONT-SIZE: 10pt; COLOR: #000000; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #f7f7e7; TEXT-ALIGN: center
+}
+.OraTableCellSelectBand {
+	FONT-SIZE: 10pt; COLOR: #000000; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: center
+}
+.OraTableVerticalGrid {
+	WIDTH: 1px; BACKGROUND-COLOR: #cccc99
+}
+.OraTableVerticalHeaderGrid {
+	WIDTH: 1px; BACKGROUND-COLOR: #f7f7e7
+}
+.OraTableHorizontalGrid {
+	WIDTH: 1px; BACKGROUND-COLOR: #cccc99
+}
+.OraTableHorizontalHeaderGrid {
+	WIDTH: 1px; BACKGROUND-COLOR: #f7f7e7
+}
+.OraTableShadowHeaderGrid {
+	WIDTH: 1px; BACKGROUND-COLOR: #666633
+}
+.OraTableHeaderLink {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-DECORATION: none
+}
+.OraTrainActive {
+	FONT-WEIGHT: bold; FONT-SIZE: 9pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: center
+}
+.OraTrainVisited {
+	FONT-SIZE: 9pt; COLOR: #cccc99; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: center
+}
+.OraTrainUnvisited {
+	FONT-SIZE: 9pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: center
+}
+.OraPrivacy {
+	FONT-SIZE: 8pt; COLOR: #663300; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: right
+}
+.OraCopyright {
+	FONT-SIZE: 8pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: left
+}
+.OraCrumbsSelected {
+	FONT-SIZE: 9pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-DECORATION: none
+}
+.OraCrumbsEnabled {
+	FONT-SIZE: 9pt; COLOR: #663300; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraNavBarActiveLink {
+	FONT-SIZE: 10pt; COLOR: #663300; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraNavBarInactiveLink {
+	FONT-SIZE: 10pt; COLOR: #999966; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraNavBarViewOnly {
+	FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraCalendarTitle {
+	FONT-SIZE: 14pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: center
+}
+.OraCalendarHeader {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-WEIGHT: bold; FONT-SIZE: 10pt; PADDING-BOTTOM: 2px; COLOR: #336699; PADDING-TOP: 2px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: center
+}
+.OraCalendarEnabled {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-SIZE: 10pt; PADDING-BOTTOM: 2px; COLOR: #336699; LINE-HEIGHT: 1.5; PADDING-TOP: 2px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #f7f7e7; TEXT-ALIGN: center; TEXT-DECORATION: none
+}
+.OraCalendarDisabled {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-SIZE: 10pt; PADDING-BOTTOM: 2px; COLOR: #999999; LINE-HEIGHT: 1.5; PADDING-TOP: 2px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #f7f7e7; TEXT-ALIGN: center
+}
+.OraCalendarSelected {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-SIZE: 10pt; PADDING-BOTTOM: 2px; COLOR: #ffffff; LINE-HEIGHT: 1.5; PADDING-TOP: 2px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #999966; TEXT-ALIGN: center
+}
+.OraCContainerColorHeaderSub {
+	FONT-WEIGHT: bold; FONT-SIZE: 14pt; COLOR: #ffffcc; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraCContainerHeaderSub {
+	FONT-WEIGHT: bold; FONT-SIZE: 14pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraTreeLink {
+	TEXT-DECORATION: none
+}
+.OraTreeText {
+	MARGIN-TOP: -2px; FONT-SIZE: 10pt; COLOR: #003366; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraTreeSelectedText {
+	MARGIN-TOP: -2px; FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #336699
+}
+.OraTreeRow {
+	MARGIN-TOP: -2px; TEXT-ALIGN: left
+}
+.OraTreeIcon {
+	VERTICAL-ALIGN: top
+}
+.OraShuttleHeader {
+	FONT-WEIGHT: bold; FONT-SIZE: 11pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraShuttleLinkText {
+	FONT-SIZE: 9pt; COLOR: #663300; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraMessageBoxList {
+	FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraMessageBoxLink {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraMessageBoxParagraph {
+	FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraMessageBoxErrorList {
+	FONT-SIZE: 10pt; COLOR: #cc0000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraMessageBoxErrorLink {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #cc0000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraMessageBoxErrorParagraph {
+	FONT-SIZE: 10pt; COLOR: #cc0000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.SBROraButtonText {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraTabledata {
+	FONT-SIZE: 10pt; BACKGROUND: #f7f7e7; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.fieldtitle {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: right
+}
+.fieldtitlebold {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: right
+}
+.fieldtitleleft {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: left
+}
+.fielddata {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.fielddatabold {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraTabledataMedium {
+	FONT-SIZE: 10pt; BACKGROUND: #ffffcc; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraBGLightKhaki {
+	BACKGROUND-COLOR: #dcdfb1
+}
+.TableRowPromptText {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: right
+}
+.TreeBGColor {
+	BACKGROUND-COLOR: #003366
+}
+.CDEBrowserPageContext {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #999966; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.LOVField {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cfcfcf
+}
+.LOVFieldText {
+	FONT-SIZE: 10pt; COLOR: #cfcfcf; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.AbbreviatedText {
+	FONT-SIZE: 8pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: left
+}
+.OraFieldtitlebold {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: right
+}
+.OraFieldtitleboldLeftAlign {
+	FONT-WEIGHT: bold; FONT-SIZE: 9pt; COLOR: #336699; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: left
+}
+.InputFieldText {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: left
+}
+.Dropdown {
+	FONT-SIZE: 10pt; WIDTH: 39mm; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cfcfcf; TEXT-ALIGN: left
+}
+.UnderlineOraFieldText {
+	FONT-SIZE: 10pt; COLOR: #000000; BORDER-BOTTOM: #999966 1px solid; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.PrinterOraTableColumnHeader {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left
+}
+.PrinterOraFieldText {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.PrinterOraTabledata {
+	FONT-SIZE: 10pt; BACKGROUND: #ffffff; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.PrinterUnderlineOraFieldText {
+	FONT-SIZE: 10pt; COLOR: #000000; BORDER-BOTTOM: #000000 1px solid; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.TableRowPromptTextLeft {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: left
+}
+.ErrorText {
+	FONT-SIZE: 10pt; COLOR: #cc0000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.MessageText {
+	FONT-SIZE: 10pt; COLOR: #009900; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.OraTableColumnHeaderVV {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ccccff; TEXT-ALIGN: left
+}
+.OraTableColumnHeaderVVNOBold {
+	FONT-SIZE: 10pt; COLOR: #336699; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ccccff
+}
+.OraTableColumnHeaderModule {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; TEXT-INDENT: 1px; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cccc99; TEXT-ALIGN: left
+}
+.FreeDropdown {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #cfcfcf; TEXT-ALIGN: left
+}
+.OraFieldTextVV {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ccccff
+}
