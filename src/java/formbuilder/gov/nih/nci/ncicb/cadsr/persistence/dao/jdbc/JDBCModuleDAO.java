@@ -137,7 +137,9 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       return 1;
     }
     else{
-      throw new DMLException(returnDesc);
+      DMLException dmlExp = new DMLException(returnDesc);
+      dmlExp.setErrorCode(ERROR_DELETE_MODULE_FAILED);    
+      throw dmlExp;
     }
   }
 

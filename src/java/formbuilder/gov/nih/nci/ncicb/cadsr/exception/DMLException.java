@@ -1,8 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.exception;
 
-import gov.nih.nci.ncicb.cadsr.exception.NestedCheckedException;
+import gov.nih.nci.ncicb.cadsr.exception.NestedRuntimeException;
 
-public class DMLException extends NestedCheckedException {
+public class DMLException extends NestedRuntimeException {
+
   public DMLException(String msg) {
     super(msg);
   }
@@ -12,6 +13,8 @@ public class DMLException extends NestedCheckedException {
     Throwable cause) {
     super(msg, cause);
   }
+
+
 
  /** public DataAccessException(Throwable cause) {
     super(cause);

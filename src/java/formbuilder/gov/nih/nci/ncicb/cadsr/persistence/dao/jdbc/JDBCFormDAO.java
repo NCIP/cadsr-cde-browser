@@ -153,7 +153,9 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       return 1;
     }
     else {
-      throw new DMLException(returnDesc);
+           DMLException dmlExp = new DMLException(returnDesc);
+	       dmlExp.setErrorCode(ERROR_DELETE_FORM_FAILED);
+           throw dmlExp;
     }
   }
 
@@ -253,7 +255,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       System.out.println("Failed to find Form");
     }
 
-    //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
+    //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
     // type, classificationIdseq
 
     /*

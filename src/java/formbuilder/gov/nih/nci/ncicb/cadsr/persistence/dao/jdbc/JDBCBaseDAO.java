@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.persistence.ErrorCodeConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.BaseDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ConnectionException;
@@ -32,7 +33,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 
-public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
+public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCodeConstants {
   GUIDGenerator idGen = null;
   public JDBCBaseDAO(ServiceLocator locator) {
     super(locator);
@@ -178,8 +179,9 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     int updatedCount = 
       updateRec.executeUpdate(newDisplayOrder, targetRecordId, relationshipName); 
     if (updatedCount <= 0){
-      throw new DMLException("No matching target record, " + 
+      DMLException dmlExp = new DMLException("No matching target record, " + 
         ", was found whose display order is to be updated.");
+      dmlExp.setErrorCode(ERROR_MODULE_TO_UPDATE_DOES_NOT_EXIST);
     }
     return 1;  // success
   }
