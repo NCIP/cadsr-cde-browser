@@ -1,18 +1,21 @@
 package gov.nih.nci.ncicb.cadsr.persistence;
 
-public interface PersistenceContants 
-{
- public static final String DAO_FACTORY_CLASS_KEY="DAOFactoryClassName";
- public static final String  DATASOURCE_LOCATION_KEY = "FormBuilderDS";
- public static final String  DATASOURCE_KEY = "DataSourceKey";
- public static final String DRIVER_MANAGER_DS="DriverManagerDS";
- public static final String CONNECTION_STRING="ConnectionString";
- public static final String DRIVER_CLASS_NAME="DriverClassName";
- public static final String USERNAME="username";
- public static final String PASSWORD="password"; 
- public static final String JDBC_FORM_DAO="jdbcFormDAO"; 
- public static final String JDBC_MODULE_DAO="jdbcModuleDAO"; 
- public static final String JDBC_QUESTION_DAO="jdbcQuestionDAO"; 
- public static final String JDBC_FORM_VALID_VALUE_DAO="jdbcFormValidValueDAO"; 
- public static final String JDBC_USER_MGR_DAO="jdbcUserManagerDAO"; 
+public interface PersistenceContants {
+  public static final String DAO_FACTORY_CLASS_KEY = "DAOFactoryClassName";
+  public static final String DATASOURCE_LOCATION_KEY = "FormBuilderDS";
+  public static final String DATASOURCE_KEY = "DataSourceKey";
+  public static final String DRIVER_MANAGER_DS = "DriverManagerDS";
+  public static final String CONNECTION_STRING = "ConnectionString";
+  public static final String DRIVER_CLASS_NAME = "DriverClassName";
+  public static final String USERNAME = "username";
+  public static final String PASSWORD = "password";
+  public static final String JDBC_FORM_DAO = "jdbcFormDAO";
+  public static final String JDBC_MODULE_DAO = "jdbcModuleDAO";
+  public static final String JDBC_QUESTION_DAO = "jdbcQuestionDAO";
+  public static final String JDBC_FORM_VALID_VALUE_DAO =
+    "jdbcFormValidValueDAO";
+  public static final String JDBC_USER_MGR_DAO = "jdbcUserManagerDAO";
+  public static final String JDBC_CONTEXT_DAO = "jdbcContextDAO";
+  public static final String JDBC_FORM_CATEGORY_DAO = "jdbcFormCategoryDAO";
+  public static final String JDBC_WK_FLOW_STATUS_DAO = "jdbcWkFlowStatusDAO";
 }
