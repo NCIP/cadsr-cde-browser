@@ -37,7 +37,7 @@ public interface FormBuilderServiceDelegate {
 
   public int deleteForm(String formPK) throws FormBuilderException;
 
-  public Form createModule(
+  public String createModule(
     Module module,
     ModuleInstruction moduleInstruction) throws FormBuilderException;
 

@@ -41,7 +41,16 @@ public interface FormBuilderServiceRemote {
 
   public int deleteForm(String formPK) throws  RemoteException;
 
-  public Form createModule(
+    
+    /**
+     * Creates a Module
+     *
+     * @param module a <code>Module</code> value
+     * @param modInstrustion a <code>ModuleInstruction</code> value
+     * @return The PK of the newly created Module
+     * @exception RemoteException if an error occurs
+     */
+  public String createModule(
     Module module,
     ModuleInstruction modInstrustion) throws  RemoteException;
 

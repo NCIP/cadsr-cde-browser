@@ -175,7 +175,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return fdao.deleteForm(formPK);
   }
 
-  public Form createModule(
+    /**
+     * @inheritDoc
+     */
+  public String createModule(
     Module module,
     ModuleInstruction modInstruction
     )  {
@@ -194,7 +197,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
       ModuleInstructionDAO midao = daoFactory.getModuleInstructionDAO();
       midao.createModuleInstructionComponent(modInstruction);
       
-      return null;
+      return modulePK;
   }
 
 
