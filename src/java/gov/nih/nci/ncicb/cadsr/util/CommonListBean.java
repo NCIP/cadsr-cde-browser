@@ -2,10 +2,16 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
 
-import java.sql.*;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
+import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
-import javax.servlet.http.*;
-import java.util.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * A Bean class.
@@ -13,6 +19,7 @@ import java.util.*;
  * @author Oracle Corporation
  */
 public class CommonListBean extends Object {
+  private static Log log = LogFactory.getLog(CommonListBean.class.getName());
 
   private HttpServletRequest myRequest;
 
@@ -252,9 +259,9 @@ public class CommonListBean extends Object {
     sqlStmt = this.getMySqlStmt() +
               searchClause +
               this.getOrderByClause();
-    System.out.println("sqlstmt: "+sqlStmt);
+    log.debug("sqlstmt: "+sqlStmt);
     rsVector = dBBroker.retrieveMultipleRecordsDB(sqlStmt);
-    System.out.println("rsVector: "+rsVector.size());
+    log.debug("rsVector: "+rsVector.size());
     pageList = new ArrayList(9);
     pageList.add(new Integer(40));
     pageList.add(new Integer(80));
