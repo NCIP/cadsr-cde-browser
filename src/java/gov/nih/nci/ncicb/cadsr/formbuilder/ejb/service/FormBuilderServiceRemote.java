@@ -161,4 +161,6 @@ public interface FormBuilderServiceRemote {
 
       public void deleteAttachment (String name) throws RemoteException;
 
+      public Collection getAllDocumentTypes() throws RemoteException;
+
 }

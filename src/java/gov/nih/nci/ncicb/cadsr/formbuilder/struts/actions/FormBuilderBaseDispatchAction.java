@@ -174,6 +174,14 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
       Collection categories = getFormBuilderService().getAllFormCategories();
       setSessionObject(req, ALL_FORM_CATEGORIES, categories);
     }
+    
+    obj = getSessionObject(req, ALL_REFDOC_TYPES);
+
+    if (obj == null) {
+      Collection refDocTypes = getFormBuilderService().getAllDocumentTypes();
+      setSessionObject(req, ALL_REFDOC_TYPES, refDocTypes);
+    }
+    
 
     obj = getSessionObject(req, ALL_FORM_TYPES);
 

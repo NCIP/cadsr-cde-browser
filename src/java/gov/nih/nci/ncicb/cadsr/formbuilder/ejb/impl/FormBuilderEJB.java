@@ -869,4 +869,11 @@ public class FormBuilderEJB extends SessionBeanAdapter
         myDAO.deleteAttachment(name);
 
   }
+  
+  public Collection getAllDocumentTypes() {
+    return daoFactory.getReferenceDocumentTypeDAO().getAllDocumentTypes();
+  }
+
+
+  
 }

@@ -137,4 +137,6 @@ public interface FormBuilderServiceLocal  {
      * @inheritDoc
      */
       public void unpublishForm(String formIdSeq, String formType, String contextIdSe);    
+      
+      public Collection getAllDocumentTypes() throws DMLException;
 }
