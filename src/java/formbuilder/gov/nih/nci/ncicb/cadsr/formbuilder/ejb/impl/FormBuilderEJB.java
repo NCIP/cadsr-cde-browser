@@ -152,7 +152,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
   }
 
   public Module updateModule(
-       Module moduleHeader,
+       String moduleIdSeq,Module moduleHeader,
        Collection updatedQuestions,
        Collection deletedQuestions,
        Collection newQuestions,
@@ -197,6 +197,13 @@ public class FormBuilderEJB extends SessionBeanAdapter
              Question currQuestion = (Question)newIt.next();
              currQuestion.setCreatedBy(getUserName());
              questionDao.createQuestionComponent(currQuestion);
+             List currQuestionValidValues = currQuestion.getValidValues();
+             ListIterator currQuestionValidValuesIt = currQuestionValidValues.listIterator();
+             while(currQuestionValidValuesIt!=null&&currQuestionValidValuesIt.hasNext())
+             {
+               FormValidValue fvv = (FormValidValue)currQuestionValidValuesIt.next();
+               formValidValueDao.createFormValidValueComponent(fvv);
+             }
            }
          }
          if(updatedValidValues!=null&&!updatedValidValues.isEmpty())
@@ -250,8 +257,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
            }
          }
 
-         //return this.getModule(moduleHeader.getModuleIdseq());
-         return null;
+         return getModule(moduleHeader.getModuleIdseq());
        }
 
   public Form updateForm(

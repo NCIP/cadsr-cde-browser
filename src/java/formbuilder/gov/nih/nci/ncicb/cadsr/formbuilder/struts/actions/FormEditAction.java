@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
@@ -62,6 +63,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       if (log.isDebugEnabled()) {
         log.debug("Exception on Clone =  " + clexp);
       }
+      throw new FatalException(clexp);
     }
 
     if ((crf != null) && (formEditForm != null)) {

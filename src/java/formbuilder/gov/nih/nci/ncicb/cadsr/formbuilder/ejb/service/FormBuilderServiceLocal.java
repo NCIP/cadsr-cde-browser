@@ -30,6 +30,7 @@ public interface FormBuilderServiceLocal  {
     Collection deletedModules) ;
 
   public Module updateModule(
+       String moduleIdSeq,
        Module moduleHeader,
        Collection updatedQuestions,
        Collection deletedQuestions,

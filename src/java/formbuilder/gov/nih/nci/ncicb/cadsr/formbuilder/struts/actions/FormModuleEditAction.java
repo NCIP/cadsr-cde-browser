@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
+import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
@@ -558,7 +559,9 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     HttpServletResponse response) throws IOException, ServletException {
     DynaActionForm moduleEditForm = (DynaActionForm) form;  
     Module module = (Module) getSessionObject(request, MODULE);
+    Integer index = (Integer) getSessionObject(request, this.MODULE_INDEX);
     Form crf = (Form) getSessionObject(request, CRF);
+    Form orgCrf = (Form) getSessionObject(request, this.CLONED_CRF);
     module.setForm(crf);
     Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
 
@@ -573,9 +576,12 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     }
 
     FormBuilderServiceDelegate service = getFormBuilderService();
-  
+    Module updatedModule = null;
     try{
-    service.updateModule(module,(Collection)changes.get(UPDATED_QUESTION_LIST),
+    module.setQuestions(null);
+    updatedModule = service.updateModule(module.getModuleIdseq(),
+                            module,
+                          (Collection)changes.get(UPDATED_QUESTION_LIST),
                          (Collection)changes.get(DELETED_QUESTION_LIST),
                          (Collection)changes.get(NEW_QUESTION_LIST),
                          (Map)changes.get(UPDATED_VV_MAP),
@@ -594,10 +600,22 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     }
                          
     saveMessage("cadsr.formbuilder.module.edit.save.success", request);
-    
-    //removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
+    crf.getModules().remove(index.intValue());
+    crf.getModules().add(index.intValue(),updatedModule);
+    orgCrf.getModules().remove(index.intValue());
+     try{
+     Module newClonedModule = (Module)updatedModule.clone();
+     orgCrf.getModules().add(index.intValue(),newClonedModule);
+     }
+    catch (CloneNotSupportedException clexp) {
+      if (log.isDebugEnabled()) {
+        log.debug("Exception on Clone =  " + clexp);
+      }
+      throw new FatalException(clexp);
+    }           
+    removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
     removeSessionObject(request,CLONED_MODULE);
-    //removeSessionObject(request,MODULE);
+    removeSessionObject(request,MODULE);
     return mapping.findForward(SUCCESS);
   }
   
@@ -732,7 +750,15 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
      currQuestion.setModule(currModule);
      if(!orgQuestionList.contains(currQuestion))
      {
+       List newQuestionVV = currQuestion.getValidValues();
+       ListIterator newQuestionVVIt = newQuestionVV.listIterator();
+       while(newQuestionVVIt!=null&&newQuestionVVIt.hasNext())
+       {
+         FormValidValue fvv = (FormValidValue)newQuestionVVIt.next();
+         fvv.setQuestion(currQuestion);
+       }
        newQuestionList.add(currQuestion);
+       
      }
      else
      {

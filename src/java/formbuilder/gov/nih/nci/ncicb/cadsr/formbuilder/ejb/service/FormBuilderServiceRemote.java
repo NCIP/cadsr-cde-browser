@@ -32,6 +32,7 @@ public interface FormBuilderServiceRemote {
     Collection deletedModules) throws RemoteException;
 
   public Module updateModule(
+       String moduleIdSeq,
        Module moduleHeader,
        Collection updatedQuestions,
        Collection deletedQuestions,

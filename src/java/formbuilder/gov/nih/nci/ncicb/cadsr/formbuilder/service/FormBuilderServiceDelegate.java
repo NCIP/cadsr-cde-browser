@@ -29,6 +29,7 @@ public interface FormBuilderServiceDelegate {
     Collection deletedModules) throws FormBuilderException;
 
   public Module updateModule(
+       String moduleIdSeq,
        Module moduleHeader,
        Collection updatedQuestions,
        Collection deletedQuestions,
