@@ -23,10 +23,3 @@ function performAction(urlParams){
   frm.document.body.style.cursor = "wait";
   frm.document.location = "search?"+urlParams;
 }
-
-function formSearchAction(urlParams){
-  var frm = findFrameByName('body');
-  document.body.style.cursor = "wait";
-  frm.document.body.style.cursor = "wait";
-  frm.document.location = "formAction.do?method=getAllFormsForTreeNode"+urlParams;
-}
