@@ -76,6 +76,11 @@ function goPage(pageInfo) {
 <table>
 <%= clb.getSearchFields() %>
 <tr>
+  <% 
+    String chkContext = (String)request.getAttribute("chkContext");
+    System.out.println(chkContext);
+    if((chkContext == null) || (!chkContext.equals("always"))) {
+  %>
   <td class="fieldtitlebold">Restrict Search to Current Context</td>
 <%
   if (clb.isFirstDisplay()) {
@@ -95,7 +100,10 @@ function goPage(pageInfo) {
 <%
     }
   }
+} else {
 %>
+<INPUT type="HIDDEN" NAME="chkContext" value="always"/>
+<% } %>
 </tr>
 
 <TR>
