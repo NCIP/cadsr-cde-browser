@@ -280,18 +280,13 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
   public Form copyForm(
     String sourceFormPK,
-    Form newForm) throws DMLException {
+    Form newForm) {
     Form resultForm = null;
     
-    try {
-      FormDAO myDAO= daoFactory.getFormDAO();
-      String resultFormPK = myDAO.copyForm(sourceFormPK,newForm);
-      resultForm = this.getFormDetails(resultFormPK);
-    } 
-    catch (DMLException ex) {
-      context.setRollbackOnly();
-      throw ex;
-    } 
+    FormDAO myDAO= daoFactory.getFormDAO();
+    String resultFormPK = myDAO.copyForm(sourceFormPK,newForm);
+    resultForm = this.getFormDetails(resultFormPK);
+
     return resultForm;
   }
 
