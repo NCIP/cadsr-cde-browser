@@ -39,15 +39,6 @@
       <form-property name="formHeader" type="java.lang.String"/>
       <form-property name="formFooter" type="java.lang.String"/>      
     </form-bean>
-    <form-bean name="createModuleForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
-      dynamic="true">
-      <form-property name="moduleLongName" type="java.lang.String"/>
-      <form-property name="moduleInstructionLongName" type="java.lang.String"/>
-      <form-property name="formIdSeq" type="java.lang.String"/>
-      <form-property name="comments" type="java.lang.String"/>
-      <form-property name="displayOrder" type="java.lang.Integer"/>
-    </form-bean>
     <form-bean name="protocolLOVForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
@@ -148,17 +139,6 @@
       <forward name="success" path="/formbuilder/formDetails.jsp"
         redirect="false"/>
     </action>
-    <action name="createModuleForm" path="/createModule" parameter="method"
-      scope="request"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ModuleCreateAction"
-      validate="true">
-      <!--
-      <forward name="toFormEdit"
-        path="/formToEditAction.do?method=getFormToEdit"/>
-      -->
-      <forward name="toFormEdit" path="/formbuilder/formEdit.jsp"/>
-      <forward name="toCreateModule" path="/formbuilder/moduleCreate.jsp"/>
-    </action>    
     <action name="createForm" path="/formCreate" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCreateAction"
