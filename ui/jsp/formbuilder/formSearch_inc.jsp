@@ -1,7 +1,6 @@
 
 <SCRIPT LANGUAGE="JavaScript">
 <!--
-
 function submitForm(methodName) {
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
   document.forms[0].submit();
@@ -122,7 +121,8 @@ function gotoClassificationsLOV() {
             <tr>
               <td width="20%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.name" /></td>
               <td class="OraTabledata" nowrap>
-                <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="60"/>
+                <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="60"
+                onkeypress="if(window.event.keyCode==13){submitForm('getAllForms');};"/>
               </td>
             </tr>
    </table>
@@ -138,7 +138,7 @@ function gotoClassificationsLOV() {
                          readonly="true" 
                          size="19"
                          styleClass="LOVField"
-                         />
+                         onkeypress="if(window.event.keyCode==13){submitForm('getAllForms');};"/>
                   &nbsp;<a href="javascript:gotoProtocolsLOV()"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Protocol Items"></a>&nbsp;
                   <a href="javascript:clearProtocol()"><i>Clear</i></a>
                   <html:hidden  property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
@@ -151,6 +151,7 @@ function gotoClassificationsLOV() {
                        readonly="true" 
                        size="19"
                        styleClass="LOVField"
+                       onkeypress="if(window.event.keyCode==13){submitForm('getAllForms');};"
                        />
                 &nbsp;<a href="javascript:gotoClassificationsLOV()"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
                 <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
@@ -160,7 +161,8 @@ function gotoClassificationsLOV() {
             <tr>            
               <td width="21%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.workflow" /></td>
               <td width="70%" class="OraTabledata" nowrap>
-              <html:select styleClass = "FreeDropdown" property="<%=FormConstants.WORKFLOW%>">
+              <html:select styleClass = "FreeDropdown" property="<%=FormConstants.WORKFLOW%>"
+              onkeypress="if(window.event.keyCode==13){submitForm('getAllForms');};">
                  <html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
                  <html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
                  </html:select>        
@@ -174,7 +176,8 @@ function gotoClassificationsLOV() {
             <tr>    
               <td width="30%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.context" /></td>
               <td width="70%" class="OraTabledata" nowrap>
-                <html:select styleClass = "Dropdown" property="<%=FormConstants.CONTEXT_ID_SEQ%>">
+                <html:select styleClass = "Dropdown" property="<%=FormConstants.CONTEXT_ID_SEQ%>"
+                onkeypress="if(window.event.keyCode==13){submitForm('getAllForms');};">
                    <html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
                    <html:options collection="<%=FormConstants.ALL_CONTEXTS%>" 
                      property="conteIdseq" labelProperty="name" />
@@ -184,7 +187,8 @@ function gotoClassificationsLOV() {
             <tr>    
               <td width="30%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.category" /></td>
               <td width="70%" class="OraTabledata" nowrap>
-              <html:select styleClass = "Dropdown" property="<%=FormConstants.CATEGORY_NAME%>">
+              <html:select styleClass = "Dropdown" property="<%=FormConstants.CATEGORY_NAME%>"
+              onkeypress="if(window.event.keyCode==13){submitForm('getAllForms');};">
                 <html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
                 <html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> 
                 </html:select> 
@@ -193,7 +197,8 @@ function gotoClassificationsLOV() {
             <tr>    
                 <td width="30%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.type" /></td>  
                 <td width="70%" class="OraTabledata" nowrap>
-                <html:select styleClass = "Dropdown" property="<%=FormConstants.FORM_TYPE%>">
+                <html:select styleClass = "Dropdown" property="<%=FormConstants.FORM_TYPE%>"
+                onkeypress="if(window.event.keyCode==13){submitForm('getAllForms');};">
                   <html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
                   <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
                    </html:select> 
