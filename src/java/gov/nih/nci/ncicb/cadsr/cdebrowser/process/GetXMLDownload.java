@@ -15,6 +15,7 @@ import gov.nih.nci.ncicb.cadsr.util.*;
 import gov.nih.nci.ncicb.cadsr.xml.XMLGeneratorBean;
 
 //import oracle.cle.process.ProcessConstants;
+import java.sql.Connection;
 import oracle.cle.persistence.HandlerFactory;
 
 import oracle.cle.process.PersistingProcess;
@@ -110,6 +111,7 @@ public class GetXMLDownload extends BasePersistingProcess {
     DESearchQueryBuilder deSearch = null;
     String source = null;
     String where = "";
+    Connection cn = null;
 
     try {
       source = getStringInfo("src");
@@ -171,7 +173,14 @@ public class GetXMLDownload extends BasePersistingProcess {
       xmlBean = new XMLGeneratorBean();
 
       String sbrextJNDIName = getStringInfo("SBREXT_DSN");
-      xmlBean.setDataSource(sbrextJNDIName);
+      
+      // Added for JBoss deployment
+      
+      //xmlBean.setDataSource(sbrextJNDIName);
+      ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
+      cn = DBUtil.createOracleConnection(ap.getDBUrl(),ap.getUser(),ap.getPassword());
+      xmlBean.setConnection(cn);
+      
       xmlBean.setQuery(stmt);
       xmlBean.setWhereClause(where);
 
