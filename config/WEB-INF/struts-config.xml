@@ -136,7 +136,7 @@
         redirect="false"/>     
     </action>
     <action name="formEditForm" path="/formToEditAction" parameter="method"
-      scope="request"
+      scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
       validate="false">
       <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
