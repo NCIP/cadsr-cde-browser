@@ -1,8 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.service;
 
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
-import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
@@ -88,5 +88,10 @@ public interface FormBuilderServiceDelegate {
   public int addToCDECart(Collection items) throws FormBuilderException;
 
   public int removeFromCDECart(Collection items) throws FormBuilderException;
-  
+
+  public int updateDEAssociation(
+    String questionId,
+    String deId,
+    String newLongName,
+    String username) throws FormBuilderException;
 }

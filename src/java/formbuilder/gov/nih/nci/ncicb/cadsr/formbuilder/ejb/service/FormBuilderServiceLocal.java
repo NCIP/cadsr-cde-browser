@@ -84,14 +84,15 @@ public interface FormBuilderServiceLocal  {
     String username,
     String password) throws DMLException;
 
-/**  public Collection getContextsForUserAndRole(
-    String username,
-    String role) throws DMLException;
-    **/
-
   public CDECart retrieveCDECart();
 
   public int addToCDECart(Collection items);
 
   public int removeFromCDECart(Collection items);
+
+  public int updateDEAssociation(
+    String questionId,
+    String deId,
+    String newLongName,
+    String username);
 }

@@ -106,5 +106,11 @@ public interface FormBuilderServiceRemote {
 
   public int removeFromCDECart(Collection items)
     throws RemoteException;
+
+  public int updateDEAssociation(
+    String questionId,
+    String deId,
+    String newLongName,
+    String username) throws RemoteException;
   
 }
