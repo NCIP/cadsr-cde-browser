@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 
-public interface FormDAO {
+public interface FormDAO extends AdminComponentDAO {
   public Collection getAllForms(
     String formLongName,
     String protocolIdSeq,
