@@ -18,11 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.Hashtable;
 import javax.swing.tree.DefaultMutableTreeNode;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import oracle.jdbc.OraclePreparedStatement;
 
-public class ContextNode  {
+public class ContextNode extends BaseTreeNode  {
   
 
   final String templateTypesQueryStmt = "SELECT distinct qcdl_name "
@@ -55,28 +56,34 @@ public class ContextNode  {
                                +"AND csc.cs_idseq = cs.cs_idseq "
                                +"AND   cs.preferred_name = ? "
                                +"ORDER BY csi.csi_name ";
-  Connection myConn = null;
+  //Connection myConn = null;
   Context myContext = null;
   DefaultMutableTreeNode myContextNode = null;
-  DBUtil myDbUtil = null;
-  final static String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
+  //DBUtil myDbUtil = null;
   List templateTypes;
+  //private String jsFunctionName = "performAction";
+  /*private String extraURLParameters = 
+    "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+  private Hashtable treeParams;*/
 
   /**
    * Constructor creates DefaultMutableTreeNode object based on info provided
    * by Context resource.
    */
   public ContextNode(Context pContext
-                    ,DBUtil dbUtil) {
+                    ,DBUtil dbUtil
+                    ,Hashtable params) {
+    super(dbUtil,params);
     myContext = pContext;
-    myDbUtil = dbUtil;
-    myConn = dbUtil.getConnection();
+    //myDbUtil = dbUtil;
+    //myConn = dbUtil.getConnection();
+    //treeParams = params;
     myContextNode = new DefaultMutableTreeNode
     (new WebNode(myContext.getConteIdseq()
                 ,myContext.getDescription()+ " ("+myContext.getName()+")"
-                ,"javascript:performAction('P_PARAM_TYPE=CONTEXT&P_IDSEQ="+
+                ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CONTEXT&P_IDSEQ="+
                 myContext.getConteIdseq()+"&P_CONTE_IDSEQ="+myContext.getConteIdseq()
-                +"&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
+                +getExtraURLParameters()+"')"
                 ,myContext.getDescription()+ " ("+myContext.getName()+")"
                 ));
     if ("CTEP".equals(myContext.getName())) {
@@ -107,11 +114,6 @@ public class ContextNode  {
                                     +"AND    latest_version_ind = 'Yes' "
                                     +"AND    asl_name = 'RELEASED' ";
 
-    /*if ("CTEP".equals(myContext.getName())) {
-      csFilter = " AND preferred_name NOT IN ('CRF_DISEASE','testTTT','CRF_TTU',"
-                 +"'TTU_DISEASE','USAGE') ";  
-    }
-    classSchemeQueryStmt = classSchemeQueryStmt + csFilter;*/
     try {
       pstmt =  
          (OraclePreparedStatement)myConn.prepareStatement(classSchemeQueryStmt);
@@ -132,7 +134,7 @@ public class ContextNode  {
         csVO.setPreferredDefinition(rs.getString(4));
         csVO.setContextName(myContext.getName());
         csVO.setConteIdseq(myContext.getConteIdseq());
-        ClassificationNode cn = new ClassificationNode(csVO,myDbUtil);
+        ClassificationNode cn = new ClassificationNode(csVO,myDbUtil,treeParams);
         DefaultMutableTreeNode csNode = cn.getTreeNode();
         List csiNodes = cn.getClassSchemeItems();
         //csiNodes = cn.getClassSchemeItems();
@@ -343,7 +345,8 @@ public class ContextNode  {
         proto.setPreferredName(rs.getString(2));
         proto.setPreferredDefinition(rs.getString(4));
         proto.setConteIdseq(myContext.getConteIdseq());
-        pn = new ProtocolNode(proto,myDbUtil);
+        pn = new ProtocolNode(proto,myDbUtil,treeParams);
+        
         protoNode = pn.getTreeNode();
         crfNodes = pn.getCRFs();
         for (Iterator it = crfNodes.iterator(); it.hasNext();){
@@ -431,7 +434,11 @@ public class ContextNode  {
     Iterator tmpIter = null;
     try {
       for (int i=0 ;i < templateTypes.size();i++ )  {
-        tmp = new TemplateNode(myContext,(String)templateTypes.get(i),csiTO,myDbUtil);
+        tmp = new TemplateNode(myContext
+                              ,(String)templateTypes.get(i)
+                              ,csiTO
+                              ,myDbUtil
+                              ,treeParams);
         DefaultMutableTreeNode tmpTypeNode = tmp.getTreeNode();
         tmpList = tmp.getDataTemplateNodes();
         tmpIter = tmpList.iterator();
@@ -485,4 +492,23 @@ public class ContextNode  {
     }
     return tmpTypes;
   }
+
+  /*private String getJsFunctionName() {
+    String functionName = (String)treeParams.get("functionName");
+    if (functionName == null) functionName = "performAction";
+    return functionName;
+  }
+
+  private String getTreeType() {
+    String treeType = (String)treeParams.get("treeType");
+    if (treeType == null) treeType = DE_SEARCH_TREE;
+    return treeType;
+  }
+  public String getExtraURLParameters() {
+    return extraURLParameters;
+  }
+
+  public void setExtraURLParameters(String newExtraURLParameters) {
+    extraURLParameters = newExtraURLParameters;
+  }*/
 }

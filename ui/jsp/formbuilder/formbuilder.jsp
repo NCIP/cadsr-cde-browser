@@ -1,10 +1,16 @@
 <%@ page contentType="text/html;charset=windows-1252"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
 <%
-  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
   String treeURL;
   String formbuilderURL;
-    treeURL = "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree&skin=CDEBrowser1";
+    treeURL = 
+      "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree"+
+      "&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" + 
+      TreeConstants.FORM_SEARCH_TREE + ";" +
+      TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
+      TreeConstants.FORM_SEARCH_FUNCTION +
+      "&skin=CDEBrowser1";
     formbuilderURL = "formbuilder/formSearch.jsp";
  
 %>

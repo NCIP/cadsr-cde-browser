@@ -21,21 +21,30 @@ import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 
-public class CDEBrowserTree extends WebTree {
+public class CDEBrowserTree extends WebTree implements TreeConstants {
   final static String contextQueryStmt =
-    "SELECT conte_idseq " + "      ,name " + "      ,description " +
-    "FROM  sbr.contexts " + "ORDER BY name ";
+    "SELECT conte_idseq " + 
+    "      ,name " + 
+    "      ,description " +
+    "FROM  sbr.contexts " + 
+    "ORDER BY name ";
   final static String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
+  private String treeType;
+  private String functionName;
+  private String extraURLParameters = 
+    "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
 
   public CDEBrowserTree() {
   }
 
-  public DefaultMutableTreeNode getTree(Hashtable params)
-    throws Exception {
-    return buildTree();
+  public DefaultMutableTreeNode getTree(Hashtable params) throws Exception {
+    treeType = (String)params.get("treeType");
+    functionName = (String)params.get("functionName");
+    
+    return buildTree(params);
   }
 
-  public DefaultMutableTreeNode buildTree() throws Exception {
+  public DefaultMutableTreeNode buildTree(Hashtable treeParams) throws Exception {
     DBUtil dbHelper = new DBUtil();
     OraclePreparedStatement pstmt = null;
     ResultSet rs = null;
@@ -47,7 +56,6 @@ public class CDEBrowserTree extends WebTree {
       CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
       String datasourceName = params.getSbrDSN();
 
-      //if (dbHelper.getConnectionFromContainer("jdbc/SBR_DCoreDS")) {
       if (dbHelper.getConnectionFromContainer(datasourceName)) {
         conn = dbHelper.getConnection();
       } else {
@@ -72,20 +80,11 @@ public class CDEBrowserTree extends WebTree {
         ctx.setName(rs.getString(2));
         ctx.setDescription(rs.getString(3));
 
-        ContextNode ctxNode = new ContextNode(ctx, dbHelper);
+        ContextNode ctxNode = new ContextNode(ctx, dbHelper, treeParams);
         DefaultMutableTreeNode ctxTreeNode = ctxNode.getTreeNode();
 
         //Adding data template nodes
 
-        /*DefaultMutableTreeNode tmpLabelNode;
-           DefaultMutableTreeNode disLabelNode;
-           if ("CTEP".equals(rs.getString(2))) {
-             tmpLabelNode = new DefaultMutableTreeNode
-             (new WebNode(dbHelper.getUniqueId(IDSEQ_GENERATOR),"Protocol Form Templates"));
-             disLabelNode = ctxNode.getDataTemplateNodes();
-             tmpLabelNode.add(disLabelNode);
-             ctxTreeNode.add(tmpLabelNode);
-           }*/
         DefaultMutableTreeNode tmpLabelNode;
         DefaultMutableTreeNode disLabelNode;
         DefaultMutableTreeNode phaseLabelNode;
@@ -124,8 +123,10 @@ public class CDEBrowserTree extends WebTree {
         }
 
         //Adding protocols nodes
-        //Filtering CTEP context
-        if (!ctx.getName().equals("CTEP")) {
+        //Filtering CTEP context in data element search tree
+        if ((!ctx.getName().equals("CTEP")
+                && treeType.equals(TreeConstants.DE_SEARCH_TREE))
+             || (treeType.equals(TreeConstants.FORM_SEARCH_TREE))) {
           List protoNodes = ctxNode.getProtocolNodes();
           DefaultMutableTreeNode protoLabelNode;
 
@@ -165,8 +166,7 @@ public class CDEBrowserTree extends WebTree {
         }
       } catch (Exception ex) {
         ex.printStackTrace();
-      } finally {
-      }
+      } 
     }
 
     return tree;

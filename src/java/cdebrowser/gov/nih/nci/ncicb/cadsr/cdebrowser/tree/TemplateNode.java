@@ -8,18 +8,18 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Hashtable;
 import javax.swing.tree.DefaultMutableTreeNode;
 import oracle.jdbc.OraclePreparedStatement;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import java.net.URLEncoder;
 
-public class TemplateNode  {
+public class TemplateNode extends BaseTreeNode  {
 
-  Connection myConn = null;
+  //Connection myConn = null;
   Context myContext = null;
   DefaultMutableTreeNode myTemplateNode = null;
-  DBUtil myDbUtil = null;
-  final static String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
+  //DBUtil myDbUtil = null;
   String myTemplateGroup = null;
   String csCsiIdseq = null;
   ClassSchemeItem csiTO = null;
@@ -31,13 +31,14 @@ public class TemplateNode  {
   public TemplateNode(Context pContext
                     ,String templateGroup
                     ,ClassSchemeItem csiTO
-                    ,DBUtil dbUtil) throws Exception {
-
+                    ,DBUtil dbUtil
+                    ,Hashtable params) throws Exception {
+                    
+    super(dbUtil,params);
     myContext = pContext;
-    myDbUtil = dbUtil;
-    myConn = dbUtil.getConnection();
+    //myDbUtil = dbUtil;
+    //myConn = dbUtil.getConnection();
     myTemplateGroup = templateGroup;
-    //this.csCsiIdseq = csCsiIdseq;
     this.csiTO = csiTO;
     this.csCsiIdseq = csiTO.getCsCsiIdseq();
     myTemplateNode = new DefaultMutableTreeNode
@@ -72,8 +73,7 @@ public class TemplateNode  {
     List tmpNodes = new ArrayList(11);;
     try {
       pstmt =  
-         (OraclePreparedStatement)myDbUtil.getConnection().
-                            prepareStatement(templateQueryStmt);
+         (OraclePreparedStatement)myConn.prepareStatement(templateQueryStmt);
       pstmt.defineColumnType(1,Types.VARCHAR);
       pstmt.defineColumnType(2,Types.VARCHAR);
       pstmt.defineColumnType(3,Types.VARCHAR);
@@ -88,13 +88,13 @@ public class TemplateNode  {
         DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode(
           new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
                      ,rs.getString(2)
-                     ,"javascript:performAction('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
+                     ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
                        rs.getString(1)+"&P_CONTE_IDSEQ="+myContext.getConteIdseq()+
                        "&csName="+URLEncoder.encode(csiTO.getClassSchemeLongName())+
                        "&diseaseName="+URLEncoder.encode(csiTO.getClassSchemeItemName())+
                        "&templateType="+URLEncoder.encode(myTemplateGroup)+
                        "&templateName="+URLEncoder.encode(rs.getString(2))+
-                       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
+                       getExtraURLParameters()+"')"
                      ,rs.getString(4)));
         tmpNodes.add(tmpNode);
       }

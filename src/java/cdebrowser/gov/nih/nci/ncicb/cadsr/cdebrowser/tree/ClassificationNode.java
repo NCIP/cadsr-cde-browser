@@ -10,6 +10,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
+import java.util.Hashtable;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -17,24 +18,25 @@ import oracle.jdbc.OraclePreparedStatement;
 
 import java.net.URLEncoder;
 
-public class ClassificationNode  {
+public class ClassificationNode extends BaseTreeNode  {
   ClassificationScheme myCsVO = null;
-  DBUtil myDbUtil = null;
+  //DBUtil myDbUtil = null;
   DefaultMutableTreeNode csTreeNode = null;
-  final static String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
-
+  
   /**
    * Constructor creates DefaultMutableTreeNode object based on info provided
    * by ClassificationScheme resource.
    */
   public ClassificationNode(ClassificationScheme cs
-                           ,DBUtil dbUtil) {
+                           ,DBUtil dbUtil
+                           ,Hashtable params) {
+    super(dbUtil,params);
     myCsVO = cs;
-    myDbUtil = dbUtil;
+    //myDbUtil = dbUtil;
     csTreeNode = new DefaultMutableTreeNode(
       new WebNode(myCsVO.getCsIdseq()
         ,myCsVO.getLongName()
-        ,"javascript:performAction('P_PARAM_TYPE=CLASSIFICATION&P_IDSEQ="+
+        ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CLASSIFICATION&P_IDSEQ="+
         myCsVO.getCsIdseq()+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
         "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
         ,myCsVO.getPreferredDefinition()));
@@ -80,7 +82,7 @@ public class ClassificationNode  {
         DefaultMutableTreeNode csiNode = new DefaultMutableTreeNode(
           new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
             ,rs.getString(2)
-            ,"javascript:performAction('P_PARAM_TYPE=CSI&P_IDSEQ="+
+            ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CSI&P_IDSEQ="+
             rs.getString(5)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
             "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
             ,rs.getString(4)));
@@ -92,7 +94,7 @@ public class ClassificationNode  {
             DefaultMutableTreeNode coreNode = new DefaultMutableTreeNode(
               new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
                 ,"Core Data Set"
-                ,"javascript:performAction('P_PARAM_TYPE=CORE&P_IDSEQ="+
+                ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CORE&P_IDSEQ="+
                 rs.getString(1)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
                 "&P_CS_CSI_IDSEQ="+rs.getString(5)+
                 "&diseaseName="+URLEncoder.encode(rs.getString(2))+
@@ -104,7 +106,7 @@ public class ClassificationNode  {
             DefaultMutableTreeNode nonCoreNode = new DefaultMutableTreeNode(
               new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
                 ,"Non-Core Data Set"
-                ,"javascript:performAction('P_PARAM_TYPE=NON-CORE&P_IDSEQ="+
+                ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=NON-CORE&P_IDSEQ="+
                 rs.getString(1)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
                 "&P_CS_CSI_IDSEQ="+rs.getString(5)+
                 "&diseaseName="+URLEncoder.encode(rs.getString(2))+
@@ -191,7 +193,7 @@ public class ClassificationNode  {
         DefaultMutableTreeNode tempNode = new DefaultMutableTreeNode(
           new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
                      ,rs.getString(2)
-                     ,"javascript:performAction('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
+                     ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
                        rs.getString(1)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
                        "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
                      ,rs.getString(3)));
@@ -243,7 +245,7 @@ public class ClassificationNode  {
         DefaultMutableTreeNode csiNode = new DefaultMutableTreeNode(
           new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
             ,rs.getString(2)
-            ,"javascript:performAction('P_PARAM_TYPE=CSI&P_IDSEQ="+
+            ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CSI&P_IDSEQ="+
             rs.getString(5)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
             "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
             ,rs.getString(4)));
@@ -271,5 +273,21 @@ public class ClassificationNode  {
     }
     return csiNodes;
   }
+
+  /*public String getJsFunctionName() {
+    return jsFunctionName;
+  }
+
+  public void setJsFunctionName(String newJsFunctionName) {
+    jsFunctionName = newJsFunctionName;
+  }
+
+  public String getExtraURLParameters() {
+    return extraURLParameters;
+  }
+
+  public void setExtraURLParameters(String newExtraURLParameters) {
+    extraURLParameters = newExtraURLParameters;
+  }*/
   
 }
