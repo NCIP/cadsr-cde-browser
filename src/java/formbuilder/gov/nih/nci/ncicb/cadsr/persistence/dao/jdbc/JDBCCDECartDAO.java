@@ -38,7 +38,7 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
 
   public CDECart findCDECart(String username) throws DMLException  {
     CDECart cart = new CDECartTransferObject();
-    List deList = deCartQuery.execute(username);
+    List deList = deCartQuery.execute(username.toUpperCase());
     cart.setDataElements(deList);
     //List formList = frmCartQuery.execute(username);
     //cart.setForms(formList);
