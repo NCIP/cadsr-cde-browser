@@ -22,7 +22,6 @@ public class DataElementTransferObject extends AdminComponentTransferObject
   private String usingContexts;
 
   public DataElementTransferObject() {
-    idseq = deIdseq;
   }
 
   public String getDeIdseq() {
@@ -31,6 +30,7 @@ public class DataElementTransferObject extends AdminComponentTransferObject
 
   public void setDeIdseq(String pDeIdseq) {
     deIdseq = pDeIdseq;
+    idseq = pDeIdseq;
   }
 
   public ValueDomain getValueDomain() {
