@@ -54,9 +54,22 @@ public abstract class FormBuilderDynamicServiceDelegateImpl implements Invocatio
     }
     catch(InvocationTargetException ex)
     {
-      if(ex.getTargetException() instanceof DMLException)
+      
+      if(ex.getTargetException() instanceof RemoteException)
       {
-        throw new FormBuilderException(ex);
+        RemoteException remoteExp = (RemoteException)ex.getTargetException();
+        if(remoteExp.detail instanceof DMLException)
+        {
+          DMLException dmlExp = (DMLException)remoteExp.detail;
+          FormBuilderException formExp = new FormBuilderException(dmlExp);
+          formExp.setErrorCode(dmlExp.getErrorCode());
+          throw formExp;
+        }
+        else
+        {
+          throw new FatalException(remoteExp);
+        }
+        
       }
       else
       {

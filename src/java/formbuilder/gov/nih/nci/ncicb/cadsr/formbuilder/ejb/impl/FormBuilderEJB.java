@@ -16,6 +16,8 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 
 import java.rmi.RemoteException;
+import javax.ejb.EJBException;
+
 
 import java.sql.Connection;
 
@@ -66,7 +68,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     String workflow,
     String categoryName,
     String type,
-    String classificationIdSeq) throws DMLException {
+    String classificationIdSeq)  {
     FormDAO dao = daoFactory.getFormDAO();
     Collection forms = null;
 
@@ -83,7 +85,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return forms;
   }
 
-  public Form getFormDetails(String formPK) throws DMLException {
+  public Form getFormDetails(String formPK)  {
     Form myForm = null;
     FormDAO fdao = daoFactory.getFormDAO();
     ModuleDAO mdao = daoFactory.getModuleDAO();
@@ -124,7 +126,41 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return myForm;
   }
 
-  public Form getFormRow(String formPK) throws DMLException {
+  public Form updateForm(
+    Form formHeader,
+    Collection updatedModules,
+    Collection deletedModules) {
+    ModuleDAO dao = daoFactory.getModuleDAO();
+
+      //TODO Update form header
+      
+      //Update Module Display Order If there are Modules to update
+      if(updatedModules!=null&&!updatedModules.isEmpty())
+      {
+        Iterator updatedIt = updatedModules.iterator();
+        while(updatedIt.hasNext())
+        {
+          Module updatedModule = (Module)updatedIt.next();
+          dao.updateDisplayOrder(updatedModule.getModuleIdseq()
+              ,updatedModule.getDisplayOrder());
+        }      
+      }
+  
+      //Delete Modules
+      if(deletedModules!=null&&!deletedModules.isEmpty())
+      {    
+        Iterator deletedIt = deletedModules.iterator();
+        while(deletedIt.hasNext())
+        {
+          Module deletedModule = (Module)deletedIt.next();
+          dao.deleteModule(deletedModule.getModuleIdseq());
+        }    
+      }
+      return getFormDetails(formHeader.getFormIdseq());
+
+  }
+
+  public Form getFormRow(String formPK)  {
     FormDAO dao = daoFactory.getFormDAO();
 
     return dao.findFormByPrimaryKey(formPK);
@@ -134,61 +170,62 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return null;
   }
 
-  public int deleteForm(String formPK) throws DMLException {
-    return 0;
+  public int deleteForm(String formPK)  {
+    FormDAO fdao = daoFactory.getFormDAO();
+    return fdao.deleteForm(formPK);
   }
 
   public Form createModule(
     String formPK,
-    Module module) throws DMLException {
+    Module module)  {
     return null;
   }
 
   public int removeModule(
     String formPK,
-    String modulePK) throws DMLException {
+    String modulePK)  {
     return 0;
   }
 
   public Form copyModules(
     String formPK,
-    Collection modules) throws DMLException {
+    Collection modules)  {
     return null;
   }
 
   public Form createQuestions(
     String modulePK,
-    Collection questions) throws DMLException {
+    Collection questions)  {
     return null;
   }
 
   public Form removeQuestions(
     String modulePK,
-    Collection questions) throws DMLException {
+    Collection questions)  {
     return null;
   }
 
   public Form copyQuestions(
     String modulePK,
-    Collection questions) throws DMLException {
+    Collection questions)  {
     return null;
   }
 
   public Form createValidValues(
     String modulePK,
-    Collection validValues) throws DMLException {
+    Collection validValues)  {
     return null;
   }
 
   public Form removeValidValues(
     String modulePK,
-    Collection validValues) throws DMLException {
+    Collection validValues)  {
     return null;
   }
 
   public Form copyValidValues(
     String modulePK,
-    Collection validValues) throws DMLException {
+    Collection validValues)  {
     return null;
   }
 
@@ -196,23 +233,23 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return context.getCallerPrincipal().getName();
   }
 
-  public Collection getAllContexts() throws DMLException {
+  public Collection getAllContexts()  {
     return daoFactory.getContextDAO().getAllContexts();
   }
 
-  public Collection getAllFormCategories() throws DMLException {
+  public Collection getAllFormCategories()  {
     return daoFactory.getFormCategoryDAO().getAllCategories();
   }
 
   public Collection getStatusesForACType(String acType)
-    throws DMLException {
+     {
     return daoFactory.getWorkFlowStatusDAO().getWorkFlowStatusesForACType(
       acType);
   }
 
   public boolean validateUser(
     String username,
-    String password) throws DMLException {
+    String password)  {
     return false;
   }
 
@@ -250,6 +287,6 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
   /**
    * public Collection getContextsForUserAndRole( String username, String role)
-   * throws DMLException { return null; }
+   *  { return null; }
    */
 }

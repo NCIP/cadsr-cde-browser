@@ -21,6 +21,11 @@ public interface FormBuilderServiceDelegate {
 
   public Form getFormDetails(String formPK) throws FormBuilderException;
 
+  public Form updateForm(
+    Form formHeader,
+    Collection updatedModules,
+    Collection deletedModules) throws FormBuilderException;
+
   public Form getFormRow(String formPK) throws FormBuilderException;
 
   public Form copyForm(
