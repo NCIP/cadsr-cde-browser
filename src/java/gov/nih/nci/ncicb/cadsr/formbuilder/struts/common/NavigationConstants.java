@@ -10,6 +10,7 @@ public interface NavigationConstants
   public static final String FORM_EDIT ="formEdit";
   public static final String MODULE_EDIT ="moduleEdit";
   public static final String SEARCH_RESULTS ="searchResults";
+  public static final String LOGIN = "login";
 
   //Method names
 

@@ -93,6 +93,6 @@ public interface FormConstants extends FormBuilderConstants {
   public static final int DEFINITION_MAX_LENGTH = 2000;
   public static final int VERSION_MAX_LENGTH = 4;
   
-  public static final String LOG_IN_USER = "j_username";
-  public static final String LOG_IN_PASSWORD = "j_password";
+  public static final String LOGIN_USER = "j_username";
+  public static final String LOGIN_PASSWORD = "j_password";
 }
