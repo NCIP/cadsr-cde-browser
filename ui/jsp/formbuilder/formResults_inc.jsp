@@ -28,8 +28,8 @@ if(confirm(message)) location.href = url;
           	<th class="OraTableColumnHeader" nowrap>
 		        <cde:sortableColumnHeader
             sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
-            ascendingImageUrl="i/up.gif"
-            descendingImageUrl="i/down.gif" 
+            ascendingImageUrl="i/sort_up.gif"
+            descendingImageUrl="i/sort_down.gif" 
 		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
 		   	   	columnHeader="Long Name" 
             orderParamId="sortOrder" 
@@ -45,8 +45,8 @@ if(confirm(message)) location.href = url;
 			          
 		        <cde:sortableColumnHeader
             sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
-            ascendingImageUrl="i/up.gif"
-            descendingImageUrl="i/down.gif" 
+            ascendingImageUrl="i/sort_up.gif"
+            descendingImageUrl="i/sort_down.gif" 
 		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
 		   	   	columnHeader="Workflow Status" 
             orderParamId="sortOrder" 

@@ -174,7 +174,23 @@ function clearProtocol() {
               <td class="OraFieldText" nowrap>
                 <bean:write  name="<%=FormConstants.CRF%>" property="version"/> 
               </td>        
-          </tr>             
+          </tr>   
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader" width="20%" nowrap>
+              Header Instruction
+            </td>
+            <td  class="OraFieldText" width="80%" nowrap>
+		<TEXTAREA NAME="comments" COLS=79 ROWS=2></TEXTAREA>
+            </td>
+          </tr>          
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader" width="20%" nowrap>
+              Footer Instruction
+            </td>
+            <td  class="OraFieldText" width="80%" nowrap>
+             <TEXTAREA NAME="comments" COLS=79 ROWS=2></TEXTAREA>
+            </td>
+          </tr>                    
         </table>
       <table cellpadding="0" cellspacing="0" width="80%" align="center">
         <tr >
@@ -218,7 +234,7 @@ function clearProtocol() {
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
                   </html:link>
                 </td>
-              </tr>
+              </tr>               
               </table> 
               </logic:empty>
             <!-- Add for delete and new Module end -->            
@@ -258,14 +274,15 @@ function clearProtocol() {
                   </html:link>&nbsp;
                 </td>
               </tr>
+             
               </table> 
             <!-- Add for delete and new Module end -->             
             
-            <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+            <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
               <tr class="OraTableColumnHeader">
                 <td class="OraTableColumnHeader">
                   <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                    <tr class="OraTableColumnHeader">
+                    <tr class="OraHeaderBlack">
                       <td width="86%">
                         <bean:write name="module" property="longName"/>
                       </td>
@@ -300,6 +317,20 @@ function clearProtocol() {
                            </table>
                       </td>
                     </tr>
+                    <tr>  
+                     <td colspan="2">
+                       <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                         <tr class="OraTabledata">
+                          <td class="OraTableColumnHeader" width="10%" nowrap>
+                            <b>Instruction</b> 
+                         </td>
+                         <td class="OraFieldText">
+                           Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
+                         </td>
+                        </tr>
+                       </table>
+                      </td>
+		    </tr>
                   </table>
                 </td>
               </tr>
@@ -338,6 +369,23 @@ function clearProtocol() {
                              </td>                              
                             </logic:notPresent>                            
                           </tr>
+                          
+                            <tr class="OraTabledata">
+                               <td class="OraFieldText" width="50">&nbsp;</td>
+                                <td class="OraFieldText">                              
+                                 <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                                   <tr class="OraTabledata">
+                                    <td class="OraTableColumnHeader" width="10%" nowrap>
+                                      <b>Instruction</b> 
+                                   </td>
+                                   <td class="OraFieldText">
+                                     Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
+                                   </td>
+                                  </tr>
+                                 </table>                                                            
+                               </td>
+                             </tr>                          
+                          
                           <logic:present name="question">
                             <logic:notEmpty name="question" property="validValues">
                               <tr class="OraTabledata">
@@ -345,12 +393,40 @@ function clearProtocol() {
                                 <td>
                                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                     <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
-                                      <tr COLSPAN="3" class="OraTabledata">
+
+                                    <tr   class="OraTabledata">
+                                        <td COLSPAN="2" class="OraFieldText" >&nbsp;</td>
+                                      </tr>
+                                      <tr   class="OraTabledata">
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td class="OraFieldText">
                                           <bean:write name="validValue" property="longName"/>
                                         </td>
                                       </tr>
+                                      <tr   class="OraTabledata">
+                                        <td class="OraFieldText" width="50">&nbsp;</td>
+                                        <td >
+                                          <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                                             <tr class="OraTabledata">
+                                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                                <b>ValueMeaning</b> 
+                                             </td>
+                                             <td class="OraFieldText">
+                                                &nbsp;
+                                             </td>
+                                            </tr>
+                                             <tr class="OraTabledata">
+                                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                                <b>Instruction</b> 
+                                             </td>
+                                             <td class="OraFieldText">
+                                               Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
+                                             </td>
+                                            </tr>                        
+                                          </table>                                       
+                                        </td>
+                                      </tr>       
+                                      
                                     </logic:iterate><!-- valid Value-->
                                   </table>
                                 </td>

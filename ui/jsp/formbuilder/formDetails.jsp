@@ -36,12 +36,8 @@
       </td>
     </tr>  
 </table> 
-    
     <%@ include file="/formbuilder/viewButton_inc.jsp"%>
-   
     <%@ include file="showMessages.jsp" %>
-          
-    
     <logic:present name="<%=FormConstants.CRF%>">
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
         <tr class="OraTabledata">
@@ -107,7 +103,23 @@
           <td  class="OraFieldText">
             <bean:write  name="<%=FormConstants.CRF%>" property="version"/> 
           </td>
-        </tr>                
+        </tr>    
+        <tr class="OraTabledata">
+          <td class="TableRowPromptTextLeft"  width="20%">
+            <b>Header Instruction:</b>
+          </td>                
+          <td  class="OraFieldText">
+            Complete and submit this form as required by the protocol.  Information in the upper right box must be completed for this form to be accepted.  Do not leave any entries blank.  Enter -1 to indicate that an answer in unknown, unobtainable, no
+          </td>
+        </tr>   
+        <tr class="OraTabledata">
+          <td class="TableRowPromptTextLeft"  width="20%">
+            <b>Footer Instruction:</b>
+          </td>                
+          <td  class="OraFieldText">
+            Complete and submit this form as required by the protocol.  Information in the upper right box must be completed for this form to be accepted.  Do not leave any entries blank.  Enter -1 to indicate that an answer in unknown, unobtainable, no
+          </td>
+        </tr>         
       </table>
       <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         <tr >
@@ -118,12 +130,26 @@
       </table>      
             <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
               <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
-                <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
-                 <tr class="OraTableColumnHeader">                 
-                    <td class="OraTableColumnHeader">
+                <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
+                 <tr>                 
+                    <td class="OraHeaderBlack">
                       <bean:write name="module" property="longName"/>
                     </td>
                   </tr>
+                 <tr class="OraTabledata">                 
+                    <td >
+                       <table align="center" cellpadding="1" cellspacing="0" border="0" class="OraBGAccentVeryDark" >
+                         <tr class="OraTabledata">
+                          <td class="OraTableColumnHeader" width="10%" nowrap>
+                            <b>Instruction</b> 
+                         </td>
+                         <td class="OraFieldText">
+                           Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
+                         </td>
+                        </tr>
+                       </table>
+                    </td>                                                          
+                  </tr>                  
                   <logic:present name="module">
                   <logic:notEmpty name="module" property = "questions">
                     <tr class="OraTabledata">
@@ -162,7 +188,25 @@
                                     &nbsp;
                                  </td>                              
                             </logic:notPresent>                                
-                            </tr>                                                     
+                            </tr> 
+                            
+                            <tr class="OraTabledata">
+                               <td class="OraFieldText" width="50">&nbsp;</td>
+                                <td class="OraFieldText">                              
+                                 <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                                   <tr class="OraTabledata">
+                                    <td class="OraTableColumnHeader" width="10%" nowrap>
+                                      <b>Instruction</b> 
+                                   </td>
+                                   <td class="OraFieldText">
+                                     Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
+                                   </td>
+                                  </tr>
+                                 </table>                                                            
+                               </td>
+                             </tr> 
+
+
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">
                               <tr class="OraTabledata">
@@ -170,17 +214,58 @@
                                 <td>
                                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                     <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
-                                      <tr  COLSPAN="3" class="OraTabledata">
+                                      <tr   class="OraTabledata">
+                                        <td COLSPAN="2" class="OraFieldText" >&nbsp;</td>
+                                      </tr>
+                                      <tr   class="OraTabledata">
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td class="OraFieldText">
                                           <bean:write name="validValue" property="longName"/>
                                         </td>
                                       </tr>
+                                      <tr   class="OraTabledata">
+                                        <td class="OraFieldText" width="50">&nbsp;</td>
+                                        <td >
+                                          <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                                             <tr class="OraTabledata">
+                                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                                <b>ValueMeaning</b> 
+                                             </td>
+                                             <td class="OraFieldText">
+                                                &nbsp;
+                                             </td>
+                                            </tr>
+                                             <tr class="OraTabledata">
+                                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                                <b>Instruction</b> 
+                                             </td>
+                                             <td class="OraFieldText">
+                                               Please submit at each follow up after completion of treatment until recurrence, at time of recurrence, and at protocol specified intervals after recurrence. All dates are MONTH, DAY, YEAR.
+                                             </td>
+                                            </tr>                        
+                                          </table>                                       
+                                        </td>
+                                      </tr>                                        
                                     </logic:iterate><!-- valid Value-->
                                   </table>
                                 </td>
                               </tr>
                             </logic:notEmpty>
+                            <logic:empty name="question" property = "validValues">
+                              <tr class="OraTabledata">
+                                <td class="OraFieldText" width="50">&nbsp;</td>
+                                <td>
+                                  <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                                      <tr  COLSPAN="3" class="OraTabledata">
+                                        <td class="OraFieldText" width="50">&nbsp;</td>
+                                        <td class="OraFieldText">
+                                          &nbsp;
+                                        </td>
+                                      </tr>   
+                                  </table>
+                                </td>
+                              </tr>                            
+                            </logic:empty>
                             </logic:present>
                           </logic:iterate><!-- Question-->
                         </table>
@@ -193,7 +278,7 @@
       		<table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         	   <tr class>
           	      <td >
-			&nbsp;
+			              &nbsp;
           	      </td>
         	   </tr> 
         	</table>

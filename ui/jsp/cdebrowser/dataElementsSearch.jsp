@@ -460,8 +460,8 @@ function newSearch(){
   	 <th class="OraTableColumnHeader" nowrap>
  		        <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-              ascendingImageUrl='<%=request.getContextPath()+ "/i/up.gif"%>'
-              descendingImageUrl='<%=request.getContextPath()+ "/i/down.gif"%>' 
+              ascendingImageUrl='<%=request.getContextPath()+ "/i/sort_up.gif"%>'
+              descendingImageUrl='<%=request.getContextPath()+ "/i/sort_down.gif"%>' 
  	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
      	   	  columnHeader="Long Name" 
               orderParamId="sortOrder" 
@@ -475,8 +475,8 @@ function newSearch(){
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-              ascendingImageUrl='<%=request.getContextPath()+ "/i/up.gif"%>'
-              descendingImageUrl='<%=request.getContextPath()+ "/i/down.gif"%>'  
+              ascendingImageUrl='<%=request.getContextPath()+ "/i/sort_up.gif"%>'
+              descendingImageUrl='<%=request.getContextPath()+ "/i/sort_down.gif"%>'  
  	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
      	   	  columnHeader="Registration Status" 
               orderParamId="sortOrder" 
@@ -487,8 +487,8 @@ function newSearch(){
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-              ascendingImageUrl='<%=request.getContextPath()+ "/i/up.gif"%>'
-              descendingImageUrl='<%=request.getContextPath()+ "/i/down.gif"%>'
+              ascendingImageUrl='<%=request.getContextPath()+ "/i/sort_up.gif"%>'
+              descendingImageUrl='<%=request.getContextPath()+ "/i/sort_down.gif"%>'
  	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
      	   	  columnHeader="Workflow Status" 
               orderParamId="sortOrder" 
