@@ -10,7 +10,15 @@ import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.JspWriter;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
-
+/**
+ * This TagHandler is used to display icons by role
+ * The icon active image is displayed if the user-in-session
+ * has the role for the CRF defined by "formId"
+ * Ex.
+ * <cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" 
+ *		            role="aRole" altMessage="Edit"/>
+ *             
+ */
 public class SecureIconDisplay extends TagSupport implements CaDSRConstants
 {
   

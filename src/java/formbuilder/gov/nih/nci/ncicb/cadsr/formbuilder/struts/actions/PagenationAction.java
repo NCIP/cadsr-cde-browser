@@ -6,7 +6,6 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PagenationBean;
 import java.util.List;
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -21,11 +20,12 @@ import java.util.Collection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.struts.actions.DispatchAction;
 
-
-public class FormAction extends FormBuilderBaseDispatchAction {
+public class PagenationAction extends FormBuilderBaseDispatchAction
+{
   /**
-   * Returns all forms for the given criteria.
+   * Test Method adds a Collection to session.
    *
    * @param mapping The ActionMapping used to select this instance.
    * @param form The optional ActionForm bean for this request.
@@ -37,41 +37,34 @@ public class FormAction extends FormBuilderBaseDispatchAction {
    * @throws IOException
    * @throws ServletException
    */
-  public ActionForward getAllForms(
+  public ActionForward init(
     ActionMapping mapping,
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     
-    //Set the lookup values in the session
-    setInitLookupValues(request);
-    
-    FormBuilderServiceDelegate service = getFormBuilderService();
-    DynaActionForm searchForm = (DynaActionForm) form;
-    String formLongName = (String) searchForm.get(this.FORM_LONG_NAME);
-    String protocolIdSeq = (String) searchForm.get(this.PROTOCOL_ID_SEQ);
-    String contextIdSeq = (String) searchForm.get(this.CONTEXT_ID_SEQ);
-    String workflow = (String) searchForm.get(this.WORKFLOW);
-    String categoryName = (String) searchForm.get(this.CATEGORY_NAME);
-    String type = (String) searchForm.get(this.FORM_TYPE);
-    
-    Collection forms = null;
-    
-     forms = service.getAllForms(
-        formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type);      
-  
-    setSessionObject(request, this.FORM_SEARCH_RESULTS, forms);
+    ArrayList list = new ArrayList();
+    list.add("1");
+    list.add("2");
+    list.add("3");
+    list.add("4");
+    list.add("5");
+    list.add("6");
+    list.add("7");
+    list.add("8");
+    list.add("9");
+    list.add("10");
+    list.add("11");
+    list.add("12");
+    setSessionObject(request, this.FORM_SEARCH_RESULTS, list);
     PagenationBean pb = new PagenationBean();
-    if(forms!=null)
-      pb.setListSize(forms.size());
+    pb.setListSize(list.size());
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION, pb);
     return mapping.findForward(SUCCESS);
-  }
-
-
-  /**
-   * Returns all forms for the search criteria specified by clicking on a tree
-   * node.
+    }
+  
+      /**
+   * Sets the PagenationBean to next page.
    *
    * @param mapping The ActionMapping used to select this instance.
    * @param form The optional ActionForm bean for this request.
@@ -83,26 +76,19 @@ public class FormAction extends FormBuilderBaseDispatchAction {
    * @throws IOException
    * @throws ServletException
    */
-  public ActionForward getAllFormsForTreeNode(
+  public ActionForward next(
     ActionMapping mapping,
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    String protocolIdSeq = "";
-    String nodeType = request.getParameter("P_PARAM_TYPE");
-    String nodeIdSeq = request.getParameter("P_IDSEQ");
-    String contextIdSeq = request.getParameter("P_CONTE_IDSEQ");
-    if ("PROTOCOL".equals(nodeType))
-      protocolIdSeq = nodeIdSeq;
-    DynaActionForm searchForm = (DynaActionForm) form;
-    searchForm.set(this.PROTOCOL_ID_SEQ,protocolIdSeq);
-    searchForm.set(this.CONTEXT_ID_SEQ,contextIdSeq);
+
+    PagenationBean pb = (PagenationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION);
+    pb.next();
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION, pb);
+    return mapping.findForward(SUCCESS);
+    }
     
-    return this.getAllForms(mapping,form,request,response);
-  }
-
-  /**
-   * This Action forwards to the default formbuilder home.
+   /* Sets the PagenationBean to previous page.
    *
    * @param mapping The ActionMapping used to select this instance.
    * @param form The optional ActionForm bean for this request.
@@ -114,11 +100,43 @@ public class FormAction extends FormBuilderBaseDispatchAction {
    * @throws IOException
    * @throws ServletException
    */
-  public ActionForward sendHome(
+  public ActionForward previous(
     ActionMapping mapping,
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    return mapping.findForward(DEFAULT_HOME);
-  }
+    PagenationBean pb = (PagenationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION);
+    pb.previous();
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION, pb);
+    return mapping.findForward(SUCCESS);
+    }    
+   /* Sets the PagenationBean to new page index.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward setPageIndex(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    
+    String pageIndexStr = request.getParameter(PAGEINDEX);
+    int pageIndex=0;
+    if(pageIndexStr!=null)
+    {
+      pageIndex= new Integer(pageIndexStr).intValue();
+    }
+    PagenationBean pb = (PagenationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION);
+    pb.setPageIndex(pageIndex);
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION, pb);
+    return mapping.findForward(SUCCESS);
+    }        
 }

@@ -37,7 +37,7 @@ function submitForm() {
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="<%=FormConstants.FORM_LONG_NAME%>" value="" size ="20"> 
+          <html:text property="formLongName"  />
         </td>
 
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol" />:</td>
@@ -87,25 +87,44 @@ function submitForm() {
 
   <P>
       <logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
+        <bean:define id="pageBean" name="<%=FormConstants.FORM_SEARCH_RESULTS_PAGENATION%>" type="gov.nih.nci.ncicb.cadsr.jsp.bean.PagenationBean"/>
+        <cde:pagenation name="top" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
+                     beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGENATION%>" 
+                     actionURL="/cdebrowser/pageAction.do"/>
+                     
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTableColumnHeader">
-          	<td class="OraTableColumnHeader" nowrap>Action</td>
-          	<td class="OraTableColumnHeader" nowrap>Long Name</td>
-          	<td class="OraTableColumnHeader" nowrap>Type</td>
-          	<td class="OraTableColumnHeader" nowrap>Workflow Status:</td>         	
+          	<th class="OraTableColumnHeader" nowrap>Action</th>
+          	<th class="OraTableColumnHeader" nowrap>Long Name</th>
+          	<th class="OraTableColumnHeader" nowrap>Type</th>
+          	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	
           </tr>        
-          <logic:iterate id="form" name="<%=FormConstants.FORM_SEARCH_RESULTS%>" type="gov.nih.nci.ncicb.cadsr.resource.Form">
+          <logic:iterate id="form" name="<%=FormConstants.FORM_SEARCH_RESULTS%>" 
+          	type="gov.nih.nci.ncicb.cadsr.resource.Form"
+                offset="<%=pageBean.getOffset()%>"
+                length="<%=pageBean.getPageSize()%>">
             <tr class="OraTabledata">
-                <td>
-                  <table cellspacing="2" cellpadding="3"  border="0" width="100%">
-                   <tr>                   
-                   <td><a href='test'/><img src="i/edit.gif" border=0 alt='View'></a></td>
-		   <td><cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Edit"/></td>
-		   <td><cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Copy"/></td>
-		   <td><cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Delete"/></td>
-                   </tr>
-                   </table>
-                </td>
+                <td class="OraFieldText">
+                  <table cellspacing="1" cellpadding="1"  border="0" width="100%">
+                    <tr >                   
+                      <td >
+                      	<a href='test'/><img src="i/view.gif" border=0 alt='View'></a>
+                      </td>
+		      <td >
+		       	<cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" 
+		            role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Edit"/>
+		       </td>
+		       <td>
+		          <cde:secureIcon  formId="form" activeImageSource="i/copy.gif" activeUrl="test" 
+		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Copy"/>
+		        </td>
+		        <td >
+		           <cde:secureIcon  formId="form" activeImageSource="i/delete.gif" activeUrl="test"
+		           	role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Delete"/>
+		        </td>
+                       </tr>
+                    </table>
+                   </td>                
           	<td class="OraFieldText">
           		<html:link page="/formAction.do" paramName="form" paramProperty="preferredName">
             			<bean:write name="form" property="longName"/><br>
@@ -120,6 +139,9 @@ function submitForm() {
             </tr>
           </logic:iterate>
         </table>
+        <cde:pagenation name="bottom" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
+                     beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGENATION%>" 
+                     actionURL="/cdebrowser/pageAction.do"/>        
         </logic:present>
    </P>
   <P>

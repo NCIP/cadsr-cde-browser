@@ -254,7 +254,7 @@
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/common/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/service/**"/>
-                <include name="gov/nih/nci/ncicb/cadsr/jsp/tag/handler/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/jsp/**"/>
               </patternset>
         </fileset>       
      </copy>

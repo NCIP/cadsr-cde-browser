@@ -9,4 +9,12 @@ public interface FormConstants
     public static final String FORM_SEARCH_RESULTS = "FormSearchResults";
     public static final String PROTOCOL_ID_SEQ = "protocolIdSeq";
     public static final String CATEGORY_NAME = "categoryName";
+    public static final String FORM_SEARCH_RESULTS_PAGENATION="FormSearchResultsPagenation";   
+    public static final String PAGEINDEX = "PageIndex"; 
+    
+    public static final String CONTEXTS = "Contexts";
+    public static final String WORKFLOWS = "Workflows";
+    public static final String PROTOCOLS = "Protocols";
+    
+    
 }
