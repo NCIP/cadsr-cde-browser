@@ -94,16 +94,16 @@ function clearProtocol() {
             <td class="OraTableColumnHeader" width="20%" nowrap>
               <bean:message key="cadsr.formbuilder.form.name"/>
             </td>
-            <td class="OraFieldText" nowrap>
-              <html:text size="80%" property="<%=FormConstants.FORM_LONG_NAME%>"></html:text>
+            <td  class="OraFieldText" width="80%" nowrap>
+              <html:text size="100" property="<%=FormConstants.FORM_LONG_NAME%>"></html:text>
             </td>
           </tr>
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="20%">
               <bean:message key="cadsr.formbuilder.form.definition"/>
             </td>
-            <td class="OraFieldText">
-              <html:text size="80%" property="<%=FormConstants.PREFERRED_DEFINITION%>"></html:text>
+            <td  class="OraFieldText" width="80%" >
+              <html:textarea  rows="3" cols="77" property="<%=FormConstants.PREFERRED_DEFINITION%>"></html:textarea>
             </td>
           </tr>
           <tr class="OraTabledata">

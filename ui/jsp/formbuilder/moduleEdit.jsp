@@ -112,7 +112,7 @@ function clearProtocol() {
               <bean:message key="cadsr.formbuilder.module.name"/>
             </td>
             <td class="OraFieldText" nowrap>
-              <html:text size="80%" property="<%=FormConstants.MODULE_LONG_NAME%>"></html:text>
+              <html:text size="100" property="<%=FormConstants.MODULE_LONG_NAME%>"></html:text>
             </td>
           </tr>
           <tr class="OraTabledata">
@@ -120,7 +120,7 @@ function clearProtocol() {
               <bean:message key="cadsr.formbuilder.moduleinstruction.name"/>
             </td>
             <td class="OraFieldText">
-              <html:text size="80%" property="<%=FormConstants.MODULE_INSTRUCTION_LONG_NAME%>"></html:text>
+              <html:text size="100" property="<%=FormConstants.MODULE_INSTRUCTION_LONG_NAME%>"></html:text>
             </td>
           </tr>
         </table>
