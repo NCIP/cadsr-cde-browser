@@ -5,16 +5,19 @@ import gov.nih.nci.ncicb.cadsr.database.*;
 import java.sql.*;
 import java.util.*;
 import javax.servlet.http.*;
-
-
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 
 /**
  * A Bean class.
  * <P>
- * @author Ram Chilukuri
+ * @author Ram Chilukuri 
+ * @version: $Id: ProtocolsForCdeBean.java,v 1.2 2004-08-17 13:12:13 jiangja Exp $
+ * 
  */
 public class ProtocolsForCdeBean extends Object {
 
+  private static Log log = LogFactory.getLog(ProtocolsForCdeBean.class.getName());
   private String targetJsp = "dataElementsSearch.jsp";
   private CommonListBean clb;
   private String searchStr = "";
@@ -79,7 +82,7 @@ public class ProtocolsForCdeBean extends Object {
 
     }
     catch( SQLException e){
-       System.out.println("my exception: " + e);
+       log.error("Exception occurred", e);
     }
   
   }
