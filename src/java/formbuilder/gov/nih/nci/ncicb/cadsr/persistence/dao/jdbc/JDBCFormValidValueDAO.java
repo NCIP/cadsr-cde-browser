@@ -70,8 +70,10 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     String qcIdseq = generateGUID(); 
     int res = insertQuestContent.createContent(newValidValue, qcIdseq);
     if (res != 1) {
-      throw new DMLException("Did not succeed creating valid value record " + 
+      DMLException dml = new DMLException("Did not succeed creating valid value record " + 
         " in the quest_contents_ext table.");
+      dml.setErrorCode(ERROR_CREATEING_VALID_VALUE);
+      throw dml;
     }
     
     InsertQuestRec  insertQuestRec  = 
@@ -82,8 +84,9 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       return 1;
     }
     else {
-      throw new DMLException("Did not succeed creating question value relationship " +  
+      DMLException dml =  new DMLException("Did not succeed creating question value relationship " +  
         "record in the quest_recs_ext table.");
+      dml.setErrorCode(this.ERROR_CREATEING_VALID_VALUE);
     }
   }
 
@@ -132,7 +135,8 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       return 1;
     }
     else{
-      throw new DMLException(returnDesc);
+      DMLException dml =  new DMLException(returnDesc);
+      dml.setErrorCode(this.ERROR_DELETEING_VALID_VALUE);
     }
   }
 

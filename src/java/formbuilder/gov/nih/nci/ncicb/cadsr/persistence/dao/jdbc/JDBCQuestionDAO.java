@@ -84,7 +84,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       return 1;
     }
     else {
-      throw new DMLException(returnDesc);
+       DMLException dml = new DMLException(returnDesc);
+       dml.setErrorCode(this.ERROR_DELETEING_QUESTION);
+       throw dml;
     }
   }
 
@@ -114,7 +116,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     int res = questionLongName.updateLongName(questionId,newLongName);
     System.out.println("result = " +res);
     if (res != 1) {
-      throw new DMLException("Did not succeed in updateing the long name");
+       DMLException dml = new DMLException("Did not succeed in updateing the long name");
+       dml.setErrorCode(this.ERROR_UPDATING_QUESTION);
+       throw dml;    
     }
     return 1;
   }

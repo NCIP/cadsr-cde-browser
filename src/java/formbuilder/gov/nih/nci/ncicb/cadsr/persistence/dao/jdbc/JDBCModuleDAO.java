@@ -66,7 +66,9 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       return 1;
     }
     else{
-      throw new DMLException(returnDesc);
+     DMLException dml = new DMLException(returnDesc);
+     dml.setErrorCode(this.ERROR_CREATEING_MODULE);
+     throw dml;
     }
   }
 
@@ -81,7 +83,9 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       this.hasCreate(sourceModule.getCreatedBy(), "QUEST_CONTENT", 
         sourceModule.getConteIdseq());
     if (!create) {
-      new DMLException("The user does not have the create module privilege.");
+       DMLException dml = new DMLException("The user does not have the create module privilege.");
+       dml.setErrorCode(this.INSUFFICIENT_PRIVILEGES);
+       throw dml;
     }
 
     sourceModule.setPreferredName(generatePreferredName(sourceModule.getLongName()));
@@ -91,8 +95,10 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     String qcIdseq = generateGUID(); 
     int res = insertQuestContent.createContent(sourceModule, qcIdseq);
     if (res != 1) {
-      throw new DMLException("Did not succeed creating module record in the " + 
+       DMLException dml = new DMLException("Did not succeed creating module record in the " + 
         " quest_contents_ext table.");
+       dml.setErrorCode(this.ERROR_CREATEING_MODULE);
+       throw dml;        
     }
     
     InsertQuestRec  insertQuestRec  = 
@@ -103,8 +109,10 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       return qcIdseq;
     }
     else {
-      throw new DMLException("Did not succeed creating form module relationship " +  
+       DMLException dml = new DMLException("Did not succeed creating form module relationship " +  
         "record in the quest_recs_ext table.");
+       dml.setErrorCode(this.ERROR_CREATEING_MODULE);
+       throw dml;          
     }
   }
 
@@ -134,7 +142,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     }
     else{
       DMLException dmlExp = new DMLException(returnDesc);
-      dmlExp.setErrorCode(ERROR_DELETE_MODULE_FAILED);    
+      dmlExp.setErrorCode(ERROR_DELETEING_MODULE);    
       throw dmlExp;
     }
   }
