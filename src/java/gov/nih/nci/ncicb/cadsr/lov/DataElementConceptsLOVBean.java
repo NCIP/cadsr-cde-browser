@@ -37,6 +37,7 @@ public class DataElementConceptsLOVBean extends Object {
     try {
       searchStr = request.getParameter("SEARCH");
       if (searchStr ==null) searchStr ="";
+      
       String searchWhere = "";
       String newSearchStr = "";
       if (!searchStr.equals("")) {
@@ -48,6 +49,8 @@ public class DataElementConceptsLOVBean extends Object {
         }
         else {*/
           newSearchStr = StringReplace.strReplace(searchStr,"*","%");
+          //Release 3.0, TT#1178
+          newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
         //}
         searchWhere = " and   (upper (dec.long_name) like upper ( '"+newSearchStr+"') " +
                       " OR upper (dec.preferred_name) like upper ( '"+newSearchStr+"')) "
