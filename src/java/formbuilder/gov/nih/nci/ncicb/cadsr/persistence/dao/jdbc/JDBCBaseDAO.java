@@ -50,7 +50,6 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     if (log.isDebugEnabled()) {
       log.debug("Return DataSource =  " + ds);
     }
-
     return ds;
   }
 
@@ -168,7 +167,7 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
        System.out.println("\n*****Update Result 1: " + res);
        res = test.hasUpdate("SBREXT", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
        System.out.println("\n*****Update Result 2: " + res);*/
-    System.out.println("GUID: " + test.generatePreferredName("my long name test test"));
+    System.out.println("Preferred Name: " + test.generatePreferredName("my long name test test"));
   }
 
   /**

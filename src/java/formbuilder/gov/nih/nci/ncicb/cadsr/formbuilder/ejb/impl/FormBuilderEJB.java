@@ -21,7 +21,9 @@ import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 
+import com.evermind.sql.OrionCMTDataSource;
 
 public class FormBuilderEJB extends SessionBeanAdapter
   implements FormBuilderServiceRemote {
@@ -34,10 +36,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
    * ServiceLocator be a input param to the ejbCreate.
    */
   public void ejbCreate() {
-    locator = null;
-
-    ServiceLocator locator = ServiceLocatorFactory.getEJBLocator();
+    locator = ServiceLocatorFactory.getEJBLocator();
     daoFactory = AbstractDAOFactory.getDAOFactory(locator);
+    
+    
   }
 
   /**
@@ -75,7 +77,6 @@ public class FormBuilderEJB extends SessionBeanAdapter
     catch (Exception ex) {
       throw new DMLException("Cannot get Forms", ex);
     }
-
     return forms;
   }
 
