@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  JBoss Server Configuration                                           -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+<!-- $Id: oracle-ds.xml,v 1.1 2005-03-08 21:45:41 kakkodis Exp $ -->
+<!-- ==================================================================== -->
+<!--  Datasource config for Oracle originally from Steven Coy             -->
+<!-- ==================================================================== -->
+<datasources>
+	<local-tx-datasource>
+		<jndi-name>jdbc/FormBuilderDS</jndi-name>
+		<connection-url>jdbc:oracle:thin:@cbiodb10.nci.nih.gov:1521:cbprod</connection-url>
+		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+		<user-name>sbrext</user-name>
+		<password>rulive01</password>
+		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
+	</local-tx-datasource>
+	<local-tx-datasource>
+		<jndi-name>jdbc/SBREXT_CBTESTDS</jndi-name>
+		<connection-url>jdbc:oracle:thin:@cbiodb10.nci.nih.gov:1521:cbprod</connection-url>
+		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+		<user-name>sbrext</user-name>
+		<password>rulive01</password>
+		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
+	</local-tx-datasource>
+	<local-tx-datasource>
+		<jndi-name>jdbc/SBR_CBTESTDS</jndi-name>
+		<connection-url>jdbc:oracle:thin:@cbiodb10.nci.nih.gov:1521:cbprod</connection-url>
+		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+		<user-name>sbr</user-name>
+		<password>rulive01</password>
+		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
+	</local-tx-datasource>
+</datasources>
