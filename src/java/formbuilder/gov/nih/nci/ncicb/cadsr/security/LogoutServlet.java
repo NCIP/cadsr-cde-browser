@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ public class LogoutServlet extends HttpServlet
         }
       }
       session.invalidate();
-      String path=request.getContextPath()+"/"+logoutHome;
+      
       HttpSession newSession = request.getSession(true);
       if(keys!=null)
       {
@@ -53,8 +54,11 @@ public class LogoutServlet extends HttpServlet
           Object obj = objMap.get(key);
           newSession.setAttribute(key,obj);
         }
-      }      
-      response.sendRedirect(logoutHome);
+      }
+
+      RequestDispatcher dispacher = request.getRequestDispatcher("/"+logoutHome);
+      dispacher.forward(request,response);
+      
     }
     else
       {
