@@ -160,8 +160,8 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
        {
          int res = test.updateQuestionDEAssociation("A65D6B91-7ADE-4288-E034-0003BA0B1A09"
                        ,"A67221F9-BDCF-4BFB-E034-0003BA0B1A09"
+                       ,"Adjacent viscera/vessel"
                        ,"sbrext");
-      System.out.println("here");
       System.out.println("\n*****Update DE Result 1: " + res);
        }
     catch (DMLException de) {
@@ -239,7 +239,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     String newDEId,
     String username) throws DMLException {
     UpdateQuestionDEAssociation nQuestion = new UpdateQuestionDEAssociation(this.getDataSource());
-    System.out.println("Start");
+
     Map out = nQuestion.execute(
       questionId,
       newDEId,
@@ -258,7 +258,31 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     String newDEId,
     String newLongName,
     String username) throws DMLException {
-    return 0;
+
+    int ret_val = 0;
+    try{
+    ret_val = updateQuestionDEAssociation(questionId,newDEId,username);
+    }
+    catch (DMLException de) {
+      ret_val = 1;
+      de.printStackTrace();
+    }
+    
+    try{
+    ret_val = updateQuestionLongName(questionId,newLongName);
+    }
+    catch (DMLException de) {
+      ret_val = 1;
+      de.printStackTrace();
+    }
+
+    if (ret_val == 0) {
+      return ret_val;
+    }
+   else
+   {
+      throw new DMLException("Error updating long name or valid value for question");
+    }
   }
 
   public int createQuestionComponents(Collection questions)
