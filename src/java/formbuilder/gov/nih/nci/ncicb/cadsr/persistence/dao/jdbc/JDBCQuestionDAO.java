@@ -159,7 +159,8 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
        try
        {
          int res = test.updateQuestionDEAssociation("A65D6B91-7ADE-4288-E034-0003BA0B1A09"
-                       ,"A67221F9-BDCF-4BFB-E034-0003BA0B1A09");
+                       ,"A67221F9-BDCF-4BFB-E034-0003BA0B1A09"
+                       ,"sbrext");
       System.out.println("here");
       System.out.println("\n*****Update DE Result 1: " + res);
        }
@@ -235,13 +236,14 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
 
   public int updateQuestionDEAssociation(
     String questionId,
-    String newDEId) throws DMLException {
+    String newDEId,
+    String username) throws DMLException {
     UpdateQuestionDEAssociation nQuestion = new UpdateQuestionDEAssociation(this.getDataSource());
     System.out.println("Start");
     Map out = nQuestion.execute(
       questionId,
       newDEId,
-      "Me");
+      username.toUpperCase());
 
     if ((out.get("p_return_code")) == null) {
       return 0;
@@ -254,7 +256,8 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
   public int updateQuestionDEAssociation(
     String questionId,
     String newDEId,
-    String newLongName) throws DMLException {
+    String newLongName,
+    String username) throws DMLException {
     return 0;
   }
 

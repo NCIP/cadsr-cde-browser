@@ -8,8 +8,9 @@ public interface AdminComponentDAO {
    * Updates long name of an admin component.
    */
   public int updateLongName(
-    String adminIdseq,
-    String newLongName);
+    String adminIdseq
+   ,String newLongName
+   ,String username);
 
   /**
    * Utility method to derive preferred name using the long name.

@@ -106,14 +106,15 @@ public interface QuestionDAO {
    * @param <b>questionId</b> Idseq of the question component.
    * @param <b>newDEId</b> Idseq of the data element associated with the
    *        question component.
-   *
+   * @param <b>username</b> Username
    * @return <b>int</b> 1 - success, 0 - failure.
    *
    * @throws <b>DMLException</b>
    */
   public int updateQuestionDEAssociation(
-    String questionId,
-    String newDEId) throws DMLException;
+    String questionId
+   ,String newDEId
+   ,String username) throws DMLException;
 
   /**
    * Changes the data element associated with a question.
@@ -122,6 +123,7 @@ public interface QuestionDAO {
    * @param <b>newDEId</b> Idseq of the data element associated with the
    *        question component.
    * @param <b>newLongName</b> New long name of the question component.
+   * @param <b>username</b> Username
    *
    * @return <b>int</b> 1 - success, 0 - failure.
    *
@@ -130,5 +132,6 @@ public interface QuestionDAO {
   public int updateQuestionDEAssociation(
     String questionId,
     String newDEId,
-    String newLongName) throws DMLException;
+    String newLongName,
+    String username) throws DMLException;
 }

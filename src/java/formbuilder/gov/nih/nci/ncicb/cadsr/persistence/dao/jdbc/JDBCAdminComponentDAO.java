@@ -45,8 +45,9 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
   }
 
   public int updateLongName(
-    String adminIdseq,
-    String newLongName) {
+    String adminIdseq
+   ,String newLongName
+   ,String username) {
     return 0;
   }
 
