@@ -6,7 +6,6 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.TreeParametersTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JDataElementTransferObject;
 import gov.nih.nci.ncicb.cadsr.html.HTMLPageScroller;
@@ -27,36 +26,31 @@ import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
 import gov.nih.nci.ncicb.cadsr.util.PageIterator;
-import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
+import gov.nih.nci.ncicb.cadsr.util.SortableColumnHeader;
 import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
 import gov.nih.nci.ncicb.cadsr.util.UserErrorMessage;
-
-import oracle.cle.persistence.HandlerFactory;
-
-import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.Service;
-
-import oracle.cle.util.statemachine.TransitionCondition;
-import oracle.cle.util.statemachine.TransitionConditionException;
-
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
 import java.text.DateFormat;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import oracle.cle.persistence.HandlerFactory;
+import oracle.cle.process.ProcessInfoException;
+import oracle.cle.process.Service;
+import oracle.cle.util.statemachine.TransitionCondition;
+import oracle.cle.util.statemachine.TransitionConditionException;
+
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.3 2004-08-17 13:56:07 jiangja Exp $
+ * @version: $Id: GetDataElements.java,v 1.4 2004-08-25 18:21:30 jiangja Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -134,6 +128,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       registerResultObject(ProcessConstants.DE_SEARCH_TOP_PAGE_SCROLLER);
       registerResultObject("uem");
       registerParameterObject(ProcessConstants.SELECT_DE);
+
     }
     catch (ProcessInfoException pie) {
       reportException(pie, true);
@@ -188,7 +183,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       String csName = getStringInfo("csName");
       String templateName = getStringInfo("templateName");
       String conteName = getStringInfo("contextName");
-
+      
       log.info("- Retrieved request parameters successfully");
 
       TreeParameters treeParam = new TreeParametersTransferObject();
@@ -273,6 +268,8 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         }
 
         dePageIterator.setCurrentPage(0);
+    
+      
         queryBuilder =
           new DESearchQueryBuilder(
             myRequest, paramType, paramIdSeq, treeConteIdseq);
@@ -372,15 +369,74 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
 
       }
+      else if (performQuery.equals("sortResults")) {
+        desb = (DataElementSearchBean) getInfoObject("desb");
+        
+        dePageIterator =
+          (PageIterator) getInfoObject(
+            ProcessConstants.DE_SEARCH_PAGE_ITERATOR);
 
+        //dePageIterator.setCurrentPage(0);
+        if (dePageIterator == null) {
+          log.info("- Unable to retrieve PageIterator from session. Creating a new PageIterator..");
+          dePageIterator = new BC4JPageIterator(40);
+        }
+        else {
+          log.info("- Retrieved PageIterator from session successfully");
+        }
+
+        dePageIterator.setCurrentPage(0);
+      
+        queryBuilder =
+          (DESearchQueryBuilder) getInfoObject(
+            ProcessConstants.DE_SEARCH_QUERY_BUILDER);
+
+        //update sort by column of queryBuilder
+        String sortField = getStringInfo("sortField");
+        String sortOrderString = getStringInfo("sortOrder");
+        int sortOrder = SortableColumnHeader.ASCENDING;
+        if (getStringInfo("sortOrder") != null)
+           sortOrder = Integer.valueOf(getStringInfo("sortOrder")).intValue();
+        
+        SortableColumnHeader sortColumnHeader = queryBuilder.getSortColumnHeader();
+        
+        if ( !sortField.equalsIgnoreCase(sortColumnHeader.getPrimary())) {
+           sortColumnHeader.setSecondary(sortColumnHeader.getPrimary());
+           sortColumnHeader.setPrimary(sortField);
+        }
+        sortColumnHeader.setOrder(sortOrder);
+       
+        log.trace("- Updated DESearchQueryBuilder successfully");
+
+        queryStmt = queryBuilder.getSQLWithoutOrderBy();
+        orderBy = queryBuilder.getOrderBy();
+
+        queryParams = queryBuilder.getQueryParams();
+
+        log.trace("- Query stmt is " + queryStmt);
+
+        dh = (DataElementHandler) HandlerFactory.getHandler(DataElement.class);
+
+        log.trace("Obtained DataElementHandler using HandlerFactory successfully");
+
+        queryResults =
+          dh.findDataElementsFromQueryClause(
+            queryStmt, orderBy, getSessionId(), dePageIterator);
+
+        log.trace("Query executed successfully");
+
+        createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER, myRequest.getContextPath());
+        createPageScroller(
+          dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, myRequest.getContextPath());
+
+        log.trace("Created both page scrollers successfully");
+      }
       setResult("desb", desb);
       setResult(ProcessConstants.DE_SEARCH_PAGE_ITERATOR, dePageIterator);
       setResult(ProcessConstants.DE_SEARCH_QUERY_BUILDER, queryBuilder);
       setResult(ProcessConstants.ALL_DATA_ELEMENTS, queryResults);
       setResult("tibSearchDE", tib);
       setResult("performQuery", null);
-
-      //
       setResult("P_PARAM_TYPE", paramType);
       setResult("P_IDSEQ", paramIdSeq);
 

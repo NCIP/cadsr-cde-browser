@@ -1,5 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser;
 
+import gov.nih.nci.ncicb.cadsr.util.SimpleSortableColumnHeader;
+import gov.nih.nci.ncicb.cadsr.util.SortableColumnHeader;
 import gov.nih.nci.ncicb.cadsr.util.StringReplace;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
@@ -28,6 +30,7 @@ public class DESearchQueryBuilder extends Object {
   private String contextUse = "";
   private String orderBy = " long_name, de_version ";
   private String sqlWithoutOrderBy;
+  private SortableColumnHeader sortColumnHeader = null;
 
   public DESearchQueryBuilder(HttpServletRequest request,
                               String treeParamType,
@@ -444,6 +447,12 @@ public class DESearchQueryBuilder extends Object {
       xmlQueryStmt = "select de.de_idseq "+fromWhere;
       //buildWorkflowList(getSearchStr(1),dbUtil);
 
+      //release 3.0, sort search result by column
+      sortColumnHeader = new SimpleSortableColumnHeader();
+      sortColumnHeader.setPrimary("long_name");
+      sortColumnHeader.setSecondary("de_version");
+      sortColumnHeader.setOrder(SimpleSortableColumnHeader.ASCENDING);
+
   }
 
   public String getSearchStr(int arrayIndex){
@@ -487,7 +496,12 @@ public class DESearchQueryBuilder extends Object {
   }
 
   public String getOrderBy() {
-    return orderBy;
+    String sortOrder = "";
+    if (sortColumnHeader.getOrder() == SortableColumnHeader.DESCENDING)
+       sortOrder = " DESC";
+    
+    return sortColumnHeader.getPrimary() +  sortOrder + ", " 
+    + sortColumnHeader.getSecondary() + sortOrder;
   }
 
   private String getUsageWhereClause() {
@@ -864,4 +878,9 @@ public class DESearchQueryBuilder extends Object {
                   + searchWhere+ " ) ";
     return altWhere;
     }
+
+
+   public SortableColumnHeader getSortColumnHeader() {
+      return sortColumnHeader;
+   }
 }

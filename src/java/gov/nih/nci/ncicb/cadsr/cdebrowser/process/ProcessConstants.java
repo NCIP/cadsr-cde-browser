@@ -16,6 +16,7 @@ public interface ProcessConstants extends oracle.cle.process.ProcessConstants {
   static final String DE_DATE_MODIFIED = "demodifieddate";
   static final String ALL_DATA_ELEMENTS = "dataelementsvector";
 
+
   //Related to the valid values
   static final String VALID_VALUES_VECTOR = "validvaluesvector";
   static final String VALID_VALUES_LIST = "validvalueslist";
@@ -75,4 +76,5 @@ public interface ProcessConstants extends oracle.cle.process.ProcessConstants {
   static final String DE_USAGES_LIST = "deUsagesList";
   static final String SELECT_DE = "selectDE";
   public static final String CDE_CART_ADD_SUCCESS = "cdecart.add.success";
+  public static final String CDE_SEARCH_RESULT_COMPARATOR="cdeSearchResultComparator";
 }
