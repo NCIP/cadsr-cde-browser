@@ -313,6 +313,9 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     }
     catch (Throwable throwable) {
       HttpSession session = request.getSession();
+      String userName = request.getRemoteUser();
+      if(userName==null)
+        userName="";
       Collection keys = (Collection)session.getAttribute(this.CLEAR_SESSION_KEYS);
       if(keys!=null)
       {
@@ -324,7 +327,7 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
       }
       if(log.isFatalEnabled())
       {
-        log.fatal("Exception in dispatchMethod in method "+name,throwable);
+        log.fatal(userName+": Exception in dispatchMethod in method "+name,throwable);
       }
       saveError(ERROR_FATAL, request);
       throw new FatalException(throwable);
