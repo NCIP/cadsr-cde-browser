@@ -101,6 +101,8 @@ public class ManageClassificationsAction extends FormBuilderBaseDispatchAction {
             if (log.isDebugEnabled()) {
                 log.debug("Exception on getAssociations =  " + exp);
             }
+	    saveError("cadsr.formbuilder.classification.add.duplicateError", request);
+	    return mapping.findForward("failure");
         }
 
 	saveMessage("cadsr.formbuilder.classification.add.success", request);
