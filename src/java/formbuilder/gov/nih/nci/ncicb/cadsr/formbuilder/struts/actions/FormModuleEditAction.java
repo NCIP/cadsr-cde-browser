@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
@@ -564,11 +565,18 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     Form orgCrf = (Form) getSessionObject(request, this.CLONED_CRF);
     module.setForm(crf);
     Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
-
+    String longName = (String) getSessionObject(request, MODULE_LONG_NAME);
+    module.setLongName(longName);
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
     Map changes = getUpdatedNewDeletedQuestions(module,orgModule.getQuestions(),module.getQuestions());
+    Module moduleHeader = null;
+    if(!longName.equals(orgModule.getLongName()))
+    {
+      moduleHeader = new ModuleTransferObject();
+      moduleHeader.setLongName(longName);
+    }
     if(changes.isEmpty())
     {
       saveMessage("cadsr.formbuilder.form.edit.nochange", request);
@@ -578,9 +586,8 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     FormBuilderServiceDelegate service = getFormBuilderService();
     Module updatedModule = null;
     try{
-    module.setQuestions(null);
     updatedModule = service.updateModule(module.getModuleIdseq(),
-                            module,
+                          moduleHeader,
                           (Collection)changes.get(UPDATED_QUESTION_LIST),
                          (Collection)changes.get(DELETED_QUESTION_LIST),
                          (Collection)changes.get(NEW_QUESTION_LIST),

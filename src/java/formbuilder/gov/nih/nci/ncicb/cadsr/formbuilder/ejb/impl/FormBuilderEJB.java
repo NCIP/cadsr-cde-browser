@@ -265,9 +265,11 @@ public class FormBuilderEJB extends SessionBeanAdapter
     Collection updatedModules,
     Collection deletedModules) {
     ModuleDAO dao = daoFactory.getModuleDAO();
-
-    //TODO Update form header
-    //Update Module Display Order If there are Modules to update
+    FormDAO formdao = daoFactory.getFormDAO();
+   if(formHeader!=null)
+   {
+     formdao.updateFormComponent(formHeader);
+   }
     if ((updatedModules != null) && !updatedModules.isEmpty()) {
       Iterator updatedIt = updatedModules.iterator();
 

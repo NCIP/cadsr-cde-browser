@@ -364,8 +364,8 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     String longName = (String) editForm.get(FORM_LONG_NAME);
 
     if ((longName != null) && (clonedCrf.getLongName() != null)) {
+       header.setLongName(longName);
       if (!longName.equals(clonedCrf.getLongName())) {
-        header.setLongName(longName);
         headerUpdate = true;
       }
     }
@@ -378,8 +378,8 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     }
 
     if ((contextIdSeq != null) && (orgContextIdSeq != null)) {
+      header.setConteIdseq(contextIdSeq);
       if (!contextIdSeq.equals(orgContextIdSeq)) {
-        header.setConteIdseq(contextIdSeq);
         headerUpdate = true;
       }
     }
@@ -392,8 +392,8 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     }
 
     if ((protocolIdSeq != null) && (orgProtocolIdSeq != null)) {
-      if (!orgProtocolIdSeq.equals(protocolIdSeq)) {
-        header.setProtoIdseq(protocolIdSeq);
+      header.setProtoIdseq(protocolIdSeq);
+      if (!orgProtocolIdSeq.equals(protocolIdSeq)) {       
         headerUpdate = true;
       }
     }
@@ -401,12 +401,12 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     String preferredDef = (String) editForm.get(PREFERRED_DEFINITION);
 
     if ((preferredDef != null) && (clonedCrf.getPreferredDefinition() != null)) {
-      if (!preferredDef.equals(clonedCrf.getPreferredDefinition())) {
-        header.setPreferredDefinition(preferredDef);
+      header.setPreferredDefinition(preferredDef);
+      if (!preferredDef.equals(clonedCrf.getPreferredDefinition())) {        
         headerUpdate = true;
       }
     }
-
+    
     List updatedModules =
       getUpdatedModules(clonedCrf.getModules(), crf.getModules());
     FormBuilderServiceDelegate service = getFormBuilderService();
@@ -415,11 +415,10 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     if (
       headerUpdate || ((deletedModules != null) && !deletedModules.isEmpty()) ||
           !updatedModules.isEmpty()) {
-      if (log.isDebugEnabled()) {
-        log.debug("***Form need to be Persisted   ");
-      }
 
       try {
+        if(!headerUpdate)
+          header=null;
         Form updatedCrf = service.updateForm(header, updatedModules, deletedModules);
         setSessionObject(request,CRF, updatedCrf);
         formUpdated = true;
