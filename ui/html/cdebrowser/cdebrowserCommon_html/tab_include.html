@@ -27,7 +27,7 @@ function subTabClicked(tabNum,urlParams) {
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= tib.getLogoutURL() %>" TARGET="_top"><html:img page="/i/icon_return.gif" alt="Back" border="0"  width="32" height="32" /> </A><br><font color=brown face=verdana size=1>&nbsp;Back&nbsp;</font></TD>
-          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('cdebrowserCommon_html/cdeBrowserHelp.html','helpWin',700,600)"><html:img page="/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('<%=request.getContextPath()%>/common/help/cdeBrowserHelp.html','helpWin',700,600)"><html:img page="/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
         </TR>
       </TABLE>
     </td>
