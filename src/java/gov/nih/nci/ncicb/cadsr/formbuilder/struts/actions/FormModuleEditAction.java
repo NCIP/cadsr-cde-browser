@@ -658,7 +658,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       if (log.isErrorEnabled()) {
         log.error("Exception while cloning module  " + orgModule,clexp);
       }
-    }    
+    }
     int index = modules.indexOf(module);
     crf.getModules().remove(index);
     crf.getModules().add(index,orgModuleClone);
@@ -868,7 +868,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         {
          validValuesChanges =
             getNewDeletedUpdatedValidValues(currQuestion,orgQuestion.getValidValues(),
-                                            currQuestion.getValidValues());          
+                                            currQuestion.getValidValues());
         }
         else if(newVVList!=null&&!newVVList.isEmpty())
         {
@@ -955,7 +955,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
        ListIterator editedIterator =  null;
        if(editedValidValueList!=null)
-        editedValidValueList.listIterator();
+        editedIterator = editedValidValueList.listIterator();
        while(editedIterator!=null&&editedIterator.hasNext())
        {
          FormValidValue editedVV = (FormValidValue)editedIterator.next();
@@ -998,7 +998,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     Question question,
     List fvvs) {
     if(fvvs==null) return;
-    
+
     ListIterator iterate = fvvs.listIterator();
 
     while (iterate.hasNext()) {
@@ -1007,7 +1007,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       }
     }
 
-  
+
   /**
    * Removes the Question given by "quesIdSeq" from the question list
    *
