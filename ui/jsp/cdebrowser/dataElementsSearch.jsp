@@ -354,7 +354,7 @@ function done() {
 
 <%
   if (!queryFlag.equals("")) {
-    if (deList.size()!=0) {
+    if (deList!=null&&deList.size()!=0) {
 %>
 <table cellpadding="0" cellspacing="0" width="100%" align="center">
   <tr>
@@ -421,7 +421,7 @@ function done() {
   </table>
 <%
     }
-    else {
+    else if(deList!=null&&deList.size()==0) {
     pageContext.getSession().setAttribute("showCached",new Boolean("true"));
 %>
 <table cellpadding="0" cellspacing="0" width="100%" align="center">
