@@ -110,7 +110,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
   public int updateQuestionLongName(
     String questionId,
     String newLongName) throws DMLException {
-  UpdateQuestionLongName  questionLongName  = new UpdateQuestionLongName (this.getDataSource());
+    UpdateQuestionLongName  questionLongName  = new UpdateQuestionLongName (this.getDataSource());
     int res = questionLongName.updateLongName(questionId,newLongName);
     System.out.println("result = " +res);
     if (res != 1) {
@@ -129,52 +129,52 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     Collection result =
       test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
     System.out.println(test);
+    
     /*
     Iterator iterator = result.iterator();
 
-       try {
-         // test createQuestionComponent method.
-         // for each test, change long name(preferred name generated from long name)
+     try {
+       // test createQuestionComponent method.
+       // for each test, change long name(preferred name generated from long name)
     
-         Form form = new FormTransferObject();
-         form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
-         Module module = new ModuleTransferObject();
-         module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
-         module.setForm(form);
-         Question question = new QuestionTransferObject();
-         question.setModule(module);
-         DataElement dataElement = new DataElementTransferObject();
-         dataElement.setDeIdseq("29A8FB2C-0AB1-11D6-A42F-0010A4C1E842");
-         question.setDataElement(dataElement);
+       Form form = new FormTransferObject();
+       form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
+       Module module = new ModuleTransferObject();
+       module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
+       module.setForm(form);
+       Question question = new QuestionTransferObject();
+       question.setModule(module);
+       DataElement dataElement = new DataElementTransferObject();
+       dataElement.setDeIdseq("29A8FB2C-0AB1-11D6-A42F-0010A4C1E842");
+       question.setDataElement(dataElement);
     
-         question.setVersion(new Float(2.31));
-         question.setLongName("Test Ques Long Name 030204 2");
-         question.setPreferredDefinition("Test Ques pref def");
-         question.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
-         form.setProtocol(new ProtocolTransferObject(""));  // template does not have protocol
-         question.setAslName("DRAFT NEW");
-         question.setCreatedBy("Hyun Kim");
-         question.setDisplayOrder(101);
-         int res = test.createQuestionComponent(question);
-         System.out.println("\n*****Create Question Result 1: " + res);
-       }
-       catch (DMLException de) {
-         System.out.println("******Printing DMLException*******");
-         de.printStackTrace();
-         System.out.println("******Finishing printing DMLException*******");
-       }*/
+       question.setVersion(new Float(2.31));
+       question.setLongName("Test Ques Long Name 030204 2");
+       question.setPreferredDefinition("Test Ques pref def");
+       question.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+       form.setProtocol(new ProtocolTransferObject(""));  // template does not have protocol
+       question.setAslName("DRAFT NEW");
+       question.setCreatedBy("Hyun Kim");
+       question.setDisplayOrder(101);
+       System.out.println(test.createQuestionComponent(question));
+     }
+     catch (DMLException de) {
+       System.out.println("******Printing DMLException*******");
+       de.printStackTrace();
+       System.out.println("******Finishing printing DMLException*******");
+     }*/
 
-      /* try
-       {
-         int res = test.updateQuestionDEAssociation("A65D6B91-7ADE-4288-E034-0003BA0B1A09"
-                       ,"A67221F9-BDCF-4BFB-E034-0003BA0B1A09"
-                       ,"Adjacent viscera/vessel"
-                       ,"sbrext");
-      System.out.println("\n*****Update DE Result 1: " + res);
-       }
-    catch (DMLException de) {
-      de.printStackTrace();
-    }*/
+    /* try
+     {
+       int res = test.updateQuestionDEAssociation("A65D6B91-7ADE-4288-E034-0003BA0B1A09"
+                     ,"A67221F9-BDCF-4BFB-E034-0003BA0B1A09"
+                     ,"Adjacent viscera/vessel"
+                     ,"sbrext");
+       System.out.println("\n*****Update DE Result 1: " + res);
+     }
+     catch (DMLException de) {
+       de.printStackTrace();
+     }*/
     /*
     try
        {
@@ -213,9 +213,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     qto.setDataElement(deto);
     qto.setLongName("long name test");
     qto.setQuesIdseq("D68C9BC5-BDAB-2F02-E034-0003BA0B1A09");
+    qto.setDisplayOrder(2);
     try {
-      int res = test.updateQuestionLongNameDispOrderDeIdseq(
-        qto, 2);
+      int res = test.updateQuestionLongNameDispOrderDeIdseq(qto);
       System.out.println("\n*****Updated " + res);
     }
     catch (DMLException de) {
@@ -229,11 +229,11 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
    *
    * @param <b>newQuestion</b> Question object
    *
-   * @return <b>int</b> 1 - success, 0 - failure.
+   * @return <b>newQuestion</b> returns Question object
    *
    * @throws <b>DMLException</b>
    */
-   public int createQuestionComponent(Question newQuestion)
+   public Question createQuestionComponent(Question newQuestion)
     throws DMLException {
     // check if the user has the privilege to create module
     boolean create =
@@ -261,7 +261,8 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     int resRec = insertQuestRec.createContent(newQuestion, qcIdseq, qrIdseq);
 
     if (resRec == 1) {
-      return 1;
+      newQuestion.setQuesIdseq(qcIdseq);
+      return newQuestion;
     }
     else {
       throw new DMLException(
@@ -297,7 +298,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
 
     int ret_val = 0;
     try{
-    ret_val = updateQuestionDEAssociation(questionId,newDEId,username);
+      ret_val = updateQuestionDEAssociation(questionId,newDEId,username);
     }
     catch (DMLException de) {
       ret_val = 0;
@@ -305,7 +306,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     }
     System.out.println("After DE"+ret_val);
     try{
-    ret_val = updateQuestionLongName(questionId,newLongName);
+      ret_val = updateQuestionLongName(questionId,newLongName);
     }
     catch (DMLException de) {
       ret_val = 0;
@@ -330,7 +331,6 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
    * Changes the long name, display order, and de_idseq of a question.
    *
    * @param <b>question</b> the question component.
-   * @param <b>newDisplayOrder</b> New display order of the question component.
    *
    * @return <b>int</b> 1 - success, 0 - failure.
    *

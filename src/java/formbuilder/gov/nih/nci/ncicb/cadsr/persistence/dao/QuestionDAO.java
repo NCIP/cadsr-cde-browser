@@ -21,11 +21,11 @@ public interface QuestionDAO {
    *
    * @param <b>newQuestion</b> Question object
    *
-   * @return <b>int</b> 1 - success, 0 - failure.
+   * @return <b>newQuestion</b> returns Question object
    *
    * @throws <b>DMLException</b>
    */
-  public int createQuestionComponent(Question newQuestion)
+  public Question createQuestionComponent(Question newQuestion)
     throws DMLException;
 
   /**
@@ -139,13 +139,12 @@ public interface QuestionDAO {
    * Changes the long name, display order, and de_idseq of a question.
    *
    * @param <b>question</b> the question component.
-   * @param <b>newDisplayOrder</b> New display order of the question component.
    *
    * @return <b>int</b> 1 - success, 0 - failure.
    *
    * @throws <b>DMLException</b>
    */
   public int updateQuestionLongNameDispOrderDeIdseq(
-    Question question, int newDispOrder) throws DMLException;
+    Question question) throws DMLException;
     
 }
