@@ -153,4 +153,9 @@ public class DataElementTransferObject extends AdminComponentTransferObject
 
     return sb.toString();
   }
+
+  public void setPublicId(int id) {
+    super.setPublicId(id);
+    this.cDEId = String.valueOf(id);
+  }
 }
