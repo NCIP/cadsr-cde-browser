@@ -25,6 +25,8 @@ public class FormTransferObject extends AdminComponentTransferObject
   private String formCategory = null;
   private List instructions = null;
    private List footerInstructions = null;
+   private String contextName = null;
+   private String protocolLongName = null;
 
   public FormTransferObject() {
     
@@ -244,5 +246,36 @@ public class FormTransferObject extends AdminComponentTransferObject
     System.out.println(form);
     System.out.println(clone);
     
+  }
+
+
+  public void setContextName(String contextName)
+  {
+    this.contextName = contextName;
+  }
+
+
+  public String getContextName()
+  {
+    if (contextName == null)  
+       this.setContextName(getContext().getName());
+    return contextName;
+  }
+
+
+  public void setProtocolLongName(String protocolLongName)
+  {
+    this.protocolLongName = protocolLongName;
+  }
+
+
+  public String getProtocolLongName()
+  {
+    if (protocolLongName == null)  
+       if (getProtocol() == null)
+          setProtocolLongName(this.getProtocol().getLongName());
+       else 
+          setProtocolLongName("");
+    return protocolLongName;
   }
 }
