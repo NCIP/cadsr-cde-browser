@@ -21,22 +21,6 @@
       dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
     </form-bean>
-    <form-bean name="copyForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
-      dynamic="true">
-      <form-property name="formLongName" type="java.lang.String"/>
-      <form-property name="formIdSeq" type="java.lang.String"/>
-      <form-property name="preferredDefinition" type="java.lang.String"/>
-      <form-property name="conteIdseq" type="java.lang.String"/>
-      <form-property name="protocolLongName" type="java.lang.String"/>
-      <form-property name="protocolIdSeq" type="java.lang.String"/>
-      <form-property name="workflow" type="java.lang.String"/>
-      <form-property name="formCategory" type="java.lang.String"/>
-      <form-property name="formType" type="java.lang.String"/>
-      <form-property name="gotoEdit" type="java.lang.Boolean"/>
-      <form-property name="formVersion" type="java.lang.Float"/>
-      <form-property name="formComments" type="java.lang.String"/>
-    </form-bean>
     <form-bean name="createForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
@@ -167,14 +151,13 @@
     <action name="createModuleForm" path="/createModule" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ModuleCreateAction"
-      validate="false">
+      validate="true">
       <!--
       <forward name="toFormEdit"
         path="/formToEditAction.do?method=getFormToEdit"/>
       -->
       <forward name="toFormEdit" path="/formbuilder/formEdit.jsp"/>
       <forward name="toCreateModule" path="/formbuilder/moduleCreate.jsp"/>
-      <forward name="toCreateForm" path=""/>
     </action>    
     <action name="createForm" path="/formCreate" parameter="method"
       scope="request"
@@ -192,14 +175,6 @@
         path="/formSearchAction.do?method=getAllForms"
         redirect="false"/>
     </action>      
-    <action name="copyForm" path="/formToCopyAction" parameter="method"
-      scope="request"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCopyAction"
-      validate="false">
-      <forward name="showSuccess" path="/formbuilder/formCopy.jsp"/>
-      <forward name="gotoEdit" path="/formToEditAction.do?method=getFormToEdit"/>
-      <forward name="gotoView" path="/formbuilder/formDetails.jsp"/>
-    </action>
     <action name="formEditForm" path="/formToEditAction" parameter="method"
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
@@ -314,4 +289,13 @@
     contentType="text/html;charset=UTF-8" locale="true"/>
   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
   <plug-in className="gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory"/>
+
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property 
+      property="pathnames" 
+      value="/WEB-INF/validator-rules.xml, 
+             /WEB-INF/validation.xml"/>
+  </plug-in>
+
+
 </struts-config>
