@@ -38,7 +38,7 @@
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
         <var>
           <var-name>maxlength</var-name>
-          <var-value>255</var-value>
+          <var-value>2000</var-value>
         </var>
       </field>
     </form>
@@ -60,7 +60,7 @@
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
         <var>
           <var-name>maxlength</var-name>
-          <var-value>255</var-value>
+          <var-value>2000</var-value>
         </var>
       </field>
 
@@ -94,7 +94,7 @@
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
         <var>
           <var-name>maxlength</var-name>
-          <var-value>255</var-value>
+          <var-value>2000</var-value>
         </var>
       </field>
 
