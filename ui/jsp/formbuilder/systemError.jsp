@@ -21,7 +21,7 @@
     <% String urlPrefix = "";
 
 %>
-    <%@ include file="../common/common_header_inc.jsp"%>
+    <%@ include file="../common/syserror_common_header_inc.jsp"%>
     <jsp:include page="../common/tab_inc.jsp" flush="true">
       <jsp:param name="label" value="System&nbsp;Error"/>
       <jsp:param name="urlPrefix" value=""/>
@@ -33,15 +33,16 @@
       <tr>
         <td class="OraErrorHeader">
         	Unexpected System Error has Occured <br><br>
-      <logic:messagesPresent message="true">
+      <logic:messagesPresent >
        <table width="80%" align="center">
-        <html:messages id="message" 
-          message="true">
+        <html:messages id="error" >
+          <logic:present name="error">
             <tr align="center" >
                <td  align="left" class="OraErrorText" nowrap>
-                <b><bean:write  name="message"/></b>
+                <b><bean:write  name="error"/></b>
               </td>
             </tr>
+          </logic:present>          
         </html:messages> 
            <tr align="center" >
              <td>
