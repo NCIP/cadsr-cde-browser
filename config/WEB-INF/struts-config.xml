@@ -209,6 +209,12 @@
       <forward name="success" path="/formbuilder/displayCDECart.jsp"/>
       <forward name="addDeleteSuccess" path="/formCDECartAction.do?method=displayCDECart"/>
     </action>
+    <action name="displayCartForm" path="/gotoChangeAssociation" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureCDECartAction"
+      validate="false">
+      <forward name="success" path="/formbuilder/changeAssociation.jsp"/>
+    </action>
   </action-mappings>
   <controller debug="3" nocache="true"
               processorClass="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureRequestProcessor"
