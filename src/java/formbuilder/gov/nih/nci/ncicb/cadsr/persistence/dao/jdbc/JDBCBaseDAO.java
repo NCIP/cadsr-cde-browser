@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.BaseDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ConnectionException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DAOCreateException;
@@ -23,7 +23,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 
-public class JDBCBaseDAO extends BaseDAO implements PersistenceContants {
+public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
   public JDBCBaseDAO(ServiceLocator locator) {
     super(locator);
     log = LogFactory.getLog(JDBCBaseDAO.class.getName());

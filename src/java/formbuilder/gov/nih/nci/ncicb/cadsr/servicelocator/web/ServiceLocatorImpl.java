@@ -26,6 +26,7 @@ import javax.rmi.PortableRemoteObject;
 import javax.sql.DataSource;
 
 import javax.transaction.UserTransaction;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 
 /**
  * This class is an implementation of the Service Locator pattern. It is used

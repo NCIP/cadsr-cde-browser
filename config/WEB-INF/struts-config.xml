@@ -15,11 +15,14 @@
     <forward name="cdebrowserHome" path="/cdebrowser" redirect="true"/>
   </global-forwards>
   <action-mappings>
-    <action name="searchForm" path="/formAction" parameter="method" scope="request" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction" validate="false">
+    <action name="searchForm" path="/formAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction" validate="false">
       <forward name="success" path="/formbuilder/formResults.jsp"/>
       <forward name="defaultHome" path="/formbuilder/formbuilder.jsp" />
     </action>
-  </action-mappings>
+  <action  path="/pageAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.PagenationAction" validate="false">
+      <forward name="success" path="/formbuilder/formResults.jsp"/>
+    </action>    
+  </action-mappings>  
   <controller debug="3" nocache="true" processorClass="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureRequestProcessor" contentType="text/html;charset=UTF-8" locale="true"/>
   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
   <plug-in className="gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory"/>

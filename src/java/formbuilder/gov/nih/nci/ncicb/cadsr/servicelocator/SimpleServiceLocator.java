@@ -1,5 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.servicelocator;
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.util.DataSourceUtil;
 
 import java.net.URL;
@@ -12,12 +12,12 @@ import javax.ejb.EJBLocalHome;
 
 import javax.sql.DataSource;
 
-public class SimpleServiceLocator extends ServiceLocatorAdapter implements PersistenceContants
+public class SimpleServiceLocator extends ServiceLocatorAdapter implements PersistenceConstants
 {
   private Map envEntrys =  new HashMap();
   private Map dataSources = new HashMap();
 
-  
+
   public SimpleServiceLocator()
   {
     init();
@@ -39,19 +39,19 @@ public class SimpleServiceLocator extends ServiceLocatorAdapter implements Persi
        envEntrys.put(PASSWORD,"jjuser");
        envEntrys.put(DATASOURCE_KEY,"FormBuilderDS");
 
-       
-       
+
+
        /**
         * envEntrys.put(CONNECTION_STRING,"jdbc:oracle:thin:@localhost:1521:red");
        envEntrys.put(USERNAME,"sbrext");
        envEntrys.put(PASSWORD,"jjuser");
        **/
-             
+
        envEntrys.put(DAO_FACTORY_CLASS_KEY,"gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory");
-       
+
         DataSource source = DataSourceUtil.getDriverManagerDS(getString(DRIVER_CLASS_NAME)
                       ,getString(CONNECTION_STRING),getString(USERNAME)
-                      ,getString(PASSWORD));       
+                      ,getString(PASSWORD));
         dataSources.put("FormBuilderDS",source);
 
       }
@@ -76,11 +76,11 @@ public class SimpleServiceLocator extends ServiceLocatorAdapter implements Persi
       log.debug("Lookup Datasource with key "+ resolveDsLookupKey(dataSourceName));
     return (DataSource)dataSources.get(resolveDsLookupKey(dataSourceName));
   }
-  
+
   public void setDataSource(String dataSourceKey, DataSource dataSource)
   {
     dataSources.put(dataSourceKey,dataSource);
-  }  
+  }
 
   public URL getUrl(String envName)
   {
@@ -98,17 +98,17 @@ public class SimpleServiceLocator extends ServiceLocatorAdapter implements Persi
       log.debug("Lookup String with key "+ resolveEnvLookupKey(envName));
     return (String)envEntrys.get(resolveEnvLookupKey(envName));
   }
-  
+
   public void setObject(String key, Object value)
     {
       String resolvedKey = resolveEnvLookupKey(key);
       if(log.isDebugEnabled())
-        log.debug("Bind with key ="+resolvedKey+" value="+ value);      
+        log.debug("Bind with key ="+resolvedKey+" value="+ value);
       envEntrys.put(resolvedKey,value);
-    }  
+    }
  public static void main(String[] args)
  {
    SimpleServiceLocator locator = new SimpleServiceLocator();
-   
+
  }
 }

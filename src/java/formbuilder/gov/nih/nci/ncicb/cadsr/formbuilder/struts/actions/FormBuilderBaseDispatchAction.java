@@ -7,7 +7,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceStartupException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * Base DispatchAction for all formbuilder DispatchActions
  * 
  */
-public class FormBuilderBaseDispatchAction extends DispatchAction implements FormConstants,NavigationConstants,PersistenceContants
+public class FormBuilderBaseDispatchAction extends DispatchAction implements FormConstants, NavigationConstants, PersistenceConstants
 {
 
  public static final String DEFAULT_METHOD_NAME= SEND_HOME_METHOD;

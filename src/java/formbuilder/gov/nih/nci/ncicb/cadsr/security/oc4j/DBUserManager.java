@@ -6,7 +6,6 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,11 +15,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import com.evermind.security.User;
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
-public class DBUserManager extends BaseUserManager implements PersistenceContants,CaDSRConstants {
+public class DBUserManager extends BaseUserManager implements PersistenceConstants, CaDSRConstants {
 
   private AbstractDAOFactory daoFactory=null;
   private UserManagerDAO userManagerDAO =null;

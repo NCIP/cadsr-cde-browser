@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.jsp.bean;
 
-public class PagenationBean 
+public class PaginationBean 
 {
   private int currentPageIndex;
   private int previousPageIndex;
@@ -11,7 +11,7 @@ public class PagenationBean
   private boolean initialized=false;
 
   
-  public PagenationBean()
+  public PaginationBean()
   {
     previousPageIndex=-1;
     currentPageIndex=1;

@@ -3,11 +3,11 @@ import javax.ejb.EJBLocalHome;
 import javax.ejb.EJBHome;
 import javax.sql.DataSource;
 import java.net.URL;
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class ServiceLocatorAdapter implements ServiceLocator,PersistenceContants
+public class ServiceLocatorAdapter implements ServiceLocator, PersistenceConstants
 {
 
   protected Log log =  LogFactory.getLog(ServiceLocatorAdapter.class.getName());

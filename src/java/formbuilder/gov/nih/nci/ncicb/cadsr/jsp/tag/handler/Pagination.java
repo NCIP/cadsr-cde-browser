@@ -25,7 +25,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
  *                    actionURL="/cdebrowser/pageAction.do"/>        
  *
  */
-public class Pagenation extends TagSupport implements CaDSRConstants,FormConstants
+public class Pagination extends TagSupport implements CaDSRConstants,FormConstants
 {
   
   private String listId;
@@ -37,7 +37,7 @@ public class Pagenation extends TagSupport implements CaDSRConstants,FormConstan
   private String selectClassName;
   private String textClassName;
 
-  public Pagenation()
+  public Pagination()
   {
   }
   

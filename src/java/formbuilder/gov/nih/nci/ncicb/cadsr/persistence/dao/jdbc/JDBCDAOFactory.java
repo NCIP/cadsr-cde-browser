@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DAOCreateException;
@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 
 
 public class JDBCDAOFactory extends AbstractDAOFactory
-  implements PersistenceContants {
+  implements PersistenceConstants {
   private Map daoCache = Collections.synchronizedMap(new HashMap());
 
   public JDBCDAOFactory() {

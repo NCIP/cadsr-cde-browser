@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 
 import java.util.Collections;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public abstract class AbstractDAOFactory implements PersistenceContants {
+public abstract class AbstractDAOFactory implements PersistenceConstants {
   private static Map cache = Collections.synchronizedMap(new HashMap());
   protected ServiceLocator serviceLocator;
 

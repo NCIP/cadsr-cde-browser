@@ -42,10 +42,10 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    
+
     //Set the lookup values in the session
     setInitLookupValues(request);
-    
+
     FormBuilderServiceDelegate service = getFormBuilderService();
     DynaActionForm searchForm = (DynaActionForm) form;
     String formLongName = (String) searchForm.get(this.FORM_LONG_NAME);
@@ -54,17 +54,17 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     String workflow = (String) searchForm.get(this.WORKFLOW);
     String categoryName = (String) searchForm.get(this.CATEGORY_NAME);
     String type = (String) searchForm.get(this.FORM_TYPE);
-    
+
     Collection forms = null;
-    
+
      forms = service.getAllForms(
-        formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type);      
-  
+        formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type);
+
     setSessionObject(request, this.FORM_SEARCH_RESULTS, forms);
     PagenationBean pb = new PagenationBean();
     if(forms!=null)
       pb.setListSize(forms.size());
-    setSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION, pb);
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb);
     return mapping.findForward(SUCCESS);
   }
 
@@ -97,7 +97,7 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     DynaActionForm searchForm = (DynaActionForm) form;
     searchForm.set(this.PROTOCOL_ID_SEQ,protocolIdSeq);
     searchForm.set(this.CONTEXT_ID_SEQ,contextIdSeq);
-    
+
     return this.getAllForms(mapping,form,request,response);
   }
 

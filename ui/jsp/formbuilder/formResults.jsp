@@ -121,9 +121,9 @@ function submitForm() {
 
   <P>
       <logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
-        <bean:define id="pageBean" name="<%=FormConstants.FORM_SEARCH_RESULTS_PAGENATION%>" type="gov.nih.nci.ncicb.cadsr.jsp.bean.PagenationBean"/>
-        <cde:pagenation name="top" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
-                     beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGENATION%>" 
+        <bean:define id="pageBean" name="<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" type="gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean"/>
+        <cde:pagination name="top" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
+                     beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
                      actionURL="/cdebrowser/pageAction.do"/>
                      
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -173,8 +173,8 @@ function submitForm() {
             </tr>
           </logic:iterate>
         </table>
-        <cde:pagenation name="bottom" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
-                     beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGENATION%>" 
+        <cde:pagination name="bottom" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
+                     beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
                      actionURL="/cdebrowser/pageAction.do"/>        
         </logic:present>
    </P>

@@ -4,7 +4,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 
-import gov.nih.nci.ncicb.cadsr.jsp.bean.PagenationBean;
+import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import java.util.List;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.actions.DispatchAction;
 
-public class PagenationAction extends FormBuilderBaseDispatchAction
+public class PaginationAction extends FormBuilderBaseDispatchAction
 {
   /**
    * Test Method adds a Collection to session.
@@ -57,9 +57,9 @@ public class PagenationAction extends FormBuilderBaseDispatchAction
     list.add("11");
     list.add("12");
     setSessionObject(request, this.FORM_SEARCH_RESULTS, list);
-    PagenationBean pb = new PagenationBean();
+    PaginationBean pb = new PaginationBean();
     pb.setListSize(list.size());
-    setSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION, pb);
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb);
     return mapping.findForward(SUCCESS);
     }
   
@@ -82,9 +82,9 @@ public class PagenationAction extends FormBuilderBaseDispatchAction
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
 
-    PagenationBean pb = (PagenationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION);
+    PaginationBean pb = (PaginationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION);
     pb.next();
-    setSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION, pb);
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb);
     return mapping.findForward(SUCCESS);
     }
     
@@ -105,9 +105,9 @@ public class PagenationAction extends FormBuilderBaseDispatchAction
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    PagenationBean pb = (PagenationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION);
+    PaginationBean pb = (PaginationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION);
     pb.previous();
-    setSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION, pb);
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb);
     return mapping.findForward(SUCCESS);
     }    
    /* Sets the PagenationBean to new page index.
@@ -134,9 +134,9 @@ public class PagenationAction extends FormBuilderBaseDispatchAction
     {
       pageIndex= new Integer(pageIndexStr).intValue();
     }
-    PagenationBean pb = (PagenationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION);
+    PaginationBean pb = (PaginationBean)getSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION);
     pb.setPageIndex(pageIndex);
-    setSessionObject(request, FORM_SEARCH_RESULTS_PAGENATION, pb);
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb);
     return mapping.findForward(SUCCESS);
     }        
 }
