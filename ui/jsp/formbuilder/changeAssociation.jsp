@@ -41,6 +41,11 @@
        f.submit();
   }
   
+function details(linkParms ){
+  var urlString="search?dataElementDetails=9" + linkParms + "&PageId=DataElementsGroup"+"&queryDE=yes";
+  newBrowserWin(urlString,'deDetails',800,600)
+  
+}
 
 </SCRIPT>
 </HEAD>
@@ -82,10 +87,16 @@
   </logic:empty>
   <logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
     <logic:iterate id="de" name="<%=CaDSRConstants.CDE_CART%>" type="gov.nih.nci.ncicb.cadsr.resource.CDECartItem" property="dataElements" indexId="itemId">
+<%
+      String deId = de.getId();
+      String detailsURL = "javascript:details('&p_de_idseq="+deId +"')";
+%>
       <tr class="OraTabledata">
         <td class="OraFieldText">
           <html:radio property="selectedText" value="<%= itemId + \",\" + de.getItem().getLongName() %>"/>
+            <a href="<%= detailsURL %>">
           <bean:write name="de" property="item.longName"/>
+        </a>
         </td>
         <td class="OraFieldText">
           <bean:write name="de" property="item.longCDEName"/>
