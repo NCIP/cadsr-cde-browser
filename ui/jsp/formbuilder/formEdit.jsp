@@ -179,8 +179,8 @@ function clearProtocol() {
                   </td>  
                 </logic:empty>                        
                 <td align="right" width="25">
-                  <html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>'
-                       paramId="<%=FormConstants.FORM_ID_SEQ%>" paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">
+                  <html:link action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="0" >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
                   </html:link>&nbsp;
                 </td>
@@ -359,8 +359,8 @@ function clearProtocol() {
                 </td>  
                 </logic:empty>                        
                 <td align="right" width="25">
-                  <html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>'
-                       paramId="<%=FormConstants.FORM_ID_SEQ%>" paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">
+                  <html:link action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
                   </html:link>&nbsp;
                 </td>
