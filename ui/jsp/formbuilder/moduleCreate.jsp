@@ -51,6 +51,7 @@
           </td>
         </tr>
 
+        <!--
         <tr>
           <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.moduleinstruction.name" />:</td> 
           <td class="OraFieldText" nowrap>
@@ -60,6 +61,7 @@
               />
           </td>
         </tr>
+        -->
 
       </table>
       
