@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
@@ -26,6 +28,7 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
       implements FormConstants, NavigationConstants, PersistenceConstants,CaDSRConstants
 {
 
+ protected static Log log = LogFactory.getLog(FormAction.class.getName());;
 
   /**
    * Retrieve an object from the application scope by its name. This is a

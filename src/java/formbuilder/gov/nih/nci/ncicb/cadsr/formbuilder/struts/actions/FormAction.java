@@ -1,7 +1,17 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
+import gov.nih.nci.ncicb.cadsr.resource.Form;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 import java.io.IOException;
 
@@ -10,11 +20,6 @@ import java.util.Collection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 
 public class FormAction extends FormBuilderBaseDispatchAction {
@@ -53,9 +58,11 @@ public class FormAction extends FormBuilderBaseDispatchAction {
 
     forms =
       service.getAllForms(
-        formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type,classificationIdSeq);
+        formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type,
+        classificationIdSeq);
     setSessionObject(request, this.FORM_SEARCH_RESULTS, forms);
 
+    //Initialize and add the PagenationBean to the Session
     PaginationBean pb = new PaginationBean();
 
     if (forms != null) {
@@ -63,6 +70,44 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     }
 
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb);
+
+    return mapping.findForward(SUCCESS);
+  }
+
+  /**
+   * Returns Complete form given an Id.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward getFormDetails(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    FormBuilderServiceDelegate service = getFormBuilderService();
+    DynaActionForm searchForm = (DynaActionForm) form;
+    String formIdSeq = (String) searchForm.get(FORM_ID_SEQ);
+
+    Form crf = null;
+
+    try {
+      crf = service.getFormDetails(formIdSeq);
+    }
+    catch (FormBuilderException ex) {
+      if (log.isDebugEnabled()) {
+        log.debug("Exception on getFormBy Id =  " + ex);
+      }
+    }
+
+    setSessionObject(request, FORM_ID_SEQ, crf);
 
     return mapping.findForward(SUCCESS);
   }

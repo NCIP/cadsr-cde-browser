@@ -7,6 +7,9 @@ public interface FormConstants
     public static final String WORKFLOW = "workflow";
     public static final String FORM_TYPE = "formType";
     public static final String FORM_SEARCH_RESULTS = "formSearchResults";
+    public static final String FORM_ID_SEQ = "formIdSeq";
+    public static final String FORM_ID = "formId";
+    
     public static final String SEARCH_ALL = "";    
     public static final String PROTOCOL_ID_SEQ = "protocolIdSeq";
     public static final String CATEGORY_NAME = "categoryName";

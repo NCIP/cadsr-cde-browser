@@ -50,9 +50,10 @@
 		           	altMessage="Delete"/>
 		</td>                
           	<td class="OraFieldText">
-          		<html:link page="/formAction.do" paramName="form" paramProperty="preferredName">
-            			<bean:write name="form" property="longName"/><br>
-          		</html:link>    
+ 			<html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+ 				paramName="form" paramProperty="formIdseq">
+			<bean:write name="form" property="longName"/>
+			</html:link>          		    
           	</td>
           	<td class="OraFieldText">
           		<bean:write name="form" property="formType"/><br>

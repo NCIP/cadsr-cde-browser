@@ -23,7 +23,12 @@
 </HEAD>
 <BODY bgcolor="#ffffff">
 
-<%@ include  file="/formbuilder/tab_include_search.jsp" %>
+<%@ include  file="/formbuilder/common_header_inc.jsp" %>
+
+<jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
+	<jsp:param name="label" value="Form&nbsp;Search" />
+	<jsp:param name="urlPrefix" value="../" />
+</jsp:include>
 
 <html:form action="/formAction.do">
  <%@ include  file="/formbuilder/formSearch_inc.jsp" %>

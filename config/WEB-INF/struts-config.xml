@@ -14,6 +14,7 @@
       <form-property name="txtClassSchemeItem" type="java.lang.String"/>
       <form-property name="jspClassification" type="java.lang.String"/>
       <form-property name="protocolLongName" type="java.lang.String"/>
+      <form-property name="formIdSeq" type="java.lang.String"/>
     </form-bean>
     <form-bean name="protocolLOVForm"
                type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
@@ -37,6 +38,10 @@
       <forward name="success" path="/formbuilder/formResults.jsp"/>
       <forward name="defaultHome" path="/formbuilder/formbuilder.jsp"/>
     </action>
+    <action name="searchForm" path="/formDetailsAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction" validate="false">
+      <forward name="success" path="/formbuilder/formDetails.jsp"/>
+    </action>     
+    <action  path="/pageAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.PaginationAction" validate="false">    
     <action path="/pageAction" parameter="method" scope="session"
             type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.PaginationAction"
             validate="false">
