@@ -8,7 +8,7 @@
           </td>          
               
           <td > 
-            <a href="javascript:submitForm('<%="cancelReferenceDocs"%>')">
+            <a href="javascript:submitForm('<%="confirmCancelReferenceDocs"%>')">
                <img src="i/back.gif" border=0 alt="Back">
             </a>              
           </td>                    

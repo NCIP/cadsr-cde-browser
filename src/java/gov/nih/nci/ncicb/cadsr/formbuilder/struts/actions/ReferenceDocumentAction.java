@@ -321,6 +321,7 @@ public class ReferenceDocumentAction
 
   attMap.put(attachment, file);
   setSessionObject(request, REFDOC_ATTACHMENT_MAP, attMap);
+  saveMessage("cadsr.formbuilder.refdoc.attach.success", request);
   return mapping.findForward("success");
  }
 
@@ -454,6 +455,33 @@ public class ReferenceDocumentAction
   removeSessionObject(request, DELETED_ATTACHMENTS);
   return mapping.findForward("gotoEdit");
  }
+ 
+  /**
+  * 
+  *
+  * @param mapping The ActionMapping used to select this instance.
+  * @param form The optional ActionForm bean for this request.
+  * @param request The HTTP Request we are processing.
+  * @param response The HTTP Response we are processing.
+  *
+  * @return
+  *
+  * @throws IOException
+  * @throws ServletException
+  */
+ public ActionForward confirmCancelReferenceDocs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                          HttpServletResponse response) throws IOException, ServletException {
+
+  if (this.anythingChanged(form, request)) 
+  {
+    return mapping.findForward("gotoConfirmCancel");
+  } else {
+    removeSessionObject(request, REFDOC_ATTACHMENT_MAP);
+    removeSessionObject(request, DELETED_REFDOCS);
+  }
+  return mapping.findForward("gotoEdit");
+ }
+
 
  /**
   * 
@@ -470,6 +498,7 @@ public class ReferenceDocumentAction
   */
  public ActionForward cancelReferenceDocs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                           HttpServletResponse response) throws IOException, ServletException {
+
   removeSessionObject(request, REFDOC_ATTACHMENT_MAP);
 
   removeSessionObject(request, DELETED_REFDOCS);
@@ -829,6 +858,25 @@ public class ReferenceDocumentAction
 
   return mapping.findForward("manageReferenceDoc");
  }
+
+ /**
+  * Cancel edit reference documentation 
+  *
+  * @param mapping The ActionMapping used to select this instance.
+  * @param form The optional ActionForm bean for this request.
+  * @param request The HTTP Request we are processing.
+  * @param response The HTTP Response we are processing.
+  *
+  * @return
+  *
+  * @throws IOException
+  * @throws ServletException
+  */
+ public ActionForward cancelUploadAttachement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                             HttpServletResponse response) throws IOException, ServletException {
+
+  return mapping.findForward("success");
+ }
  /**
   * Save changes to reference documentation 
   *
@@ -1006,4 +1054,69 @@ public class ReferenceDocumentAction
 
   return null;
  }
+ 
+  private boolean anythingChanged( ActionForm form, HttpServletRequest request) {
+
+  Form crf = (Form)getSessionObject(request, CRF);
+
+  List refDocs = crf.getRefereceDocs();
+  List originalDocs = (List)getSessionObject(request, REFDOCS_CLONED);
+  Map attachments = (Map)getSessionObject(request, REFDOC_ATTACHMENT_MAP);
+
+  Iterator iter = refDocs.iterator();
+  int index = 0;
+
+   for (int i = 0; i < refDocs.size(); i++) {
+    ReferenceDocument refDoc = (ReferenceDocument)refDocs.get(i);
+
+    refDoc.setDisplayOrder(i);
+
+    if (refDoc.getDocIDSeq() == null) {
+     // new reference document
+     return true;
+    } else {
+     ReferenceDocument origRefDoc = findOriginalRefDoc(originalDocs, refDoc);
+
+     if (origRefDoc != null) //this should alreay be true {
+      if (hasRefDocChanged(origRefDoc, refDoc)) {
+       return true; // some existing ref doc has changed
+      }
+
+     List refAtts = refDoc.getAttachments();
+     List origAtts = origRefDoc.getAttachments();
+     Iterator attIter = refAtts.iterator();
+
+     while (attIter.hasNext()) {
+      Attachment newAtt = (Attachment)attIter.next();
+
+      if (isAttachmentNew(origAtts, newAtt.getName())) 
+       return true;
+        
+      
+     }
+    }
+   }
+
+   List deletedRefDocs = (List)getSessionObject(request, DELETED_REFDOCS);
+
+   for (int i = 0; i < deletedRefDocs.size(); i++) {
+    ReferenceDocument refDoc = (ReferenceDocument)deletedRefDocs.get(i);
+
+    if (refDoc.getDocIDSeq() != null) {
+     return true;
+    }
+   }
+
+   List deletedAtts = (List)getSessionObject(request, DELETED_ATTACHMENTS);
+
+   for (int i = 0; i < deletedAtts.size(); i++) {
+    Attachment deleteAttachment = (Attachment)deletedAtts.get(i);
+
+    return true;
+   }
+  
+  return false;
+ }
+
+ 
 }
