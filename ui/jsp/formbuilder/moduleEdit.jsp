@@ -90,10 +90,10 @@ function clearProtocol() {
           </tr>
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="20%">
-              <bean:message key="cadsr.formbuilder.module.comments"/>
+              <bean:message key="cadsr.formbuilder.moduleinstruction.name"/>
             </td>
             <td class="OraFieldText">
-              <html:text size="80%" property="<%=FormConstants.MODULE_COMMENTS%>"></html:text>
+              <html:text size="80%" property="<%=FormConstants.MODULE_INSTRUCTION_LONG_NAME%>"></html:text>
             </td>
           </tr>
         </table>
