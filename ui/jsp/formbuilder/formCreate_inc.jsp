@@ -45,10 +45,9 @@ function clearProtocol() {
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
         <td class="OraFieldText" nowrap>
-        <html:select styleClass = "Dropdown" property="<%=FormConstants.FORM_TYPE%>">
-        	<html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
-		      <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
-	      </html:select> 
+          <html:select styleClass = "Dropdown" property="<%=FormConstants.FORM_TYPE%>">
+	    <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
+	  </html:select> 
         </td>        
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/>:</td>
         <td class="OraFieldText" nowrap>
@@ -87,14 +86,24 @@ function clearProtocol() {
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
         <td class="OraFieldText" nowrap>
-          <html:text property="<%=FormConstants.PREFERRED_DEFINITION%>" size="35" />
+          <html:textarea 
+            property="<%= FormConstants.PREFERRED_DEFINITION %>"
+             cols="30"
+            rows="5"
+          />
         </td>
+        
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.comments" />:</td>
         <td class="OraFieldText" nowrap>
-          <html:text property="<%=FormConstants.FORM_COMMENTS%>" size="35" />
+          <html:textarea 
+            property="<%= FormConstants.FORM_COMMENTS %>"
+            cols="30"
+            rows="5"
+          />        
         </td>
     </tr>
-  </table>
+  
+ </table>
 
   <br/>
   <hr/>

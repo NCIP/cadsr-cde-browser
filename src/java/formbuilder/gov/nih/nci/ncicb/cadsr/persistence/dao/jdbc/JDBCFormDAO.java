@@ -597,15 +597,19 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     protected int createContent(
       Form sm,
       String qcIdseq) {
+      
+      String protocolIdSeq = null;
+      if(sm.getProtocol()!=null) {
+         protocolIdSeq = sm.getProtocol().getProtoIdseq();
+      }
 
       Object[] obj =
         new Object[] {
           qcIdseq, sm.getVersion().toString(),
           generatePreferredName(sm.getLongName()), sm.getLongName(),
           sm.getPreferredDefinition(), sm.getContext().getConteIdseq(), 
-          sm.getProtocol().getProtoIdseq(),
-          sm.getAslName(), sm.getCreatedBy(), sm.getFormType(),
-          sm.getFormCategory()
+          protocolIdSeq, sm.getAslName(), sm.getCreatedBy(), 
+          sm.getFormType(), sm.getFormCategory()
         };
 
       int res = update(obj);
