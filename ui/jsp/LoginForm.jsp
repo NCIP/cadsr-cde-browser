@@ -13,7 +13,10 @@ function submitForm() {
   document.forms[0].submit();
 }
 
-
+function clearForm()
+{
+  document.form[0].reset();
+}
 -->
 </SCRIPT>
 </head>

@@ -44,7 +44,8 @@
 
       <table cellspacing="2" cellpadding="3" border="0" width="100%">
         <tr>                                                      
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.module.name" />:</td> 
+          <td class="OraFieldtitlebold" nowrap>
+              <bean:message key="cadsr.formbuilder.module.name" />:</td> 
           <td class="OraFieldText" nowrap>
             <html:text 
               property="<%= FormConstants.MODULE_LONG_NAME %>"
@@ -53,19 +54,6 @@
               />
           </td>
         </tr>
-
-        <!--
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.moduleinstruction.name" />:</td> 
-          <td class="OraFieldText" nowrap>
-            <html:text 
-              property="<%= FormConstants.MODULE_INSTRUCTION_LONG_NAME %>"
-              size="50"
-              />
-          </td>
-        </tr>
-        -->
-
       </table>
       
       <%@ include file="/formbuilder/createModule_inc.jsp"%>    

@@ -8,11 +8,5 @@
               <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
             </html:link>             
           </td>                
-        </tr> 
-        <tr >
-          <td >
-            &nbsp;
-          </td>                          
-        </tr>         
-        
+        </tr>             
       </table>
