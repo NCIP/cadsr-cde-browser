@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 
 
 public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
@@ -88,6 +89,9 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     String sourceFormId,
     Form newForm) throws DMLException {
     CopyForm nForm = new CopyForm(this.getDataSource());
+
+    newForm.setPreferredName(generatePreferredName(newForm.getLongName()));
+
     Map out = nForm.execute(sourceFormId, newForm);
 
     if ((out.get("p_return_code")) == null) {
@@ -227,33 +231,68 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
 
-    //String formId1 = "9E343E83-5FEB-119F-E034-080020C9C0E0";  //CRF
-    String formId1 = "99CD59C5-A98A-3FA4-E034-080020C9C0E0"; // TEMPLATE
+    FormTransferObject newForm = new FormTransferObject();
 
+    newForm.setLongName("CHRIS TEST 1");
+    newForm.setPreferredName(formTest.generatePreferredName(newForm.getLongName()));
+//     newForm.setFormIdseq();
+
+    newForm.setPreferredDefinition("This is a test Definition");
+    
+    ContextTransferObject newContext = new ContextTransferObject(null);
+    newContext.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+    newForm.setContext(newContext);
+    
+    ProtocolTransferObject newProtocol = new ProtocolTransferObject(null);
+    newProtocol.setProtoIdseq("9DC06830-EB45-2E3C-E034-080020C9C0E0");
+    newForm.setProtocol(newProtocol);
+
+    newForm.setFormCategory("Comments");
+    newForm.setFormType("CRF");
+
+    newForm.setAslName("DRAFT NEW");
+    
+    newForm.setVersion(new Float(1.0));
+    
+//     newForm.setPreferredName(newForm.getLongName());
+    newForm.setCreatedBy("Anonymous");
+    
     try {
-      System.out.println(formTest.findFormByPrimaryKey(formId1));
-    }
-    catch (DMLException e) {
-      System.out.println("Failed to get a form for " + formId1);
-    }
+	formTest.copyForm("9DC06CFF-6DF7-2B36-E034-080020C9C0E0", 
+			  newForm);
 
-    try {
-      Form form1 =
-        formTest.findFormByPrimaryKey("D3830147-13E8-11BF-E034-0003BA0B1A09");
-      Form form2 =
-        formTest.findFormByPrimaryKey("D3830147-13E8-11BF-E034-0003BA0B1A09");
-      form2.setPreferredName("testcopyprna1456");
-      form2.setLongName("my form test 456123");
-      form2.setAslName("DRAFT MOD");
-      form2.setConteIdseq("29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
-      System.out.println(form2.getProtocol().getProtoIdseq() + "Conte_idseq");
+    } catch (DMLException e){
+	System.out.println("Failed: " + e);
+    } 
 
-      //System.out.println(formTest.copyForm(form1, form2).getFormIdseq());
-    }
+// end of try-catch
+//     //String formId1 = "9E343E83-5FEB-119F-E034-080020C9C0E0";  //CRF
+//     String formId1 = "99CD59C5-A98A-3FA4-E034-080020C9C0E0"; // TEMPLATE
 
-    catch (DMLException e) {
-      System.out.println("Failed to find Form");
-    }
+//     try {
+//       System.out.println(formTest.findFormByPrimaryKey(formId1));
+//     }
+//     catch (DMLException e) {
+//       System.out.println("Failed to get a form for " + formId1);
+//     }
+
+//     try {
+//       Form form1 =
+//         formTest.findFormByPrimaryKey("D3830147-13E8-11BF-E034-0003BA0B1A09");
+//       Form form2 =
+//         formTest.findFormByPrimaryKey("D3830147-13E8-11BF-E034-0003BA0B1A09");
+//       form2.setPreferredName("testcopyprna1456");
+//       form2.setLongName("my form test 456123");
+//       form2.setAslName("DRAFT MOD");
+//       form2.setConteIdseq("29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+//       System.out.println(form2.getProtocol().getProtoIdseq() + "Conte_idseq");
+
+//       //System.out.println(formTest.copyForm(form1, form2).getFormIdseq());
+//     }
+
+//     catch (DMLException e) {
+//       System.out.println("Failed to find Form");
+//     }
 
     //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
     // type, classificationIdseq
@@ -605,7 +644,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       in.put("p_preferred_name", newForm.getPreferredName());
       in.put("p_long_name", newForm.getLongName());
       in.put("p_preferred_definition", newForm.getPreferredDefinition());
-      in.put("p_conte_idseq", newForm.getConteIdseq());
+      in.put("p_conte_idseq", newForm.getContext().getConteIdseq());
       in.put("p_proto_idseq", newForm.getProtocol().getProtoIdseq());
       in.put("p_asl_name", newForm.getAslName());
       in.put("p_created_by", newForm.getCreatedBy());
