@@ -21,8 +21,7 @@
   queryBuilder.getSortColumnHeader());
   DataElementSearchBean desb = (DataElementSearchBean)infoBean.getInfo("desb");
   List deList = (List)infoBean.getInfo(ProcessConstants.ALL_DATA_ELEMENTS);
-  HTMLPageScroller myScroller = (HTMLPageScroller)infoBean.getInfo(
-                           ProcessConstants.DE_SEARCH_PAGE_SCROLLER);
+  HTMLPageScroller myScroller = (HTMLPageScroller)infoBean.getInfo(ProcessConstants.DE_SEARCH_PAGE_SCROLLER);
 
   HTMLPageScroller topScroller = (HTMLPageScroller)infoBean.getInfo(
                            ProcessConstants.DE_SEARCH_TOP_PAGE_SCROLLER);
@@ -98,12 +97,12 @@ Data Elements Search - Data Elements
 <BODY onLoad="turnOff()" topmargin="0">
 
 
-<SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/checkbox.js"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/checkbox.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function redirect1(detailReqType, linkParms )
 {
-  var urlString="search?dataElementDetails=9" + linkParms + "<%= pageUrl %>"+"&queryDE=yes";
+  var urlString="<%=request.getContextPath()%>/search?dataElementDetails=9" + linkParms + "<%= pageUrl %>"+"&queryDE=yes";
   newBrowserWin(urlString,'deDetails',800,600)
   
 }
@@ -226,6 +225,14 @@ function updateCart() {
   }
 }
 
+function compareCDEs() {
+  var numberSelected = validateMultiSelection('selectDE','Please select at least two data elements to compare');
+  if (numberSelected > 1) {
+  var urlString="<%=request.getContextPath()%>/cdebrowser/compareCDEAction.do?method=compareCDEs&numberSelected=" + numberSelected;
+  newBrowserWin(urlString,'deCompares',800,600)
+  }
+}
+
 function done() {
   top.location.href = "<%=doneURL%>";
 }
@@ -249,7 +256,7 @@ function newSearch(){
 <%
   }
 %>
-<form action="<%= infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm">
+<form action="<%= infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(window.event.keyCode==13){submitForm()};">
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
@@ -442,6 +449,7 @@ function newSearch(){
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
     <tr>
       <td align="left"><a href="javascript:updateCart()"><html:img page="/i/AddToCDECart.gif" border="0" /></a></td>
+      <td align="left"><a href="javascript:compareCDEs()"><html:img page="/i/compareCDEs.gif" border="0" /></a></td>
       <td align="right"><%=topScroller.getScrollerHTML()%></td>
     </tr>
 </table>
@@ -452,8 +460,8 @@ function newSearch(){
   	 <th class="OraTableColumnHeader" nowrap>
  		        <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-              ascendingImageUrl="i/up.gif"
-              descendingImageUrl="i/down.gif" 
+              ascendingImageUrl='<%=request.getContextPath()+ "/i/up.gif"%>'
+              descendingImageUrl='<%=request.getContextPath()+ "/i/down.gif"%>' 
  	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
      	   	  columnHeader="Long Name" 
               orderParamId="sortOrder" 
@@ -467,8 +475,8 @@ function newSearch(){
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-              ascendingImageUrl="i/up.gif"
-              descendingImageUrl="i/down.gif" 
+              ascendingImageUrl='<%=request.getContextPath()+ "/i/up.gif"%>'
+              descendingImageUrl='<%=request.getContextPath()+ "/i/down.gif"%>'  
  	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
      	   	  columnHeader="Registration Status" 
               orderParamId="sortOrder" 
@@ -479,8 +487,8 @@ function newSearch(){
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-              ascendingImageUrl="i/up.gif"
-              descendingImageUrl="i/down.gif" 
+              ascendingImageUrl='<%=request.getContextPath()+ "/i/up.gif"%>'
+              descendingImageUrl='<%=request.getContextPath()+ "/i/down.gif"%>'
  	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
      	   	  columnHeader="Workflow Status" 
               orderParamId="sortOrder" 
