@@ -148,11 +148,10 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
     }
 
     setSessionObject(request, CRF, newForm);
-    request.setAttribute(FORM_ID_SEQ, newForm.getFormIdseq());
 
-    // !!! HACK
-    request.setAttribute("P_IDSEQ", newForm.getFormIdseq());
-
+    
+    request.setAttribute("showCached", CaDSRConstants.YES);
+    
     saveMessage("cadsr.formbuilder.form.copy.success", request);
 
     if (dynaForm.get(FORM_GOTO_EDIT) == null) {

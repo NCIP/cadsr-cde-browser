@@ -52,6 +52,7 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
                String html = generateHtml(nonListedVVs,availableVVs);
                out.print(html); 
                pageContext.setAttribute(AVAILABLE_VALID_VALUE_PRESENT,"Yes");
+               
              }
              else
              {

@@ -12,7 +12,9 @@ public class JDBCQuestionTransferObject extends QuestionTransferObject
     setQuesIdseq(rs.getString(1));  //QUES_IDSEQ
     setLongName(rs.getString(9));   // LONG_NAME
     setDisplayOrder(rs.getInt(13)); // DISPLAY_ORDER
+    setAslName(rs.getString(5));//Workflow
     String deIdSeq = rs.getString(8);
+    
     if(deIdSeq!=null)
     {
       DataElementTransferObject dataElementTransferObject =

@@ -138,6 +138,7 @@ A:visited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; col
 .LOVFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#CFCFCF}
 .AbbreviatedText {FONT-SIZE: 8pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; text-align: left; }
 .OraFieldtitlebold {FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: right}
+.OraFieldtitleboldLeftAlign {FONT-WEIGHT: bold; FONT-SIZE: 9pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; TEXT-ALIGN: left; text-indent:1}
 .InputFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000;text-align: left}
 .Dropdown {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; BACKGROUND-COLOR: #CFCFCF; text-align: left; width:39mm }
 .UnderlineOraFieldText {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; color:#000000; border-bottom:1px solid #999966;}

@@ -217,8 +217,14 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     FormBuilderServiceDelegate service = getFormBuilderService();
     DynaActionForm hrefCRFForm = (DynaActionForm) form;
     Form crf = null;
-
-    if (hrefCRFForm != null) {
+    
+    String showCached = (String)request.getAttribute("showCached");
+    
+    if(showCached!=null&&showCached.equalsIgnoreCase(CaDSRConstants.YES))
+    {
+      crf = (Form) getSessionObject(request, CRF);
+    }    
+    else if (hrefCRFForm != null) {
       String formIdSeq = (String) hrefCRFForm.get(FORM_ID_SEQ);
       //Added to support tree
       if ("".equals(formIdSeq)) {
