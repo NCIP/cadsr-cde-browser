@@ -134,13 +134,21 @@ public class PageContextValueObject implements CDEBrowserPageContext,java.io.Ser
       conteIdseq = param.getConteIdseq();
       if (contextName.equals("CTEP")) {
         //contextName = "CTEP";
+        String str = "";
+        if(param.getClassSchemeName()!=null)
+            str = param.getClassSchemeName()+" >> ";
+        if(param.getClassSchemeItemName()!=null)
+            str = str+param.getClassSchemeItemName()+" >> ";
+        if(param.getTemplateGrpName()!=null)
+            str = str+param.getTemplateGrpName()+" >> ";
+       /**     
         cdeTemplateType = param.getTemplateGrpName();
         classSchemeItemName = param.getClassSchemeItemName();
         classSchemeName = param.getClassSchemeName();
+        **/
+        
         pageContextDisplayString = pageContextDisplayString + contextName
-            + " >> Protocol Form Templates >> "+ classSchemeName + " >> " 
-            + classSchemeItemName + " >> "
-            +cdeTemplateType + " >> " + cdeTemplateName ;
+            + " >> Protocol Form Templates >> "+ str + cdeTemplateName ;
 
       }
       else {
