@@ -12,13 +12,13 @@
           <td >
 		       <cde:secureIcon  formId="<%=FormConstants.CRF%>"
             formScope="<%=CaDSRConstants.SESSION_SCOPE%>"
-            activeImageSource="i/copyButton.gif" 
+            activeImageSource="i/selectForCopyButton.gif" 
 		       	activeUrl='<%="/formToCopyAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_COPY%>' 
 		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
 		   	   	urlPrefix="<%=urlPrefix%>"
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
-		   	   	altMessage="Copy" />    
+		   	   	altMessage="Select for Copy" />    
           </td> 
           <td >
 		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 

@@ -325,7 +325,7 @@ function clearProtocol() {
                                               questionBeanId="question"
                                               availableValidValusMapId="<%=FormConstants.AVAILABLE_VALID_VALUES_MAP%>"
                                               selectClassName="FreeDropdown"
-                                              selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX%>"/>
+                                              selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX+questionIndex%>"/>
                                           </td>
                                           <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                            <td align="left" width="4%">
@@ -364,7 +364,7 @@ function clearProtocol() {
                                                       questionBeanId="question"
                                                       availableValidValusMapId="<%=FormConstants.AVAILABLE_VALID_VALUES_MAP%>"
                                                       selectClassName="FreeDropdown"
-                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX%>"/>
+                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX+questionIndex%>"/>
                                                   </td>
                                                   <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                                     <td align="left" width="4%">
@@ -430,7 +430,7 @@ function clearProtocol() {
                                                       questionBeanId="question"
                                                       availableValidValusMapId="<%=FormConstants.AVAILABLE_VALID_VALUES_MAP%>"
                                                       selectClassName="FreeDropdown"
-                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX%>"/>
+                                                      selectName="<%=FormConstants.ADD_AVAILABLE_VALID_VALUE_INDEX+questionIndex%>"/>
                                                   </td>
                                                   <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                                     <td align="left" width="4%">

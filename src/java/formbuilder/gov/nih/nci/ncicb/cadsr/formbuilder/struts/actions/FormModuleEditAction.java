@@ -494,9 +494,10 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     int currQuestionIndex = questionIndex.intValue();
     int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
-
-    Integer addAvailableValidValueIndex =
-      (Integer) moduleEditForm.get(ADD_AVAILABLE_VALID_VALUE_INDEX);
+    String addAvailableValidValueIndexStr = request.getParameter(ADD_AVAILABLE_VALID_VALUE_INDEX+currQuestionIndex);
+    int addAvailableValidValueIndex = 0;
+    if(addAvailableValidValueIndexStr!=null)
+      addAvailableValidValueIndex = Integer.parseInt(addAvailableValidValueIndexStr);
 
     Map availbleValidValuesMap =
       (Map) getSessionObject(request, this.AVAILABLE_VALID_VALUES_MAP);
@@ -509,7 +510,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
 
     List availablevvList = (List)availbleValidValuesMap.get(currQuestion.getQuesIdseq());
     
-    FormValidValue formValidValueToAdd = (FormValidValue)availablevvList.get(addAvailableValidValueIndex.intValue());;
+    FormValidValue formValidValueToAdd = (FormValidValue)availablevvList.get(addAvailableValidValueIndex);
     
     if(formValidValueToAdd==null)
       return mapping.findForward(MODULE_EDIT);
@@ -519,10 +520,10 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     if (currValidValueIndex < validValues.size()) {
       FormValidValue currValidValue =
         (FormValidValue) validValues.get(currValidValueIndex);
-      int displayOrder = currValidValue.getDisplayOrder();
-      FormActionUtil.incrementDisplayOrder(validValues, currValidValueIndex);
+      int displayOrder = currValidValue.getDisplayOrder();      
       formValidValueToAdd.setDisplayOrder(displayOrder);
       validValues.add(currValidValueIndex, formValidValueToAdd);
+     FormActionUtil.incrementDisplayOrder(validValues, currValidValueIndex+1);      
     }
     else {
       int newDisplayOrder = 0;

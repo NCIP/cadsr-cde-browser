@@ -27,7 +27,7 @@
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTableColumnHeader">
           	<th class="OraTableColumnHeader" nowrap>Download</th>
-          	<th class="OraTableColumnHeader" nowrap>Copy</th>
+          	<th class="OraTableColumnHeader" >Select for Copy</th>
           	<th class="OraTableColumnHeader" nowrap>Edit</th>
           	<th class="OraTableColumnHeader" nowrap>Delete</th>
           	<th class="OraTableColumnHeader" nowrap>Long Name</th>
@@ -55,7 +55,7 @@
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
             inactiveImageSource="i/copy_inactive.gif"
-		   	   	altMessage="Copy"
+		   	   	altMessage="Select for Copy"
 		   	   	target="_parent"/>
 		 </td>                  
 		  <td align=center>
