@@ -237,7 +237,7 @@ function listChanged(urlInfo) {
       <tr class="OraTabledata">
         <td class="OraFieldText"><%=validValue.getShortMeaningValue()%> </td>
         <td class="OraFieldText"><%=validValue.getShortMeaning()%> </td>
-        <td class="OraFieldText"><%=validValue.getShortMeaningDescription()%> </td>
+        <td class="OraFieldText"><%=validValue.getDescription()%> </td>
       </tr>
 <%
     }
