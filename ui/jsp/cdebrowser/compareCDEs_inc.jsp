@@ -15,12 +15,12 @@
           <a href="javascript:changeDisplayOrder()">
              <img src="../i/changeCompareOrder.gif" border=0 alt="Change the order in which the CDEs are compared">
           </a>          
-        </td>         
+        </td>
         <TD valign="TOP" align="CENTER"  colspan=1>
-              <html:link action='<%="/cdebrowser/CDECompareExcelDownload.do?"+NavigationConstants.METHOD_PARAM+"=downloadToExcel"%>' 
-                 >
-                <img src="../i/excelDownload.gif" border=0>
-              </html:link>          
+		  <html:link action='<%="/cdebrowser/CDECompareExcelDownload.do?"+NavigationConstants.METHOD_PARAM+"=downloadToExcel"%>'>
+		    <img src="../i/excelDownload.gif" border=0>
+		  </html:link>          
         </TD>
+        
     </tr>
 </table>
