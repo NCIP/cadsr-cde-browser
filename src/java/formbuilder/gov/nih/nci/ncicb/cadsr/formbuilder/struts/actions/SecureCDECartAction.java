@@ -155,7 +155,8 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
 					ActionForm form,
 					HttpServletRequest request,
 					HttpServletResponse response) throws IOException, ServletException {
-	CDECart cart = new CDECartTransferObject();
+	//CDECart cart = new CDECartTransferObject();
+  CDECart cart = null;
 
 	try {
 	    FormBuilderServiceDelegate service = getFormBuilderService();
@@ -231,41 +232,49 @@ public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
     }
 
     /**
-     * Adds items to CDE Cart.
-     *
-     * @param mapping The ActionMapping used to select this instance.
-     * @param form The optional ActionForm bean for this request.
-     * @param request The HTTP Request we are processing.
-     * @param response The HTTP Response we are processing.
-     *
-     * @return
-     *
-     * @throws IOException
-     * @throws ServletException
-     */
-    public ActionForward removeItems(
-				     ActionMapping mapping,
-				     ActionForm form,
-				     HttpServletRequest request,
-				     HttpServletResponse response) throws IOException, ServletException {
-	try {
-	    FormBuilderServiceDelegate service = getFormBuilderService();
-	    CDECartFormBean myForm = (CDECartFormBean) form;
-	    String[] selectedDeleteItems = myForm.getSelectedDeleteItems();
-	    Collection items = new ArrayList();
-
-	    for (int i = 0; i < selectedDeleteItems.length; i++) {
-		items.add(selectedDeleteItems[i]);
-	    }
-
-	    service.removeFromCDECart(items);
-	}
-	catch (FormBuilderException exp) {
-	    if (log.isDebugEnabled()) {
-		log.debug("Exception on addItems =  " + exp);
-	    }
-	}
-
-	return mapping.findForward("addDeleteSuccess");
+   * Delete items from the CDE Cart.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward removeItems(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    try {
+      FormBuilderServiceDelegate service = getFormBuilderService();
+      CDECartFormBean myForm = (CDECartFormBean) form;
+      String[] selectedDeleteItems = myForm.getSelectedDeleteItems();
+      Collection savedItems = new ArrayList();
+      //Collection unsavedItems = new ArrayList();
+      Collection items = new ArrayList();
+      //Get the cart in the session
+      CDECart sessionCart =
+        (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+      CDECartItem item = null;
+      for (int i = 0; i < selectedDeleteItems.length; i++) {
+        item = sessionCart.findDataElement(selectedDeleteItems[i]);
+        if (item.getPersistedInd())
+          savedItems.add(selectedDeleteItems[i]);
+        items.add(selectedDeleteItems[i]);
+      }
+      service.removeFromCDECart(savedItems);
+      sessionCart.removeDataElements(items);
     }
+    catch (FormBuilderException exp) {
+      if (log.isDebugEnabled()) {
+        log.debug("Exception on removeItems =  " + exp);
+      }
+    }
+
+    return mapping.findForward("addDeleteSuccess");
+  }
 }
