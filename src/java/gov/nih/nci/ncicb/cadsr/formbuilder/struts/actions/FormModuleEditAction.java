@@ -458,6 +458,58 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     return mapping.findForward(MODULE_EDIT);
   }
+  
+    /**
+   * Deletes the Multiple ValidValue of specified index.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward deleteValidValues(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    DynaActionForm moduleEditForm = (DynaActionForm) form;
+
+    Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
+    
+    String[] selectedVVIndexes = (String[])request.getParameterValues(SELECTED_ITEMS+questionIndex);
+     
+    int currQuestionIndex = questionIndex.intValue();
+
+    Module module = (Module) getSessionObject(request, MODULE);
+
+    String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
+    setQuestionsFromArray(module, questionArr);
+
+    List questions = module.getQuestions();
+    Question currQuestion = (Question) questions.get(currQuestionIndex);
+    List validValues = currQuestion.getValidValues();
+
+    for(int i=selectedVVIndexes.length-1;i>-1;--i)
+    {
+      int currValidValueIndex = (new Integer(selectedVVIndexes[i])).intValue();
+      if ((validValues != null) && (validValues.size() > 0)) {
+        FormValidValue deletedValidValue =
+          (FormValidValue) validValues.remove(currValidValueIndex);
+        FormActionUtil.decrementDisplayOrder(validValues, currValidValueIndex);
+      }
+    }
+    
+    questionArr = getQuestionsAsArray(module.getQuestions());
+    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+
+    return mapping.findForward(MODULE_EDIT);
+  }
+
 
   /**
    * Add ValidValue from deleted list.

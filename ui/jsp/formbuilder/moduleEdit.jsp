@@ -15,6 +15,7 @@
     <TITLE>Formbuilder: Edit Module</TITLE>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
+    <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/checkbox.js"></SCRIPT>
     <SCRIPT LANGUAGE="JavaScript">
 <!--
 
@@ -28,6 +29,28 @@ function submitValidValueEdit(methodName,questionIndexValue,validValueIndexValue
   document.forms[0].<%=FormConstants.VALID_VALUE_INDEX%>.value=validValueIndexValue;
   document.forms[0].submit();
 }
+
+function submitValidValuesEdit(methodName,questionIndexValue) {
+   var selectedItems = '<%=FormConstants.SELECTED_ITEMS%>';
+   var selectedElements = selectedItems+questionIndexValue;
+   var selectedSize = getNumberOfSelectedItems(selectedElements);
+  if (validateSelection(selectedElements,'Please select at least one valid value to delete')) {
+      if(selectedSize>1)
+      {
+        document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+        document.forms[0].<%=FormConstants.QUESTION_INDEX%>.value=questionIndexValue;
+        document.forms[0].submit();
+        return true;
+      }
+      else
+      {
+        var selectedIndexValue = getValueOfSelectedItem(selectedElements);
+        submitValidValueEdit(methodName,questionIndexValue,selectedIndexValue);
+        return true;
+      }
+    }
+ }
+ 
 function submitModuleEdit(methodName,questionIndexValue) {
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
   document.forms[0].<%=FormConstants.QUESTION_INDEX%>.value=questionIndexValue;
@@ -479,26 +502,28 @@ function clearProtocol() {
                                   <tr class="OraTabledata">
                                     <td class="OraTabledata" >&nbsp;</td>
                                     <td class="OraTabledata" align="left" width="90%"> 
-                                       <table width="35%" align="left" cellpadding="0" cellspacing="0" border="0" >
+                                       <table width="30%" align="left" cellpadding="0" cellspacing="0" border="0" >
                                          </tr >
-                                            <td width="30%" align="left" >
+                                            <td width="32%" align="left" >
                                              <a href="javascript:CheckAll('<%= FormConstants.SELECTED_ITEMS+questionIndex %>')">Check All
                                              </a>
                                            </td>
-                                           <td align="left">
+                                           <td width="32%" align="left">
                                              <a href="javascript:ClearAll('<%= FormConstants.SELECTED_ITEMS+questionIndex %>')">Clear All
                                              </a>     
                                            </td>
                                            <td align="left">
-                                              <a href="javascript:submitValidValueEdit()">                                              
-                                                <img src="<%=urlPrefix%>i/delete.gif" border="0" alt="Delete"/>
+                                              <a href="javascript:submitValidValuesEdit('<%=NavigationConstants.DELETE_VALID_VALUES%>','<%=questionIndex%>')">                                              
+                                               <img src="<%=urlPrefix%>i/delete.gif" border="0" alt="Delete"/>
                                               </a>
                                             </td>
+                                            <!-- Used for subset Prototype
                                             <td align="left">
                                              <a href="javascript:submitToSubsets('<%=NavigationConstants.VIEW_SUBSETTEDVDS_LIST%>','<%=questionIndex %>')">
                                                  <img src=<%=urlPrefix%>i/subset.gif border=0 alt="Select from existing subsets">
                                              </a>
                                             </td>
+                                            -->
                                         </tr>
                                       </table>
                                     </td>                               
@@ -509,7 +534,9 @@ function clearProtocol() {
                                     <td class="OraTabledata" align="right" width="90%">                                                                        
                                         <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                           <tr class="OraTabledata" >
-                                           <td align="left" ><INPUT TYPE=CHECKBOX NAME="<%= FormConstants.SELECTED_ITEMS+questionIndex%>" value="<%= validValueIndex %>"></td>
+                                           <td align="left" >
+                                              <INPUT TYPE=CHECKBOX NAME="<%= FormConstants.SELECTED_ITEMS+questionIndex%>" value="<%= validValueIndex %>">
+                                              </td>
                                                <!-- Adding from available vv list -->
                                                   
                                                   <td align="right"   class="OraFieldText" nowrap width="90%">    

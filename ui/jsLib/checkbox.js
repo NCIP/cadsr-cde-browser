@@ -49,3 +49,16 @@ function getNumberOfSelectedItems(chkName){
 
    return numberselected;
 }
+
+function getValueOfSelectedItem(chkName){
+  dml=document.forms[0];
+  len = dml.elements.length;
+  var i=0;
+  var value=0;
+  for( i=0 ; i<len ; i++) {
+   if ((dml.elements[i].name==chkName) && (dml.elements[i].checked==1)) 
+    value = dml.elements[i].value;
+   }
+
+   return value;
+}

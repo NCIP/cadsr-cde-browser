@@ -60,7 +60,7 @@
       <form-property name="questionIdSeq" type="java.lang.String"/>
       <form-property name="questionIndex" type="java.lang.Integer"/>
       <form-property name="questionOption" type="java.lang.String"/>  
-      <form-property name="moduleQuestions" type="java.lang.String[]"/>
+      <form-property name="moduleQuestions" type="java.lang.String[]"/>    
       <form-property name="addDeletedQuestionIdSeq" type="java.lang.String"/>
       <form-property name="validValueIndex" type="java.lang.Integer"/>
       <form-property name="addAvailableValidValueIndex" type="java.lang.Integer"/> 

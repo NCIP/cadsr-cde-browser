@@ -28,7 +28,6 @@ function removeFromCompareList() {
   if (validateSelection('<%=BrowserFormConstants.CDE_TO_REMOVE%>','Please select at least one data element to remove from the list')) {
     document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.REMOVE_FROM_CDE_COMPARE_LIST%>";    
     document.forms[0].action='<%=request.getContextPath()%>/cdebrowser/removeFromCompareListAction.do';      
-    alert(document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value);
     document.forms[0].submit();
     return true;
   }

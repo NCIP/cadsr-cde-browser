@@ -39,6 +39,7 @@ public interface NavigationConstants
   public static final String MOVE_VALID_VALUE_UP="moveValidValueUp";
   public static final String MOVE_VALID_VALUE_DOWN="moveValidValueDown";
   public static final String DELETE_VALID_VALUE="deleteValidValue";
+  public static final String DELETE_VALID_VALUES="deleteValidValues";
   public static final String ADD_FROM_AVAILABLE_VALID_VALUE_LIST="addFromAvailableValidValueList";
   public static final String SAVE_MODULE="saveModule";
   public static final String CANCEL_MODULE_EDIT ="cancelModuleEdit";
