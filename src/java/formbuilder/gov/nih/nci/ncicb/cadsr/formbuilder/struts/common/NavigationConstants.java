@@ -6,7 +6,8 @@ public interface NavigationConstants
   public static final String SUCCESS = "success";
   public static final String FAILURE = "failure";
   public static final String FORM_DETAILS ="formDetails";
-   public static final String FORM_EDIT ="formEdit";
+  public static final String FORM_EDIT ="formEdit";
+  public static final String MODULE_EDIT ="moduleEdit";
 
   //Method names
 
@@ -23,8 +24,17 @@ public interface NavigationConstants
   public static final String GET_FORM_TO_COPY="getFormToCopy";
   public static final String GET_FORM_TO_PRINT="getPrinterVersion";
   public static final String FORM_COPY = "formCopy";
+  //Edit Module
   public static final String GET_MODULE_TO_EDIT ="getModuleToEdit";
-  //Edit
+  public static final String MOVE_QUESTION_UP="moveQuestionUp";
+  public static final String MOVE_QUESTION_DOWN="moveQuestionDown"; 
+  public static final String DELETE_QUESTION="deleteQuestion"; 
+  public static final String ADD_FROM_DELETED_QUESTION_LIST="addFromDeletedQuestionList";
+  public static final String MOVE_VALID_VALUE_UP="moveValidValueUp";
+  public static final String MOVE_VALID_VALUE_DOWN="moveValidValueDown"; 
+  public static final String DELETE_VALID_VALUE="deleteValidValue"; 
+  public static final String ADD_FROM_AVAILABLE_VALID_VALUE_LIST="addFromAvailableValidValueList";  
+  //Edit Form
   public static final String GET_FORM_TO_EDIT="getFormToEdit";
   public static final String DELETE_FORM="deleteForm";  
   public static final String MOVE_MODULE_UP="moveModuleUp";
@@ -32,6 +42,7 @@ public interface NavigationConstants
   public static final String DELETE_MODULE="deleteModule";
   public static final String ADD_FROM_DELETED_LIST="addFromDeletedList";
   public static final String SAVE_FORM="saveForm";
+ 
 
   public static final String CREATE_MODULE = "createModule";
   public static final String GO_TO_CREATE_MODULE = "goToCreateModule";

@@ -1,39 +1,27 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
-import gov.nih.nci.ncicb.cadsr.dto.GenericTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.GenericTransferObjectImpl;
+import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
-import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
-import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
-import org.apache.struts.action.DynaActionForm;
+import gov.nih.nci.ncicb.cadsr.resource.Orderable;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 
 public class FormEditAction extends FormBuilderBaseDispatchAction {
@@ -464,7 +452,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
    *
    * @return the removed module
    */
-  private Module removeModuleFromList(
+  protected Module removeModuleFromList(
     String moduleIdSeq,
     List modules) {
     ListIterator iterate = modules.listIterator();
@@ -490,7 +478,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
    *
    * @return the  module else returns null;
    */
-  private Module getModuleFromList(
+  protected Module getModuleFromList(
     String moduleIdSeq,
     List modules) {
     ListIterator iterate = modules.listIterator();
@@ -513,15 +501,15 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
    * @param modules
    * @param startIndex
    */
-  private void incrementDisplayOrder(
-    List modules,
+  protected void incrementDisplayOrder(
+    List list,
     int startIndex) {
-    ListIterator iterate = modules.listIterator(startIndex);
+    ListIterator iterate = list.listIterator(startIndex);
 
     while (iterate.hasNext()) {
-      Module module = (Module) iterate.next();
-      int displayOrder = module.getDisplayOrder();
-      module.setDisplayOrder(++displayOrder);
+      Orderable orderableObj = (Orderable) iterate.next();
+      int displayOrder = orderableObj.getDisplayOrder();
+      orderableObj.setDisplayOrder(++displayOrder);
     }
   }
 
@@ -532,15 +520,15 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
    * @param modules
    * @param startIndex
    */
-  private void decrementDisplayOrder(
-    List modules,
+  protected void decrementDisplayOrder(
+    List list,
     int startIndex) {
-    ListIterator iterate = modules.listIterator(startIndex);
+    ListIterator iterate = list.listIterator(startIndex);
 
     while (iterate.hasNext()) {
-      Module module = (Module) iterate.next();
-      int displayOrder = module.getDisplayOrder();
-      module.setDisplayOrder(--displayOrder);
+      Orderable orderable = (Orderable) iterate.next();
+      int displayOrder = orderable.getDisplayOrder();
+      orderable.setDisplayOrder(--displayOrder);
     }
   }
 
@@ -555,7 +543,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
    *         newly added modules. Returns empty list if "newModules" is null;
    *         If no modules present returns empty list;
    */
-  private List getUpdatedModules(
+  protected List getUpdatedModules(
     List orgModules,
     List newModules) {
     List updatedModules = new ArrayList();
@@ -593,7 +581,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
    *
    * @param modules
    */
-  private void printDisplayOrder(List modules) {
+  protected void printDisplayOrder(List modules) {
     ListIterator iterate = modules.listIterator();
     log.debug("Module Display order");
 

@@ -2,7 +2,7 @@ package gov.nih.nci.ncicb.cadsr.resource;
 
 import java.util.List;
 
-public interface Question extends AdminComponent  {
+public interface Question extends AdminComponent,Orderable  {
   public String getQuesIdseq();
   public void setQuesIdseq(String idseq);
 
@@ -18,9 +18,6 @@ public interface Question extends AdminComponent  {
   public DataElement getDataElement();
   public void setDataElement(DataElement dataElement);
 
-  public int getDisplayOrder();
-  public void setDisplayOrder(int dispOrder);
-  
   public Object clone() throws CloneNotSupportedException ;
   
 }
