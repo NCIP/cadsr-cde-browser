@@ -702,6 +702,7 @@
        clean_build_redeploy_restart - clean_build_redeploy,oc4j_start(Developement)
        
        dist_dev		      - Creates Developement Clean distribution.
+       dist_prod	      - Creates Test Clean distribution.
        dist_qa		      - Creates QA Clean distribution.
        dist_stage	      - Creates Stage Clean distribution.
        dist_prod	      - Creates Prod Clean distribution.
