@@ -54,6 +54,8 @@
 
       <html:form action='<%="/addClassifications?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.ADD_CLASSIFICATIONS%>'>
 
+  <%@ include file="/formbuilder/addClassifications_inc.jsp"%>    
+
   <table cellspacing="2" cellpadding="3" border="0" width="80%" >
 
     <% for(int i=0; i<nbOfClassifications; i++) { %>
