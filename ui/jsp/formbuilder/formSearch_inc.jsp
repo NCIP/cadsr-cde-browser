@@ -48,7 +48,6 @@ function clearForm() {
 <!--
 function gotoClassificationsLOV() {
      var dest = '<%= csLOVUrl %>' + '&P_CONTE_IDSEQ=' + document.forms[0].<%= FormConstants.CONTEXT_ID_SEQ %>.value;
-     alert(dest);
      newWin(dest, 'ClassificationLOV', 700, 600);
 }
 -->
