@@ -74,6 +74,9 @@ function clearProtocol() {
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
         <td class="OraFieldText" nowrap>
+        <html:select property="<%=FormConstants.CONTEXT_ID_SEQ%>">
+		<html:options collection="<%=FormConstants.CONTEXTS%>" property="conteIdseq" labelProperty="name"/>
+	</html:select>
           <input type="text" name="<%=FormConstants.CONTEXT_ID_SEQ%>" value="" size ="20"> 
         </td>
 
