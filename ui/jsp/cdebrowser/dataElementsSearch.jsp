@@ -400,7 +400,7 @@ function newSearch(){
                sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
                separator=">>" 
                showDefault="Y"
-               labelMapping="doc_text,Document Text,long_name,Long Name,registration_status,Registration Status,asl_name,Workflow Status"
+               labelMapping="doc_text,Document Text,long_name,Long Name,name,Owned By,de_usedby,Used By Context,registration_status,Registration Status,display_order,Registration Status,asl_name,Workflow Status,de_cdeid,Public ID,de_version,Version"
                defaultText=" (Default) "
                ascendingText=" [Ascending]"
                descendingText=" [Descending]"
@@ -424,8 +424,6 @@ function newSearch(){
       <td align="right"><%=topScroller.getScrollerHTML()%></td>
     </tr>
 </table>
-
-
 
         
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -452,8 +450,28 @@ function newSearch(){
             />       
     
     </th>
-    <th class="OraTableColumnHeader">Owned By</th>
-    <th class="OraTableColumnHeader">Used By Context</th>
+    <th class="OraTableColumnHeader">
+     	      <cde:sortableColumnHeader
+                  sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
+     	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+         	   	  columnHeader="Owned By" 
+                  orderParamId="sortOrder" 
+         	   	  sortFieldId="sortField"
+           	     sortFieldValue = "name"
+                />       
+    </th>
+    <th class="OraTableColumnHeader">
+         	      <cde:sortableColumnHeader
+                      sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
+         	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+             	   	  columnHeader="Used By Context" 
+                      orderParamId="sortOrder" 
+             	   	  sortFieldId="sortField"
+               	     sortFieldValue = "de_usedby"
+                    />       
+
+    
+    </th>
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
@@ -474,8 +492,28 @@ function newSearch(){
        	     sortFieldValue = "asl_name"
             />   
     </th>
-    <th class="OraTableColumnHeader">Public ID</th>
-    <th class="OraTableColumnHeader">Version</th>
+    <th class="OraTableColumnHeader">
+  	      <cde:sortableColumnHeader
+              sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+     	   	  columnHeader="Public ID" 
+              orderParamId="sortOrder" 
+     	   	  sortFieldId="sortField"
+       	     sortFieldValue = "de_cdeid"
+            />   
+   
+    </th>
+    <th class="OraTableColumnHeader">
+  	      <cde:sortableColumnHeader
+              sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
+ 	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl %>'
+     	   	  columnHeader="Version" 
+              orderParamId="sortOrder" 
+     	   	  sortFieldId="sortField"
+       	     sortFieldValue = "de_version"
+            />   
+    
+    </th>
   </tr>
 <%
       String pagesDropDown = myScroller.getScrollerHTML();

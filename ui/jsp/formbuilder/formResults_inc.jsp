@@ -19,7 +19,7 @@ if(confirm(message)) location.href = url;
                           sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
                           separator=">>" 
                           showDefault="Y"
-                          labelMapping="longName,Long Name,aslName,Workflow Status"
+                          labelMapping="longName,Long Name,contextName,Context,formType,Type,protocolLongName,Protocol,aslName,Workflow Status"
                           defaultText=" (Default) "
                           ascendingText=" [Ascending]"
                           descendingText=" [Descending]"                          
@@ -55,9 +55,42 @@ if(confirm(message)) location.href = url;
 		   	   	target="_parent"
             />   
             </th>             
-            <th class="OraTableColumnHeader" nowrap>Context</th>
-          	<th class="OraTableColumnHeader" nowrap>Type</th>
-            <th class="OraTableColumnHeader" nowrap>Protocol</th>
+            <th class="OraTableColumnHeader" nowrap>
+		        <cde:sortableColumnHeader
+            sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
+		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
+		   	   	columnHeader="Context" 
+            orderParamId="sortOrder" 
+		   	   	sortFieldId="sortField"
+		   	   	sortFieldValue = "contextName"
+		   	   	target="_parent"
+            />   
+            </th>
+            <th class="OraTableColumnHeader" nowrap>
+	    <cde:sortableColumnHeader
+            sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
+		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
+		   	   	columnHeader="Type" 
+            orderParamId="sortOrder" 
+		   	   	sortFieldId="sortField"
+		   	   	sortFieldValue = "formType"
+		   	   	target="_parent"
+            />   
+          	
+            </th>
+            <th class="OraTableColumnHeader" nowrap>
+	    <cde:sortableColumnHeader
+            sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
+		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
+		   	   	columnHeader="Protocol" 
+            orderParamId="sortOrder" 
+		   	   	sortFieldId="sortField"
+		   	   	sortFieldValue = "protocolLongName"
+		   	   	target="_parent"
+            />   
+          	
+            
+            </th>
           	<th class="OraTableColumnHeader" nowrap>
 			          
 		        <cde:sortableColumnHeader
