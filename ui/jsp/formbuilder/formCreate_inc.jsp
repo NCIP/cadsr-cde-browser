@@ -23,7 +23,7 @@ function clearProtocol() {
   String pageUrl = "&PageId=DataElementsGroup";
   // HSK
   String contextPath = request.getContextPath();
-  String csLOVUrl= "javascript:newWin('"+contextPath+"/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
+
   String protoLOVUrl= 
     "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&chkContext=true&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
 
