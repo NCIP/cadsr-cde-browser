@@ -128,7 +128,6 @@ public class DataElementHandlerImpl extends Handler
     try {
       CDEBrowserBc4jModuleImpl am =
         (CDEBrowserBc4jModuleImpl) getConnection(sessionId);
-      System.out.println("App Module is: "+am.toString());
       runtimeVO = am.createViewObjectFromQueryStmt(null, sqlQuery);
       rowCount = runtimeVO.getEstimatedRowCount();
       runtimeVO.setOrderByClause(orderByClause);
