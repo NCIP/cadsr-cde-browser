@@ -98,11 +98,14 @@ public class SessionUtils {
   
   private static void clearStaleObject()
   {
+   synchronized(sessionObjectCacheTimeout){
    log.error("SessionUtil.clearStaleObject start :"+TimeUtils.getEasternTime());
     Set keys = sessionObjectCacheTimeout.keySet();
+    Collection copyKeys =  new ArrayList();
+    keys.addAll(copyKeys); // done to avoid java.util.ConcurrentModificationException
     if(keys!=null)
     {
-      Iterator it = keys.iterator();
+      Iterator it = copyKeys.iterator();
       while(it.hasNext())
       {
         String key = (String)it.next();
@@ -115,5 +118,6 @@ public class SessionUtils {
       }
     }
    log.error("SessionUtil.clearStaleObject( start :"+TimeUtils.getEasternTime());
+   }
   }
 }
