@@ -85,7 +85,8 @@
            /WEB-INF/struts-config-manageClassifications.xml,/WEB-INF/struts-config-module.xml,
            /WEB-INF/struts-config-formCreate.xml, /WEB-INF/struts-config-cdeSideBySide.xml,
            /WEB-INF/struts-config-manageReferenceDocs.xml,/WEB-INF/struts-config-downloadFormToExcel.xml,
-           /WEB-INF/struts-config-browserSearchScreenType.xml,/WEB-INF/struts-config-publish.xml
+           /WEB-INF/struts-config-browserSearchScreenType.xml,/WEB-INF/struts-config-publish.xml,
+           /WEB-INF/struts-config-cde-search-preferences.xml
        </param-value>
     </init-param>
     <init-param>
