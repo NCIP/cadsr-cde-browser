@@ -20,6 +20,7 @@ import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.object.SqlFunction;
 import org.springframework.jdbc.object.SqlUpdate;
 import org.springframework.jdbc.object.StoredProcedure;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -126,13 +127,14 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     String acId,
     String csCsiId) {
     
-    InsertAcCsi insertAcCsi =
-      new InsertAcCsi(this.getDataSource());
-    int res = insertAcCsi.insertOneAcCsiRecord(csCsiId, acId);
-
-    if (res != 1) {
+    try {
+      InsertAcCsi insertAcCsi =
+	new InsertAcCsi(this.getDataSource());
+      int res = insertAcCsi.insertOneAcCsiRecord(csCsiId, acId);
+      
+    } catch (DataIntegrityViolationException e) {
       throw new DMLException(
-        "Did not succeed assigning csi CSI to AC.");
+        "Did not succeed. Classification is already assigned.");
     }
 
     return 1;
