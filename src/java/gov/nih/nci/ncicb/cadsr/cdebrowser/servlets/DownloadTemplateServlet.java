@@ -1,14 +1,29 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.servlets;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
-import java.util.*;
-import oracle.sql.*;
-import java.sql.*;
-import oracle.jdbc.OracleResultSet;
 import gov.nih.nci.ncicb.cadsr.util.ConnectionHelper;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import oracle.jdbc.OracleResultSet;
+
+import oracle.sql.BLOB;
+
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
 public class DownloadTemplateServlet extends HttpServlet  {
+  private static Log log = LogFactory.getLog(DownloadTemplateServlet.class.getName());
   private static final String CONTENT_TYPE = "text/html; charset=windows-1252";
   private ConnectionHelper ch = null;
 
@@ -41,7 +56,7 @@ public class DownloadTemplateServlet extends HttpServlet  {
                        "and rd.rd_idseq = rb.rd_idseq " +
                        "and rd.dctl_name = 'IMAGE_FILE' "+
                        "and ac.ac_idseq = ?";
-      System.out.println(sqlStmt);
+      log.info(sqlStmt);
       PreparedStatement ps = conn.prepareStatement(sqlStmt);
       BLOB theBlob = null;
       ps.setString(1,refDocId);
@@ -63,7 +78,7 @@ public class DownloadTemplateServlet extends HttpServlet  {
       }
     } 
     catch (Exception ex) {
-      ex.printStackTrace();
+      log.error("Exception Caught:", ex);
     } 
     finally {
       try {
@@ -72,7 +87,7 @@ public class DownloadTemplateServlet extends HttpServlet  {
         //if (db != null) db.closeDB();  
       } 
       catch (Exception ex) {
-        ex.printStackTrace();
+         log.error("Exception Caught cleaning up:", ex);
       } 
       finally {
       }
