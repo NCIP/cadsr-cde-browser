@@ -189,10 +189,43 @@ function clearForm() {
   document.forms[0].jspAltName.value = "";
   document.forms[0].jspCdeId.value = "";
   document.forms[0].jspValidValue.value = "";
-  document.forms[0].jspStatus.options[document.forms[0].jspStatus.selectedIndex].value = "ALL";
-  document.forms[0].regStatus.options[document.forms[0].regStatus.selectedIndex].value = "ALL";
-  document.forms[0].altName.options[document.forms[0].altName.selectedIndex].value = "ALL";
-    
+
+  document.forms[0].jspObjectClass.value = "";
+  document.forms[0].jspProperty.value = "";
+  document.forms[0].jspConceptCode.value = "";
+  document.forms[0].jspConceptName.value = "";
+  
+  unselect(document.forms[0].jspSearchIn);
+  document.forms[0].jspSearchIn.options[1].selected  = true;
+
+  unselect(document.forms[0].jspStatus);
+  document.forms[0].jspStatus.options[0].selected  = true;
+  
+  unselect(document.forms[0].regStatus);
+  document.forms[0].regStatus.options[0].selected  = true;
+  
+  unselect(document.forms[0].contextUse);
+  document.forms[0].contextUse.options[2].selected  = true;
+  
+  if(document.forms[0].altName.options.selected)
+  {
+    unselect(document.forms[0].altName);
+  }
+  else
+  {
+    unselect(document.forms[0].altName);
+  }
+  
+  document.forms[0].jspLatestVersion[0].checked=true
+
+}
+
+function unselect(val)
+{
+   for (i=0; i < val.options.length ; i++)
+    {
+	val.options[i].selected  = false;
+    }
 }
 
 function turnOn() {
@@ -340,7 +373,15 @@ function gotoCDESearchPrefs() {
 %>
 
 <%@ include file="../formbuilder/showMessages.jsp" %>
-
+<%
+  if ("".equals(src)) {
+%>
+<p class="MessageText">
+  <b>To get back to the cart please click the done button.</b>
+</p>
+<% 
+  }
+%>
 
 
 <logic:present name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>">

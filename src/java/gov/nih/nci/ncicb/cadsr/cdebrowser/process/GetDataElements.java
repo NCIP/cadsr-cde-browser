@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.8 2005-02-18 19:42:46 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.9 2005-02-21 17:19:39 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -252,19 +252,12 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
          initSearchPreferences(desb,dbUtil);
       }
       else if (performQuery.equals("yes")) {
-        DataElementSearchBean oldDesb = (DataElementSearchBean) getInfoObject("desb");
+        
         
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
         // Need to the session Preference which is per session
-        
-        if(oldDesb!=null)
-        {
-          desb.setAslNameExcludeList(oldDesb.getAslNameExcludeList());
-          desb.setExcludeTestContext(oldDesb.isExcludeTestContext());
-          desb.setRegStatusExcludeList(oldDesb.getRegStatusExcludeList());
-        }
-        
+        setValuesFromOldSearchBean(desb);
         desb.setLOVLists(dbUtil);
         log.info("- Created DataElementSearchBean successfully");
 
@@ -381,7 +374,9 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         queryResults = null;
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
-        initSearchPreferences(desb,dbUtil);
+          // Set search preference  from old Search Bean to the new one 
+         setValuesFromOldSearchBean(desb);
+         desb.setLOVLists(dbUtil);        
 
       }
       else if (performQuery.equals("sortResults")) {
@@ -636,5 +631,16 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
           desb.setAslNameExcludeList(aslNameExcludeList);
         }      
         desb.setLOVLists(dbUtil);
+   }
+   
+   private void setValuesFromOldSearchBean(DataElementSearchBean desb) throws Exception
+   {
+        DataElementSearchBean oldDesb = (DataElementSearchBean) getInfoObject("desb");
+        if(oldDesb!=null)
+        {
+          desb.setAslNameExcludeList(oldDesb.getAslNameExcludeList());
+          desb.setExcludeTestContext(oldDesb.isExcludeTestContext());
+          desb.setRegStatusExcludeList(oldDesb.getRegStatusExcludeList());
+        }
    }
 }

@@ -339,15 +339,6 @@ public class DataElementSearchBean extends Object {
         searchInList.append("<option value=\"ALL\">ALL</option> ");
       }
 
-      if (StringUtils.containsKey(searchIn, "Preferred Name")) {
-        searchInList.append(
-          "<option selected value=\"Preferred Name\">Preferred Name</option> ");
-      }
-      else {
-        searchInList.append(
-          "<option value=\"Preferred Name\">Preferred Name</option> ");
-      }
-
       if (StringUtils.containsKey(searchIn, "Long Name")) {
         searchInList.append(
           "<option selected value=\"Long Name\">Long Name</option> ");
@@ -356,6 +347,15 @@ public class DataElementSearchBean extends Object {
         searchInList.append("<option value=\"Long Name\">Long Name</option> ");
       }
 
+      if (StringUtils.containsKey(searchIn, "Preferred Name")) {
+        searchInList.append(
+          "<option selected value=\"Preferred Name\">Preferred Name</option> ");
+      }
+      else {
+        searchInList.append(
+          "<option value=\"Preferred Name\">Preferred Name</option> ");
+      }
+      
       if (StringUtils.containsKey(searchIn, "Doc Text")) {
         searchInList.append(
           "<option selected value=\"Doc Text\">Document Text</option> ");
