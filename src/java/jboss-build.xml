@@ -25,7 +25,10 @@
    <property name="oc4j.start.script.name" value="debugoc4j.bat" />
    <property name="oc4j.admin.jar.name" value="admin" /> 
   
-  
+   <property name="jboss.home" value="D:/tools/other/jboss-4.0.0" /> 
+   <property name="jboss.start.script.name" value="run.bat" />
+   <property name="jboss.stop.script.name" value="shutdown.bat" />
+   
   
   <property name="project.home" value="${basedir}/../.."/>
   
@@ -629,7 +632,7 @@
             </fileset>          
 	    <fileset dir="${classes.build.dir}/ejb" includes="META-INF/ejb-jar.xml"/>
 	    <fileset dir="${classes.build.dir}/ejb" includes="META-INF/orion-ejb-jar.xml"/>
-      <fileset dir="${classes.build.dir}/ejb" includes="META-INF/jboss.xml"/>
+            <fileset dir="${classes.build.dir}/ejb" includes="META-INF/jboss.xml"/>
             <manifest>
                <attribute name="Built-By" value="${user.name}"/>
                <attribute name="Class-Path" 
@@ -866,52 +869,44 @@
           </classpath> 
         </java> 
    </target> 
+     
+   <target name="jboss_stop">
+           <exec executable="cmd.exe" spawn="true" os="Windows 2000">
+                           <arg value="/C"/>
+                           <arg value="start"/>
+                           <arg value="${jboss.home}/bin/${jboss.stop.script.name}"/>
+           </exec>
+  </target>
+  
+  <target name="jboss_start">
+             <exec executable="cmd.exe" spawn="true" os="Windows 2000">
+                             <arg value="/C"/>
+                             <arg value="start"/>
+                             <arg value="${jboss.home}/bin/${jboss.start.script.name}"/>
+             </exec>
+  </target>
+  
+   <target  name="clean_jboss" depends="init" >       
+	<delete dir="${jboss.home}/server/default/tmp/deploy" failonerror="true"  verbose="true" />
+	<delete file="${jboss.home}/server/default/deploy/${ear.name}.ear" failonerror="true" verbose="true" />
+   </target>    
    
-   <target name="bind_web_app" depends="ear_deploy"> 
-       <java jar="${oc4j.j2ee.home}/${oc4j.admin.jar.name}.jar"  fork="yes"> 
-         <arg value="${deploy.ormi}" /> 
-         <arg value="${deploy.username}" /> 
-         <arg value="${deploy.password}" /> 
-         <arg value="-bindWebApp" /> 
-         <arg value="${app.name}" /> 
-         <arg value="${web.app.name}" /> 
-         <arg value="http-web-site" /> 
-         <arg value="/${app.name}" /> 
-         <classpath> 
-              <pathelement location="${oc4j.j2ee.home}/admin.jar" /> 
-         </classpath> 
-       </java> 
-   </target> 
-
-  <target  name="deploy_cdebrowser" depends="ear_deploy,bind_web_app"> 
-  </target>   
-   
-  <target  name="copy_ear_oc4j" depends="dev_config,ear_cdebrowser"> 
-     <copy todir="${oc4j.j2ee.home}/applications">      
+   <target  name="ear_deploy_jboss" depends="dev_config,ear_cdebrowser"> 
+     <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
              <include name="${ear.name}.ear"/>
            </patternset>
-         </fileset>    
-      </copy>           
+         </fileset> 
+     </copy>
+   </target> 
+   
+   
+  
+  <target  name="clean_build_deploy_qa" depends="clean,qa_config,ear_cdebrowser,clean_jboss,ear_deploy_jboss"> 
   </target>
   
-  <target  name="clean_build" depends="clean,dev_config,ear_cdebrowser"> 
-  </target>
-  
-  <target  name="clean_build_redeploy" depends="clean,dev_config,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j"> 
-  </target>
-  
-  <target  name="clean_build_redeploy_restart" depends="clean_build_redeploy,oc4j_start"> 
-  </target>
-  
-  <target name="oc4j_start">
-        <exec executable="cmd.exe" spawn="true" os="Windows 2000">
-                        <arg value="/C"/>
-                        <arg value="start"/>
-                        <arg value="${oc4j.j2ee.home}/${oc4j.start.script.name}"/>
-        </exec>
-  </target>
+
 
 <!-- =========== End Deployment targets  ======================= -->
 

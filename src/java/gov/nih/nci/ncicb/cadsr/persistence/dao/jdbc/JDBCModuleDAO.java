@@ -214,13 +214,12 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCModuleDAO test = new JDBCModuleDAO(locator);
-    /*
-    //System.out.println(
-    //  test.getQuestionsInAModule("99CD59C5-B13D-3FA4-E034-080020C9C0E0"));
-    System.out.println(
-      test.getQuestionsInAModule("99CD59C5-A9C3-3FA4-E034-080020C9C0E0"));
-    */
     
+
+    System.out.println(test.getQuestionsInAModule("99CD59C5-AB7C-3FA4-E034-080020C9C0E0"));
+
+    
+    /*
     Module module = test.findModuleByPrimaryKey("99CD59C5-B04A-3FA4-E034-080020C9C0E0");
     System.out.println(module);
     module.setLongName("test long name");    
@@ -231,7 +230,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     catch (DMLException de) {
       de.printStackTrace();
     }
-    
+    */
     /*
     try {
       int res = test.deleteModule("99CD59C5-B206-3FA4-E034-080020C9C0E0");

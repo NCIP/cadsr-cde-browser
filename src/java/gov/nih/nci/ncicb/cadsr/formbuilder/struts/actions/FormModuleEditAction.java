@@ -165,7 +165,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     setValidValueInstructionsFromArray(module,vvInstructionsArr);    
 
     List questions = module.getQuestions();
-    //FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+    FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
                                       
@@ -225,7 +225,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     setValidValueInstructionsFromArray(module,vvInstructionsArr);
     
     List questions = module.getQuestions();
-    //FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+    FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
                                       // in case  they are  incorrect in database
                                       //Bug #tt 1136
                                       
@@ -292,7 +292,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
 
     List questions = module.getQuestions();
-
+    FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                      //Bug #tt 1136
+                                      
     if ((questions != null) && (questions.size() > 0)) {
       Question deletedQuestion =
         (Question) questions.remove(questionIndex.intValue());
