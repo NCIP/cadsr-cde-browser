@@ -76,7 +76,7 @@ public class ProtocolNode extends BaseTreeNode  {
         DefaultMutableTreeNode crfNode = new DefaultMutableTreeNode(
           new WebNode(rs.getString(1)
                      ,rs.getString(2)
-                     ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=CRF&P_IDSEQ="+
+                     ,"javascript:"+getFormJsFunctionName()+"('P_PARAM_TYPE=CRF&P_IDSEQ="+
                        rs.getString(1)+"&P_CONTE_IDSEQ="+_myProtoVO.getConteIdseq()+
                        "&P_PROTO_IDSEQ="+_myProtoVO.getProtoIdseq()+
                        getExtraURLParameters()+"')"
@@ -106,5 +106,7 @@ public class ProtocolNode extends BaseTreeNode  {
   public DefaultMutableTreeNode getTreeNode(){
     return _protoTreeNode;
   }
+
+  
   
 }

@@ -6,6 +6,9 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.database.*;
 import gov.nih.nci.ncicb.cadsr.resource.*;
+import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 //CDE Browser Application Imports
 import gov.nih.nci.ncicb.cadsr.util.*;
@@ -65,6 +68,7 @@ public class GetXMLDownload extends BasePersistingProcess {
 
       //registerResultObject(ProcessConstants.XML_DOCUMENT);
       registerStringParameter("SBREXT_DSN");
+      registerStringParameter("src");
       registerStringParameter("XML_DOWNLOAD_DIR");
       registerStringResult("FILE_NAME");
       registerParameterObject("dbUtil");
@@ -104,19 +108,47 @@ public class GetXMLDownload extends BasePersistingProcess {
     String fileSuffix = "";
     String filename = "";
     DESearchQueryBuilder deSearch = null;
+    String source = null;
+    String where = "";
 
     try {
-      desb = (DataElementSearchBean) getInfoObject("desb");
+      source = getStringInfo("src");
+      if ("deSearch".equals(source)) {
+        desb = (DataElementSearchBean) getInfoObject("desb");
 
-      //rowcount = desb.getCommonListBean().getTotalRecordCount();
-      //String where = desb.getXMLQueryStmt();
-      deSearch =
-        (DESearchQueryBuilder) getInfoObject(
-          ProcessConstants.DE_SEARCH_QUERY_BUILDER);
+        deSearch =
+          (DESearchQueryBuilder) getInfoObject(
+            ProcessConstants.DE_SEARCH_QUERY_BUILDER);
 
-      String where = deSearch.getXMLQueryStmt();
+        where = deSearch.getXMLQueryStmt();
 
-      where = "DE_IDSEQ IN (" + where + ")";
+        where = "DE_IDSEQ IN (" + where + ")";
+      }
+      else if ("cdeCart".equals(source)) {
+        HttpServletRequest myRequest = 
+          (HttpServletRequest) getInfoObject("HTTPRequest");
+        HttpSession userSession = myRequest.getSession(false);
+        CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
+        Collection items = cart.getDataElements();
+        CDECartItem item = null;
+        boolean firstOne = true;
+        StringBuffer whereBuffer = new StringBuffer("");
+        Iterator itemsIt = items.iterator();
+        while (itemsIt.hasNext()) {
+          item = (CDECartItem)itemsIt.next();
+          if (firstOne) {
+            whereBuffer.append("'" +item.getId()+"'");
+            firstOne = false;
+          }
+          else 
+            whereBuffer.append(",'" +item.getId()+"'");
+        }
+        where = "DE_IDSEQ IN (" + whereBuffer.toString() + ")";
+        
+      }
+      else {
+        throw new Exception("No result set to download");
+      }
 
       String stmt = " SELECT \"PublicId\" "+
                         ", \"LongName\" "+

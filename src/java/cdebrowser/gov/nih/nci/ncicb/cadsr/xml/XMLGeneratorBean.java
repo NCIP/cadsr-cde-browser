@@ -42,6 +42,7 @@ public class XMLGeneratorBean  {
     connHelper = new ConnectionHelper(dataSource);
     cn = connHelper.getConnection();
     xmlQuery = new OracleXMLQuery(cn,sqlQuery);
+    xmlQuery.setEncoding("UTF-8");
     if (!rowset.equals("")) {
       xmlQuery.setRowsetTag(rowset);
     }
@@ -83,7 +84,7 @@ public class XMLGeneratorBean  {
       //xmlQuery.keepObjectOpen(true);
       xmlQuery.setRaiseNoRowsException(true);
       xmlQuery.setRaiseException(true);
-
+      xmlQuery.setEncoding("UTF-8");
       if (!rowset.equals("")) {
         xmlQuery.setRowsetTag(rowset);
       }

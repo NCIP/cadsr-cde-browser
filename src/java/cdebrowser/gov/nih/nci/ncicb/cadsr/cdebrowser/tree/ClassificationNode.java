@@ -193,7 +193,7 @@ public class ClassificationNode extends BaseTreeNode  {
         DefaultMutableTreeNode tempNode = new DefaultMutableTreeNode(
           new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
                      ,rs.getString(2)
-                     ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
+                     ,"javascript:"+getFormJsFunctionName()+"('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
                        rs.getString(1)+"&P_CONTE_IDSEQ="+myCsVO.getConteIdseq()+
                        "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes')"
                      ,rs.getString(3)));

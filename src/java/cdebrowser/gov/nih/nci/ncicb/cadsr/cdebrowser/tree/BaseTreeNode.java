@@ -36,5 +36,15 @@ public class BaseTreeNode implements TreeConstants  {
     }
     return extraURLParameters;
   }
+
+  protected String getFormJsFunctionName() {
+    String functionName = "performAction";
+    if (this.FORM_SEARCH_TREE.equals(this.getTreeType()))
+      functionName = this.FORM_DETAILS_FUNCTION;
+    else 
+      functionName = (String)treeParams.get(FUNCTION_NAME_URL_PARAM);
+    if (functionName == null) functionName = "performAction";
+    return functionName;
+  }
   
 }

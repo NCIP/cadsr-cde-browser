@@ -19,6 +19,7 @@ import gov.nih.nci.ncicb.cadsr.util.*;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.resource.impl.*;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 import oracle.cle.persistence.HandlerFactory;
@@ -130,17 +131,17 @@ public class GetDataElements extends BasePersistingProcess {
     DBUtil dbUtil = null;
 
     try {
+      myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
+      userSession = myRequest.getSession(false);
       System.out.println(
         getCurrentTimestamp() +
         "- GetDataElements process started successfully ");
-      initialize();
-
+      initialize(userSession);
       System.out.println(
         getCurrentTimestamp() + " -Performed intialization successfully");
 
       tib = new TabInfoBean("cdebrowser_search_tabs");
-      myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
-      userSession = myRequest.getSession(false);
+      
       tib.processRequest(myRequest);
 
       if (tib.getMainTabNum() != 0) {
@@ -330,9 +331,10 @@ public class GetDataElements extends BasePersistingProcess {
         queryResults = (List)getInfoObject(
             ProcessConstants.ALL_DATA_ELEMENTS);
 
-        CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
+        /*CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
         if (cart == null)
-          cart = new CDECartTransferObject();
+          cart = new CDECartTransferObject();*/
+        CDECart cart = this.findCart(userSession);
         String [] itemsList = getInfoStringArray(ProcessConstants.SELECT_DE);
         CDECartItem cdeItem = null;
         DataElement de = null;
@@ -352,7 +354,7 @@ public class GetDataElements extends BasePersistingProcess {
         while (it.hasNext()) {
           System.out.println("DE Id: "+((CDECartItem)it.next()).getId());
         }
-        userSession.setAttribute(CaDSRConstants.CDE_CART,cart);
+        //userSession.setAttribute(CaDSRConstants.CDE_CART,cart);
         
       }
 
@@ -417,7 +419,7 @@ public class GetDataElements extends BasePersistingProcess {
     return getCondition(FAILURE);
   }
 
-  private void initialize() {
+  private void initialize(HttpSession mySession) {
     if (getStringInfo("INITIALIZED") == null) {
       CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
       setResult("SBREXT_DSN", params.getSbrextDSN());
@@ -428,6 +430,8 @@ public class GetDataElements extends BasePersistingProcess {
       setResult("XML_FILE_MAX_RECORDS", params.getXMLFileMaxRecords());
       setResult("TREE_URL", params.getTreeURL());
       setResult("INITIALIZED", "yes");
+      CDECart cart = this.findCart(mySession);   
+      mySession.setAttribute(CaDSRConstants.CDE_CART,cart);
     }
     else {
       setResult("SBREXT_DSN", getStringInfo("SBREXT_DSN"));
@@ -503,5 +507,12 @@ public class GetDataElements extends BasePersistingProcess {
       }
     }
     return de;
+  }
+
+  private CDECart findCart(HttpSession mySession) {
+    CDECart cart = (CDECart)mySession.getAttribute(CaDSRConstants.CDE_CART);
+    if (cart == null)
+      cart = new CDECartImpl();
+    return cart;
   }
 }

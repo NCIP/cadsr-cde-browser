@@ -88,7 +88,7 @@ public class TemplateNode extends BaseTreeNode  {
         DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode(
           new WebNode(myDbUtil.getUniqueId(IDSEQ_GENERATOR)
                      ,rs.getString(2)
-                     ,"javascript:"+getJsFunctionName()+"('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
+                     ,"javascript:"+getFormJsFunctionName()+"('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+
                        rs.getString(1)+"&P_CONTE_IDSEQ="+myContext.getConteIdseq()+
                        "&csName="+URLEncoder.encode(csiTO.getClassSchemeLongName())+
                        "&diseaseName="+URLEncoder.encode(csiTO.getClassSchemeItemName())+

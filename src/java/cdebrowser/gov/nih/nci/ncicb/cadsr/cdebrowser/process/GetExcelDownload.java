@@ -29,6 +29,7 @@ import gov.nih.nci.ncicb.cadsr.resource.*;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 /**
  *
@@ -61,6 +62,7 @@ public class GetExcelDownload extends BasePersistingProcess{
 		try{
 			registerParameterObject(ProcessConstants.ALL_DATA_ELEMENTS);
       registerStringParameter("SBREXT_DSN");
+      registerStringParameter("src");
       registerStringParameter("XML_DOWNLOAD_DIR");
       registerStringResult("EXCEL_FILE_NAME");
       registerParameterObject("dbUtil");
@@ -190,22 +192,51 @@ public class GetExcelDownload extends BasePersistingProcess{
     String where = "";
     DataElementSearchBean desb = null;
     DESearchQueryBuilder deSearch = null;
+    String source = null;
+
+    source = getStringInfo("src");
     
     try {
   
       String dataSource = getStringInfo("SBREXT_DSN");
       cn = dbUtil.getConnection();
       st = cn.createStatement();
-      desb = (DataElementSearchBean)getInfoObject("desb");
-      deSearch = (DESearchQueryBuilder)getInfoObject(
+      if ("deSearch".equals(source)) {
+        desb = (DataElementSearchBean)getInfoObject("desb");
+        deSearch = (DESearchQueryBuilder)getInfoObject(
                                 ProcessConstants.DE_SEARCH_QUERY_BUILDER);
-      //where = desb.getXMLQueryStmt();
-      where = deSearch.getXMLQueryStmt();
+        where = deSearch.getXMLQueryStmt();
+      }
+      else if ("cdeCart".equals(source)) { 
+        HttpServletRequest myRequest = 
+          (HttpServletRequest) getInfoObject("HTTPRequest");
+        HttpSession userSession = myRequest.getSession(false);
+        CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
+        Collection items = cart.getDataElements();
+        CDECartItem item = null;
+        boolean firstOne = true;
+        StringBuffer whereBuffer = new StringBuffer("");
+        Iterator itemsIt = items.iterator();
+        while (itemsIt.hasNext()) {
+          item = (CDECartItem)itemsIt.next();
+          if (firstOne) {
+            whereBuffer.append("'" +item.getId()+"'");
+            firstOne = false;
+          }
+          else 
+            whereBuffer.append(",'" +item.getId()+"'");
+        }
+        where = whereBuffer.toString();
+      }
+      else {
+        throw new Exception("No result set to download");
+      }
+    
       String sqlStmt = "SELECT * FROM DE_EXCEL_GENERATOR_VIEW "
                       +"WHERE DE_IDSEQ IN "
                       +" ( "+where+" )  ";
                       //+" ORDER BY PREFERRED_NAME ";
-      System.out.println("Excel Query "+sqlStmt);
+      
       rs = st.executeQuery(sqlStmt);
       pw = getPrintWriter(filename);
       

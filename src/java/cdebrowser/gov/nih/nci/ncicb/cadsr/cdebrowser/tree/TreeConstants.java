@@ -9,5 +9,6 @@ public interface TreeConstants  {
   public final static String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
   public static final String DE_SEARCH_FUNCTION = "performAction";
   public static final String FORM_SEARCH_FUNCTION = "formSearchAction";
+  public static final String FORM_DETAILS_FUNCTION = "formDetailsAction";
   
 }
