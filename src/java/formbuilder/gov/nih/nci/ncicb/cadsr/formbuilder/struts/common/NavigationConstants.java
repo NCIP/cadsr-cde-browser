@@ -49,5 +49,7 @@ public interface NavigationConstants
   
   public static final String GET_PROTOCOL_LOV_METHOD="getProtocolsLOV";
 
+  public static final String CHANGE_DE_ASSOCIATION = "changeAssociation";
+  
 
 }
