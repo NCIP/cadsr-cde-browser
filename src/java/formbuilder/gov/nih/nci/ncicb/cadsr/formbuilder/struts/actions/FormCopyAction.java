@@ -38,7 +38,7 @@ import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
-public class FormCopyAction extends FormBuilderBaseDispatchAction {
+public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
 
 
   /**
@@ -71,15 +71,15 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
 	dynaForm.set(WORKFLOW, "DRAFT NEW");
 
 	NCIUser nciUser = (NCIUser)getSessionObject(request, CaDSRConstants.USER_KEY);
-	Map contexts = nciUser.getContextsByRole(); 
-		
+	Map contexts = nciUser.getContextsByRole();
+
 
       }
     catch (FormBuilderException exp)
       {
 	if (log.isDebugEnabled()) {
 	  log.debug("Exception on getFormToEdit =  " + exp);
-	}      
+	}
       }
     return mapping.findForward("showSuccess");
   }
@@ -124,13 +124,13 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
 	newForm.setFormType((String)dynaForm.get(FORM_TYPE));
 
 	newForm.setAslName((String)dynaForm.get(WORKFLOW));
-      
+
 	newForm.setVersion((Float)dynaForm.get(FORM_VERSION));
 
 	newForm.setCreatedBy(request.getRemoteUser());
 
 	Form crf = (Form)getSessionObject(request, CRF);
-      
+
 	FormBuilderServiceDelegate service = getFormBuilderService();
 	newForm = service.copyForm(crf.getFormIdseq(), newForm);
 	// 		newForm = service.getFormDetails(newFormPK);
@@ -140,10 +140,10 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
       {
 	if (log.isDebugEnabled()) {
 	  log.debug("Exception on copyForm =  " + exp);
-	}      
+	}
       }
 
-    setSessionObject(request, CRF, newForm);  
+    setSessionObject(request, CRF, newForm);
     request.setAttribute(FORM_ID_SEQ, newForm.getFormIdseq());
 
     saveMessage("cadsr.formbuilder.form.copy.success", request);
@@ -158,4 +158,4 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
   }
 
 }
-  
+

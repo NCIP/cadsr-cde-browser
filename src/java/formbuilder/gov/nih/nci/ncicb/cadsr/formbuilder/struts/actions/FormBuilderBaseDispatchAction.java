@@ -316,17 +316,6 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
       return super.dispatchMethod(mapping, form, request, response, name);
     }
     catch (Throwable throwable) {
-      if (log.isFatalEnabled()) {
-        NCIUser user = (NCIUser) getSessionObject(request, USER_KEY);
-
-        if (user != null) {
-          log.fatal(user.getUsername(), throwable);
-        }
-        else
-        {
-          log.fatal(throwable);
-        }
-      }
       HttpSession session = request.getSession();
       Collection keys = (Collection)session.getAttribute(this.CLEAR_SESSION_KEYS);
       if(keys!=null)

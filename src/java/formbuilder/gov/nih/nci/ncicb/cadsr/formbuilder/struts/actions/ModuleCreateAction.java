@@ -32,7 +32,7 @@ import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 
 
-public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
+public class ModuleCreateAction extends FormBuilderSecureBaseDispatchAction {
 
 
   /**
@@ -85,7 +85,7 @@ public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
     ModuleInstruction newModInst = new ModuleInstructionTransferObject();
 
     int displayOrder = ((Integer)dynaForm.get(DISPLAY_ORDER)).intValue();
-	
+
     Form f = (Form)getSessionObject(request, CRF);
 
     newModule.setForm(f);
@@ -96,14 +96,14 @@ public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
     newModule.setCreatedBy(request.getRemoteUser());
     newModule.setDisplayOrder(displayOrder);
     newModule.setQuestions(new ArrayList());
-	
+
     newModInst.setLongName((String)dynaForm.get(MODULE_INSTRUCTION_LONG_NAME));
     newModInst.setAslName("DRAFT NEW");
     newModInst.setVersion(new Float(1.0));
     newModInst.setCreatedBy(request.getRemoteUser());
 
     Form crf = (Form) getSessionObject(request, CRF);
-	
+
     List modules = crf.getModules();
     if(modules == null) {
       modules = new ArrayList();
@@ -123,4 +123,4 @@ public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
   }
 
 }
-  
+

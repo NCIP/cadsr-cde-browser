@@ -36,7 +36,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 
 
-public class FormAction extends FormBuilderBaseDispatchAction {
+public class FormAction extends FormBuilderSecureBaseDispatchAction {
 
 
   /**

@@ -76,6 +76,9 @@
     <exception type="gov.nih.nci.ncicb.cadsr.exception.FatalException"
       scope="request" path="/formbuilder/systemError.jsp"
       key="error.system.message"/>
+    <exception type="gov.nih.nci.ncicb.cadsr.exception.InvalidUserException"
+      scope="request" path="/LoginError.jsp"
+      key="error.system.message"/>      
   </global-exceptions>
   <global-forwards>
     <forward name="cdebrowserHome" path="/cdebrowser" redirect="true"/>
@@ -238,9 +241,7 @@
       <forward name="success" path="/moduleToEditAction.do?method=getModuleToEdit"/>
     </action>
   </action-mappings>
-  <controller debug="3" nocache="true"
-    processorClass="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureRequestProcessor"
-    contentType="text/html;charset=UTF-8" locale="true"/>
+ 
   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
   <plug-in className="gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory"/>
 

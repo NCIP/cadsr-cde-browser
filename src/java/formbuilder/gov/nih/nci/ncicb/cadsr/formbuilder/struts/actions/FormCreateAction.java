@@ -35,7 +35,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormInstruction;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 
-public class FormCreateAction extends FormBuilderBaseDispatchAction {
+public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
 
   /**
    * Prepares the Create Form page
@@ -84,7 +84,7 @@ public class FormCreateAction extends FormBuilderBaseDispatchAction {
     Form newForm = null;
     FormInstruction newFormHdrInst = null;
     FormInstruction newFormFtrInst = null;
-	
+
     // assemble a new form information.
     /*
     // all required fields.
@@ -96,7 +96,7 @@ public class FormCreateAction extends FormBuilderBaseDispatchAction {
       return mapping.findForward("toSearch");
     }
     */
-    newForm = new FormTransferObject();    
+    newForm = new FormTransferObject();
     newForm.setLongName((String)dynaForm.get(FORM_LONG_NAME));
     newForm.setPreferredDefinition((String)dynaForm.get(PREFERRED_DEFINITION));
 
@@ -104,11 +104,11 @@ public class FormCreateAction extends FormBuilderBaseDispatchAction {
     context.setConteIdseq((String)dynaForm.get(CONTEXT_ID_SEQ));
     newForm.setContext(context);
 
-    Protocol protocol = 
+    Protocol protocol =
       new ProtocolTransferObject((String)dynaForm.get(PROTOCOLS_LOV_NAME_FIELD));
     protocol.setProtoIdseq((String)dynaForm.get(PROTOCOLS_LOV_ID_FIELD));
     newForm.setProtocol(protocol);
-    
+
     newForm.setFormType((String)dynaForm.get(FORM_TYPE));
     newForm.setFormCategory((String)dynaForm.get(FORM_CATEGORY));
     newForm.setAslName("DRAFT NEW");
@@ -147,19 +147,19 @@ public class FormCreateAction extends FormBuilderBaseDispatchAction {
       createdForm = service.createForm(newForm, newFormHdrInst, newFormFtrInst);
     } catch (FormBuilderException exp) {
         if (log.isDebugEnabled()) {
-          log.debug("Exception on creating Form and its header and footer " + 
+          log.debug("Exception on creating Form and its header and footer " +
             "instructions =  " + exp);
         }
     }
-    
-    setSessionObject(request, CRF, createdForm);  
+
+    setSessionObject(request, CRF, createdForm);
     request.setAttribute(FORM_ID_SEQ, createdForm.getFormIdseq());
-    
+
     saveMessage("cadsr.formbuilder.form.create.success", request);
 
     return mapping.findForward("gotoEdit");
-    
+
   }
 
 }
-  
+

@@ -35,9 +35,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 
-public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
- 
- 
+public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
+
+
   private static final String UPDATED_QUESTION_LIST="updatedQuestionList";
   private static final String NEW_QUESTION_LIST="newQuestionList";
   private static final String DELETED_QUESTION_LIST="deletedQuestionList";
@@ -46,7 +46,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
   private static final String UPDATED_VV_LIST="updatedVVList";
   private static final String DELETED_VV_MAP="deletedVVMap";
   private static final String NEW_VV_MAP="newVVMap";
-  private static final String UPDATED_VV_MAP="updatedVVMap";  
+  private static final String UPDATED_VV_MAP="updatedVVMap";
 
   private static final String VALID_VALUE_CHANGES="validValueChanges";
   /**
@@ -69,15 +69,15 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     HttpServletResponse response) throws IOException, ServletException {
     Form crf = null;
     DynaActionForm moduleEditForm = (DynaActionForm) editForm;
-    
+
     Integer moduleIndex = (Integer) moduleEditForm.get(MODULE_INDEX);
-    
+
     Form orgCRF = (Form)getSessionObject(request, CLONED_CRF);
     List orgModules = orgCRF.getModules();
     Module orgModule = (Module) orgModules.get(moduleIndex.intValue());
     setSessionObject(request, CLONED_MODULE, orgModule,true);
 
-    
+
     crf = (Form) getSessionObject(request, CRF);
 
     List modules = crf.getModules();
@@ -460,7 +460,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
 
     if ((validValues != null) && (validValues.size() > 0)) {
       FormValidValue deletedValidValue =
-        (FormValidValue) validValues.remove(currValidValueIndex);        
+        (FormValidValue) validValues.remove(currValidValueIndex);
       FormActionUtil.decrementDisplayOrder(validValues, currValidValueIndex);
     }
 
@@ -501,7 +501,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
 
     Map availbleValidValuesMap =
       (Map) getSessionObject(request, this.AVAILABLE_VALID_VALUES_MAP);
-    
+
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
@@ -509,21 +509,21 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     Question currQuestion = (Question) questions.get(currQuestionIndex);
 
     List availablevvList = (List)availbleValidValuesMap.get(currQuestion.getQuesIdseq());
-    
+
     FormValidValue formValidValueToAdd = (FormValidValue)availablevvList.get(addAvailableValidValueIndex);
-    
+
     if(formValidValueToAdd==null)
       return mapping.findForward(MODULE_EDIT);
-    
+
     List validValues = currQuestion.getValidValues();
-    
+
     if (currValidValueIndex < validValues.size()) {
       FormValidValue currValidValue =
         (FormValidValue) validValues.get(currValidValueIndex);
-      int displayOrder = currValidValue.getDisplayOrder();      
+      int displayOrder = currValidValue.getDisplayOrder();
       formValidValueToAdd.setDisplayOrder(displayOrder);
       validValues.add(currValidValueIndex, formValidValueToAdd);
-     FormActionUtil.incrementDisplayOrder(validValues, currValidValueIndex+1);      
+     FormActionUtil.incrementDisplayOrder(validValues, currValidValueIndex+1);
     }
     else {
       int newDisplayOrder = 0;
@@ -562,7 +562,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    DynaActionForm moduleEditForm = (DynaActionForm) form;  
+    DynaActionForm moduleEditForm = (DynaActionForm) form;
     Module module = (Module) getSessionObject(request, MODULE);
     Integer index = (Integer) moduleEditForm.get(MODULE_INDEX);
     Form crf = (Form) getSessionObject(request, CRF);
@@ -610,7 +610,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
         saveError(exp.getErrorCode(), request);
         return mapping.findForward(FAILURE);
     }
-                         
+
     saveMessage("cadsr.formbuilder.module.edit.save.success", request);
     crf.getModules().remove(index.intValue());
     crf.getModules().add(index.intValue(),updatedModule);
@@ -624,7 +624,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
         log.debug("Exception on Clone =  " + clexp);
       }
       throw new FatalException(clexp);
-    }    
+    }
     FormBuilderBaseDynaFormBean clearForm = (FormBuilderBaseDynaFormBean) form;
     clearForm.clear();
     removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
@@ -653,12 +653,12 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     FormBuilderBaseDynaFormBean moduleEditForm = (FormBuilderBaseDynaFormBean) form;
-    
+
     Integer moduleIndex = (Integer) moduleEditForm.get(MODULE_INDEX);
-    
+
     Form crf = (Form)getSessionObject(request,CRF);
     Module module = (Module)getSessionObject(request,MODULE);
-    
+
     Module orgModule = (Module)getSessionObject(request,CLONED_MODULE);
     List modules = crf.getModules();
     Module orgModuleClone = null;
@@ -670,8 +670,8 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     {
       throw new FatalException("Could not clone Module",ex);
     }
-    int index = modules.indexOf(module);    
-    crf.getModules().remove(index); 
+    int index = modules.indexOf(module);
+    crf.getModules().remove(index);
     crf.getModules().add(index,orgModuleClone);
     removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
     removeSessionObject(request,CLONED_MODULE);
@@ -679,8 +679,8 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     removeSessionObject(request,DELETED_QUESTIONS);
     moduleEditForm.clear();
     return mapping.findForward(SUCCESS);
-      
-    }  
+
+    }
  private Map getAvailableValidValuesForQuestions(Module module,List questions, Map vdvvMap)
  {
    ListIterator questionIterator = questions.listIterator();
@@ -688,7 +688,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    while(questionIterator.hasNext())
    {
      Question currQuestion = (Question)questionIterator.next();
-     currQuestion.setModule(module);    
+     currQuestion.setModule(module);
      if(currQuestion.getDataElement()==null)
      {
        List vvList  = currQuestion.getValidValues();
@@ -707,7 +707,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
        if(vdIdSeq!=null)
        {
          vdVVList = (List)vdvvMap.get(vdIdSeq);
-         //Check if vv in question has vpIdseq         
+         //Check if vv in question has vpIdseq
        }
        List vvList = currQuestion.getValidValues();
        ListIterator vvIterator = vvList.listIterator();
@@ -720,19 +720,19 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
             vpvdPresent=true;
             break;
           }
-       }  
+       }
        //Get the intersection
        List copyList = cloneFormValidValueList(vvList);
        if(vpvdPresent&&vdVVList!=null)
        {
-         ListIterator vvvdIterator = vdVVList.listIterator();         
+         ListIterator vvvdIterator = vdVVList.listIterator();
          while(vvvdIterator.hasNext())
          {
             ValidValue vv = (ValidValue)vvvdIterator.next();
             FormValidValue tempFvv = DTOTransformer.toFormValidValue(vv,currQuestion);
            if(!copyList.contains(tempFvv))
             copyList.add(tempFvv);
-         }          
+         }
        }
        if(copyList!=null&&!copyList.isEmpty())
        {
@@ -742,14 +742,14 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    }
    return availableVVMap;
  }
- 
+
  private List cloneFormValidValueList(List fvvList)
  {
        List copyVVList = new ArrayList();
        if(fvvList==null)
          return copyVVList;
        ListIterator vvIterator = fvvList.listIterator();
-       
+
        while(vvIterator.hasNext())
        {
          FormValidValue fvv = (FormValidValue)vvIterator.next();
@@ -791,7 +791,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    Map updatedValidValuesMap = new HashMap();
    Map deletedValidValuesMap = new HashMap();
 
-   
+
    Map resultMap = new HashMap();
    //Get deleted Questions
    ListIterator iterate = orgQuestionList.listIterator();
@@ -803,7 +803,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
      {
        deletedQuestionList.add(currQuestion);
      }
-   }   
+   }
    // Get Edited and New Questions
    while(editedQuestionIterate.hasNext())
    {
@@ -820,7 +820,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
          fvv.setQuestion(currQuestion);
        }
        newQuestionList.add(currQuestion);
-       
+
      }
      else// Get edited Questions
      {
@@ -834,7 +834,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
        {
          hasDEAssosiationChanged=false;
        }
-       else 
+       else
        {
          if(orgQusetionDE==null||currQusetionDE==null)
          {
@@ -866,14 +866,14 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
      //Get ValidValue changes when there is no DE association Change
      if(!hasDEAssosiationChanged)
       {
-         validValuesChanges =  
+         validValuesChanges =
             getNewDeletedUpdatedValidValues(currQuestion,orgQuestion.getValidValues(),
-                                            currQuestion.getValidValues());        
+                                            currQuestion.getValidValues());
       }
       //Get ValidValue changes when there is a DE association Change
       else if(hasDEAssosiationChanged)
       {
-        
+
         List newVVList = currQuestion.getValidValues();
         if(!newVVList.isEmpty())
         {
@@ -883,23 +883,23 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
         }
       }
       if(validValuesChanges!=null&&!validValuesChanges.isEmpty())
-      {        
+      {
         List newvvList = (List)validValuesChanges.get(NEW_VV_LIST);
         if(newvvList!=null)
           newValidValuesMap.put(currQuestion.getQuesIdseq(), newvvList);
- 
+
         List deletedList = (List)validValuesChanges.get(DELETED_VV_LIST);
         if(deletedList!=null)
           deletedValidValuesMap.put(currQuestion.getQuesIdseq(), deletedList);
 
         List updatedvvList = (List)validValuesChanges.get(UPDATED_VV_LIST);
         if(updatedvvList!=null)
-          updatedValidValuesMap.put(currQuestion.getQuesIdseq(), updatedvvList);          
+          updatedValidValuesMap.put(currQuestion.getQuesIdseq(), updatedvvList);
 
       }
-     }                                                  
+     }
    }
- 
+
    if(!newQuestionList.isEmpty())
    {
      resultMap.put(NEW_QUESTION_LIST,newQuestionList);
@@ -923,10 +923,10 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    if(!newValidValuesMap.isEmpty())
    {
      resultMap.put(NEW_VV_MAP,newValidValuesMap);
-   }   
+   }
    return resultMap;
  }
-  
+
   /**
   * Gets the validvalue Changes in a map
   *  If no changes returns a empty Map
@@ -950,13 +950,13 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
             deletedValidValueList.add(currVV);
           }
        }
-       
+
        ListIterator editedIterator =   editedValidValueList.listIterator();
        while(editedIterator.hasNext())
        {
          FormValidValue editedVV = (FormValidValue)editedIterator.next();
          editedVV.setQuestion(currQuestion);
-         // get new valid Values 
+         // get new valid Values
          if(!orgValidValueList.contains(editedVV))
          {
            newVVList.add(editedVV);
@@ -980,7 +980,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
       return resultMap;
     }
 
- 
+
 
 
   /**
@@ -1017,7 +1017,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
    * @param modules
    *
    * @return the  module else returns null;
-  
+
   private Question getQuestionFromList(
     String moduleIdSeq,
     List questions) {

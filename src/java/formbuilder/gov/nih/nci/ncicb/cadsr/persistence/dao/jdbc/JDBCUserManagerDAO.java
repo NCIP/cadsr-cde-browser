@@ -12,6 +12,7 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl;
 
 import java.sql.Connection;
+import java.sql.Statement;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.RowCallbackHandler;
@@ -60,6 +61,16 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
       return true;
     }
   }
+  /**
+   * The retun map has key value as action:map
+   * Each value itself is map with key value formtype:Map
+   * Each e value it
+   * @return 
+   */
+  public Map getPermissionsByAction()
+  {
+      return null;
+  }  
 
   public boolean validUser(
     String userName,
@@ -68,6 +79,11 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
     Connection conn = null;
     try {
       conn = getDataSource().getConnection(userName, password);
+      
+      // The Query below is to make sure connection db is established
+      // In some case it was noticed that just making the connection did
+      // not make a call to the db
+      conn.getMetaData();
       validUser = true;
     }
     catch (SQLException e) {

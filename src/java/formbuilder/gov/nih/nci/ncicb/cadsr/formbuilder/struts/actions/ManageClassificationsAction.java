@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class ManageClassificationsAction extends FormBuilderBaseDispatchAction {
+public class ManageClassificationsAction extends FormBuilderSecureBaseDispatchAction {
     /**
      * Returns Complete form given an Id for Copy.
      *

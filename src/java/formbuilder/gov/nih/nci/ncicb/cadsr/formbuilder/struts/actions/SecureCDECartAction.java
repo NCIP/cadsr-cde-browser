@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class SecureCDECartAction extends FormBuilderBaseDispatchAction {
+public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
   public ActionForward addQuestion(
     ActionMapping mapping,
     ActionForm form,

@@ -31,12 +31,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 
-public class FormEditAction extends FormBuilderBaseDispatchAction {
+public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
 
   private static String FORM_EDIT_HEADER = "formEditHeader";
   private static String FORM_EDIT_UPDATED_MODULES = "formEditUpdatedModules";
   private static String FORM_EDIT_DELETED_MODULES = "formEditDeletedModules";
-  private static String FORM_EDIT_ADDED_MODULES = "formEditAddedModules";  
+  private static String FORM_EDIT_ADDED_MODULES = "formEditAddedModules";
 
   /**
    * Returns Complete form given an Id for Edit.
@@ -92,11 +92,11 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
         this.PROTOCOL_ID_SEQ, crf.getProtocol().getProtoIdseq());
       dynaFormEditForm.set(
         this.PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
-      dynaFormEditForm.set(CATEGORY_NAME, crf.getFormCategory());      
+      dynaFormEditForm.set(CATEGORY_NAME, crf.getFormCategory());
       dynaFormEditForm.set(
         this.FORM_TYPE, crf.getFormType());
-      dynaFormEditForm.set(CATEGORY_NAME, crf.getFormCategory()); 
-      dynaFormEditForm.set(this.WORKFLOW, crf.getAslName()); 
+      dynaFormEditForm.set(CATEGORY_NAME, crf.getFormCategory());
+      dynaFormEditForm.set(this.WORKFLOW, crf.getAslName());
     }
 
     if (log.isDebugEnabled()) {
@@ -331,7 +331,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       log.info("Delete Form With Id " + formIdSeq);
     }
     FormBuilderServiceDelegate service = getFormBuilderService();
-    try {    
+    try {
         service.deleteForm(formIdSeq);
       }
     catch (FormBuilderException exp) {
@@ -341,7 +341,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
         saveError(ERROR_FORM_DELETE_FAILED, request);
         saveError(exp.getErrorCode(), request);
         return mapping.findForward(FAILURE);
-      }    
+      }
     removeSessionObject(request, DELETED_MODULES);
     removeSessionObject(request, CLONED_CRF);
     removeSessionObject(request, CRF);
@@ -375,7 +375,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     if(hasUpdate)
     {
         try {
-          FormBuilderServiceDelegate service = getFormBuilderService();        
+          FormBuilderServiceDelegate service = getFormBuilderService();
           Form header = (Form)getSessionObject(request,FORM_EDIT_HEADER);
           Collection updatedModules = (Collection)getSessionObject(request,FORM_EDIT_UPDATED_MODULES);
           Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
@@ -389,7 +389,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
           if (log.isDebugEnabled()) {
             log.debug("Exception on service.updateForm=  " + exp);
           }
-  
+
           saveError(ERROR_FORM_SAVE_FAILED, request);
           saveError(exp.getErrorCode(), request);
           return mapping.findForward(FAILURE);
@@ -399,15 +399,15 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
             log.debug("Exception on save =  " + exp);
           }
           throw new FatalException(exp);
-        }   
+        }
         removeSessionObject(request, DELETED_MODULES);
         saveMessage("cadsr.formbuilder.form.edit.save.success", request);
-        return mapping.findForward(SUCCESS); 
+        return mapping.findForward(SUCCESS);
        }
     else
     {
       saveMessage("cadsr.formbuilder.form.edit.nochange", request);
-       return mapping.findForward(FORM_EDIT); 
+       return mapping.findForward(FORM_EDIT);
     }
     }
 
@@ -433,11 +433,11 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     boolean hasUpdate  = setValuesForUpdate(mapping,form,request);
       if(hasUpdate)
       {
-        return mapping.findForward("saveConfirm"); 
+        return mapping.findForward("saveConfirm");
       }
       else
       {
-        return mapping.findForward("moduleEdit"); 
+        return mapping.findForward("moduleEdit");
       }
     }
   /**
@@ -461,7 +461,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     Form crf = (Form) getSessionObject(request, CRF);
 
         try {
-          FormBuilderServiceDelegate service = getFormBuilderService();        
+          FormBuilderServiceDelegate service = getFormBuilderService();
           Form header = (Form)getSessionObject(request,FORM_EDIT_HEADER);
           Collection updatedModules = (Collection)getSessionObject(request,FORM_EDIT_UPDATED_MODULES);
           Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
@@ -469,13 +469,13 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
           Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules);
           setSessionObject(request,CRF, updatedCrf);
           Form clonedCrf = (Form) updatedCrf.clone();
-          setSessionObject(request, CLONED_CRF, clonedCrf);          
+          setSessionObject(request, CLONED_CRF, clonedCrf);
         }
         catch (FormBuilderException exp) {
           if (log.isDebugEnabled()) {
             log.debug("Exception on service.updateForm=  " + exp);
           }
-  
+
           saveError(ERROR_FORM_SAVE_FAILED, request);
           saveError(exp.getErrorCode(), request);
           return mapping.findForward(FORM_EDIT);
@@ -485,10 +485,10 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
             log.debug("Exception on save =  " + exp);
           }
           throw new FatalException(exp);
-        }          
+        }
         saveMessage("cadsr.formbuilder.form.edit.save.success", request);
         removeSessionObject(request, DELETED_MODULES);
-        return mapping.findForward(MODULE_EDIT); 
+        return mapping.findForward(MODULE_EDIT);
 
     }
   /**
@@ -514,11 +514,11 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     removeSessionObject(request, CLONED_CRF);
     editForm.clear();
     return mapping.findForward(SUCCESS);
-      
+
     }
 
   /**
-   * Cancel Save before ModuleEdit 
+   * Cancel Save before ModuleEdit
    *
    * @param mapping The ActionMapping used to select this instance.
    * @param form The optional ActionForm bean for this request.
@@ -539,10 +539,10 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     removeSessionObject(request, FORM_EDIT_HEADER);
     removeSessionObject(request, FORM_EDIT_UPDATED_MODULES);
     removeSessionObject(request, FORM_EDIT_DELETED_MODULES);
-    removeSessionObject(request, FORM_EDIT_ADDED_MODULES);    
-   
+    removeSessionObject(request, FORM_EDIT_ADDED_MODULES);
+
     return mapping.findForward(FORM_EDIT);
-      
+
     }
 
   /**
@@ -573,7 +573,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     header.setFormIdseq((String) editForm.get(FORM_ID_SEQ));
     header.setPreferredName(clonedCrf.getPreferredName());
     String longName = (String) editForm.get(FORM_LONG_NAME);
-  
+
     if ((longName != null) && (clonedCrf.getLongName() != null)) {
        header.setLongName(longName);
       if (!longName.equals(clonedCrf.getLongName())) {
@@ -613,7 +613,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
      Protocol protocol = new ProtocolTransferObject();
      protocol.setProtoIdseq(protocolIdSeq);
       header.setProtocol(protocol);
-      if (!orgProtocolIdSeq.equals(protocolIdSeq)) {       
+      if (!orgProtocolIdSeq.equals(protocolIdSeq)) {
         headerUpdate = true;
       }
     }
@@ -627,7 +627,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     String orgWorkflow = clonedCrf.getAslName();
    if ((workflow != null) && orgWorkflow!=null) {
       header.setAslName(workflow);
-      if (!workflow.equals(orgWorkflow)) {       
+      if (!workflow.equals(orgWorkflow)) {
         headerUpdate = true;
       }
     }
@@ -636,7 +636,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     String orgCategoryName = clonedCrf.getFormCategory();
    if ((categoryName != null) && orgCategoryName!=null) {
       header.setFormCategory(categoryName);
-      if (!categoryName.equals(orgCategoryName)) {       
+      if (!categoryName.equals(orgCategoryName)) {
         headerUpdate = true;
       }
     }
@@ -650,7 +650,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     String orgFormType = clonedCrf.getFormType();
    if ((formType != null) && orgFormType!=null) {
       header.setFormType(formType);
-      if (!formType.equals(orgFormType)) {       
+      if (!formType.equals(orgFormType)) {
         headerUpdate = true;
       }
     }
@@ -659,7 +659,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     String orgPreferredDef = clonedCrf.getPreferredDefinition();
     if ((preferredDef != null) && orgPreferredDef != null) {
       header.setPreferredDefinition(preferredDef);
-      if (!preferredDef.equals(clonedCrf.getPreferredDefinition())) {        
+      if (!preferredDef.equals(clonedCrf.getPreferredDefinition())) {
         headerUpdate = true;
       }
     }
@@ -668,12 +668,12 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       header.setPreferredDefinition(null);
       headerUpdate = true;
     }
-    
+
    List updatedModules =
        getUpdatedModules(clonedCrf.getModules(), crf.getModules());
-   List addedModules = 
+   List addedModules =
        getAddedModules( crf.getModules());
-       
+
     if(!headerUpdate)
        header=null;
     if (
@@ -687,10 +687,10 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       }
     else
     {
-      return false;      
+      return false;
     }
   }
-    
+
    /**
    * Removes the module given by "moduleIdSeq" from the module list
    *
@@ -704,7 +704,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
         removeSessionObject(request,FORM_EDIT_HEADER);
         removeSessionObject(request,FORM_EDIT_UPDATED_MODULES);
         removeSessionObject(request,FORM_EDIT_DELETED_MODULES);
-        removeSessionObject(request,FORM_EDIT_ADDED_MODULES);    
+        removeSessionObject(request,FORM_EDIT_ADDED_MODULES);
   }
   /**
    * Removes the module given by "moduleIdSeq" from the module list

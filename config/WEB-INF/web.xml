@@ -171,6 +171,22 @@
       <web-resource-name>Secure Services</web-resource-name>
       <url-pattern>form*.do</url-pattern>
     </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>moduleSaveAction.do</url-pattern>
+    </web-resource-collection>  
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>moduleToEditAction.do</url-pattern>
+    </web-resource-collection>     
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>gotoChangeAssociation.do</url-pattern>
+    </web-resource-collection> 
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>changeAssociation.do</url-pattern>
+    </web-resource-collection>     
     <auth-constraint>
       <description>Authorized Users Group</description>
       <role-name>FORMBUILDER_USERS</role-name>

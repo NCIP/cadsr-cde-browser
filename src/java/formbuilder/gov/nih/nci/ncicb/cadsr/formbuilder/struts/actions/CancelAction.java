@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class CancelAction extends FormBuilderBaseDispatchAction {
+public class CancelAction extends FormBuilderSecureBaseDispatchAction {
     public ActionForward getModuleToEdit(ActionMapping mapping,
         ActionForm form, HttpServletRequest request,
         HttpServletResponse response) throws IOException, ServletException {
@@ -51,7 +51,7 @@ public class CancelAction extends FormBuilderBaseDispatchAction {
 
         return mapping.findForward("gotoSearch");
     }
-    
+
     public ActionForward gotoManageClassifications(ActionMapping mapping, ActionForm form,
         HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
