@@ -227,7 +227,6 @@
      <copy todir="${classes.build.dir}/WEB-INF/classes">    
          <fileset dir="${config.home}/connections">
            <patternset>
-             <include name="*.properties"/>
              <include name="cle-providers.xml"/>
            </patternset>
          </fileset>
@@ -256,11 +255,17 @@
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
          <fileset dir="${config.test}/connections">
            <patternset>
-             <include name="cdebrowser.properties"/>
              <include name="cle-providers.xml"/>
            </patternset>
          </fileset>
-      </copy>        
+      </copy>   
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.test}/properties">
+           <patternset>
+             <include name="cdebrowser.properties"/>
+           </patternset>
+         </fileset>
+      </copy>       
     </target>
   <!-- =========== END DEV CONFIG ======================= -->
   
@@ -702,7 +707,7 @@
        clean_build_redeploy_restart - clean_build_redeploy,oc4j_start(Developement)
        
        dist_dev		      - Creates Developement Clean distribution.
-       dist_prod	      - Creates Test Clean distribution.
+       dist_test	      - Creates Test Clean distribution.
        dist_qa		      - Creates QA Clean distribution.
        dist_stage	      - Creates Stage Clean distribution.
        dist_prod	      - Creates Prod Clean distribution.
