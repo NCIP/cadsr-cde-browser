@@ -50,7 +50,7 @@ function closeOnClick() {
 }
 
 function goPage(pageInfo) {
-  document.location.href = "/cdebrowser/formLOVAction.do?method=getProtocolsLOV&"+pageInfo + "<%= pageUrl %>";
+  document.location.href = "formLOVAction.do?method=getProtocolsLOV&"+pageInfo + "<%= pageUrl %>";
     
 }
   
@@ -61,7 +61,7 @@ function goPage(pageInfo) {
 <p class="OraHeaderSubSub">Protocols </p>
 </center>
 
-<form method="POST" action="/cdebrowser/formLOVAction.do">
+<form method="POST" action="formLOVAction.do">
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= clb.getJsId() %>">
 <INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= clb.getJsName() %>">
