@@ -23,5 +23,5 @@ public interface PersistenceConstants {
 
   public static final String FORM_ADMIN_COMPONENT_TYPE="QUEST_CONTENT";
   
-  public static final String[] FORM_TYPE_VALUES={"FORM","TEMPLATE"};
+  public static final String[] FORM_TYPE_VALUES={"CRF","TEMPLATE"};
 }

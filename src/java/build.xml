@@ -265,6 +265,7 @@
         <patternset>
           <include name="WEB-INF/*.tld"/>
           <include name="WEB-INF/struts-config.xml"/>
+          <include name="WEB-INF/orion-web.xml"/>
         </patternset>
       </fileset>    
         
@@ -351,6 +352,7 @@
          <fileset dir="${CONFIG_HOME}/ejb">
            <patternset>
             <include name="ejb-jar.xml"/> 
+            <include name="orion-ejb-jar.xml"/>
            </patternset>
          </fileset>      
        </copy>  
@@ -362,7 +364,8 @@
                 <include name="gov/nih/nci/ncicb/cadsr/ejb/common/**/*.*"/>
               </patternset>
             </fileset>          
-	    <fileset dir="${CLASSES_BUILD_DIR}/ejb" includes="META-INF/ejb-jar.xml"/>  
+	    <fileset dir="${CLASSES_BUILD_DIR}/ejb" includes="META-INF/ejb-jar.xml"/>
+	    <fileset dir="${CLASSES_BUILD_DIR}/ejb" includes="META-INF/orion-ejb-jar.xml"/>
             <manifest>
                <attribute name="Built-By" value="${user.name}"/>
                <attribute name="Class-Path" 
