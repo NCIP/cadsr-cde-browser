@@ -503,7 +503,6 @@
           <include name="WEB-INF/jboss-web.xml"/>
         </patternset>
       </fileset>
-      
       <fileset dir="${classes.build.dir}">
         <patternset>
           <include name="WEB-INF/classes/**/*.*"/>
@@ -513,7 +512,7 @@
       <fileset dir="${jsp.dir}/">
         <patternset>
           <include name="formbuilder/**/*.*"/>  
-  <!-- release 3.0, reorganze ui directory -->
+         <!-- release 3.0, reorganze ui directory -->
           <include name="cdebrowser/**/*.*"/>  
           <include name="*.jsp"/>
         </patternset>

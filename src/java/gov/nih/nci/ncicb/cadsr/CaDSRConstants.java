@@ -21,5 +21,6 @@ public interface CaDSRConstants {
   public static final String NO="No";
   public static final String CDEBROWSER_SERVICE_LOCATOR_CLASSNAME = "gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl";
   public static final String TREE_REFRESH_INDICATOR="treeRefreshIndicator";
+  public static final String ANCHOR="anchor";
 
 }
