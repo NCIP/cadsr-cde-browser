@@ -87,7 +87,19 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
   public Form copyForm(
     Form sourceForm,
     Form newForm) throws DMLException {
-    return null;
+    
+    CopyForm nForm = new CopyForm(this.getDataSource());
+    Map out = nForm.execute(sourceForm, newForm);
+    
+   if ((out.get("p_return_code"))==null)
+   {
+     newForm.setFormIdseq((String) out.get("p_new_idseq"));
+     return newForm;
+   }
+  else
+  {
+    throw new DMLException((String) out.get("p_return_desc"));
+  }
   }
 
   /**
@@ -492,5 +504,45 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       return out;
     }
   }
+ /**
+   * Inner class that copies the source form to a new form
+   */
+  private class CopyForm extends StoredProcedure {
+    public CopyForm(DataSource ds) {
+      super(ds, "sbrext_form_builder_pkg.copy_crf");
+      declareParameter(new SqlParameter("p_src_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_qtl_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_version", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_preferred_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_long_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_preferred_definition", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_conte_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_proto_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_asl_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("p_created_by", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_new_idseq", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
+      declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
+      compile();
+    }
 
+    public Map execute(Form sourceForm, Form newForm) {
+      Map in = new HashMap();
+      
+
+      in.put("p_src_idseq", sourceForm.getFormIdseq());
+      in.put("p_qtl_name", newForm.getFormType());
+      in.put("p_version", newForm.getVersion().toString());
+      in.put("p_preferred_name", newForm.getPreferredName());
+      in.put("p_long_name", newForm.getLongName());
+      in.put("p_preferred_definition", newForm.getPreferredDefinition()); 
+      in.put("p_conte_idseq", newForm.getConteIdseq());  
+      in.put("p_proto_idseq", newForm.getProtoIdseq());
+      in.put("p_asl_name", newForm.getAslName());      
+      in.put("p_created_by", newForm.getCreatedBy());
+
+      Map out = execute(in);
+      return out;
+    }
+  }
 }
