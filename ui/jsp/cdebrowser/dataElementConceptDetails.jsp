@@ -9,6 +9,7 @@
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="oracle.clex.process.PageConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils" %>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
@@ -24,7 +25,7 @@
   String pageName = PageConstants.PAGEID;
   String pageUrl = "&"+pageName+"="+pageId;
   CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-  String evsUrlThesaurus = params.getEvsUrlThesaurus();
+
   String socVersion="";
   if(dec.getObjectClass()!=null)
   {
@@ -224,6 +225,7 @@ function goPage(pageInfo) {
          
         <logic:present name="de" property = "dataElementConcept.objectClass.conceptDerivationRule">         
             <% ConceptDerivationRule ocdr = objClass.getConceptDerivationRule(); %>
+            <!-- Taken out at Denises request TT#1240            
                <br>
               <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                 <tr  valign="bottom" >
@@ -252,7 +254,7 @@ function goPage(pageInfo) {
                   <td class="OraFieldText"><%=ocdr.getConcatenationChar()%> </td>
                </tr>                 
              </table>
-             
+             -->
               <logic:present name="de" property = "dataElementConcept.objectClass.conceptDerivationRule.componentConcepts">                    
                    <br>
                   <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
@@ -272,9 +274,7 @@ function goPage(pageInfo) {
                         <tr class="OraTabledata">
                            <td class="OraFieldText"><%=comp.getConcept().getLongName()%> </td>
                            <td class="OraFieldText">
-                                <a class="link" TARGET="_blank"  href="<%=evsUrlThesaurus+"code="+comp.getConcept().getCode()%>">
-                                   <%=comp.getConcept().getCode()%>
-                                 </a>
+                                <%=CDEDetailsUtils.getConceptCodeUrl(comp.getConcept(),params,"link",",")%>                                  
                            </td>
                            <td class="OraFieldText"><%=comp.getConcept().getPublicId()%> </td> 
                            <td class="OraFieldText"><%=comp.getConcept().getDefinitionSource()%> </td> 
@@ -283,21 +283,35 @@ function goPage(pageInfo) {
                        </logic:iterate>
                     </table>                      
              </logic:present>
-      </logic:present>
+            <logic:notPresent name="de" property = "dataElementConcept.objectClass.conceptDerivationRule.componentConcepts"> 
+                       <br>
+                       <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                        <tr  valign="bottom" >
+                         <td class="OraHeaderSubSubSub" width="100%">Object Class Component Concepts</td>
+                        </tr>
+                       </table>
+                       <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                         <tr class="OraTabledata">
+                            <td  width="20%" >Object Class does not have any Component Concepts.</td>
+                         </tr>
+                         </tr>                 
+                       </table>    
+              </logic:notPresent >             
+      </logic:present>  
       <logic:notPresent name="de" property = "dataElementConcept.objectClass.conceptDerivationRule"> 
                <br>
                <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                 <tr  valign="bottom" >
-                 <td class="OraHeaderSubSubSub" width="100%">Object Class Concept Derivation Rule</td>
+                 <td class="OraHeaderSubSubSub" width="100%">Object Class Component Concepts</td>
                 </tr>
                </table>
                <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                  <tr class="OraTabledata">
-                    <td  width="20%" >Object Class does not have any Concept Derivation Rules.</td>
+                    <td  width="20%" >Object Class does not have any Component Concepts.</td>
                  </tr>
                  </tr>                 
                </table>    
-       </logic:notPresent >        
+       </logic:notPresent >       
  </logic:present>
  <logic:notPresent name="de" property = "dataElementConcept.objectClass"> 
          <br>
@@ -351,6 +365,7 @@ function goPage(pageInfo) {
           
          <logic:present name="de" property = "dataElementConcept.property.conceptDerivationRule">         
              <% ConceptDerivationRule ocdr = prop.getConceptDerivationRule(); %>
+             <!-- Taken out at Denises request TT#1240             
                 <br>
                <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                  <tr  valign="bottom" >
@@ -379,7 +394,7 @@ function goPage(pageInfo) {
                    <td class="OraFieldText"><%=ocdr.getConcatenationChar()%> </td>
                 </tr>                 
               </table>
-              
+              -->
                <logic:present name="de" property = "dataElementConcept.property.conceptDerivationRule.componentConcepts">                    
                     <br>
                    <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
@@ -399,9 +414,7 @@ function goPage(pageInfo) {
                          <tr class="OraTabledata">
                             <td class="OraFieldText"><%=comp.getConcept().getLongName()%> </td>
                             <td class="OraFieldText">
-                                 <a class="link" TARGET="_blank"  href="<%=evsUrlThesaurus+"code="+comp.getConcept().getCode()%>">
-                                    <%=comp.getConcept().getCode()%>
-                                  </a>
+                                <%=CDEDetailsUtils.getConceptCodeUrl(comp.getConcept(),params,"link",",")%>                              
                             </td>
                             <td class="OraFieldText"><%=comp.getConcept().getPublicId()%> </td> 
                             <td class="OraFieldText"><%=comp.getConcept().getDefinitionSource()%> </td> 
@@ -410,17 +423,31 @@ function goPage(pageInfo) {
                         </logic:iterate>
                      </table>                      
               </logic:present>
+              <logic:notPresent name="de" property = "dataElementConcept.property.conceptDerivationRule.componentConcepts"> 
+                       <br>
+                       <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                        <tr  valign="bottom" >
+                         <td class="OraHeaderSubSubSub" width="100%">Property Component Concepts</td>
+                        </tr>
+                       </table>
+                       <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                         <tr class="OraTabledata">
+                            <td  width="20%" >Property does not have any Component Concepts.</td>
+                         </tr>
+                         </tr>                 
+                       </table>    
+               </logic:notPresent >               
        </logic:present>
        <logic:notPresent name="de" property = "dataElementConcept.property.conceptDerivationRule"> 
                <br>
                <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                 <tr  valign="bottom" >
-                 <td class="OraHeaderSubSubSub" width="100%">Property Concept Derivation Rule</td>
+                 <td class="OraHeaderSubSubSub" width="100%">Property Component Concepts</td>
                 </tr>
                </table>
                <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                  <tr class="OraTabledata">
-                    <td  width="20%" >Property does not have any Concept Derivation Rules.</td>
+                    <td  width="20%" >Property does not have any Component Concepts.</td>
                  </tr>
                  </tr>                 
                </table>    

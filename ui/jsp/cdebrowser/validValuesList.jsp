@@ -31,7 +31,7 @@
   HTMLPageScroller scroller = (HTMLPageScroller)
                 infoBean.getInfo(ProcessConstants.VALID_VALUES_PAGE_SCROLLER);
   CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-  String evsUrlThesaurus = params.getEvsUrlThesaurus();
+
 %>
 
 <HTML>
@@ -210,8 +210,8 @@ function listChanged(urlInfo) {
  </tr>
 </table>
         <logic:present name="de" property = "valueDomain.conceptDerivationRule"> 
-
             <% ConceptDerivationRule ocdr = vd.getConceptDerivationRule(); %>
+            <!-- Taken out at Denises request TT#1240
                <br>
               <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                 <tr  valign="bottom" >
@@ -240,7 +240,7 @@ function listChanged(urlInfo) {
                   <td class="OraFieldText"><%=ocdr.getConcatenationChar()%> </td>
                </tr>                 
              </table>
-             
+            --->
               <logic:present name="de" property = "valueDomain.conceptDerivationRule.componentConcepts">                    
                    <br>
                   <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
@@ -260,9 +260,7 @@ function listChanged(urlInfo) {
                         <tr class="OraTabledata">
                            <td class="OraFieldText"><%=comp.getConcept().getLongName()%> </td>
                            <td class="OraFieldText">
-                                <a class="link" TARGET="_blank"  href="<%=evsUrlThesaurus+"code="+comp.getConcept().getCode()%>">
-                                   <%=comp.getConcept().getCode()%>
-                                 </a>
+                                <%=CDEDetailsUtils.getConceptCodeUrl(comp.getConcept(),params,"link",",")%>
                            </td>
                            <td class="OraFieldText"><%=comp.getConcept().getPublicId()%> </td> 
                            <td class="OraFieldText"><%=comp.getConcept().getDefinitionSource()%> </td> 
@@ -271,23 +269,36 @@ function listChanged(urlInfo) {
                        </logic:iterate>
                     </table>                      
              </logic:present>
+              <logic:notPresent name="de" property = "valueDomain.conceptDerivationRule.componentConcepts">
+                    <br>
+                      <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                        <tr  valign="bottom" >
+                          <td class="OraHeaderSubSubSub" width="100%">Value Domain Component Concepts</td>
+                        </tr>
+                     </table>
+                     <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                       <tr class="OraTabledata">
+                          <td   width="20%" >Value Domain does have any Component Concepts.</td>
+                       </tr>
+                       </tr>                 
+                     </table>      
+              </logic:notPresent>             
       </logic:present>
-      
       <logic:notPresent name="de" property = "valueDomain.conceptDerivationRule">
             <br>
               <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
                 <tr  valign="bottom" >
-                  <td class="OraHeaderSubSubSub" width="100%">Value Domain Concept Derivation Rule</td>
+                  <td class="OraHeaderSubSubSub" width="100%">Value Domain Component Concepts</td>
                 </tr>
              </table>
              <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
                <tr class="OraTabledata">
-                  <td   width="20%" >Value Domain does have any Concept Derivation Rules.</td>
+                  <td   width="20%" >Value Domain does have any Component Concepts.</td>
                </tr>
                </tr>                 
              </table>      
-      </logic:notPresent>
-
+      </logic:notPresent>      
+      
  
 <br>
 <table cellpadding="0" cellspacing="0" width="80%" align="center" >
@@ -332,7 +343,7 @@ function listChanged(urlInfo) {
         <td class="OraFieldText"><%=validValue.getShortMeaningValue()%> </td>
         <td class="OraFieldText"><%=validValue.getShortMeaning()%> </td>
        <td class="OraFieldText">
-          <%=CDEDetailsUtils.getConceptCodes(validValue.getConceptDerivationRule(),evsUrlThesaurus,"link",",")%>
+          <%=CDEDetailsUtils.getConceptCodesUrl(validValue.getConceptDerivationRule(),params,"link",",")%>
        </td>
         <td class="OraFieldText"><%=validValue.getDescription()%> </td>        
       </tr>

@@ -2,6 +2,8 @@ package gov.nih.nci.ncicb.cadsr.util;
 
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class CDEBrowserParams
@@ -13,8 +15,9 @@ public class CDEBrowserParams
     String xmlPaginationFlag = "no";
     String xmlFileMaxRecord;
     String treeURL = "";
-    String evsUrlThesaurus = "";
+    String evsSources = "";
     String showFormsAlphebetical ="no";    
+    Map evsUrlMap = new HashMap();
     
     static CDEBrowserParams instance;
     // constructor
@@ -49,8 +52,9 @@ public class CDEBrowserParams
             index++;
             treeURL = b.getString("TREE_URL");
             index++;
-            evsUrlThesaurus = b.getString("EVS_URL_THESAURUS");
+            evsSources = b.getString("EVS_URL_SOURCES");
             index++;
+            setEvsUrlMap(b,evsSources);
             showFormsAlphebetical = b.getString("SHOW_FORMS_ALPHEBETICAL");
             index++;            
             
@@ -93,17 +97,44 @@ public class CDEBrowserParams
     public String getXMLFileMaxRecords() {
       return xmlFileMaxRecord;
     }
-
-
-  public void setEvsUrlThesaurus(String evsUrlThesaurus)
+  
+  public void setEvsUrlMap(Map evsUrlMap)
   {
-    this.evsUrlThesaurus = evsUrlThesaurus;
+   this.evsUrlMap = evsUrlMap;
   }
 
-  public String getEvsUrlThesaurus()
+  public void setEvsUrlMap(ResourceBundle bundle,String evsSourcesArr)
   {
-    return evsUrlThesaurus;
+        try
+        {
+            String[] urls = StringUtils.tokenizeCSVList(evsSourcesArr);
+            for(int i=0; i<urls.length;i++)
+            {
+              String key  = urls[i];
+              String value = bundle.getString(key);
+              if(evsUrlMap==null)
+                evsUrlMap = new HashMap();
+              evsUrlMap.put(key,value);
+            }
+        }
+        catch (java.util.MissingResourceException mre) 
+        {
+            log.error("Error getting init parameters, missing resource values");
+            log.error("EVS Url not mapped correctly");
+            log.error(mre.getMessage(), mre);
+            System.exit(-1);
+        }
+        catch (Exception e)
+        {
+            log.error("Exception occurred", e);
+            System.exit(-1);
+        }
   }
+  public Map getEvsUrlMap()
+  {
+    return evsUrlMap;
+  }
+  
   public void setShowFormsAlphebetical(String showFormsAlphebetical)
   {
     this.showFormsAlphebetical = showFormsAlphebetical;

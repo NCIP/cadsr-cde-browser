@@ -27,7 +27,6 @@
 <!--
 <%
   CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-  String evsUrlThesaurus = params.getEvsUrlThesaurus();
 
 %>
 function removeFromCompareList() {
@@ -359,8 +358,8 @@ function done() {
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                           <logic:present name="currCDE" property = "dataElementConcept.objectClass">                         
                               <logic:present name="currCDE" property = "dataElementConcept.objectClass.conceptDerivationRule">                             
-                                <td class="OraFieldText" width='30%'  >
-                                    <%=CDEDetailsUtils.getConceptCodes(currCDE.getDataElementConcept().getObjectClass().getConceptDerivationRule(),evsUrlThesaurus,"link",",")%>                                                            
+                                <td class="OraFieldText" width='30%'  >                                                          
+                                    <%=CDEDetailsUtils.getConceptCodesUrl(currCDE.getDataElementConcept().getObjectClass().getConceptDerivationRule(),params,"link",",")%>
                                 </td>
                               </logic:present>
                               <logic:notPresent name="currCDE" property = "dataElementConcept.objectClass.conceptDerivationRule"> 
@@ -398,8 +397,8 @@ function done() {
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                           <logic:present name="currCDE" property = "dataElementConcept.property">                         
                               <logic:present name="currCDE" property = "dataElementConcept.property.conceptDerivationRule">                             
-                                <td class="OraFieldText" width='30%'  >
-                                    <%=CDEDetailsUtils.getConceptCodes(currCDE.getDataElementConcept().getProperty().getConceptDerivationRule(),evsUrlThesaurus,"link",",")%>                                                            
+                                <td class="OraFieldText" width='30%'  >                                                                                
+                                    <%=CDEDetailsUtils.getConceptCodesUrl(currCDE.getDataElementConcept().getProperty().getConceptDerivationRule(),params,"link",",")%>
                                 </td>
                               </logic:present>
                               <logic:notPresent name="currCDE" property = "dataElementConcept.property.conceptDerivationRule"> 
@@ -581,8 +580,8 @@ function done() {
                    <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                           <logic:present name="currCDE" property = "valueDomain">                         
                               <logic:present name="currCDE" property = "valueDomain.conceptDerivationRule">                             
-                                <td class="OraFieldText" width='30%'  >
-                                    <%=CDEDetailsUtils.getConceptCodes(currCDE.getValueDomain().getConceptDerivationRule(),evsUrlThesaurus,"link",",")%>                                                            
+                                <td class="OraFieldText" width='30%'>                                                          
+                                    <%=CDEDetailsUtils.getConceptCodesUrl(currCDE.getValueDomain().getConceptDerivationRule(),params,"link",",")%>
                                 </td>
                               </logic:present>
                               <logic:notPresent name="currCDE" property = "valueDomain.conceptDerivationRule"> 
@@ -651,7 +650,7 @@ function done() {
                           </logic:iterate>
                 </tr>
             </table>
-            <table cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
+            <table vAlign=top cellSpacing=2 cellPadding=0  width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>%" align=center border=0>
              	<tr>
                    <TD vAlign=top width=10%>
                        &nbsp;
@@ -659,7 +658,7 @@ function done() {
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                    <logic:empty name="currCDE" property="valueDomain.validValues">
                        <td vAlign=top width="30%" class="PrinterOraFieldText" >
-                          <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                          <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                             <TR class=OraTableColumnHeader>
                               <TH class=OraTableColumnHeader>Value</TH>
                               <TH class=OraTableColumnHeader>Value meaning</TH>
@@ -674,8 +673,8 @@ function done() {
                        </td>
                    </logic:empty>
                    <logic:notEmpty name="currCDE" property="valueDomain.validValues">
-                       <td width="30%" class="PrinterOraFieldText" >
-                          <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                       <td vAlign=top width="30%" class="PrinterOraFieldText" >
+                          <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                             <TR class=OraTableColumnHeader>
                               <TH class=OraTableColumnHeader>Value</TH>
                               <TH class=OraTableColumnHeader>Value meaning</TH>
@@ -724,7 +723,7 @@ function done() {
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                    <logic:empty name="currCDE" property="refereceDocs">
                        <td vAlign=top width="30%" class="PrinterOraFieldText" >
-                          <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                          <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                             <TR class=OraTableColumnHeader>
                                <th class="OraTableColumnHeader">Document Name</th>
                                <th class="OraTableColumnHeader">Document Type</th>
@@ -791,8 +790,8 @@ function done() {
                     </TD>             	
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                    <logic:empty name="currCDE" property="classifications">
-                       <td width="30%" class="PrinterOraFieldText" >
-                          <table cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                       <td width="30%" vAlign=top class="PrinterOraFieldText" >
+                          <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                             <TR class=OraTableColumnHeader>
                               <TH class=OraTableColumnHeader>CS* Preferred Name</TH>
                               <TH class=OraTableColumnHeader>CS* Definition</TH>
@@ -860,7 +859,7 @@ function done() {
                   <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                        <logic:notPresent name="currCDE" property="derivedDataElement">
                            <td vAlign=top  width="30%" class="PrinterOraFieldText" >
-                              <table cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
+                              <table vAlign=top cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
                                  <TR >
                                       <td width="30%" class="OraHeaderSubSub" >Derivation Details</td>                     
                                   </TR> 
@@ -883,7 +882,7 @@ function done() {
                       
                        <logic:present name="currCDE" property="derivedDataElement">
                            <td vAlign=top width="30%" class="PrinterOraFieldText" >
-                              <table cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
+                              <table vAlign=top cellSpacing=0 cellPadding=0  width="100%" align=center border=0 >
                                  <TR >
                                       <td width="30%" class="OraHeaderSubSub" >Derivation Details</td>                     
                                   </TR> 
