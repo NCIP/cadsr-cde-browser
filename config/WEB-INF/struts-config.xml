@@ -69,6 +69,21 @@
       <form-property name="moduleIndex" type="java.lang.Integer"/>
       <form-property name="deletedModuleIndex" type="java.lang.Integer"/>
     </form-bean>
+    <form-bean name="moduleEditForm" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean" dynamic="true">
+      <form-property name="formIdSeq" type="java.lang.String"/>
+      <form-property name="moduleLongName" type="java.lang.String"/>
+      <form-property name="moduleComments" type="java.lang.String"/>
+      <form-property name="moduleIndex" type="java.lang.Integer"/>
+      <form-property name="questionLongName" type="java.lang.String"/>
+      <form-property name="questionIdSeq" type="java.lang.String"/>
+      <form-property name="questionIndex" type="java.lang.Integer"/>
+      <form-property name="questionOption" type="java.lang.String"/>  
+      <form-property name="moduleQuestions" type="java.lang.String[]"/>
+      <form-property name="addDeletedQuestionIdSeq" type="java.lang.String"/>
+      <form-property name="validValueIndex" type="java.lang.Integer"/>
+      <form-property name="addAvailableValidValueIdSeq" type="java.lang.String"/>    
+    </form-bean>       
+  </form-beans>    
     <form-bean name="displayCartForm"
                type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.CDECartFormBean"/>
     <form-bean name="changeAssociationForm"
@@ -157,6 +172,16 @@
                redirect="false"/>
       <forward name="failure" path="/formbuilder/formEdit.jsp" redirect="false"/>
     </action>
+    
+    <action name="moduleEditForm" path="/moduleToEditAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction" validate="false">
+      <forward name="success" path="/formbuilder/moduleEdit.jsp" redirect="false"/>
+    </action>
+    <action name="moduleEditForm" path="/moduleSaveAction" parameter="method" scope="session" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction" validate="false">
+      <forward name="moduleEdit" path="/formbuilder/moduleEdit.jsp" redirect="false"/>
+      <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
+      <forward name="failure" path="/formbuilder/moduleEdit.jsp" redirect="false"/>
+    </action> 
+    
     <action name="hrefCRFForm" path="/formHrefDeleteAction" parameter="method"
             scope="request"
             type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
