@@ -80,9 +80,6 @@ function clearProtocol() {
               </td>
             </tr>
           </html:messages>
-          <tr align="center">
-            <td>&nbsp;</td>
-          </tr>
         </table>
       </logic:messagesPresent>
       <logic:present name="<%=FormConstants.MODULE%>">

@@ -32,6 +32,12 @@ import org.apache.struts.action.DynaActionForm;
 
 
 public class FormEditAction extends FormBuilderBaseDispatchAction {
+
+  private static String FORM_EDIT_HEADER = "formEditHeader";
+  private static String FORM_EDIT_UPDATED_MODULES = "formEditUpdatedModules";
+  private static String FORM_EDIT_DELETED_MODULES = "formEditDeletedModules";
+  private static String FORM_EDIT_ADDED_MODULES = "formEditAddedModules";  
+
   /**
    * Returns Complete form given an Id for Edit.
    *
@@ -63,6 +69,8 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       if (log.isDebugEnabled()) {
         log.debug("Exception on getFormForEdit =  " + exp);
       }
+      //TODO Change this to so to FormSearch Page
+      throw new FatalException(exp);
     }
     catch (CloneNotSupportedException clexp) {
       if (log.isDebugEnabled()) {
@@ -346,6 +354,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
   /**
    * Save Changes
    *
+   *
    * @param mapping The ActionMapping used to select this instance.
    * @param form The optional ActionForm bean for this request.
    * @param request The HTTP Request we are processing.
@@ -366,13 +375,15 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     if(hasUpdate)
     {
         try {
-          FormBuilderServiceDelegate service = getFormBuilderService();
-          Form header = (Form)request.getAttribute("header");
-          Collection updatedModules = (Collection)request.getAttribute("updatedModules");
-          Collection deletedModules = (Collection)request.getAttribute("deletedModules");
-          Collection addedModules = (Collection)request.getAttribute("addedModules");
+          FormBuilderServiceDelegate service = getFormBuilderService();        
+          Form header = (Form)getSessionObject(request,FORM_EDIT_HEADER);
+          Collection updatedModules = (Collection)getSessionObject(request,FORM_EDIT_UPDATED_MODULES);
+          Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
+          Collection addedModules = (Collection)getSessionObject(request,FORM_EDIT_ADDED_MODULES);
           Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules);
           setSessionObject(request,CRF, updatedCrf);
+          Form clonedCrf = (Form) updatedCrf.clone();
+          setSessionObject(request, CLONED_CRF, clonedCrf);
         }
         catch (FormBuilderException exp) {
           if (log.isDebugEnabled()) {
@@ -383,9 +394,14 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
           saveMessage(exp.getErrorCode(), request);
           return mapping.findForward(FAILURE);
         }
-        saveMessage("cadsr.formbuilder.form.edit.save.success", request);
+        catch (CloneNotSupportedException exp) {
+          if (log.isDebugEnabled()) {
+            log.debug("Exception on save =  " + exp);
+          }
+          throw new FatalException(exp);
+        }   
         removeSessionObject(request, DELETED_MODULES);
-        removeSessionObject(request, CLONED_CRF);
+        saveMessage("cadsr.formbuilder.form.edit.save.success", request);
         return mapping.findForward(SUCCESS); 
        }
     else
@@ -395,6 +411,86 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     }
     }
 
+
+  /**
+   * Save Changes Module Edit
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward checkChangesModuleEdit(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    boolean hasUpdate  = setValuesForUpdate(mapping,form,request);
+      if(hasUpdate)
+      {
+        return mapping.findForward("saveConfirm"); 
+      }
+      else
+      {
+        return mapping.findForward("moduleEdit"); 
+      }
+    }
+  /**
+   * Save Changes Module Edit
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward saveFormModuleEdit(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    Form crf = (Form) getSessionObject(request, CRF);
+
+        try {
+          FormBuilderServiceDelegate service = getFormBuilderService();        
+          Form header = (Form)getSessionObject(request,FORM_EDIT_HEADER);
+          Collection updatedModules = (Collection)getSessionObject(request,FORM_EDIT_UPDATED_MODULES);
+          Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
+          Collection addedModules = (Collection)getSessionObject(request,FORM_EDIT_ADDED_MODULES);
+          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules);
+          setSessionObject(request,CRF, updatedCrf);
+          Form clonedCrf = (Form) updatedCrf.clone();
+          setSessionObject(request, CLONED_CRF, clonedCrf);          
+        }
+        catch (FormBuilderException exp) {
+          if (log.isDebugEnabled()) {
+            log.debug("Exception on service.updateForm=  " + exp);
+          }
+  
+          saveMessage(ERROR_FORM_SAVE_FAILED, request);
+          saveMessage(exp.getErrorCode(), request);
+          return mapping.findForward(FORM_EDIT);
+        }
+        catch (CloneNotSupportedException exp) {
+          if (log.isDebugEnabled()) {
+            log.debug("Exception on save =  " + exp);
+          }
+          throw new FatalException(exp);
+        }          
+        saveMessage("cadsr.formbuilder.form.edit.save.success", request);
+        removeSessionObject(request, DELETED_MODULES);
+        return mapping.findForward(MODULE_EDIT); 
+
+    }
   /**
    * Cancel Edit and back to Search results
    *
@@ -555,10 +651,10 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     if (
         header!=null || ((deletedModules != null) && !deletedModules.isEmpty()) ||
           !updatedModules.isEmpty()||!addedModules.isEmpty()) {
-        request.setAttribute("header",header);
-        request.setAttribute("updatedModules",updatedModules);
-        request.setAttribute("deletedModules",deletedModules);
-        request.setAttribute("addedModules",addedModules);
+        setSessionObject(request,FORM_EDIT_HEADER,header);
+        setSessionObject(request,FORM_EDIT_UPDATED_MODULES,updatedModules);
+        setSessionObject(request,FORM_EDIT_DELETED_MODULES,deletedModules);
+        setSessionObject(request,FORM_EDIT_ADDED_MODULES,addedModules);
         return true;
       }
     else
@@ -567,7 +663,21 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     }
   }
     
-    
+   /**
+   * Removes the module given by "moduleIdSeq" from the module list
+   *
+   * @param moduleIdSeq
+   * @param modules
+   *
+   * @return the removed module
+   */
+  protected void removeFormEditChanges(HttpServletRequest request)
+  {
+        removeSessionObject(request,FORM_EDIT_HEADER);
+        removeSessionObject(request,FORM_EDIT_UPDATED_MODULES);
+        removeSessionObject(request,FORM_EDIT_DELETED_MODULES);
+        removeSessionObject(request,FORM_EDIT_ADDED_MODULES);    
+  }
   /**
    * Removes the module given by "moduleIdSeq" from the module list
    *

@@ -159,7 +159,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
          if(moduleHeader!=null)
          {
            moduleHeader.setModifiedBy(getUserName());
-           moduleDao.updateModuleLongName(moduleHeader.getModuleIdseq(),moduleHeader.getLongName());
+           moduleDao.updateModuleComponent(moduleHeader);
          }
 
          if(updatedQuestions!=null&&!updatedQuestions.isEmpty())

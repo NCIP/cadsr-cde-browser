@@ -130,7 +130,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
     int currQuestionIndex = questionIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
-    Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
+    //Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
 
@@ -580,7 +580,7 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     {
       moduleHeader = new ModuleTransferObject();
       moduleHeader.setLongName(longName);
-      moduleHeader.setModuleIdseq(module.getLongName());
+      moduleHeader.setModuleIdseq(module.getModuleIdseq());
     }
     if(changes.isEmpty()&&moduleHeader==null)
     {
@@ -661,9 +661,18 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     
     Module orgModule = (Module)getSessionObject(request,CLONED_MODULE);
     List modules = crf.getModules();
-    int index = modules.indexOf(module);
-    crf.getModules().add(index,orgModule);
-    crf.getModules().remove(index+1); 
+    Module orgModuleClone = null;
+    try
+    {
+      orgModuleClone = (Module)orgModule.clone();
+    }
+    catch(Exception ex)
+    {
+      throw new FatalException("Could not clone Module",ex);
+    }
+    int index = modules.indexOf(module);    
+    crf.getModules().remove(index); 
+    crf.getModules().add(index,orgModuleClone);
     removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
     removeSessionObject(request,CLONED_MODULE);
     removeSessionObject(request,MODULE);

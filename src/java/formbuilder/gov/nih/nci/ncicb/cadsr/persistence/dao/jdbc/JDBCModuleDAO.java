@@ -199,8 +199,9 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     int res = updateModuleComponent.updateModule(module);
 
     if (res != 1) {
-      throw new DMLException(
-        "Did not succeed updating module's long name");
+      DMLException dmlExp = new DMLException("Did not succeed updating module's long name");
+      dmlExp.setErrorCode(ERROR_UPDATING_MODULE);    
+      throw dmlExp;
     }
 
     return 1;
@@ -500,7 +501,9 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     }
     else
     {
-      throw new DMLException("No matching module record found");
+      DMLException dmlExp = new DMLException("No matching module record found");
+      dmlExp.setErrorCode(NO_MATCH_FOUND);    
+      throw dmlExp;
     }
 
     return myModule;

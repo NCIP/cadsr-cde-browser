@@ -16,5 +16,6 @@ public interface ErrorCodeConstants
  public static final String ERROR_CREATEING_VALID_VALUE = "DML0012";
  public static final String ERROR_DELETEING_VALID_VALUE = "DML0013";
  public static final String ERROR_UPDATING_VALID_VALUE = "DML0014";
+ public static final String NO_MATCH_FOUND = "DML0015";
 
 }
