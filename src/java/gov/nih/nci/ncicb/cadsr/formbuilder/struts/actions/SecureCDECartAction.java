@@ -321,4 +321,97 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
     return mapping.findForward("addDeleteSuccess");
   }
+ 
+ 
+  public ActionForward subsetQuestionValidValues(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    DynaActionForm dynaForm = (DynaActionForm) form;
+    String[] selectedItems = (String[]) dynaForm.get(SELECTED_ITEMS);
+
+    CDECart sessionCart =
+      (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+
+    Form crf = (Form) getSessionObject(request, CRF);
+    Module module = (Module) getSessionObject(request, MODULE);
+    List selectedDataElements = new ArrayList();
+
+    Collection col = sessionCart.getDataElements();
+    ArrayList al = new ArrayList(col);
+
+    int displayOrder = Integer.parseInt((String) dynaForm.get(QUESTION_INDEX));
+
+    for (int i = 0; i < selectedItems.length; i++) {
+      DataElement de =
+        (DataElement) ((CDECartItem) al.get(Integer.parseInt(selectedItems[i]))).getItem();
+      selectedDataElements.add(de);
+    }
+    
+    this.setSessionObject(request,SELECTED_DATAELEMENTS,selectedDataElements,true);
+    return mapping.findForward(SUBSET_VALIDVALUES);
+  }
+ 
+  public ActionForward addSubsettedValidValuesQuestion(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    DynaActionForm dynaForm = (DynaActionForm) form;
+    
+    /**
+    String[] selectedItems = (String[]) dynaForm.get(SELECTED_ITEMS);
+
+
+    Form crf = (Form) getSessionObject(request, CRF);
+    Module module = (Module) getSessionObject(request, MODULE);
+    List questions = module.getQuestions();
+
+    //Get the list of Valid Values here
+    
+      int displayOrder = Integer.parseInt((String) dynaForm.get(QUESTION_INDEX));
+
+      DataElement de = (DataElement)getSessionObject(request,"selectedDataElement");
+
+      Question q = new QuestionTransferObject();
+      module.setForm(crf);
+      q.setModule(module);
+
+      List values = de.getValueDomain().getValidValues();
+      List newValidValues = DTOTransformer.toFormValidValueList(values, q);
+      q.setQuesIdseq(new Date().getTime()+"0");
+      q.setValidValues(newValidValues);
+      q.setDataElement(de);
+      q.setLongName(de.getLongName());
+      q.setVersion(crf.getVersion());
+      q.setAslName(crf.getAslName());
+      q.setPreferredDefinition(de.getPreferredDefinition());
+      q.setContext(crf.getContext());
+
+      q.setDisplayOrder(displayOrder);
+
+      if (displayOrder < questions.size()) {
+        questions.add(displayOrder, q);
+        FormActionUtil.incrementDisplayOrder(questions, displayOrder + 1);
+      }
+      else {
+        questions.add(q);
+      }
+   **/
+    saveMessage("cadsr.formbuilder.question.add.success",request);
+    return mapping.findForward("success");
+  } 
+  
+  
+  public ActionForward cancelAddSubsettedValidValuesQuestion(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    DynaActionForm dynaForm = (DynaActionForm) form;
+    
+    removeSessionObject(request,SELECTED_DATAELEMENTS);
+    return mapping.findForward(CANCEL);
+  }   
 }

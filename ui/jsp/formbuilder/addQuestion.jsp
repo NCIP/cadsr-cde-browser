@@ -80,11 +80,15 @@
         }
   }
 
-  function submitForm() {
+  function submitForm(methodName) {
      var f = document.forms[0];
      if(validate(f) == true)
+     {
+       document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
        f.submit();
+       }
   }
+  
 function details(linkParms ){
   var urlString="search?dataElementDetails=9" + linkParms + "&PageId=DataElementsGroup"+"&queryDE=yes";
   newBrowserWin(urlString,'deDetails',800,600)
@@ -110,18 +114,19 @@ function details(linkParms ){
       </td>
     </tr>  
 </table> 
-<html:form action='<%= "/addQuestion?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.ADD_QUESTION %>' 
+<html:form action='<%= "/addQuestion" %>' 
   onsubmit="validate(this)">
-
+<html:hidden property="<%= FormConstants.QUESTION_INDEX %>"/>
+<html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
 <logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
   <%@ include file="addQuestion_inc.jsp" %>
 </logic:notEmpty>
 
 <%@ include file="showMessages.jsp" %>
-<html:hidden property="<%= FormConstants.QUESTION_INDEX %>"/>
+
 
 <logic:present name="<%=CaDSRConstants.CDE_CART%>">
-  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <table width="90%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
     <tr class="OraTableColumnHeader">
       <th scope="col"><input type="checkbox" name="toggleAll" title="<bean:message key="cadsr.formbuilder.selectAll"/>" onclick="switchAll(this)"/></th>
       <th scope="col"><bean:message key="cadsr.formbuilder.question.longName"/></th>
@@ -134,7 +139,7 @@ function details(linkParms ){
     </tr>
   <logic:empty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
     <tr class="OraTabledata">
-        <td class="OraFieldText" colspan="8">
+        <td class="OraFieldText" colspan="9">
           CDE Cart is empty. 
         </td>
     </tr>
@@ -147,14 +152,16 @@ function details(linkParms ){
       String detailsURL = "javascript:details('&p_de_idseq="+deId +"')";
 %>
       <tr class="OraTabledata">
-        <td class="OraFieldText">
-          <html:checkbox property="<%= FormConstants.SELECTED_ITEMS %>" value="<%= itemId %>"/>
-        </td>
-        <td class="OraFieldText">
+
+          <td class="OraFieldText">
+           <html:checkbox property="<%= FormConstants.SELECTED_ITEMS %>" value="<%= itemId %>"/>
+          </td>
+         <td class="OraFieldText">
           <a href="<%= detailsURL %>">
             <bean:write name="de" property="item.longName"/>
           </a>
-        </td>
+         </td>
+      
         <td class="OraFieldText">
           <bean:write name="de" property="item.longCDEName"/>
         </td>

@@ -22,6 +22,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String CRF = "crf";
   public static final String FORM_TYPE = "formType";
   public static final String FORM_SEARCH_RESULTS = "formSearchResults";
+  public static final String MODULE_SEARCH_RESULTS = "moduleSearchResults";
   public static final String FORM_SEARCH_RESULT_COMPARATOR="formSearchResultComparator";
   public static final String MODULE_INDEX = "moduleIndex";
   public static final String DELETED_MODULE_INDEX = "deletedModuleIndex";
@@ -80,8 +81,11 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String AVAILABLE_VALID_VALUES_MAP =
     "AvailableValidValuesMap";
   public static final String SELECTED_ITEMS = "selectedItems";
+  public static final String SELECTED_ITEM = "selectedItem";
   public static final String CLASSIFICATIONS = "classifications";
   public static final String DE_SEARCH_SRC = "src";
+  
+  public static final String SELECTED_DATAELEMENTS = "selectedDataElements";
   
   public static final int LONG_NAME_MAX_LENGTH = 255;
   public static final int DEFINITION_MAX_LENGTH = 2000;

@@ -5,6 +5,7 @@ public interface NavigationConstants
   //struts forward names
   public static final String SUCCESS = "success";
   public static final String FAILURE = "failure";
+  public static final String CANCEL = "cancel";
   public static final String FORM_DETAILS ="formDetails";
   public static final String FORM_EDIT ="formEdit";
   public static final String MODULE_EDIT ="moduleEdit";
@@ -74,6 +75,10 @@ public interface NavigationConstants
 
   public static final String ADD_QUESTION = "addQuestion";
   public static final String GO_TO_ADD_QUESTION = "displayCDECart";
+  public static final String SUBSET_QUESTION_VALIDVALUES = "subsetQuestionValidValues";
+  public static final String SUBSET_VALIDVALUES = "subsetVVs";
+  public static final String ADD_SUBSETTED_VALIDVALUES_QUESTION = "addSubsettedValidValuesQuestion";
+  public static final String CANCEL_ADD_SUBSETTED_VALIDVALUES_QUESTION = "cancelAddSubsettedValidValuesQuestion";
 
   public static final String GET_CLASSIFICATIONS = "getClassifications";
   public static final String GO_TO_ADD_CLASSIFICATIONS = "gotoAddClassifications";

@@ -307,5 +307,41 @@
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute>      
+  </tag>
+  <tag>
+    <name>enumeratedVDIcon</name>
+    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.EnumeratedVDIconDisplay</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>SecureIconDisplay</info>
+    <attribute>
+    <name>dataElementId</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>    
+    <name>activeImageSource</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+    <name>activeUrl</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+    <name>inactiveImageSource</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+    <name>altMessage</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>target</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>        
   </tag>   
 </taglib>

@@ -25,7 +25,18 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureCDECartAction"
       validate="false">
       <forward name="success" path="/moduleToEditAction.do?method=getModuleToEdit"/>
+      <forward name="subsetVVs" path="/formbuilder/addQuestionSubsetValidValues.jsp"/>
     </action>
-  </action-mappings>
+       
+    <action name="addQuestionForm" path="/addQuestionSubsetted" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureCDECartAction"
+      validate="false">
+      <forward name="success" path="/moduleToEditAction.do?method=getModuleToEdit"/>
+      <forward name="cancel" path="/formbuilder/addQuestion.jsp"/>
+      <forward name="failure" path="/formbuilder/addQuestionSubsetValidValues.jsp"/>
+    </action>    
+   
+   </action-mappings>
 
 </struts-config>
