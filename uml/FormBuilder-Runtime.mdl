@@ -1,0 +1,4620 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.5.0103.1920"
+    charSet    	0)
+
+(object Design "Logical View"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"Java"
+	    name       	"IDE"
+	    value      	"Internal Editor"))
+    quid       	"3FCD06A601B5"
+    defaults   	(object defaults
+	rightMargin 	0.250000
+	leftMargin 	0.250000
+	topMargin  	0.500000
+	bottomMargin 	0.250000
+	pageOverlap 	1.000000
+	clipIconLabels 	TRUE
+	autoResize 	TRUE
+	snapToGrid 	TRUE
+	gridX      	16
+	gridY      	16
+	defaultFont 	(object Font
+	    size       	10
+	    face       	"Arial"
+	    bold       	FALSE
+	    italics    	FALSE
+	    underline  	FALSE
+	    strike     	FALSE
+	    color      	0
+	    default_color 	TRUE)
+	showMessageNum 	1
+	showClassOfObject 	TRUE
+	notation   	"Unified")
+    root_usecase_package 	(object Class_Category "Use Case View"
+	quid       	"3FCD06A601B7"
+	exportControl 	"Public"
+	global     	TRUE
+	logical_models 	(list unit_reference_list)
+	logical_presentations 	(list unit_reference_list
+	    (object UseCaseDiagram "Main"
+		quid       	"3FCD06AA0111"
+		title      	"Main"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list))))
+    root_category 	(object Class_Category "Logical View"
+	quid       	"3FCD06A601B6"
+	exportControl 	"Public"
+	global     	TRUE
+	subsystem  	"Component View"
+	quidu      	"3FCD06A601B8"
+	logical_models 	(list unit_reference_list
+	    (object Class "ServiceDelegateFactory"
+		quid       	"3FCD06BE02D2"
+		stereotype 	"java class"
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"3FCD095A0001"
+			stereotype 	"creates"
+			supplier   	"Logical View::FormBuilderServiceDelegate"
+			quidu      	"3FCD078C007F")))
+	    (object Class "FormBuilderServiceDelegate"
+		quid       	"3FCD078C007F"
+		stereotype 	"java interface")
+	    (object Class "FormBuilderRemoteEJBServiceDelegate"
+		quid       	"3FCD08700380"
+		stereotype 	"java class"
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"3FCD08BE00D9"
+			supplier   	"Logical View::FormBuilderServiceDelegate"
+			quidu      	"3FCD078C007F")))
+	    (object Class "FormBuilderLocalEJBServiceDelegate"
+		quid       	"3FCD08CE0227"
+		stereotype 	"java class"
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"3FCD0916019E"
+			supplier   	"Logical View::FormBuilderServiceDelegate"
+			quidu      	"3FCD078C007F")))
+	    (object Class "FormBuilderService"
+		quid       	"3FCD0A2801CA"
+		stereotype 	"java interface")
+	    (object Class "FormBuilder"
+		quid       	"3FCD0A7B0328"
+		stereotype 	"ejb remote component interface"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"3FCD0B110229"
+			supplier   	"Logical View::FormBuilderService"
+			quidu      	"3FCD0A2801CA")))
+	    (object Class "FormBuilderLocal"
+		quid       	"3FCD0AE0017E"
+		stereotype 	"ejb local component interface"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"3FCD0B150379"
+			supplier   	"Logical View::FormBuilderService"
+			quidu      	"3FCD0A2801CA")))
+	    (object Class "FormBuilderEJB"
+		quid       	"3FCD0C490336"
+		stereotype 	"ejb bean class"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"3FCE18CD037E"
+			supplier   	"Logical View::SessionBeanAdapter"
+			quidu      	"3FCE18840080"))
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"3FCD0CFE01F6"
+			supplier   	"Logical View::FormBuilderService"
+			quidu      	"3FCD0A2801CA")))
+	    (object Class "ServiceLocator"
+		quid       	"3FCD0D77036C"
+		stereotype 	"java class"
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"3FCD0F800312"
+			stereotype 	"locates"
+			supplier   	"Logical View::FormBuilderLocalHome"
+			quidu      	"3FCD0E2B02A3")
+		    (object Uses_Relationship
+			quid       	"3FCD0F8B0263"
+			stereotype 	"locates"
+			supplier   	"Logical View::FormBuilderHome"
+			quidu      	"3FCD0E020218")))
+	    (object Class "FormBuilderHome"
+		quid       	"3FCD0E020218"
+		stereotype 	"ejb remote home interface")
+	    (object Class "FormBuilderLocalHome"
+		quid       	"3FCD0E2B02A3"
+		stereotype 	"ejb local home interface")
+	    (object Class "SessionBeanAdapter"
+		quid       	"3FCE18840080"
+		stereotype 	"java class")
+	    (object Class "AbstractDAOFactory"
+		quid       	"3FCE1B26027E"
+		stereotype 	"java class"
+		abstract   	TRUE)
+	    (object Class "JdbcDAOFactory"
+		quid       	"3FCE1C0B03A0"
+		stereotype 	"java class"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"3FCE1D070239"
+			supplier   	"Logical View::AbstractDAOFactory"
+			quidu      	"3FCE1B26027E"))
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"3FCE249801EF"
+			stereotype 	"creates"
+			supplier   	"Logical View::JDBCFormDAO"
+			quidu      	"3FCE222500AC")
+		    (object Uses_Relationship
+			quid       	"3FCE24A002E0"
+			stereotype 	"creates"
+			supplier   	"Logical View::JDBCModuleDAO"
+			quidu      	"3FCE22CA0208")
+		    (object Uses_Relationship
+			quid       	"3FCE24E5031C"
+			stereotype 	"creates"
+			supplier   	"Logical View::JDBCQuestionDAO"
+			quidu      	"3FCE235600C9")
+		    (object Uses_Relationship
+			quid       	"3FCE24E90046"
+			stereotype 	"creates"
+			supplier   	"Logical View::JDBCFormValidValueDAO"
+			quidu      	"3FCE23E702A8")))
+	    (object Class "JDBCFormDAO"
+		quid       	"3FCE222500AC"
+		stereotype 	"java class"
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"3FCE22BD0250"
+			supplier   	"Logical View::FormDAO"
+			quidu      	"3FCE223E0243")))
+	    (object Class "FormDAO"
+		quid       	"3FCE223E0243"
+		stereotype 	"java interface")
+	    (object Class "JDBCModuleDAO"
+		quid       	"3FCE22CA0208"
+		stereotype 	"java class"
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"3FCE234303B1"
+			supplier   	"Logical View::ModuleDAO"
+			quidu      	"3FCE22F90134")))
+	    (object Class "ModuleDAO"
+		quid       	"3FCE22F90134"
+		stereotype 	"java interface")
+	    (object Class "JDBCQuestionDAO"
+		quid       	"3FCE235600C9"
+		stereotype 	"java class"
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"3FCE23DB014D"
+			supplier   	"Logical View::QuestionDAO"
+			quidu      	"3FCE23A7015C")))
+	    (object Class "QuestionDAO"
+		quid       	"3FCE23A7015C"
+		stereotype 	"java interface")
+	    (object Class "JDBCFormValidValueDAO"
+		quid       	"3FCE23E702A8"
+		stereotype 	"java class"
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"3FCE24430124"
+			supplier   	"Logical View::FormValidValueDAO"
+			quidu      	"3FCE240F01FC")))
+	    (object Class "FormValidValueDAO"
+		quid       	"3FCE240F01FC"
+		stereotype 	"java interface")
+	    (object Association "$UNNAMED$0"
+		quid       	"3FCF7F220199"
+		stereotype 	"uses"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$1"
+			quid       	"3FCF7F2300B4"
+			supplier   	"Logical View::FormBuilderRemoteEJBServiceDelegate"
+			quidu      	"3FCD08700380")
+		    (object Role "$UNNAMED$2"
+			quid       	"3FCF7F2300BE"
+			supplier   	"Logical View::ServiceLocator"
+			quidu      	"3FCD0D77036C")))
+	    (object Association "$UNNAMED$3"
+		quid       	"3FCF8455002A"
+		stereotype 	"uses"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$4"
+			quid       	"3FCF84560072"
+			supplier   	"Logical View::FormBuilderLocalEJBServiceDelegate"
+			quidu      	"3FCD08CE0227")
+		    (object Role "$UNNAMED$5"
+			quid       	"3FCF84560074"
+			supplier   	"Logical View::ServiceLocator"
+			quidu      	"3FCD0D77036C")))
+	    (object Association "$UNNAMED$6"
+		quid       	"3FCF84FA017C"
+		stereotype 	"uses"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$7"
+			quid       	"3FCF84FB0322"
+			supplier   	"Logical View::FormBuilderEJB"
+			quidu      	"3FCD0C490336")
+		    (object Role "$UNNAMED$8"
+			quid       	"3FCF84FB032C"
+			supplier   	"Logical View::AbstractDAOFactory"
+			quidu      	"3FCE1B26027E")))
+	    (object Mechanism @1
+		logical_models 	(list unit_reference_list
+		    (object Object "theServiceDelegateFactory"
+			quid       	"3FCF88C1035D"
+			collaborators 	(list link_list
+			    (object Link
+				quid       	"3FCF8B190071"
+				supplier   	"aBusinessDelegate"
+				quidu      	"3FCF8AA1005A"
+				messages   	(list Messages
+				    (object Message "create"
+					quid       	"3FCF8B190072"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"1.1"
+					ordinal    	1
+					creation   	FALSE))))
+			class      	"Logical View::ServiceDelegateFactory"
+			quidu      	"3FCD06BE02D2"
+			persistence 	"Transient"
+			creationObj 	FALSE
+			multi      	FALSE)
+		    (object Object "anAction"
+			quid       	"3FCF895E0273"
+			collaborators 	(list link_list
+			    (object Link
+				quid       	"3FCF8966021A"
+				supplier   	"theServiceDelegateFactory"
+				quidu      	"3FCF88C1035D"
+				messages   	(list Messages
+				    (object Message "getServiceDelegate"
+					quid       	"3FCF896802D1"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"1"
+					ordinal    	0
+					creation   	FALSE)
+				    (object Message "aBusinessDelegate"
+					quid       	"3FCF8B7E031F"
+					frequency  	"Aperiodic"
+					synchronization 	"Return"
+					dir        	"ToClientFromSupplier"
+					sequence   	"1.2"
+					ordinal    	9
+					creation   	FALSE)))
+			    (object Link
+				quid       	"3FCF9149017D"
+				supplier   	"aBusinessDelegate"
+				quidu      	"3FCF8AA1005A"
+				messages   	(list Messages
+				    (object Message "businessMethod"
+					quid       	"3FCF9149017E"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"3"
+					ordinal    	10
+					creation   	FALSE)
+				    (object Message "aResult"
+					quid       	"3FCFAF1F02B6"
+					frequency  	"Aperiodic"
+					synchronization 	"Return"
+					dir        	"ToClientFromSupplier"
+					sequence   	"3.3"
+					ordinal    	16
+					creation   	FALSE))))
+			persistence 	"Transient"
+			creationObj 	FALSE
+			multi      	FALSE)
+		    (object Object "aBusinessDelegate"
+			quid       	"3FCF8AA1005A"
+			collaborators 	(list link_list
+			    (object Link
+				quid       	"3FCF8FBE021F"
+				supplier   	"aBusinessDelegate"
+				quidu      	"3FCF8AA1005A")
+			    (object Link
+				quid       	"3FCF902C01CD"
+				supplier   	"theServiceLocator"
+				quidu      	"3FCF8FDB01D1"
+				messages   	(list Messages
+				    (object Message "getInstance"
+					quid       	"3FCF90930352"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"1.1.1"
+					ordinal    	2
+					creation   	FALSE)
+				    (object Message "theServiceLocator"
+					quid       	"3FCF90B300D7"
+					frequency  	"Aperiodic"
+					synchronization 	"Return"
+					dir        	"ToClientFromSupplier"
+					sequence   	"1.1.1.2"
+					ordinal    	4
+					creation   	FALSE)
+				    (object Message "getLocalHome"
+					quid       	"3FCFA3AC0077"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"2"
+					ordinal    	5
+					creation   	FALSE)
+				    (object Message "aLocalHome"
+					quid       	"3FCFABB80386"
+					frequency  	"Aperiodic"
+					synchronization 	"Return"
+					dir        	"ToClientFromSupplier"
+					sequence   	"2.2"
+					ordinal    	8
+					creation   	FALSE)))
+			    (object Link
+				quid       	"3FCFA6E102A8"
+				supplier   	"aComponent"
+				quidu      	"3FCFA4CD022B"
+				messages   	(list Messages
+				    (object Message "method"
+					quid       	"3FCFAEB40045"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"3.2"
+					ordinal    	14
+					creation   	FALSE)
+				    (object Message "result"
+					quid       	"3FCFAF04025D"
+					frequency  	"Aperiodic"
+					synchronization 	"Return"
+					dir        	"ToClientFromSupplier"
+					sequence   	"3.2.1"
+					ordinal    	15
+					creation   	FALSE)))
+			    (object Link
+				quid       	"3FCFACB4005D"
+				supplier   	"aLocalHome"
+				quidu      	"3FCF91D60284"
+				messages   	(list Messages
+				    (object Message "create"
+					quid       	"3FCFACB4005E"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"3.1"
+					ordinal    	11
+					creation   	FALSE)
+				    (object Message "aFormBuilderLocalComponent"
+					quid       	"3FCFAD0B0062"
+					frequency  	"Aperiodic"
+					synchronization 	"Return"
+					dir        	"ToClientFromSupplier"
+					sequence   	"3.1.2"
+					ordinal    	13
+					creation   	FALSE))))
+			class      	"Logical View::FormBuilderLocalEJBServiceDelegate"
+			quidu      	"3FCD08CE0227"
+			persistence 	"Transient"
+			creationObj 	FALSE
+			multi      	FALSE)
+		    (object Object "theServiceLocator"
+			quid       	"3FCF8FDB01D1"
+			collaborators 	(list link_list
+			    (object Link
+				quid       	"3FCFA28D039F"
+				supplier   	"aLocalHome"
+				quidu      	"3FCF91D60284")
+			    (object Link
+				quid       	"3FCFA8D601A4"
+				supplier   	"initialContext"
+				quidu      	"3FCFA895002E"
+				messages   	(list Messages
+				    (object Message "create"
+					quid       	"3FCFA8D601A5"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"1.1.1.1"
+					ordinal    	3
+					creation   	FALSE)
+				    (object Message "lookup"
+					quid       	"3FCFA9120060"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"2.1"
+					ordinal    	6
+					creation   	FALSE))))
+			class      	"Logical View::ServiceLocator"
+			quidu      	"3FCD0D77036C"
+			persistence 	"Transient"
+			creationObj 	FALSE
+			multi      	FALSE)
+		    (object Object "aLocalHome"
+			quid       	"3FCF91D60284"
+			collaborators 	(list link_list
+			    (object Link
+				quid       	"3FCFA71F0030"
+				supplier   	"aComponent"
+				quidu      	"3FCFA4CD022B"
+				messages   	(list Messages
+				    (object Message "create"
+					quid       	"3FCFACD601C5"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"3.1.1"
+					ordinal    	12
+					creation   	FALSE))))
+			class      	"Logical View::FormBuilderLocalHome"
+			quidu      	"3FCD0E2B02A3"
+			persistence 	"Transient"
+			creationObj 	FALSE
+			multi      	FALSE)
+		    (object Object "aComponent"
+			quid       	"3FCFA4CD022B"
+			class      	"Logical View::FormBuilderLocal"
+			quidu      	"3FCD0AE0017E"
+			persistence 	"Transient"
+			creationObj 	FALSE
+			multi      	FALSE)
+		    (object Object "initialContext"
+			quid       	"3FCFA895002E"
+			collaborators 	(list link_list
+			    (object Link
+				quid       	"3FCFA9710002"
+				supplier   	"aLocalHome"
+				quidu      	"3FCF91D60284"
+				messages   	(list Messages
+				    (object Message "create"
+					quid       	"3FCFA9710003"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"2.1.1"
+					ordinal    	7
+					creation   	FALSE))))
+			persistence 	"Transient"
+			creationObj 	FALSE
+			multi      	FALSE))))
+	logical_presentations 	(list unit_reference_list
+	    (object ClassDiagram "Main"
+		quid       	"3FCD06AA012E"
+		title      	"Main"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list
+		    (object ClassView "Class" "Logical View::ServiceDelegateFactory" @2
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(576, 272)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@2
+			    location   	(339, 243)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	474
+			    justify    	0
+			    label      	"ServiceDelegateFactory")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@2
+			    location   	(339, 193)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	474
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD06BE02D2"
+			width      	492
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::FormBuilderServiceDelegate" @3
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1504, 272)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@3
+			    location   	(1227, 243)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	554
+			    justify    	0
+			    label      	"FormBuilderServiceDelegate")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@3
+			    location   	(1227, 193)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	554
+			    justify    	0
+			    label      	"<<java interface>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD078C007F"
+			width      	572
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object UsesView "" @4
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@4
+			    location   	(1020, 272)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	140
+			    justify    	0
+			    label      	"")
+			stereotype 	(object SegLabel @5
+			    Parent_View 	@4
+			    location   	(1069, 197)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<creates>>"
+			    pctDist    	0.422785
+			    height     	25
+			    orientation 	0)
+			line_color 	3342489
+			quidu      	"3FCD095A0001"
+			client     	@2
+			supplier   	@3
+			line_style 	0)
+		    (object ClassView "Class" "Logical View::FormBuilderService" @6
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1744, 1024)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@6
+			    location   	(1549, 995)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	390
+			    justify    	0
+			    label      	"FormBuilderService")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@6
+			    location   	(1549, 945)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	390
+			    justify    	0
+			    label      	"<<java interface>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD0A2801CA"
+			width      	408
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::FormBuilder" @7
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1408, 1504)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@7
+			    location   	(1070, 1475)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	676
+			    justify    	0
+			    label      	"FormBuilder")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@7
+			    location   	(1070, 1425)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	673
+			    justify    	0
+			    label      	"<<ejb remote component interface>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD0A7B0328"
+			width      	694
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::FormBuilderLocal" @8
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2160, 1504)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@8
+			    location   	(1843, 1475)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	634
+			    justify    	0
+			    label      	"FormBuilderLocal")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@8
+			    location   	(1843, 1425)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	631
+			    justify    	0
+			    label      	"<<ejb local component interface>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD0AE0017E"
+			width      	652
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object InheritView "" @9
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCD0B110229"
+			client     	@7
+			supplier   	@6
+			line_style 	3
+			origin_attachment 	(1584, 1413)
+			terminal_attachment 	(1584, 1114))
+		    (object ClassView "Class" "Logical View::FormBuilderHome" @10
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(608, 1440)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@10
+			    location   	(321, 1411)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	574
+			    justify    	0
+			    label      	"FormBuilderHome")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@10
+			    location   	(321, 1361)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	572
+			    justify    	0
+			    label      	"<<ejb remote home interface>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD0E020218"
+			width      	592
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::FormBuilderLocalHome" @11
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(592, 1152)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@11
+			    location   	(325, 1123)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	534
+			    justify    	0
+			    label      	"FormBuilderLocalHome")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@11
+			    location   	(325, 1073)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	534
+			    justify    	0
+			    label      	"<<ejb local home interface>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD0E2B02A3"
+			width      	552
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object InheritView "" @12
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCD0B150379"
+			client     	@8
+			supplier   	@6
+			line_style 	3
+			origin_attachment 	(1928, 1413)
+			terminal_attachment 	(1928, 1114))
+		    (object ClassView "Class" "Logical View::SessionBeanAdapter" @13
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2560, 1760)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@13
+			    location   	(2352, 1731)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	416
+			    justify    	0
+			    label      	"SessionBeanAdapter")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@13
+			    location   	(2352, 1681)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	416
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE18840080"
+			width      	434
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::JdbcDAOFactory" @14
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(864, 2416)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@14
+			    location   	(688, 2387)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	352
+			    justify    	0
+			    label      	"JdbcDAOFactory")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@14
+			    location   	(688, 2337)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	352
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE1C0B03A0"
+			width      	370
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::JDBCFormDAO" @15
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1520, 2048)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@15
+			    location   	(1358, 2019)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	324
+			    justify    	0
+			    label      	"JDBCFormDAO")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@15
+			    location   	(1358, 1969)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	324
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE222500AC"
+			width      	342
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::FormDAO" @16
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2288, 2064)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@16
+			    location   	(2119, 2035)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	338
+			    justify    	0
+			    label      	"FormDAO")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@16
+			    location   	(2119, 1985)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	336
+			    justify    	0
+			    label      	"<<java interface>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE223E0243"
+			width      	356
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object RealizeView "" @17
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCE22BD0250"
+			client     	@15
+			supplier   	@16
+			line_style 	3
+			origin_attachment 	(1691, 2056)
+			terminal_attachment 	(2110, 2056))
+		    (object ClassView "Class" "Logical View::JDBCModuleDAO" @18
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1536, 2304)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@18
+			    location   	(1353, 2275)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	366
+			    justify    	0
+			    label      	"JDBCModuleDAO")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@18
+			    location   	(1353, 2225)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	366
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE22CA0208"
+			width      	384
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::ModuleDAO" @19
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2288, 2320)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@19
+			    location   	(2119, 2291)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	338
+			    justify    	0
+			    label      	"ModuleDAO")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@19
+			    location   	(2119, 2241)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	336
+			    justify    	0
+			    label      	"<<java interface>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE22F90134"
+			width      	356
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object RealizeView "" @20
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCE234303B1"
+			client     	@18
+			supplier   	@19
+			line_style 	3
+			origin_attachment 	(1728, 2312)
+			terminal_attachment 	(2110, 2312))
+		    (object ClassView "Class" "Logical View::JDBCQuestionDAO" @21
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1552, 2576)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@21
+			    location   	(1358, 2547)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	388
+			    justify    	0
+			    label      	"JDBCQuestionDAO")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@21
+			    location   	(1358, 2497)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	388
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE235600C9"
+			width      	406
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::QuestionDAO" @22
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2288, 2576)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@22
+			    location   	(2119, 2547)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	338
+			    justify    	0
+			    label      	"QuestionDAO")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@22
+			    location   	(2119, 2497)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	336
+			    justify    	0
+			    label      	"<<java interface>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE23A7015C"
+			width      	356
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object RealizeView "" @23
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCE23DB014D"
+			client     	@21
+			supplier   	@22
+			line_style 	3
+			origin_attachment 	(1755, 2576)
+			terminal_attachment 	(2110, 2576))
+		    (object ClassView "Class" "Logical View::JDBCFormValidValueDAO" @24
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1616, 2880)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@24
+			    location   	(1355, 2851)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	522
+			    justify    	0
+			    label      	"JDBCFormValidValueDAO")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@24
+			    location   	(1355, 2801)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	522
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE23E702A8"
+			width      	540
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::FormValidValueDAO" @25
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2336, 2880)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@25
+			    location   	(2131, 2851)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	410
+			    justify    	0
+			    label      	"FormValidValueDAO")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@25
+			    location   	(2131, 2801)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	410
+			    justify    	0
+			    label      	"<<java interface>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE240F01FC"
+			width      	428
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object RealizeView "" @26
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCE24430124"
+			client     	@24
+			supplier   	@25
+			line_style 	3
+			origin_attachment 	(1886, 2880)
+			terminal_attachment 	(2122, 2880))
+		    (object UsesView "" @27
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@27
+			    location   	(1192, 2231)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	140
+			    justify    	0
+			    label      	"")
+			stereotype 	(object SegLabel @28
+			    Parent_View 	@27
+			    location   	(1241, 2156)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<creates>>"
+			    pctDist    	0.500000
+			    height     	120
+			    orientation 	0)
+			line_color 	3342489
+			quidu      	"3FCE249801EF"
+			client     	@14
+			supplier   	@15
+			line_style 	0)
+		    (object UsesView "" @29
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	(object SegLabel @30
+			    Parent_View 	@29
+			    location   	(1193, 2323)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<creates>>"
+			    pctDist    	0.507998
+			    height     	38
+			    orientation 	0)
+			line_color 	3342489
+			quidu      	"3FCE24A002E0"
+			client     	@14
+			supplier   	@18
+			line_style 	0)
+		    (object UsesView "" @31
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	(object SegLabel @32
+			    Parent_View 	@31
+			    location   	(1208, 2456)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<creates>>"
+			    pctDist    	0.505085
+			    height     	39
+			    orientation 	0)
+			line_color 	3342489
+			quidu      	"3FCE24E5031C"
+			client     	@14
+			supplier   	@21
+			line_style 	0)
+		    (object UsesView "" @33
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	(object SegLabel @34
+			    Parent_View 	@33
+			    location   	(1239, 2578)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<creates>>"
+			    pctDist    	0.430374
+			    height     	60
+			    orientation 	0)
+			line_color 	3342489
+			quidu      	"3FCE24E90046"
+			client     	@14
+			supplier   	@24
+			line_style 	0)
+		    (object Label @35
+			location   	(1025, 47)
+			font       	(object Font
+			    size       	14
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	TRUE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			nlines     	1
+			max_width  	956
+			label      	"Form Builder Runtime Class Diagram")
+		    (object ClassView "Class" "Logical View::FormBuilderRemoteEJBServiceDelegate" @36
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1152, 624)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@36
+			    location   	(776, 595)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	752
+			    justify    	0
+			    label      	"FormBuilderRemoteEJBServiceDelegate")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@36
+			    location   	(776, 545)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	752
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD08700380"
+			width      	770
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object RealizeView "" @37
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCD08BE00D9"
+			client     	@36
+			supplier   	@3
+			line_style 	3
+			origin_attachment 	(1419, 532)
+			terminal_attachment 	(1419, 362))
+		    (object ClassView "Class" "Logical View::FormBuilderLocalEJBServiceDelegate" @38
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1952, 624)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@38
+			    location   	(1597, 595)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	710
+			    justify    	0
+			    label      	"FormBuilderLocalEJBServiceDelegate")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@38
+			    location   	(1597, 545)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	710
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD08CE0227"
+			width      	728
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object RealizeView "" @39
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCD0916019E"
+			client     	@38
+			supplier   	@3
+			line_style 	3
+			origin_attachment 	(1725, 532)
+			terminal_attachment 	(1725, 362))
+		    (object ClassView "Class" "Logical View::ServiceLocator" @40
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(176, 832)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@40
+			    location   	(24, 803)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	304
+			    justify    	0
+			    label      	"ServiceLocator")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@40
+			    location   	(24, 753)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	304
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD0D77036C"
+			width      	322
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object UsesView "" @41
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	(object SegLabel @42
+			    Parent_View 	@41
+			    location   	(40, 964)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<locates>>"
+			    pctDist    	0.107784
+			    height     	120
+			    orientation 	1)
+			line_color 	3342489
+			quidu      	"3FCD0F800312"
+			client     	@40
+			supplier   	@11
+			vertices   	(list Points
+			    (159, 923)
+			    (159, 1160)
+			    (316, 1160))
+			line_style 	3
+			origin_attachment 	(159, 923)
+			terminal_attachment 	(316, 1160))
+		    (object UsesView "" @43
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	(object SegLabel @44
+			    Parent_View 	@43
+			    location   	(-171, 1018)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<locates>>"
+			    pctDist    	0.130081
+			    height     	233
+			    orientation 	1)
+			line_color 	3342489
+			quidu      	"3FCD0F8B0263"
+			client     	@40
+			supplier   	@10
+			vertices   	(list Points
+			    (61, 923)
+			    (61, 1410)
+			    (312, 1410))
+			line_style 	3
+			origin_attachment 	(61, 923)
+			terminal_attachment 	(312, 1410))
+		    (object AssociationViewNew "$UNNAMED$0" @45
+			location   	(412, 622)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	(object SegLabel @46
+			    Parent_View 	@45
+			    location   	(458, 586)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<uses>>"
+			    pctDist    	1.283333
+			    height     	37
+			    orientation 	0)
+			line_color 	3342489
+			quidu      	"3FCF7F220199"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$1" @47
+				Parent_View 	@45
+				location   	(236, -210)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3FCF7F2300B4"
+				client     	@45
+				supplier   	@36
+				line_style 	0)
+			    (object RoleView "$UNNAMED$2" @48
+				Parent_View 	@45
+				location   	(236, -210)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3FCF7F2300BE"
+				client     	@45
+				supplier   	@40
+				vertices   	(list Points
+				    (412, 622)
+				    (175, 622)
+				    (175, 740))
+				line_style 	0)))
+		    (object AssociationViewNew "$UNNAMED$3" @49
+			location   	(1209, 846)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	(object SegLabel @50
+			    Parent_View 	@49
+			    location   	(1225, 810)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<uses>>"
+			    pctDist    	0.766667
+			    height     	37
+			    orientation 	0)
+			line_color 	3342489
+			quidu      	"3FCF8455002A"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$4" @51
+				Parent_View 	@49
+				location   	(1033, 14)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3FCF84560072"
+				client     	@49
+				supplier   	@38
+				vertices   	(list Points
+				    (1209, 846)
+				    (1950, 846)
+				    (1950, 715))
+				line_style 	3
+				origin_attachment 	(1209, 846)
+				terminal_attachment 	(1950, 715))
+			    (object RoleView "$UNNAMED$5" @52
+				Parent_View 	@49
+				location   	(1033, 14)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3FCF84560074"
+				client     	@49
+				supplier   	@40
+				line_style 	3
+				origin_attachment 	(1209, 846)
+				terminal_attachment 	(337, 846))))
+		    (object ClassView "Class" "Logical View::FormBuilderEJB" @53
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1936, 1760)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@53
+			    location   	(1753, 1731)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	366
+			    justify    	0
+			    label      	"FormBuilderEJB")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@53
+			    location   	(1753, 1681)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	364
+			    justify    	0
+			    label      	"<<ejb bean class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCD0C490336"
+			width      	384
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object RealizeView "" @54
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCD0CFE01F6"
+			client     	@53
+			supplier   	@6
+			line_style 	3
+			origin_attachment 	(1784, 1668)
+			terminal_attachment 	(1784, 1115))
+		    (object InheritView "" @55
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCE18CD037E"
+			client     	@53
+			supplier   	@13
+			line_style 	0)
+		    (object ClassView "Class" "Logical View::AbstractDAOFactory" @56
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1024, 1776)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@56
+			    location   	(820, 1747)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	408
+			    justify    	0
+			    label      	"AbstractDAOFactory")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@56
+			    location   	(820, 1697)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	408
+			    justify    	0
+			    label      	"<<java class>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCE1B26027E"
+			width      	426
+			height     	182
+			annotation 	8
+			autoResize 	TRUE)
+		    (object InheritView "" @57
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3FCE1D070239"
+			client     	@14
+			supplier   	@56
+			line_style 	3
+			origin_attachment 	(938, 2324)
+			terminal_attachment 	(938, 1867))
+		    (object AssociationViewNew "$UNNAMED$6" @58
+			location   	(1490, 1768)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	(object SegLabel @59
+			    Parent_View 	@58
+			    location   	(1490, 1649)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<uses>>"
+			    pctDist    	0.500000
+			    height     	120
+			    orientation 	0)
+			line_color 	3342489
+			quidu      	"3FCF84FA017C"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$7" @60
+				Parent_View 	@58
+				location   	(466, -8)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3FCF84FB0322"
+				client     	@58
+				supplier   	@53
+				line_style 	3
+				origin_attachment 	(1490, 1768)
+				terminal_attachment 	(1744, 1768))
+			    (object RoleView "$UNNAMED$8" @61
+				Parent_View 	@58
+				location   	(466, -8)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3FCF84FB032C"
+				client     	@58
+				supplier   	@56
+				line_style 	3
+				origin_attachment 	(1490, 1768)
+				terminal_attachment 	(1237, 1768))))))
+	    (object InteractionDiagram "Seq-1"
+		mechanism_ref 	@1
+		quid       	"3FCF885F0190"
+		title      	"Seq-1"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list
+		    (object InterObjView "anAction" @62
+			location   	(336, 224)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	TRUE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@62
+			    location   	(336, 224)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	282
+			    justify    	0
+			    label      	"anAction")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCF895E0273"
+			width      	300
+			height     	2430
+			icon_height 	0
+			icon_width 	0
+			icon_y_offset 	0
+			annotation 	1
+			Focus_Of_Control 	(object Focus_Of_Control "" @63
+			    location   	(336, 352)
+			    line_color 	3342489
+			    InterObjView 	@62
+			    height     	1396
+			    y_coord    	1336
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @64
+			    location   	(336, 1568)
+			    line_color 	3342489
+			    InterObjView 	@62
+			    height     	60
+			    y_coord    	0
+			    Nested     	TRUE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @65
+			    location   	(336, 1840)
+			    line_color 	3342489
+			    InterObjView 	@62
+			    height     	724
+			    y_coord    	664
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @66
+			    location   	(336, 2384)
+			    line_color 	3342489
+			    InterObjView 	@62
+			    height     	60
+			    y_coord    	0
+			    Nested     	TRUE))
+		    (object InterObjView "theServiceDelegateFactory" @67
+			location   	(896, 224)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	TRUE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@67
+			    location   	(896, 224)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	548
+			    justify    	0
+			    label      	"theServiceDelegateFactory")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCF88C1035D"
+			width      	566
+			height     	2430
+			icon_height 	0
+			icon_width 	0
+			icon_y_offset 	0
+			annotation 	1
+			Focus_Of_Control 	(object Focus_Of_Control "" @68
+			    location   	(896, 352)
+			    line_color 	3342489
+			    InterObjView 	@67
+			    height     	1336
+			    y_coord    	1276
+			    Nested     	FALSE))
+		    (object InterObjView "aBusinessDelegate" @69
+			location   	(1552, 224)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	TRUE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@69
+			    location   	(1552, 224)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	700
+			    justify    	0
+			    label      	"aBusinessDelegate")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCF8AA1005A"
+			width      	718
+			height     	2430
+			icon_height 	0
+			icon_width 	0
+			icon_y_offset 	0
+			annotation 	1
+			Focus_Of_Control 	(object Focus_Of_Control "" @70
+			    location   	(1552, 416)
+			    line_color 	3342489
+			    InterObjView 	@69
+			    height     	556
+			    y_coord    	496
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @71
+			    location   	(1552, 752)
+			    line_color 	3342489
+			    InterObjView 	@69
+			    height     	60
+			    y_coord    	0
+			    Nested     	TRUE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @72
+			    location   	(1552, 976)
+			    line_color 	3342489
+			    InterObjView 	@69
+			    height     	420
+			    y_coord    	360
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @73
+			    location   	(1552, 1216)
+			    line_color 	3342489
+			    InterObjView 	@69
+			    height     	60
+			    y_coord    	0
+			    Nested     	TRUE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @74
+			    location   	(1552, 1840)
+			    line_color 	3342489
+			    InterObjView 	@69
+			    height     	664
+			    y_coord    	604
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @75
+			    location   	(1552, 2016)
+			    line_color 	3342489
+			    InterObjView 	@69
+			    height     	60
+			    y_coord    	0
+			    Nested     	TRUE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @76
+			    location   	(1552, 2256)
+			    line_color 	3342489
+			    InterObjView 	@69
+			    height     	60
+			    y_coord    	0
+			    Nested     	TRUE))
+		    (object InterObjView "theServiceLocator" @77
+			location   	(2112, 224)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	TRUE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@77
+			    location   	(2112, 224)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	374
+			    justify    	0
+			    label      	"theServiceLocator")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCF8FDB01D1"
+			width      	392
+			height     	2430
+			icon_height 	0
+			icon_width 	0
+			icon_y_offset 	0
+			annotation 	1
+			Focus_Of_Control 	(object Focus_Of_Control "" @78
+			    location   	(2112, 464)
+			    line_color 	3342489
+			    InterObjView 	@77
+			    height     	408
+			    y_coord    	348
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @79
+			    location   	(2112, 976)
+			    line_color 	3342489
+			    InterObjView 	@77
+			    height     	360
+			    y_coord    	300
+			    Nested     	FALSE))
+		    (object InterObjView "aLocalHome" @80
+			location   	(2896, 224)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	TRUE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@80
+			    location   	(2896, 224)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	448
+			    justify    	0
+			    label      	"aLocalHome")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCF91D60284"
+			width      	466
+			height     	2430
+			icon_height 	0
+			icon_width 	0
+			icon_y_offset 	0
+			annotation 	1
+			Focus_Of_Control 	(object Focus_Of_Control "" @81
+			    location   	(2896, 1088)
+			    line_color 	3342489
+			    InterObjView 	@80
+			    height     	60
+			    y_coord    	0
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @82
+			    location   	(2896, 1888)
+			    line_color 	3342489
+			    InterObjView 	@80
+			    height     	248
+			    y_coord    	188
+			    Nested     	FALSE))
+		    (object InterObjView "aComponent" @83
+			location   	(3312, 224)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	TRUE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@83
+			    location   	(3312, 224)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	330
+			    justify    	0
+			    label      	"aComponent")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCFA4CD022B"
+			width      	348
+			height     	2430
+			icon_height 	0
+			icon_width 	0
+			icon_y_offset 	0
+			annotation 	1
+			Focus_Of_Control 	(object Focus_Of_Control "" @84
+			    location   	(3312, 1936)
+			    line_color 	3342489
+			    InterObjView 	@83
+			    height     	60
+			    y_coord    	0
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @85
+			    location   	(3312, 2160)
+			    line_color 	3342489
+			    InterObjView 	@83
+			    height     	216
+			    y_coord    	156
+			    Nested     	FALSE))
+		    (object InterObjView "initialContext" @86
+			location   	(2480, 224)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	TRUE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@86
+			    location   	(2480, 224)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	282
+			    justify    	0
+			    label      	"initialContext")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FCFA895002E"
+			width      	300
+			height     	2430
+			icon_height 	0
+			icon_width 	0
+			icon_y_offset 	0
+			annotation 	1
+			Focus_Of_Control 	(object Focus_Of_Control "" @87
+			    location   	(2480, 576)
+			    line_color 	3342489
+			    InterObjView 	@86
+			    height     	60
+			    y_coord    	0
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @88
+			    location   	(2480, 1024)
+			    line_color 	3342489
+			    InterObjView 	@86
+			    height     	184
+			    y_coord    	124
+			    Nested     	FALSE))
+		    (object InterMessView "" @89
+			location   	(16, 352)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @90
+			    Parent_View 	@89
+			    location   	(615, 308)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCF896802D1"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	376
+			    justify    	0
+			    label      	"getServiceDelegate"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			line_color 	3342489
+			client     	@62
+			supplier   	@67
+			Focus_Src  	@63
+			Focus_Entry 	@68
+			origin     	(351, 352)
+			terminus   	(880, 352)
+			ordinal    	0)
+		    (object InterMessView "" @91
+			location   	(1216, 416)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @92
+			    Parent_View 	@91
+			    location   	(1223, 372)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCF8B190072"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	124
+			    justify    	0
+			    label      	"create"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			line_color 	3342489
+			client     	@67
+			supplier   	@69
+			Focus_Src  	@68
+			Focus_Entry 	@70
+			origin     	(911, 416)
+			terminus   	(1536, 416)
+			ordinal    	1)
+		    (object InterMessView "" @93
+			location   	(16, 1568)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @94
+			    Parent_View 	@93
+			    location   	(616, 1524)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCF8B7E031F"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	370
+			    justify    	0
+			    label      	"aBusinessDelegate"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	1)
+			line_color 	3342489
+			client     	@67
+			supplier   	@62
+			Focus_Src  	@68
+			Focus_Entry 	@64
+			origin     	(880, 1568)
+			terminus   	(352, 1568)
+			ordinal    	9)
+		    (object InterMessView "" @95
+			location   	(1792, 464)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @96
+			    Parent_View 	@95
+			    location   	(1830, 424)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCF90930352"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	222
+			    justify    	0
+			    label      	"getInstance"
+			    pctDist    	0.498994
+			    height     	41
+			    orientation 	0)
+			line_color 	3342489
+			client     	@69
+			supplier   	@77
+			Focus_Src  	@70
+			Focus_Entry 	@78
+			origin     	(1567, 464)
+			terminus   	(2096, 464)
+			ordinal    	2)
+		    (object InterMessView "" @97
+			location   	(1792, 752)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @98
+			    Parent_View 	@97
+			    location   	(1848, 722)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCF90B300D7"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	346
+			    justify    	0
+			    label      	"theServiceLocator"
+			    pctDist    	0.469758
+			    height     	31
+			    orientation 	1)
+			line_color 	3342489
+			client     	@77
+			supplier   	@69
+			Focus_Src  	@78
+			Focus_Entry 	@71
+			origin     	(2096, 752)
+			terminus   	(1568, 752)
+			ordinal    	4)
+		    (object InterMessView "" @99
+			location   	(16, 1840)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @100
+			    Parent_View 	@99
+			    location   	(943, 1796)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCF9149017E"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	312
+			    justify    	0
+			    label      	"businessMethod"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			line_color 	3342489
+			client     	@62
+			supplier   	@69
+			Focus_Src  	@65
+			Focus_Entry 	@74
+			origin     	(351, 1840)
+			terminus   	(1536, 1840)
+			ordinal    	10)
+		    (object InterMessView "" @101
+			location   	(16, 976)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @102
+			    Parent_View 	@101
+			    location   	(1813, 931)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFA3AC0077"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	278
+			    justify    	0
+			    label      	"getLocalHome"
+			    pctDist    	0.466801
+			    height     	46
+			    orientation 	0)
+			line_color 	3342489
+			client     	@69
+			supplier   	@77
+			Focus_Src  	@72
+			Focus_Entry 	@79
+			origin     	(1567, 976)
+			terminus   	(2096, 976)
+			ordinal    	5)
+		    (object InterMessView "" @103
+			location   	(16, 576)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @104
+			    Parent_View 	@103
+			    location   	(2280, 534)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFA8D601A5"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	124
+			    justify    	0
+			    label      	"create"
+			    pctDist    	0.455285
+			    height     	43
+			    orientation 	0)
+			line_color 	3342489
+			client     	@77
+			supplier   	@86
+			Focus_Src  	@78
+			Focus_Entry 	@87
+			origin     	(2127, 576)
+			terminus   	(2464, 576)
+			ordinal    	3)
+		    (object InterMessView "" @105
+			location   	(2240, 1024)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @106
+			    Parent_View 	@105
+			    location   	(2266, 997)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFA9120060"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	129
+			    justify    	0
+			    label      	"lookup"
+			    pctDist    	0.414634
+			    height     	28
+			    orientation 	0)
+			line_color 	3342489
+			client     	@77
+			supplier   	@86
+			Focus_Src  	@79
+			Focus_Entry 	@88
+			origin     	(2127, 1024)
+			terminus   	(2464, 1024)
+			ordinal    	6)
+		    (object InterMessView "" @107
+			location   	(2672, 1088)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @108
+			    Parent_View 	@107
+			    location   	(2673, 1061)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFA9710003"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	124
+			    justify    	0
+			    label      	"create"
+			    pctDist    	0.462830
+			    height     	28
+			    orientation 	0)
+			line_color 	3342489
+			client     	@86
+			supplier   	@80
+			Focus_Src  	@88
+			Focus_Entry 	@81
+			origin     	(2495, 1088)
+			terminus   	(2880, 1088)
+			ordinal    	7)
+		    (object InterMessView "" @109
+			location   	(16, 1216)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @110
+			    Parent_View 	@109
+			    location   	(1832, 1172)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFABB80386"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	242
+			    justify    	0
+			    label      	"aLocalHome"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	1)
+			line_color 	3342489
+			client     	@77
+			supplier   	@69
+			Focus_Src  	@79
+			Focus_Entry 	@73
+			origin     	(2096, 1216)
+			terminus   	(1568, 1216)
+			ordinal    	8)
+		    (object InterMessView "" @111
+			location   	(2208, 1888)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @112
+			    Parent_View 	@111
+			    location   	(2223, 1844)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFACB4005E"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	124
+			    justify    	0
+			    label      	"create"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			line_color 	3342489
+			client     	@69
+			supplier   	@80
+			Focus_Src  	@74
+			Focus_Entry 	@82
+			origin     	(1567, 1888)
+			terminus   	(2880, 1888)
+			ordinal    	11)
+		    (object InterMessView "" @113
+			location   	(3104, 1936)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @114
+			    Parent_View 	@113
+			    location   	(3103, 1892)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFACD601C5"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	124
+			    justify    	0
+			    label      	"create"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			line_color 	3342489
+			client     	@80
+			supplier   	@83
+			Focus_Src  	@82
+			Focus_Entry 	@84
+			origin     	(2911, 1936)
+			terminus   	(3296, 1936)
+			ordinal    	12)
+		    (object InterMessView "" @115
+			location   	(16, 2016)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @116
+			    Parent_View 	@115
+			    location   	(2224, 1972)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFAD0B0062"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	584
+			    justify    	0
+			    label      	"aFormBuilderLocalComponent"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	1)
+			line_color 	3342489
+			client     	@80
+			supplier   	@69
+			Focus_Src  	@82
+			Focus_Entry 	@75
+			origin     	(2880, 2016)
+			terminus   	(1568, 2016)
+			ordinal    	13)
+		    (object InterMessView "" @117
+			location   	(2416, 2160)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @118
+			    Parent_View 	@117
+			    location   	(2431, 2116)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFAEB40045"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	145
+			    justify    	0
+			    label      	"method"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			line_color 	3342489
+			client     	@69
+			supplier   	@83
+			Focus_Src  	@74
+			Focus_Entry 	@85
+			origin     	(1567, 2160)
+			terminus   	(3296, 2160)
+			ordinal    	14)
+		    (object InterMessView "" @119
+			location   	(2416, 2256)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @120
+			    Parent_View 	@119
+			    location   	(2432, 2212)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFAF04025D"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	111
+			    justify    	0
+			    label      	"result"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	1)
+			line_color 	3342489
+			client     	@83
+			supplier   	@69
+			Focus_Src  	@85
+			Focus_Entry 	@76
+			origin     	(3296, 2256)
+			terminus   	(1568, 2256)
+			ordinal    	15)
+		    (object InterMessView "" @121
+			location   	(16, 2384)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @122
+			    Parent_View 	@121
+			    location   	(944, 2340)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"3FCFAF1F02B6"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	148
+			    justify    	0
+			    label      	"aResult"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	1)
+			line_color 	3342489
+			client     	@69
+			supplier   	@62
+			Focus_Src  	@74
+			Focus_Entry 	@66
+			origin     	(1536, 2384)
+			terminus   	(352, 2384)
+			ordinal    	16)))))
+    root_subsystem 	(object SubSystem "Component View"
+	quid       	"3FCD06A601B8"
+	physical_models 	(list unit_reference_list)
+	physical_presentations 	(list unit_reference_list
+	    (object Module_Diagram "Main"
+		quid       	"3FCD06AA0110"
+		title      	"Main"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list))))
+    process_structure 	(object Processes
+	quid       	"3FCD06A601BF"
+	ProcsNDevs 	(list
+	    (object Process_Diagram "Deployment View"
+		quid       	"3FCD06A601DD"
+		title      	"Deployment View"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list))))
+    properties 	(object Properties
+	attributes 	(list Attribute_Set
+	    (object Attribute
+		tool       	"CORBA"
+		name       	"propertyId"
+		value      	"809135966")
+	    (object Attribute
+		tool       	"CORBA"
+		name       	"default__Project"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"CreateMissingDirectories"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"Editor"
+			value      	("EditorType" 100))
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"IncludePath"
+			value      	"")
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"StopOnError"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"EditorType"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"CORBA"
+				name       	"BuiltIn"
+				value      	100)
+			    (object Attribute
+				tool       	"CORBA"
+				name       	"WindowsShell"
+				value      	101)))
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"PathSeparator"
+			value      	"")))
+	    (object Attribute
+		tool       	"CORBA"
+		name       	"default__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"ArrayDimensions"
+			value      	"")
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"ConstValue"
+			value      	"")
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"ImplementationType"
+			value      	"")))
+	    (object Attribute
+		tool       	"CORBA"
+		name       	"default__Module-Spec"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"AdditionalIncludes"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"CmIdentification"
+			value      	(value Text "  %X% %Q% %Z% %W%"))
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"CopyrightNotice"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"InclusionProtectionSymbol"
+			value      	"AUTO GENERATE")))
+	    (object Attribute
+		tool       	"CORBA"
+		name       	"default__Module-Body"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"AdditionalIncludes"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"CmIdentification"
+			value      	(value Text "  %X% %Q% %Z% %W%"))
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"CopyrightNotice"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"InclusionProtectionSymbol"
+			value      	"AUTO GENERATE")))
+	    (object Attribute
+		tool       	"CORBA"
+		name       	"default__Operation"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"Context"
+			value      	"")
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"OperationIsOneWay"
+			value      	FALSE)))
+	    (object Attribute
+		tool       	"CORBA"
+		name       	"default__Attribute"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"ArrayDimensions"
+			value      	"")
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"CaseSpecifier"
+			value      	"")
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"IsReadOnly"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"Order"
+			value      	"")))
+	    (object Attribute
+		tool       	"CORBA"
+		name       	"default__Role"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"ArrayDimensions"
+			value      	"")
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"CaseSpecifier"
+			value      	"")
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"GenerateForwardReference"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"IsReadOnly"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"Order"
+			value      	"")
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"BoundedRoleType"
+			value      	("AssocTypeSet" 47))
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"AssocTypeSet"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"CORBA"
+				name       	"Array"
+				value      	24)
+			    (object Attribute
+				tool       	"CORBA"
+				name       	"Sequence"
+				value      	47)))))
+	    (object Attribute
+		tool       	"CORBA"
+		name       	"default__Uses"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"CORBA"
+			name       	"GenerateForwardReference"
+			value      	FALSE)))
+	    (object Attribute
+		tool       	"CORBA"
+		name       	"HiddenTool"
+		value      	FALSE)
+	    (object Attribute
+		tool       	"Cleveland Service XML"
+		name       	"HiddenTool"
+		value      	FALSE)
+	    (object Attribute
+		tool       	"MOF"
+		name       	"propertyId"
+		value      	"809135966")
+	    (object Attribute
+		tool       	"JCR"
+		name       	"propertyId"
+		value      	"809135966")
+	    (object Attribute
+		tool       	"MOF"
+		name       	"default__Category"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.hasImplicitReferences"
+			value      	"true")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.clusteredImport"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.supertypes"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_prefix"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_version"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"xmi.namespace"
+			value      	"")))
+	    (object Attribute
+		tool       	"JCR"
+		name       	"default__Category"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"JCR"
+			name       	"java_prefix"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"java_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"c_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"versioning.package"
+			value      	"")))
+	    (object Attribute
+		tool       	"MOF"
+		name       	"default__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.corbaType"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.repositoryId"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_version"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"xmi.enumerationUnprefix"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.evaluationPolicy"
+			value      	"deferred")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.constrainedElements"
+			value      	"")))
+	    (object Attribute
+		tool       	"JCR"
+		name       	"default__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"JCR"
+			name       	"java_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"c_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"cpp_substitute_type"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"cpp_substitute_base"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"xmi.externalizeOK"
+			value      	"true")))
+	    (object Attribute
+		tool       	"MOF"
+		name       	"default__Role"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.isChangeable"
+			value      	"true")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_version"
+			value      	"")))
+	    (object Attribute
+		tool       	"JCR"
+		name       	"default__Role"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"JCR"
+			name       	"java_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"c_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"MOF"
+		name       	"default__Association"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.visibility"
+			value      	"public_vis")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_version"
+			value      	"")))
+	    (object Attribute
+		tool       	"JCR"
+		name       	"default__Association"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"JCR"
+			name       	"java_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"c_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"MOF"
+		name       	"default__Attribute"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.multiplicity"
+			value      	"1")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.isOrdered"
+			value      	"false")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.isUnique"
+			value      	"false")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.isChangeable"
+			value      	"true")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.referencedEnd"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_version"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"xmi.defaultValue"
+			value      	"")))
+	    (object Attribute
+		tool       	"JCR"
+		name       	"default__Attribute"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"JCR"
+			name       	"java_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"c_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"mof.object_name"
+			value      	"false")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"xmi.externalizeOK"
+			value      	"true")))
+	    (object Attribute
+		tool       	"MOF"
+		name       	"default__Operation"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.scope"
+			value      	"instance_level")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.isQuery"
+			value      	"false")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.return.multiplicity"
+			value      	"1")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.return.isOrdered"
+			value      	"false")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.return.isUnique"
+			value      	"false")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_version"
+			value      	"")))
+	    (object Attribute
+		tool       	"JCR"
+		name       	"default__Operation"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"JCR"
+			name       	"java_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"c_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"cpp_virtual"
+			value      	"false")))
+	    (object Attribute
+		tool       	"MOF"
+		name       	"default__Param"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.multiplicity"
+			value      	"1")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.isOrdered"
+			value      	"false")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"uml2mof.isUnique"
+			value      	"false")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"rose2mof.direction"
+			value      	"in_dir")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"MOF"
+			name       	"mof.idl_version"
+			value      	"")))
+	    (object Attribute
+		tool       	"JCR"
+		name       	"default__Param"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"JCR"
+			name       	"java_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"c_substitute_name"
+			value      	"")
+		    (object Attribute
+			tool       	"JCR"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"JCRMOF"
+		name       	"HiddenTool"
+		value      	FALSE)
+	    (object Attribute
+		tool       	"UML"
+		name       	"propertyId"
+		value      	"809135966")
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Category"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"useJavaExceptions"
+			value      	"true")
+		    (object Attribute
+			tool       	"UML"
+			name       	"requiredItem"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"requiredItemType"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"DependencyStereotype"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"DependencyName"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"useSeparateDependencies"
+			value      	"true")
+		    (object Attribute
+			tool       	"UML"
+			name       	"exportableUnit"
+			value      	"true")
+		    (object Attribute
+			tool       	"UML"
+			name       	"hasImportedUUIDs"
+			value      	"false")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"useJavaExceptions"
+			value      	"true")
+		    (object Attribute
+			tool       	"UML"
+			name       	"secondaryStereotype"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"requiredItem"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"requiredItemType"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"DependencyStereotype"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"DependencyName"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"useSeparateDependencies"
+			value      	"true")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Role"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"changeability"
+			value      	"changeable")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Association"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Attribute"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"multiplicity"
+			value      	"1")
+		    (object Attribute
+			tool       	"UML"
+			name       	"DependencySupplier"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"DependencyStereotype"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"DependencyName"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"useSeparateDependencies"
+			value      	"true")
+		    (object Attribute
+			tool       	"UML"
+			name       	"changeability"
+			value      	"changeable")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Param"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"direction"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Operation"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"returnDefaultValue"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"MethodLanguage"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"MethodBody"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"useSeparateDependencies"
+			value      	"true")
+		    (object Attribute
+			tool       	"UML"
+			name       	"DependencyName"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Module"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Subsystem"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"exportableUnit"
+			value      	"true")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Link"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__ObjectInstance"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__StateMachine"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__ActivityModel"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__SwimLane"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__UseCase"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"requiredItem"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"requiredItemType"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"DependencyStereotype"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"DependencyName"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"useSeparateDependencies"
+			value      	"true")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__StateTransition"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"SendActionName"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"ActionScriptLanguage"
+			value      	"")
+		    (object Attribute
+			tool       	"UML"
+			name       	"ActionScriptBody"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Model"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Dependency"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"UML"
+		name       	"default__Generalization"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"UML"
+			name       	"uuid"
+			value      	"")))
+	    (object Attribute
+		tool       	"JCRUML"
+		name       	"HiddenTool"
+		value      	FALSE)
+	    (object Attribute
+		tool       	"Java"
+		name       	"propertyId"
+		value      	"809135966")
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Project"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"RootDir"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"CreateMissingDirectories"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"StopOnError"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"UsePrefixes"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"AutoSync"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"NotShowRoseIDDlg"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ShowCodegenDlg"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateRoseID"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateDefaultReturnLine"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocDefaultAuthor"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocDefaultVersion"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocDefaultSince"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"UserDefineTagName1"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"UserDefineTagApply1"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"UserDefineTagText1"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"UserDefineTagName2"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"UserDefineTagApply2"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"UserDefineTagText2"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"UserDefineTagName3"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"UserDefineTagApply3"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"UserDefineTagText3"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocNumAsterisks"
+			value      	0)
+		    (object Attribute
+			tool       	"Java"
+			name       	"MaxNumChars"
+			value      	80)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Editor"
+			value      	("EditorType" 100))
+		    (object Attribute
+			tool       	"Java"
+			name       	"VM"
+			value      	("VMType" 200))
+		    (object Attribute
+			tool       	"Java"
+			name       	"ClassPath"
+			value      	"C:\\JDev9i\\jdk\\bin\\java.exe;C:\\JDev9i\\jdk\\bin\\jar.exe;;C:\\tools\\jdk1.3.1_04\\src.jar;C:\\tools\\jdk1.3.1_04\\jre\\lib\\i18n.jar;C:\\tools\\jdk1.3.1_04\\jre\\lib\\jaws.jar;C:\\tools\\jdk1.3.1_04\\jre\\lib\\rt.jar;C:\\tools\\jdk1.3.1_04\\lib\\dt.jar;C:\\tools\\jdk1.3.1_04\\lib\\tools.jar;C:\\tools\\jdk1.3.1_04\\jre\\lib\\sunrsasign.jar")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ReferenceClasspath"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EditorType"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"BuiltIn"
+				value      	100)
+			    (object Attribute
+				tool       	"Java"
+				name       	"WindowsShell"
+				value      	101)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"VMType"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Sun"
+				value      	200)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"VAJavaWorkingFolder"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"InstanceVariablePrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ClassVariablePrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"DefaultAttributeDataType"
+			value      	"int")
+		    (object Attribute
+			tool       	"Java"
+			name       	"DefaultOperationReturnType"
+			value      	"void")
+		    (object Attribute
+			tool       	"Java"
+			name       	"NoClassCustomDlg"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GlobalImports"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"Java"
+			name       	"OpenBraceClassStyle"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"OpenBraceMethodStyle"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"UseTabs"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"UseSpaces"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"SpacingItems"
+			value      	3)
+		    (object Attribute
+			tool       	"Java"
+			name       	"RoseDefaultCommentStyle"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"AsteriskCommentStyle"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavaCommentStyle"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocAuthor"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocSince"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"JavadocVersion"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"BeanPrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"BeanSuffix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"RemotePrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"RemoteSuffix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"HomePrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"HomeSuffix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"PrimaryKeyPrefix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"PrimaryKeySuffix"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBDTDLocation"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletDTDLocation"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"DefaultEJBVersion"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"DefaultServletVersion"
+			value      	"")))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"Final"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Static"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateDefaultConstructor"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ConstructorIs"
+			value      	("Ctor_Set" 62))
+		    (object Attribute
+			tool       	"Java"
+			name       	"Ctor_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"public"
+				value      	62)
+			    (object Attribute
+				tool       	"Java"
+				name       	"protected"
+				value      	63)
+			    (object Attribute
+				tool       	"Java"
+				name       	"private"
+				value      	64)
+			    (object Attribute
+				tool       	"Java"
+				name       	"package"
+				value      	65)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateFinalizer"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateStaticInitializer"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateInstanceInitializer"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateCode"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"DisableAutoSync"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ReadOnly"
+			value      	FALSE)))
+	    (object Attribute
+		tool       	"Java"
+		name       	"Default_Servlet__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletName"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletContextRef"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"IsSingleThread"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletInitParameter"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletInitParameterNames"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletIsSecure"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestDispatcher"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestDispatcherPath"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"DispatcherInclude"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"DispatcherForward"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletSecurityRoles"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletgetInfo"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletXMLFilePath"
+			value      	"")))
+	    (object Attribute
+		tool       	"Java"
+		name       	"Http_Servlet__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestAttribute"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestAttributesNames"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"MethodForRequestAttributes"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestParameter"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletRequestParameterNames"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"MethodForRequestParameters"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletHeader"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletHeaderNames"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"MethodForHeaders"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletIntHeader"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletDateHeader"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletCookie"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"MethodForCookie"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"ServletContentType"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateHTML"
+			value      	FALSE)))
+	    (object Attribute
+		tool       	"Java"
+		name       	"Default_EJB__Class"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"Generate_XML_DD"
+			value      	TRUE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBCmpField"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBEnvironmentProperties"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBCnxFactory"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBReferences"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBSecurityRoles"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBNameInJAR"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBSessionType"
+			value      	("EJBSessionType_Set" 200))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBSessionType_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	""
+				value      	200)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Stateless"
+				value      	201)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Stateful"
+				value      	202)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBTransactionType"
+			value      	("EJBTransactionType_Set" 211))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBTransactionType_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Container"
+				value      	211)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Bean"
+				value      	212)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBPersistenceType"
+			value      	("EJBPersistenceType_Set" 220))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBPersistenceType_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	""
+				value      	220)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Bean"
+				value      	221)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Container"
+				value      	222)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBReentrant"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBSessionSync"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBVersion"
+			value      	("EJBVersion_Set" 230))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBVersion_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"2.0"
+				value      	230)
+			    (object Attribute
+				tool       	"Java"
+				name       	"1.x"
+				value      	231)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"EJBXMLFilePath"
+			value      	"")))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Module-Spec"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"CmIdentification"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"Java"
+			name       	"CopyrightNotice"
+			value      	(value Text ""))))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Module-Body"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"CmIdentification"
+			value      	(value Text ""))
+		    (object Attribute
+			tool       	"Java"
+			name       	"CopyrightNotice"
+			value      	(value Text ""))))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Operation"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"Abstract"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Static"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Final"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Native"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Synchronized"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateFullyQualifiedReturn"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"ReplaceExistingCode"
+			value      	TRUE)))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Attribute"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"Final"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Transient"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Volatile"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"PropertyType"
+			value      	("BeanProperty_Set" 71))
+		    (object Attribute
+			tool       	"Java"
+			name       	"BeanProperty_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Not A Property"
+				value      	71)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Simple"
+				value      	72)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Bound"
+				value      	73)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Constrained"
+				value      	74)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"IndividualChangeMgt"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Read/Write"
+			value      	("Read/Write_Set" 81))
+		    (object Attribute
+			tool       	"Java"
+			name       	"Read/Write_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Read & Write"
+				value      	81)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Read Only"
+				value      	82)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Write Only"
+				value      	83)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateFullyQualifiedTypes"
+			value      	FALSE)))
+	    (object Attribute
+		tool       	"Java"
+		name       	"default__Role"
+		value      	(list Attribute_Set
+		    (object Attribute
+			tool       	"Java"
+			name       	"ContainerClass"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"InitialValue"
+			value      	"")
+		    (object Attribute
+			tool       	"Java"
+			name       	"Final"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Transient"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Volatile"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"PropertyType"
+			value      	("BeanProperty_Set" 71))
+		    (object Attribute
+			tool       	"Java"
+			name       	"BeanProperty_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Not A Property"
+				value      	71)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Simple"
+				value      	72)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Bound"
+				value      	73)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Constrained"
+				value      	74)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"IndividualChangeMgt"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"Read/Write"
+			value      	("Read/Write_Set" 81))
+		    (object Attribute
+			tool       	"Java"
+			name       	"Read/Write_Set"
+			value      	(list Attribute_Set
+			    (object Attribute
+				tool       	"Java"
+				name       	"Read & Write"
+				value      	81)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Read Only"
+				value      	82)
+			    (object Attribute
+				tool       	"Java"
+				name       	"Write Only"
+				value      	83)))
+		    (object Attribute
+			tool       	"Java"
+			name       	"GenerateFullyQualifiedTypes"
+			value      	FALSE)
+		    (object Attribute
+			tool       	"Java"
+			name       	"IsNavigable"
+			value      	TRUE)))
+	    (object Attribute
+		tool       	"Java"
+		name       	"HiddenTool"
+		value      	FALSE)
+	    (object Attribute
+		tool       	"Rose Model Integrator"
+		name       	"HiddenTool"
+		value      	FALSE)
+	    (object Attribute
+		tool       	"Rose Web Publisher"
+		name       	"HiddenTool"
+		value      	FALSE)
+	    (object Attribute
+		tool       	"TopLink"
+		name       	"HiddenTool"
+		value      	FALSE)
+	    (object Attribute
+		tool       	"Version Control"
+		name       	"HiddenTool"
+		value      	FALSE))
+	quid       	"3FCD06A601C0"))
