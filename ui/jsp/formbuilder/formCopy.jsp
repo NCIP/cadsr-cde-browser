@@ -28,21 +28,48 @@
     </jsp:include>
 
 
+    <logic:messagesPresent>
+      <ul>
+        <html:messages id="error">
+          <li><bean:write name="error"/></li>
+        </html:messages>
+      </ul><hr>
+    </logic:messagesPresent>
 
     <logic:present name="<%=FormConstants.CRF%>">
-      <html:form action='<%="/formToCopyAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.FORM_COPY%>'>
+      <html:form 
+        action='<%="/formCopyAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.FORM_COPY%>'
+        onsubmit="validateCopyForm(this)"
+        >
       <%@ include file="/formbuilder/copyButton_inc.jsp"%>    
-      <table cellspacing="2" cellpadding="3" border="0" width="100%">
+
+      <table cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr >
+          <td >
+            &nbsp;
+          </td>
+        </tr>         
         <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
+          <td class="OraHeaderSubSub" width="100%">New Form Header</td>
+        </tr>
+        <tr>
+          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+        </tr>
+      </table>
+
+      <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
           <td class="OraFieldText" nowrap>
-            <html:text 
+            <html:textarea 
               property="<%= FormConstants.FORM_LONG_NAME %>"
-              size="30"
+              cols="30"
+              rows="5"
               />
           </td>
 
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:define id="context" scope="session" name="<%= FormConstants.CRF %>" property="<%= FormConstants.CRF_CONTEXT %>" toScope="page"/>
 
@@ -53,8 +80,8 @@
           </td>
         </tr>
 
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.version" />:</td>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.version" />:</td>
           <td class="OraFieldText" nowrap>
             <html:text 
               property="<%= FormConstants.FORM_VERSION %>"
@@ -62,7 +89,7 @@
               />
           </td>
 
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
           <td class="OraFieldText" nowrap>
             <html:text 
               property="<%= FormConstants.WORKFLOW %>"
@@ -78,14 +105,14 @@
 -->
           </td>      
         </tr>
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
           <td class="OraFieldText" nowrap>
             <html:select styleClass="Dropdown" name="<%= FormConstants.CRF %>" property="<%=FormConstants.FORM_TYPE%>">
               <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
             </html:select> 
           </td>        
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol" />:</td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocol" />:</td>
           <td class="OraFieldText" nowrap>
             <html:text 
               property="<%= FormConstants.PROTOCOLS_LOV_NAME_FIELD %>"
@@ -101,17 +128,22 @@
         </tr>
 
 
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
           <td class="OraFieldText" nowrap>
             <html:select styleClass = "Dropdown" name="<%= FormConstants.CRF %>" property="<%=FormConstants.FORM_CATEGORY%>">
               <html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> \
             </html:select> 
           </td>
+          <td class="OraTableColumnHeader" nowrap>
+          </td>
+          <td class="OraFieldText" nowrap>
+          </td>
+          
         </tr>     
 
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
           <td class="OraFieldText" nowrap>
             <html:textarea 
               property="<%= FormConstants.PREFERRED_DEFINITION %>"
@@ -120,7 +152,7 @@
               rows="5"
               />
            </td>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.comments" />:</td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.comments" />:</td>
           <td class="OraFieldText" nowrap>
             <html:textarea 
               property="<%= FormConstants.FORM_COMMENTS %>"
@@ -129,15 +161,29 @@
               />
            </td>
         </tr>
+      </table>
 
-
-        <tr>
-          <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.confirmCopy" />:</td>
-          <td class="OraFieldText" nowrap>
+      <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0">
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.confirmCopy" />:
             <html:checkbox property="<%= FormConstants.FORM_GOTO_EDIT %>"/>
           </td>
         </tr>
 
+      </table>
+
+      <table cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr >
+          <td >
+            &nbsp;
+          </td>
+        </tr>         
+        <tr>
+          <td class="OraHeaderSubSub" width="100%">New Form Details</td>
+        </tr>
+        <tr>
+          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+        </tr>
       </table>
       
       <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
@@ -233,4 +279,7 @@
     <%@ include file="/common/common_bottom_border.jsp"%>
 
 </BODY>
+
+<html:javascript formName="copyForm"/>
+
 </HTML>

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
+
 <%@ page import="oracle.clex.process.jsp.GetInfoBean "%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
@@ -32,7 +33,8 @@
 
 
     <logic:present name="<%=FormConstants.CRF%>">
-      <html:form action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_MODULE%>'>
+      <html:form action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_MODULE%>'
+        onsubmit="validateCreateModuleForm(this)">
 
       <%@ include file="/formbuilder/createModule_inc.jsp"%>    
 
@@ -67,5 +69,7 @@
 </logic:present>
 <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
 <%@ include file="/common/common_bottom_border.jsp"%>
+
+<html:javascript formName="createModuleForm"/>
 </BODY>
 </HTML>

@@ -36,7 +36,7 @@
     <logic:present name="<%=FormConstants.CRF%>">
       <html:form action='<%="/addClassifications?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.ADD_CLASSIFICATIONS%>'>
 
-  <table cellspacing="2" cellpadding="3" border="0" width="100%">
+  <table cellspacing="2" cellpadding="3" border="0" width="80%" >
 
     <% for(int i=0; i<nbOfClassifications; i++) { %>
 
@@ -61,11 +61,10 @@
     <% } %>
   </table>
 
-      
-      <%@ include file="/formbuilder/addClassifications_inc.jsp"%>    
-
-      </html:form>
-    </logic:present>
+  <%@ include file="/formbuilder/addClassifications_inc.jsp"%>    
+    
+  </html:form>
+</logic:present>
 
     <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
 
