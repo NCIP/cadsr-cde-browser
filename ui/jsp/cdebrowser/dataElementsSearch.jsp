@@ -106,7 +106,7 @@ function redirect1(detailReqType, linkParms )
   
 }
 function goPage(pageNumber, pageInfo) {
-  document.location.href = "search?searchDataElements=9&"+pageInfo+"&deSearchPageNum="+pageNumber+ "<%= pageUrl %>"+"<%= urlParams %>";
+  document.location.href ="<%=request.getContextPath()%>" + "/search?searchDataElements=9&"+pageInfo+"&deSearchPageNum="+pageNumber+ "<%= pageUrl %>"+"<%= urlParams %>";
     
 }
 function clearValueDomain() {
