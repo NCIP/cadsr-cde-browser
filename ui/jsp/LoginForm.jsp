@@ -45,8 +45,7 @@ function submitForm() {
   <TR>
   <td align=left valign=top width="1%" bgcolor="#336699"><img src="i/top_left.gif" width=4 height="25"></td>
   <td nowrap align=left valign=top width="5%" bgcolor="#336699"><b><font size="3" face="Arial" color="#FFFFFF">&nbsp; &nbsp;Please Login</font></b></td>
-  
-  
+
   <td align=left valign=top width="5%" bgcolor="#336699">&nbsp;</td>
   
   <TD align=left valign=center bgcolor="#336699" height=25 width="94%">&nbsp;</TD>
@@ -64,6 +63,11 @@ function submitForm() {
   <form method="POST" action="j_security_check">
 
   <table align=center cellspacing="2" cellpadding="3" border="0">
+    <% if(request.getAttribute("msg") != null) { %>
+    <tr>
+      <td colspan=2 class="OraErrorText"><%= request.getAttribute("msg") %></td>
+    </tr>
+    <% } %>
     <tr>
         <td class="OraFieldtitlebold" nowrap>Username:</td>
         <td class="OraFieldText" nowrap>

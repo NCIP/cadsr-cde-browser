@@ -1,3 +1,13 @@
+<%  
+
+  request.setAttribute("msg", "Login Failed, please try again.");
+  request.getRequestDispatcher("formSearchAction.do").forward(request, response);
+
+  if(true)
+    return;
+
+%>
+
 <html>
 <head>
 <title>Untitled Document</title>
