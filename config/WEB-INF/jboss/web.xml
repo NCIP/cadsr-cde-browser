@@ -222,7 +222,7 @@
     <web-resource-collection>
       <web-resource-name>Secure Services</web-resource-name>
       <url-pattern>changeAssociation.do</url-pattern>
-    </web-resource-collection>     
+    </web-resource-collection>          
     <auth-constraint>
       <description>Authorized Users Group</description>
       <role-name>CDE MANAGER</role-name>

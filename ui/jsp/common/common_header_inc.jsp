@@ -32,36 +32,41 @@
       </TABLE>
     </td>
   </tr>
+ </table>
+  <table valign="top">
    <tr>
-    <td  width="100%" >
+    <td  width="90%" >
     <TABLE align ="left" width="100%" Cellpadding=0 Cellspacing=0 border=0 >
           <tr>
-           <td  align="left" width="20%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
+           <td  valign="bottom" align="center" width="15%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
                <a href="http://cadsr-prod.nci.nih.gov" target="_blank" >Admin Tool&nbsp;</a> </span></td>
 
-           <td  align="left" width="20%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
+           <td  align="left" width="15%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
                 <a href="http://ncicb.nci.nih.gov/cdecurate" target="_blank">
                       Curation Tool&nbsp;</a></span>
             </td>
-           <td  align="left" width="28%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
+           <td  align="center"  width="22%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
                 <a href="http://ncimeta.nci.nih.gov" target="_blank" >
                       NCI Metathesaurus&nbsp;</a></span>
             </td>
-           <td  align="left" width="32%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
+           <td  align="center" width="28%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
                 <a href="http://nciterms.nci.nih.gov" target="_blank">
                       NCI Terminology Server&nbsp;</a></span>
             </td>
-
+           <td  align="center" width="15%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
+                <a href="http://cadsrsentinel.nci.nih.gov" target="_blank">
+                      Sentinel Tool&nbsp;</a></span>
+            </td>            
         </tr>
       </table>
      </td>
-    <td  width="100%" >
-    <TABLE align ="left" width="100%" Cellpadding=0 Cellspacing=0 border=0 >
+    <td  width="10%" >
+    <TABLE align ="right" width="100%" Cellpadding=0 Cellspacing=0 border=0 >
           <tr>
           <!--
            <td  align="right"   height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
                 <a href="http://nciterms.nci.nih.gov" target="_blank">
-                      What's new</a>&nbsp;&nbsp;&nbsp;</span>
+                      What's new</a>&nbsp;&nbsp;</span>
             </td>
             -->
            <td  align="right"   height="10" nowrap>

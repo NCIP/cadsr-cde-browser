@@ -192,9 +192,10 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
 
 
                 List protoNodes = ctxNode.getProtocolNodes();
-
+                /**
                 List formNodes = new ArrayList();
                 formNodes = ctxNode.getFormsWithNoProtocolNodes();
+                **/
                /**
                 if(showFormsAlphebetically)
                   formNodes=ctxNode.getFormNodes();
@@ -204,7 +205,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                 DefaultMutableTreeNode protocolLabelNode =null;
                 DefaultMutableTreeNode formsLabelNode =null;
 
-                if (!protoNodes.isEmpty()|| !formNodes.isEmpty())
+                if (!protoNodes.isEmpty())
                 {                
                   protocolFormsLabelNode =
                     new DefaultMutableTreeNode(
@@ -240,14 +241,16 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
 
                   }
                  **/
-                 // Add form with no protocol
+                 // Add form with no protocol will taken out for this release
+                 /**
                   if(!formNodes.isEmpty())
                   {
                     Iterator tmpIter = formNodes.iterator();
                     while (tmpIter.hasNext()) {
                       protocolFormsLabelNode.add((DefaultMutableTreeNode) tmpIter.next());
                       }
-                  }   
+                  } 
+                  **/
                   // Add form with no protocol
                   if(!protoNodes.isEmpty())
                   {
@@ -266,7 +269,8 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
         //Display Catalog
 
           //Get Publishing Node info
-
+          if (ctx.getName().equals("caBIG"))
+          {
           Map info = ctxNode.getPublisingNodeInfo();
           if(!info.isEmpty())
           {
@@ -352,7 +356,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                   ctxTreeNode.add(publishNode);
             }
           }
-
+        }
         //End Catalog
 
         tree.add(ctxTreeNode);
