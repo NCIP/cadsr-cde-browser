@@ -76,4 +76,7 @@ public interface FormConstants extends FormBuilderConstants
 
     public static final String SELECTED_ITEMS = "selectedItems";
 
+    public static final String CLASSIFICATIONS = "classifications";
+    
+
 }

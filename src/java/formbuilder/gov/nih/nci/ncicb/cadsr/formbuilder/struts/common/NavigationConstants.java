@@ -56,4 +56,13 @@ public interface NavigationConstants
   public static final String ADD_QUESTION = "addQuestion";
   public static final String GO_TO_ADD_QUESTION = "displayCDECart";
 
+  public static final String GET_CLASSIFICATIONS = "getClassifications";
+  public static final String GO_TO_ADD_CLASSIFICATIONS = "gotoAddClassifications";
+  public static final String ADD_CLASSIFICATIONS = "addClassifications";
+
+ public static final String REMOVE_CLASSIFICATION = "removeClassification";
+
+ public static final String GO_TO_SEARCH = "gotoSearch";
+
+
 }
