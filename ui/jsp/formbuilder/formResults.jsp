@@ -9,7 +9,6 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants" %>
-<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
 
 <HTML>
 <HEAD>
@@ -18,7 +17,12 @@
 <LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
 
 </HEAD>
-<BODY topmargin=0 bgcolor="#ffffff" onload="location.hash='#results'">
+<logic:present  name="<%=CaDSRConstants.ANCHOR%>"> 
+<BODY topmargin=0 bgcolor="#ffffff" onload="location.hash='#<bean:write name="<%=CaDSRConstants.ANCHOR%>"/>'">
+</logic:present>
+<logic:notPresent  name="<%=CaDSRConstants.ANCHOR%>"> 
+<BODY topmargin=0 bgcolor="#ffffff">
+</logic:notPresent>
 
 <%
   String urlPrefix = "";
@@ -38,7 +42,8 @@
 </table> 
 <html:form action="/formSearchAction.do">
  <%@ include  file="/formbuilder/formSearch_inc.jsp" %> 
-<logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
+<logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>"> 
+
     <A NAME="results"></A>
        <table cellpadding="0" cellspacing="0" width="100%" align="center">  
       <tr>

@@ -67,6 +67,8 @@
   String queryFlag = request.getParameter("performQuery");
   if (queryFlag == null) queryFlag = "";
 
+  String loadAnchor = (String)request.getAttribute("anchor");
+  if (loadAnchor == null) loadAnchor = "";
 
   String doneURL = "";
 
@@ -238,11 +240,9 @@ function turnOff() {
     var treeFrame = findFrameByName('tree');
     treeFrame.document.body.style.cursor = "default";
   }
-  
-  if ("<%= queryFlag %>" != "") { 
-    location.hash="#results";
+  if ("<%=loadAnchor%>"!= "") {
+    location.hash="#<%=loadAnchor%>";
   }
-
   
 }
 

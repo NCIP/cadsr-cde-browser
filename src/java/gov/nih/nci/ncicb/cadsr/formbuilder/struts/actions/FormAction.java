@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
@@ -124,8 +125,7 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     }
       
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);
-    
-    
+    request.setAttribute(CaDSRConstants.ANCHOR, "results");
 
     return mapping.findForward(SUCCESS);
   }

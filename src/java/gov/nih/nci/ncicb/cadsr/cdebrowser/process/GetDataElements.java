@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.11 2005-02-24 20:57:25 jiangja Exp $
+ * @version: $Id: GetDataElements.java,v 1.12 2005-03-09 21:04:30 jiangja Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -303,6 +303,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER, myRequest.getContextPath());
         createPageScroller(
           dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, myRequest.getContextPath());
+        myRequest.setAttribute("anchor", "results");
 
         log.trace("Created both page scrollers successfully");
       }
@@ -334,6 +335,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         myRequest.getContextPath());
         createPageScroller(dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, 
         myRequest.getContextPath());
+        myRequest.setAttribute("anchor", "results");
       }
 
       else if (performQuery.equals("addToCart")) {
@@ -377,6 +379,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
           // Set search preference  from old Search Bean to the new one 
          setValuesFromOldSearchBean(desb);
          desb.setLOVLists(dbUtil);        
+      myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
 
       }
       else if (performQuery.equals("sortResults")) {
@@ -464,7 +467,8 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER, myRequest.getContextPath());
         createPageScroller(
           dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, myRequest.getContextPath());
-
+        
+        myRequest.setAttribute("anchor", "results");
         log.trace("Created both page scrollers successfully");
       }
       setResult("desb", desb);
@@ -475,7 +479,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       setResult("performQuery", null);
       setResult("P_PARAM_TYPE", paramType);
       setResult("P_IDSEQ", paramIdSeq);
-
+      
       setCondition(SUCCESS);
     }
     catch (Exception ex) {
