@@ -39,6 +39,16 @@ public class CDECartTransferObject implements CDECart {
     dataElements.add(item);
   }
 
+  public void setForms(Collection forms) {
+    forms.addAll(forms);
+  }
+
+  public void mergeCart(CDECart cart) {
+    Collection deColl = cart.getDataElements();
+    this.dataElements.addAll(deColl);
+    this.forms.addAll(cart.getForms());
+  }
+
   public static void main(String[] args) { 
     CDECartTransferObject c = new CDECartTransferObject();
     Collection l = new ArrayList();
@@ -56,4 +66,5 @@ public class CDECartTransferObject implements CDECart {
     System.out.println("Hashcode of i1: "+i1.hashCode());
     System.out.println("Hashcode of i2: "+i2.hashCode());
   }
+  
 }

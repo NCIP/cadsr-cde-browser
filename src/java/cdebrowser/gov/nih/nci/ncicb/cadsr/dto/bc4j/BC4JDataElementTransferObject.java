@@ -25,8 +25,8 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
 	protected String usingContexts = "";
 
 	public BC4JDataElementTransferObject() {
-   idseq = deIdseq; 
-	}
+
+  }
 
 	public BC4JDataElementTransferObject(DataElementsViewRowImpl dataElementsViewRowImpl)
 		throws Exception {
@@ -59,23 +59,23 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
       publicId = dataElementsViewRowImpl.getCdeId().intValue();
     origin = checkForNull(dataElementsViewRowImpl.getOrigin());
 
-	} //end method
+	}
 
 	public String getDeIdseq() {
 		return deIdseq;
-	} //end method
+	}
 
 	public String getVdIdseq() {
 		return vdIdseq;
-	} //end method
+	}
 
 	public String getDecIdseq() {
 		return decIdseq;
-	} //end method
+	} 
 
 	public ValueDomain getValueDomain() {
 		return valueDomain;
-	} //end method
+	}
 
 	public String getVdName() {
 		return valueDomain.getLongName();
@@ -88,11 +88,11 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
 
 	public String getLongCDEName() {
 		return longCDEName;
-	} //end method
+	}
 
 	public String getCDEId() {
 		return cdeId;
-	} //end method
+	}
 
 	public String getDecName() {
 		return dec.getLongName();
@@ -100,7 +100,7 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
 
 	public DataElementConcept getDataElementConcept() {
 		return dec;
-	} //end method
+	}
 
 	public String getUsingContexts() {
 		return usingContexts;
@@ -110,15 +110,16 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
 
 	public void setVdIdseq(String pVdIdseq) {
 		vdIdseq = pVdIdseq;
-	} //end method
+	}
 
 	public void setDeIdseq(String pDeIdseq) {
 		deIdseq = pDeIdseq;
-	} //end method
+    idseq = pDeIdseq;
+	}
 
 	public void setValueDomain(ValueDomain pValueDomain) {
 		valueDomain = pValueDomain;
-	} //end method
+	}
 
 	public void setDecIdseq(String pDecIdseq) {
 		decIdseq = pDecIdseq;
@@ -142,6 +143,11 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
 
 	public void setUsingContexts(String usingContexts) {
 		this.usingContexts = usingContexts;
+	}
+
+  public void setIdseq(String pDeIdseq) {
+		deIdseq = pDeIdseq;
+    idseq = pDeIdseq;
 	}
 
 }

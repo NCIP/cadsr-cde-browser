@@ -335,10 +335,14 @@ public class GetDataElements extends BasePersistingProcess {
           cart = new CDECartTransferObject();
         String [] itemsList = getInfoStringArray(ProcessConstants.SELECT_DE);
         CDECartItem cdeItem = null;
+        DataElement de = null;
         for (int i=0; i <itemsList.length; i++){
           cdeItem = new CDECartItemTransferObject();
-          cdeItem.setId(itemsList[i]);
-          cdeItem.setType("DATAELEMENT");
+          /*cdeItem.setId(itemsList[i]);
+          cdeItem.setType("DATAELEMENT");*/
+          de = locateDataElement(queryResults,itemsList[i]);
+          //cdeItem.setDataElement(de);
+          cdeItem.setItem(de);
           cart.setDataElement(cdeItem);
         }
 
@@ -487,5 +491,17 @@ public class GetDataElements extends BasePersistingProcess {
     String ts = DateFormat.getDateTimeInstance().format(timestamp);
 
     return ts;
+  }
+
+  private DataElement locateDataElement(List results, String deId) {
+    Iterator it = results.iterator();
+    DataElement de = null;
+    while (it.hasNext()) {
+      de = (DataElement)it.next();
+      if (de.getDeIdseq().equals(deId)){
+        return de;
+      }
+    }
+    return de;
   }
 }

@@ -3,6 +3,8 @@ package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.CDECartItem;
 
 import java.sql.Timestamp;
+import gov.nih.nci.ncicb.cadsr.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 
 
 public class CDECartItemTransferObject implements CDECartItem {
@@ -10,6 +12,10 @@ public class CDECartItemTransferObject implements CDECartItem {
   protected String type;
   protected Timestamp createdDate;
   protected String createdBy;
+  protected DataElement cde;
+  protected AdminComponent ac;
+  protected boolean deletedInd;
+  protected boolean persistedInd;
 
   public CDECartItemTransferObject() {
   }
@@ -53,5 +59,41 @@ public class CDECartItemTransferObject implements CDECartItem {
 
   public int hashCode() {
     return 59878489;
+  }
+
+  /*public DataElement getDataElement() {
+    return cde;
+  }
+
+  public void setDataElement(DataElement de) {
+    this.cde = de;
+    id = cde.getDeIdseq();
+    type = "DATAELEMENT";
+        
+  }*/
+
+  public AdminComponent getItem() {
+    return ac;
+  }
+
+  public void setItem(AdminComponent ac) {
+    this.ac = ac;
+    id = ac.getIdseq();
+  }
+
+  public boolean getDeletedInd() {
+    return deletedInd;
+  }
+
+  public void setDeletedInd(boolean ind) {
+    deletedInd = ind;
+  }
+
+  public boolean getPersistedInd() {
+    return persistedInd;
+  }
+
+  public void setPersistedInd(boolean ind) {
+    persistedInd = ind;
   }
 }

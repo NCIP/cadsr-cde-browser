@@ -11,4 +11,7 @@ public interface CDECart  {
 
   public Collection getForms();
   public void setForm(CDECartItem form);
+  public void setForms(Collection forms);
+
+  public void mergeCart(CDECart cart);
 }
