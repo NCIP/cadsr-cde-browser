@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-public class JDBCFormValidValueDAO extends JDBCBaseDAO
+public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
   implements FormValidValueDAO {
   public JDBCFormValidValueDAO(ServiceLocator locator) {
     super(locator);

@@ -36,7 +36,7 @@ import javax.sql.DataSource;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 
 
-public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
+public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   public JDBCFormDAO(ServiceLocator locator) {
     super(locator);
   }

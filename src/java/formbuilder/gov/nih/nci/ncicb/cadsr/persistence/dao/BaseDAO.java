@@ -29,26 +29,5 @@ public abstract class BaseDAO {
   public void setServiceLocator(ServiceLocator newServiceLocator) {
     serviceLocator = newServiceLocator;
   }
-
-  /**
-   * Checks if a user can update an admin component.
-   */
-  public abstract boolean hasUpdate(
-    String username,
-    String acIdseq);
-
-  /**
-   * Checks if a user can delete an admin component.
-   */
-  public abstract boolean hasDelete(
-    String username,
-    String acIdseq);
-
-  /**
-   * Checks if a user can create a particular type of an admin component in a 
-   */
-  public abstract boolean hasCreate(
-    String username,
-    String acType,
-    String conteIdseq);
+  
 }

@@ -12,14 +12,6 @@ public interface AdminComponentDAO {
     String newLongName);
 
   /**
-   * Utility method to get global unique identifier used as a primary key in
-   * all caDSR tables
-   *
-   * @return <b>String</b> global unique identifier (length 36)
-   */
-  public String generateGUID();
-
-  /**
    * Utility method to derive preferred name using the long name.
    *
    * @param <b>longName</b> Long name of the admin component

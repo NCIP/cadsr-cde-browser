@@ -33,7 +33,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 
-public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
+public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
   public JDBCModuleDAO(ServiceLocator locator) {
     super(locator);
   }

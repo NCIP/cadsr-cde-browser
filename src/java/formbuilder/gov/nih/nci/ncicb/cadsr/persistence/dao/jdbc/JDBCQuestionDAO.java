@@ -37,7 +37,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 
-public class JDBCQuestionDAO extends JDBCBaseDAO implements QuestionDAO {
+public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDAO {
   public JDBCQuestionDAO(ServiceLocator locator) {
     super(locator);
   }

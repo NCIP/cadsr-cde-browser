@@ -66,63 +66,7 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
     return DATASOURCE_LOCATION_KEY;
   }
 
-  /**
-   * Check if the user has a create privilege on the administered component
-   * within the context
-   *
-   * @param username corresponds to the login user name.
-   * @param acType corresponds to the administered component type
-   * @param conteIdseq corresponds to the context id seq
-   *
-   * @return <b>boolean</b> true indicates that user has an create privilege
-   *         and false when the user has not
-   */
-  public boolean hasCreate(
-    String username,
-    String acType,
-    String conteIdseq) {
-    HasCreateQuery hasCreate = new HasCreateQuery(this.getDataSource());
-    String retValue = hasCreate.execute(username, acType, conteIdseq);
-
-    return StringUtils.toBoolean(retValue);
-  }
-
-  /**
-   * Check if the user has a delete privilege on the administered component
-   *
-   * @param username corresponds to the login user name.
-   * @param acIdseq corresponds to the administered component id seq
-   *
-   * @return <b>boolean</b> true indicates that user has an delete privilege
-   *         and false when the user has not
-   */
-  public boolean hasDelete(
-    String username,
-    String acIdseq) {
-    HasDeleteQuery hasDelete = new HasDeleteQuery(this.getDataSource());
-    String retValue = hasDelete.execute(username, acIdseq);
-
-    return StringUtils.toBoolean(retValue);
-  }
-
-  /**
-   * Check if the user has an update privilege on the administered component
-   *
-   * @param username corresponds to the login user name.
-   * @param acIdseq corresponds to the administered component id seq
-   *
-   * @return <b>boolean</b> true indicates that user has an update privilege
-   *         and false when the user has not
-   */
-  public boolean hasUpdate(
-    String username,
-    String acIdseq) {
-    HasUpdateQuery hasUpdate = new HasUpdateQuery(this.getDataSource());
-    String retValue = hasUpdate.execute(username, acIdseq);
-
-    return StringUtils.toBoolean(retValue);
-  }
-
+  
   /**
    * Utility method to get global unique identifier used as a primary key in
    * all caDSR tables
@@ -135,22 +79,6 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
     guid = this.getGUIDGenerator().getGUID();
 
     return guid;
-  }
-
-  /**
-   * Utility method to derive preferred name using the long name.
-   *
-   * @param <b>longName</b> Long name of the admin component
-   *
-   * @return <b>String</b> Derived preferred name
-   */
-  public String generatePreferredName(String longName) {
-    String prefName = null;
-    PreferredNameGenerator gen =
-      new PreferredNameGenerator(this.getDataSource());
-    prefName = gen.getPreferredName(longName);
-
-    return prefName;
   }
 
   public GUIDGenerator getGUIDGenerator (){
@@ -285,93 +213,7 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
     
   }
 
-  /**
-   * Inner class that checks if the user has a create privilege on the
-   * administered component within the context
-   */
-  private class HasCreateQuery extends StoredProcedure {
-    public HasCreateQuery(DataSource ds) {
-      super(ds, "cadsr_security_util.has_create_privilege");
-      setFunction(true);
-      declareParameter(new SqlOutParameter("returnValue", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_ua_name", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_actl_name", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_conte_idseq", Types.VARCHAR));
-      compile();
-    }
-
-    public String execute(
-      String username,
-      String acType,
-      String conteIdseq) {
-      Map in = new HashMap();
-      in.put("p_ua_name", username);
-      in.put("p_actl_name", acType);
-      in.put("p_conte_idseq", conteIdseq);
-
-      Map out = execute(in);
-      String retValue = (String) out.get("returnValue");
-
-      return retValue;
-    }
-  }
-
-  /**
-   * Inner class that checks if the user has a delete privilege on the
-   * administered component
-   */
-  private class HasDeleteQuery extends StoredProcedure {
-    public HasDeleteQuery(DataSource ds) {
-      super(ds, "cadsr_security_util.has_delete_privilege");
-      setFunction(true);
-      declareParameter(new SqlOutParameter("returnValue", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_ua_name", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_ac_idseq", Types.VARCHAR));
-      compile();
-    }
-
-    public String execute(
-      String username,
-      String acIdseq) {
-      Map in = new HashMap();
-      in.put("p_ua_name", username);
-      in.put("p_ac_idseq", acIdseq);
-
-      Map out = execute(in);
-      String retValue = (String) out.get("returnValue");
-
-      return retValue;
-    }
-  }
-
-  /**
-   * Inner class that checks if the user has an update privilege on the
-   * administered component
-   */
-  private class HasUpdateQuery extends StoredProcedure {
-    public HasUpdateQuery(DataSource ds) {
-      super(ds, "cadsr_security_util.has_update_privilege");
-      setFunction(true);
-      declareParameter(new SqlOutParameter("returnValue", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_ua_name", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_ac_idseq", Types.VARCHAR));
-      compile();
-    }
-
-    public String execute(
-      String username,
-      String acIdseq) {
-      Map in = new HashMap();
-      in.put("p_ua_name", username);
-      in.put("p_ac_idseq", acIdseq);
-
-      Map out = execute(in);
-      String retValue = (String) out.get("returnValue");
-
-      return retValue;
-    }
-  }
-
+  
   /**
    * Inner class to get global unique identifier
    */
@@ -385,29 +227,6 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
 
     public String getGUID() {
       Map in = new HashMap();
-      Map out = execute(in);
-      String retValue = (String) out.get("returnValue");
-
-      return retValue;
-    }
-  }
-
-  /**
-   * Inner class to get preferred name
-   */
-  private class PreferredNameGenerator extends StoredProcedure {
-    public PreferredNameGenerator(DataSource ds) {
-      super(ds, "set_name.set_qc_name");
-      setFunction(true);
-      declareParameter(new SqlOutParameter("returnValue", Types.VARCHAR));
-      declareParameter(new SqlParameter("name", Types.VARCHAR));
-      compile();
-    }
-
-    public String getPreferredName(String longName) {
-      Map in = new HashMap();
-      in.put("name", longName);
-
       Map out = execute(in);
       String retValue = (String) out.get("returnValue");
 
