@@ -134,4 +134,18 @@ public interface QuestionDAO {
     String newDEId,
     String newLongName,
     String username) throws DMLException;
+
+  /**
+   * Changes the long name, display order, and de_idseq of a question.
+   *
+   * @param <b>question</b> the question component.
+   * @param <b>newDisplayOrder</b> New display order of the question component.
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public int updateQuestionLongNameDispOrderDeIdseq(
+    Question question, int newDispOrder) throws DMLException;
+    
 }

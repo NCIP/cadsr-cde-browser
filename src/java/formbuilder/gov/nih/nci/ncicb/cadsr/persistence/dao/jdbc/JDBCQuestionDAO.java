@@ -106,28 +106,12 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     return updateDisplayOrderDirect(questionId, "MODULE_ELEMENT", 
       newDisplayOrder);
   }
-   /**
-   * Changes the long name of a question.
-   *
-   * @param <b>questionId</b> Idseq of the question component.
-   * @param <b>newLongName</b> New long name of the question component.
-   *
-   * @return <b>int</b> 1 - success, 0 - failure.
-   *
-   * @throws <b>DMLException</b>
-   */
+  
   public int updateQuestionLongName(
     String questionId,
-    String newLongName) throws DMLException{
-    return 0;
-    };
-    
-  public int updateLongName(
-    String adminIdseq,
-    String newLongName,
-    String username) throws DMLException {
-  UpdateLongName  questionLongName  = new UpdateLongName (this.getDataSource());
-    int res = questionLongName.updateLongName(adminIdseq,newLongName,username);
+    String newLongName) throws DMLException {
+  UpdateQuestionLongName  questionLongName  = new UpdateQuestionLongName (this.getDataSource());
+    int res = questionLongName.updateLongName(questionId,newLongName);
     System.out.println("result = " +res);
     if (res != 1) {
       throw new DMLException("Did not succeed in updateing the long name");
@@ -189,17 +173,17 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     catch (DMLException de) {
       de.printStackTrace();
     }*/
-
+    /*
     try
        {
-         int res = test.updateLongName("99CD59C6-2583-3FA4-E034-080020C9C0E0"
-                       ,"Lab Unit Type"
-                       ,"me");
+         int res = test.updateQuestionLongName("99CD59C6-2583-3FA4-E034-080020C9C0E0"
+                       ,"Lab Unit Type");
       System.out.println("\n*****Update DE Result 1: " + res);
        }
     catch (DMLException de) {
       de.printStackTrace();
     }
+    */
     /*
     // test for deleteQuestion
     try {
@@ -219,6 +203,22 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     catch (DMLException de) {
       de.printStackTrace();
     }*/
+
+    // test for updateLongNameDisplayOrderDeIdseq
+    DataElementTransferObject deto = new DataElementTransferObject();
+    deto.setDeIdseq("29A8FB2C-0AB1-11D6-A42F-0010A4C1E842");
+    QuestionTransferObject qto = new QuestionTransferObject();
+    qto.setDataElement(deto);
+    qto.setLongName("long name test");
+    qto.setQuesIdseq("D68C9BC5-BDAB-2F02-E034-0003BA0B1A09");
+    try {
+      int res = test.updateQuestionLongNameDispOrderDeIdseq(
+        qto, 2);
+      System.out.println("\n*****Updated " + res);
+    }
+    catch (DMLException de) {
+      de.printStackTrace();
+    }
   }
 
   /**
@@ -302,7 +302,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     }
     System.out.println("After DE"+ret_val);
     try{
-    ret_val = updateLongName(questionId,newLongName,username);
+    ret_val = updateQuestionLongName(questionId,newLongName);
     }
     catch (DMLException de) {
       ret_val = 0;
@@ -322,6 +322,39 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     throws DMLException {
     return 0;
   }
+
+  /**
+   * Changes the long name, display order, and de_idseq of a question.
+   *
+   * @param <b>question</b> the question component.
+   * @param <b>newDisplayOrder</b> New display order of the question component.
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
+  public int updateQuestionLongNameDispOrderDeIdseq(
+    Question question, int newDispOrder) throws DMLException {
+
+    int res = updateDisplayOrder(question.getQuesIdseq(), newDispOrder);
+    if (res != 1) {
+      throw new DMLException(
+        "Did not succeed updating question's display order.");
+    }
+
+    UpdateQuestionLongNameDeIdseq updateQuestionLnDe =
+      new UpdateQuestionLongNameDeIdseq(this.getDataSource());
+    res = updateQuestionLnDe.updateQuestion(question);
+
+    if (res != 1) {
+      throw new DMLException(
+        "Did not succeed updating question's long name, de idseq.");
+    }
+
+    return 1;
+      
+  }
+
 
   /**
    * Inner class that accesses database to create a question record in the
@@ -483,33 +516,68 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
 /**
    * Inner class that accesses database to update an longname.
    */
- private class UpdateLongName extends SqlUpdate {
-    public UpdateLongName(DataSource ds) {
+ private class UpdateQuestionLongName extends SqlUpdate {
+    public UpdateQuestionLongName(DataSource ds) {
       String longNameUpdateSql = 
       " UPDATE Quest_contents_view_ext " +
       " SET long_name = ?" +
-      ", modified_by = ?" +
       " WHERE qc_idseq =  ?" ;
 
       this.setDataSource(ds);
       this.setSql(longNameUpdateSql);
       declareParameter(new SqlParameter("p_long_name", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_user_name", Types.VARCHAR));
       declareParameter(new SqlParameter("p_qc_idseq", Types.VARCHAR));
       compile();
     }
-    protected int updateLongName (String questionId, String newLongName, String username) 
+    protected int updateLongName (String questionId, String newLongName) 
     {
       Object [] obj = 
         new Object[]
           {
           newLongName,
-          username,
           questionId
           };
       
 	    int res = update(obj);
       return res;
     }
-  }  
+  }
+
+  
+  /**
+   * Inner class that updates long name, display order, and de idseq of
+   * the question. 
+   * 
+   */
+  private class UpdateQuestionLongNameDeIdseq extends SqlUpdate {
+    public UpdateQuestionLongNameDeIdseq(DataSource ds) {
+      String updateSql =
+        " UPDATE quest_contents_ext " + 
+        " SET DE_IDSEQ = ? , LONG_NAME = ? " +
+        " WHERE QC_IDSEQ = ? ";
+
+      this.setDataSource(ds);
+      this.setSql(updateSql);
+      declareParameter(new SqlParameter("de_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("long_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
+      compile();
+    }
+
+    protected int updateQuestion(
+      Question question) {
+
+      Object[] obj =
+        new Object[] {
+          question.getDataElement().getDeIdseq(),
+          question.getLongName(),
+          question.getQuesIdseq()
+        };
+
+      int res = update(obj);
+
+      return res;
+    }
+  }
+
 }
