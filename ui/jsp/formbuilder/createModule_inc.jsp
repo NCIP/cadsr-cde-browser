@@ -5,7 +5,7 @@
           </td>           
           <td >
  	    <html:link action='<%="/formSearchAction"%>'>				
-		<html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Cancel"/>
+		<html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
 	    </html:link>             
           </td>                
         </tr> 

@@ -2,12 +2,6 @@
         <tr >
           <td >
             <html:image src='<%=urlPrefix+"i/copyButton.gif"%>' border="0" alt="Copy"/>
-            <%--
- 	    <html:link action='<%="/formToCopyAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.FORM_COPY%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
- 				paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">
-		<html:img src='<%=urlPrefix+"i/copyButton.gif"%>' border="0" alt="Copy"/>
-	    </html:link>             
-            --%>
           </td>           
           <td >
             <a href="javascript:clearForm()">
@@ -16,7 +10,7 @@
           </td>                
           <td >
  	    <html:link action='<%="/formSearchAction"%>'>				
-		<html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Edit"/>
+		<html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
 	    </html:link>             
           </td>                
         </tr> 
