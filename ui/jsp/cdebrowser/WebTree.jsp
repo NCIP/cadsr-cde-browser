@@ -6,6 +6,7 @@
 <%
   	// get parameters
     String treeClass      = (String) request.getParameter("treeClass");
+    String tName = (String) request.getParameter("treeName");
     String treeParams     = (String) request.getParameter("treeParams");
   	String targetId       = (String) request.getParameter("targetId");
    	String treeAction     = (String) request.getParameter("treeAction");
@@ -29,30 +30,38 @@
   {   
     BDWebTree webTree = null;    
     HttpSession userSession = request.getSession(false);     
+
+    String treeName = "webTree";
+
+    if((tName != null) && (tName.equals("formTree"))) 
+      treeName = "formTree";
   
+
     // get current web tree from session 
-    if (userSession != null)
-    {
-      webTree = (BDWebTree) userSession.getAttribute("webTree");
-    }
-    
-    // if no treeAction specified, build a new tree
+    if (userSession != null) {
+      webTree = (BDWebTree) userSession.getAttribute(treeName);  
+}
+
+    //  if no treeAction specified, build a new tree 
+    //  only if it doesn't exist
     if (treeAction == null)
     {
-      // request/create new session
-      userSession = request.getSession(true);
-    
-      // construct new web tree
-      webTree = new BDWebTree(treeClass, treeParams);
+         userSession = request.getSession(true);
+        
+        // construct new web tree
+        if(webTree == null)
+          webTree = new BDWebTree(treeClass, treeParams);
+    } else if(treeAction.equals("refresh")) {
+        webTree = new BDWebTree(treeClass, treeParams);
     }
 
     if (webTree != null)
     {
       // ** build/update display tree **
       DefaultMutableTreeNode displayTreeRoot = webTree.getDisplayTree(treeAction, targetId, userSession, treeDirective);
-     
+
       // set updated tree in session   
-      userSession.setAttribute("webTree", webTree);      
+      userSession.setAttribute(treeName, webTree);      
 %>   
 <table border="0">
 <%    // render display tree
@@ -101,12 +110,12 @@
 <%        }              
           else if (displayWebNode.hasChildren() && !displayNode.isLeaf())
           { %>
-            <td  nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeAction=collapse&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderOpen.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
+  <td  nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeName=<%=treeName%>&treeAction=collapse&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderOpen.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
 <%        }
           else if (displayWebNode.hasChildren())           
           { 
             // no children currently displayed, but has children %>
-            <td  nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&amp;treeAction=expand&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderClosed.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
+            <td  nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeName=<%=treeName%>&amp;treeAction=expand&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderClosed.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
 <%        }   
           else
           {

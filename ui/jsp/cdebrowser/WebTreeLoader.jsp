@@ -18,6 +18,6 @@
   var now = new Date();
   var glob = now.getHours()+now.getSeconds()+now.getMilliseconds();
   window.document.write("Building tree, please wait...");  
-  var targetURL = "WebTree.jsp?&treeClass=<%=treeClass%>&treeParams=<%=treeParams%>&skin=<%=skin%>&treeDirective=<%=treeDirective%>&glob="+glob;
+  var targetURL = "WebTree.jsp?treeName=<%= request.getParameter("treeName") %>&treeClass=<%=treeClass%>&treeParams=<%=treeParams%>&skin=<%=skin%>&treeDirective=<%=treeDirective%>&glob="+glob;
   window.location.href = targetURL;     
 </script>

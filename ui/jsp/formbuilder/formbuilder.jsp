@@ -15,6 +15,7 @@
       TreeConstants.FORM_SEARCH_TREE + ";" +
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
       TreeConstants.FORM_SEARCH_FUNCTION +
+      "&treeName=formTree" +
       "&skin=CDEBrowser1";
     formbuilderURL = "formbuilder/formSearch.jsp";
  
