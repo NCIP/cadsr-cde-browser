@@ -17,11 +17,11 @@ function findFrame(doc, strName) {
 
    return top;
 }
-function performAction(urlParams){
+function performAction_not_used(urlParams){
   var frm = findFrameByName('body');
   document.body.style.cursor = "wait";
   frm.document.body.style.cursor = "wait";
-  frm.document.location = "search?"+urlParams;
+  frm.document.location = "search?"+urlParams + "<%= callerParams %>";
 }
 function formSearchAction(urlParams){
     var frm = findFrameByName('body');
