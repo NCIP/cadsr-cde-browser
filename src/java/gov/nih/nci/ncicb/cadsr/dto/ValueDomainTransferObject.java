@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.dto;
+import gov.nih.nci.ncicb.cadsr.resource.Representation;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +24,7 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   Float cdVersion;
   String vdType;
   List validValues;
+  Representation representation;
   
   public ValueDomainTransferObject() {
   }
@@ -140,5 +142,14 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
     this.validValues = validValues;
   }
 
+   public Representation getRepresentation()
+   {
+     return representation;
+   }
+   public void setRepresentation(Representation newRepresentation)
+   {
+     representation=newRepresentation;
+   }
+   
 
 }

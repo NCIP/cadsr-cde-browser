@@ -1007,4 +1007,13 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
   public AcRegistrationsViewImpl getAcRegistrationsView() {
     return (AcRegistrationsViewImpl)findViewObject("AcRegistrationsView");
   }
+
+  /**
+   * 
+   *  Container's getter for RepresentationViewObj1
+   */
+  public RepresentationViewObjImpl getRepresentationViewObj1()
+  {
+    return (RepresentationViewObjImpl)findViewObject("RepresentationViewObj1");
+  }
 }

@@ -401,6 +401,13 @@
       Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConceptualDomainsImpl" >
    </AccessorAttribute>
    <AccessorAttribute
+      Name="Representation"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc.Representation"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc.ValueDomains"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepresentationImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
       Name="DataElements"
       Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeVdFkAssoc"
       AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeVdFkAssoc.DataElements"
@@ -416,6 +423,14 @@
       Type="oracle.jbo.RowIterator"
       IsUpdateable="false" >
    </AccessorAttribute>
+   <ViewLinkAccessor
+      Name="RepresentationViewObj"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VDRepViewLink"
+      ViewLinkEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VDRepViewLink.RepresentationViewObj"
+      ViewLinkOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VDRepViewLink.ValueDomainsView"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
    <Key
       Name="Avcon985893623Delet006" >
       <AttrArray Name="Attributes">

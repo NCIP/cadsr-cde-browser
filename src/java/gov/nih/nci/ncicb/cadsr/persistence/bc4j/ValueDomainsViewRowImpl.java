@@ -42,9 +42,11 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
   public static final int QUALIFIERNAME = 27;
   public static final int ORIGIN = 28;
   public static final int VDID = 29;
-  public static final int CONCEPTUALDOMAINSROW = 30;
-  public static final int DATAELEMENTSVIEW = 31;
-  public static final int VDPVSVIEW = 32;
+  public static final int REPIDSEQ = 30;
+  public static final int CONCEPTUALDOMAINSROW = 31;
+  public static final int DATAELEMENTSVIEW = 32;
+  public static final int VDPVSVIEW = 33;
+  public static final int REPRESENTATIONVIEWOBJ = 34;
   private static Log log = LogFactory.getLog(ValueDomainsViewRowImpl.class.getName());
 
   /**
@@ -574,10 +576,14 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
         return getOrigin();
       case VDID:
         return getVdId();
+      case REPIDSEQ:
+        return getRepIdseq();
       case DATAELEMENTSVIEW:
         return getDataElementsView();
       case VDPVSVIEW:
         return getVdPvsView();
+      case REPRESENTATIONVIEWOBJ:
+        return getRepresentationViewObj();
       case CONCEPTUALDOMAINSROW:
         return getConceptualDomainsRow();
       default:
@@ -678,6 +684,9 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
         return;
       case VDID:
         setVdId((Number)value);
+        return;
+      case REPIDSEQ:
+        setRepIdseq((String)value);
         return;
       default:
         super.setAttrInvokeAccessor(index, value, attrDef);
@@ -781,4 +790,33 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
   public void setVdId(Number value) {
     setAttributeInternal(VDID, value);
   }
+
+  /**
+   * 
+   *  Gets the attribute value for REP_IDSEQ using the alias name RepIdseq
+   */
+  public String getRepIdseq()
+  {
+    return (String)getAttributeInternal(REPIDSEQ);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as attribute value for REP_IDSEQ using the alias name RepIdseq
+   */
+  public void setRepIdseq(String value)
+  {
+    setAttributeInternal(REPIDSEQ, value);
+  }
+
+  /**
+   * 
+   *  Gets the associated <code>Row</code> using master-detail link RepresentationViewObj
+   */
+  public oracle.jbo.Row getRepresentationViewObj()
+  {
+    return (oracle.jbo.Row)getAttributeInternal(REPRESENTATIONVIEWOBJ);
+  }
+
+
 }

@@ -45,8 +45,13 @@ public class ValueDomainsImpl extends EntityImpl
   public static final int VDID = 30;
   public static final int CONTEXTS = 31;
   public static final int CONCEPTUALDOMAINS = 32;
-  public static final int DATAELEMENTS = 33;
-  public static final int VDPVS = 34;
+  public static final int REPRESENTATION = 33;
+  public static final int DATAELEMENTS = 34;
+  public static final int VDPVS = 35;
+  public static final int REPRESENTATIONVIEWOBJ = 36;
+
+
+
 
 
 
@@ -72,6 +77,9 @@ public class ValueDomainsImpl extends EntityImpl
     }
     return mDefinitionObject;
   }
+
+
+
 
 
 
@@ -643,6 +651,10 @@ public class ValueDomainsImpl extends EntityImpl
         return getContexts();
       case CONCEPTUALDOMAINS:
         return getConceptualDomains();
+      case REPRESENTATION:
+        return getRepresentation();
+      case REPRESENTATIONVIEWOBJ:
+        return getRepresentationViewObj();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -870,6 +882,37 @@ public class ValueDomainsImpl extends EntityImpl
    */
   public void setConceptualDomains(ConceptualDomainsImpl value) {
     setAttributeInternal(CONCEPTUALDOMAINS, value);
+  }
+
+
+  /**
+   * 
+   *  Gets the associated entity RepresentationImpl
+   */
+  public RepresentationImpl getRepresentation()
+  {
+    return (RepresentationImpl)getAttributeInternal(REPRESENTATION);
+  }
+
+  /**
+   * 
+   *  Sets <code>value</code> as the associated entity RepresentationImpl
+   */
+  public void setRepresentation(RepresentationImpl value)
+  {
+    setAttributeInternal(REPRESENTATION, value);
+  }
+
+
+
+
+  /**
+   * 
+   *  Uses the link VDRepViewLink to return rows of RepresentationViewObj
+   */
+  public RepresentationViewObjRowImpl getRepresentationViewObj()
+  {
+    return (RepresentationViewObjRowImpl)getAttributeInternal(REPRESENTATIONVIEWOBJ);
   }
 
   /**

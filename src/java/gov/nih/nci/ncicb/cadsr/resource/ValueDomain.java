@@ -44,4 +44,7 @@ public interface ValueDomain extends AdminComponent , Serializable
    public List getValidValues();
    public void setValidValues(List validValues);
    
+   public Representation getRepresentation();
+   public void setRepresentation(Representation rep);
+   
 }

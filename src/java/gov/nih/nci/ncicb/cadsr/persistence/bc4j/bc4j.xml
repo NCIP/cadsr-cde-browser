@@ -704,4 +704,29 @@
       FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionsDMLView"
       ObjectType="ViewObject" >
    </Containee>
+   <Containee
+      Name="Representation"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Representation"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="VdRepFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="RepCotFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCotFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="RepresentationViewObj"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepresentationViewObj"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="VDRepViewLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VDRepViewLink"
+      ObjectType="ViewLink" >
+   </Containee>
 </JboPackage>

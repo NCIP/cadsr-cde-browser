@@ -186,6 +186,10 @@
       Name="AcRegistrationsView"
       ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsView" >
    </ViewUsage>
+   <ViewUsage
+      Name="RepresentationViewObj1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepresentationViewObj" >
+   </ViewUsage>
    <ViewLinkUsage
       Name="DeConteFkLink"
       ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeConteFkLink"

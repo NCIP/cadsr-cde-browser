@@ -46,7 +46,9 @@ ValueDomains.PREFERRED_NAME,
        ValueDomains.QUALIFIER_NAME, 
 
        ValueDomains.ORIGIN, 
-       ValueDomains.VD_ID"
+       ValueDomains.VD_ID, 
+   
+    ValueDomains.REP_IDSEQ"
    FromList="VALUE_DOMAINS ValueDomains"
    BindingStyle="Oracle"
    CustomQuery="false"
@@ -292,6 +294,13 @@ ValueDomains.PREFERRED_NAME,
       EntityUsage="ValueDomains"
       AliasName="VD_ID" >
    </ViewAttribute>
+   <ViewAttribute
+      Name="RepIdseq"
+      PrecisionRule="true"
+      EntityAttrName="RepIdseq"
+      EntityUsage="ValueDomains"
+      AliasName="REP_IDSEQ" >
+   </ViewAttribute>
    <ViewLinkAccessor
       Name="ConceptualDomainsRow"
       ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCdFKLink"
@@ -309,6 +318,12 @@ ValueDomains.PREFERRED_NAME,
       Name="VdPvsView"
       ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkLink"
       Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="RepresentationViewObj"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VDRepViewLink"
+      Type="oracle.jbo.Row"
       IsUpdateable="false" >
    </ViewLinkAccessor>
 </ViewObject>

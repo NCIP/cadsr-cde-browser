@@ -1,5 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.dto.bc4j;
 
+import gov.nih.nci.ncicb.cadsr.dto.RepresentationTransferObject;
+import gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepresentationViewObjRowImpl;
+import gov.nih.nci.ncicb.cadsr.resource.Representation;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 	protected Float cdVersion;
 	protected String vdType;
   protected List validValues;
+  protected Representation representation;
 
 	public BC4JValueDomainTransferObject() {
     idseq = vdIdseq;
@@ -63,6 +67,16 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
     if (vdViewRowImpl.getVdId() != null)
       publicId = vdViewRowImpl.getVdId().intValue();
     origin = checkForNull(vdViewRowImpl.getOrigin());
+    RepresentationViewObjRowImpl repImpl=  (RepresentationViewObjRowImpl)vdViewRowImpl.getRepresentationViewObj();
+    if(repImpl!=null)
+    {
+      Representation rep = new RepresentationTransferObject();
+      rep.setLongName(repImpl.getLongName());
+      rep.setPreferredName(repImpl.getPreferredName());
+      rep.setIdseq(repImpl.getRepIdseq());
+      setRepresentation(rep);
+    }
+    
 
 	}
 
@@ -168,4 +182,13 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
    {
      this.validValues = validValues;
    }
+   public Representation getRepresentation()
+   {
+     return representation;
+   }
+   public void setRepresentation(Representation newRepresentation)
+   {
+     representation=newRepresentation;
+   }
+   
 }
