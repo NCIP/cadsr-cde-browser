@@ -64,7 +64,7 @@ function goPage(pageInfo) {
 
  <tr class="OraTabledata">
     <td class="TableRowPromptText" width="20%">Public ID:</td>
-    <td class="OraFieldText"><%=de.getCDEId()%></td>
+    <td class="OraFieldText"><%=de.getPublicId()%></td>
  </tr>
 
  <tr class="OraTabledata">
