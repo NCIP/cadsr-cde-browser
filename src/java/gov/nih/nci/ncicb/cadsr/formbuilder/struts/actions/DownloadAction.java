@@ -154,6 +154,9 @@ public class DownloadAction
    cell.setCellValue("CDE");
    cell.setCellStyle(boldCellStyle);
    cell = row.createCell(colNumber++);
+   cell.setCellValue("CDE Public ID");
+   cell.setCellStyle(boldCellStyle);
+   cell = row.createCell(colNumber++);
    cell.setCellValue("CDE Version");
    cell.setCellStyle(boldCellStyle);
    cell = row.createCell(colNumber++);
@@ -192,7 +195,7 @@ public class DownloadAction
 
      if (cde != null) {
       row.createCell(colNumber++).setCellValue(cde.getLongName());
-
+      row.createCell(colNumber++).setCellValue(cde.getCDEId());
       row.createCell(colNumber++).setCellValue(cde.getVersion().toString());
      } else
       colNumber += 2;
