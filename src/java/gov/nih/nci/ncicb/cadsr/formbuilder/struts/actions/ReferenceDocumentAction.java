@@ -31,8 +31,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import java.util.Random;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -457,6 +457,7 @@ public class ReferenceDocumentAction
   removeSessionObject(request, DELETED_REFDOCS);
   removeSessionObject(request, REFDOC_ATTACHMENT_MAP);
   removeSessionObject(request, DELETED_ATTACHMENTS);
+  saveMessage("cadsr.formbuilder.refdoc.save.success", request);
   return mapping.findForward("gotoEdit");
  }
  
