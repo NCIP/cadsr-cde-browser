@@ -32,6 +32,7 @@ public class BC4JDataElementConceptTransferObject extends AdminComponentTransfer
 
 	public BC4JDataElementConceptTransferObject() {
 		super();
+    idseq = decIdseq;
 	}
 
 	public BC4JDataElementConceptTransferObject(DataElementConceptsViewRowImpl dataElementConceptsViewRowImpl)

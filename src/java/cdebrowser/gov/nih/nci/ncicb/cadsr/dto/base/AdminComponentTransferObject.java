@@ -26,6 +26,7 @@ public class AdminComponentTransferObject extends BaseValueObject
 	protected List designations;
   protected int publicId;
   protected String origin;
+  protected String idseq;
 
 	public AdminComponentTransferObject() {
 		super();
@@ -180,5 +181,13 @@ public class AdminComponentTransferObject extends BaseValueObject
 
   public void setOrigin(String source) {
     origin = source;
+  }
+
+  public String getIdseq(){
+    return idseq;
+  }
+
+  public void setIdseq(String idseq) {
+    this.idseq = idseq;
   }
 }

@@ -26,6 +26,7 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 	protected String vdType;
 
 	public BC4JValueDomainTransferObject() {
+    idseq = vdIdseq;
 	}
 
 	public BC4JValueDomainTransferObject(ValueDomainsViewRowImpl vdViewRowImpl)
