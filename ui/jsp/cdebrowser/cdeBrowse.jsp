@@ -6,6 +6,8 @@
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants"%>
 
+<%@ page import="java.util.List" %>
+
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <jsp:useBean id="currInfoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
