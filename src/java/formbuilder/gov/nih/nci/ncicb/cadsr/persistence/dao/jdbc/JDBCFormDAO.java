@@ -49,7 +49,6 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     String categoryName,
     String type,
     String classificationIdseq) {
-    Collection col = new ArrayList();
     FormQuery query = new FormQuery();
     query.setDataSource(getDataSource());
     query.setSql(
@@ -67,7 +66,6 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
    * @return modules that belong to the specified form
    */
   public Collection getModulesInAForm(String formId) {
-    Collection col = new ArrayList();
     ModulesInAFormQuery query = new ModulesInAFormQuery();
     query.setDataSource(getDataSource());
     query.setSql();
@@ -91,8 +89,19 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     return null;
   }
 
+  /**
+   * Gets a form by the form idseq
+   *
+   * @param formId corresponds to the form idseq
+   *
+   * @return form that has the formId as the primary key
+   */
   public Form findFormByPrimaryKey(String formId) throws DMLException {
-    return null;
+    FormByPrimaryKey query = new FormByPrimaryKey();
+    query.setDataSource(getDataSource());
+    query.setSql();
+
+    return (Form) query.execute(formId).get(0);
   }
 
   public static void main(String[] args) {
@@ -100,13 +109,21 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
 
-    // formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
+    //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
     // type, classificationIdseq
     formTest.getAllForms(
       "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "",
       "99BA9DC8-A622-4E69-E034-080020C9C0E0");
-
     formTest.getModulesInAForm("99CD59C5-A9A0-3FA4-E034-080020C9C0E0");
+
+    String formId = "99CD59C5-A9A0-3FA4-E034-080020C9C0E0";
+
+    try {
+      formTest.findFormByPrimaryKey(formId);
+    }
+    catch (DMLException e) {
+      System.out.println("Failed to get a form for " + formId);
+    }
   }
 
   /**
@@ -129,6 +146,27 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       //System.out.println("module name = " + rs.getString("LONG_NAME") +
       //  " display order = " + rs.getString("DISPLAY_ORDER"));
       return new JDBCModuleTransferObject(rs);
+    }
+  }
+
+  /**
+   * Inner class that accesses database to get a form using the form idseq
+   */
+  class FormByPrimaryKey extends MappingSqlQuery {
+    FormByPrimaryKey() {
+      super();
+    }
+
+    public void setSql() {
+      super.setSql("SELECT * FROM FB_FORMS_VIEW where QC_IDSEQ = ? ");
+      declareParameter(new SqlParameter("QC_IDSEQ", Types.VARCHAR));
+    }
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+      //System.out.println("\n form name by primary key **** = " + rs.getString("LONG_NAME"));
+      return new JDBCFormTransferObject(rs);
     }
   }
 
@@ -244,11 +282,13 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       if (!classificationIdseq.equals("")) {
         if (hasWhere) {
           whereBuffer.append(
-            " AND CS_CSI_IDSEQ ='" + classificationIdseq + "'");
+            " AND QC_IDSEQ in (select ac_idseq from ac_csi where CS_CSI_IDSEQ ='" +
+            classificationIdseq + "')");
         }
         else {
           whereBuffer.append(
-            " WHERE CS_CSI_IDSEQ ='" + classificationIdseq + "'");
+            " QC_IDSEQ in (select ac_idseq from ac_csi where CS_CSI_IDSEQ ='" +
+            classificationIdseq + "')");
           hasWhere = true;
         }
       }
