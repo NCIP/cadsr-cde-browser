@@ -302,7 +302,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
     while (it.hasNext()) {
       itemId = (String) it.next();
-      myDAO.deleteCartItem(itemId);
+      myDAO.deleteCartItem(itemId,getUserName());
       count++;
     }
 
