@@ -61,7 +61,7 @@ function clearProtocol() {
       <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
       <html:hidden property="<%=FormConstants.FORM_ID_SEQ%>"/>
       <html:hidden property="<%=FormConstants.QUESTION_ID_SEQ%>"/>
-      <html:hidden property="<%=FormConstants.QUESTION_INDEX%>"/>  
+      <html:hidden property="<%=FormConstants.QUESTION_INDEX%>"/> 
       <html:hidden property="<%=FormConstants.VALID_VALUE_INDEX%>"/>
       <%@ include file="/formbuilder/common_header_inc.jsp"%>
       <jsp:include page="/formbuilder/tab_inc.jsp" flush="true">
@@ -115,19 +115,21 @@ function clearProtocol() {
                 </td>
               </tr>         
               <tr align="right">                      
-                <td align="right" width="25">
-                  <%--
+                <td align="right" width="3%">
+                  <%
+                    params.put(FormConstants.QUESTION_INDEX, new Integer(0));
+                    %>
                   <html:link action='<%="/gotoAddQuestion?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_ADD_QUESTION%>'
-                    paramId="<%=FormConstants.MODULE_INDEX%>" paramName="moduleIndex" >
+                    name="params" 
+                    scope="page"
+                    >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add Question"/>
                   </html:link>&nbsp;
-                  --%>
                 </td>
               </tr>
               </table> 
               </logic:empty>
             <!-- Add for delete and new Question end -->         
-        
         <logic:notEmpty name="module" property="questions">        
 
             <logic:iterate id="question" name="module" indexId="questionIndex" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">
@@ -229,7 +231,7 @@ function clearProtocol() {
                           <tr class="OraTableColumnHeader">
                             
                             <td align="right">
-                              <table width="100%" align="right" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+                              <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                 <tr class="OraTableColumnHeaderModule">
                                  
                                  <td >
@@ -245,15 +247,7 @@ function clearProtocol() {
                                   <td align="center" width="70" >
                                     <bean:write name="question" property="dataElement.version"/>
                                   </td>
-                                 </logic:present>
-                                  <logic:notPresent name="question" property="dataElement">
-                                    <td align="center" width="70" class="UnderlineOraFieldText">
-                                     &nbsp;
-                                    </td>
-                                   <td align="center" width="70" class="UnderlineOraFieldText">
-                                      &nbsp;
-                                   </td>                              
-                                  </logic:notPresent>                                  
+                                 </logic:present>                               
                                 </tr>
                               </table>
                             </td>
@@ -318,11 +312,14 @@ function clearProtocol() {
                                           </td>
                                           <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                            <td align="left" width="4%">
-                                              <a href="javascript:submitModuleEdit('<%=NavigationConstants.ADD_FROM_AVAILABLE_VALID_VALUE_LIST%>','<%=questionIndex%>')">
+                                              <a href="javascript:submitValidValueEdit('<%=NavigationConstants.ADD_FROM_AVAILABLE_VALID_VALUE_LIST%>','<%=questionIndex%>','0')">
                                                  <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
                                               </a>                          
                                             </td>
                                           </logic:present>
+                                          <logic:notPresent name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
+                                              <td class="OraTabledata" >&nbsp;</td>                                                                                                                                                                           
+                                           </logic:notPresent>                                            
                                           <td class="OraTabledata" width="10">&nbsp;</td>
                                           <!-- Adding from available vv list end -->                                         
                                     </td>
@@ -354,11 +351,14 @@ function clearProtocol() {
                                                   </td>
                                                   <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
                                                     <td align="left" width="4%">
-                                                      <a href="javascript:submitModuleEdit('<%=NavigationConstants.ADD_FROM_AVAILABLE_VALID_VALUE_LIST%>','<%=questionIndex%>')">
+                                                      <a href="javascript:submitValidValueEdit('<%=NavigationConstants.ADD_FROM_AVAILABLE_VALID_VALUE_LIST%>','<%=questionIndex%>','<%=validValueIndex%>')">
                                                          <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
                                                       </a>                          
                                                     </td>   
                                                   </logic:present>
+                                                  <logic:notPresent name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
+                                                    <td class="OraTabledata" >&nbsp;</td>                                                                                                                                                                           
+                                                  </logic:notPresent>                                                    
                                                   <!-- Adding from available vv list end -->
                                           </tr>
                                         </table>                                                                                                            
@@ -422,18 +422,14 @@ function clearProtocol() {
                                                       </a>                          
                                                     </td>   
                                                   </logic:present>
+                                                  <logic:notPresent name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
+                                                    <td class="OraTabledata" >&nbsp;</td>                                                                                                                                                                           
+                                                  </logic:notPresent>                                                    
                                                   <!-- Adding from available vv list end -->
                                           </tr>
                                          </table>                                                                                                            
                                     </td>
-                                  </tr>
-                                  <logic:present name="<%=AvailableValidValue.AVAILABLE_VALID_VALUE_PRESENT%>">
-                                  <tr class="OraTabledata">
-                                    <td class="OraTabledata" >&nbsp;</td>
-                                    <td class="OraTabledata" >&nbsp;</td>                                                                                                                                                                            
-                                    </td>
-                                  </tr>  
-                                  </logic:present>                                                                    
+                                  </tr>                                                                  
                                  </logic:equal>                                  
                                 </logic:iterate> 
 

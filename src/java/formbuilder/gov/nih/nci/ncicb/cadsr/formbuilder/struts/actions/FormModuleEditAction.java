@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
@@ -560,12 +561,12 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     HttpServletResponse response) throws IOException, ServletException {
     DynaActionForm moduleEditForm = (DynaActionForm) form;  
     Module module = (Module) getSessionObject(request, MODULE);
-    Integer index = (Integer) getSessionObject(request, this.MODULE_INDEX);
+    Integer index = (Integer) moduleEditForm.get(MODULE_INDEX);
     Form crf = (Form) getSessionObject(request, CRF);
     Form orgCrf = (Form) getSessionObject(request, this.CLONED_CRF);
     module.setForm(crf);
     Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
-    String longName = (String) getSessionObject(request, MODULE_LONG_NAME);
+    String longName = (String) moduleEditForm.get(MODULE_LONG_NAME);
     module.setLongName(longName);
     String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
     setQuestionsFromArray(module, questionArr);
@@ -576,8 +577,9 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
     {
       moduleHeader = new ModuleTransferObject();
       moduleHeader.setLongName(longName);
+      moduleHeader.setModuleIdseq(module.getLongName());
     }
-    if(changes.isEmpty())
+    if(changes.isEmpty()&&moduleHeader==null)
     {
       saveMessage("cadsr.formbuilder.form.edit.nochange", request);
       return mapping.findForward(MODULE_EDIT);
@@ -619,13 +621,41 @@ public class FormModuleEditAction  extends FormBuilderBaseDispatchAction{
         log.debug("Exception on Clone =  " + clexp);
       }
       throw new FatalException(clexp);
-    }           
+    }    
+    FormBuilderBaseDynaFormBean clearForm = (FormBuilderBaseDynaFormBean) form;
+    clearForm.clear();
     removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
     removeSessionObject(request,CLONED_MODULE);
     removeSessionObject(request,MODULE);
     return mapping.findForward(SUCCESS);
   }
-  
+
+  /**
+   * Cancel Edit and back to Search results
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward cancelModuleEdit(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    FormBuilderBaseDynaFormBean editForm = (FormBuilderBaseDynaFormBean) form;
+    removeSessionObject(request, AVAILABLE_VALID_VALUES_MAP);
+    removeSessionObject(request,CLONED_MODULE);
+    removeSessionObject(request,MODULE);
+    editForm.clear();
+    return mapping.findForward(SUCCESS);
+      
+    }  
  private Map getAvailableValidValuesForQuestions(List questions, Map vdvvMap)
  {
    ListIterator questionIterator = questions.listIterator();

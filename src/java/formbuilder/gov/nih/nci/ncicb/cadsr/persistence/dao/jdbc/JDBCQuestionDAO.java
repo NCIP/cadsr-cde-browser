@@ -244,8 +244,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
         newQuestion.getCreatedBy(), "QUEST_CONTENT", newQuestion.getConteIdseq());
 
     if (!create) {
-      new DMLException(
-        "The user does not have the privilege to create question.");
+       DMLException dml = new DMLException("The user does not have the privilege to create question.");
+       dml.setErrorCode(this.INSUFFICIENT_PRIVILEGES);
+       throw dml;
     }
 
     InsertQuestContent insertQuestContent =
@@ -254,9 +255,11 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     int res = insertQuestContent.createContent(newQuestion, qcIdseq);
 
     if (res != 1) {
-      throw new DMLException(
-        "Did not succeed creating question record in the " +
+
+       DMLException dml = new DMLException("Did not succeed creating question record in the " +
         " quest_contents_ext table.");
+       dml.setErrorCode(this.ERROR_CREATEING_QUESTION);
+       throw dml;        
     }
 
     InsertQuestRec insertQuestRec = new InsertQuestRec(this.getDataSource());
@@ -268,9 +271,11 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       return newQuestion;
     }
     else {
-      throw new DMLException(
+       DMLException dml = new DMLException(
         "Did not succeed creating module question relationship " +
         "record in the quest_recs_ext table.");
+       dml.setErrorCode(this.ERROR_CREATEING_QUESTION);
+       throw dml;      
     }
   }
 
@@ -289,7 +294,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       return 1;
     }
     else {
-      throw new DMLException((String) out.get("p_return_desc"));
+       DMLException dml = new DMLException((String) out.get("p_return_desc"));
+       dml.setErrorCode(this.ERROR_UPDATING_QUESTION);
+       throw dml;
     }
   }
 
@@ -321,7 +328,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     }
    else
    {
-      throw new DMLException("Error updating long name or valid value for question");
+       DMLException dml = new DMLException("Error updating long name or valid value for question");
+       dml.setErrorCode(this.ERROR_UPDATING_QUESTION); 
+       throw dml;      
     }
   }
 
@@ -344,8 +353,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
 
     int res = updateDisplayOrder(question.getQuesIdseq(), question.getDisplayOrder());
     if (res != 1) {
-      throw new DMLException(
-        "Did not succeed updating question's display order.");
+       DMLException dml = new DMLException("Did not succeed updating question's display order.");
+       dml.setErrorCode(this.ERROR_UPDATING_QUESTION); 
+       throw dml;             
     }
 
     UpdateQuestionLongNameDeIdseq updateQuestionLnDe =
@@ -353,8 +363,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     res = updateQuestionLnDe.updateQuestion(question);
 
     if (res != 1) {
-      throw new DMLException(
-        "Did not succeed updating question's long name, de idseq.");
+       DMLException dml = new DMLException("Did not succeed updating question's long name, de idseq.");
+       dml.setErrorCode(this.ERROR_UPDATING_QUESTION); 
+       throw dml;        
     }
 
     return 1;

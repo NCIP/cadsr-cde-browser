@@ -1,9 +1,9 @@
       <table width="25%" align="center" cellpadding="1" cellspacing="1" border="0" >
         <tr >
           <td >
-            <html:link action='<%="/formSearchAction"%>'>				
-            <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Cancel"/>
-            </html:link>             
+            <html:link action='<%="/cancelModuleEditAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CANCEL_MODULE_EDIT%>'>
+              <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+	          </html:link>              
           </td>                
           <td >
             <html:link action='<%="/formEditDeleteAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"

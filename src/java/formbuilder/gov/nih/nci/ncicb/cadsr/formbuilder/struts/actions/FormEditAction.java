@@ -1,15 +1,19 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Orderable;
 
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -70,8 +74,8 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       FormBuilderBaseDynaFormBean dynaFormEditForm =
         (FormBuilderBaseDynaFormBean) formEditForm;
       dynaFormEditForm.clear();
-      dynaFormEditForm.set(this.FORM_ID_SEQ, crf.getFormIdseq());
-      dynaFormEditForm.set(this.FORM_LONG_NAME, crf.getLongName());
+      dynaFormEditForm.set(FORM_ID_SEQ, crf.getFormIdseq());
+      dynaFormEditForm.set(FORM_LONG_NAME, crf.getLongName());
       dynaFormEditForm.set(
         this.PREFERRED_DEFINITION, crf.getPreferredDefinition());
       dynaFormEditForm.set(CONTEXT_ID_SEQ, crf.getContext().getConteIdseq());
@@ -79,6 +83,11 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
         this.PROTOCOL_ID_SEQ, crf.getProtocol().getProtoIdseq());
       dynaFormEditForm.set(
         this.PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
+      dynaFormEditForm.set(CATEGORY_NAME, crf.getFormCategory());      
+      dynaFormEditForm.set(
+        this.FORM_TYPE, crf.getFormType());
+      dynaFormEditForm.set(CATEGORY_NAME, crf.getFormCategory()); 
+      dynaFormEditForm.set(this.WORKFLOW, crf.getAslName()); 
     }
 
     if (log.isDebugEnabled()) {
@@ -360,14 +369,19 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     //Add the header info into TransferObj after checking for update
     boolean headerUpdate = false;
     header.setFormIdseq((String) editForm.get(FORM_ID_SEQ));
-
+    header.setPreferredName(clonedCrf.getPreferredName());
     String longName = (String) editForm.get(FORM_LONG_NAME);
-
+  
     if ((longName != null) && (clonedCrf.getLongName() != null)) {
        header.setLongName(longName);
       if (!longName.equals(clonedCrf.getLongName())) {
         headerUpdate = true;
       }
+    }
+    else if(longName==null)
+    {
+       header.setLongName(null);
+       headerUpdate = true;
     }
 
     String contextIdSeq = (String) editForm.get(CONTEXT_ID_SEQ);
@@ -378,7 +392,9 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     }
 
     if ((contextIdSeq != null) && (orgContextIdSeq != null)) {
-      header.setConteIdseq(contextIdSeq);
+      Context context = new ContextTransferObject();
+      context.setConteIdseq(contextIdSeq);
+      header.setContext(context);
       if (!contextIdSeq.equals(orgContextIdSeq)) {
         headerUpdate = true;
       }
@@ -392,19 +408,63 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     }
 
     if ((protocolIdSeq != null) && (orgProtocolIdSeq != null)) {
-      header.setProtoIdseq(protocolIdSeq);
+     Protocol protocol = new ProtocolTransferObject();
+     protocol.setProtoIdseq(protocolIdSeq);
+      header.setProtocol(protocol);
       if (!orgProtocolIdSeq.equals(protocolIdSeq)) {       
+        headerUpdate = true;
+      }
+    }
+    else if(protocolIdSeq==null)
+    {
+      header.setProtocol(null);
+      headerUpdate = true;
+    }
+
+    String workflow = (String) editForm.get(WORKFLOW);
+    String orgWorkflow = clonedCrf.getAslName();
+   if ((workflow != null) && orgWorkflow!=null) {
+      header.setAslName(workflow);
+      if (!workflow.equals(orgWorkflow)) {       
+        headerUpdate = true;
+      }
+    }
+
+    String categoryName = (String) editForm.get(CATEGORY_NAME);
+    String orgCategoryName = clonedCrf.getFormCategory();
+   if ((categoryName != null) && orgCategoryName!=null) {
+      header.setFormCategory(categoryName);
+      if (!categoryName.equals(orgCategoryName)) {       
+        headerUpdate = true;
+      }
+    }
+   else if(categoryName==null)
+   {
+     header.setFormCategory(null);
+     headerUpdate = true;
+   }
+
+    String formType = (String) editForm.get(this.FORM_TYPE);
+    String orgFormType = clonedCrf.getFormType();
+   if ((formType != null) && orgFormType!=null) {
+      header.setFormType(formType);
+      if (!formType.equals(orgFormType)) {       
         headerUpdate = true;
       }
     }
 
     String preferredDef = (String) editForm.get(PREFERRED_DEFINITION);
-
-    if ((preferredDef != null) && (clonedCrf.getPreferredDefinition() != null)) {
+    String orgPreferredDef = clonedCrf.getPreferredDefinition();
+    if ((preferredDef != null) && orgPreferredDef != null) {
       header.setPreferredDefinition(preferredDef);
       if (!preferredDef.equals(clonedCrf.getPreferredDefinition())) {        
         headerUpdate = true;
       }
+    }
+    else if(preferredDef != null)
+    {
+      header.setPreferredDefinition(null);
+      headerUpdate = true;
     }
     
     List updatedModules =
@@ -436,8 +496,8 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
 
     if (formUpdated) { // move to FormDetails Page
       saveMessage("cadsr.formbuilder.form.edit.save.success", request);
-      setSessionObject(request, DELETED_MODULES, null);
-      setSessionObject(request, CLONED_CRF, null);
+      removeSessionObject(request, DELETED_MODULES);
+      removeSessionObject(request, CLONED_CRF);
       return mapping.findForward(SUCCESS);
     }
     else { // stay on the same Page
@@ -446,6 +506,31 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
     }
   }
 
+  /**
+   * Cancel Edit and back to Search results
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward cancelFormEdit(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    FormBuilderBaseDynaFormBean editForm = (FormBuilderBaseDynaFormBean) form;
+    removeSessionObject(request, DELETED_MODULES);
+    removeSessionObject(request, CLONED_CRF);
+    editForm.clear();
+    return mapping.findForward(SUCCESS);
+      
+    }
   /**
    * Removes the module given by "moduleIdSeq" from the module list
    *

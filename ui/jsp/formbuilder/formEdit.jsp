@@ -101,8 +101,7 @@ function clearProtocol() {
               <bean:message key="cadsr.formbuilder.form.context"/>
             </td>
             <td class="OraFieldText" nowrap>
-              <html:select styleClass="Dropdown" property="<%=FormConstants.CONTEXT_ID_SEQ%>">
-                <html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>"></html:option>
+              <html:select styleClass="Dropdown" property="<%=FormConstants.CONTEXT_ID_SEQ%>" >               
                 <html:options collection="<%=FormConstants.ALL_CONTEXTS%>" property="conteIdseq" labelProperty="name"/>
               </html:select>
             </td>
@@ -120,7 +119,35 @@ function clearProtocol() {
               <html:hidden property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
             </td>
           </tr>
-          
+
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader" width="20%" nowrap>
+              <bean:message key="cadsr.formbuilder.form.workflow" />
+            </td>
+            <td class="OraFieldText" nowrap>
+            <html:select styleClass = "Dropdown" property="<%=FormConstants.WORKFLOW%>">        	
+               <html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
+              </html:select>        
+            </td>   
+          </tr>
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader" width="20%" nowrap>
+              <bean:message key="cadsr.formbuilder.form.category" />
+            </td>
+            <td class="OraFieldText" nowrap>
+              <html:select styleClass = "Dropdown" property="<%=FormConstants.CATEGORY_NAME%>">              
+                <html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> 
+              </html:select> 
+            </td>
+          </tr>         
+          <tr class="OraTabledata" >
+              <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
+              <td class="OraFieldText" nowrap>
+               <html:select styleClass = "Dropdown" property="<%=FormConstants.FORM_TYPE%>"> 
+                  <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
+               </html:select> 
+              </td>        
+          </tr>       
         </table>
         
         <!-- If the Modules Collection is empty and deleted modules Exists -->
