@@ -12,6 +12,10 @@
 <project name="formbuilder" default="init" basedir=".">
   
   <!-- Project Settings -->
+  <!-- Use your own build.properties 
+       Properties in build.properties overide properties in build.xml
+       -->
+  <property file="build.properties"/>
   
    <!-- Make sure these are correct for your instance -->
    <property name="deploy.ormi" value="ormi://localhost" />
@@ -583,6 +587,21 @@
   </target>
 
 <!-- =========== End Deployment targets  ======================= -->
+
+<!-- =========== Test Targets ========================== -->
+
+<!-- Use to test a bootable class.
+     use -Dtest.class=your.full.class.Name 
+     -->
+  <target name="test-class" depends="compile">
+    <java fork="true" classname="${test.class}">
+      <classpath refid="classpath"/>
+      <classpath> 
+        <pathelement location="${build.dir}/classes" /> 
+      </classpath>
+    </java>
+  </target>
+<!-- =========== End Test Targets ====================== -->
 
 <!-- =========== Copy DISTRIBUTION EAR============== -->
   <target name="dist_ear_copy" depends="dev_config,ear_cdebrowser">  
