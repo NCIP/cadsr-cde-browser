@@ -5,7 +5,7 @@
     <property name="user" value="sbr"/>
     <property name="password" value="rulive01"/>
     <property name="modulename" value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule"/>
-    <property name="connectionstring" value="jdbc:oracle:thin:sbr/rulive01@cbiodb2.nci.nih.gov:1521:cbstg"/>
+    <property name="connectionstring" value="jdbc:oracle:thin:sbr/rulive01@cbiodb20.nci.nih.gov:1521:cbstg"/>
     <property name="host" value="cbiodb20.nci.nih.gov"/>
     <property name="sid" value="cbstg"/>
     <property name="persistencebase" value="gov.nih.nci.ncicb.cadsr.persistence.bc4j"/>
