@@ -1,4 +1,4 @@
-
+ 
    <logic:notEmpty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
         <bean:define id="pageBean" name="<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
         	type="gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean"/>
