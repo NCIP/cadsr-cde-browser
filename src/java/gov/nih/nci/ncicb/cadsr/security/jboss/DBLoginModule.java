@@ -195,5 +195,9 @@ public class DBLoginModule extends AbstractServerLoginModule {
 
     return username;
   }
+
+  protected Principal createIdentity(String p0) throws Exception {
+    return new SimplePrincipal(p0);
+  }
   
 }

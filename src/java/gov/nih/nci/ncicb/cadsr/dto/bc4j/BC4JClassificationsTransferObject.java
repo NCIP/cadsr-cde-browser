@@ -26,7 +26,11 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 		classSchemeDefinition = classificationsViewRowImpl.getPreferredDefinition();
 		classSchemeItemName = classificationsViewRowImpl.getCsiName();
 		classSchemeItemType = classificationsViewRowImpl.getCsitlName();
-    csPublicId = classificationsViewRowImpl.getCsId().stringValue();
+    //If clause added by Ram
+    if (classificationsViewRowImpl.getCsId() != null)
+      csPublicId = classificationsViewRowImpl.getCsId().stringValue();
+    else
+      csPublicId = "";
 	}
 
 	//getter method

@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
+import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.util.DataSourceUtil;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
@@ -14,6 +15,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import javax.sql.DataSource;
+import oracle.jdbc.OracleConnection;
+import oracle.jdbc.pool.OracleDataSource;
 
 public class DBUtil  {
   private static Log log = LogFactory.getLog(DBUtil.class.getName());
@@ -51,7 +54,7 @@ public class DBUtil  {
       }
       catch (Exception e) {
         log.error("Exception occurred in getConnectionFromContainer", e);
-        throw new Exception("Exception in ConnectionHelper.getConnection()");
+        throw new Exception("Exception in getConnectionFromContainer() ");
       }
     }
     return isConnected;
@@ -327,6 +330,14 @@ public class DBUtil  {
     } 
     return rs;
   }
+  
+  public static OracleConnection createOracleConnection(
+    String dbURL,
+    String username,
+    String password) throws Exception {
+    OracleDataSource ds = DataSourceUtil.getOracleDataSource(dbURL,username,password);
+    return (OracleConnection)ds.getConnection();
+    }
 
   public static void main(String[] args) {
     DBUtil dBUtil = new DBUtil();

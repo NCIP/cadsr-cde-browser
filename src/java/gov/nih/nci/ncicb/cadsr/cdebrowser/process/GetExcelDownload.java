@@ -7,6 +7,7 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.util.ApplicationParameters;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 
 import java.io.BufferedWriter;
@@ -47,7 +48,7 @@ import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 /**
  *
  * @author Ram Chilukuri 
- * @version: $Id: GetExcelDownload.java,v 1.2 2004-08-17 14:09:29 jiangja Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.3 2005-01-20 19:30:29 chilukur Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess{
    private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -214,7 +215,9 @@ public class GetExcelDownload extends BasePersistingProcess{
     try {
   
       String dataSource = getStringInfo("SBREXT_DSN");
-      cn = dbUtil.getConnection();
+      //cn = dbUtil.getConnection(); -- Commented for JBoss deployment
+      ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
+      cn = DBUtil.createOracleConnection(ap.getDBUrl(),ap.getUser(),ap.getPassword());
       st = cn.createStatement();
       if ("deSearch".equals(source)) {
         desb = (DataElementSearchBean)getInfoObject("desb");
@@ -478,7 +481,7 @@ public class GetExcelDownload extends BasePersistingProcess{
       try {
         if (rs != null) rs.close();
         if (st != null) st.close();
-        //if (cn != null) cn.close();
+        if (cn != null) cn.close(); // Uncommented for JBoss deployment
         if (pw != null) pw.close();
       }
       
