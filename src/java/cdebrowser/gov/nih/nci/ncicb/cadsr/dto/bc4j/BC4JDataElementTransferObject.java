@@ -25,12 +25,13 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
 	protected String usingContexts = "";
 
 	public BC4JDataElementTransferObject() {
-    idseq = deIdseq;
+   idseq = deIdseq; 
 	}
 
 	public BC4JDataElementTransferObject(DataElementsViewRowImpl dataElementsViewRowImpl)
 		throws Exception {
 		deIdseq = dataElementsViewRowImpl.getDeIdseq();
+    idseq = deIdseq;
 		preferredDefinition = dataElementsViewRowImpl.getPreferredDefinition();
 		preferredName = dataElementsViewRowImpl.getPreferredName();
 		longName = checkForNull(dataElementsViewRowImpl.getLongName());

@@ -20,6 +20,7 @@ public class BC4JFormValueTransferObject extends AdminComponentTransferObject
 
   public BC4JFormValueTransferObject(FormValidValuesViewRowImpl vvRow) {
     vvIdseq = vvRow.getQcIdseq();
+    idseq = vvIdseq;
     preferredDefinition = vvRow.getPreferredDefinition();
     preferredName = vvRow.getPreferredName();
     longName = checkForNull(vvRow.getLongName());

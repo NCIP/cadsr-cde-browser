@@ -18,7 +18,7 @@ import java.util.List;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class BC4JQuestionTransferObject extends QuestionTransferObject {
   
@@ -29,6 +29,7 @@ public class BC4JQuestionTransferObject extends QuestionTransferObject {
    */
   public BC4JQuestionTransferObject(QuestionsViewRowImpl termRow) {
     quesIdseq = termRow.getQcIdseq();
+    idseq = quesIdseq;
     preferredDefinition = termRow.getPreferredDefinition();
     preferredName = termRow.getPreferredName();
     longName = StringUtils.replaceNull(termRow.getLongName());

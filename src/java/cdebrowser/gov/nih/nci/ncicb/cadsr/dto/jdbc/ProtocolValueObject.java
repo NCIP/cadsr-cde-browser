@@ -13,6 +13,7 @@ public class ProtocolValueObject extends AdminComponentTransferObject
   protected Date _endDate;
 
   public ProtocolValueObject() {
+    idseq = _protoIdseq;
   }
 
   public String getProtoIdseq() {

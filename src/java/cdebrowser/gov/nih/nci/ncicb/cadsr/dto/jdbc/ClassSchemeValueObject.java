@@ -8,6 +8,7 @@ public class ClassSchemeValueObject extends AdminComponentTransferObject
   protected String csType = null;
   protected String contextName = null;
   public ClassSchemeValueObject() {
+    idseq = csIdseq;
   }
 
   public String getCsIdseq(){

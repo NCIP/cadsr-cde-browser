@@ -21,11 +21,13 @@ public class BC4JModuleTransferObject extends AdminComponentTransferObject
 
   public BC4JModuleTransferObject() {
     super();
+    idseq = modIdseq;
   }
   public BC4JModuleTransferObject(ModulesViewRowImpl moduleRow) {
     super();
     this.moduleRow = moduleRow;
     modIdseq = moduleRow.getQcIdseq();
+    idseq = modIdseq;
     preferredDefinition = moduleRow.getPreferredDefinition();
     preferredName = moduleRow.getPreferredName();
     longName = checkForNull(moduleRow.getLongName());

@@ -43,6 +43,7 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 		deletedInd = checkForNull(vdViewRowImpl.getDeletedInd());
 		latestVerInd = vdViewRowImpl.getLatestVersionInd();
 		vdIdseq = vdViewRowImpl.getVdIdseq();
+    idseq = vdIdseq;
 		datatype = vdViewRowImpl.getDtlName();
 		uom = checkForNull(vdViewRowImpl.getUomlName());
 		dispFormat = checkForNull(vdViewRowImpl.getFormlName());

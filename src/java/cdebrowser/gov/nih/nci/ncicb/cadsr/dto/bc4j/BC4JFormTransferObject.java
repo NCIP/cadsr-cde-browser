@@ -18,12 +18,14 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
 
   public BC4JFormTransferObject() {
     super();
+    idseq = formIdseq;
   }
   
   public BC4JFormTransferObject(FormsViewRowImpl formRow ) {
     super();
     this.formRow = formRow;
     formIdseq = formRow.getQcIdseq();
+    idseq = formIdseq;
     formType = formRow.getQcdlName();
     preferredDefinition = formRow.getPreferredDefinition();
 		preferredName = formRow.getPreferredName();
