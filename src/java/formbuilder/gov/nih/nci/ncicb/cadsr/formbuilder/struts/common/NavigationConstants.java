@@ -53,6 +53,6 @@ public interface NavigationConstants
   public static final String GO_TO_CHANGE_DE_ASSOCIATION = "displayCDECart";
 
   public static final String ADD_QUESTION = "addQuestion";
-  public static final String GO_TO_ADD_QUESTION = "gotoAddQuestion";
+  public static final String GO_TO_ADD_QUESTION = "displayCDECart";
 
 }

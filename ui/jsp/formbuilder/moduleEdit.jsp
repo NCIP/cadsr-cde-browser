@@ -49,7 +49,14 @@ function clearProtocol() {
   <BODY bgcolor="#ffffff">
     <% String urlPrefix = "";
 
-%>
+      // Prepare parameter map for add and edit linx
+      java.util.Map params = new java.util.HashMap();
+      params.put(FormConstants.MODULE_INDEX, request.getParameter(FormConstants.MODULE_INDEX));
+      // params.put(FormConstants.QUESTION_INDEX, request.getParameter(FormConstants.QUESTION_INDEX));
+
+      pageContext.setAttribute("params", params); 
+
+      %>
     <html:form action="/moduleSaveAction.do">
       <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
       <html:hidden property="<%=FormConstants.FORM_ID_SEQ%>"/>
@@ -109,10 +116,12 @@ function clearProtocol() {
               </tr>         
               <tr align="right">                      
                 <td align="right" width="25">
-                  <html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>'
-                       paramId="<%=FormConstants.FORM_ID_SEQ%>" paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">
-                    <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
+                  <%--
+                  <html:link action='<%="/gotoAddQuestion?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_ADD_QUESTION%>'
+                    paramId="<%=FormConstants.MODULE_INDEX%>" paramName="moduleIndex" >
+                    <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add Question"/>
                   </html:link>&nbsp;
+                  --%>
                 </td>
               </tr>
               </table> 
@@ -151,9 +160,14 @@ function clearProtocol() {
                   </td>  
                 </logic:empty>                        
                 <td align="right" width="3%">
-                  <html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>'
-                       paramId="<%=FormConstants.FORM_ID_SEQ%>" paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">
-                    <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
+                  <%
+                    params.put(FormConstants.QUESTION_INDEX, questionIndex);
+                    %>
+                  <html:link action='<%="/gotoAddQuestion?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_ADD_QUESTION%>'
+                    name="params" 
+                    scope="page"
+                    >
+                    <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add Question"/>
                   </html:link>&nbsp;
                 </td>
               </tr>              
@@ -188,17 +202,12 @@ function clearProtocol() {
                                     </logic:notEqual>
                                   </td>
                                   <td align="center">
-                                    <%-- 
-                                      // TEMPORARY 
-                                      --%>
-                                      <a href="gotoChangeAssociation.do?method=displayCDECart&amp;<%= FormConstants.QUESTION_INDEX%>=<bean:write name="questionIndex"/>&amp;<%= FormConstants.MODULE_INDEX %>=0">
-                                        <img src="<%=urlPrefix%>i/edit.gif" border="0" alt="Change DE Association"/>
-                                      </a>
-                                    <%--
-                                    <a href="javascript:submitModuleEdit('<%=NavigationConstants.CHANGE_DE_ASSOCIATION%>','<%=questionIndex%>')">
+                                    <html:link action='<%= "/gotoChangeAssociation?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CHANGE_DE_ASSOCIATION%>'
+                                      name="params"
+                                      scope="page"
+                                      >
                                       <img src="<%=urlPrefix%>i/edit.gif" border="0" alt="Change DE Association"/>
-                                    </a>
-                                    --%>
+                                    </html:link>
                                   </td>                                  
                                   <td align="center">
                                     <a href="javascript:submitModuleEdit('<%=NavigationConstants.DELETE_QUESTION%>','<%=questionIndex%>')">
@@ -452,9 +461,15 @@ function clearProtocol() {
                    </td>  
                   </logic:empty>               
                  <td align="right" width="3%">
-                  <html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>'
-                       paramId="<%=FormConstants.FORM_ID_SEQ%>" paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">
-                    <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
+                  <%
+                    params.put(FormConstants.QUESTION_INDEX, questionSize);
+                    %>
+                    <html:link action='<%="/gotoAddQuestion?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_ADD_QUESTION%>'
+                      name="params" 
+                      scope="page"
+                      >
+                      
+                      <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add Question"/>
                   </html:link>&nbsp;
                 </td>
               </tr>
