@@ -347,6 +347,7 @@
           <include name="WEB-INF/*.tld"/>
           <include name="WEB-INF/struts-config*.xml"/>
           <include name="WEB-INF/orion-web.xml"/>
+          <include name="WEB-INF/validat*.xml"/>
         </patternset>
       </fileset>    
         
