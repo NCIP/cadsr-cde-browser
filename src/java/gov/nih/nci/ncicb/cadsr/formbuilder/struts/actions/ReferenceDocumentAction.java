@@ -15,6 +15,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +26,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -404,11 +406,26 @@ public class ReferenceDocumentAction
     service.deleteAttachment(deleteAttachment.getName());
     anythingChanged = true;
    }
-  } catch (FormBuilderException fe) {
-   log.error("Error occurred trying to save the reference document", fe);
+  }  catch (DMLException dmle)
+  {
+  
+     if (dmle.getMessage().indexOf("Document name already exist") >= 0)
+        saveError("cadsr.formbuilder.refdoc.save.duplicate.error", request);
+      else
+        saveError("cadsr.formbuilder.refdoc.save.error", request);
+     return mapping.findForward("success"); //simply reload the form
+    
+  }
+  
+  catch (FormBuilderException fe) {
+   log.error("Error occurred trying to save reference documents", fe);
+          saveError(ERROR_REFERENCE_DOC_SAVE_FAILED, request);
+          saveError(fe.getErrorCode(), request);
+          
+ //         return mapping.findForward(FAILURE);
 
-   saveMessage("cadsr.formbuilder.refdoc.save.error", request);
-   return mapping.findForward("success"); //simply reload the form
+     saveError("cadsr.formbuilder.refdoc.save.error", request);
+     return mapping.findForward("success"); //simply reload the form
   }
 
   // now save attachments  
@@ -875,7 +892,7 @@ public class ReferenceDocumentAction
   return false;
  }
 
- private boolean saveRefDocAttachment(Attachment attachment, String rd_idseq, FormFile attFile) {
+ private boolean saveRefDocAttachment(Attachment attachment, String rd_idseq, FormFile attFile) throws DMLException{
   String
      sqlNewRow = "INSERT INTO reference_blobs (rd_idseq,name,mime_type,doc_size,content_type,blob_content) "
                     + "VALUES (?,?,?,?,?,EMPTY_BLOB())",
@@ -914,10 +931,16 @@ public class ReferenceDocumentAction
 
    ps.setBlob(1, dbBlob);
    conn.commit();
-  } catch (Exception ex) {
+  } catch (SQLException sqlE) 
+  {
+    if (sqlE.getMessage().indexOf("unique constraint") >0) 
+    {
+      throw new DMLException("Document name already exists in the database.");
+    }
+  }
+  catch (Exception ex) {
    log.error("Exception Caught:", ex);
-
-   return false;
+   throw new DMLException("Exception occurred while saving attachment to the database",ex);
   } finally {
    try {
     if (conn != null)
