@@ -152,7 +152,7 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
         "comp.CONDR_IDSEQ=der.CONDR_IDSEQ " +
         " and comp.CON_IDSEQ=con.CON_IDSEQ and der.CONDR_IDSEQ = ?" +
         " and con.CONTE_IDSEQ=contexts.CONTE_IDSEQ " +
-        " order by der.CONDR_IDSEQ , comp.DISPLAY_ORDER";
+        " order by der.CONDR_IDSEQ , comp.DISPLAY_ORDER DESC";
 
       this.setDataSource(ds);
       this.setSql(sql);
@@ -294,7 +294,7 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
     {
       
       String startStr = " and der.CONDR_IDSEQ in ( ";
-      String endStr = " ) order by comp.DISPLAY_ORDER ";
+      String endStr = " ) order by comp.DISPLAY_ORDER DESC ";
       String where=startStr;
       Iterator it = cdridseqs.iterator();
       while(it.hasNext())
