@@ -71,6 +71,10 @@
     </form-bean>
     <form-bean name="displayCartForm"
                type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.CDECartFormBean"/>
+    <form-bean name="changeAssociationForm"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean">
+      <form-property name="selectedItem" type="java.lang.String"/>
+    </form-bean>
   </form-beans>
   <global-exceptions>
     <exception type="gov.nih.nci.ncicb.cadsr.exception.FatalException"
