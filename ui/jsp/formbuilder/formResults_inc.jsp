@@ -40,13 +40,11 @@
                 length="<%=pageBean.getPageSize()%>">
             <tr class="OraTabledata">
                    
-                  <td align=center>
- 			<html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
- 				paramName="form" paramProperty="formIdseq"
- 				target="_parent">
-			   <html:img src='<%=urlPrefix+"i/view.gif"%>' border="0" alt="View"/>
-			</html:link>  			
-                  </td>
+              <td align=center>
+                <a href="search?viewTemplate=9&templateIdseq=<%= form.getFormIdseq() %>&PageId=DataElementsGroup" target="_blank">
+                  <html:img src='<%=urlPrefix+"i/dload-sm.gif"%>' border="0" alt="Download"/>
+		            </a>			
+              </td>
 		  <td align=center>
 		       <cde:secureIcon  formId="form" 
             formScope="<%=CaDSRConstants.PAGE_SCOPE%>"

@@ -320,9 +320,11 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
 
       ReferenceDocumentsViewRowImpl rdViewRowImpl;
       rdViewRowImpl = (ReferenceDocumentsViewRowImpl) rdVO.first();
-
+      if (rdViewRowImpl == null) {
+        throw new DocumentNotFoundException("Document not found");
+      }
       String rdIdseq = rdViewRowImpl.getRdIdseq();
-
+      
       ReferenceBlobsViewImpl rbVO = getReferenceBlobsView();
       rbVO.setWhereClause("RD_IDSEQ = '" + rdIdseq + "'");
       rbVO.executeQuery();

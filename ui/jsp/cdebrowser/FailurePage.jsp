@@ -34,7 +34,7 @@
 <LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
 </HEAD>
 <BODY topmargin="0">
-<%@ include  file="cdebrowserCommon_html/tab_include_search.html" %>
+<%@ include  file="cdebrowserCommon_html/tab_include_lov.html" %>
 
 <CENTER>
 <FORM>
