@@ -67,7 +67,7 @@
         readonly="true" 
         size="19"
         styleClass="LOVField"
-        onfocus="this.blur();"/>
+        />
         &nbsp;
         <a href="<%=csLOVUrl[i]%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
         <a href="javascript:clearClassSchemeItem(<%= i %>)"><i>Clear</i></a>
