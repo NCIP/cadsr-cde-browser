@@ -54,6 +54,11 @@
         <tr>
           <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
         </tr>
+        <tr>    
+          <td align="left" class="AbbreviatedText">
+            <bean:message key="cadsr.cdebrowser.helpText.results"/>
+          </td>
+        </tr>
       </table>   
   <%@ include  file="/formbuilder/formResults_inc.jsp" %>
 </logic:present> 

@@ -62,21 +62,17 @@
      </td>
     <td  width="10%" >
     <TABLE align ="right" width="100%" Cellpadding=0 Cellspacing=0 border=0 >
-          <tr>
-          <!--
+     <tr>
            <td  align="right"   height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-                <a href="http://nciterms.nci.nih.gov" target="_blank">
+                <A HREF="javascript:newBrowserWin('<%=request.getContextPath()%>/common/help/cdeBrowserHelp.html#NewFeatures','helpWin',700,600)">
                       What's new</a>&nbsp;&nbsp;</span>
-            </td>
-            -->
-           <td  align="right"   height="10" nowrap>
-             <span style="font-size: 10.0pt; font-family: Arial">
-                      What's new&nbsp;&nbsp;&nbsp;</span>
             </td>
         </tr>
       </table>
      </td>
   </tr>
+  </tabel>
+  <table>
   <logic:present name="nciUser">
   <tr>
     <td align="left" class="OraInlineInfoText" nowrap>

@@ -53,6 +53,12 @@
     </jsp:include>
 
     <%@ include file="showMessages.jsp"%>
+      <table>
+        <tr>    
+          <td align="left" class="AbbreviatedText">
+            <bean:message key="cadsr.formbuilder.helpText.refdocs.attachments"/>
+          </td>
+        </tr>
     <html:form action="/manageReferenceDocs.do">
     <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
      <html:hidden value="" property="<%=FormConstants.REFDOC_INDEX%>"/>

@@ -67,8 +67,6 @@
   String queryFlag = request.getParameter("performQuery");
   if (queryFlag == null) queryFlag = "";
 
-  String loadAnchor = (String)request.getAttribute("anchor");
-  if (loadAnchor == null) loadAnchor = "";
 
   String doneURL = "";
 
@@ -240,9 +238,11 @@ function turnOff() {
     var treeFrame = findFrameByName('tree');
     treeFrame.document.body.style.cursor = "default";
   }
-  if ("<%=loadAnchor%>"!= "") {
-    location.hash="#<%=loadAnchor%>";
+  
+  if ("<%= queryFlag %>" != "") { 
+    location.hash="#results";
   }
+
   
 }
 
@@ -425,6 +425,11 @@ function gotoCDESearchPrefs() {
       <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
     </td>
   </tr>
+          <tr valign="top">    
+          <td valign="top" align="left" class="AbbreviatedText">
+            <bean:message key="cadsr.cdebrowser.helpText.results"/>
+          </td>
+        </tr>
 </table>
 
 <table cellpadding="0" cellspacing="0" width="100%" align="center" border="0">
@@ -613,6 +618,11 @@ function gotoCDESearchPrefs() {
       <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
     </td>
   </tr>
+        <tr>    
+          <td align="left" class="AbbreviatedText">
+            <bean:message key="cadsr.cdebrowser.helpText.results"/>
+          </td>
+        </tr>  
 </table>
 
 
