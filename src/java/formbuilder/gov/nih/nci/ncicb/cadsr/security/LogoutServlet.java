@@ -24,10 +24,12 @@ public class LogoutServlet extends HttpServlet
     if(logoutHome!=null)
     {
       request.getSession().invalidate();
+      String path=request.getContextPath()+"/"+logoutHome;
       response.sendRedirect(logoutHome);
     }
     else
       {
+        request.getSession().invalidate();
         response.getWriter().println("User Logged out");
         response.getWriter().flush();
       }

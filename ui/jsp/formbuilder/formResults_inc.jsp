@@ -16,7 +16,7 @@
         	type="gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean"/>
         <cde:pagination name="top" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
                      beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
-                     actionURL="/cdebrowser/pageAction.do"
+                     actionURL="pageAction.do"
         	     previousOnImage="i/prev_on.gif"
         	     previousOffImage="i/prev_off.gif"
         	     nextOnImage="i/next_on.gif"
@@ -99,7 +99,7 @@
         </table>
         <cde:pagination name="bottom" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
                      beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
-                     actionURL="/cdebrowser/pageAction.do"
+                     actionURL="pageAction.do"
         	     previousOnImage="i/prev_on.gif"
         	     previousOffImage="i/prev_off.gif"
         	     nextOnImage="i/next_on.gif"

@@ -14,7 +14,7 @@ You are not authenticated to use this web application
 <br>
 <br>
 
-<a href="/cdebrowser/formbuilder/index.jsp"> Retry Login </a>
+<a href="<%= "formSearchAction.do"%>"> Retry Login </a>
 
 </body>
 </html>

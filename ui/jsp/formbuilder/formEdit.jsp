@@ -41,12 +41,12 @@ function clearProtocol() {
   </HEAD>
   <BODY bgcolor="#ffffff">
     <% String urlPrefix = "";
-
+  String contextPath = request.getContextPath();
   String pageUrl = "&PageId=DataElementsGroup";
   // HSK
 
   String protoLOVUrl= 
-    "javascript:newWin('/cdebrowser/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
+    "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
 
 %>
     <html:form action="/formSaveAction.do">

@@ -2,7 +2,7 @@
 <head>
 <title>Untitled Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<LINK REL=STYLESHEET TYPE="text/css" HREF="/cdebrowser/cdebrowserCommon_html/blaf.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css">
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 
@@ -32,7 +32,7 @@ function submitForm() {
   
   <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
   <TR>
-  <td align=left valign=top width="1%" bgcolor="#336699"><img src="/cdebrowser/i/top_left.gif" width=4 height="25"></td>
+  <td align=left valign=top width="1%" bgcolor="#336699"><img src="i/top_left.gif" width=4 height="25"></td>
   <td nowrap align=left valign=top width="5%" bgcolor="#336699"><b><font size="5" face="Arial" color="#FFFFFF">&nbsp; &nbsp;Please Login</font></b></td>
   
   
@@ -44,9 +44,9 @@ function submitForm() {
   
   <table  width=100% Cellpadding=0 Cellspacing=0 border=0>
   <tr>
-  <td align=right valign=top width=49 height=21 bgcolor="#336699"><img src="/cdebrowser/i/left_end_bottom.gif" height=21 width=49></td>
-  <TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><img src="/cdebrowser/i/bottom_middle.gif" height=6 width=100%></TD>
-  <td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><img src="/cdebrowser/i/right_end_bottom.gif" height=7 width=5></td>
+  <td align=right valign=top width=49 height=21 bgcolor="#336699"><img src="i/left_end_bottom.gif" height=21 width=49></td>
+  <TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><img src="i/bottom_middle.gif" height=6 width=100%></TD>
+  <td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><img src="i/right_end_bottom.gif" height=7 width=5></td>
   </TR>
   </table>
   
@@ -72,8 +72,8 @@ function submitForm() {
   <table align=center cellspacing="2" cellpadding="3" border="0">
      <TR>
         
-        <td colspan="1" align="right" nowrap><a href="javascript:submitForm()"><img src=/cdebrowser/i/logon.gif border=0></a></td>
-        <td colspan="1" align="left" nowrap><a href="javascript:clearForm()"><img src=/cdebrowser/i/reset.gif border=0></a></td>
+        <td colspan="1" align="right" nowrap><a href="javascript:submitForm()"><img src=i/logon.gif border=0></a></td>
+        <td colspan="1" align="left" nowrap><a href="javascript:clearForm()"><img src=i/reset.gif border=0></a></td>
     </TR>  
     <tr>
       <td>&nbsp;</td>
@@ -83,8 +83,8 @@ function submitForm() {
   </form>
 <TABLE width=100% cellspacing=0 cellpadding=0 border=0>
 <TR>
-<TD valign=bottom width=99%><img src="/cdebrowser/i/bottom_shade.gif" height=6 width="100%"></TD>
-<TD valign=bottom width="1%" align=right><IMG src="/cdebrowser/i/bottomblueright.gif"></TD>
+<TD valign=bottom width=99%><img src="i/bottom_shade.gif" height=6 width="100%"></TD>
+<TD valign=bottom width="1%" align=right><IMG src="i/bottomblueright.gif"></TD>
 </TR>
 </TABLE>
 <TABLE width=100% cellspacing=0 cellpadding=0 bgcolor="#336699" border=0>
@@ -100,7 +100,7 @@ function submitForm() {
 
 </TR>
 <TR>
-<TD colspan=2><IMG src="/cdebrowser/i/bottom_middle.gif" height=6 width="100%"></TD>
+<TD colspan=2><IMG src="i/bottom_middle.gif" height=6 width="100%"></TD>
 </TR>
 </TABLE>
 </body>

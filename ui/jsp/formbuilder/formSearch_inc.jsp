@@ -21,10 +21,10 @@ function clearProtocol() {
 <%
   String pageUrl = "&PageId=DataElementsGroup";
   // HSK
-
-  String csLOVUrl= "javascript:newWin('/cdebrowser/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
+  String contextPath = request.getContextPath();
+    String csLOVUrl= "javascript:newWin('"+contextPath+"/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
   String protoLOVUrl= 
-    "javascript:newWin('/cdebrowser/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
+    "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
 
 %>
   <table cellspacing="2" cellpadding="3" border="0" width="100%">
