@@ -109,11 +109,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    *
    * @param <b>sourceForm</b> Form object
    *
-   * @return <b>Form</b> Form object
+   * @return <b>String</b> Form Idseq.
    *
    * @throws <b>DMLException</b>
    */
-  public Form createFormComponent(Form sourceForm) throws DMLException {
+  public String createFormComponent(Form sourceForm) throws DMLException {
     // check if the user has the privilege to create module
     boolean create =
       this.hasCreate(
@@ -130,7 +130,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
     if (res == 1) {
       sourceForm.setFormIdseq(qcIdseq);
-      return sourceForm;
+      return qcIdseq;
     }
     else {
       throw new DMLException(

@@ -46,11 +46,11 @@ public interface FormDAO extends AdminComponentDAO {
    *
    * @param <b>sourceForm</b> Form object
    *
-   * @return <b>Form</b> Form object.
+   * @return <b>String</b> Form Idseq.
    *
    * @throws <b>DMLException</b>
    */
-  public Form createFormComponent(Form sourceForm) throws DMLException;
+  public String createFormComponent(Form sourceForm) throws DMLException;
 
   /**
    * Adds new modules to a form. 
