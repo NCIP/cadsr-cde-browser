@@ -14,9 +14,6 @@
     <TITLE>Welcome to Form Builder..</TITLE>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
-    <SCRIPT LANGUAGE="JavaScript">
-      
-    </SCRIPT>
   </HEAD>
   <BODY bgcolor="#ffffff">
     <% String urlPrefix = "";
@@ -177,10 +174,10 @@
                         <bean:write name="question" property="dataElement.CDEId"/>
                       </html:link>
                     </td>
+                    <td align="center" width="70" class="UnderlineOraFieldText">
+                      <bean:write name="question" property="dataElement.version"/>
+                    </td>                              
                   </logic:present>
-                  <td align="center" width="70" class="UnderlineOraFieldText">
-                    <bean:write name="question" property="dataElement.version"/>
-                  </td>                              
                 </tr>                                                     
                 <logic:present name="question">
                   <logic:notEmpty name="question" property = "validValues">
