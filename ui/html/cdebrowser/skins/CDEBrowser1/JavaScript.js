@@ -27,6 +27,10 @@ function formSearchAction(urlParams){
     var frm = findFrameByName('body');
     document.body.style.cursor = "wait";
     frm.document.body.style.cursor = "wait";
-    frm.document.location = "formAction.do?method=getAllFormsForTreeNode&"+urlParams;
+    frm.document.location = "formSearchAction.do?method=getAllFormsForTreeNode&"+urlParams;
+}
+
+function formDetailsAction(urlParams){
+    top.document.location = "formDetailsAction.do?method=getFormDetails&"+urlParams;
 }
 

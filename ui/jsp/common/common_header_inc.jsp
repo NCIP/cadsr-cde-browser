@@ -1,4 +1,11 @@
-
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%
+	String dest = pageContext.getRequest().getParameter("loginDestination");
+	String urlPrefix = pageContext.getRequest().getParameter("urlPrefix");
+%>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=urlPrefix%>jsLib/newWinJS.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=urlPrefix%>ljsLib/helpWinJS.js"></SCRIPT>
 
@@ -20,7 +27,7 @@
             <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%="logout?"+CaDSRConstants.LOGOUT_URL+"=/cdebrowser/"%>" TARGET="_top"><IMG SRC="<%=urlPrefix%>i/logout.jpg" alt="Logout" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Logout&nbsp;</font></TD>
           </logic:present>
           <logic:notPresent name="nciUser">
-            <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="formCDECartAction.do?method=displayCDECart" TARGET="_top"><IMG SRC="<%=urlPrefix%>i/icon_login.gif" alt="Login" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Login&nbsp;</font></TD>
+            <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%= dest %>" TARGET="_top"><IMG SRC="<%=urlPrefix%>i/icon_login.gif" alt="Login" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Login&nbsp;</font></TD>
           </logic:notPresent>
 	  
         </TR>

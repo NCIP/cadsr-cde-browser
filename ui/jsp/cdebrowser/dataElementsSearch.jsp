@@ -35,9 +35,9 @@
   if (paramType == null) paramType = "";
   String templateURL = "search?viewTemplate=9&templateIdseq="+paramIdseq+pageUrl;
   //String downloadXMLURL = "javascript:newDownloadWin('search?xmlDownload=9"+pageUrl+"','downloadWin',10,10)";
-  String downloadXMLURL = "javascript:fileDownloadWin('downloadXMLPage.jsp','xmlWin',500,200)";
+  String downloadXMLURL = "javascript:fileDownloadWin('downloadXMLPage.jsp?src=deSearch','xmlWin',500,200)";
   //String downloadExcelURL = "javascript:newDownloadWin('search?excelDownload=9"+pageUrl+"','downloadWin',10,10)";
-  String downloadExcelURL = "javascript:fileDownloadWin('downloadExcelPage.jsp','excelWin',500,200)";
+  String downloadExcelURL = "javascript:fileDownloadWin('downloadExcelPage.jsp?src=deSearch','excelWin',500,200)";
   String valueDomainLOVUrl= "javascript:newWin('search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain"+pageUrl+"','vdLOV',700,600)";
   String decLOVUrl= "javascript:newWin('search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept"+pageUrl+"','decLOV',700,600)";
   String csLOVUrl= "javascript:newBrowserWin('search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";

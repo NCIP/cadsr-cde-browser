@@ -1,3 +1,7 @@
+<%
+  String source = request.getParameter("src");
+%>
+
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
@@ -8,7 +12,7 @@
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function goPage() {
-  document.location.href = "search?xmlDownload=9&PageId=DataElementsGroup";
+  document.location.href = "search?xmlDownload=9&PageId=DataElementsGroup&src=" + "<%= source %>";
   
 }
 function closeWindow() {
