@@ -18,22 +18,33 @@ function submitForm() {
 </SCRIPT>
 </head>
 
-<body text="#000000">
-<TABLE width=100% cellspacing=0 cellpadding=0  border=0>
-<TR>
-<td>&nbsp; 
-</TD>
+<body text="#000000" topmargin="0">
+<TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
+  <tr>
 
-</TR>
-<TR>
-<TD>&nbsp; </TD>
-</TR>
+    <td align="left" nowrap>
+
+    <img src=i/graphic6.gif border=0>
+    </td>
+
+    <td align=right valign=top colspan=2 nowrap>
+      <TABLE Cellpadding=0 Cellspacing=0 border=0 >
+        <TR>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="cdeBrowse.jsp?PageId=DataElementsGroup" TARGET="_top"><IMG SRC="i/icon_home.gif" alt="Home" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font></TD>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('cdebrowserCommon_html/cdeBrowserHelp.html','helpWin',700,600)"><IMG SRC="i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
+        </TR>
+      </TABLE>
+    </td>
+  </tr>
+
 </TABLE>
+<br>
+<br>
   
   <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
   <TR>
   <td align=left valign=top width="1%" bgcolor="#336699"><img src="i/top_left.gif" width=4 height="25"></td>
-  <td nowrap align=left valign=top width="5%" bgcolor="#336699"><b><font size="5" face="Arial" color="#FFFFFF">&nbsp; &nbsp;Please Login</font></b></td>
+  <td nowrap align=left valign=top width="5%" bgcolor="#336699"><b><font size="3" face="Arial" color="#FFFFFF">&nbsp; &nbsp;Please Login</font></b></td>
   
   
   <td align=left valign=top width="5%" bgcolor="#336699">&nbsp;</td>
