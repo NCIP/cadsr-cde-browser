@@ -69,7 +69,7 @@ public interface NavigationConstants
   public static final String GET_PROTOCOL_LOV_METHOD="getProtocolsLOV";
 
   public static final String CHANGE_DE_ASSOCIATION = "changeAssociation";
-  public static final String GO_TO_CHANGE_DE_ASSOCIATION = "displayCDECart";
+  public static final String GO_TO_CHANGE_DE_ASSOCIATION = "gotoChangeDEAssociation";
 
   public static final String ADD_QUESTION = "addQuestion";
   public static final String GO_TO_ADD_QUESTION = "displayCDECart";
