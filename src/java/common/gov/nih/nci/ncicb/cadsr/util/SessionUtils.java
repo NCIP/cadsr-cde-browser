@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 
 public class SessionUtils {
 
- private static Map  sessionObjectCache = Collections.synchronizedMap(new HashMap());
+ public static Map  sessionObjectCache = Collections.synchronizedMap(new HashMap());
  private static Map  sessionObjectCacheTimeout = Collections.synchronizedMap(new HashMap());
  private static int CACHE_TIMEOUT_VALUE = 1800000;
   public SessionUtils() {

@@ -34,7 +34,8 @@ public class LogoutServlet extends HttpServlet
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-
+    synchronized(SessionUtils.sessionObjectCache)
+    {
       HttpSession session = request.getSession();
       String forwardUrl = "/"+LOGOUT_JSP;
 
@@ -66,7 +67,7 @@ public class LogoutServlet extends HttpServlet
             
       RequestDispatcher dispacher = request.getRequestDispatcher(forwardUrl);
       dispacher.forward(request,response);           
-
+    }
   }
  private Map copyAllsessionObjects(HttpSession session)
  {
