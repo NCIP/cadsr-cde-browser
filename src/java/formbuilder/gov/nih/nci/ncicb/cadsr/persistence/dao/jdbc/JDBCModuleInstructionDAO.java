@@ -54,15 +54,9 @@ public class JDBCModuleInstructionDAO extends JDBCInstructionDAO
   }
   
   /**
-   * Creates a new module instruction component (just the header info).
-   *
-   * @param <b>moduleInstr</b> ModuleInstruction object
-   *
-   * @return <b>int</b> 1 - success, 0 - failure.
-   *
-   * @throws <b>DMLException</b>
+   * @inheritDoc
    */
-  public int createModuleInstructionComponent(ModuleInstruction moduleInstr)
+  public String createModuleInstructionComponent(ModuleInstruction moduleInstr)
     throws DMLException {
     // check if the user has the privilege to create module
     boolean create =
@@ -73,6 +67,8 @@ public class JDBCModuleInstructionDAO extends JDBCInstructionDAO
       new DMLException(
         "The user does not have the privilege to create module instruction.");
     }
+
+    moduleInstr.setPreferredName(generatePreferredName(moduleInstr.getLongName()));
 
     InsertQuestContent insertQuestContent =
       new InsertQuestContent(this.getDataSource());
@@ -90,7 +86,7 @@ public class JDBCModuleInstructionDAO extends JDBCInstructionDAO
     int resRec = insertQuestRec.createContent(moduleInstr, qcIdseq, qrIdseq);
 
     if (resRec == 1) {
-      return 1;
+      return qrIdseq;
     }
     else {
       throw new DMLException(
@@ -138,7 +134,7 @@ public class JDBCModuleInstructionDAO extends JDBCInstructionDAO
       moduleInst.setCreatedBy("Hyun Kim");
       moduleInst.setDisplayOrder(7);
 
-      int res = test.createModuleInstructionComponent(moduleInst);
+      String res = test.createModuleInstructionComponent(moduleInst);
       System.out.println("\n*****Create Module Instruction Result 1: " + res);
     }
     catch (DMLException de) {
@@ -180,10 +176,15 @@ public class JDBCModuleInstructionDAO extends JDBCInstructionDAO
       String qcIdseq) {
       Object[] obj =
         new Object[] {
-          qcIdseq, sm.getVersion().toString(),
-          generatePreferredName(sm.getLongName()), sm.getLongName(),
-          sm.getPreferredDefinition(), sm.getConteIdseq(),
-          sm.getModule().getForm().getProtoIdseq(), sm.getAslName(), sm.getCreatedBy(),
+          qcIdseq, 
+	  sm.getVersion().toString(),
+          generatePreferredName(sm.getLongName()), 
+	  sm.getLongName(),
+          sm.getPreferredDefinition(), 
+	  sm.getContext().getConteIdseq(),
+          sm.getModule().getForm().getProtocol().getProtoIdseq(), 
+	  sm.getAslName(),
+	  sm.getCreatedBy(),
           "MODULE_INSTR"
         };
 
@@ -221,7 +222,9 @@ public class JDBCModuleInstructionDAO extends JDBCInstructionDAO
       String qrIdseq) {
       Object[] obj =
         new Object[] {
-          qrIdseq, sm.getModule().getModuleIdseq(), qcIdseq,
+          qrIdseq,
+	  sm.getModule().getModuleIdseq(),
+	  qcIdseq,
           new Integer(sm.getDisplayOrder()), "MODULE_INSTRUCTION", 
           sm.getCreatedBy()
         };

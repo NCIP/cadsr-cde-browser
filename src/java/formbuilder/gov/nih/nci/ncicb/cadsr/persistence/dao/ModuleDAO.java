@@ -22,11 +22,11 @@ public interface ModuleDAO {
    *
    * @param <b>sourceModule</b> Module object
    *
-   * @return <b>Module</b> Module object representing the new module.
+   * @return <b>String</b> Primary Key of the new module.
    *
    * @throws <b>DMLException</b>
    */
-  public int createModuleComponent(Module sourceModule)
+  public String createModuleComponent(Module sourceModule)
     throws DMLException;
 
   /**

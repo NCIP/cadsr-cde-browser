@@ -71,15 +71,9 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
   }
 
   /**
-   * Creates a new module component (just the header info).
-   *
-   * @param <b>sourceModule</b> Module object
-   *
-   * @return <b>Module</b> Module object representing the new module.
-   *
-   * @throws <b>DMLException</b>
+   * @inheritDoc
    */
-  public int createModuleComponent(Module sourceModule)
+  public String createModuleComponent(Module sourceModule)
     throws DMLException {
 
     // check if the user has the privilege to create module
@@ -89,6 +83,8 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
     if (!create) {
       new DMLException("The user does not have the create module privilege.");
     }
+
+    sourceModule.setPreferredName(generatePreferredName(sourceModule.getLongName()));
 
     InsertQuestContent  insertQuestContent  = 
       new InsertQuestContent (this.getDataSource());
@@ -104,7 +100,7 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
     String qrIdseq = generateGUID();
     int resRec = insertQuestRec.createContent(sourceModule, qcIdseq, qrIdseq);
     if (resRec == 1) {
-      return 1;
+      return qcIdseq;
     }
     else {
       throw new DMLException("Did not succeed creating form module relationship " +  
@@ -307,8 +303,8 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       in.put("p_preferred_name", sm.getPreferredName());
       in.put("p_long_name", sm.getLongName());
       in.put("p_preferred_definition", sm.getPreferredDefinition());
-      in.put("p_conte_idseq", sm.getConteIdseq());
-      in.put("p_proto_idseq", sm.getForm().getProtoIdseq());
+      in.put("p_conte_idseq", sm.getContext().getConteIdseq());
+      in.put("p_proto_idseq", sm.getForm().getProtocol().getProtoIdseq());
       in.put("p_asl_name", sm.getAslName());
       in.put("p_created_by", sm.getCreatedBy());
       in.put("p_display_order", new Integer(sm.getDisplayOrder()));
@@ -357,8 +353,8 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
            generatePreferredName(sm.getLongName()),
            sm.getLongName(),
            sm.getPreferredDefinition(),
-           sm.getConteIdseq(),
-           sm.getForm().getProtoIdseq(),
+           sm.getForm().getContext().getConteIdseq(),
+           sm.getForm().getProtocol().getProtoIdseq(),
            sm.getAslName(),
            sm.getCreatedBy(),
            "MODULE"
@@ -386,7 +382,7 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
       declareParameter(new SqlParameter("p_qr_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("p_qc_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("c_qc_idseq", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_pisplay_order", Types.INTEGER));
+      declareParameter(new SqlParameter("p_display_order", Types.INTEGER));
       declareParameter(new SqlParameter("p_rl_name", Types.VARCHAR));
       declareParameter(new SqlParameter("p_created_by", Types.VARCHAR));
       compile();
