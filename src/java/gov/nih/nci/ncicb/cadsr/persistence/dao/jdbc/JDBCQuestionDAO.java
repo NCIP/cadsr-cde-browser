@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.DataElementTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
@@ -495,7 +496,15 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
           fvv.setVpIdseq(rs.getString(8));        // VP_IDSEQ
           fvv.setLongName(rs.getString(9));       // LONG_NAME
           fvv.setDisplayOrder(rs.getInt(14));     // DISPLAY_ORDER
-          fvv.setShortMeaning(rs.getString(15));    // Meaning      
+          fvv.setShortMeaning(rs.getString(15));    // Meaning  
+          fvv.setVersion(new Float(rs.getString(2))); // VERSION
+          //Bug Fix tt#1058
+          fvv.setAslName(rs.getString(5));
+          fvv.setPreferredDefinition(rs.getString(7));
+          ContextTransferObject contextTransferObject = new ContextTransferObject();
+          contextTransferObject.setConteIdseq(rs.getString(4)); //CONTE_IDSEQ
+          fvv.setContext(contextTransferObject);
+          
          return fvv;
     }
   }

@@ -1177,19 +1177,21 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       {
 
         List newVVList = currQuestion.getValidValues();
-        if(currQuestion.getDataElement()==null||newVVList.isEmpty())
-        {
-         validValuesChanges =
-            getNewDeletedUpdatedValidValues(currQuestion,orgQuestion.getValidValues(),
-                                            currQuestion.getValidValues());
-        }
-        else if(newVVList!=null&&!newVVList.isEmpty())
+        List oldVVList = orgQuestion.getValidValues();
+        if(oldVVList!=null&&!oldVVList.isEmpty())
         {
           if(validValuesChanges==null)
             validValuesChanges = new HashMap();
-          setQuestionForFormValidValues(currQuestion,newVVList);
+          validValuesChanges.put(this.DELETED_VV_LIST,oldVVList);
+        }  
+        if(newVVList!=null&&!newVVList.isEmpty())
+        {
+          if(validValuesChanges==null)
+            validValuesChanges = new HashMap();
+          setAttributesForNewFormValidValues(currQuestion,newVVList);
           validValuesChanges.put(this.NEW_VV_LIST,newVVList);
         }
+      
       }
       if(validValuesChanges!=null&&!validValuesChanges.isEmpty())
       {
@@ -1414,7 +1416,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
    *
    * @return the removed module
    */
-  private void setQuestionForFormValidValues(
+  private void setAttributesForNewFormValidValues(
     Question question,
     List fvvs) {
     if(fvvs==null) return;
@@ -1424,6 +1426,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     while (iterate.hasNext()) {
       FormValidValue fvv = (FormValidValue) iterate.next();
       fvv.setQuestion(question);
+      fvv.setVersion(new Float(1.0));//BugFix 1058
       }
     }
 

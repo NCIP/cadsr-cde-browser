@@ -33,9 +33,10 @@ public class DTOTransformer {
     fvv.setContext(question.getModule().getForm().getContext());
     fvv.setAslName(question.getModule().getForm().getAslName());
     fvv.setVpIdseq(validValue.getVpIdseq());
-    fvv.setVersion(question.getModule().getForm().getVersion());
+    fvv.setVersion(new Float(1.0)); //Bug Fix tt#1058
     fvv.setShortMeaning(validValue.getShortMeaning());
     fvv.setQuestion(question);
+    fvv.setVersion(question.getVersion());
 
     return fvv;
   }
