@@ -229,7 +229,7 @@ function compareCDEs() {
   var numberSelected = validateMultiSelection('selectDE','Please select at least two data elements to compare');
   if (numberSelected > 1) {
   var urlString="<%=request.getContextPath()%>/cdebrowser/compareCDEAction.do?method=compareCDEs&numberSelected=" + numberSelected;
-  newBrowserWin(urlString,'deCompares',800,600)
+  top.location.href=urlString;
   }
 }
 
@@ -449,6 +449,7 @@ function newSearch(){
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
     <tr>
       <td align="left"><a href="javascript:updateCart()"><html:img page="/i/AddToCDECart.gif" border="0" /></a></td>
+      <td align="left"><a href=" "><html:img page="/i/addToCDECompareList.gif" border="0" /></a></td>
       <td align="left"><a href="javascript:compareCDEs()"><html:img page="/i/compareCDEs.gif" border="0" /></a></td>
       <td align="right"><%=topScroller.getScrollerHTML()%></td>
     </tr>
