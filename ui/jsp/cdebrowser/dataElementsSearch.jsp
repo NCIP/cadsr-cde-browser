@@ -352,7 +352,7 @@ function newSearch(){
    <td colspan="4" align="center" nowrap> 
    <table >
     <td colspan="1" align="center" nowrap><a href="javascript:submitForm()"><img src=i/SearchDataElements.gif border=0></a></td>
-    <td colspan="1" align="center nowrap><a href="javascript:clearForm()"><img src=i/clear.gif border=0></a></td>
+    <td colspan="1" align="center" nowrap><a href="javascript:clearForm()"><img src=i/clear.gif border=0></a></td>
     <td colspan="1" align="center" nowrap><a href="javascript:newSearch()"><img src=i/newSearchButton.gif border=0></a></td>
     </table>
     </td>
