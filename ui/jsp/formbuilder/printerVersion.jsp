@@ -82,6 +82,14 @@
          </tr>
         <tr class="PrinterOraTableColumnHeader">
           <td  width="20%">
+            <bean:message key="cadsr.formbuilder.form.publicID"/>
+          </td>                
+          <td  class="PrinterOraTableColumnHeader">
+            <bean:write name="<%=FormConstants.CRF%>" property="publicId"/>
+          </td>
+         </tr>          
+        <tr class="PrinterOraTableColumnHeader">
+          <td  width="20%">
             <bean:message key="cadsr.formbuilder.question.version"/>
           </td>                
           <td  class="PrinterOraTableColumnHeader">

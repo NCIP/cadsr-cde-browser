@@ -113,6 +113,14 @@
         </tr> 
         <tr class="OraTabledata">
           <td class="TableRowPromptTextLeft"  width="20%">
+            <bean:message key="cadsr.formbuilder.form.publicID"/>
+          </td>                
+          <td  class="OraFieldText">
+            <bean:write  name="<%=FormConstants.CRF%>" property="publicId"/> 
+          </td>
+        </tr>           
+        <tr class="OraTabledata">
+          <td class="TableRowPromptTextLeft"  width="20%">
             <bean:message key="cadsr.formbuilder.question.version"/>
           </td>                
           <td  class="OraFieldText">

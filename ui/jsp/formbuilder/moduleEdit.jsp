@@ -188,6 +188,22 @@ function clearProtocol() {
               <bean:write  name="<%=FormConstants.CRF%>" property="longName"/> 
             </td>
           </tr>
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader" width="20%" nowrap>
+              <bean:message key="cadsr.formbuilder.form.publicID"/>
+            </td>
+            <td class="OraFieldText" >
+              <bean:write  name="<%=FormConstants.CRF%>" property="publicId"/> 
+            </td>
+          </tr>
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader" width="20%" nowrap>
+              <bean:message key="cadsr.formbuilder.question.version"/>
+            </td>
+            <td class="OraFieldText" >
+              <bean:write  name="<%=FormConstants.CRF%>" property="version"/> 
+            </td>
+          </tr>          
         </table>
       
         <bean:define id="module" name="<%=FormConstants.MODULE%>"></bean:define>

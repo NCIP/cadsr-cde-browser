@@ -102,7 +102,13 @@ if(confirm(message)) location.href = url;
 		   	   	sortFieldValue = "aslName"
 		   	   	target="_parent"
             />                 
-            </th>         	
+            </th>    
+            <th class="OraTableColumnHeader" nowrap>
+              Public ID
+            </th>
+            <th class="OraTableColumnHeader" nowrap>
+              Version
+            </th>            
           </tr>        
           <logic:iterate id="form" name="<%=FormConstants.FORM_SEARCH_RESULTS%>" 
           	type="gov.nih.nci.ncicb.cadsr.resource.Form"
@@ -192,7 +198,13 @@ if(confirm(message)) location.href = url;
           	</td>             
           	<td class="OraFieldText">
           		<bean:write name="form" property="aslName"/><br>
-          	</td>          	
+          	</td>          
+          	<td class="OraFieldText">
+          		<bean:write name="form" property="publicId"/><br>
+          	</td>   
+          	<td class="OraFieldText">
+          		<bean:write name="form" property="version"/><br>
+          	</td>               
             </tr>
           </logic:iterate>
         </table>
@@ -215,10 +227,12 @@ if(confirm(message)) location.href = url;
             <th class="OraTableColumnHeader" nowrap>Context</th>
           	<th class="OraTableColumnHeader" nowrap>Type</th>
             <th class="OraTableColumnHeader" nowrap>Protocol</th>
-          	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	
+          	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>
+            <th class="OraTableColumnHeader" nowrap>Public ID</th> 
+            <th class="OraTableColumnHeader" nowrap>Version</th> 
           </tr>
       <tr class="OraTabledata" >
-         	<td colspan="6" ><bean:message key="cadsr.formbuilder.empty.search.results"/></td>
+         	<td colspan="8" ><bean:message key="cadsr.formbuilder.empty.search.results"/></td>
   	  </tr>
   	</table>        
                  

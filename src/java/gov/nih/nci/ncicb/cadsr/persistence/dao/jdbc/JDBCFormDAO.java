@@ -528,7 +528,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     form.setPreferredDefinition(rs.getString(8)); // PREFERRED_DEFINITION
     form.setCreatedBy(rs.getString(13)); // CREATED_BY
     form.setFormCategory(rs.getString(5));
-    
+    form.setPublicId(rs.getInt(17));
     return form;
     }
   }
@@ -632,6 +632,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     form.setFormType(rs.getString(3)); // TYPE
     form.setAslName(rs.getString(6)); // WORKFLOW
     form.setVersion(new Float(rs.getString(2))); // VERSION
+    form.setPublicId(rs.getInt(17)); //Public ID
     form.setPreferredDefinition(rs.getString(8)); // PREFERRED_DEFINITION
     form.setCreatedBy(rs.getString(13)); // CREATED_BY
     form.setFormCategory(rs.getString(5));

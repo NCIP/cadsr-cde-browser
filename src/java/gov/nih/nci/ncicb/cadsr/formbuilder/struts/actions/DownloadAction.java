@@ -110,6 +110,12 @@ public class DownloadAction
 
   row = sheet.createRow(rowNumber++);
   cell = row.createCell((short)0);
+  cell.setCellValue("Public ID");
+  cell.setCellStyle(boldCellStyle);
+  row.createCell((short)1).setCellValue(crf.getPublicId());
+  
+  row = sheet.createRow(rowNumber++);
+  cell = row.createCell((short)0);
   cell.setCellValue("Version");
   cell.setCellStyle(boldCellStyle);
   row.createCell((short)1).setCellValue(crf.getVersion().toString());

@@ -158,7 +158,7 @@ function clearProtocol() {
             </html:select> 
           </td>        
         </tr>
-        
+    
     <tr class="OraTabledata">
       <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.version" /></td>
       <td class="OraFieldText" nowrap>
