@@ -15,6 +15,7 @@
 
 <%
   String performQuery = request.getParameter("performQuery");
+  SessionUtils.setPreviousSessionValues(request);
   List cachedDeList = null;
   Boolean showCached = null;
   try{

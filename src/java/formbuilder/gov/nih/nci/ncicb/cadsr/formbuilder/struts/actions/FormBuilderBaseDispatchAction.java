@@ -96,10 +96,9 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     Object sessionObject) {
     HttpSession session = req.getSession(false);
 
-    if (session != null) {     
+    if (session != null) {
       session.setAttribute(attrName, sessionObject);
     }
-    SessionUtils.addGlobalSessionKey(session,attrName);
   }
 
   /**
@@ -217,13 +216,13 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     FormBuilderServiceDelegate service = getFormBuilderService();
     DynaActionForm hrefCRFForm = (DynaActionForm) form;
     Form crf = null;
-    
+
     String showCached = (String)request.getAttribute("showCached");
-    
+
     if(showCached!=null&&showCached.equalsIgnoreCase(CaDSRConstants.YES))
     {
       crf = (Form) getSessionObject(request, CRF);
-    }    
+    }
     else if (hrefCRFForm != null) {
       String formIdSeq = (String) hrefCRFForm.get(FORM_ID_SEQ);
       //Added to support tree
@@ -253,7 +252,7 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
       errorMessages = (ActionErrors)request.getAttribute(Globals.ERROR_KEY);
       if(errorMessages==null)
         errorMessages = new ActionErrors();
-      
+
       errorMessages.add(errorMessages.GLOBAL_ERROR, errorMessage);
       saveErrors(request,errorMessages);
     }
@@ -263,11 +262,11 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     HttpServletRequest request) {
     if (key != null) {
       ActionMessage message = new ActionMessage(key);
-      
+
       ActionMessages messages = null;
       messages = (ActionMessages)request.getAttribute(Globals.MESSAGE_KEY);
       if(messages==null)
-        messages = new ActionMessages();            
+        messages = new ActionMessages();
 
       messages.add(messages.GLOBAL_MESSAGE, message);
       saveMessages(request, messages);
@@ -339,7 +338,7 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
   /**
    * Used by the action to check if a input form field has a value
    * @param str
-   * @return 
+   * @return
    */
   protected boolean hasValue(String str)
   {

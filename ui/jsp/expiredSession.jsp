@@ -54,17 +54,14 @@ if (parent.frames[1])
   </TR>
   </table>
   
+      
       <table width=100% Cellpadding=0 Cellspacing=0 border=0>
       <tr><td>&nbsp;</td></tr>   
-      <tr class="OraErrorText">
-         <td class="OraErrorText"><b>Your Session has Expired!</b></td>
-      </tr>
       <tr><td>&nbsp;</td></tr>
-      <tr><td>&nbsp;</td></tr>
+      <tr><td align="center" class="OraErrorText"><b>Your Session has Expired!</b></td></tr>
       <tr class="OraTipLabel">
-          <td align="center" class="OraTipLabel" >Click on the home icon to return to CDEBrowser home page.<br> 
-           To close this window click on the following link <a target="_top" href="javascript:top.window.close()">Close Window</a>
-            </td>
+          <td align="center" class="OraTipLabel"> Click <a target="_top" href="cdeBrowse.jsp">here</a> to return to CDEBrowser.
+          </td>
       </tr>
       <tr><td>&nbsp;</td></tr>
       <tr><td class="OraTipLabel"></td></tr>   

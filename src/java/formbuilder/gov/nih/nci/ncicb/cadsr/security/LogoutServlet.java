@@ -3,9 +3,11 @@ import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import javax.servlet.http.HttpSession;
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
 
 public class LogoutServlet extends HttpServlet 
 {
+  
+  private static String LOGOUT_JSP="logout.jsp";
+  private String[] logoutKeys = {CaDSRConstants.USER_KEY,CaDSRConstants.USER_CONTEXTS};
   public LogoutServlet()  
   {
   }
@@ -28,60 +34,69 @@ public class LogoutServlet extends HttpServlet
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    String logoutHome = request.getParameter(CaDSRConstants.LOGOUT_URL);
-    if(logoutHome!=null)
-    {
+
       HttpSession session = request.getSession();
-      if(session!=null)
-      {
-        Set keys = (Set)session.getAttribute(CaDSRConstants.GLOBAL_SESSION_KEYS);
-        Map objMap = new HashMap();
+      String forwardUrl = "/"+LOGOUT_JSP;
+
+      if(session!=null&&isLoggedIn(request))
+      {      
+          for(int i=0;i<logoutKeys.length;i++)
+          {
+            session.removeAttribute(logoutKeys[i]);
+          }      
+        //remove formbuilder specific objects
+        //TODO has to be moved to an action
+        Collection keys = (Collection)session.getAttribute(FormBuilderConstants.CLEAR_SESSION_KEYS);
         if(keys!=null)
         {
           Iterator it  = keys.iterator();
           while(it.hasNext())
           {
-            String key = (String)it.next();
-            Object obj = session.getAttribute(key);
-            objMap.put(obj,key);
+            session.removeAttribute((String)it.next());
           }
-        }
-        //cleanSession(session);
-       session.invalidate();
-       session = request.getSession(true);
-        if(keys!=null)
-        {
-          Iterator keyIt  = keys.iterator();
-          while(keyIt.hasNext())
-          {
-            String key = (String)keyIt.next();
-            Object obj = objMap.get(key);
-            session.setAttribute(key,obj);
+        }          
+          HashMap allMap = new HashMap();
+          allMap.put(CaDSRConstants.GLOBAL_SESSION_KEYS,copyAllsessionKeys(session));
+          allMap.put(CaDSRConstants.GLOBAL_SESSION_MAP,copyAllsessionObjects(session));
+          SessionUtils.addToSessionCache(session.getId(),allMap);        
+          forwardUrl=forwardUrl+"?"+CaDSRConstants.PREVIOUS_SESSION_ID+"="+session.getId();
+          session.invalidate();
 
-          }
-        }
       }
-      else
-      {
-        session = request.getSession(true); 
-      }
-      RequestDispatcher dispacher = request.getRequestDispatcher("/"+logoutHome);
-      dispacher.forward(request,response);
-      
-    }
-    else
-      {
-        request.getSession().invalidate();
-        response.getWriter().println("User Logged out");
-        response.getWriter().flush();
-      }
+            
+      RequestDispatcher dispacher = request.getRequestDispatcher(forwardUrl);
+      dispacher.forward(request,response);           
+
   }
- private void cleanSession(HttpSession session)
+ private Map copyAllsessionObjects(HttpSession session)
  {
+    HashMap map = new HashMap();
     Enumeration  keys = session.getAttributeNames();
     for (; keys.hasMoreElements() ;) {
          String key = (String)keys.nextElement();
-         session.removeAttribute(key);
+         map.put(key,session.getAttribute(key));
      }
+     return map;
+ }
+ 
+  private Set copyAllsessionKeys(HttpSession session)
+ {
+    HashSet set = new HashSet();
+    Enumeration  keys = session.getAttributeNames();
+    for (; keys.hasMoreElements() ;) {
+         String key = (String)keys.nextElement();
+         set.add(key);
+     }
+     return set;
+ }
+ 
+ private boolean  isLoggedIn(HttpServletRequest request)
+ {
+   String user = request.getRemoteUser();
+   if(user==null)
+    return false;
+   if("".equals(user))
+    return false;
+  return true;
  }
 }

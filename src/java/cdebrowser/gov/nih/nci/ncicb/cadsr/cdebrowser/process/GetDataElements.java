@@ -154,24 +154,6 @@ public class GetDataElements extends BasePersistingProcess {
       myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
       userSession = myRequest.getSession(false);
 
-      // This integrates cdebrowser with other application outside mvcframework
-      //stores the session keys that need to copied when session reset
-      String currentServiceString =
-        (String) userSession.getAttribute(ProcessConstants.SERVICENAME);
-      SessionUtils.addGlobalSessionKey(
-        userSession, ProcessConstants.SERVICENAME);
-      SessionUtils.addGlobalSessionKey(userSession, "InfoTablePool");
-
-      if (currentServiceString != null) {
-        SessionUtils.addGlobalSessionKey(
-          userSession, currentServiceString + ".service");
-      }
-
-      SessionUtils.addGlobalSessionKey(userSession, "IsSessionReset");
-      SessionUtils.addGlobalSessionKey(userSession, "maintb");
-      SessionUtils.addGlobalSessionKey(userSession, "subtab0");
-      SessionUtils.addGlobalSessionKey(userSession, "MultipartRequest");
-      SessionUtils.addGlobalSessionKey(userSession, "RequestedValues");
 
       System.out.println(
         getCurrentTimestamp() +
@@ -398,7 +380,7 @@ public class GetDataElements extends BasePersistingProcess {
         queryResults = null;
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
-        
+
       }
 
       setResult("desb", desb);
@@ -479,7 +461,6 @@ public class GetDataElements extends BasePersistingProcess {
 
       CDECart cart = this.findCart(mySession);
       mySession.setAttribute(CaDSRConstants.CDE_CART, cart);
-      SessionUtils.addGlobalSessionKey(mySession, CaDSRConstants.CDE_CART);
     }
     else {
       setResult("SBREXT_DSN", getStringInfo("SBREXT_DSN"));
