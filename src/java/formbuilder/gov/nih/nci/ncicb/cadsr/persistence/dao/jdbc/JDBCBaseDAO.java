@@ -55,17 +55,8 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
   }
 
   public String getDataSourceKey() {
-    if (log.isDebugEnabled()) {
-      log.debug("get DataSource key using key =  " + DATASOURCE_KEY);
-    }
 
-    String dsKey = getServiceLocator().getString(DATASOURCE_KEY);
-
-    if (log.isDebugEnabled()) {
-      log.debug("getDataSourceKey() =  " + dsKey);
-    }
-
-    return dsKey;
+    return DATASOURCE_LOCATION_KEY;
   }
 
   /**
