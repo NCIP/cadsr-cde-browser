@@ -96,5 +96,5 @@ public interface FormBuilderServiceDelegate {
     String newLongName,
     String username) throws FormBuilderException;
     
-  public Map getValidValule(Collection vdIdSeqs) throws FormBuilderException;
+  public Map getValidValues(Collection vdIdSeqs) throws FormBuilderException;
 }

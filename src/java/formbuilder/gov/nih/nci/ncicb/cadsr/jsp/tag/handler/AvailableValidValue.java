@@ -87,7 +87,7 @@ public class AvailableValidValue extends TagSupport implements CaDSRConstants,Fo
     ListIterator avalilableVVsListIterate = avalilableVVs.listIterator();
      while (avalilableVVsListIterate.hasNext()) {
       ValidValue vv = (ValidValue) avalilableVVsListIterate.next();
-      sb.append("<option value=\""+vv.getShortMeaningValue()+">"+vv.getShortMeaningValue()+"</option> \n" );
+      sb.append("<option value=\""+vv.getShortMeaningValue()+"\">"+vv.getShortMeaningValue()+"</option> \n" );
      }
     sb.append("</select>");
     return sb.toString();

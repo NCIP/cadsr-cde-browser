@@ -110,5 +110,5 @@ public interface FormBuilderServiceRemote {
     String newLongName,
     String username) throws RemoteException;
 
-  public Map getValidValule(Collection vdIdSeqs) throws RemoteException;
+  public Map getValidValues(Collection vdIdSeqs) throws RemoteException;
 }

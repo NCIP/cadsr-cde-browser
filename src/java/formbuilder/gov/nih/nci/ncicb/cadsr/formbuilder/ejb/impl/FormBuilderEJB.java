@@ -334,7 +334,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return ret;
   }
   
-  public Map getValidValule(Collection vdIdSeqs)
+  public Map getValidValues(Collection vdIdSeqs)
   {
     ValueDomainDAO myDAO = daoFactory.getValueDomainDAO();
     Map valueMap =

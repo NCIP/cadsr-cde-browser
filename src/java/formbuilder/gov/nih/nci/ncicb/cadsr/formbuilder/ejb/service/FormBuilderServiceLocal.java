@@ -97,5 +97,5 @@ public interface FormBuilderServiceLocal  {
     String newLongName,
     String username);
     
-  public Map getValidValule(Collection vdIdSeqs);
+  public Map getValidValues(Collection vdIdSeqs);
 }
