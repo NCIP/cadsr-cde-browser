@@ -1,40 +1,58 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 // java imports
+//CDE Browser Application Imports
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-import gov.nih.nci.ncicb.cadsr.base.process.*;
+import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.resource.*;
-import gov.nih.nci.ncicb.cadsr.util.*;
+import gov.nih.nci.ncicb.cadsr.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
-import java.sql.*;
+import java.sql.Array;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import oracle.cle.process.ProcessInfoException;
 import oracle.cle.process.Service;
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
 
-import oracle.jdbc.*;
+import oracle.jdbc.OracleResultSet;
 
-import oracle.sql.*;
-// Framework imports
-//import oracle.cle.process.ProcessConstants;
-//CDE Browser Application Imports
+import oracle.sql.ARRAY;
+import oracle.sql.CHAR;
+import oracle.sql.Datum;
+import oracle.sql.NUMBER;
+import oracle.sql.STRUCT;
+
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
 
 /**
  *
  * @author Ram Chilukuri 
+ * @version: $Id: GetExcelDownload.java,v 1.2 2004-08-17 14:09:29 jiangja Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess{
+   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
 	private static final String EMPTY_STRING = "";
-  private static final int NUMBER_OF_DE_COLUMNS = 32;
+   private static final int NUMBER_OF_DE_COLUMNS = 32;
     
 	public GetExcelDownload(){
 		this(null);
@@ -453,7 +471,7 @@ public class GetExcelDownload extends BasePersistingProcess{
       
     } 
     catch (Exception ex) {
-      ex.printStackTrace();
+      log.error("Exception caught", ex);
       throw ex;
     } 
     finally {
@@ -465,8 +483,7 @@ public class GetExcelDownload extends BasePersistingProcess{
       }
       
       catch (Exception e){
-        System.out.println
-         ("Unable to perform clean up due to the following error "+e.getMessage());
+        log.error("Unable to perform clean up due to the following error ", e);
       }
       
     }
