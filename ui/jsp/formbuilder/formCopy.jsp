@@ -72,14 +72,15 @@ function submitForm() {
         <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
           <td class="OraFieldText" nowrap>
-            <html:textarea 
+            <html:text 
               property="<%= FormConstants.FORM_LONG_NAME %>"
-              cols="30"
-              rows="5"
+              size="100"
               styleClass="OraFieldText"
               />
           </td>
+        </tr>
 
+        <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:define id="context" scope="session" name="<%= FormConstants.CRF %>" property="<%= FormConstants.CRF_CONTEXT %>" toScope="page"/>
@@ -99,9 +100,13 @@ function submitForm() {
               size="10"
               />
           </td>
+        </tr>
 
+        <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
           <td class="OraFieldText" nowrap>
+            DRAFT NEW
+            <!--
             <html:text 
               property="<%= FormConstants.WORKFLOW %>"
               readonly="true" 
@@ -109,13 +114,13 @@ function submitForm() {
               styleClass="LOVField"
               onfocus="this.blur();"
               />
-            <!--
             <html:select styleClass = "Dropdown" property="<%=FormConstants.WORKFLOW%>">
               <html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
             </html:select>        
 -->
           </td>      
         </tr>
+
         <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
           <td class="OraFieldText" nowrap>
@@ -123,6 +128,9 @@ function submitForm() {
               <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
             </html:select> 
           </td>        
+        </tr>
+
+        <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocol" />:</td>
           <td class="OraFieldText" nowrap>
             <html:text 
@@ -146,11 +154,6 @@ function submitForm() {
               <html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> \
             </html:select> 
           </td>
-          <td class="OraTableColumnHeader" nowrap>
-          </td>
-          <td class="OraFieldText" nowrap>
-          </td>
-          
         </tr>     
 
         <tr class="OraTabledata">
@@ -159,11 +162,15 @@ function submitForm() {
             <html:textarea 
               property="<%= FormConstants.PREFERRED_DEFINITION %>"
               name="<%= FormConstants.CRF %>"
-              cols="30"
-              rows="5"
+              cols="100"
+              rows="3"
               styleClass="OraFieldText"
               />
            </td>
+         </tr>
+
+         <!--
+        <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.comments" />:</td>
           <td class="OraFieldText" nowrap>
             <html:textarea 
@@ -174,11 +181,10 @@ function submitForm() {
               />
            </td>
         </tr>
-      </table>
+        -->
 
-      <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0">
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.confirmCopy" />:
+          <td class="OraTableColumnHeader" nowrap  colspan="2"><bean:message key="cadsr.formbuilder.form.confirmCopy"/>:
             <html:checkbox property="<%= FormConstants.FORM_GOTO_EDIT %>"/>
           </td>
         </tr>
