@@ -375,11 +375,14 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
             String type = header.getFormType();
             if(type.equalsIgnoreCase(PersistenceConstants.FORM_TYPE_CRF))
             {
-              if(header.getProtocol()==null)
+             
+             /** 
+              * if(header.getProtocol()==null)
                 {
                    saveError("cadsr.formbuilder.form.edit.form.noProtocol", request);
                    return mapping.findForward(FAILURE);
                 }
+                **/
             }
             else
             {
@@ -512,11 +515,12 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
             String type = header.getFormType();
             if(type.equalsIgnoreCase(PersistenceConstants.FORM_TYPE_CRF))
             {
-              if(header.getProtocol()==null)
+             /** if(header.getProtocol()==null)
                 {
                    saveError("cadsr.formbuilder.form.edit.form.noProtocol", request);
                    return mapping.findForward(FAILURE);
                 }
+                **/
             }
             else
             {
