@@ -390,7 +390,7 @@ function listChanged(urlInfo) {
         <td class="OraFieldText"><%=rd.getDocName()%> </td>
         <td class="OraFieldText"><%=rd.getDocType()%> </td>
         <td class="OraFieldText"><%=rd.getDocText()%> </td>
-        <td class="OraFieldText"><%=rd.getUrl()%> </td>
+        <td class="OraFieldText"><a href="<%=rd.getUrl()%>" target="AuxWindow"> <%=rd.getUrl()%> </a></td>
       </tr>
 <%
     }

@@ -288,7 +288,9 @@
                     URL 
                   </td>
                   <td class="OraFieldText" nowrap>
-                        <bean:write name="refDoc" property="url"/>
+                  <a href="<bean:write name="refDoc" property="url"/>" target="AuxWindow"  >
+                    <bean:write name="refDoc" property="url"/>
+                    </a>
                   </td>
                </tr>    
                <tr class="OraTabledata">
