@@ -74,6 +74,11 @@
     <name>formType</name>
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
+    </attribute>     
+    <attribute>
+    <name>confirmMessageKey</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
     </attribute>      
   </tag> 
   <tag>

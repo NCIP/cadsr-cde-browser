@@ -1,4 +1,12 @@
+</SCRIPT>
 
+ <script LANGUAGE="Javascript">
+<!---
+function actionConfirm(message, url){
+if(confirm(message)) location.href = url;
+}
+// --->
+</SCRIPT>
       <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" >
         <tr >
            <td width="40%" >
@@ -45,7 +53,8 @@
 		   	   	urlPrefix="<%=urlPrefix%>"
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
-		   	   	altMessage="Delete"            
+		   	   	altMessage="Delete"  
+            confirmMessageKey="cadsr.formbuilder.form.delete.confirm"
 		   	   	/>		                
           </td>  
           <td width="40%" align="right">

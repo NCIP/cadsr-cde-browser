@@ -23,6 +23,9 @@ public interface FormBuilderConstants {
   public static final String ERROR_MODULE_RETRIEVE="FB005";
   public static final String ERROR_FORM_RETRIEVE="FB006";
   public static final String ERROR_FORM_CREATE="FB007";
+  public static final String ERROR_FORM_DOES_NOT_EXIST="FB008"; 
+  public static final String ERROR_FORM_EDIT_FAILED="FB0010";
+  public static final String ERROR_FORM_COPY_FAILED="FB0011"; 
   public static final String ERROR_FATAL="FB911";
   
 

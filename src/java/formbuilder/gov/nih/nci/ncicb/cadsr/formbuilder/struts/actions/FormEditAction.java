@@ -66,6 +66,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       setSessionObject(request, CLONED_CRF, clonedCrf,true);
     }
     catch (FormBuilderException exp) {
+      saveError(ERROR_FORM_RETRIEVE, request);
+      saveError(ERROR_FORM_DOES_NOT_EXIST, request);    
       saveError(exp.getErrorCode(),request);
       if (log.isErrorEnabled()) {
         log.error("Exception on getFormForEdit form " + crf,exp);

@@ -1,3 +1,12 @@
+</SCRIPT>
+
+ <script LANGUAGE="Javascript">
+<!---
+function actionConfirm(message, url){
+if(confirm(message)) location.href = url;
+}
+// --->
+</SCRIPT>
 <%@ include file="showMessages.jsp" %>
    
    <logic:notEmpty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
@@ -75,6 +84,7 @@
 		   	   	paramProperty="formIdseq"
             inactiveImageSource="i/delete_inactive.gif"
 		   	   	altMessage="Delete"
+            confirmMessageKey="cadsr.formbuilder.form.delete.confirm"
 		   	   	/>		           	
 		</td> 
 	       </tr>

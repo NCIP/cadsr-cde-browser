@@ -17,7 +17,10 @@ import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.JspWriter;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.struts.taglib.bean.*;
+import org.apache.struts.util.RequestUtils;
 
 /**
  * This TagHandler is used to display icons by role
@@ -47,6 +50,7 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
   private String target;
   private String formScope;
   private String formType;
+  private String confirmMessageKey;
 
   public SecureIconDisplay()
   {
@@ -106,7 +110,13 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
         targetStr="target=\""+target+"\" ";        
        if(hasPrivilege(role,formType,nciUser,form))
         {
-          out.print("<a href='"+getHrefUrl(req,form)+"'"+targetStr+"/><img src=\""+urlPrefix+activeImageSource+"\" border=0 alt='"+altMessage+"'></a>");
+          String hrefVal=null;
+          if(confirmMessageKey!=null)
+            hrefVal= getConfirmMethod(getHrefUrl(req,form));
+          else
+            hrefVal=getHrefUrl(req,form);
+            
+          out.print("<a href=\""+hrefVal+"\" "+targetStr+"/><img src=\""+urlPrefix+activeImageSource+"\" border=0 alt='"+altMessage+"'></a>");
         }
         else
         {
@@ -120,6 +130,12 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
 
     }//end doStartTag()
  
+ private String getConfirmMethod(String url) throws JspException
+ {
+   String message = RequestUtils.message(pageContext,null,null,confirmMessageKey);
+   String method = "javascript:actionConfirm('"+message+"', '"+url+"')";
+   return method;
+ }
   protected boolean hasPrivilege(String userRole,String currFormType, NCIUser user,Form form) throws JspException
   {
     Context userContext = form.getContext();
@@ -262,5 +278,15 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
   public void setFormType(String newFormType)
   {
     formType = newFormType;
+  }
+
+  public String getConfirmMessageKey()
+  {
+    return confirmMessageKey;
+  }
+
+  public void setConfirmMessageKey(String newConfirmMessageKey)
+  {
+    confirmMessageKey = newConfirmMessageKey;
   }
 }

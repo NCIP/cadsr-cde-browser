@@ -30,7 +30,7 @@
 	<jsp:param name="label" value="Create&nbsp;Form" />
 	<jsp:param name="urlPrefix" value="" />
 </jsp:include>
-<%@ include file="showMessages.jsp" %>
+
 <html:form action='<%="/formCreate?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_FORM%>'>
   <%@ include  file="/formbuilder/formCreate_inc.jsp" %>
 </html:form>

@@ -56,7 +56,7 @@ function clearProtocol() {
     </tr>
   </table>
 
-  <%@ include file="showValidationErrors.jsp" %>
+<%@ include file="showMessages.jsp" %>
 
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
     <tr class="OraTabledata">

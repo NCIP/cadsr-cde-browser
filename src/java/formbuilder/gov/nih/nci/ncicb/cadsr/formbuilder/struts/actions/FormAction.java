@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.apache.struts.Globals;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -114,6 +116,9 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     ActionMessages messages =
       (ActionMessages) request.getAttribute(Globals.MESSAGE_KEY);
 
+    ActionErrors errors =
+      (ActionErrors) request.getAttribute(Globals.ERROR_KEY);
+
     if ((messages != null) && !messages.isEmpty()) {
       Iterator mesgIt = messages.get(ActionMessages.GLOBAL_MESSAGE);
       StringBuffer strBuff = new StringBuffer();
@@ -125,11 +130,24 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
         if (mesgIt.hasNext()) {
           strBuff.append(",");
         }
-      }
-
-      params.put(ActionMessages.GLOBAL_MESSAGE, strBuff.toString());
+      }      
+     params.put(ActionMessages.GLOBAL_MESSAGE, strBuff.toString());
     }
+    if ((errors != null) && !errors.isEmpty()) {
+      Iterator errorIt = errors.get(ActionErrors.GLOBAL_ERROR);
+      StringBuffer strBuff = new StringBuffer();
 
+      while (errorIt.hasNext()) {
+        ActionError error = (ActionError)errorIt.next();
+        strBuff.append(error.getKey());
+
+        if (errorIt.hasNext()) {
+          strBuff.append(",");
+        }
+      }      
+
+      params.put(ActionErrors.GLOBAL_ERROR, strBuff.toString());
+    }
     request.setAttribute("requestMap", params);
 
     return mapping.findForward(SUCCESS);
@@ -163,6 +181,15 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
       }
     }
 
+    String stringErrors = request.getParameter(ActionErrors.GLOBAL_ERROR);
+    if ((stringErrors != null) && !stringErrors.equals("")) {
+      String[] errorArr = StringUtils.tokenizeCSVList(stringErrors);
+  
+      for (int i = 0; i < errorArr.length; i++) {
+        this.saveError(errorArr[i], request);
+      }
+    }
+
     return mapping.findForward(SUCCESS);
   }
 
@@ -190,10 +217,11 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     }
     catch (FormBuilderException exp) {
       if (log.isErrorEnabled()) {
-        log.error("Exception on getForm Details ", exp);
-      }
-
-      saveError(exp.getErrorCode(), request);
+        log.error("Exception getting CRF", exp);
+      }      
+      saveError(ERROR_FORM_RETRIEVE, request);
+      saveError(ERROR_FORM_DOES_NOT_EXIST, request);
+      return mapping.findForward(FAILURE);
     }
 
     return mapping.findForward(SUCCESS);
@@ -225,8 +253,8 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
       }
     }
     catch (FormBuilderException exp) {
-      saveError(exp.getErrorCode(), request);
-
+      saveError(ERROR_FORM_RETRIEVE, request);
+      saveError(ERROR_FORM_DOES_NOT_EXIST, request);
       if (log.isErrorEnabled()) {
         log.error("Exception on getFormForEdit ", exp);
       }

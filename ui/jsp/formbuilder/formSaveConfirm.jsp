@@ -60,7 +60,7 @@ function submitFormToSave(methodName) {
         <tr >
          <td align="center">
             <a href="javascript:submitFormToSave('<%=NavigationConstants.SAVE_FORM_MODULE_EDIT%>')">
-                <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Save"/>
+                <html:img src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
              </a> 
           </td>   
          <td align="center">

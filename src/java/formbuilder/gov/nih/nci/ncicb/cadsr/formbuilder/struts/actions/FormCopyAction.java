@@ -1,10 +1,17 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
 import org.apache.commons.logging.Log;
@@ -29,18 +36,9 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
-import gov.nih.nci.ncicb.cadsr.resource.Context;
-import gov.nih.nci.ncicb.cadsr.resource.Protocol;
-import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
-import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
-
-
   /**
    * Returns Complete form given an Id for Copy.
    *
@@ -59,31 +57,32 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-  	Form crf = (Form)getSessionObject(request, CRF);
-    try
-      {
-	setFormForAction(form,request);
-	DynaActionForm dynaForm = (DynaActionForm)form;
+    
 
-	dynaForm.set(FORM_LONG_NAME, crf.getLongName());
-	dynaForm.set(FORM_VERSION, new Float(1.0));
-	dynaForm.set(PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
-	dynaForm.set(PROTOCOLS_LOV_ID_FIELD, crf.getProtocol().getProtoIdseq());
-	dynaForm.set(WORKFLOW, "DRAFT NEW");
+    try {
+      setFormForAction(form, request);
+      DynaActionForm dynaForm = (DynaActionForm) form;
+      Form crf = (Form) getSessionObject(request, CRF);
+      dynaForm.set(FORM_LONG_NAME, crf.getLongName());
+      dynaForm.set(FORM_VERSION, new Float(1.0));
+      dynaForm.set(PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
+      dynaForm.set(PROTOCOLS_LOV_ID_FIELD, crf.getProtocol().getProtoIdseq());
+      dynaForm.set(WORKFLOW, "DRAFT NEW");
 
-	NCIUser nciUser = (NCIUser)getSessionObject(request, CaDSRConstants.USER_KEY);
-	Map contexts = nciUser.getContextsByRole();
-
-
+      NCIUser nciUser =
+        (NCIUser) getSessionObject(request, CaDSRConstants.USER_KEY);
+      Map contexts = nciUser.getContextsByRole();
+    }
+    catch (FormBuilderException exp) {
+      if (log.isErrorEnabled()) {
+        log.error("Exception on getFormToCopy for form "+form , exp);
       }
-    catch (FormBuilderException exp)
-      {
-	if (log.isErrorEnabled()) {
-	  log.error("Exception on getFormToCopy for form" + crf,exp);
-	}
-	saveError(exp.getErrorCode(), request);
-	return mapping.findForward("failure");
-      }
+      saveError(ERROR_FORM_DOES_NOT_EXIST, request);
+      saveError(exp.getErrorCode(), request);
+
+      return mapping.findForward("failure");
+    }
+
     return mapping.findForward("showSuccess");
   }
 
@@ -105,49 +104,48 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-
-    DynaActionForm dynaForm = (DynaActionForm)form;
+    DynaActionForm dynaForm = (DynaActionForm) form;
     Form newForm = new FormTransferObject();
-    Form crf = (Form)getSessionObject(request, CRF);
-    try
-      {
-	newForm.setLongName((String)dynaForm.get(FORM_LONG_NAME));
-	// 		newForm.setFormIdseq((String)dynaForm.get(FORM_ID_SEQ));
-	newForm.setPreferredDefinition((String)dynaForm.get(PREFERRED_DEFINITION));
+    Form crf = (Form) getSessionObject(request, CRF);
 
-	Context newContext = new ContextTransferObject(null);
-	newContext.setConteIdseq((String)dynaForm.get(CRF_CONTEXT_ID_SEQ));
-	newForm.setContext(newContext);
+    try {
+      newForm.setLongName((String) dynaForm.get(FORM_LONG_NAME));
 
-	Protocol newProtocol = new ProtocolTransferObject(null);
-	newProtocol.setProtoIdseq((String)dynaForm.get(PROTOCOLS_LOV_ID_FIELD));
-	newForm.setProtocol(newProtocol);
+      // 		newForm.setFormIdseq((String)dynaForm.get(FORM_ID_SEQ));
+      newForm.setPreferredDefinition(
+        (String) dynaForm.get(PREFERRED_DEFINITION));
 
-	newForm.setFormCategory((String)dynaForm.get(FORM_CATEGORY));
-	newForm.setFormType((String)dynaForm.get(FORM_TYPE));
+      Context newContext = new ContextTransferObject(null);
+      newContext.setConteIdseq((String) dynaForm.get(CRF_CONTEXT_ID_SEQ));
+      newForm.setContext(newContext);
 
-// 	newForm.setAslName((String)dynaForm.get(WORKFLOW));
-	newForm.setAslName("DRAFT NEW");
+      Protocol newProtocol = new ProtocolTransferObject(null);
+      newProtocol.setProtoIdseq((String) dynaForm.get(PROTOCOLS_LOV_ID_FIELD));
+      newForm.setProtocol(newProtocol);
 
-	newForm.setVersion((Float)dynaForm.get(FORM_VERSION));
+      newForm.setFormCategory((String) dynaForm.get(FORM_CATEGORY));
+      newForm.setFormType((String) dynaForm.get(FORM_TYPE));
 
-	newForm.setCreatedBy(request.getRemoteUser());
+      // 	newForm.setAslName((String)dynaForm.get(WORKFLOW));
+      newForm.setAslName("DRAFT NEW");
 
-	
+      newForm.setVersion((Float) dynaForm.get(FORM_VERSION));
 
-	FormBuilderServiceDelegate service = getFormBuilderService();
-	newForm = service.copyForm(crf.getFormIdseq(), newForm);
-	// 		newForm = service.getFormDetails(newFormPK);
+      newForm.setCreatedBy(request.getRemoteUser());
 
+      FormBuilderServiceDelegate service = getFormBuilderService();
+      newForm = service.copyForm(crf.getFormIdseq(), newForm);
+
+      // 		newForm = service.getFormDetails(newFormPK);
+    }
+    catch (FormBuilderException exp) {
+      if (log.isErrorEnabled()) {
+        log.error("Exception on copying Form  " + crf, exp);
       }
-    catch (FormBuilderException exp)
-      {
-	if (log.isErrorEnabled()) {
-	  log.error("Exception on copying Form  " + crf,exp);
-	}
-	saveError(exp.getErrorCode(), request);
-	return mapping.findForward("failure");
-      }
+      saveError(exp.getErrorCode(), request);
+
+      return mapping.findForward("failure");
+    }
 
     setSessionObject(request, CRF, newForm);
     request.setAttribute(FORM_ID_SEQ, newForm.getFormIdseq());
@@ -156,12 +154,13 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
 
     if (dynaForm.get(FORM_GOTO_EDIT) == null) {
       return mapping.findForward("gotoView");
-    } else if (((Boolean)dynaForm.get(FORM_GOTO_EDIT)).booleanValue()) {
+    }
+    else if (((Boolean) dynaForm.get(FORM_GOTO_EDIT)).booleanValue()) {
       return mapping.findForward("gotoEdit");
-    } else {
+    }
+    else {
       return mapping.findForward("gotoView");
-    } // end of else
+    }
+     // end of else
   }
-
 }
-
