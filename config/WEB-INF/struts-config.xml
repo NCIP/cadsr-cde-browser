@@ -72,7 +72,7 @@
     <form-bean name="moduleEditForm" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean" dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="moduleLongName" type="java.lang.String"/>
-      <form-property name="moduleComments" type="java.lang.String"/>
+      <form-property name="moduleInstructionLongName" type="java.lang.String"/>
       <form-property name="moduleIndex" type="java.lang.Integer"/>
       <form-property name="questionLongName" type="java.lang.String"/>
       <form-property name="questionIdSeq" type="java.lang.String"/>
