@@ -36,7 +36,7 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
  */
 public class GetExcelDownload extends BasePersistingProcess{
 	private static final String EMPTY_STRING = "";
-  private static final int NUMBER_OF_DE_COLUMNS = 29;
+  private static final int NUMBER_OF_DE_COLUMNS = 30;
     
 	public GetExcelDownload(){
 		this(null);
@@ -249,6 +249,7 @@ public class GetExcelDownload extends BasePersistingProcess{
         deList.add(Integer.toString(rs.getInt("DECIMAL_PLACE"))); //26
         deList.add(rs.getString("FORML_NAME")); //27
         deList.add(rs.getString("VD_LONG_NAME")); //28
+        deList.add(rs.getString("DEC_LONG_NAME")); //29
         
         deStr= getDataElementStr(deList);
 
@@ -423,6 +424,7 @@ public class GetExcelDownload extends BasePersistingProcess{
                   +"Value Domain Format,"
                   +"Data Element Concept Public ID,"
                   +"Data Element Concept Preferred Name,"
+                  +"Data Element Concept Long Name,"
                   +"Data Element Concept Version,"
                   +"Data Element Concept Context Name,"
                   +"Data Element Concept Context Version,"
@@ -476,6 +478,7 @@ public class GetExcelDownload extends BasePersistingProcess{
                "\""+checkForNull((String)l.get(27))+"\"" +"," +
                "\""+checkForNull((String)l.get(18))+"\"" +"," +
                "\""+checkForNull((String)l.get(11))+"\"" +"," +
+               "\""+checkForNull((String)l.get(29))+"\"" +"," +
                "\""+checkForNull((String)l.get(12))+"\"" +"," +
                "\""+checkForNull((String)l.get(13))+"\"" +"," +
                "\""+checkForNull((String)l.get(14))+"\"" +"," +

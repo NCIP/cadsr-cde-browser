@@ -108,8 +108,6 @@ public class GetDataElements extends BasePersistingProcess {
     }
   }
 
-  // end registerInfo
-
   /**
    * persist: called by start to do all persisting work for this process.  If
    * this method throws an exception, then the condition returned by the
