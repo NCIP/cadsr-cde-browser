@@ -1,4 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.bc4j;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import oracle.jbo.server.ViewRowImpl;
 import oracle.jbo.server.AttributeDefImpl;
 import oracle.jbo.RowIterator;
@@ -10,6 +12,7 @@ import oracle.jbo.domain.Date;
 
 public class ValueDomainsViewRowImpl extends ViewRowImpl  {
 
+  private static Log log = LogFactory.getLog(ValueDomainsViewRowImpl.class.getName());
 
   protected static final int VDIDSEQ = 0;
   protected static final int VERSION = 1;
@@ -726,7 +729,7 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
     }
     catch(Exception e)
     {
-      System.out.println("Error in DataElementsViewRowImpl.getValueDomain(): " + e.getMessage());
+      log.error("Error in getValueDomain(): ", e);
     }
     return row;
   }
