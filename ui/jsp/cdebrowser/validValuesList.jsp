@@ -181,6 +181,7 @@ function listChanged(urlInfo) {
     <td class="TableRowPromptText">Value Domain Type:</td>
     <td class="OraFieldText"><%=vd.getVDType()%></td>
  </tr>
+ 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Conceptual Domain Preferred Name:</td>
     <td class="OraFieldText"><%=vd.getCDPrefName()%> </td>
@@ -193,6 +194,12 @@ function listChanged(urlInfo) {
     <td class="TableRowPromptText">Conceptual Domain Version:</td>
     <td class="OraFieldText"><%=vd.getCDVersion()%> </td>
  </tr>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Conceptual Domain Concept id:</td>
+    <td class="OraFieldText">
+    <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
+    </td>
+ </tr>  
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Origin:</td>
     <td class="OraFieldText"><%=vd.getOrigin()%> </td>
@@ -230,6 +237,7 @@ function listChanged(urlInfo) {
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader">Value</th>
     <th class="OraTableColumnHeader">Value Meaning</th>
+    <th class="OraTableColumnHeader">Value Meaning Concept Id</th>
     <th class="OraTableColumnHeader">Value Meaning Description</th>
   </tr>
 <%
@@ -241,7 +249,10 @@ function listChanged(urlInfo) {
       <tr class="OraTabledata">
         <td class="OraFieldText"><%=validValue.getShortMeaningValue()%> </td>
         <td class="OraFieldText"><%=validValue.getShortMeaning()%> </td>
-        <td class="OraFieldText"><%=validValue.getDescription()%> </td>
+        <td class="OraFieldText">
+          <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
+        </td> 
+        <td class="OraFieldText"><%=validValue.getDescription()%> </td>        
       </tr>
 <%
     }
