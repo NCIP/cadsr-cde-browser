@@ -55,7 +55,6 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
   }
 
   public String getDataSourceKey() {
-
     return DATASOURCE_LOCATION_KEY;
   }
 
@@ -116,35 +115,36 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     return StringUtils.toBoolean(retValue);
   }
 
-  /*
-     public boolean hasUpdate(
-       String username,
-       String acIdseq) {
-       int[] inputTypes = { Types.VARCHAR, Types.VARCHAR };
-       String sqlStmt =
-         " SELECT cadsr_security_util.has_update_privilege(?,?) FROM DUAL ";
-       SqlFunction hasUpdateFunc =
-         new SqlFunction(this.getDataSource(), sqlStmt, inputTypes, Types.VARCHAR);
-       hasUpdateFunc.compile();
-       Object[] inputValues = { username, acIdseq };
-       String retVal = (String) hasUpdateFunc.runGeneric(inputValues);
-       return StringUtils.toBoolean(retVal);
-     }
+  /**
+   * Utility method to get global unique identifier used as a primary key in
+   * all caDSR tables
+   *
+   * @return <b>String</b> global unique identifier (length 36)
    */
-
   public String generateGUID() {
     String guid = null;
     GUIDGenerator gen = new GUIDGenerator(this.getDataSource());
     guid = gen.getGUID();
+
     return guid;
   }
 
-  public String generatePreferredName() {
+  /**
+   * Utility method to derive preferred name using the long name.
+   *
+   * @param <b>longName</b> Long name of the admin component
+   *
+   * @return <b>String</b> Derived preferred name
+   */
+  public String generatePreferredName(String longName) {
     String prefName = null;
+    PreferredNameGenerator gen =
+      new PreferredNameGenerator(this.getDataSource());
+    prefName = gen.getPreferredName(longName);
 
     return prefName;
   }
-   
+
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
 
@@ -152,31 +152,23 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     JDBCBaseDAO test = new JDBCBaseDAO(locator);
 
     /*boolean res;
-    res = test.hasDelete("SBREX", "B046971C-6A89-5F47-E034-0003BA0B1A09");
-    System.out.println("\n*****Delete Result 1: " + res);
-
-    res = test.hasDelete("SBREXT", "99BA9DC8-2099-4E69-E034-080020C9C0E0");
-    System.out.println("\n*****Delete Result 2: " + res);
-
-    res =
-      test.hasCreate(
-        "SBREX", "CONCEPTUALDOM", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
-    System.out.println("\n*****Create Result 1: " + res);
-
-    res =
-      test.hasCreate(
-        "SBREXT", "CONCEPTUALDOMAIN", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
-    System.out.println("\n*****Create Result 2: " + res);
-
-    res = test.hasUpdate("SBREX", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
-    System.out.println("\n*****Update Result 1: " + res);
-
-    res = test.hasUpdate("SBREXT", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
-    System.out.println("\n*****Update Result 2: " + res);*/
-
-    
-    System.out.println("GUID: "+test.generateGUID());
-    
+       res = test.hasDelete("SBREX", "B046971C-6A89-5F47-E034-0003BA0B1A09");
+       System.out.println("\n*****Delete Result 1: " + res);
+       res = test.hasDelete("SBREXT", "99BA9DC8-2099-4E69-E034-080020C9C0E0");
+       System.out.println("\n*****Delete Result 2: " + res);
+       res =
+         test.hasCreate(
+           "SBREX", "CONCEPTUALDOM", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+       System.out.println("\n*****Create Result 1: " + res);
+       res =
+         test.hasCreate(
+           "SBREXT", "CONCEPTUALDOMAIN", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+       System.out.println("\n*****Create Result 2: " + res);
+       res = test.hasUpdate("SBREX", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+       System.out.println("\n*****Update Result 1: " + res);
+       res = test.hasUpdate("SBREXT", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+       System.out.println("\n*****Update Result 2: " + res);*/
+    System.out.println("GUID: " + test.generatePreferredName("my long name test test"));
   }
 
   /**
@@ -212,7 +204,7 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
 
   /**
    * Inner class that checks if the user has a delete privilege on the
-   * administered component 
+   * administered component
    */
   private class HasDeleteQuery extends StoredProcedure {
     public HasDeleteQuery(DataSource ds) {
@@ -269,7 +261,7 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
   /**
    * Inner class to get global unique identifier
    */
-  private class GUIDGenerator extends StoredProcedure  {
+  private class GUIDGenerator extends StoredProcedure {
     public GUIDGenerator(DataSource ds) {
       super(ds, PersistenceConstants.IDSEQ_GENERATOR);
       setFunction(true);
@@ -279,6 +271,29 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
 
     public String getGUID() {
       Map in = new HashMap();
+      Map out = execute(in);
+      String retValue = (String) out.get("returnValue");
+
+      return retValue;
+    }
+  }
+
+  /**
+   * Inner class to get preferred name
+   */
+  private class PreferredNameGenerator extends StoredProcedure {
+    public PreferredNameGenerator(DataSource ds) {
+      super(ds, "set_name.set_qc_name");
+      setFunction(true);
+      declareParameter(new SqlOutParameter("returnValue", Types.VARCHAR));
+      declareParameter(new SqlParameter("name", Types.VARCHAR));
+      compile();
+    }
+
+    public String getPreferredName(String longName) {
+      Map in = new HashMap();
+      in.put("name", longName);
+
       Map out = execute(in);
       String retValue = (String) out.get("returnValue");
 
