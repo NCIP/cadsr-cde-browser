@@ -74,12 +74,15 @@
         <tr >
          <td>
             <a href="javascript:submitForm('<%="uploadDocuments"%>')">
-               <html:img src='<%="i/save.gif"%>' border="0" alt="Upload Document"/>
+               <html:img src='<%="i/add_button.gif"%>' border="0" alt="Add Attachment"/>
             </a>
           </td>          
               
           <td > 
-		<html:img src='<%=urlPrefix+"i/back.gif"%>' border="0" alt="Done"/>           
+            <a href="javascript:submitForm('<%="cancelUploadAttachement"%>')">
+         		<html:img src='<%=urlPrefix+"i/back.gif"%>' border="0" alt="Done"/>           
+            </a>
+
           </td>                    
              
         </tr> 
