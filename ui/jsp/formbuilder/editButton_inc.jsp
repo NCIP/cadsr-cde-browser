@@ -1,3 +1,4 @@
+<script LANGUAGE="Javascript">
 <!---
 function actionConfirm(message, url){
 if(confirm(message)) location.href = url;
