@@ -281,7 +281,7 @@
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.CDECartAction"
       validate="false">
-      <forward name="success" path="/displayCDECart.jsp"/>
+      <forward name="success" path="/cdebrowser/displayCDECart.jsp"/>
       <forward name="saveSuccess" path="/formCDECartAction.do?method=addItems"/>
     </action>
     <action name="displayCartForm" path="/formCDECartAction" parameter="method"

@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="yes"?>
 <!-- NOTE!  Adjust the following path to match your server installation... -->
 <!DOCTYPE service SYSTEM ""[
-<!ENTITY docpath "">
+<!ENTITY docpath "/cdebrowser/">
 ]>
 <service name="CDEBrowser" class="oracle.cle.process.Service" initial="SearchRouter">
     <process name="SearchRouter" class="oracle.clex.process.ProcessRouter" end="false">
