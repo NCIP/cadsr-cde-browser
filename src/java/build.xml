@@ -18,6 +18,7 @@
    <property name="deploy.username" value="admin" />
    <property name="deploy.password" value="oracle" /> 
    <property name="oc4j.j2ee.home" value="D:/tools/oracle/oc4j/902_FB/j2ee/home" /> 
+   <property name="oc4j.start.script.name" value="debugoc4j.bat" />
    <property name="oc4j.admin.jar.name" value="admin" /> 
   
   
@@ -522,8 +523,17 @@
   <target  name="clean_build" depends="clean,ear_cdebrowser"> 
   </target>
   
-  <target  name="clean_build_redeploy" depends="clean,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j"> 
+  <target  name="clean_build_redeploy" depends="clean,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j,oc4j_start"> 
   </target>
+  
+  <target name="oc4j_start">
+        <exec executable="cmd.exe"  spawn="true" os="Windows 2000">
+                        <arg value="/C"/>
+                        <arg value="start"/>
+                        <arg value="${oc4j.j2ee.home}/${oc4j.start.script.name}"/>
+        </exec>
+  </target>
+
   
  <!-- =========== BUILD HELPERS ======================= -->
    <target name="help" depends="init">
@@ -547,6 +557,7 @@
        ear_deploy	      - Deploy the application
        ear_undeploy	      - Undeploy the application
        copy_ear_oc4j	      - Copy application ear to oc4j
+       oc4j_start	      - start oc4j
        clean_build_redeploy   - Does the following targets clean
        				,ear_cdebrowser,oc4j_stop
        				,clean_oc4j, oc4j_copy_ear 
