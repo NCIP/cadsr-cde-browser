@@ -89,7 +89,7 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
     }
 
     public void setSql(String whereString, String dummy) {
-      super.setSql("SELECT * FROM SBREXT.FB_VD_VV_VIEW " + whereString);
+      super.setSql("SELECT * FROM SBREXT.FB_VD_VV_VIEW " + whereString +"order by upper( PV_VALUE ) ");
     }
     
     public Map getValidValueMap(){

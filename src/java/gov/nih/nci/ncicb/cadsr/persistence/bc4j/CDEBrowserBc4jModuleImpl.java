@@ -121,6 +121,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
       ViewObjectImpl view1 =
         (ValidValuesViewImpl) bc4jUtil.cloneViewObject(view);
       view1.setWhereClause(" VD_IDSEQ = '" + aVdIdseq + "'");
+      view1.setOrderByClause(" UPPER(VALUE) ");
       view1.executeQuery();
       rows = new Vector(view1.getRowCount());
 
@@ -135,7 +136,6 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
         vv.setShortMeaningDescription(vvImpl.getMeaningDescription());
         vv.setShortMeaningValue(vvImpl.getValue());
         vv.setVpIdseq(vvImpl.getVpIdseq());
-
         String cdrIdseq = vvImpl.getCondrIdseq();
 
         if (cdrIdseq != null) {

@@ -52,11 +52,13 @@ public class DTOTransformer {
     List validValues,
     Question question) {
     List newValidValues = new ArrayList();
-
+    int displayOrder = 0;
     for (Iterator it = validValues.iterator(); it.hasNext();) {
       ValidValue vv = (ValidValue) it.next();
       FormValidValue fvv = toFormValidValue(vv, question);
+      fvv.setDisplayOrder(displayOrder);
       newValidValues.add(fvv);
+      ++displayOrder;
     }
 
     return newValidValues;
