@@ -465,6 +465,17 @@ public class ReferenceDocumentAction
   removeSessionObject(request, REFDOC_ATTACHMENT_MAP);
   removeSessionObject(request, DELETED_ATTACHMENTS);
   removeSessionObject(request, REFDOCS_TEMPLATE_ATT_NAME);
+  
+  //reset CRF and CLONED_CRF
+  try {
+    crf = service.getFormDetails(crf.getIdseq());
+    setSessionObject(request, CRF, crf);
+    setSessionObject(request, CLONED_CRF, (Form) crf.clone(),true);
+  } catch (Exception formE) 
+  {
+  //refresh cache
+    return mapping.findForward("gotoEdit");
+  }
   saveMessage("cadsr.formbuilder.refdoc.save.success", request);
   return mapping.findForward("backtoRefDocEdit");
  }
