@@ -82,18 +82,32 @@
                   <logic:notEmpty name="module" property = "questions">
                     <tr class="OraTabledata">
                       <td>
-                        <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">      
+                        <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraTabledata">      
                           <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">                           
                             <tr class="OraTabledata">
                               <td class="OraFieldText" width="50">&nbsp;</td>
-                              <td height="1"  bgcolor="#F7F7E7" bordercolor="#C0C087">                               
-                              </td>
+                              <td height="1"  class="OraFieldText">                               
+                              </td>                              
                             </tr>                             
                             <tr class="OraTabledata">
                               <td class="OraFieldText" width="50">&nbsp;</td>
                               <td class="UnderlineOraFieldText">
                                 <bean:write name="question" property="longName"/>
                               </td>
+                              <logic:present name="question" property = "dataElement">
+                                <td align="center" width="70" class="UnderlineOraFieldText" >
+ 	    			    <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
+ 	    			        paramId = "p_de_idseq"
+ 					paramName="question"
+ 					paramProperty="dataElement.deIdseq"
+ 					target="_blank">
+					<bean:write name="question" property="dataElement.publicId"/>
+	    			    </html:link>
+	    			 </td>
+                              </logic:present>
+                              <td align="center" width="70" class="UnderlineOraFieldText">
+                                	<bean:write name="question" property="dataElement.version"/>
+                              </td>                              
                             </tr>                                                     
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">
@@ -102,7 +116,7 @@
                                 <td>
                                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                     <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
-                                      <tr class="OraTabledata">
+                                      <tr  COLSPAN="3" class="OraTabledata">
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td class="OraFieldText">
                                           <bean:write name="validValue" property="longName"/>

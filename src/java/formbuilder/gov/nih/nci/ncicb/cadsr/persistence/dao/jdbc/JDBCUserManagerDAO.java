@@ -9,6 +9,8 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
@@ -31,6 +33,9 @@ import javax.sql.DataSource;
 
 
 public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
+ 
+  protected Log log =  LogFactory.getLog(JDBCUserManagerDAO.class.getName());
+ 
   public JDBCUserManagerDAO(ServiceLocator locator) {
     super(locator);
   }
@@ -72,7 +77,8 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
   public NCIUser getNCIUser(String username) {
     UserQuery userQuery = new UserQuery(getDataSource());
     NCIUser user = (NCIUser) userQuery.findObject(username);
-    user.setContextsByRole(this.getContextsForAllRoles(username,"QUEST_CONTENT"));
+    if(user!=null)
+      user.setContextsByRole(this.getContextsForAllRoles(user.getUsername(),"QUEST_CONTENT"));
     return user;
   }
 

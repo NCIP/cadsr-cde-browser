@@ -76,19 +76,27 @@
                   <logic:notEmpty name="module" property = "questions">
                     <tr class="PrinterOraTabledata">
                       <td>
-                        <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentBlack">      
+                        <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" >      
                           <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">                           
                             <tr class="PrinterOraTabledata">
                               <td class="PrinterOraFieldText" width="50">&nbsp;</td>
-                              <td height="1"  >                               
+                              <td class="PrinterOraFieldText" height="1"  >                               
                               </td>
-                            </tr>                             
+                            </tr>                              
                             <tr class="PrinterOraTabledata">
                               <td class="PrinterOraFieldText" width="50">&nbsp;</td>
                               <td class="PrinterUnderlineOraFieldText">
                                 <bean:write name="question" property="longName"/>
                               </td>
-                            </tr>                                                     
+                              <logic:present name="question" property = "dataElement">
+                                <td align="center" width="70" class="PrinterUnderlineOraFieldText" >
+				    <bean:write name="question" property="dataElement.cDEId"/>
+	    			 </td>
+                              </logic:present>
+                              <td align="center" width="70" class="PrinterUnderlineOraFieldText">
+                                	<bean:write name="question" property="dataElement.version"/>
+                              </td>                              
+                            </tr>                             
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">
                               <tr class="PrinterOraTabledata">
@@ -96,7 +104,7 @@
                                 <td>
                                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentBlack">
                                     <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
-                                      <tr class="PrinterOraTabledata">
+                                      <tr COLSPAN="3" class="PrinterOraTabledata">
                                         <td class="PrinterOraFieldText" width="50">&nbsp;</td>
                                         <td class="PrinterOraFieldText">
                                           <bean:write name="validValue" property="longName"/>

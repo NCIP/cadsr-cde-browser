@@ -5,6 +5,8 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.action.ActionForward;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,8 @@ import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 public class SecureRequestProcessor extends RequestProcessor implements CaDSRConstants
 {
+  protected Log log =  LogFactory.getLog(SecureRequestProcessor.class.getName());
+  
   public SecureRequestProcessor()
   {
     super();
@@ -57,7 +61,10 @@ public class SecureRequestProcessor extends RequestProcessor implements CaDSRCon
     ServiceLocator locator = ServiceLocatorFactory.getLocator(locatorClassName);
     AbstractDAOFactory daoFactory=AbstractDAOFactory.getDAOFactory(locator); 
     UserManagerDAO dao = daoFactory.getUserManagerDAO();
-    return dao.getNCIUser(username);
+    NCIUser user = dao.getNCIUser(username);
+    if(log.isInfoEnabled())
+        log.info("getNCIUser()="+user);
+    return user;
   }
   protected String getLoggedInUsername(HttpServletRequest request)
   {
