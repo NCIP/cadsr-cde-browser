@@ -126,17 +126,20 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
     
     if(userRole!=null&&currFormType!=null)
     {
-     if(form.getFormType().equalsIgnoreCase(currFormType)
-        && user.hasRoleAccess(role,userContext))
+     if(form.getFormType().equalsIgnoreCase(currFormType))
      {
        return true;
      }
+     else
+     {
+       return user.hasRoleAccess(userRole,userContext);
+     }
     }
-    else if(currFormType==null)
+    else if(currFormType==null&&userRole!=null)
     {
       return user.hasRoleAccess(role,userContext);
     }
-    else
+    else if(userRole==null&&currFormType!=null)
     {
       return form.getFormType().equalsIgnoreCase(currFormType);
     }
