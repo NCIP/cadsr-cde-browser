@@ -2,6 +2,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="gov.nih.nci.ncicb.webtree.*" %>
 <%@ page import="java.io.*"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
 
 <%
   	// get parameters
@@ -35,7 +36,6 @@
 
     if((tName != null) && (tName.equals("formTree"))) 
       treeName = "formTree";
-  
 
     // get current web tree from session 
     if (userSession != null) {
@@ -44,6 +44,7 @@
 
     //  if no treeAction specified, build a new tree 
     //  only if it doesn't exist
+
     if (treeAction == null)
     {
          userSession = request.getSession(true);
@@ -53,18 +54,40 @@
           webTree = new BDWebTree(treeClass, treeParams);
     } else if(treeAction.equals("refresh")) {
         webTree = new BDWebTree(treeClass, treeParams);
+        treeAction = null;
     }
 
     if (webTree != null)
     {
       // ** build/update display tree **
+
       DefaultMutableTreeNode displayTreeRoot = webTree.getDisplayTree(treeAction, targetId, userSession, treeDirective);
 
       // set updated tree in session   
       userSession.setAttribute(treeName, webTree);      
 %>   
 <table border="0">
+  <tr>
+    <%
+      //      String treeURL = "WebTree.jsp?treeName=" + 
+      //      request.getParameter("treeName") +  
+      //      "&treeAction=refresh" + 
+      //      "&treeClass=" + treeClass + 
+      //      "&treeParams=" + treeParams + 
+      //      "&skin=" + skin + "&treeDirective=" + 
+      //      treeDirective;
+
+      String treeURL = "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree"+
+            "&treeName=" + treeName +
+            "&treeAction=refresh" + 
+            "&treeParams="+ treeParams + 
+            "&skin=CDEBrowser1";
+      %>
+
+      <td><a href="<%= treeURL %>">Refresh this tree</a></td>
+  </tr>
 <%    // render display tree
+
       Enumeration displayTree = displayTreeRoot.preorderEnumeration();
 
       while (displayTree.hasMoreElements())  
@@ -110,12 +133,12 @@
 <%        }              
           else if (displayWebNode.hasChildren() && !displayNode.isLeaf())
           { %>
-  <td  nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeName=<%=treeName%>&treeAction=collapse&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderOpen.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
+  <td  nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeParams=<%=treeParams%>&treeName=<%=treeName%>&treeAction=collapse&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderOpen.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
 <%        }
           else if (displayWebNode.hasChildren())           
           { 
             // no children currently displayed, but has children %>
-            <td  nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeName=<%=treeName%>&amp;treeAction=expand&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderClosed.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
+            <td  nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeParams=<%=treeParams%>&treeName=<%=treeName%>&amp;treeAction=expand&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderClosed.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
 <%        }   
           else
           {
@@ -159,6 +182,7 @@
   } // end try
   catch (Exception e)
   {
+  e.printStackTrace(System.out);
  %>   
       <table>
       <tr><td>&nbsp;</td></tr>   
