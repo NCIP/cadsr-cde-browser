@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding='windows-1252'?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="ProtocolsExtView"
+   TimeStamp="1029430213302"
+   SelectList="ProtocolsExt.PROTO_IDSEQ, 
+       ProtocolsExt.VERSION, 
+    
+   ProtocolsExt.CONTE_IDSEQ, 
+       ProtocolsExt.PREFERRED_NAME, 
+
+       ProtocolsExt.PREFERRED_DEFINITION, 
+       ProtocolsExt.ASL_NAME, 
+
+       ProtocolsExt.LONG_NAME, 
+       ProtocolsExt.LATEST_VERSION_IND, 
+
+       ProtocolsExt.DELETED_IND, 
+       ProtocolsExt.BEGIN_DATE, 
+
+       ProtocolsExt.END_DATE, 
+       ProtocolsExt.PROTOCOL_ID, 
+
+       ProtocolsExt.TYPE, 
+       ProtocolsExt.PHASE, 
+     
+  ProtocolsExt.LEAD_ORG, 
+       ProtocolsExt.CHANGE_TYPE, 
+ 
+      ProtocolsExt.CHANGE_NUMBER, 
+       ProtocolsExt.REVIEWED_DATE, 
+
+       ProtocolsExt.REVIEWED_BY, 
+       ProtocolsExt.APPROVED_DATE, 
+
+       ProtocolsExt.APPROVED_BY, 
+       ProtocolsExt.DATE_CREATED, 
+
+       ProtocolsExt.CREATED_BY, 
+       ProtocolsExt.DATE_MODIFIED, 
+
+       ProtocolsExt.MODIFIED_BY, 
+       ProtocolsExt.CHANGE_NOTE"
+   FromList="SBREXT.PROTOCOLS_EXT ProtocolsExt"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExtViewImpl"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_version" Value="9.0.2.7.99" />
+      <Attr Name="_CodeGenFlagNew" Value="36" />
+   </DesignTime>
+   <EntityUsage
+      Name="ProtocolsExt"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt" >
+      <DesignTime>
+         <Attr Name="_ReadOnly" Value="false" />
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="ProtoIdseq"
+      IsNotNull="true"
+      EntityAttrName="ProtoIdseq"
+      EntityUsage="ProtocolsExt"
+      AliasName="PROTO_IDSEQ" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="Version"
+      EntityUsage="ProtocolsExt"
+      AliasName="VERSION" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="ProtocolsExt"
+      AliasName="CONTE_IDSEQ" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="PreferredName"
+      EntityUsage="ProtocolsExt"
+      AliasName="PREFERRED_NAME" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="ProtocolsExt"
+      AliasName="PREFERRED_DEFINITION" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      EntityAttrName="AslName"
+      EntityUsage="ProtocolsExt"
+      AliasName="ASL_NAME" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      EntityAttrName="LongName"
+      EntityUsage="ProtocolsExt"
+      AliasName="LONG_NAME" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="ProtocolsExt"
+      AliasName="LATEST_VERSION_IND" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      EntityAttrName="DeletedInd"
+      EntityUsage="ProtocolsExt"
+      AliasName="DELETED_IND" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      EntityAttrName="BeginDate"
+      EntityUsage="ProtocolsExt"
+      AliasName="BEGIN_DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      EntityAttrName="EndDate"
+      EntityUsage="ProtocolsExt"
+      AliasName="END_DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ProtocolId"
+      EntityAttrName="ProtocolId"
+      EntityUsage="ProtocolsExt"
+      AliasName="PROTOCOL_ID" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Type"
+      EntityAttrName="Type"
+      EntityUsage="ProtocolsExt"
+      AliasName="TYPE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Phase"
+      EntityAttrName="Phase"
+      EntityUsage="ProtocolsExt"
+      AliasName="PHASE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LeadOrg"
+      EntityAttrName="LeadOrg"
+      EntityUsage="ProtocolsExt"
+      AliasName="LEAD_ORG" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeType"
+      EntityAttrName="ChangeType"
+      EntityUsage="ProtocolsExt"
+      AliasName="CHANGE_TYPE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNumber"
+      EntityAttrName="ChangeNumber"
+      EntityUsage="ProtocolsExt"
+      AliasName="CHANGE_NUMBER" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewedDate"
+      EntityAttrName="ReviewedDate"
+      EntityUsage="ProtocolsExt"
+      AliasName="REVIEWED_DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewedBy"
+      EntityAttrName="ReviewedBy"
+      EntityUsage="ProtocolsExt"
+      AliasName="REVIEWED_BY" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ApprovedDate"
+      EntityAttrName="ApprovedDate"
+      EntityUsage="ProtocolsExt"
+      AliasName="APPROVED_DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ApprovedBy"
+      EntityAttrName="ApprovedBy"
+      EntityUsage="ProtocolsExt"
+      AliasName="APPROVED_BY" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      EntityAttrName="DateCreated"
+      EntityUsage="ProtocolsExt"
+      AliasName="DATE_CREATED" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      EntityAttrName="CreatedBy"
+      EntityUsage="ProtocolsExt"
+      AliasName="CREATED_BY" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      EntityAttrName="DateModified"
+      EntityUsage="ProtocolsExt"
+      AliasName="DATE_MODIFIED" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="ProtocolsExt"
+      AliasName="MODIFIED_BY" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNote"
+      EntityAttrName="ChangeNote"
+      EntityUsage="ProtocolsExt"
+      AliasName="CHANGE_NOTE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>
