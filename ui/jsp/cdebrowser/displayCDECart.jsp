@@ -115,6 +115,23 @@ function retrieveSavedItems() {
           CDE Cart is empty. 
         </td>
     </tr>
+    <table width="40%" align="center" cellpadding="1" cellspacing="1" border="0">
+      <TR>
+        <td>&nbsp;</td>
+      </TR>
+      <tr>
+        <td>
+          <a href="javascript:retrieveSavedItems()()">
+            <html:img src='<%=urlPrefix+"i/retrieve.gif"%>' border="0" alt="Retrieve Saved Data Elements"/> 
+          </a>
+        </td>
+        <td >
+          <html:link href="cdeBrowse.jsp?PageId=DataElementsGroup">				
+            <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Back to Data Element Search"/>
+          </html:link>             
+        </td>
+      </tr>
+    </table>
   </logic:empty>
   <logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
     <logic:iterate id="de" name="<%=CaDSRConstants.CDE_CART%>" type="gov.nih.nci.ncicb.cadsr.resource.CDECartItem" property="dataElements">
