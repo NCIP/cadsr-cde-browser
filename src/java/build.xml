@@ -246,15 +246,15 @@
   
   <!-- =========== TEST CONFIG ======================= -->
     <target name="test_config" depends="init,dev_config">    
-       <copy todir="${classes.build.dir}/META-INF">      
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
            <fileset dir="${config.test}/connections">
              <patternset>
                <include name="data-sources.xml"/>
              </patternset>
            </fileset>      
         </copy> 
-     <copy todir="${classes.build.dir}/WEB-INF/classes">    
-         <fileset dir="${config.home}/connections">
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.test}/connections">
            <patternset>
              <include name="cdebrowser.properties"/>
              <include name="cle-providers.xml"/>
