@@ -39,6 +39,9 @@ import oracle.cle.process.Service;
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
 
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+
 import java.text.DateFormat;
 
 import java.util.Collection;
@@ -53,8 +56,11 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
+ * @version: $Id: GetDataElements.java,v 1.3 2004-08-17 13:56:07 jiangja Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
+private static Log log = LogFactory.getLog(GetDataElements.class.getName());
+
   String dsName = null;
 
   public GetDataElements() {
@@ -156,12 +162,9 @@ public class GetDataElements extends BasePersistingProcess {
       userSession = myRequest.getSession(false);
 
 
-      System.out.println(
-        getCurrentTimestamp() +
-        "- GetDataElements process started successfully ");
+      log.info("GetDataElements process started successfully ");
       initialize(userSession);
-      System.out.println(
-        getCurrentTimestamp() + " -Performed intialization successfully");
+      log.info(" -Performed intialization successfully");
 
       tib = new TabInfoBean("cdebrowser_search_tabs");
 
@@ -171,8 +174,7 @@ public class GetDataElements extends BasePersistingProcess {
         tib.setMainTabNum(0);
       }
 
-      System.out.println(
-        getCurrentTimestamp() + "- Intialized TabInfoBean successfully");
+      log.info("- Intialized TabInfoBean successfully");
 
       String paramType = getStringInfo("P_PARAM_TYPE");
       String paramIdSeq = getStringInfo("P_IDSEQ");
@@ -187,8 +189,7 @@ public class GetDataElements extends BasePersistingProcess {
       String templateName = getStringInfo("templateName");
       String conteName = getStringInfo("contextName");
 
-      System.out.println(
-        getCurrentTimestamp() + "- Retrieved request parameters successfully");
+      log.info("- Retrieved request parameters successfully");
 
       TreeParameters treeParam = new TreeParametersTransferObject();
 
@@ -232,8 +233,7 @@ public class GetDataElements extends BasePersistingProcess {
         setResult("P_CONTEXT", pc.getContextName());
         setResult("P_CONTE_IDSEQ", pc.getConteIdseq());
 
-        System.out.println(
-          getCurrentTimestamp() + "- Created PageContext object successfully");
+        log.info("- Created PageContext object successfully");
       }
 
       DataElementSearchBean desb = null;
@@ -257,9 +257,7 @@ public class GetDataElements extends BasePersistingProcess {
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
 
-        System.out.println(
-          getCurrentTimestamp() +
-          "- Created DataElementSearchBean successfully");
+        log.info("- Created DataElementSearchBean successfully");
 
         dePageIterator =
           (PageIterator) getInfoObject(
@@ -267,15 +265,11 @@ public class GetDataElements extends BasePersistingProcess {
 
         //dePageIterator.setCurrentPage(0);
         if (dePageIterator == null) {
-          System.out.println(
-            getCurrentTimestamp() +
-            "- Unable to retrieve PageIterator from session. Creating a new PageIterator..");
+          log.info("- Unable to retrieve PageIterator from session. Creating a new PageIterator..");
           dePageIterator = new BC4JPageIterator(40);
         }
         else {
-          System.out.println(
-            getCurrentTimestamp() +
-            "- Retrieved PageIterator from session successfully");
+          log.info("- Retrieved PageIterator from session successfully");
         }
 
         dePageIterator.setCurrentPage(0);
@@ -283,37 +277,30 @@ public class GetDataElements extends BasePersistingProcess {
           new DESearchQueryBuilder(
             myRequest, paramType, paramIdSeq, treeConteIdseq);
 
-        System.out.println(
-          getCurrentTimestamp() +
-          "- Created DESearchQueryBuilder successfully");
+        log.trace("- Created DESearchQueryBuilder successfully");
 
         queryStmt = queryBuilder.getSQLWithoutOrderBy();
         orderBy = queryBuilder.getOrderBy();
 
         queryParams = queryBuilder.getQueryParams();
 
-        System.out.println(
-          getCurrentTimestamp() + "- Query stmt is " + queryStmt);
+        log.trace("- Query stmt is " + queryStmt);
 
         dh = (DataElementHandler) HandlerFactory.getHandler(DataElement.class);
 
-        System.out.println(
-          getCurrentTimestamp() +
-          "- Obtained DataElementHandler using HandlerFactory successfully");
+        log.trace("Obtained DataElementHandler using HandlerFactory successfully");
 
         queryResults =
           dh.findDataElementsFromQueryClause(
             queryStmt, orderBy, getSessionId(), dePageIterator);
 
-        System.out.println(
-          getCurrentTimestamp() + "- Query executed successfully");
+        log.trace("Query executed successfully");
 
         createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER, myRequest.getContextPath());
         createPageScroller(
           dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, myRequest.getContextPath());
 
-        System.out.println(
-          getCurrentTimestamp() + "- Created both page scrollers successfully");
+        log.trace("Created both page scrollers successfully");
       }
       else if (performQuery.equals("no")) {
         desb = (DataElementSearchBean) getInfoObject("desb");
@@ -403,7 +390,7 @@ public class GetDataElements extends BasePersistingProcess {
       UserErrorMessage uem;
 
       try {
-        System.out.println(getCurrentTimestamp() + "- Exception caught");
+        log.error("Exception caught", ex);
         tib = new TabInfoBean("cdebrowser_error_tabs");
         myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
         tib.processRequest(myRequest);
@@ -423,7 +410,6 @@ public class GetDataElements extends BasePersistingProcess {
         setResult("uem", uem);
         setCondition(FAILURE);
         dbUtil.returnConnection();
-        ex.printStackTrace();
       }
       catch (TransitionConditionException tce) {
         reportException(tce, DEBUG);
