@@ -129,6 +129,7 @@ function resetForm() {
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" /></td>
           <td class="OraFieldText" nowrap>
             <html:select styleClass = "Dropdown" name="<%= FormConstants.CRF %>" property="<%=FormConstants.FORM_CATEGORY%>">
+              <html:option value=""/>
               <html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> \
             </html:select> 
           </td>

@@ -148,6 +148,7 @@ function clearProtocol() {
             </td>
             <td class="OraFieldText" nowrap>
               <html:select styleClass = "Dropdown" property="<%=FormConstants.CATEGORY_NAME%>">              
+                <html:option value=""/>
                 <html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> 
               </html:select> 
             </td>
