@@ -153,7 +153,7 @@
               </td>
               <td class="OraFieldText">
                 <html:link action='<%= "/removeClassification?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.REMOVE_CLASSIFICATION %>' paramId="<%= FormConstants.CS_CSI_ID%>" paramName="classification" paramProperty="acCsiIdseq">
-                  <html:img src='<%=urlPrefix+"i/delete_item.gif"%>' border="0" alt="Remove"/>
+                  <html:img src='<%=urlPrefix+"i/delete.gif"%>' border="0" alt="Remove"/>
                 </html:link>
               </td>
             </tr>
