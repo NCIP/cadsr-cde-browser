@@ -37,6 +37,8 @@
       >
       <forward name="gotoEdit" path="/formToEditAction.do?method=getFormToEdit"/>
       <forward name="gotoView" path="/formDetailsAction.do?method=getFormDetails"/>
+      <forward name="failure" path="/formToCopyAction.do?method=getFormToCopy"/>
+      
     </action>
   </action-mappings>
 
