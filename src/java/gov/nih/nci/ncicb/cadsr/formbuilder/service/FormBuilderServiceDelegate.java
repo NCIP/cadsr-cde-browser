@@ -9,6 +9,7 @@ import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
+import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import java.util.Collection;
 import java.util.Map;
 
@@ -20,9 +21,9 @@ public interface FormBuilderServiceDelegate {
 
     //Publish Change Order
     public Collection getAllFormsForClassification(String classificationIdSeq);
-    
+
     public Collection getAllPublishedFormsForProtocol(String protocolIdSeq);
-        
+
     public Form getFormDetails(String formPK) throws FormBuilderException;
 
     public Form updateForm(String formIdSeq, Form formHeader, Collection updatedModules,
@@ -102,12 +103,18 @@ public interface FormBuilderServiceDelegate {
     public Form createForm(Form form, Instruction formHeaderInstruction,
         Instruction formFooterInstruction)
         throws FormBuilderException;
-        
-    //Publish Change Order 
+
+    //Publish Change Order
     public void publishForm(String formIdSeq,String formType, String contextIdSeq) throws FormBuilderException;
-    
-    //Publish Change Order 
+
+    //Publish Change Order
     public void unpublishForm(String formIdSeq, String formType, String contextIdSeq) throws FormBuilderException;
-        
-                
+
+    public ReferenceDocument createReferenceDocument (ReferenceDocument refDoc, String acIdseq) throws FormBuilderException;
+
+    public void deleteReferenceDocument (String rdIdseq) throws FormBuilderException;
+
+    public void updateReferenceDocument (ReferenceDocument refDoc) throws FormBuilderException;
+
+    public void deleteAttachment (String name) throws FormBuilderException;
 }

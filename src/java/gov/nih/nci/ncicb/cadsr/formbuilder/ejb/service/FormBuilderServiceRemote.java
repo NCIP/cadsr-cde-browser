@@ -9,6 +9,7 @@ import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
+import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import java.rmi.RemoteException;
 
 import java.util.Collection;
@@ -133,14 +134,14 @@ public interface FormBuilderServiceRemote {
     public Form createForm(Form form, Instruction formHeaderInstruction,
         Instruction formFooterInstruction)
 	    throws RemoteException;
-  
+
     //Publish Change Order
     public Collection getAllPublishedFormsForProtocol(String protocolIdSeq) throws RemoteException;
     //Publish Change Order
     public Collection getAllFormsForClassification(String classificationIdSeq) throws RemoteException;
     /**
      * Publishes the form by assigning publishing classifications to the form
-     * 
+     *
      * @inheritDoc
      */
     public void publishForm(String formIdSeq,String formType, String contextIdSeq) throws RemoteException;
@@ -151,5 +152,13 @@ public interface FormBuilderServiceRemote {
      * @inheritDoc
      */
       public void unpublishForm(String formIdSeq, String formType, String contextIdSe) throws RemoteException;
+
+      public ReferenceDocument createReferenceDocument (ReferenceDocument refDoc, String acIdseq)throws RemoteException;
+
+      public void deleteReferenceDocument (String rdIdseq) throws RemoteException;
+
+      public void updateReferenceDocument (ReferenceDocument refDoc) throws RemoteException;
+
+      public void deleteAttachment (String name) throws RemoteException;
 
 }
