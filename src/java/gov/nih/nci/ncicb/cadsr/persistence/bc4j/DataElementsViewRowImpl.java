@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JDesignationTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.*;
 
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import oracle.clex.persistence.bc4j.*;
 
@@ -21,7 +22,6 @@ import oracle.jbo.server.ViewObjectImpl;
 import oracle.jbo.server.ViewRowImpl;
 
 import java.util.*;
-import org.apache.commons.logging.Log;
 
 
 //  ---------------------------------------------------------------
