@@ -60,19 +60,26 @@ if (parent.frames[1])
   </TR>
   </table>
   
-      <table width=100% Cellpadding=0 Cellspacing=0 border=0>
-      <tr><td>&nbsp;</td></tr>   
-      <tr><td>&nbsp;</td></tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr class="OraTipLabel">
-          <td align="center" class="OraTipLabel">Insufficient privileges. Your user account is not authorized to use Form Builder application.
-          Click <a target="_top" href="<%=forwardUrl%>">here</a> to return to CDEBrowser.
-          </td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr><td class="OraTipLabel"></td></tr>   
-      <tr><td>&nbsp;</td></tr>
-      </table>
+      <table>
+            <tr>
+              <td class="OraErrorHeader">
+              	Insufficient Privileges <br><br>
+                <table width="80%" align="center">
+                  <tr align="center" >
+                     <td  align="left" class="OraErrorText" nowrap> <b>
+                      Your user account is not authorized to use Form Builder.
+                      Click <a target="_top" href="<%=forwardUrl%>">here</a> to return to CDEBrowser. </b>
+                    </td>
+                  </tr>
+                  <tr align="center" >
+                   <td>
+                      &nbsp;
+                  </td>
+                 </tr>        
+                </table>
+              </td>
+            </tr>
+ </table>
 
 <TABLE width=100% cellspacing=0 cellpadding=0 border=0>
 <TR>
