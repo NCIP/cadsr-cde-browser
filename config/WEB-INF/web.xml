@@ -1,36 +1,33 @@
 <?xml version = '1.0' encoding = 'windows-1252'?>
 <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
 <web-app>
-   <description>web.xml file for CDE Browser</description>
-   <session-config>
-      <session-timeout>300</session-timeout>
-   </session-config>
-   <mime-mapping>
-      <extension>html</extension>
-      <mime-type>text/html</mime-type>
-   </mime-mapping>
-   <mime-mapping>
-      <extension>txt</extension>
-      <mime-type>text/plain</mime-type>
-   </mime-mapping>
-   <welcome-file-list>
-      <welcome-file>cdeBrowse.jsp</welcome-file>     
-   </welcome-file-list>
-
+  <description>web.xml file for CDE Browser</description>
+  <session-config>
+    <session-timeout>1</session-timeout>
+  </session-config>
+  <mime-mapping>
+    <extension>html</extension>
+    <mime-type>text/html</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>txt</extension>
+    <mime-type>text/plain</mime-type>
+  </mime-mapping>
+  <welcome-file-list>
+    <welcome-file>cdeBrowse.jsp</welcome-file>
+  </welcome-file-list>
   <!-- authentication -->
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
-      <form-login-page>LoginForm.jsp</form-login-page>
-      <form-error-page>LoginError.jsp</form-error-page>
+      <form-login-page>/LoginForm.jsp</form-login-page>
+      <form-error-page>/LoginError.jsp</form-error-page>
     </form-login-config>
   </login-config>
-  
-   <listener>
+  <listener>
     <listener-class>oracle.clex.util.ServletEventListener</listener-class>
   </listener>
-  
-   <servlet>
+  <servlet>
     <servlet-name>CDEBrowserServletController</servlet-name>
     <servlet-class>oracle.clex.process.controller.HttpServletController</servlet-class>
     <init-param>
@@ -38,39 +35,31 @@
       <param-value>cdeBrowser.xml</param-value>
     </init-param>
   </servlet>
-
   <servlet>
-      <servlet-name>DownloadTemplateServlet</servlet-name>
-      <servlet-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.DownloadTemplateServlet</servlet-class>
-   </servlet>
-
-   <servlet>
-      <servlet-name>CRFBuilderServletController</servlet-name>
-      <servlet-class>oracle.clex.process.controller.HttpServletController</servlet-class>
-      <init-param>
-        <param-name>cle-service-descriptor</param-name>
-        <param-value>crfBuilder.xml</param-value>
-      </init-param>
-    </servlet>
-
-
+    <servlet-name>DownloadTemplateServlet</servlet-name>
+    <servlet-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.DownloadTemplateServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CRFBuilderServletController</servlet-name>
+    <servlet-class>oracle.clex.process.controller.HttpServletController</servlet-class>
+    <init-param>
+      <param-name>cle-service-descriptor</param-name>
+      <param-value>crfBuilder.xml</param-value>
+    </init-param>
+  </servlet>
   <servlet-mapping>
-        <servlet-name>CRFBuilderServletController</servlet-name>
-        <url-pattern>/formbuild</url-pattern>
+    <servlet-name>CRFBuilderServletController</servlet-name>
+    <url-pattern>/formbuild</url-pattern>
   </servlet-mapping>
-  
   <servlet-mapping>
     <servlet-name>CDEBrowserServletController</servlet-name>
     <url-pattern>/search</url-pattern>
   </servlet-mapping>
-  
   <servlet-mapping>
-      <servlet-name>DownloadTemplateServlet</servlet-name>
-      <url-pattern>/downloadtemplate</url-pattern>
-   </servlet-mapping>
-  
-
-   <servlet>
+    <servlet-name>DownloadTemplateServlet</servlet-name>
+    <url-pattern>/downloadtemplate</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>LogoutServlet</servlet-name>
     <servlet-class>gov.nih.nci.ncicb.cadsr.security.LogoutServlet</servlet-class>
     <init-param>
@@ -78,12 +67,10 @@
       <param-value>cdeBrowse.jsp</param-value>
     </init-param>
   </servlet>
-
   <servlet-mapping>
-      <servlet-name>LogoutServlet</servlet-name>
-      <url-pattern>/logout</url-pattern>
-   </servlet-mapping>
-   
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>action</servlet-name>
     <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
@@ -106,15 +93,29 @@
     <init-param>
       <param-name>ServiceLocatorClassName</param-name>
       <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</param-value>
-    </init-param>    
+    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
-  
+   <filter> 
+       <filter-name>SessionFilter</filter-name>
+       <filter-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.SessionFilter</filter-class>   
+       <init-param>
+      		<param-name>controllerName</param-name>
+      		<param-value>search</param-value>
+    	</init-param>  
+       <init-param>
+      		<param-name>expiredSessionJSP</param-name>
+      		<param-value>expiredSession.jsp</param-value>
+    	</init-param>      	
+   </filter>   
   <servlet-mapping>
     <servlet-name>action</servlet-name>
     <url-pattern>*.do</url-pattern>
-  </servlet-mapping>  
-
+  </servlet-mapping>
+  <filter-mapping> 
+         <filter-name>SessionFilter</filter-name>
+         <url-pattern>/search*</url-pattern> 
+ </filter-mapping> 
   <taglib>
     <taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
     <taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
@@ -127,7 +128,6 @@
     <taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
     <taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
   </taglib>
-  
   <ejb-ref>
     <ejb-ref-name>ejb/FormBuilder</ejb-ref-name>
     <ejb-ref-type>Session</ejb-ref-type>
@@ -142,31 +142,28 @@
     <local>gov.nih.nci.ncicb.cadsr.formbuilder.ejb.FormBuilderLocal</local>
     <ejb-link>FormBuilder</ejb-link>
   </ejb-local-ref>
-  
-   <env-entry>
-     <description>Specifies the implementation class of FormBuilderServiceDelegate that should be used.</description>
-     <env-entry-name>FormBuilderServiceDelegate</env-entry-name>
-     <env-entry-value>gov.nih.nci.ncicb.cadsr.formbuilder.service.ejb.FormBuilderDynamicRemoteServiceDelegateImpl</env-entry-value>
-     <env-entry-type>java.lang.String</env-entry-type>
-   </env-entry>
-   <env-entry>
-      <description>Class name of the DAOFactory that FormBuilderEJB will use.</description>
-      <env-entry-name>DAOFactoryClassName</env-entry-name>
-      <env-entry-value>gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
-      <env-entry-type>java.lang.String</env-entry-type>
+  <env-entry>
+    <description>Specifies the implementation class of FormBuilderServiceDelegate that should be used.</description>
+    <env-entry-name>FormBuilderServiceDelegate</env-entry-name>
+    <env-entry-value>gov.nih.nci.ncicb.cadsr.formbuilder.service.ejb.FormBuilderDynamicRemoteServiceDelegateImpl</env-entry-value>
+    <env-entry-type>java.lang.String</env-entry-type>
   </env-entry>
   <env-entry>
-        <env-entry-name>DataSourceKey</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>FormBuilderDS</env-entry-value>
-   </env-entry>   
-      
-   <security-role>
-       <description>The Only Secure Role</description>
-       <role-name>FORMBUILDER_USERS</role-name>
-   </security-role>
-
-   <security-constraint>
+    <description>Class name of the DAOFactory that FormBuilderEJB will use.</description>
+    <env-entry-name>DAOFactoryClassName</env-entry-name>
+    <env-entry-value>gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
+    <env-entry-type>java.lang.String</env-entry-type>
+  </env-entry>
+  <env-entry>
+    <env-entry-name>DataSourceKey</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+    <env-entry-value>FormBuilderDS</env-entry-value>
+  </env-entry>
+  <security-role>
+    <description>The Only Secure Role</description>
+    <role-name>FORMBUILDER_USERS</role-name>
+  </security-role>
+  <security-constraint>
     <web-resource-collection>
       <web-resource-name>Secure Services</web-resource-name>
       <url-pattern>/formbuilder/*</url-pattern>
@@ -174,11 +171,10 @@
     <web-resource-collection>
       <web-resource-name>Secure Services</web-resource-name>
       <url-pattern>*.do</url-pattern>
-    </web-resource-collection>       
+    </web-resource-collection>
     <auth-constraint>
       <description>Authorized Users Group</description>
       <role-name>FORMBUILDER_USERS</role-name>
     </auth-constraint>
-   </security-constraint>
-   
+  </security-constraint>
 </web-app>

@@ -6,9 +6,14 @@
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 
+if (parent.frames[1]) 
+  parent.location.href = self.location.href; 
+
 function submitForm() {
   document.forms[0].submit();
 }
+
+
 -->
 </SCRIPT>
 </head>

@@ -93,13 +93,17 @@ public class DBUserManager extends BaseUserManager implements PersistenceContant
    * @return <b>boolean </b> returns boolean flag to indicate that the user exists.
    */
   protected boolean checkPassword(String username, String password) {
+    boolean result = false;
     if(log.isDebugEnabled())
         log.debug("Check password for user ="+username);
     if(daoFactory==null)
       setAbstractDAOFactory();
     if(userManagerDAO==null)
         userManagerDAO = daoFactory.getUserManagerDAO();
-    return userManagerDAO.validUser(username,password);
+    result =  userManagerDAO.validUser(username,password);
+    if(log.isDebugEnabled())
+        log.debug("User validation= ="+result);    
+    return result;
   }
 
   /**
@@ -112,13 +116,17 @@ public class DBUserManager extends BaseUserManager implements PersistenceContant
    *                        exists and user belongs to that group/role
    */
   protected boolean inGroup(String username, String groupname) {
+    boolean result = false;
     if(log.isDebugEnabled())
         log.debug("Check if user = "+username+" in group = "+groupname);
     if(daoFactory==null)
       setAbstractDAOFactory();
     if(userManagerDAO==null)
         userManagerDAO = daoFactory.getUserManagerDAO();       
-    return userManagerDAO.userInGroup(username,groupname);
+    result =  userManagerDAO.userInGroup(username,groupname);
+    if(log.isDebugEnabled())
+        log.debug("User  in group = "+result);  
+    return result;
   }
   
   private void setAbstractDAOFactory()
