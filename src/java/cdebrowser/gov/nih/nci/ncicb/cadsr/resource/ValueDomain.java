@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.resource;
+import java.util.List;
 
 public interface ValueDomain extends AdminComponent 
 {
@@ -38,5 +39,8 @@ public interface ValueDomain extends AdminComponent
 
    public String getVDType();
    public void setVDType(String type);
+   
+   public List getValidValues();
+   public void setValidValues(List validValues);
    
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.io.Serializable;
 import gov.nih.nci.ncicb.cadsr.dto.base.AdminComponentTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomainsViewRowImpl;
+import java.util.List;
 
 public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
                             implements ValueDomain, Serializable {
@@ -154,4 +155,13 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 	public void setVDType(String type) {
 		vdType = type;
 	}
+  
+   public List getValidValues()
+   {
+     return null;
+   }
+   public void setValidValues(List validValues)
+   {
+     
+   }
 }

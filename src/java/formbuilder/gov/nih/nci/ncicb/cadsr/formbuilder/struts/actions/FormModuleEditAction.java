@@ -52,7 +52,7 @@ public class FormModuleEditAction extends FormEditAction {
     Module selectedModule = (Module)modules.get(moduleIndex.intValue());
     String[] questionArr = getQuestionsAsArray(selectedModule.getQuestions());
     moduleEditForm.set(MODULE_LONG_NAME,selectedModule.getLongName());
-    moduleEditForm.set(MODULE_COMMENTS,selectedModule.getLongName());
+    moduleEditForm.set(MODULE_INSTRUCTION_LONG_NAME,selectedModule.getLongName());
     moduleEditForm.set(MODULE_QUESTIONS,questionArr);
     setSessionObject(request, MODULE,selectedModule);
     

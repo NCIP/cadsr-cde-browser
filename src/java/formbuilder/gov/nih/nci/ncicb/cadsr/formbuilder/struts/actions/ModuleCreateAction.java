@@ -92,13 +92,13 @@ public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
 	try
 	    {
 		newModule.setForm(f);
-		newModule.setLongName((String)dynaForm.get(LONG_NAME));
+		newModule.setLongName((String)dynaForm.get(MODULE_LONG_NAME));
 		newModule.setAslName("DRAFT NEW");
 		newModule.setVersion(new Float(1.0));
 		newModule.setCreatedBy(request.getRemoteUser());
 		newModule.setDisplayOrder(((Integer)dynaForm.get(DISPLAY_ORDER)).intValue());
 
-		newModInst.setLongName((String)dynaForm.get(COMMENTS));
+		newModInst.setLongName((String)dynaForm.get(MODULE_INSTRUCTION_LONG_NAME));
 		newModInst.setAslName("DRAFT NEW");
 		newModInst.setVersion(new Float(1.0));
 		newModInst.setCreatedBy(request.getRemoteUser());

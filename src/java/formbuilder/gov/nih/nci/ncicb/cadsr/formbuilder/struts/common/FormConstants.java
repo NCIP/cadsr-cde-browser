@@ -27,8 +27,8 @@ public interface FormConstants extends FormBuilderConstants
     public static final String FORM_COMMENTS = "formComments";
     public static final String FORM_GOTO_EDIT = "gotoEdit";
 
-    public static final String MODULE_LONG_NAME = "longName";
-    public static final String MODULE_INSTRUCTION_LONG_NAME = "comments";
+    public static final String MODULE_LONG_NAME = "moduleLongName";
+    public static final String MODULE_INSTRUCTION_LONG_NAME = "moduleInstructionLongName";
 
     public static final String CLONED_CRF = "clonedCrf";
     public static final String MODULE = "eModule";
@@ -61,8 +61,6 @@ public interface FormConstants extends FormBuilderConstants
     public static final String CSI_NAME = "txtClassSchemeItem";
     public static final String CS_CSI_ID = "jspClassification";
     
-    public static final String MODULE_LONG_NAME = "moduleLongName";
-    public static final String MODULE_COMMENTS = "moduleComments";
     public static final String QUESTION_LONG_NAME = "questionLongName";
     public static final String QUESTION_ID_SEQ = "questionIdSeq";
     public static final String QUESTION_INDEX = "questionIndex";
