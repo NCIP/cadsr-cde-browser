@@ -3,8 +3,9 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.tree;
 import java.sql.Connection;
 import java.util.Hashtable;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
-public class BaseTreeNode implements TreeConstants  {
+public class BaseTreeNode implements TreeConstants, CaDSRConstants  {
   protected Connection myConn = null;
   protected DBUtil myDbUtil = null;
   protected Hashtable treeParams = null;
@@ -56,6 +57,14 @@ public class BaseTreeNode implements TreeConstants  {
       functionName = (String)treeParams.get(FUNCTION_NAME_URL_PARAM);
     if (functionName == null) functionName = "performAction";
     return functionName;
+  }
+
+  protected String isCTEPUser() {
+    String ctepUser = CaDSRConstants.NO;
+    if (treeParams.containsKey(this.CTEP_USER_FLAG))
+      ctepUser = (String)treeParams.get(this.CTEP_USER_FLAG);
+
+    return ctepUser;
   }
   
 }

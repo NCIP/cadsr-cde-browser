@@ -10,5 +10,6 @@ public interface TreeConstants  {
   public static final String DE_SEARCH_FUNCTION = "performAction";
   public static final String FORM_SEARCH_FUNCTION = "formSearchAction";
   public static final String FORM_DETAILS_FUNCTION = "formDetailsAction";
+  public static final String CTEP_USER_FLAG = "ctepUser";
   
 }

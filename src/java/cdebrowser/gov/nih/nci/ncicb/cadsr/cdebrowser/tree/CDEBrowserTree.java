@@ -52,6 +52,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
     Context ctx = null;
     DefaultMutableTreeNode tree = null;
     BaseTreeNode baseNode = null; 
+    
 
     try {
       CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
@@ -130,6 +131,12 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
         if ((!ctx.getName().equals("CTEP")
                 && treeType.equals(TreeConstants.DE_SEARCH_TREE))
              || (treeType.equals(TreeConstants.FORM_SEARCH_TREE))) {
+
+          if ((ctx.getName().equals("CTEP") 
+               && baseNode.isCTEPUser().equals("Yes"))
+             || (!ctx.getName().equals("CTEP"))) {
+               
+          
           List protoNodes = ctxNode.getProtocolNodes();
           DefaultMutableTreeNode protoLabelNode;
 
@@ -147,6 +154,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
 
             ctxTreeNode.add(protoLabelNode);
           }
+        }
         }
 
         tree.add(ctxTreeNode);
