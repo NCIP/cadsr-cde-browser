@@ -33,6 +33,17 @@
     </jsp:include>
 
 
+    <SCRIPT>
+      <!--
+           function clearClassSchemeItem(i) {
+           var name = '<%= FormConstants.CSI_NAME %>' + i;
+           document.forms[0][name].value = "";
+           name = '<%= FormConstants.CS_CSI_ID %>[' + i + ']';
+           document.forms[0][name].value = "";
+           }
+           -->
+    </SCRIPT>
+
     <logic:present name="<%=FormConstants.CRF%>">
       <html:form action='<%="/addClassifications?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.ADD_CLASSIFICATIONS%>'>
 
@@ -52,7 +63,7 @@
         onfocus="this.blur();"/>
         &nbsp;
         <a href="<%=csLOVUrl[i]%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
-        <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
+        <a href="javascript:clearClassSchemeItem(<%= i %>)"><i>Clear</i></a>
         
         <html:hidden  property='<%=FormConstants.CS_CSI_ID + "[" + i + "]"%>'/>
       </td>
