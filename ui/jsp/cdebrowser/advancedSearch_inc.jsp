@@ -36,6 +36,14 @@
   </tr> 
  </table>
  
+  <table valign="top">
+  <tr>
+   <td valign="top" class="CDEBrowserPageContext">
+     <%=pageContextInfo%>
+   </td >
+  </tr>
+</table>
+
 <table width="100%" >
  
 
