@@ -201,6 +201,9 @@
               <include name="gov/nih/nci/ncicb/cadsr/exception/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/servicelocator/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/util/StringUtils.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/logging/LogFactory.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/logging/Log.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/logging/CaDSRLogImpl.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/util/SessionUtils.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/util/DebugStringBuffer.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/CaDSRConstants.class"/>
