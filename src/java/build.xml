@@ -542,11 +542,14 @@
   <target  name="clean_build" depends="clean,ear_cdebrowser"> 
   </target>
   
-  <target  name="clean_build_redeploy" depends="clean,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j,oc4j_start"> 
+  <target  name="clean_build_redeploy" depends="clean,ear_cdebrowser,oc4j_stop,clean_oc4j,copy_ear_oc4j"> 
+  </target>
+  
+  <target  name="clean_build_redeploy_restart" depends="clean_build_redeploy,oc4j_start"> 
   </target>
   
   <target name="oc4j_start">
-        <exec executable="cmd.exe"  spawn="true" os="Windows 2000">
+        <exec executable="cmd.exe" spawn="true" os="Windows 2000">
                         <arg value="/C"/>
                         <arg value="start"/>
                         <arg value="${oc4j.j2ee.home}/${oc4j.start.script.name}"/>
@@ -582,6 +585,7 @@
        clean_build_redeploy   - Does the following targets clean
        				,ear_cdebrowser,oc4j_stop
        				,clean_oc4j, oc4j_copy_ear 
+      clean_build_redeploy_restart - clean_build_redeploy,oc4j_start
 
        help                   - This help screen.
  
