@@ -109,11 +109,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    *
    * @param <b>sourceForm</b> Form object
    *
-   * @return <b>int</b> 1 - success, 0 - failure.
+   * @return <b>Form</b> Form object
    *
    * @throws <b>DMLException</b>
    */
-  public int createFormComponent(Form sourceForm) throws DMLException {
+  public Form createFormComponent(Form sourceForm) throws DMLException {
     // check if the user has the privilege to create module
     boolean create =
       this.hasCreate(
@@ -128,13 +128,15 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     String qcIdseq = generateGUID();
     int res = insertQuestContent.createContent(sourceForm, qcIdseq);
 
-    if (res != 1) {
+    if (res == 1) {
+      sourceForm.setFormIdseq(qcIdseq);
+      return sourceForm;
+    }
+    else {
       throw new DMLException(
         "Did not succeed creating form record in the " +
         " quest_contents_ext table.");
     }
-
-    return 1;
   }
 
   /**
@@ -337,8 +339,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
          newForm.setCreatedBy("Hyun Kim");
          newForm.setFormCategory("Registration");
          newForm.setFormType("CRF");
-         int res = formTest.createFormComponent(newForm);
-         System.out.println("\n*****Create Form Result 1: " + res);
+         System.out.println(formTest.createFormComponent(newForm));
        }
        catch (DMLException de) {
          System.out.println("******Printing DMLException*******");

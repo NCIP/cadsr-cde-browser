@@ -46,11 +46,11 @@ public interface FormDAO {
    *
    * @param <b>sourceForm</b> Form object
    *
-   * @return <b>int</b> 1 - success, 0 - failure.
+   * @return <b>Form</b> Form object.
    *
    * @throws <b>DMLException</b>
    */
-  public int createFormComponent(Form sourceForm) throws DMLException;
+  public Form createFormComponent(Form sourceForm) throws DMLException;
 
   /**
    * Adds new modules to a form. 
