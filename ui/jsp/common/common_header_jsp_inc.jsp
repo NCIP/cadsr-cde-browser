@@ -8,8 +8,8 @@
 	String dest = pageContext.getRequest().getParameter("loginDestination");
 %>
 
-<SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/newWinJS.js"></SCRIPT>
-<SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/helpWinJS.js"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/jsLib/newWinJS.js"/>'></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/jsLib/helpWinJS.js"/>'></SCRIPT>
 
 <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
   <tr>
