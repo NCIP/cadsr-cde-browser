@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCQuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
@@ -182,6 +183,18 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
 
 
 
+  }
+
+  public Module addQuestion(
+    String moduleId,
+    Question question) throws DMLException {
+    return null;
+  }
+
+  public int updateModuleLongName(
+    String moduleId,
+    String newLongName) throws DMLException {
+    return 0;
   }
 
   /**
