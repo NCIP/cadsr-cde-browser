@@ -2,9 +2,11 @@
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 
-function submitForm() {
+function submitForm(methodName) {
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
   document.forms[0].submit();
-}
+  }
+
 /* HSK */
 function clearClassSchemeItem() {
   document.forms[0].jspClassification.value = "";
@@ -34,6 +36,8 @@ function clearForm() {
        "/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl;
 
 %>
+
+
 <SCRIPT>
 <!--
 function gotoProtocolsLOV() {
@@ -48,7 +52,24 @@ function gotoClassificationsLOV() {
 -->
 </SCRIPT>
 
+ <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
+
+  <logic:present name="searchForm" property="<%=FormConstants.CONTEXT_NAME%>">
+   <logic:notEqual name="searchForm" property="<%=FormConstants.CONTEXT_NAME%>" value='<%=""%>'>
+      <table width="100%">
+	      <tr>
+	      <td align="center">
+	      <h3 class="CDEBrowserPageContext">
+		 caDSRContext >> <bean:write name="searchForm" property="<%=FormConstants.CONTEXT_NAME%>" />
+	      </h3>
+	      </td>
+	      </tr>
+      </table>
+     </logic:notEqual>
+  </logic:present>
+  
   <table cellspacing="2" cellpadding="3" border="0" width="100%">
+  
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
         <td class="OraFieldText" nowrap>
@@ -120,11 +141,6 @@ function gotoClassificationsLOV() {
         </td>        
     </tr>        
     <tr>    
-      <td>
-        <html:hidden value="<%=NavigationConstants.GET_ALL_FORMS_METHOD%>" property="<%=NavigationConstants.METHOD_PARAM%>"/>
-      </td>
-    </tr>
-    <tr>    
       <td colspan="4" nowrap align="left" class="AbbreviatedText">
         <bean:message key="cadsr.formbuilder.search.message"/>
       </td>
@@ -133,11 +149,27 @@ function gotoClassificationsLOV() {
     <td colspan="4" nowrap align="left" class="AbbreviatedText">Wildcard character for search is *</td>
  </tr>
  <TR>
-    <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=<%=urlPrefix%>i/searchButton.gif border=0></a></td>
-    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=urlPrefix%>i/clear.gif border=0></a></td>
+
+    <td  colspan="4" align="center" nowrap >
+      <table>
+       <tr>
+	  <td   align="right" nowrap>
+	      <a href="javascript:submitForm('<%=NavigationConstants.GET_ALL_FORMS_METHOD%>')"><img src=<%=urlPrefix%>i/searchButton.gif border=0></a>
+	    </td>       
+         <td align="left" >
+           <a href="javascript:clearForm()"><img src=<%=urlPrefix%>i/clear.gif border=0></a>
+          </td>
+	       <td  align="left" nowrap>
+	      <html:link action='<%="/clearFormSearchAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CLEAR_FORM_SEARCH_METHOD%>' >
+		     <html:img src='<%=urlPrefix+"i/newSearchButton.gif"%>' border="0" alt="New Search"/>
+	      </html:link>
+	    </td>          
+       </tr>
+      </table>       
+    </td>
  </TR>
  <TR>
-    <td colspan="3" align="right" nowrap>
+    <td colspan="4" align="center" nowrap>
       <html:link action='<%="/gotoFormCreate?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_FORM%>' target="_parent" >
         <html:img src='<%=urlPrefix+"i/create_new_form_template.gif"%>' border="0" alt="Create New Form"/>
       </html:link>&nbsp;

@@ -17,6 +17,7 @@ public interface NavigationConstants
   //When Chaining actions
 
   public static final String GET_ALL_FORMS_METHOD="getAllForms";
+  public static final String CLEAR_FORM_SEARCH_METHOD="clearFormSearch";
   public static final String SEND_HOME_METHOD="sendHome";
   public static final String DEFAULT_METHOD=SEND_HOME_METHOD;
   public static final String FORWARD_FRAMED_SEARCH_RESULTS_PAGE="framedSearchResultsPage";

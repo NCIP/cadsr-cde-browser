@@ -8,6 +8,7 @@
       <form-property name="formLongName" type="java.lang.String"/>
       <form-property name="protocolIdSeq" type="java.lang.String"/>
       <form-property name="contextIdSeq" type="java.lang.String"/>
+      <form-property name="contextName" type="java.lang.String"/>
       <form-property name="workflow" type="java.lang.String"/>
       <form-property name="categoryName" type="java.lang.String"/>
       <form-property name="formType" type="java.lang.String"/>
@@ -117,6 +118,13 @@
       <forward name="success" path="/formbuilder/formResults.jsp"
         redirect="false"/>
     </action>
+    <action name="searchForm" path="/clearFormSearchAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction"
+      validate="false">
+      <forward name="success" path="/formbuilder/formResults.jsp"
+        redirect="false"/>
+    </action>    
     <action name="hrefCRFForm" path="/formDetailsAction" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction"
@@ -183,6 +191,8 @@
       validate="false">
       <forward name="success" path="/formSearchAction.do?method=getAllForms"
         redirect="false"/>
+      <forward name="failure" path="/formSearchAction.do?method=getAllForms"
+        redirect="false"/>        
     </action>
     <action name="hrefCRFForm" path="/formViewDeleteAction" parameter="method"
       scope="request"

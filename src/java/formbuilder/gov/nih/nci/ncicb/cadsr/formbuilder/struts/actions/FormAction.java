@@ -7,6 +7,8 @@ import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
+import java.util.List;
+import java.util.ListIterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -72,7 +74,15 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     String type = (String) searchForm.get(this.FORM_TYPE);
     String classificationIdSeq = (String) searchForm.get(this.CS_CSI_ID);
 
-    Collection forms = null;
+
+   //Set the Context Name
+   
+   List contexts = (List)this.getSessionObject(request,this.ALL_CONTEXTS);
+   Context currContext = getContextForId(contexts,contextIdSeq);
+   if(currContext!=null)
+    searchForm.set(this.CONTEXT_NAME,currContext.getName());
+   
+   Collection forms = null;
 
     forms =
       service.getAllForms(
@@ -303,6 +313,47 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
       return this.getFormDetails(mapping, form, request, response);
     else
       return this.getAllForms(mapping, form, request, response);
+  }
+  
+  /**
+   * Clear the screen for a new Search
+   * Clears the struts form and also the resultSet of the previous search
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward clearFormSearch(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    
+    FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
+    formBean.clear();
+    removeSessionObject(request,FORM_SEARCH_RESULTS);
+    return mapping.findForward(SUCCESS);
+    }
+  private Context getContextForId(List contexts,String contextIdSeq)
+  {
+    if(contexts==null||contextIdSeq==null)
+      return null;
+    ListIterator listIt = contexts.listIterator();
+    while(listIt.hasNext())
+    {
+      Context currContext = (Context)listIt.next();
+      if(currContext.getConteIdseq().equals(contextIdSeq))
+      {
+        return currContext;
+      }
+    }
+    return null;
   }
 }
   
