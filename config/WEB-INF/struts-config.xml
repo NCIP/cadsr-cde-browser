@@ -40,7 +40,8 @@
     <form-bean name="createModuleForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
-      <form-property name="longName" type="java.lang.String"/>
+      <form-property name="moduleLongName" type="java.lang.String"/>
+      <form-property name="moduleInstructionLongName" type="java.lang.String"/>
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="comments" type="java.lang.String"/>
       <form-property name="displayOrder" type="java.lang.Integer"/>
@@ -88,7 +89,8 @@
     <form-bean name="changeAssociationForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
-      <form-property name="selectedItem" type="java.lang.String"/>
+      <form-property name="questionIndex" type="java.lang.String"/>
+      <form-property name="moduleIndex" type="java.lang.Integer"/>
       <form-property name="selectedText" type="java.lang.String"/>
     </form-bean>
   </form-beans>
@@ -145,8 +147,11 @@
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ModuleCreateAction"
       validate="false">
+      <!--
       <forward name="toFormEdit"
         path="/formToEditAction.do?method=getFormToEdit"/>
+      -->
+      <forward name="toFormEdit" path="/formbuilder/formEdit.jsp"/>
       <forward name="toCreateModule" path="/formbuilder/moduleCreate.jsp"/>
       <forward name="toCreateForm" path=""/>
     </action>
@@ -239,7 +244,7 @@
       <forward name="success" path="/formbuilder/displayCDECart.jsp"/>
       <forward name="addDeleteSuccess" path="/formCDECartAction.do?method=displayCDECart"/>
     </action>
-    <action name="displayCartForm" path="/gotoChangeAssociation" parameter="method"
+    <action name="changeAssociationForm" path="/gotoChangeAssociation" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureCDECartAction"
       validate="false">
@@ -249,7 +254,7 @@
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureCDECartAction"
       validate="false">
-      <forward name="success" path="/formbuilder/changeAssociation.jsp"/>
+      <forward name="success" path="/moduleToEditAction.do?method=getModuleToEdit"/>
     </action>
   </action-mappings>
   <controller debug="3" nocache="true"
