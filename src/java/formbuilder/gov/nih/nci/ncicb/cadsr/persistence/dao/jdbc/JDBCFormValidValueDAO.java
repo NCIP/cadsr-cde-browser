@@ -43,6 +43,15 @@ public class JDBCFormValidValueDAO extends JDBCBaseDAO
     super(locator);
   }
 
+  /**
+   * Creates a new form valid value component (just the header info).
+   *
+   * @param <b>newValidValue</b> FormValidValue object
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
   public int createFormValidValueComponent(FormValidValue newValidValue)
     throws DMLException {
 
@@ -81,42 +90,39 @@ public class JDBCFormValidValueDAO extends JDBCBaseDAO
     return 0;
   }
 
+  /**
+   * Changes the display order of the specified form valid value. Display order
+   * of the other form valid values in the question is also updated accordingly.
+   *
+   * @param <b>validValueId</b> Idseq of the form valid value component.
+   * @param <b>newDisplayOrder</b> New display order of the form valid value.
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
   public int updateDisplayOrder(
     String validValueId,
     int newDisplayOrder) throws DMLException {
 
-    // first, get the original display order of valid value which to be updated
-    // with new display order
-    ParentIdseq query = new ParentIdseq();
-    query.setDataSource(getDataSource());
-    query.setSql();
-    List result = (List)query.execute(validValueId);
-    if (result.size() <= 0){
-      throw new DMLException("No matching valid value record found whose " +
-        "display order to be updated.");
+    try {
+      swapDisplayOrder(validValueId, "ELEMENT_VALUE", newDisplayOrder);
     }
-    Map rec = (Map)(result.get(0));
-    String qrIdseq = (String) rec.get("QR_IDSEQ");
-    String pQcIdseq = (String) rec.get("P_QC_IDSEQ");
-    int originalDisplayOrder = 
-      Integer.parseInt(rec.get("DISPLAY_ORDER").toString());
-
-    // now, update the display order of the swapped record with the original 
-    // display order
-    UpdateSwappedRecDispOrder updateRec1 = 
-      new UpdateSwappedRecDispOrder(getDataSource());
-    int updateCount1 = 
-      updateRec1.executeUpdate (originalDisplayOrder, pQcIdseq, newDisplayOrder); 
-
-    // now update the display order of the indicated record with the new display
-    // order
-    UpdateRecDispOrder updateRec2 = new UpdateRecDispOrder(getDataSource());
-    int updateCount2 = 
-      updateRec2.executeUpdate (newDisplayOrder, qrIdseq); 
-     
-    return 1;  // success
+    catch (DMLException e) {
+      System.out.println("Failed to find the target record to update its display order");
+    }
+    return 1; //success
   }
 
+  /**
+   * Deletes the specified form valid value and all its associated components.
+   * 
+   * @param <b>validValueId</b> Idseq of the form valid value component.
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
   public int deleteFormValidValue(String validValueId)
     throws DMLException {
     
@@ -157,7 +163,7 @@ public class JDBCFormValidValueDAO extends JDBCBaseDAO
       
       formValidValue.setQuestion(question);
       formValidValue.setVersion(new Float(2.31));
-      formValidValue.setLongName("Test ValidValue Long Name 022804 4");
+      formValidValue.setLongName("Test ValidValue Long Name 022904 1");
       formValidValue.setPreferredDefinition("Test Valid Value pref def");
       formValidValue.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
       formValidValue.setAslName("DRAFT NEW");
@@ -171,7 +177,8 @@ public class JDBCFormValidValueDAO extends JDBCBaseDAO
     catch (DMLException de) {
       de.printStackTrace();
     }
-        
+    */
+    /*     
     // test for deleteQuestion
     try {
       int res = test.deleteFormValidValue("D472B2E9-BB01-21C2-E034-0003BA0B1A09");
@@ -303,89 +310,4 @@ public class JDBCFormValidValueDAO extends JDBCBaseDAO
     }
   }
 
-  /**
-   * Inner class that accesses database to get the display order, parent idseq, and
-   * primary key of the record whose display oder is to be updated.
-   */
-  private class ParentIdseq extends MappingSqlQuery {
-    ParentIdseq() {
-      super();
-    }
-
-    public void setSql() {
-      super.setSql("select QR_IDSEQ, P_QC_IDSEQ, DISPLAY_ORDER from QC_RECS_EXT " +
-        " where C_QC_IDSEQ = ? and RL_NAME = 'ELEMENT_VALUE' ");
-      declareParameter(new SqlParameter("C_QC_IDSEQ", Types.VARCHAR));
-    }
-
-    protected Object mapRow(
-      ResultSet rs,
-      int rownum) throws SQLException {
-
-      Map out = new HashMap();
-      out.put("QR_IDSEQ", rs.getString(1));  // QR_IDSEQ
-      out.put("P_QC_IDSEQ", rs.getString(2));  // P_QC_IDSEQ
-      out.put("DISPLAY_ORDER", new Integer(rs.getString(3)));  // DISPLAY_ORDER
-      return out;
-    }
-  }
-
-  /**
-   * Inner class that accesses database to update the display order of the
-   * display order swapped record.
-   */
-  private class UpdateSwappedRecDispOrder extends SqlUpdate {
-    public UpdateSwappedRecDispOrder(DataSource ds) {
-      String updateSql = 
-      " update qc_recs_ext set display_order = ? where p_qc_idseq = ? and " + 
-      " display_order = ? ";
-      this.setDataSource(ds);
-      this.setSql(updateSql);
-      declareParameter(new SqlParameter("original_display_order", Types.INTEGER));
-      declareParameter(new SqlParameter("p_qc_idseq", Types.VARCHAR));
-      declareParameter(new SqlParameter("new_display_order", Types.INTEGER));
-      compile();
-    }
-    protected int executeUpdate (int originalDisplayOrder, String pQcIdseq, 
-      int newDisplayOrder) 
-    {
-      Object [] obj = 
-        new Object[]
-          {new Integer(originalDisplayOrder), 
-           pQcIdseq,
-           new Integer(newDisplayOrder)
-          };
-      
-	    int res = update(obj);
-      return res;
-    }
-  }
-
-  /**
-   * Inner class that accesses database to update the display order of the
-   * selected record.
-   */
-  private class UpdateRecDispOrder extends SqlUpdate {
-    public UpdateRecDispOrder(DataSource ds) {
-      String updateSql = 
-      " update qc_recs_ext set display_order = ? where qr_idseq = ? ";
-      this.setDataSource(ds);
-      this.setSql(updateSql);
-      declareParameter(new SqlParameter("display_order", Types.INTEGER));
-      declareParameter(new SqlParameter("qr_idseq", Types.VARCHAR));
-      compile();
-    }
-    protected int executeUpdate (int displayOrder, String qrIdseq)
-    {
-      Object [] obj = 
-        new Object[]
-          {new Integer(displayOrder), 
-           qrIdseq
-          };
-      
-	    int res = update(obj);
-      return res;
-    }
-  }
-  
 }

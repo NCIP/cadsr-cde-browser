@@ -90,6 +90,15 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     return null;
   }
 
+  /**
+   * Creates a new form component (just the header info).
+   *
+   * @param <b>sourceForm</b> Form object
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
   public int createFormComponent(Form sourceForm) throws DMLException {
 
     // check if the user has the privilege to create module
@@ -111,6 +120,14 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     return 1;
   }
 
+  /**
+   * Deletes the entire form including all the components associated with it.
+   * @param <b>formId</b> Idseq of the form component.
+   *
+   * @return <b>int</b> 1 - success, 0 - failure.
+   *
+   * @throws <b>DMLException</b>
+   */
   public int deleteForm(String formId) throws DMLException {
     DeleteForm deleteForm = new DeleteForm(this.getDataSource());
     Map out = deleteForm.executeDeleteCommand(formId);
@@ -193,13 +210,13 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     catch (DMLException e) {
       System.out.println("Failed to get a form for " + formId);
     }
-    
+    */
+    // test createFormComponent method.
+    // for each test, change long name(preferred name generated from long name)
     try {
-      // test createFormComponent method.
-      // for each test, change long name(preferred name generated from long name)
       Form newForm = new FormTransferObject();
       newForm.setVersion(new Float(2.31));
-      newForm.setLongName("Test Form Long Name 022804 2");
+      newForm.setLongName("Test Form Long Name 022904 1");
       newForm.setPreferredDefinition("Test Form pref def");
       newForm.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
       Protocol protocol = new ProtocolTransferObject("TEST");
@@ -217,8 +234,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       de.printStackTrace();
       System.out.println("******Finishing printing DMLException*******");
     }
-    */
-    
+    /*
     try {
       int res = formTest.deleteForm("D4700045-2FD0-0DAA-E034-0003BA0B1A09");
       System.out.println("\n*****Delete Form Result 1: " + res);
@@ -228,6 +244,7 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       de.printStackTrace();
       System.out.println("******Finishing printing DMLException*******");
     }
+    */
   }
 
   /**

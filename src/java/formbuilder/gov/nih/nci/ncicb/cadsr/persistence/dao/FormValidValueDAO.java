@@ -50,8 +50,6 @@ public interface FormValidValueDAO {
   /**
    * Deletes the specified form valid value and all its associated components.
    * 
-   * Hyun: Use stored procedure: sbrext_form_builder_pkg.remove_value
-   *
    * @param <b>validValueId</b> Idseq of the form valid value component.
    *
    * @return <b>int</b> 1 - success, 0 - failure.

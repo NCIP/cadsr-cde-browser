@@ -46,7 +46,7 @@ public interface FormDAO {
    *
    * @param <b>sourceForm</b> Form object
    *
-   * @return <b>Form</b> Form object representing the new form.
+   * @return <b>int</b> 1 - success, 0 - failure.
    *
    * @throws <b>DMLException</b>
    */
@@ -108,7 +108,6 @@ public interface FormDAO {
 
   /**
    * Deletes the entire form including all the components associated with it.
-   * Hyun: Use stored procedure: sbrext_form_builder_pkg.remove_crf 
    * @param <b>formId</b> Idseq of the form component.
    *
    * @return <b>int</b> 1 - success, 0 - failure.
