@@ -6,7 +6,7 @@ import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * This class will be used to build the sql query for CDE Browser's 
+ * This class will be used to build the sql query for CDE Browser's
  * data element search page. The basis for the resulting query is the user request.
  * @author Ram Chilukuri
  */
@@ -26,7 +26,7 @@ public class DESearchQueryBuilder extends Object {
   private String treeConteIdSeq = "";
   private Object[] queryParams = new Object[]{"%","%","%","%","%"};
   private String contextUse = "";
-  private String orderBy = " de.long_name, de_version ";
+  private String orderBy = " long_name, de_version ";
   private String sqlWithoutOrderBy;
 
   public DESearchQueryBuilder(HttpServletRequest request,
@@ -44,9 +44,9 @@ public class DESearchQueryBuilder extends Object {
     String selIndex = null;
     contextUse = request.getParameter("contextUse");
     if (contextUse == null) contextUse = "";
-    
+
     String usageWhere = "";
-    
+
     String searchStr0 = "";
     String searchStr2 = "";
     String searchStr3 = "";
@@ -61,7 +61,7 @@ public class DESearchQueryBuilder extends Object {
     String decFrom = "";
     //String decWhere = "";
     StringBuffer whereBuffer = new StringBuffer();
-    
+
     String registrationFrom = " , sbr.ac_registrations acr ";
     String registrationWhere = " and de.de_idseq = acr.ac_idseq (+) ";
     if (strArray == null) {
@@ -72,31 +72,31 @@ public class DESearchQueryBuilder extends Object {
       whereBuffer.append(latestWhere);
     }
     else {
-      searchStr0 = StringUtils.replaceNull(request.getParameter("jspKeyword"));  
+      searchStr0 = StringUtils.replaceNull(request.getParameter("jspKeyword"));
       String [] searchStr1 = request.getParameterValues("jspStatus");
       String [] searchIn = request.getParameterValues("jspSearchIn");
-      String validValue = 
+      String validValue =
         StringUtils.replaceNull(request.getParameter("jspValidValue"));
       boolean doStatusSearch = false;
       if (searchStr1 != null) {
         if (!StringUtils.containsKey(searchStr1,"ALL")) {
-          doStatusSearch = true; 
+          doStatusSearch = true;
         }
       }
-      searchStr2 = 
+      searchStr2 =
         StringUtils.replaceNull(request.getParameter("jspValueDomain"));
       searchStr3 = StringUtils.replaceNull(request.getParameter("jspCdeId"));
-      searchStr4 = 
+      searchStr4 =
         StringUtils.replaceNull(request.getParameter("jspDataElementConcept"));
-      searchStr5 = 
+      searchStr5 =
         StringUtils.replaceNull(request.getParameter("jspClassification"));
-      searchStr6 = 
+      searchStr6 =
         StringUtils.replaceNull(request.getParameter("jspLatestVersion"));
-      
+
       if (searchStr6.equals("Yes")||searchStr6.equals("")) {
         //latestWhere = " and de.latest_version_ind = '"+searchStr6+"'";
-        latestWhere = " and de.latest_version_ind = 'Yes' ";    
-      } 
+        latestWhere = " and de.latest_version_ind = 'Yes' ";
+      }
       else {
         latestWhere = "";
       }
@@ -117,8 +117,8 @@ public class DESearchQueryBuilder extends Object {
       String searchWhere ="";
       String docWhere = "";
       String vvWhere = "";
-      
-      if (doStatusSearch){ 
+
+      if (doStatusSearch){
         wkFlowWhere = this.buildStatusWhereClause(searchStr1);
       }
       //if (!getSearchStr(3).equals("")){
@@ -185,14 +185,14 @@ public class DESearchQueryBuilder extends Object {
                             registrationFrom+
                      " where de.deleted_ind = 'No'  "+
                      " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
-                     //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
-                     " and de.asl_name != 'RETIRED DELETED' " + 
+                     //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
+                     " and de.asl_name != 'RETIRED DELETED' " +
                      " and conte.conte_idseq = de.conte_idseq " +
                      //" and de.de_idseq = dc.ac_idseq (+) "+
                      //" and vd.vd_idseq = de.vd_idseq " +
-                     //" and dec.dec_idseq = de.dec_idseq " + 
+                     //" and dec.dec_idseq = de.dec_idseq " +
                      csiWhere + whereClause + registrationWhere;
-                           
+
       }
       else if (treeParamType.equals("CONTEXT")){
         fromWhere= " from sbr.data_elements de , "+
@@ -207,8 +207,8 @@ public class DESearchQueryBuilder extends Object {
                              registrationFrom+
                    " where de.deleted_ind = 'No' "+
                    " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
-                   //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
-                   " and de.asl_name != 'RETIRED DELETED' " + 
+                   //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
+                   " and de.asl_name != 'RETIRED DELETED' " +
                    " and conte.conte_idseq = de.conte_idseq " +
                    //" and de.de_idseq = dc.ac_idseq (+) " +
                    //" and conte.conte_idseq = '"+treeParamIdSeq+"'" +
@@ -216,7 +216,7 @@ public class DESearchQueryBuilder extends Object {
                    //" and dec.dec_idseq = de.dec_idseq " +
                    //usageWhere +
                     csiWhere + whereClause + registrationWhere;
-                           
+
       }
       else if (treeParamType.equals("PROTOCOL")){
         fromWhere = " from  sbr.data_elements de , " +
@@ -234,8 +234,8 @@ public class DESearchQueryBuilder extends Object {
                                registrationFrom+
                    " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
-                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
-                         " and de.asl_name != 'RETIRED DELETED' " + 
+                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
+                         " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
                          //" and de.de_idseq = dc.ac_idseq (+) " +
                          " and pt.proto_idseq = frm.proto_idseq " +
@@ -243,7 +243,7 @@ public class DESearchQueryBuilder extends Object {
                          " and qc.dn_crf_idseq = frm.qc_idseq " +
                          " and qc.qtl_name = 'QUESTION' " +
                          " and qc.de_idseq = de.de_idseq " +
-                         " and pt.proto_idseq = '"+treeParamIdSeq+"'" + 
+                         " and pt.proto_idseq = '"+treeParamIdSeq+"'" +
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " +
                          csiWhere + whereClause + registrationWhere;
@@ -262,8 +262,8 @@ public class DESearchQueryBuilder extends Object {
                                registrationFrom+
                     " where de.deleted_ind = 'No'  "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
-                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
-                         " and de.asl_name != 'RETIRED DELETED' " + 
+                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
+                         " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
                          //" and de.de_idseq = dc.ac_idseq (+) " +
                          " and qc.dn_crf_idseq = '"+treeParamIdSeq+"'" +
@@ -272,10 +272,10 @@ public class DESearchQueryBuilder extends Object {
                         // " and vd.vd_idseq = de.vd_idseq " +
                         // " and dec.dec_idseq = de.dec_idseq " +
                          csiWhere + whereClause + registrationWhere;
-                           
+
       }
       else if (treeParamType.equals("CSI")){
-        if (searchStr5.equals("")) 
+        if (searchStr5.equals(""))
           csiWhere = " and acs.cs_csi_idseq = '"+treeParamIdSeq+"'";
         else
           csiWhere = " and acs.cs_csi_idseq IN ('"+treeParamIdSeq+"','"+searchStr5+"')";
@@ -291,8 +291,8 @@ public class DESearchQueryBuilder extends Object {
                                registrationFrom +
                          " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
-                        //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
-                         " and de.asl_name != 'RETIRED DELETED' " + 
+                        //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
+                         " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
                          //" and de.de_idseq = dc.ac_idseq (+) " +
                          csiWhere +
@@ -300,10 +300,10 @@ public class DESearchQueryBuilder extends Object {
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " +
                          whereClause+ registrationWhere;
-                           
+
       }
       else if (treeParamType.equals("CLASSIFICATION")){
-        if (searchStr5.equals("")) 
+        if (searchStr5.equals(""))
           csiWhere = "";
         else
           csiWhere = " and acs.cs_csi_idseq = '"+searchStr5+"'";
@@ -321,8 +321,8 @@ public class DESearchQueryBuilder extends Object {
                                registrationFrom +
                          " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
-                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
-                         " and de.asl_name != 'RETIRED DELETED' " + 
+                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
+                         " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
                          //" and de.de_idseq = dc.ac_idseq (+) " +
                          " and csc.cs_idseq = '"+treeParamIdSeq+"'" +
@@ -331,7 +331,7 @@ public class DESearchQueryBuilder extends Object {
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " +
                          csiWhere + whereClause+ registrationWhere;
-                           
+
       }
       else if (treeParamType.equals("CORE")) {
         fromWhere = " from sbr.data_elements de , "+
@@ -346,12 +346,12 @@ public class DESearchQueryBuilder extends Object {
                                 registrationFrom +
                          " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
-                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
-                         " and de.asl_name != 'RETIRED DELETED' " + 
+                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
+                         " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
                          //" and de.de_idseq = dc.ac_idseq (+) "+
                          //" and vd.vd_idseq = de.vd_idseq " +
-                         //" and dec.dec_idseq = de.dec_idseq " + 
+                         //" and dec.dec_idseq = de.dec_idseq " +
                          " and de.de_idseq in ( select de_idseq " +
                                               " from   sbrext.core_noncore_de_view " +
                                               " where csi_idseq = '"+treeParamIdSeq+"'" +
@@ -371,12 +371,12 @@ public class DESearchQueryBuilder extends Object {
                                 registrationFrom+
                          " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
-                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
-                         " and de.asl_name != 'RETIRED DELETED' " + 
+                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
+                         " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
                          //" and de.de_idseq = dc.ac_idseq (+) "+
                          //" and vd.vd_idseq = de.vd_idseq " +
-                         //" and dec.dec_idseq = de.dec_idseq " + 
+                         //" and dec.dec_idseq = de.dec_idseq " +
                          " and de.de_idseq in ( select de_idseq " +
                                               " from   sbrext.core_noncore_de_view " +
                                               " where csi_idseq = '"+treeParamIdSeq+"'" +
@@ -385,7 +385,7 @@ public class DESearchQueryBuilder extends Object {
       }
       //String orderBy = " order by de.preferred_name, de.version ";
       StringBuffer finalSqlStmt = new StringBuffer ();
-        
+
       String selectClause = "SELECT de.de_idseq "
                            +"      ,de.preferred_name de_preferred_name"
                            +"      ,de.long_name "
@@ -407,7 +407,7 @@ public class DESearchQueryBuilder extends Object {
       sqlStmt = finalSqlStmt.toString();
       xmlQueryStmt = "select de.de_idseq "+fromWhere;
       //buildWorkflowList(getSearchStr(1),dbUtil);
-     
+
   }
 
   public String getSearchStr(int arrayIndex){
@@ -457,7 +457,7 @@ public class DESearchQueryBuilder extends Object {
   private String getUsageWhereClause() {
     String usageWhere = "";
     if ("used_by".equals(contextUse)) {
-          usageWhere = 
+          usageWhere =
             " and de.de_idseq IN (select ac_idseq " +
             "                     from   designations des " +
             "                     where  des.conte_idseq = '"+treeConteIdSeq+"'" +
@@ -469,7 +469,7 @@ public class DESearchQueryBuilder extends Object {
     }
     else if ("both".equals(contextUse) || "".equals(contextUse) ) {
       if ("CONTEXT".equals(treeParamType)) {
-        usageWhere = 
+        usageWhere =
           " and de.de_idseq IN (select ac_idseq " +
           "                     from   designations des " +
           "                     where  des.conte_idseq = '"+treeConteIdSeq+"'" +
@@ -495,11 +495,11 @@ public class DESearchQueryBuilder extends Object {
       for (int i=0; i<statusList.length; i++) {
         if (i==0)
           wkFlow = "'"+statusList[0]+"'";
-        else 
+        else
           wkFlow = wkFlow + ","+ "'"+ statusList[i]+"'";
       }
       wkFlowWhere = " and de.asl_name IN ("+wkFlow+")";
-          
+
     }
 
     return wkFlowWhere;
@@ -517,7 +517,7 @@ public class DESearchQueryBuilder extends Object {
           StringUtils.containsKey(searchDomain,"Preferred Name") &&
           StringUtils.containsKey(searchDomain,"Hist") &&
           StringUtils.containsKey(searchDomain,"Doc Text"))) {
-      searchWhere = " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " + 
+      searchWhere = " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " +
                            " OR upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"') " +
                            " OR upper (de.preferred_name) like upper ( '"+newSearchStr+"')) ";
 
@@ -535,13 +535,13 @@ public class DESearchQueryBuilder extends Object {
                   +" and    upper (nvl(rd2.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
       return docWhere;
     }
-    
+
     else if(StringUtils.containsKey(searchDomain,"Long Name") &&
             StringUtils.containsKey(searchDomain,"Preferred Name") &&
             StringUtils.containsKey(searchDomain,"Hist")) {
 
-      searchWhere = 
-        " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " + 
+      searchWhere =
+        " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " +
                " OR upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"') " +
                " OR upper (de.preferred_name) like upper ( '"+newSearchStr+"')) ";
 
@@ -557,8 +557,8 @@ public class DESearchQueryBuilder extends Object {
             StringUtils.containsKey(searchDomain,"Preferred Name") &&
             StringUtils.containsKey(searchDomain,"Doc Text")) {
 
-      searchWhere = 
-        " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " + 
+      searchWhere =
+        " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " +
                " OR upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"') " +
                " OR upper (de.preferred_name) like upper ( '"+newSearchStr+"')) ";
 
@@ -573,10 +573,10 @@ public class DESearchQueryBuilder extends Object {
     else if(StringUtils.containsKey(searchDomain,"Long Name") &&
             StringUtils.containsKey(searchDomain,"Doc Text") &&
             StringUtils.containsKey(searchDomain,"Hist")) {
-      searchWhere = 
-        " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " + 
+      searchWhere =
+        " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " +
           " OR upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"'))";
-                           
+
 
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
@@ -595,10 +595,10 @@ public class DESearchQueryBuilder extends Object {
     else if(StringUtils.containsKey(searchDomain,"Preferred Name") &&
             StringUtils.containsKey(searchDomain,"Doc Text") &&
             StringUtils.containsKey(searchDomain,"Hist")) {
-      searchWhere = 
+      searchWhere =
         " and (upper (de.preferred_name) like upper ( '"+newSearchStr+"') " +
           " OR upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
-                           
+
 
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
@@ -616,7 +616,7 @@ public class DESearchQueryBuilder extends Object {
     }
     else if(StringUtils.containsKey(searchDomain,"Long Name") &&
             StringUtils.containsKey(searchDomain,"Preferred Name")) {
-      searchWhere = 
+      searchWhere =
         " (upper (de.preferred_name) like upper ( '"+newSearchStr+"') " +
           " OR upper (de.long_name) like upper ( '"+newSearchStr+"')) ";
 
@@ -628,10 +628,10 @@ public class DESearchQueryBuilder extends Object {
     }
     else if(StringUtils.containsKey(searchDomain,"Long Name") &&
             StringUtils.containsKey(searchDomain,"Doc Text")) {
-      searchWhere = 
+      searchWhere =
         " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " +
           " OR upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
-                           
+
 
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
@@ -643,10 +643,10 @@ public class DESearchQueryBuilder extends Object {
     }
     else if(StringUtils.containsKey(searchDomain,"Long Name") &&
             StringUtils.containsKey(searchDomain,"Hist")) {
-      searchWhere = 
+      searchWhere =
         " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " +
           " OR upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
-                           
+
 
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
@@ -658,10 +658,10 @@ public class DESearchQueryBuilder extends Object {
     }
     else if(StringUtils.containsKey(searchDomain,"Preferred Name") &&
             StringUtils.containsKey(searchDomain,"Doc Text")) {
-      searchWhere = 
+      searchWhere =
         " and (upper (de.preferred_name) like upper ( '"+newSearchStr+"') " +
           " OR upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
-                           
+
 
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
@@ -673,10 +673,10 @@ public class DESearchQueryBuilder extends Object {
     }
     else if(StringUtils.containsKey(searchDomain,"Preferred Name") &&
             StringUtils.containsKey(searchDomain,"Hist")) {
-      searchWhere = 
+      searchWhere =
         " and (upper (de.preferred_name) like upper ( '"+newSearchStr+"') " +
           " OR upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
-                           
+
 
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
@@ -688,9 +688,9 @@ public class DESearchQueryBuilder extends Object {
     }
     else if(StringUtils.containsKey(searchDomain,"Doc Text") &&
             StringUtils.containsKey(searchDomain,"Hist")) {
-      searchWhere = 
+      searchWhere =
         " and upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"') ";
-           
+
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
@@ -706,9 +706,9 @@ public class DESearchQueryBuilder extends Object {
       return docWhere;
     }
     else if (StringUtils.containsKey(searchDomain,"Preferred Name")) {
-      searchWhere = 
+      searchWhere =
         " upper (de.preferred_name) like upper ( '"+newSearchStr+"') ";
-                           
+
 
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
@@ -717,9 +717,9 @@ public class DESearchQueryBuilder extends Object {
       return docWhere;
     }
     else if (StringUtils.containsKey(searchDomain,"Long Name")) {
-      searchWhere = 
+      searchWhere =
         " upper (de.long_name) like upper ( '"+newSearchStr+"') ";
-           
+
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
                   +" from sbr.data_elements de1 "
@@ -727,9 +727,9 @@ public class DESearchQueryBuilder extends Object {
       return docWhere;
     }
     else if(StringUtils.containsKey(searchDomain,"Hist")) {
-      searchWhere = 
+      searchWhere =
         " and upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"') ";
-                           
+
 
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
@@ -740,9 +740,9 @@ public class DESearchQueryBuilder extends Object {
       return docWhere;
     }
     else if(StringUtils.containsKey(searchDomain,"Doc Text")) {
-      searchWhere = 
+      searchWhere =
         " and upper (nvl(rd1.doc_text,'%')) like upper ('"+newSearchStr+"') ";
-                           
+
       docWhere = " and de.de_idseq IN "
                   +"(select de_idseq "
                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
@@ -751,7 +751,7 @@ public class DESearchQueryBuilder extends Object {
                   + searchWhere + " ) ";
       return docWhere;
     }
-    
+
     return docWhere;
   }
 
@@ -767,6 +767,6 @@ public class DESearchQueryBuilder extends Object {
                      " and    upper(pv.value) like upper('"+newSearchStr+"'))";
 
     return vvWhere;
-    
+
   }
 }
