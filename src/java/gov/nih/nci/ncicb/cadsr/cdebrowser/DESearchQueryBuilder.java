@@ -100,10 +100,26 @@ public class DESearchQueryBuilder extends Object {
     }
 
     String contextExludeWhere ="";
-    
+    String contextExludeToExclude ="";
     if(searchBean.isExcludeTestContext())
-      contextExludeWhere = " and conte.name NOT IN ('TEST')";
-      
+    {
+      contextExludeToExclude=" 'TEST'";
+    }
+    if(searchBean.isExcludeTrainingContext())
+    {
+       if(contextExludeToExclude.equals(""))
+       {
+         contextExludeToExclude=" 'TRAINING'";
+       }
+       else
+       {
+         contextExludeToExclude = contextExludeToExclude+", 'TRAINING' ";
+       }
+    }
+    if(!contextExludeToExclude.equals(""))
+    {
+      contextExludeWhere = " and conte.name NOT IN ("+contextExludeToExclude+" )";
+    }
     
     if (strArray == null) {
       searchStr = "";

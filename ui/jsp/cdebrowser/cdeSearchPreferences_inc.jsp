@@ -9,7 +9,7 @@
         </td>
        <td valign="BOTTOM" align="CENTER">
           <a href="javascript:cancel()">
-             <img src="../i/cancel.gif" border=0 alt="Cancel">
+             <img src="../i/back.gif" border=0 alt="Cancel">
           </a>          
         </td>         
     </tr>

@@ -6,6 +6,10 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import oracle.cle.process.ProcessConstants;
+import oracle.cle.process.ProcessInfo;
+import oracle.cle.process.Service;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -35,4 +39,41 @@ public class BrowserBaseDispatchAction extends BaseDispatchAction implements Bro
 
     return mapping.findForward("cdebrowserHome");
   }
+  
+   /**
+    * Retrive Object from MVC Frame works info table 
+    */
+    protected Object getInfoObject(HttpServletRequest request,String aKey)
+    {
+      Object infoValue = null;
+      ProcessInfo info = null;
+      Service service = getService(request);
+      if(service!=null)
+        info = (ProcessInfo)service.getInfo(aKey, false);
+
+      if (info!=null && info.isReady())
+      {
+         infoValue = info.getValue();
+      }
+
+      return infoValue;
+    }
+    
+    protected Service getService( HttpServletRequest request)
+    {
+      String serviceName = null;
+      HttpSession session = request.getSession();
+      try
+      {
+        serviceName = (String) session.getAttribute(ProcessConstants.SERVICENAME);
+      }
+      catch(NoSuchMethodError mnfe)
+      {
+        serviceName = (String) session.getValue(ProcessConstants.SERVICENAME);
+      }
+
+      Object serviceObject = session.getAttribute(serviceName + ".service");
+
+      return (Service)serviceObject;
+    }  
 }

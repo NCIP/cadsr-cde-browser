@@ -18,6 +18,7 @@ public class CDEBrowserParams
     String evsSources = "";
     String showFormsAlphebetical ="no";    
     String excludeTestContext = "no";
+    String excludeTrainingContext="no";
     String excludeWorkFlowStatuses = "";
     String excludeRegistrationStatuses = "";
     Map evsUrlMap = new HashMap();
@@ -62,6 +63,8 @@ public class CDEBrowserParams
             index++;            
             excludeTestContext = b.getString("EXCLUDE_TEST_CONTEXT_BY_DEFAULT");
             index++;
+            excludeTrainingContext = b.getString("EXCLUDE_TRAINING_CONTEXT_BY_DEFAULT");
+            index++;            
             excludeWorkFlowStatuses = b.getString("EXCLUDE_WORKFLOW_BY_DEFAULT");
             index++;
             excludeRegistrationStatuses = b.getString("EXCLUDE_REGISTRATION_BY_DEFAULT");
@@ -166,6 +169,17 @@ public class CDEBrowserParams
   {
     return excludeTestContext;
   }
+  
+  public void setExcludeTrainingContext(String excludeTrainingContext)
+  {
+    this.excludeTrainingContext = excludeTrainingContext;
+  }
+
+
+  public String getExcludeTrainingContext()
+  {
+    return excludeTrainingContext;
+  }  
 
   public String getExcludeWorkFlowStatuses()
   {

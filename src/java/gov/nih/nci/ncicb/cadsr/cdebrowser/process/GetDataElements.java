@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.9 2005-02-21 17:19:39 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.10 2005-02-21 23:36:24 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -249,7 +249,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
         dePageIterator = new BC4JPageIterator(40);
-         initSearchPreferences(desb,dbUtil);
+         desb.initSearchPreferences(dbUtil);
       }
       else if (performQuery.equals("yes")) {
         
@@ -611,27 +611,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
     return cart;
   }
   
-   private void initSearchPreferences( DataElementSearchBean desb,DBUtil dbUtil) throws Exception
-   {
-          CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-      // Initialize Search Preference Values
-        boolean excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
-        desb.setExcludeTestContext(excludeTestContext);
-        String regVals = params.getExcludeRegistrationStatuses();
-        if(regVals!=null&&regVals!="")
-        {
-          String [] regStatusExcludeList = StringUtils.tokenizeCSVList(regVals);
-          desb.setRegStatusExcludeList(regStatusExcludeList);
-        }
-  
-        String wfVals = params.getExcludeWorkFlowStatuses();
-        if(wfVals!=null&&wfVals!="")
-        {
-          String []  aslNameExcludeList = StringUtils.tokenizeCSVList(wfVals);
-          desb.setAslNameExcludeList(aslNameExcludeList);
-        }      
-        desb.setLOVLists(dbUtil);
-   }
+
    
    private void setValuesFromOldSearchBean(DataElementSearchBean desb) throws Exception
    {

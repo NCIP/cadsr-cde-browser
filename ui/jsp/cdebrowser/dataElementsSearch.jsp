@@ -357,32 +357,38 @@ function gotoCDESearchPrefs() {
 <INPUT TYPE="HIDDEN" NAME="<%=BrowserFormConstants.BROWSER_SEARCH_SCREEN_TYPE%>" >
  
 <%@ include  file="cdebrowserCommon_html/tab_include_search.html" %>
-<%
+
+ <%
   if (pageContextInfo!=null&&!pageContextInfo.equals("")) {
 %>
-
-
-<%}
-  if (request.getAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS) != null) {
-%>
-<p class="MessageText">
-  <b><%=request.getAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS)%></b>
-</p>
-<%
-  }
-%>
-
-<%@ include file="../formbuilder/showMessages.jsp" %>
-<%
-  if ("".equals(src)) {
-%>
-<p class="MessageText">
-  <b>To get back to the cart please click the done button.</b>
-</p>
-<% 
-  }
-%>
-
+<table>
+    <%}
+      if (request.getAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS) != null) {
+    %>
+    
+        <tr align="center" >
+          <td  align="left" class="MessageText" >        
+            <b><%=request.getAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS)%></b><br>
+          </td>
+        </tr>
+    <%
+      }
+    %>
+    
+    <%@ include file="../formbuilder/showMessages.jsp" %>
+    <%
+      if (!"".equals(src)) {
+    %>
+    
+        <tr align="center" >
+          <td  align="left" class="MessageText" >        
+            <b>To get back to the cart please click the done button.</b><br>
+          </td>
+        </tr>
+    <% 
+      }
+    %>
+</table>
 
 <logic:present name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>">
     <bean:size id="listSize" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" property="cdeList"/>

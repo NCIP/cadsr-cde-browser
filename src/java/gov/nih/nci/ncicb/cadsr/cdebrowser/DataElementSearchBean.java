@@ -45,6 +45,7 @@ public class DataElementSearchBean extends Object {
   private String[] aslNameExcludeList=null;
   private String[] regStatusExcludeList=null;
   private boolean excludeTestContext=false;
+  private boolean excludeTrainingContext=false;
 
 
   private String vdIdseq;
@@ -128,6 +129,49 @@ public class DataElementSearchBean extends Object {
     buildAlternateNameList(altNames, dbUtil);
     buildContextUseList(contextUse);
   }
+  public void initSearchPreferences() throws Exception
+  {
+      DBUtil dbUtil = null;
+      try{
+        CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+        dbUtil = new DBUtil();
+        dbUtil.getConnectionFromContainer(params.getSbrDSN());
+        initSearchPreferences(dbUtil);
+      }
+      catch (Exception ex) {
+        ex.printStackTrace();
+        throw ex;
+      }
+     finally {
+      if (dbUtil != null) {
+        dbUtil.returnConnection();
+      }      
+     }        
+  }
+  public void initSearchPreferences(DBUtil dbUtil) throws Exception
+   {
+          CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+      // Initialize Search Preference Values
+        boolean excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
+        boolean excludeTrainingContext = new Boolean(params.getExcludeTrainingContext()).booleanValue();
+        setExcludeTestContext(excludeTestContext);
+        setExcludeTrainingContext(excludeTrainingContext);
+        
+        String regVals = params.getExcludeRegistrationStatuses();
+        if(regVals!=null&&regVals!="")
+        {
+          String [] regStatusExcludeList = StringUtils.tokenizeCSVList(regVals);
+          setRegStatusExcludeList(regStatusExcludeList);
+        }
+  
+        String wfVals = params.getExcludeWorkFlowStatuses();
+        if(wfVals!=null&&wfVals!="")
+        {
+          String []  aslNameExcludeList = StringUtils.tokenizeCSVList(wfVals);
+          setAslNameExcludeList(aslNameExcludeList);
+        }      
+        setLOVLists(dbUtil);
+   }
 
   public String getSearchStr(int arrayIndex) {
     if (strArray != null) {
@@ -286,6 +330,7 @@ public class DataElementSearchBean extends Object {
 
   private void buildContextUseList(String usage) {
     //if ("".equals(contextUse) || "owned_by".equals(contextUse)) {
+    usageList = new StringBuffer("");
     if ("owned_by".equals(contextUse)) {
       usageList.append(
         "<select name=\"contextUse\" size=\"1\" class=\"LOVField\"> ");
@@ -318,13 +363,13 @@ public class DataElementSearchBean extends Object {
     return usageList;
   }
 
-  private void buildSearchInList(String[] searchIn) {
+  public void buildSearchInList(String[] searchIn) {
     searchInList.append(
       "<select multiple name=\"jspSearchIn\" size=\"4\" class=\"LongLOVField\"> ");
 
     if (searchIn == null) {
-      searchInList.append("<option value=\"ALL\">ALL</option> ");
-      searchInList.append("<option selected value=\"Long Name\">Long Name</option> ");
+      searchInList.append("<option  value=\"ALL\">ALL</option> ");
+      searchInList.append("<option  selected value=\"Long Name\">Long Name</option> ");
       searchInList.append(
         "<option value=\"Preferred Name\">Preferred Name</option> ");
       searchInList.append("<option value=\"Doc Text\">Document Text</option> ");
@@ -480,10 +525,10 @@ public class DataElementSearchBean extends Object {
 
   public void resetLOVList() throws Exception
   {
-
+      DBUtil dbUtil = null;
       try {
         CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-        DBUtil dbUtil = new DBUtil();
+        dbUtil = new DBUtil();
         dbUtil.getConnectionFromContainer(params.getSbrDSN());
         buildWorkflowFullList(aslNameExcludeList, dbUtil);
         buildRegStatusFullList(regStatusExcludeList,dbUtil);
@@ -494,6 +539,11 @@ public class DataElementSearchBean extends Object {
         ex.printStackTrace();
         throw ex;
       }
+     finally {
+      if (dbUtil != null) {
+        dbUtil.returnConnection();
+      }      
+     }
 
   }
 
@@ -531,6 +581,15 @@ public class DataElementSearchBean extends Object {
     this.excludeTestContext = excludeTestContext;
   }
 
+  public boolean isExcludeTrainingContext()
+  {
+    return excludeTrainingContext;
+  }
+
+  public void setExcludeTrainingContext(boolean excludeTrainingContext)
+  {
+    this.excludeTrainingContext = excludeTrainingContext;
+  }
 
 }
 

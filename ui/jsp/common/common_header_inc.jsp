@@ -58,11 +58,16 @@
     <td  width="100%" >
     <TABLE align ="left" width="100%" Cellpadding=0 Cellspacing=0 border=0 >
           <tr>
+          <!--
            <td  align="right"   height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
                 <a href="http://nciterms.nci.nih.gov" target="_blank">
                       What's new</a>&nbsp;&nbsp;&nbsp;</span>
             </td>
-
+            -->
+           <td  align="right"   height="10" nowrap>
+             <span style="font-size: 10.0pt; font-family: Arial">
+                      What's new&nbsp;&nbsp;&nbsp;</span>
+            </td>
         </tr>
       </table>
      </td>

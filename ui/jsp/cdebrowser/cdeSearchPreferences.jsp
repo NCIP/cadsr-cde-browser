@@ -43,6 +43,11 @@ function cancel() {
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="cancelCDESearchPref";
   document.forms[0].submit();
 }
+
+function setDefaults() {
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="setDefaultCDESearchPref";
+  document.forms[0].submit();
+}
 -->
 
 </SCRIPT>
@@ -69,10 +74,17 @@ function cancel() {
 
  <table width="100%">
   <tr align="left">
-     <td class="OraHeaderSubSub" width="80%" align="left" nowrap>CDE search preferences for this session</td>
+     <td class="OraHeaderSubSub" width="50%" align="left" nowrap>CDE search preferences for this session</td>
+    <logic:equal value="false" name="searchPrefForm" property="isPreferencesDefault">
+      <td width="50%" align="right" nowrap>
+        <a href="javascript:setDefaults()">
+               Reset to default search preferences
+        </a>    
+      </td>
+    </logic:equal>
   </tr>  
   <tr>
-    <td align="center" ><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+    <td align="center" colspan="2" ><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
    </tr> 
  </table> 
  
@@ -87,11 +99,16 @@ function cancel() {
                    <bean:message key="cadsr.cdebrowser.exclude.test.context"/>
                 </html:checkbox>
               </td>
-            </tr>              
+            </tr>   
+            <tr>
+              <td colspan="2" class="OraTableColumnHeaderNoBG" >
+                <html:checkbox property="excludeTrainingContext" value="true"  >
+                   <bean:message key="cadsr.cdebrowser.exclude.training.context"/>
+                </html:checkbox>
+              </td>
+            </tr>             
           </table>
          </td>
-       
-
      </tr>
   </table> 
 <br>  

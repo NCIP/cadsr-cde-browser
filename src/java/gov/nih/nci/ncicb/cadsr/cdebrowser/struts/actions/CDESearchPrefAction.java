@@ -19,8 +19,10 @@ import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 
 
 
+import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -56,20 +58,14 @@ public class CDESearchPrefAction
  */
  public ActionForward gotoCDESearchPref(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                           HttpServletResponse response) throws IOException, ServletException {
-  DynaActionForm prefForm = (DynaActionForm)form;
-  
-  DataElementSearchBean searchBean  = (DataElementSearchBean)getInfoObject(request,"desb");
-  
-  if(searchBean.isExcludeTestContext())
-    {
-      prefForm.set("excludeTestContext","true");
-    }
-  else
-   {
-     prefForm.set("excludeTestContext","false");
-   }
-  
-  
+    DynaActionForm prefForm = (DynaActionForm)form;
+    
+    DataElementSearchBean searchBean  = (DataElementSearchBean)getInfoObject(request,"desb");
+    
+    prefForm.set("excludeTestContext",new Boolean(searchBean.isExcludeTestContext()).toString());
+    prefForm.set("excludeTrainingContext",new Boolean(searchBean.isExcludeTrainingContext()).toString());
+    prefForm.set("isPreferencesDefault",new Boolean(isPreferencesDefault(searchBean)).toString());
+
    return mapping.findForward("prefPage");
  }
 
@@ -88,47 +84,61 @@ public class CDESearchPrefAction
   */
  public ActionForward saveCDESearchPref(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                                HttpServletResponse response) throws IOException, ServletException {
-  DynaActionForm prefForm = (DynaActionForm)form;
-  
-  String[] aslNames = request.getParameterValues("jspStatus");
-  String[] regStatuses = request.getParameterValues("regStatus");
-  String excludeTestContext = (String)prefForm.get("excludeTestContext");
-
-  
-  String[] emptyArr = {""};
-  DataElementSearchBean searchBean  = (DataElementSearchBean)getInfoObject(request,"desb");
-  if(aslNames==null)aslNames = emptyArr;
-  if(regStatuses==null)regStatuses = emptyArr;
-  
-
-  searchBean.setAslNameExcludeList(aslNames);    
-  searchBean.setRegStatusExcludeList(regStatuses);   
-
- 
- if(excludeTestContext.equals("true"))
- {
-   searchBean.setExcludeTestContext(true);
-   prefForm.set("excludeTestContext","true");
- }
- else
- {
-   searchBean.setExcludeTestContext(false);
-   prefForm.set("excludeTestContext","false");
- }
-  setSessionObject(request,TREE_REFRESH_INDICATOR,YES,true);
-  
-  try{
-    searchBean.resetLOVList();
-  }
-  catch(Exception exp)
-  {
-    //Add message later
-    saveError("cadsr.cdebrowser.cde.search.pref.save.error", request);
-    return mapping.findForward("prefPage");
-    
-  }
-  saveMessage("cadsr.cdebrowser.cde.search.pref.save.success", request);
-  return mapping.findForward("prefPage");
+        DynaActionForm prefForm = (DynaActionForm)form;
+        
+        String[] aslNames = request.getParameterValues("jspStatus");
+        String[] regStatuses = request.getParameterValues("regStatus");
+        String excludeTestContext = (String)prefForm.get("excludeTestContext");
+        String excludeTrainingContext = (String)prefForm.get("excludeTrainingContext");
+        
+        String[] emptyArr = {""};
+        DataElementSearchBean searchBean  = (DataElementSearchBean)getInfoObject(request,"desb");
+        if(aslNames==null)aslNames = emptyArr;
+        if(regStatuses==null)regStatuses = emptyArr;
+        
+        
+        searchBean.setAslNameExcludeList(aslNames);    
+        searchBean.setRegStatusExcludeList(regStatuses);   
+        
+        
+        if(excludeTestContext.equals("true"))
+        {
+            searchBean.setExcludeTestContext(true);
+            prefForm.set("excludeTestContext","true");
+        }
+        else
+        {
+            searchBean.setExcludeTestContext(false);
+            prefForm.set("excludeTestContext","false");
+        }
+        
+        if(excludeTrainingContext.equals("true"))
+        {
+            searchBean.setExcludeTrainingContext(true);
+            prefForm.set("excludeTrainingContext","true");
+        }
+        else
+        {
+            searchBean.setExcludeTrainingContext(false);
+            prefForm.set("excludeTrainingContext","false");
+        }
+        
+        prefForm.set("isPreferencesDefault",new Boolean(isPreferencesDefault(searchBean)).toString());
+        
+        setSessionObject(request,TREE_REFRESH_INDICATOR,YES,true);
+        
+        try{
+            searchBean.resetLOVList();
+        }
+        catch(Exception exp)
+        {
+        //Add message later
+            saveError("cadsr.cdebrowser.cde.search.pref.save.error", request);
+            return mapping.findForward("prefPage");
+        }
+        
+        saveMessage("cadsr.cdebrowser.cde.search.pref.save.success", request);
+        return mapping.findForward("prefPage");
  }
 
  /**
@@ -152,42 +162,43 @@ public class CDESearchPrefAction
  }
 
 
-   /**
-    * Retrive Object from MVC Frame works info table 
-    */
-    private Object getInfoObject(HttpServletRequest request,String aKey)
-    {
-      Object infoValue = null;
-      ProcessInfo info = null;
-      Service service = getService(request);
-      if(service!=null)
-        info = (ProcessInfo)service.getInfo(aKey, false);
+ /**
+*
+*
+* @param mapping The ActionMapping used to select this instance.
+* @param form The optional ActionForm bean for this request.
+* @param request The HTTP Request we are processing.
+* @param response The HTTP Response we are processing.
+*
+* @return
+*
+* @throws IOException
+* @throws ServletException
+*/
+ public ActionForward setDefaultCDESearchPref(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                     HttpServletResponse response) throws IOException, ServletException {
+                                     
+  DynaActionForm prefForm = (DynaActionForm)form;
+  DataElementSearchBean searchBean  = (DataElementSearchBean)getInfoObject(request,"desb");
+  
+  try{
+      searchBean.initSearchPreferences();
+  }
+  catch(Exception exp)
+  {
+      saveError("cadsr.cdebrowser.cde.search.pref.default.error", request);
+      return mapping.findForward("prefPage");
+  }
+  prefForm.set("excludeTestContext",new Boolean(searchBean.isExcludeTestContext()).toString());
+  prefForm.set("excludeTrainingContext",new Boolean(searchBean.isExcludeTestContext()).toString());
+  prefForm.set("isPreferencesDefault",new Boolean(isPreferencesDefault(searchBean)).toString());  
+  saveMessage("cadsr.cdebrowser.cde.search.pref.default.success", request);  
+  setSessionObject(request,TREE_REFRESH_INDICATOR,YES,true);
+  return mapping.findForward("prefPage");
+ }
 
-      if (info!=null && info.isReady())
-      {
-         infoValue = info.getValue();
-      }
 
-      return infoValue;
-    }
-    
-    private Service getService( HttpServletRequest request)
-    {
-      String serviceName = null;
-      HttpSession session = request.getSession();
-      try
-      {
-        serviceName = (String) session.getAttribute(ProcessConstants.SERVICENAME);
-      }
-      catch(NoSuchMethodError mnfe)
-      {
-        serviceName = (String) session.getValue(ProcessConstants.SERVICENAME);
-      }
 
-      Object serviceObject = session.getAttribute(serviceName + ".service");
-
-      return (Service)serviceObject;
-    }
     private boolean isEmptyString(String[] arr)
     {
       
@@ -199,5 +210,97 @@ public class CDESearchPrefAction
           return false;
       }
       return false;
+    }
+    
+    /**
+     * Check if the user have changed from the defaults
+     */
+    private boolean isPreferencesDefault(DataElementSearchBean searchBean)
+    {
+      
+        CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+
+        boolean excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
+        
+        if(!searchBean.isExcludeTestContext()==excludeTestContext)
+        {
+          return false;
+        }
+        boolean excludeTrainingContext = new Boolean(params.getExcludeTrainingContext()).booleanValue();
+        
+        if(!searchBean.isExcludeTrainingContext()==excludeTrainingContext)
+        {
+          return false;
+        }
+        
+        String regVals = params.getExcludeRegistrationStatuses();
+        if(regVals!=null&&regVals!="")
+        {
+          String [] regStatusExcludeList = StringUtils.tokenizeCSVList(regVals);
+          // Clean is done to remove the "All" Value from that array
+          String[] beanRegStatusExcludeList = getCleanList(searchBean.getRegStatusExcludeList());
+          if(beanRegStatusExcludeList!=null)
+          {
+            Arrays.sort(regStatusExcludeList);
+            Arrays.sort(beanRegStatusExcludeList);
+            if(!Arrays.equals(regStatusExcludeList ,beanRegStatusExcludeList))
+              return false;
+          }
+          else
+          {
+            return false;
+          }
+        }
+
+        String wfVals = params.getExcludeWorkFlowStatuses();
+        if(wfVals!=null&&wfVals!="")
+        {
+          String []  aslNameExcludeList = StringUtils.tokenizeCSVList(wfVals);
+          String[] beanAslNameExcludeList = getCleanList(searchBean.getAslNameExcludeList());
+          if(beanAslNameExcludeList!=null)
+          {
+            Arrays.sort(aslNameExcludeList);
+            Arrays.sort(beanAslNameExcludeList);
+            if(!Arrays.equals(aslNameExcludeList ,beanAslNameExcludeList))
+              return false;
+          }
+          else
+          {
+            return false;
+          }            
+        } 
+        return true;
+    }
+    //Remove the first element if it equals ""
+    private String[] getCleanList(String[] strArr)
+    {
+      if(strArr==null) return null;
+      String[] cleanArr = null;
+      int length = 0;
+      if(strArr.length>0&&strArr[0].equals(""))
+      {
+        length=strArr.length-1;
+        
+      }
+      else
+      {
+        return strArr;
+      }
+      
+      cleanArr = new String[length];
+      
+      for(int i=0; i<strArr.length;i++)
+      {
+        int j=0;
+        if(i==0&&strArr[i].equals(""))
+        { }
+        else
+        {
+          cleanArr[j] = strArr[i];
+          j++;
+        }
+      }
+      
+      return cleanArr;
     }
 }
