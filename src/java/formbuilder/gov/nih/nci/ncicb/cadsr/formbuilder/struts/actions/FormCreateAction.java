@@ -151,7 +151,7 @@ public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
             "instructions =  " + exp);
         }
 	saveError(exp.getErrorCode(), request);
-	mapping.findForward("failure");
+	return mapping.findForward("failure");
 	  
     }
 
