@@ -12,12 +12,20 @@ import com.evermind.security.User;
 public class NCIOC4JUserObject extends NCIUserObject implements NCIOC4JUser
 {
   BaseUserManager userManager =null;
-  
+  String name = null;
+  public NCIOC4JUserObject()
+  {
+  }   
   public NCIOC4JUserObject(BaseUserManager newUserManager)
   {
     userManager=newUserManager;
   }
 
+  public void setName(String newName)
+  {
+    this.name=newName;
+  }
+  
   public String getName()
   {
     return null;
@@ -108,5 +116,9 @@ public class NCIOC4JUserObject extends NCIUserObject implements NCIOC4JUser
   public void setUserManager(BaseUserManager newUserManager)
   {
     userManager = newUserManager;
+  }
+  public static void main(String args[])
+  {
+    NCIOC4JUserObject user = new NCIOC4JUserObject();
   }
 }

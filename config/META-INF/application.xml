@@ -11,4 +11,8 @@
    <module>
       <ejb>formbuilder-ejb.jar</ejb>
    </module>   
+   <security-role>
+	<role-name>FORMBUILDER_USERS</role-name>
+	<description>The Only Secure Role</description>
+   </security-role>   
 </application>

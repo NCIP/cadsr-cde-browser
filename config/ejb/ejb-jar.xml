@@ -20,29 +20,9 @@
         <env-entry-value>gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
       </env-entry>
       <env-entry>
-        <env-entry-name>DriverManagerDS</env-entry-name>
-        <env-entry-type>java.lang.Boolean</env-entry-type>
-        <env-entry-value>true</env-entry-value>
-      </env-entry>
-      <env-entry>
-        <env-entry-name>connectionString</env-entry-name>
+        <env-entry-name>ServiceLocatorClassName</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>jdbc:oracle:thin:@localhost:1521:red</env-entry-value>
-      </env-entry>      
-      <env-entry>
-        <env-entry-name>driverClassName</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>oracle.jdbc.driver.OracleDriver</env-entry-value>
-      </env-entry>
-      <env-entry>
-        <env-entry-name>username</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>scott</env-entry-value>
-      </env-entry>
-      <env-entry>
-        <env-entry-name>password</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>tiger</env-entry-value>
+        <env-entry-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</env-entry-value>
       </env-entry>      
     </session>
   </enterprise-beans>

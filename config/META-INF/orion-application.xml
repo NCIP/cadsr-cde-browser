@@ -1,5 +1,15 @@
 <?xml version = '1.0' encoding = 'windows-1252'?>
 <!DOCTYPE orion-application PUBLIC "-//Evermind//DTD J2EE Application runtime 1.2//EN" "http://xmlns.oracle.com/ias/dtds/orion-application.dtd">
 <orion-application>
+ <user-manager class="gov.nih.nci.ncicb.cadsr.security.oc4j.DBUserManager">
+ 	<property name="DAOFactoryClassName" value="gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory" />
+ 	<property name="ServiceLocatorClassName" value="gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl" />
+ 	<property name="debug" value="true" />
+ </user-manager>
+ 
+  <security-role-mapping name="FORMBUILDER_USERS">
+    <group name="CDE MANAGER" />
+ </security-role-mapping>
+ 
    <data-sources path="./data-sources.xml"/>
 </orion-application>

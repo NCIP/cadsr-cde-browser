@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.security.oc4j;
 import com.evermind.security.AbstractUserManager;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
+import gov.nih.nci.ncicb.cadsr.resource.NCIOC4JUser;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import com.evermind.security.User;
 
-public class DBUserManager extends AbstractUserManager {
+public class DBUserManager extends BaseUserManager {
 
   private AbstractDAOFactory daoFactory=null;
   private UserManagerDAO userManagerDAO =null;
@@ -29,7 +30,8 @@ public class DBUserManager extends AbstractUserManager {
     String serviceLocatorClassName = properties.getProperty(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
     String daoFactoryClassName = properties.getProperty(ServiceLocator.DAO_FACTORY_CLASS_KEY);
     ServiceLocator locator = ServiceLocatorFactory.getLocator(serviceLocatorClassName);
-    daoFactory=AbstractDAOFactory.getDAOFactory(locator);     
+    daoFactory=AbstractDAOFactory.getDAOFactory(locator);    
+    System.out.println("in usermanager");
   }
 
 
@@ -63,7 +65,7 @@ public class DBUserManager extends AbstractUserManager {
       return false;
     if(userManagerDAO==null)
         userManagerDAO = daoFactory.getUserManagerDAO();
-    return userManagerDAO.validateUser(username,password);
+    return userManagerDAO.validUser(username,password);
   }
 
   /**
@@ -90,7 +92,9 @@ public class DBUserManager extends AbstractUserManager {
    */ 
   public User getUser(String username) {
     if(username != null && userExists(username)) {
-      return (User)userManagerDAO.getUser(username);
+      NCIOC4JUser user = (NCIOC4JUser)userManagerDAO.getUser(username);
+      user.setUserManager(this);
+      return user;
     }
     else {
       return getParent().getUser(username);

@@ -85,12 +85,7 @@ public class ServiceLocatorImpl implements ServiceLocator{
   public DataSource getDataSource(String dataSourceName)
     {
     try {
-      if(getProperty(DRIVER_MANAGER_DS)!=null&&getProperty(DRIVER_MANAGER_DS).equalsIgnoreCase("false"))
         return (DataSource) ic.lookup(dataSourceName);
-      else
-        return DataSourceUtil.getDriverManagerDS(getProperty(DRIVER_CLASS_NAME)
-              ,getProperty(CONNECTION_STRING),getProperty(USERNAME)
-              ,getProperty(PASSWORD));
     }
     catch (Exception e) {
       throw new ServiceLocatorException("",e);
@@ -134,29 +129,4 @@ public class ServiceLocatorImpl implements ServiceLocator{
     }
   }
   
-  public String getProperty(String propName)
-  {
-  
-     // This is a temp fix need to revisit
-      String propVal = null;
-      try{
-    //   PropertyReader propReaderKeys =
-     //  new PropertyReader(this.getClass(),this.DEPLOYMENT_FILENAME);
-     //  Properties keysProperties = propReaderKeys.loadProperties();
-     //  propVal= keysProperties.getProperty(propName);
-     Map aMap = new HashMap();
-     aMap.put(DRIVER_MANAGER_DS,"true");
-     aMap.put(DRIVER_CLASS_NAME,"oracle.jdbc.driver.OracleDriver");
-     aMap.put(CONNECTION_STRING,"jdbc:oracle:thin:@localhost:1521:red");
-     aMap.put(USERNAME,"scott");
-     aMap.put(PASSWORD,"tiger");
-     
-     return (String) aMap.get(propName);
-     
-      }
-      catch(Exception ex)
-      {
-      }
-      return propVal;
-  }
 }

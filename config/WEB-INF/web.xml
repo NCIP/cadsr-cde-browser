@@ -14,10 +14,18 @@
       <mime-type>text/plain</mime-type>
    </mime-mapping>
    <welcome-file-list>
-      <welcome-file>cdeBrowse.jsp</welcome-file>
-      
+      <welcome-file>cdeBrowse.jsp</welcome-file>     
    </welcome-file-list>
 
+  <!-- authentication -->
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+      <form-login-page>LoginForm.jsp</form-login-page>
+      <form-error-page>LoginError.jsp</form-error-page>
+    </form-login-config>
+  </login-config>
+  
    <listener>
     <listener-class>oracle.clex.util.ServletEventListener</listener-class>
   </listener>
@@ -122,4 +130,21 @@
     <ejb-link>FormBuilder</ejb-link>
   </ejb-local-ref>
   
+  
+   <security-role>
+       <description>The Only Secure Role</description>
+       <role-name>FORMBUILDER_USERS</role-name>
+   </security-role>
+
+   <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>/formbuilder/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <description>Authorized Users Group</description>
+      <role-name>FORMBUILDER_USERS</role-name>
+    </auth-constraint>
+   </security-constraint>
+   
 </web-app>
