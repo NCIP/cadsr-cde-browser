@@ -75,6 +75,8 @@
 
 <html:form action='<%= "/addQuestion?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.ADD_QUESTION %>' >
 
+<%@ include file="addQuestion_inc.jsp" %>
+
 <html:hidden property="<%= FormConstants.QUESTION_INDEX %>"/>
 
 <logic:present name="<%=CaDSRConstants.CDE_CART%>">
