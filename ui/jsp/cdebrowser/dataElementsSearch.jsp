@@ -409,7 +409,7 @@ function newSearch(){
       
     <logic:notPresent name="<%=SortableColumnHeader.DEFAULT_SORT_ORDER%>">
         <td align="right" width="20%" nowrap>
-           <a href="javascript:submitForm()" >Reset to default sort order</a>
+           <a href="<%="javascript:"+submitFunction%>" >Reset to default sort order</a>
         </td>
      </logic:notPresent>     
 
