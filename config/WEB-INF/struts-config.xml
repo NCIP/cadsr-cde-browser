@@ -294,7 +294,7 @@
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormBuilderLOVAction"
       validate="false">
-      <forward name="success" path="/protocolsLOV.jsp"/>
+      <forward name="success" path="/cdebrowser/protocolsLOV.jsp"/>
     </action>
     <action name="displayCartForm" path="/cdeCartAction" parameter="method"
       scope="request"
