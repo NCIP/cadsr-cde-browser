@@ -375,6 +375,7 @@ function listChanged(urlInfo) {
     <th class="OraTableColumnHeader">Document Name</th>
     <th class="OraTableColumnHeader">Document Type</th>
     <th class="OraTableColumnHeader">Document Text</th>
+    <th class="OraTableColumnHeader">Context</th>
     <th class="OraTableColumnHeader">URL</th>
   </tr>
 <%
@@ -390,6 +391,9 @@ function listChanged(urlInfo) {
         <td class="OraFieldText"><%=rd.getDocName()%> </td>
         <td class="OraFieldText"><%=rd.getDocType()%> </td>
         <td class="OraFieldText"><%=rd.getDocText()%> </td>
+         <td class="OraFieldText">
+         <% if (rd.getContext() != null) {
+         %><%=rd.getContext().getName()%> <% } %></td>
         <td class="OraFieldText"><a href="<%=rd.getUrl()%>" target="AuxWindow"> <%=rd.getUrl()%> </a></td>
       </tr>
 <%
