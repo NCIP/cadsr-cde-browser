@@ -27,7 +27,6 @@ function clearProtocol() {
   String protoLOVUrl= "javascript:newWin('/cdebrowser/search?protocolsLOV=9&idVar=jspProtocol&nameVar=txtProtocol"+pageUrl+"','protoLOV',700,600)";
 
 %>
-
   <table cellspacing="2" cellpadding="3" border="0" width="100%">
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
@@ -109,8 +108,8 @@ function clearProtocol() {
     <td colspan="4" nowrap align="left" class="AbbreviatedText">Wildcard character for search is *</td>
  </tr>
  <TR>
-    <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=<%=urlPrefix%>i/search.gif border=0></a></td>
-    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=urlPrefix%>i/clear.gif border=0></a></td>
+    <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=<%=urlPrefix%>i/searchButton.gif border=0></a></td>
+    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=urlPrefix%>i/clearAllButton.gif border=0></a></td>
  </TR>    
     <tr>
       <td>&nbsp;</td>

@@ -44,7 +44,12 @@
     <name>altMessage</name>
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
-    </attribute>     
+    </attribute> 
+    <attribute>
+    <name>urlPrefix</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>    
   </tag> 
   <tag>
     <name>pagination</name>
@@ -85,6 +90,31 @@
     <name>textClassName</name>
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
-    </attribute>     
+    </attribute>  
+    <attribute>
+    <name>previousOnImage</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+    <name>previousOffImage</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+    <name>nextOnImage</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>    
+    <attribute>
+    <name>nextOffImage</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>   
+    <attribute>
+    <name>urlPrefix</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>   
   </tag>   
 </taglib>

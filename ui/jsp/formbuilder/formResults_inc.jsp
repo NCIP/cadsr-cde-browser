@@ -1,14 +1,23 @@
 
-   
    <logic:notEmpty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
-        <bean:define id="pageBean" name="<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" type="gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean"/>
+        <bean:define id="pageBean" name="<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
+        	type="gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean"/>
         <cde:pagination name="top" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
                      beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
-                     actionURL="/cdebrowser/pageAction.do"/>
+                     actionURL="/cdebrowser/pageAction.do"
+        	     previousOnImage="i/prev_on.gif"
+        	     previousOffImage="i/prev_off.gif"
+        	     nextOnImage="i/next_on.gif"
+        	     nextOffImage="i/next_off.gif"
+        	     urlPrefix="<%=urlPrefix%>"
+        	     /> 
                      
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTableColumnHeader">
-          	<th class="OraTableColumnHeader" nowrap>Action</th>
+          	<th class="OraTableColumnHeader" nowrap>View</th>
+          	<th class="OraTableColumnHeader" nowrap>Copy</th>
+          	<th class="OraTableColumnHeader" nowrap>Edit</th>
+          	<th class="OraTableColumnHeader" nowrap>Delete</th>
           	<th class="OraTableColumnHeader" nowrap>Long Name</th>
           	<th class="OraTableColumnHeader" nowrap>Type</th>
           	<th class="OraTableColumnHeader" nowrap>Workflow Status</th>         	
@@ -18,27 +27,28 @@
                 offset="<%=pageBean.getOffset()%>"
                 length="<%=pageBean.getPageSize()%>">
             <tr class="OraTabledata">
-                <td class="OraFieldText">
-                  <table cellspacing="1" cellpadding="1"  border="0" width="100%">
-                    <tr >                   
-                      <td >
-                      	<a href='test'/><img src="i/view.gif" border=0 alt='View'></a>
-                      </td>
-		      <td >
+                   
+                  <td align=center>
+                      	<a href='test'/><img src="<%=urlPrefix%>i/view.gif" border=0 alt='View'></a>
+                  </td>
+		  <td align=center>
+		       <cde:secureIcon  formId="form" activeImageSource="i/copy.gif" activeUrl="test" 
+		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		   	   	urlPrefix="<%=urlPrefix%>"
+		   	   	altMessage="Copy"/>
+		 </td>                  
+		  <td align=center>
 		       	<cde:secureIcon  formId="form" activeImageSource="i/edit.gif" activeUrl="test" 
-		            role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Edit"/>
-		       </td>
-		       <td>
-		          <cde:secureIcon  formId="form" activeImageSource="i/copy.gif" activeUrl="test" 
-		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Copy"/>
-		        </td>
-		        <td >
-		           <cde:secureIcon  formId="form" activeImageSource="i/delete.gif" activeUrl="test"
-		           	role="<%=CaDSRConstants.CDE_MANAGER%>" altMessage="Delete"/>
-		        </td>
-                       </tr>
-                    </table>
-                   </td>                
+		            role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		            urlPrefix="<%=urlPrefix%>"
+		            altMessage="Edit"/>
+		  </td>
+		 <td align=center>
+		        <cde:secureIcon  formId="form" activeImageSource="i/delete.gif" activeUrl="test"
+		           	role="<%=CaDSRConstants.CDE_MANAGER%>"
+		           	urlPrefix="<%=urlPrefix%>"
+		           	altMessage="Delete"/>
+		</td>                
           	<td class="OraFieldText">
           		<html:link page="/formAction.do" paramName="form" paramProperty="preferredName">
             			<bean:write name="form" property="longName"/><br>
@@ -53,9 +63,16 @@
             </tr>
           </logic:iterate>
         </table>
-        <cde:pagination name="bottom" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
+        <cde:pagination name="top" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
                      beanId = "<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
-                     actionURL="/cdebrowser/pageAction.do"/>        
+                     actionURL="/cdebrowser/pageAction.do"
+        	     previousOnImage="i/prev_on.gif"
+        	     previousOffImage="i/prev_off.gif"
+        	     nextOnImage="i/next_on.gif"
+        	     nextOffImage="i/next_off.gif"
+        	     urlPrefix="<%=urlPrefix%>"
+        	     /> 
+       
         </logic:notEmpty>
         <logic:empty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
 	<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">

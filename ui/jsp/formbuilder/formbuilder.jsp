@@ -19,7 +19,7 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <TITLE>
-CDE Browser
+FormBuilder
 </TITLE>
 </HEAD>
   <frameset cols="25%,*">

@@ -29,6 +29,7 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
   private String role;
   private String altMessage;
   private String formId;
+  private String urlPrefix="";
 
   public SecureIconDisplay()
   {
@@ -75,12 +76,12 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
         out = pageContext.getOut();     
        if( nciUser.hasRoleAccess(role,contextId))
         {
-          out.print("<a href='"+activeUrl+"'/><img src=\""+activeImageSource+"\" border=0 alt='"+altMessage+"'></a>");
+          out.print("<a href='"+activeUrl+"'/><img src=\""+urlPrefix+activeImageSource+"\" border=0 alt='"+altMessage+"'></a>");
         }
         else
         {
           if(inactiveImageSource!=null)
-              out.print("<img src=\""+inactiveImageSource +"\"border=0>");         
+              out.print("<img src=\""+urlPrefix+inactiveImageSource +"\"border=0>");         
         }
       } catch( IOException ioe ) {
           throw new JspException( "I/O Error : " + ioe.getMessage() );
@@ -117,6 +118,16 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
   public void setFormId(String newFormId)
   {
     formId = newFormId;
+  }
+
+  public String getUrlPrefix()
+  {
+    return urlPrefix;
+  }
+
+  public void setUrlPrefix(String newUrlPrefix)
+  {
+    urlPrefix = newUrlPrefix;
   }
 
 }

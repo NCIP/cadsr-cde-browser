@@ -36,9 +36,14 @@ public class Pagination extends TagSupport implements CaDSRConstants,FormConstan
   private String name;
   private String selectClassName;
   private String textClassName;
+  private String previousOnImage;
+  private String previousOffImage;
+  private String nextOnImage;
+  private String nextOffImage;
+  private String urlPrefix="";
 
   public Pagination()
-  {
+  {   
   }
   
   public int doStartTag() throws javax.servlet.jsp.JspException {
@@ -58,11 +63,11 @@ public class Pagination extends TagSupport implements CaDSRConstants,FormConstan
         
         if(pageBean.getPreviousPageIndex()!=-1)
         {
-          out.print("<a href=\"javascript:"+name+"previous()\"><img src=\"i/prev_on.gif\" border=\"0\" alt=\"Previous Page\">&nbsp;Previous&nbsp"+pageSize+"<%=pageSize%></a>&nbsp;");
+          out.print("<a href=\"javascript:"+name+"previous()\"><img src=\""+urlPrefix+previousOnImage+"\" border=\"0\" alt=\"Previous Page\">&nbsp;Previous&nbsp"+pageSize+"<%=pageSize%></a>&nbsp;");
         }
         else
         {
-          out.print("<img src=\"i/prev_off.gif\" border=\"0\" alt=\"Previous Page\">&nbsp;");
+          out.print("<img src=\""+urlPrefix+previousOffImage+"\" border=\"0\" alt=\"Previous Page\">&nbsp;");
         }
                                 
         out.print(generateSelectList(pageBean));   
@@ -72,11 +77,11 @@ public class Pagination extends TagSupport implements CaDSRConstants,FormConstan
           
         if(pageBean.getNextPageIndex()!=-1)
         {
-          out.print("<a href=\"javascript:"+name+"next()\">&nbsp;Next&nbsp;"+nextSet+"&nbsp;<img src=\"i/next_on.gif\" border=\"0\" alt=\"Next Page\"></a>");
+          out.print("<a href=\"javascript:"+name+"next()\">&nbsp;Next&nbsp;"+nextSet+"&nbsp;<img src=\""+urlPrefix+nextOnImage+"\" border=\"0\" alt=\"Next Page\"></a>");
         }
         else
         {
-          out.print("<img src=\"i/next_off.gif\" border=\"0\" alt=\"Next Page\">&nbsp;");
+          out.print("<img src=\""+urlPrefix+nextOffImage+"\" border=\"0\" alt=\"Next Page\">&nbsp;");
         }
                      
        out.print(getTableFooter());
@@ -241,5 +246,55 @@ public class Pagination extends TagSupport implements CaDSRConstants,FormConstan
   public void setTextClassName(String newTextClassName)
   {
     textClassName = newTextClassName;
+  }
+
+  public String getPreviousOnImage()
+  {
+    return previousOnImage;
+  }
+
+  public void setPreviousOnImage(String newPreviousOnImage)
+  {
+    previousOnImage = newPreviousOnImage;
+  }
+
+  public String getPreviousOffImage()
+  {
+    return previousOffImage;
+  }
+
+  public void setPreviousOffImage(String newPreviousOffImage)
+  {
+    previousOffImage = newPreviousOffImage;
+  }
+
+  public String getNextOnImage()
+  {
+    return nextOnImage;
+  }
+
+  public void setNextOnImage(String newNextOnImage)
+  {
+    nextOnImage = newNextOnImage;
+  }
+
+  public String getNextOffImage()
+  {
+    return nextOffImage;
+  }
+
+  public void setNextOffImage(String newNextOffImage)
+  {
+    nextOffImage = newNextOffImage;
+  }
+
+  public String getUrlPrefix()
+  {
+    return urlPrefix;
+  }
+
+  public void setUrlPrefix(String newUrlPrefix)
+  {
+    urlPrefix = newUrlPrefix;
   }
 }
