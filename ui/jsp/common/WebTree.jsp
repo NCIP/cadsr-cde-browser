@@ -51,7 +51,7 @@
     var frm = findFrameByName('body');
     document.body.style.cursor = "wait";
     frm.document.body.style.cursor = "wait";
-    frm.document.location = "search?"+urlParams + "<%=callerParams%>";
+    frm.document.location = "<%=request.getContextPath()%>" + "/search?" + urlParams + "<%=callerParams%>";
   }
   //-->
   </script>
