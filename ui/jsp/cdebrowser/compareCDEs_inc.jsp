@@ -19,7 +19,7 @@
         <TD valign="TOP" align="CENTER"  colspan=1>
               <html:link action='<%="/cdebrowser/CDECompareExcelDownload.do?"+NavigationConstants.METHOD_PARAM+"=downloadToExcel"%>' 
                  >
-                <img src="/cdebrowser/i/excelDownload.gif" border=0>
+                <img src="../i/excelDownload.gif" border=0>
               </html:link>          
         </TD>
     </tr>
