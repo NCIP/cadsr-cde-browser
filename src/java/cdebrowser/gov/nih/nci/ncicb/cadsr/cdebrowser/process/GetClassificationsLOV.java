@@ -7,6 +7,7 @@ import gov.nih.nci.ncicb.cadsr.lov.ClassificationsLOVBean;
 
 //CDE Browser Application Imports
 import gov.nih.nci.ncicb.cadsr.util.*;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 
 //import oracle.cle.process.ProcessConstants;
 import oracle.cle.persistence.HandlerFactory;
@@ -122,15 +123,50 @@ public class GetClassificationsLOV extends BasePersistingProcess {
         //dsName = getStringInfo("SBR_DSN");
         dbUtil.getConnectionFromContainer(dsName);
 
-        String conteIdseq = getStringInfo("P_CONTE_IDSEQ");
+        String contextIdSeq = getStringInfo("P_CONTE_IDSEQ");
 
-        if (conteIdseq == null) {
-          conteIdseq = "";
-        }
+//         if (conteIdseq == null) {
+//           conteIdseq = "";
+//         }
 
-        String additionalWhere =
-          " and upper(nvl(cs_conte.conte_idseq,'%')) like upper ( '%" +
-          conteIdseq + "%') ";
+	String chk = getStringInfo("chkContext");
+	
+	String[] contexts = null;
+	
+	if((chk != null) && chk.equals("always")) {
+	  Collection coll = (Collection)myRequest.getSession().getAttribute("userContexts");
+	  contexts = new String[coll.size()];
+	  int i=0;
+	  for(Iterator it = coll.iterator(); it.hasNext(); i++)
+	    contexts[i] = ((Context)it.next()).getConteIdseq();
+	  myRequest.setAttribute("chkContext", chk);
+	} else {
+	  if ((contextIdSeq != null) && (contextIdSeq.length() > 0)) {
+	    contexts = new String[1];
+	    contexts[0] = contextIdSeq;
+	  } else 
+	    contexts = new String[0];
+	}
+
+	// build additional query filters
+	String additionalWhere = "";
+	if(contexts.length > 0) 
+	  additionalWhere +=
+	    " and (upper(nvl(cs_conte.conte_idseq,'%')) like upper ( '%" +
+	    contexts[0] + "%') ";
+	
+	for(int i=1; i<contexts.length; i++) {
+	  additionalWhere +=
+	    " or upper(nvl(cs_conte.conte_idseq,'%')) like upper ( '%" +
+	    contexts[i] + "%') ";
+	}
+	if(contexts.length > 0)
+	  additionalWhere += ")";
+	
+
+//         String additionalWhere =
+//           " and upper(nvl(cs_conte.conte_idseq,'%')) like upper ( '%" +
+//           conteIdseq + "%') ";
 
         cslb = new ClassificationsLOVBean(myRequest, dbUtil, additionalWhere);
         dbUtil.returnConnection();
