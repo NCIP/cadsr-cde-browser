@@ -64,6 +64,15 @@
   <property name="config.prod" value="${project.home}/config_prod"/>
   <property name="ejb.descriptor.home" value="${project.home}/config/ejb"/>  
   
+  <property name="app.docs.dir" value="${project.home}/docs" /> 
+  <property name="app.docs.setup.dir" value="${project.home}/docs/setup" />  
+  <property name="app.setup.oc4j.install.name" value="Install_CDBrowser_9ias.txt" />
+  <property name="app.setup.9ias.install.name" value="Install_CDBrowser_on_OC4J.txt" />
+  <property name="app.setup.oc4j.install.out.name" value="Install_CDBrowser_2.1_9ias.txt" />
+  <property name="app.setup.9ias.install.out.name" value="Install_CDBrowser_2.1_on_OC4J.txt" />  
+  <property name="download.file.name.unix" value="CDEBrowser_Windows_2.1" />
+  <property name="download.file.name.windows" value="CDEBrowser_Unix_2.1" />
+  
   
     <!-- Open source directoris -->
   <property name="open.source.dir" value="${build.dir}/opensource" />  
@@ -72,8 +81,9 @@
   <property name="open.source.dir.raw.lib" value="${open.source.dir.raw}/lib" />
   <property name="open.source.dir.raw.src" value="${open.source.dir.raw}/src" />
   <property name="open.source.dir.raw.ui" value="${open.source.dir.raw}/ui" />
+  <property name="app.docs.setup.readme.name" value="source_readme" /> 
   <!-- base dir in the zip file -->
-  <property name="open.source.dir.base.name" value="cdebrowser" />    
+  <property name="open.source.dir.base.name" value="cdebrowser2_1" />    
 
   <!-- =========== CLEAN BUILD AREA ======================= -->
     
@@ -323,6 +333,41 @@
              </patternset>
            </fileset>      
         </copy> 
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.prod}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy>         
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.prod}/connections">
+           <patternset>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+         <fileset dir="${config.prod}/properties">
+           <patternset>
+             <include name="cdebrowser.properties"/>
+           </patternset>
+         </fileset>
+      </copy>   
+     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
+         <fileset dir="${config.prod}/properties">
+           <patternset>
+             <include name="log4j.properties"/>
+           </patternset>
+         </fileset>
+      </copy>         
+    </target>
+  <!-- =========== END PROD CONFIG ======================= -->  
+  
+    <!-- =========== DOWNLOAD CONFIG ======================= -->
+    
+    <target name="download_config" depends="init,dev_config">    
+      <delete file="${classes.build.dir}/META-INF/data-sources.xml" failonerror="false"/>
        <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
            <fileset dir="${config.prod}/META-INF">
              <patternset>
@@ -604,6 +649,7 @@
     </target>
   <!-- =========== END CREATE EAR FILE ======================= -->
 
+
  <!-- ===========  OPEN SOURCE ======================= -->
    <target name="opensource_init" depends="init">
      <mkdir dir="${open.source.dir}"/>
@@ -667,7 +713,14 @@
              <include name="META-INF/*.*"/>
            </patternset>
          </fileset>               
-      </copy>   
+      </copy>  
+     <copy todir="${open.source.dir.raw.config}">      
+         <fileset dir="${config.home}">
+           <patternset>
+             <include name="WEB-INF/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy>             
      <copy todir="${open.source.dir.raw.config}">      
          <fileset dir="${config.home}">
            <patternset>
@@ -707,11 +760,15 @@
              <include name="**/i/*.*"/>
            </patternset>
          </fileset>               
-      </copy>       
+      </copy>  
+      <native2ascii src="${app.docs.setup.dir}" 
+                    dest="${open.source.dir}/ascii/${open.source.dir.base.name}"
+               includes="${open.source.readme.name}.txt"               
+               />        
   </target>
   
  <target name="opensource_windows" depends="opensource_unit">
-   <zip destfile="${build.dir}/${open.source.file.name.windows}.zip"
+   <zip destfile="${dist.dir}/${open.source.file.name.windows}.zip"
        basedir="${open.source.dir}/ascii"
        update="true" />
  </target>
@@ -721,13 +778,13 @@
     <tar tarfile="${build.dir}/${open.source.file.name.unix}.tar"
         basedir="${open.source.dir}/ascii"
         longfile="gnu"/>
-   <gzip zipfile="${build.dir}/${open.source.file.name.unix}.tar.gz" 
+   <gzip zipfile="${dist.dir}/${open.source.file.name.unix}.tar.gz" 
       src="${build.dir}/${open.source.file.name.unix}.tar"
        />
  </target> 
 
 
-<!-- ===========  OPEN SOURCE ======================= -->
+<!-- ===========  End OPEN SOURCE ======================= -->
 
  <!-- =========== Deployment targets below ======================= -->
  
@@ -878,6 +935,50 @@
         <target name="dist_prod" depends="clean,prod_config,ear_cdebrowser,dist_ear_copy">  
         </target>      
   <!-- =========== END PROD DISTRIBUTION ======================= -->
+  
+  <!-- =========== PROD DISTRIBUTION Complete============== -->
+        <target name="dist_prod_full" depends="clean,prod_config
+                ,ear_cdebrowser,dist_ear_copy,dist_download,opensource_windows,
+                opensource_unix">  
+               <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
+               includes="${app.docs.setup.readme.name}"               
+               />        
+        </target>      
+  <!-- =========== END PROD DISTRIBUTION ======================= -->
+    
+  <!-- =========== Download distribution============== -->
+        <target name="dist_download" depends="clean,download_config,ear_cdebrowser"> 
+            <mkdir dir="${build.dir}/download"/>
+             <copy todir="${build.dir}/download">      
+                 <fileset dir="${build.dir}">
+                   <patternset>
+                     <include name="${ear.name}.ear"/>
+                   </patternset>
+                 </fileset>    
+              </copy> 
+                              
+               <native2ascii src="${app.docs.setup.dir}" dest="${build.dir}/download/"
+               includes="${app.setup.oc4j.install.name}"               
+               />     
+               <move file="${build.dir}/download/${app.setup.oc4j.install.name}"
+                    tofile="${build.dir}/download/${app.setup.oc4j.install.out.name}"/>
+               <native2ascii src="${app.docs.setup.dir}" dest="${build.dir}/download/"
+               includes="${app.setup.9ias.install.name}"               
+               />    
+               <move file="${build.dir}/download/${app.setup.9ias.install.name}" 
+                    tofile="${build.dir}/download/${app.setup.9ias.install.out.name}"/>
+            <zip destfile="${dist.dir}/${download.file.name.windows}.zip"
+                 basedir="${build.dir}/download"
+                 update="true" />      
+                 
+            <tar tarfile="${dist.dir}/${download.file.name.unix}.tar"
+                 basedir="${build.dir}/download"
+                 longfile="gnu"/>
+            <gzip zipfile="${dist.dir}/${download.file.name.unix}.tar.gz" 
+                src="${dist.dir}/${download.file.name.unix}.tar"
+                />                               
+        </target>      
+  <!-- =========== END Download DISTRIBUTION ======================= -->  
   
  <!-- =========== BUILD HELPERS ======================= -->
    <target name="help" depends="init">
