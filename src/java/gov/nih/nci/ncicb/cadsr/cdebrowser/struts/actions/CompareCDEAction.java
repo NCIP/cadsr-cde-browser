@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.10 2005-02-14 21:22:32 kakkodis Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.11 2005-02-16 15:04:33 jiangja Exp $
  */
 
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
@@ -297,7 +297,7 @@ public class CompareCDEAction
   addNewRow(sheet, rowNumber++, "Document Text", boldCellStyle, cdeColl, "longCDEName");
   addNewRow(sheet, rowNumber++, "Definition", boldCellStyle, cdeColl, "preferredDefinition");
   addNewRow(sheet, rowNumber++, "Owned by Context", boldCellStyle, cdeColl, "contextName");
-  addNewRow(sheet, rowNumber++, "Used by Context", boldCellStyle, cdeColl, "contextName");
+  addNewRow(sheet, rowNumber++, "Used by Context", boldCellStyle, cdeColl, "usingContexts");
   addNewRow(sheet, rowNumber++, "Origin", boldCellStyle, cdeColl, "origin");
   addNewRow(sheet, rowNumber++, "Workflow Status", boldCellStyle, cdeColl, "aslName");
   addNewRow(sheet, rowNumber++, "Registration Status", boldCellStyle, cdeColl, "registrationStatus");
