@@ -20,6 +20,8 @@ public class SorableColumnHeaderBreadcrumb extends TagSupport implements CaDSRCo
   private String defaultText="Default";
   private String labelMapping="";
   private String[] labelMappingArr=null;
+  private String ascendingText="";
+  private String descendingText="";
 
   public SorableColumnHeaderBreadcrumb()
   {
@@ -60,6 +62,14 @@ public class SorableColumnHeaderBreadcrumb extends TagSupport implements CaDSRCo
         {
           sb.append(separator);
           sb.append(getLabel(sortableTableHeader.getTertiary()));      
+        }
+        if(sortableTableHeader.getOrder()==sortableTableHeader.ASCENDING)
+        {
+          sb.append(this.ascendingText);
+        }
+        else
+        {
+          sb.append(this.descendingText);
         }
         try{   
            out.print(sb.toString());
@@ -147,5 +157,25 @@ public class SorableColumnHeaderBreadcrumb extends TagSupport implements CaDSRCo
       }		
       return "";	
   }        
+
+  public String getAscendingText()
+  {
+    return ascendingText;
+  }
+
+  public void setAscendingText(String ascendingText)
+  {
+    this.ascendingText = ascendingText;
+  }
+
+  public String getDescendingText()
+  {
+    return descendingText;
+  }
+
+  public void setDescendingText(String descendingText)
+  {
+    this.descendingText = descendingText;
+  }
 }
 

@@ -164,6 +164,8 @@ function details(linkParms ){
     <td class="OraFieldText" ><a class="link" href="#permissibleValues">Permissible Values</a></td>
     <td class="OraFieldText" ><a class="link" href="#referenceDocuments">Reference Documents</a></td>  
     <td class="OraFieldText" ><a class="link" href="#classifications">Classifications</a></td>
+    <td class="OraFieldText" ><a class="link" href="#data_element_derivation">Data Element Derivation</a></td>
+    
  </tr>
  </table>
 <table>
@@ -246,11 +248,11 @@ function details(linkParms ){
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader" width="10%">Public ID</td>
 
-    <td class="OraFieldText" width='30%'><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=99BA9DC8-292F-4E69-E034-080020C9C0E0')">61250</a></td>
+    <td class="OraFieldText" width='30%'><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=99BA9DC8-39FE-4E69-E034-080020C9C0E0')">61250</a></td>
 
-    <td class="OraFieldText" width='30%'><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=99BA9DC8-292F-4E69-E034-080020C9C0E0')">2093</a></td>
+    <td class="OraFieldText" width='30%'><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=B30B0B01-3AF0-1194-E034-0003BA12F5E7')">2093</a></td>
 
-   <td class="OraFieldText" width='30%'><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=99BA9DC8-292F-4E69-E034-080020C9C0E0')">2093</a></td>
+   <td class="OraFieldText" width='30%'><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=B30B0B01-3AF0-1194-E034-0003BA12F5E7')">2093</a></td>
  
  </tr>
  
@@ -265,6 +267,17 @@ function details(linkParms ){
 
  </tr>
 
+ <tr class="OraTabledata">
+    <td class="OraTableColumnHeader" width="10%">Preferred Name</td>
+
+    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS(GYN)</td>
+
+    <td class="OraFieldText" width='30%'>AGT_DOSE_UOM</td>
+    
+    <td class="OraFieldText" width='30%'>AGT_DOSE_UOM</td>
+    
+ </tr>
+ 
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader" width="10%">Document Text</td>
 
@@ -341,16 +354,6 @@ function details(linkParms ){
 
  </tr>
   
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Preferred Name</td>
-
-    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS(GYN)</td>
-
-    <td class="OraFieldText" width='30%'>AGT_DOSE_UOM</td>
-    
-    <td class="OraFieldText" width='30%'>AGT_DOSE_UOM</td>
-    
- </tr>
 
 
  <tr class="OraTabledata">
@@ -401,7 +404,18 @@ function details(linkParms ){
     <td class="OraFieldText" width='30%'>Agent Quantity</td>
 
  </tr>
+ 
+ <tr class="OraTabledata">
+    <td class="OraTableColumnHeader" width="10%">Preferred Name</td>
 
+    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS</td>
+
+    <td class="OraFieldText" width='30%'>AGT_QTY</td>
+    
+    <td class="OraFieldText" width='30%'>AGT_QTY</td>
+
+  </tr>
+  
  <tr class="OraTabledata">
     <td class="OraTableColumnHeader" width="10%">Definition</td>
 
@@ -479,16 +493,7 @@ function details(linkParms ){
 
  </tr>
  
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader" width="10%">Preferred Name</td>
 
-    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS</td>
-
-    <td class="OraFieldText" width='30%'>AGT_QTY</td>
-    
-    <td class="OraFieldText" width='30%'>AGT_QTY</td>
-
-  </tr>
 
 </table>
 
@@ -526,6 +531,17 @@ function details(linkParms ){
 
  </tr>
 
+ <tr class="OraTabledata">
+    <td class="OraTableColumnHeader">Preferred Name</td>
+
+    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS(GYN)_VD </td>
+
+    <td class="OraFieldText" width='30%'>AGT_UOM</td>
+    
+    <td class="OraFieldText" width='30%'>AGT_UOM</td>
+
+ </tr>
+ 
   <tr class="OraTabledata">
      <td class="OraTableColumnHeader">Definition</td>
 
@@ -675,16 +691,7 @@ function details(linkParms ){
 
  </tr>
 
- <tr class="OraTabledata">
-    <td class="OraTableColumnHeader">Preferred Name</td>
 
-    <td class="OraFieldText" width='30%'>AGENT_DOSE_UNITS(GYN)_VD </td>
-
-    <td class="OraFieldText" width='30%'>AGT_UOM</td>
-    
-    <td class="OraFieldText" width='30%'>AGT_UOM</td>
-
- </tr>
  
   <tr class="OraTabledata">
      <td class="OraTableColumnHeader">Version</td>
@@ -1471,7 +1478,185 @@ function details(linkParms ){
     </TR>
     
     </TBODY></TABLE>
+    
+<A NAME="data_element_derivation"></A> 
+<br>
+<table cellpadding="0" cellspacing="0" width="140%" align="center" >
+  <tr>
+    <td class="OraHeaderSubSub" width="100%">Data Element Derivation</td>
+  </tr>
+  <tr>
+    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+  </tr>
+</table>
 
+<TABLE cellSpacing=1 cellPadding=1 width="140%" align=center border=0>
+  <TBODY>
+     <TR class="OraHeaderSubSub">
+       <TD vAlign=top width=10%>
+         &nbsp;
+       </TD>
+   
+     <TD vAlign=top width="30%">
+        Derivation Details
+     </td>
+     <TD vAlign=top width="30%">
+        Derivation Details
+     </td>
+     <TD vAlign=top width="30%">
+        Derivation Details
+     </td>
+   </tr>
+ 
+ <TR>
+    <TD vAlign=top width=10%>
+      &nbsp;
+    </TD>
+
+    <TD vAlign=top width="30%">
+
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Derivation Type</th>
+    <th class="OraTableColumnHeader">Rule</th>
+    <th class="OraTableColumnHeader">Method</th>
+    <th class="OraTableColumnHeader">Concatenation Character</th>   
+  </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">COMPOUND</td>
+        <td class="OraFieldText">&nbsp;</td>
+        <td class="OraFieldText">&nbsp;</td>
+        <td class="OraFieldText">&nbsp;</td>        
+      </tr>
+
+
+</table>
+
+    </TD>
+    
+    <TD vAlign=top width="30%">
+    
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Derivation Type</th>
+    <th class="OraTableColumnHeader">Rule</th>
+    <th class="OraTableColumnHeader">Method</th>
+    <th class="OraTableColumnHeader">Concatenation Character</th>   
+  </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText" colspan=4>CDE is not a derived data element</td>
+      </tr>
+
+
+</table>
+    
+    </TD>
+    
+    <TD vAlign=top width="30%">
+
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Derivation Type</th>
+    <th class="OraTableColumnHeader">Rule</th>
+    <th class="OraTableColumnHeader">Method</th>
+    <th class="OraTableColumnHeader">Concatenation Character</th>   
+  </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText" colspan=4>CDE is not a derived data element</td>
+      </tr>
+</table>
+
+    </TD>
+    
+    </TR></TBODY></TABLE>    
+<br>
+<TABLE cellSpacing=1 cellPadding=1 width="140%" align=center border=0>
+  <TBODY>
+    <TR class="OraHeaderSubSub">
+      <TD vAlign=top width=10%>
+        &nbsp;
+      </TD>
+  
+    <TD vAlign=top width="30%">
+       Component Data Elements
+    </td>
+    <TD vAlign=top width="30%">
+       Component Data Elements
+    </td>
+    <TD vAlign=top width="30%">
+       Component Data Elements
+    </td>
+   </tr>
+    
+  <TR>
+    <TD vAlign=top width=10%>
+      &nbsp;
+    </TD>
+
+    <TD vAlign=top width="30%">
+
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Long Name</th>
+    <th class="OraTableColumnHeader">Context</th>
+    <th class="OraTableColumnHeader">Public ID</th>   
+    <th class="OraTableColumnHeader">Version</th>
+  </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText">Zip Code</td>
+        <td class="OraFieldText">CTEP</td>
+        <td class="OraFieldText">78325</td>  
+        <td class="OraFieldText">3.0</td> 
+      </tr>
+
+
+</table>
+
+    </TD>
+    
+    <TD vAlign=top width="30%">
+    
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Long Name</th>
+    <th class="OraTableColumnHeader">Context</th>
+    <th class="OraTableColumnHeader">Public ID</th>   
+    <th class="OraTableColumnHeader">Version</th>
+  </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText" colspan=4>CDE is not a derived data element</td>
+      </tr>
+
+
+</table>
+    
+    </TD>
+    
+    <TD vAlign=top width="30%">
+
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Long Name</th>
+    <th class="OraTableColumnHeader">Context</th>
+    <th class="OraTableColumnHeader">Public ID</th>   
+    <th class="OraTableColumnHeader">Version</th>
+  </tr>
+
+      <tr class="OraTabledata">
+        <td class="OraFieldText" colspan=4>CDE is not a derived data element</td>
+      </tr>
+
+</table>
+
+    </TD>
+    
+    </TR></TBODY></TABLE>  
+<br>
 <table cellpadding="0" cellspacing="0" width="140%" align="center">
 
   <tr>

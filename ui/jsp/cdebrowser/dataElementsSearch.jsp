@@ -457,6 +457,8 @@ function newSearch(){
                showDefault="Y"
                labelMapping="doc_text,Document Text,long_name,Long Name,registration_status,Registration Status,asl_name,Workflow Status"
                defaultText=" (Default) "
+               ascendingText=" [Ascending]"
+               descendingText=" [Descending]"
         />           
       </td>
       
