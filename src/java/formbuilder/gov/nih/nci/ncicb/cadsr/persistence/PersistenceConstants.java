@@ -22,9 +22,9 @@ public interface PersistenceConstants {
   public static final String JDBC_QUESTION_INSTR_DAO = "jdbcQuestionInstrDAO";
   public static final String JDBC_VALUE_INSTR_DAO = "jdbcValueInstrDAO";
 
-
-
   public static final String FORM_ADMIN_COMPONENT_TYPE="QUEST_CONTENT";
   
   public static final String[] FORM_TYPE_VALUES={"CRF","TEMPLATE"};
+
+  public static final String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
 }
