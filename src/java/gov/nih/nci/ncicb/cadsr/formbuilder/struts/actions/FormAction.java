@@ -6,8 +6,10 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaF
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
+import gov.nih.nci.ncicb.cadsr.util.StringPropertyComparator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import org.apache.commons.logging.Log;
@@ -98,8 +100,21 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     if (forms != null) {
       pb.setListSize(forms.size());
     }
-
+    Form aForm = null;
+    if(forms.size()>0)
+    {
+      Object[] formArr = forms.toArray();
+      aForm=(Form)formArr[0];
+      StringPropertyComparator comparator = new StringPropertyComparator(aForm.getClass());
+      comparator.setPrimary("longName");
+      comparator.setOrder(comparator.ASCENDING);
+      Collections.sort((List)forms,comparator);
+      setSessionObject(request,FORM_SEARCH_RESULT_COMPARATOR,comparator);      
+    }
+      
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);
+    
+    
 
     return mapping.findForward(SUCCESS);
   }
@@ -129,6 +144,42 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     formBean.clear();
     removeSessionObject(request, this.FORM_SEARCH_RESULTS);
     removeSessionObject(request, this.FORM_SEARCH_RESULTS_PAGINATION);
+    return mapping.findForward(SUCCESS);
+  }
+  
+    /**
+   * Sorts search results by fieldName
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward sortResult(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    //Set the lookup values in the session
+    setInitLookupValues(request);
+    DynaActionForm searchForm = (DynaActionForm) form;
+    String sortField = (String) searchForm.get("sortField");
+    Integer sortOrder = (Integer) searchForm.get("sortOrder");
+    List forms = (List)getSessionObject(request,FORM_SEARCH_RESULTS);
+    StringPropertyComparator comparator = (StringPropertyComparator)getSessionObject(request,FORM_SEARCH_RESULT_COMPARATOR);
+    comparator.setRelativePrimary(sortField);
+    comparator.setOrder(sortOrder.intValue());
+    //Initialize and add the PagenationBean to the Session
+    PaginationBean pb = new PaginationBean();
+    if (forms != null) {
+      pb.setListSize(forms.size());
+    }
+    Collections.sort(forms,comparator);
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);    
     return mapping.findForward(SUCCESS);
   }
   

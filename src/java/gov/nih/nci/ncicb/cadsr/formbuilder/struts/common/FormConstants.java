@@ -22,6 +22,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String CRF = "crf";
   public static final String FORM_TYPE = "formType";
   public static final String FORM_SEARCH_RESULTS = "formSearchResults";
+  public static final String FORM_SEARCH_RESULT_COMPARATOR="formSearchResultComparator";
   public static final String MODULE_INDEX = "moduleIndex";
   public static final String DELETED_MODULE_INDEX = "deletedModuleIndex";
   public static final String ADD_DELETED_MODULE_IDSEQ = "addDeletedModuleIdSeq";
