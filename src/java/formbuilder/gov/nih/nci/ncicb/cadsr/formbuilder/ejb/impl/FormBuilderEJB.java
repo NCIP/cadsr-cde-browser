@@ -10,6 +10,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service.FormBuilderServiceRemote;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.*;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.resource.*;
+import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
@@ -129,10 +130,6 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return dao.findFormByPrimaryKey(formPK);
   }
 
-  public Form copyForm(Form form) throws DMLException {
-    return null;
-  }
-
   public Form editFormRow(String formPK) throws DMLException {
     return null;
   }
@@ -220,18 +217,35 @@ public class FormBuilderEJB extends SessionBeanAdapter
   }
 
   public CDECart retrieveCDECart(String username)
-    throws DMLException, RemoteException {
+    throws DMLException {
     return null;
   }
 
   public int addToCDECart(CDECartItem item)
-    throws DMLException, RemoteException {
+    throws DMLException {
     return 0;
   }
 
   public int removeFromCDECart(String itemId)
-    throws DMLException, RemoteException {
+    throws DMLException {
     return 0;
+  }
+
+  public Form copyForm(
+    String sourceFormPK,
+    Form newForm) throws DMLException {
+    Form resultForm = null;
+    
+    try {
+      FormDAO myDAO= daoFactory.getFormDAO();
+      String resultFormPK = myDAO.copyForm(sourceFormPK,newForm);
+      resultForm = this.getFormDetails(resultFormPK);
+    } 
+    catch (DMLException ex) {
+      context.setRollbackOnly();
+      throw ex;
+    } 
+    return resultForm;
   }
 
   /**

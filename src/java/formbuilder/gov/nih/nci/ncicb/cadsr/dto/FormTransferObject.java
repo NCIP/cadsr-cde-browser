@@ -20,7 +20,7 @@ public class FormTransferObject extends AdminComponentTransferObject
   private String formCategory = null;
 
   public FormTransferObject() {
-    idseq = formIdseq;
+    
   }
 
   public String getFormIdseq() {
@@ -29,6 +29,12 @@ public class FormTransferObject extends AdminComponentTransferObject
 
   public void setFormIdseq(String formIdseq) {
     this.formIdseq = formIdseq;
+    idseq = formIdseq;
+  }
+
+  public void setIdseq(String formIdseq) {
+    this.formIdseq = formIdseq;
+    idseq = formIdseq;
   }
 
   public String getFormType() {

@@ -1,37 +1,36 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
-import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCFormTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCFormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
-import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
-import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
-import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.jdbc.object.SqlUpdate;
+import org.springframework.jdbc.object.StoredProcedure;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.sql.Timestamp;
+import java.sql.Types;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -85,22 +84,20 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     return query.execute(formId);
   }
 
-  public Form copyForm(
-    Form sourceForm,
+  public String copyForm(
+    String sourceFormId,
     Form newForm) throws DMLException {
-    
     CopyForm nForm = new CopyForm(this.getDataSource());
-    Map out = nForm.execute(sourceForm, newForm);
-    
-   if ((out.get("p_return_code"))==null)
-   {
-     newForm.setFormIdseq((String) out.get("p_new_idseq"));
-     return newForm;
-   }
-  else
-  {
-    throw new DMLException((String) out.get("p_return_desc"));
-  }
+    Map out = nForm.execute(sourceFormId, newForm);
+
+    if ((out.get("p_return_code")) == null) {
+      /*newForm.setFormIdseq((String) out.get("p_new_idseq"));
+      return newForm;*/
+      return (String) out.get("p_new_idseq");
+    }
+    else {
+      throw new DMLException((String) out.get("p_return_desc"));
+    }
   }
 
   /**
@@ -113,28 +110,32 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
    * @throws <b>DMLException</b>
    */
   public int createFormComponent(Form sourceForm) throws DMLException {
-
     // check if the user has the privilege to create module
-    boolean create = 
-      this.hasCreate(sourceForm.getCreatedBy(), "QUEST_CONTENT", 
-        sourceForm.getConteIdseq());
+    boolean create =
+      this.hasCreate(
+        sourceForm.getCreatedBy(), "QUEST_CONTENT", sourceForm.getConteIdseq());
+
     if (!create) {
       new DMLException("The user does not have the create form privilege.");
     }
 
-    InsertQuestContent  insertQuestContent  = 
-      new InsertQuestContent (this.getDataSource());
-    String qcIdseq = generateGUID(); 
+    InsertQuestContent insertQuestContent =
+      new InsertQuestContent(this.getDataSource());
+    String qcIdseq = generateGUID();
     int res = insertQuestContent.createContent(sourceForm, qcIdseq);
+
     if (res != 1) {
-      throw new DMLException("Did not succeed creating form record in the " + 
+      throw new DMLException(
+        "Did not succeed creating form record in the " +
         " quest_contents_ext table.");
     }
+
     return 1;
   }
 
   /**
    * Deletes the entire form including all the components associated with it.
+   *
    * @param <b>formId</b> Idseq of the form component.
    *
    * @return <b>int</b> 1 - success, 0 - failure.
@@ -147,10 +148,11 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
 
     String returnCode = (String) out.get("p_return_code");
     String returnDesc = (String) out.get("p_return_desc");
+
     if (!StringUtils.doesValueExist(returnCode)) {
       return 1;
     }
-    else{
+    else {
       throw new DMLException(returnDesc);
     }
   }
@@ -183,25 +185,37 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     FormByPrimaryKey query = new FormByPrimaryKey();
     query.setDataSource(getDataSource());
     query.setSql();
-    List result= (List)query.execute(formId);
-    if (result.size() != 0)
-      myForm = (Form)(query.execute(formId).get(0));
+
+    List result = (List) query.execute(formId);
+
+    if (result.size() != 0) {
+      myForm = (Form) (query.execute(formId).get(0));
+    }
     else
+    {
       throw new DMLException("No matching record found");
+    }
 
     return myForm;
   }
 
-  public Form findFormByTimestamp(String formId, Timestamp ts) throws DMLException {
+  public Form findFormByTimestamp(
+    String formId,
+    Timestamp ts) throws DMLException {
     Form myForm = null;
     FormByTimestamp query = new FormByTimestamp();
     query.setDataSource(getDataSource());
     query.setSql();
-    List result= (List)query.execute(new Object [] {ts,formId});
-    if (result.size() != 0)
-      myForm = (Form)(query.execute(new Object [] {ts,formId}).get(0));
+
+    List result = (List) query.execute(new Object[] { ts, formId });
+
+    if (result.size() != 0) {
+      myForm = (Form) (query.execute(new Object[] { ts, formId }).get(0));
+    }
     else
+    {
       throw new DMLException("No matching record found");
+    }
 
     return myForm;
   }
@@ -212,89 +226,90 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
 
     //String formId1 = "9E343E83-5FEB-119F-E034-080020C9C0E0";  //CRF
-    String formId1 = "99CD59C5-A98A-3FA4-E034-080020C9C0E0";  // TEMPLATE
+    String formId1 = "99CD59C5-A98A-3FA4-E034-080020C9C0E0"; // TEMPLATE
+
     try {
       System.out.println(formTest.findFormByPrimaryKey(formId1));
     }
     catch (DMLException e) {
       System.out.println("Failed to get a form for " + formId1);
     }
-try{
-  Form form1 = formTest.findFormByPrimaryKey("D3830147-13E8-11BF-E034-0003BA0B1A09");
-  Form form2 = formTest.findFormByPrimaryKey("D3830147-13E8-11BF-E034-0003BA0B1A09");
-  form2.setPreferredName("testcopyprna1456");
-  form2.setLongName("my form test 456123");
-  form2.setAslName("DRAFT MOD");
-  form2.setConteIdseq("29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
-  System.out.println(form2.getProtocol().getProtoIdseq()+ "Conte_idseq");
 
-  System.out.println(formTest.copyForm(form1,form2).getFormIdseq());
-}
+    try {
+      Form form1 =
+        formTest.findFormByPrimaryKey("D3830147-13E8-11BF-E034-0003BA0B1A09");
+      Form form2 =
+        formTest.findFormByPrimaryKey("D3830147-13E8-11BF-E034-0003BA0B1A09");
+      form2.setPreferredName("testcopyprna1456");
+      form2.setLongName("my form test 456123");
+      form2.setAslName("DRAFT MOD");
+      form2.setConteIdseq("29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
+      System.out.println(form2.getProtocol().getProtoIdseq() + "Conte_idseq");
+
+      //System.out.println(formTest.copyForm(form1, form2).getFormIdseq());
+    }
 
     catch (DMLException e) {
       System.out.println("Failed to find Form");
     }
-  
+
     //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
     // type, classificationIdseq
-    /*
-    System.out.println(formTest.getAllForms(
-      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "",
-      "99BA9DC8-A622-4E69-E034-080020C9C0E0"));
-    System.out.println(formTest.getAllForms(
-      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", null));
-    System.out.println(
-      formTest.getModulesInAForm("99CD59C5-A9A0-3FA4-E034-080020C9C0E0"));
 
-    String formId = "9E343E83-5FEB-119F-E034-080020C9C0E0";
-    try {
-      Form test = formTest.findFormByPrimaryKey(formId);
-      //System.out.println(formTest.findFormByPrimaryKey(formId));
-
-      System.out.println(formTest.findFormByTimestamp(formId, test.getDateModified()));
-    }
-    catch (DMLException e) {
-      System.out.println("Failed to get a form for " + formId);
-    }
-    */
     /*
-    // test createFormComponent method.
-    // for each test, change long name(preferred name generated from long name)
-    try {
-      Form newForm = new FormTransferObject();
-      newForm.setVersion(new Float(2.31));
-      newForm.setLongName("Test Form Long Name 030104 1");
-      newForm.setPreferredDefinition("Test Form pref def");
-      newForm.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
-      Protocol protocol = new ProtocolTransferObject("TEST");
-      protocol.setProtoIdseq("A1204FD0-22B8-3B68-E034-080020C9C0E0");
-      newForm.setProtocol(protocol);
-      newForm.setAslName("DRAFT NEW");
-      newForm.setCreatedBy("Hyun Kim");
-      newForm.setFormCategory("Registration");
-      newForm.setFormType("CRF");
-
-      int res = formTest.createFormComponent(newForm);
-      System.out.println("\n*****Create Form Result 1: " + res);
-    }
-    catch (DMLException de) {
-      System.out.println("******Printing DMLException*******");
-      de.printStackTrace();
-      System.out.println("******Finishing printing DMLException*******");
-    }
-    */
-    
+       System.out.println(formTest.getAllForms(
+         "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "",
+         "99BA9DC8-A622-4E69-E034-080020C9C0E0"));
+       System.out.println(formTest.getAllForms(
+         "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", null));
+       System.out.println(
+         formTest.getModulesInAForm("99CD59C5-A9A0-3FA4-E034-080020C9C0E0"));
+       String formId = "9E343E83-5FEB-119F-E034-080020C9C0E0";
+       try {
+         Form test = formTest.findFormByPrimaryKey(formId);
+         //System.out.println(formTest.findFormByPrimaryKey(formId));
+         System.out.println(formTest.findFormByTimestamp(formId, test.getDateModified()));
+       }
+       catch (DMLException e) {
+         System.out.println("Failed to get a form for " + formId);
+       }
+     */
     /*
-    try {
-      int res = formTest.deleteForm("D4700045-2FD0-0DAA-E034-0003BA0B1A09");
-      System.out.println("\n*****Delete Form Result 1: " + res);
-    }
-    catch (DMLException de) {
-      System.out.println("******Printing DMLException*******");
-      de.printStackTrace();
-      System.out.println("******Finishing printing DMLException*******");
-    }
-    */
+       // test createFormComponent method.
+       // for each test, change long name(preferred name generated from long name)
+       try {
+         Form newForm = new FormTransferObject();
+         newForm.setVersion(new Float(2.31));
+         newForm.setLongName("Test Form Long Name 030104 1");
+         newForm.setPreferredDefinition("Test Form pref def");
+         newForm.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+         Protocol protocol = new ProtocolTransferObject("TEST");
+         protocol.setProtoIdseq("A1204FD0-22B8-3B68-E034-080020C9C0E0");
+         newForm.setProtocol(protocol);
+         newForm.setAslName("DRAFT NEW");
+         newForm.setCreatedBy("Hyun Kim");
+         newForm.setFormCategory("Registration");
+         newForm.setFormType("CRF");
+         int res = formTest.createFormComponent(newForm);
+         System.out.println("\n*****Create Form Result 1: " + res);
+       }
+       catch (DMLException de) {
+         System.out.println("******Printing DMLException*******");
+         de.printStackTrace();
+         System.out.println("******Finishing printing DMLException*******");
+       }
+     */
+    /*
+       try {
+         int res = formTest.deleteForm("D4700045-2FD0-0DAA-E034-0003BA0B1A09");
+         System.out.println("\n*****Delete Form Result 1: " + res);
+       }
+       catch (DMLException de) {
+         System.out.println("******Printing DMLException*******");
+         de.printStackTrace();
+         System.out.println("******Finishing printing DMLException*******");
+       }
+     */
   }
 
   /**
@@ -344,7 +359,8 @@ try{
     }
 
     public void setSql() {
-      super.setSql("SELECT * FROM FB_FORMS_VIEW where DATE_MODIFIED = ? AND QC_IDSEQ = ?");
+      super.setSql(
+        "SELECT * FROM FB_FORMS_VIEW where DATE_MODIFIED = ? AND QC_IDSEQ = ?");
       declareParameter(new SqlParameter("date_modified", Types.TIMESTAMP));
       declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
     }
@@ -399,6 +415,7 @@ try{
       String where = "";
       StringBuffer whereBuffer = new StringBuffer("");
       boolean hasWhere = false;
+
       if (StringUtils.doesValueExist(formName)) {
         String temp = StringUtils.strReplace(formName, "*", "%");
 
@@ -487,14 +504,13 @@ try{
    * Inner class that accesses database to create a form in the
    * quest_contents_ext table.
    */
- private class InsertQuestContent extends SqlUpdate {
+  private class InsertQuestContent extends SqlUpdate {
     public InsertQuestContent(DataSource ds) {
-      String contentInsertSql = 
-      " INSERT INTO quest_contents_ext " + 
-      " (qc_idseq, version, preferred_name, long_name, preferred_definition, " + 
-      "  conte_idseq, proto_idseq, asl_name, created_by, qtl_name, qcdl_name ) " +
-      " VALUES " +
-      " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+      String contentInsertSql =
+        " INSERT INTO quest_contents_ext " +
+        " (qc_idseq, version, preferred_name, long_name, preferred_definition, " +
+        "  conte_idseq, proto_idseq, asl_name, created_by, qtl_name, qcdl_name ) " +
+        " VALUES " + " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
       this.setDataSource(ds);
       this.setSql(contentInsertSql);
@@ -512,24 +528,21 @@ try{
       declareParameter(new SqlParameter("p_qcdl_name", Types.VARCHAR));
       compile();
     }
-    protected int createContent (Form sm, String qcIdseq) 
-    {
-      Object [] obj = 
-        new Object[]
-          {qcIdseq, 
-           sm.getVersion().toString(),
-           generatePreferredName(sm.getLongName()),
-           sm.getLongName(),
-           sm.getPreferredDefinition(),
-           sm.getConteIdseq(),
-           sm.getProtoIdseq(),
-           sm.getAslName(),
-           sm.getCreatedBy(),
-           sm.getFormType(),
-           sm.getFormCategory()
-          };
-      
-	    int res = update(obj);
+
+    protected int createContent(
+      Form sm,
+      String qcIdseq) {
+      Object[] obj =
+        new Object[] {
+          qcIdseq, sm.getVersion().toString(),
+          generatePreferredName(sm.getLongName()), sm.getLongName(),
+          sm.getPreferredDefinition(), sm.getConteIdseq(), sm.getProtoIdseq(),
+          sm.getAslName(), sm.getCreatedBy(), sm.getFormType(),
+          sm.getFormCategory()
+        };
+
+      int res = update(obj);
+
       return res;
     }
   }
@@ -555,7 +568,8 @@ try{
       return out;
     }
   }
- /**
+
+  /**
    * Inner class that copies the source form to a new form
    */
   private class CopyForm extends StoredProcedure {
@@ -566,7 +580,8 @@ try{
       declareParameter(new SqlParameter("p_version", Types.VARCHAR));
       declareParameter(new SqlParameter("p_preferred_name", Types.VARCHAR));
       declareParameter(new SqlParameter("p_long_name", Types.VARCHAR));
-      declareParameter(new SqlParameter("p_preferred_definition", Types.VARCHAR));
+      declareParameter(
+        new SqlParameter("p_preferred_definition", Types.VARCHAR));
       declareParameter(new SqlParameter("p_conte_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("p_proto_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("p_asl_name", Types.VARCHAR));
@@ -577,22 +592,24 @@ try{
       compile();
     }
 
-    public Map execute(Form sourceForm, Form newForm) {
+    public Map execute(
+      String sourceFormId,
+      Form newForm) {
       Map in = new HashMap();
-      
 
-      in.put("p_src_idseq", sourceForm.getFormIdseq());
+      in.put("p_src_idseq", sourceFormId);
       in.put("p_qtl_name", newForm.getFormType());
       in.put("p_version", newForm.getVersion().toString());
       in.put("p_preferred_name", newForm.getPreferredName());
       in.put("p_long_name", newForm.getLongName());
-      in.put("p_preferred_definition", newForm.getPreferredDefinition()); 
-      in.put("p_conte_idseq", newForm.getConteIdseq());  
+      in.put("p_preferred_definition", newForm.getPreferredDefinition());
+      in.put("p_conte_idseq", newForm.getConteIdseq());
       in.put("p_proto_idseq", newForm.getProtocol().getProtoIdseq());
-      in.put("p_asl_name", newForm.getAslName());      
+      in.put("p_asl_name", newForm.getAslName());
       in.put("p_created_by", newForm.getCreatedBy());
 
       Map out = execute(in);
+
       return out;
     }
   }

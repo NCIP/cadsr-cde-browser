@@ -30,15 +30,15 @@ public interface FormDAO {
   /**
    * Creates a new form by copying an existing form.
    * Hyun: Use stored procedure: sbrext_form_builder_pkg.copy_crf 
-   * @param <b>sourceForm</b> Form that is being copied.
+   * @param <b>sourceFormId</b> Idseq of the form that is being copied.
    * @param <b>newForm</b> Specifies data for new form
    *
-   * @return <b>Form</b> Form object representing the new form.
+   * @return <b>String</b> Idseq of the new form.
    *
    * @throws <b>DMLException</b>
    */
-  public Form copyForm(
-    Form sourceForm,
+  public String copyForm(
+    String sourceFormId,
     Form newForm) throws DMLException;
 
   /**

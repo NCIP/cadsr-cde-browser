@@ -1,23 +1,30 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.service;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.*;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.cdecart.*;
 
 import java.util.Collection;
 
 
 public interface FormBuilderServiceDelegate {
+  public Collection getAllForms(
+    String formName,
+    String protocol,
+    String context,
+    String workflow,
+    String category,
+    String type,
+    String classificationIdSeq);
 
-  public Collection getAllForms(String formName, String protocol, String context, 
-    String workflow, String category, String type,String classificationIdSeq);
-  
   public Form getFormDetails(String formPK) throws FormBuilderException;
 
   public Form getFormRow(String formPK) throws FormBuilderException;
 
-  public Form copyForm(Form form) throws FormBuilderException;
+  public Form copyForm(
+    String sourceFormPK,
+    Form newForm) throws FormBuilderException;
 
   public Form editFormRow(String formPK) throws FormBuilderException;
 
@@ -75,8 +82,8 @@ public interface FormBuilderServiceDelegate {
 
   public int removeFromCDECart(String itemId) throws FormBuilderException;
 
- /** public Collection getContextsForUserAndRole(
-    String username,
-    String role) throws FormBuilderException;
-    **/
+  /**
+   * public Collection getContextsForUserAndRole( String username, String role)
+   * throws FormBuilderException;
+   */
 }

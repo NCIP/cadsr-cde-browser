@@ -22,7 +22,9 @@ public interface FormBuilderServiceLocal  {
 
   public Form getFormRow(String formPK) throws DMLException;
 
-  public Form copyForm(Form form) throws DMLException;
+  public Form copyForm(
+    String sourceFormPK,
+    Form newForm) throws DMLException;
 
   public Form editFormRow(String formPK) throws DMLException;
 

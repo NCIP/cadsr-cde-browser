@@ -25,7 +25,9 @@ public interface FormBuilderServiceRemote {
 
   public Form getFormRow(String formPK) throws DMLException, RemoteException;
 
-  public Form copyForm(Form form) throws DMLException, RemoteException;
+  public Form copyForm(
+    String sourceFormPK,
+    Form newForm) throws DMLException, RemoteException;
 
   public Form editFormRow(String formPK) throws DMLException, RemoteException;
 
