@@ -475,12 +475,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
         FormDAO fdao = daoFactory.getFormDAO();
         Form newForm = fdao.createFormComponent(form);
 
-        formHeaderInstruction.setForm(newForm);
-
         FormInstructionDAO fidao1 = daoFactory.getFormInstructionDAO();
         fidao1.createFormInstructionComponent(formHeaderInstruction);
-
-        formFooterInstruction.setForm(newForm);
 
         FormInstructionDAO fidao2 = daoFactory.getFormInstructionDAO();
         fidao2.createFormInstructionComponent(formFooterInstruction);
