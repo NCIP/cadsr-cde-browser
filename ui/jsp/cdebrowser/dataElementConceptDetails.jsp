@@ -155,10 +155,6 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=dec.getVersion()%> </td>
  </tr>
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Conceptual Domain Public ID:</td>
-    <td class="OraFieldText"><%=dec.getCDPublicId()%></td>
- </tr>
- <tr class="OraTabledata">
     <td class="TableRowPromptText">Conceptual Domain Preferred Name:</td>
     <td class="OraFieldText"><%=dec.getCDPrefName()%> </td>
  </tr>
@@ -171,9 +167,11 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=dec.getCDVersion()%> </td>
  </tr>
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Object Class Public ID:</td>
-    <td class="OraFieldText"><%=dec.getObjClassPublicId()%> </td>
- </tr>
+    <td class="TableRowPromptText">Conceptual Domain Concept id:</td>
+    <td class="OraFieldText">
+    <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
+    </td>
+ </tr> 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Object Class Preferred Name:</td>
     <td class="OraFieldText"><%=dec.getObjClassPrefName()%> </td>
@@ -187,12 +185,14 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=socVersion%> </td>
  </tr>
  <tr class="OraTabledata">
+    <td class="TableRowPromptText">Object Class Concept Id:</td>
+    <td class="OraFieldText">
+    <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
+    </td>
+ </tr> 
+ <tr class="OraTabledata">
     <td class="TableRowPromptText">Object Class Qualifier:</td>
     <td class="OraFieldText"><%=dec.getObjClassQualifier()%> </td>
- </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Property Public ID:</td>
-    <td class="OraFieldText"><%=dec.getPropertyPublicId()%></td>
  </tr>
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Property Preferred Name:</td>
@@ -211,6 +211,13 @@ function goPage(pageInfo) {
     <td class="TableRowPromptText">Property Qualifier:</td>
     <td class="OraFieldText"><%=dec.getPropertyQualifier()%> </td>
  </tr>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Property Concept Id:</td>
+    <td class="OraFieldText">
+    <a class="link" TARGET="_blank"  href="http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=C36664">C36664</a>
+    </td>
+ </tr>
+ 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Origin:</td>
     <td class="OraFieldText"><%=dec.getOrigin()%> </td>
