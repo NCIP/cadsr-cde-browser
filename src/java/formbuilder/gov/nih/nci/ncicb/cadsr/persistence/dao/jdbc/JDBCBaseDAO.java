@@ -131,6 +131,19 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
        return StringUtils.toBoolean(retVal);
      }
    */
+
+  public String generateGUID() {
+    String guid = null;
+    GUIDGenerator gen = new GUIDGenerator(this.getDataSource());
+    guid = gen.getGUID();
+    return guid;
+  }
+
+  public String generatePreferredName() {
+    String prefName = null;
+
+    return prefName;
+  }
    
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
@@ -138,7 +151,7 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     //JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory(locator);
     JDBCBaseDAO test = new JDBCBaseDAO(locator);
 
-    boolean res;
+    /*boolean res;
     res = test.hasDelete("SBREX", "B046971C-6A89-5F47-E034-0003BA0B1A09");
     System.out.println("\n*****Delete Result 1: " + res);
 
@@ -159,7 +172,11 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
     System.out.println("\n*****Update Result 1: " + res);
 
     res = test.hasUpdate("SBREXT", "29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
-    System.out.println("\n*****Update Result 2: " + res);
+    System.out.println("\n*****Update Result 2: " + res);*/
+
+    
+    System.out.println("GUID: "+test.generateGUID());
+    
   }
 
   /**
@@ -242,6 +259,26 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants {
       in.put("p_ua_name", username);
       in.put("p_ac_idseq", acIdseq);
 
+      Map out = execute(in);
+      String retValue = (String) out.get("returnValue");
+
+      return retValue;
+    }
+  }
+
+  /**
+   * Inner class to get global unique identifier
+   */
+  private class GUIDGenerator extends StoredProcedure  {
+    public GUIDGenerator(DataSource ds) {
+      super(ds, PersistenceConstants.IDSEQ_GENERATOR);
+      setFunction(true);
+      declareParameter(new SqlOutParameter("returnValue", Types.VARCHAR));
+      compile();
+    }
+
+    public String getGUID() {
+      Map in = new HashMap();
       Map out = execute(in);
       String retValue = (String) out.get("returnValue");
 
