@@ -68,8 +68,7 @@
                     Name 
                   </td>
                   <td class="OraFieldText" nowrap>
-                    <html:text size="80" property="docName">
-                       maxlength="<%= Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH)%>">
+                    <html:text size="80" property="docName" maxlength="30">
                     </html:text>
                   </td>
                </tr>    
