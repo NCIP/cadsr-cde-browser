@@ -26,11 +26,34 @@ function clearForm() {
   String pageUrl = "&PageId=DataElementsGroup";
   // HSK
   String contextPath = request.getContextPath();
-    String csLOVUrl= "javascript:newWin('"+contextPath+"/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
+  //    String csLOVUrl= "javascript:newWin('"+contextPath+"/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
+
+  String csLOVUrl= contextPath + 
+       "/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem" + pageUrl;
+
+
+  //  String csLOVUrl= "javascript:newWin('" + 
+  //          contextPath + 
+  //          "/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem" 
+  //          + pageUrl + 
+  //          "&P_CONTE_IDSEQ=' + document.forms[0]." + 
+  //          FormConstants.CONTEXT_ID_SEQ + 
+  //          ",'csLOV',700,600)";
+
   String protoLOVUrl= 
     "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
 
 %>
+<SCRIPT>
+<!--
+function gotoClassificationsLOV() {
+     var dest = '<%= csLOVUrl %>' + '&P_CONTE_IDSEQ=' + document.forms[0].<%= FormConstants.CONTEXT_ID_SEQ %>.value;
+     alert(dest);
+     newWin(dest, 'ClassificationLOV', 700, 600);
+}
+-->
+</SCRIPT>
+
   <table cellspacing="2" cellpadding="3" border="0" width="100%">
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
@@ -87,7 +110,7 @@ function clearForm() {
       	     size="19"
       	     styleClass="LOVField"
       	     />
-      &nbsp;<a href="<%=csLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
+      &nbsp;<a href="javascript:gotoClassificationsLOV()"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
       <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
       <html:hidden  property="<%=FormConstants.CS_CSI_ID%>"/>
     </td>
