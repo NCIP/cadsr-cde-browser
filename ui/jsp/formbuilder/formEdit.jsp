@@ -39,7 +39,7 @@ function clearProtocol() {
 -->
 </SCRIPT>
   </HEAD>
-  <BODY bgcolor="#ffffff">
+  <BODY topmargin=0 bgcolor="#ffffff">
     <% String urlPrefix = "";
   String contextPath = request.getContextPath();
   String pageUrl = "&PageId=DataElementsGroup";

@@ -46,7 +46,7 @@ function clearProtocol() {
 -->
 </SCRIPT>
   </HEAD>
-  <BODY bgcolor="#ffffff">
+  <BODY topmargin=0 bgcolor="#ffffff">
     <% String urlPrefix = "";
 
       // Prepare parameter map for add and edit linx

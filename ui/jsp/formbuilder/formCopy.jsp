@@ -15,7 +15,7 @@
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK REL="STYLESHEET" TYPE="text/css" HREF="cdebrowserCommon_html/blaf.css"/>
   </HEAD>
-  <BODY bgcolor="#ffffff">
+  <BODY topmargin=0 bgcolor="#ffffff">
     <% String urlPrefix = "";
       String pageUrl = "&PageId=DataElementsGroup";
       String protoLOVUrl= 

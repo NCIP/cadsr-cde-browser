@@ -18,7 +18,7 @@
 
 </SCRIPT>
   </HEAD>
-  <BODY bgcolor="#ffffff">
+  <body topmargin=0 bgcolor="#ffffff">
     <% String urlPrefix = "";
 
 	%>

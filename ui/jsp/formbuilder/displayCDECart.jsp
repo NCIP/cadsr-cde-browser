@@ -60,7 +60,7 @@ function details(linkParms ){
 
 </SCRIPT>
 </HEAD>
-<BODY bgcolor="#ffffff" topmargin="0">
+<BODY topmargin=0 bgcolor="#ffffff" topmargin="0">
 
 <% 
   String urlPrefix = "";

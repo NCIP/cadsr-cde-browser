@@ -29,7 +29,6 @@
           	<th class="OraTableColumnHeader" nowrap>View</th>
           	<th class="OraTableColumnHeader" nowrap>Copy</th>
           	<th class="OraTableColumnHeader" nowrap>Edit</th>
-          	<th class="OraTableColumnHeader" nowrap>Class</th>
           	<th class="OraTableColumnHeader" nowrap>Delete</th>
           	<th class="OraTableColumnHeader" nowrap>Long Name</th>
           	<th class="OraTableColumnHeader" nowrap>Type</th>
@@ -68,17 +67,6 @@
 		   	   	paramProperty="formIdseq"
             inactiveImageSource="i/edit_inactive.gif"
 		   	   	altMessage="Edit"
-		   	   	target="_parent"/>		            
-		  </td>
-		  <td align=center>
-		       <cde:secureIcon  formId="form" activeImageSource="i/edit.gif" 
-		       		activeUrl='<%="/gotoManageClassifications.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_CLASSIFICATIONS%>' 
-		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
-		   	   	urlPrefix="<%=urlPrefix%>"
-		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
-		   	   	paramProperty="formIdseq"
-                         inactiveImageSource="i/edit_inactive.gif"
-		   	   	altMessage="Manage Classifications"
 		   	   	target="_parent"/>		            
 		  </td>
 		 <td align=center>

@@ -17,7 +17,7 @@
 <SCRIPT LANGUAGE="JavaScript">
 </SCRIPT>
 </HEAD>
-<BODY bgcolor="#ffffff" topmargin="0">
+<BODY topmargin=0 bgcolor="#ffffff" topmargin="0">
 
 <% 
   String urlPrefix = "";
@@ -35,8 +35,8 @@
 <logic:present name="<%=CaDSRConstants.CDE_CART%>">
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
     <tr class="OraTableColumnHeader">
-      <th scope="col"><bean:message key="cadsr.formbuilder.question.preferredName"/></th>
       <th scope="col"><bean:message key="cadsr.formbuilder.question.longName"/></th>
+      <th scope="col"><bean:message key="cadsr.formbuilder.question.preferredName"/></th>
       <th scope="col"><bean:message key="cadsr.formbuilder.question.comments"/></th>
       <th scope="col"><bean:message key="cadsr.formbuilder.question.context"/></th>
       <th scope="col"><bean:message key="cadsr.formbuilder.question.usedByContext"/></th>
@@ -56,18 +56,23 @@
     <logic:iterate id="de" name="<%=CaDSRConstants.CDE_CART%>" type="gov.nih.nci.ncicb.cadsr.resource.CDECartItem" property="dataElements" indexId="itemId">
       <tr class="OraTabledata">
         <td class="OraFieldText">
-          <html:radio property="selectedText" value="<%= itemId + \",\" + de.getItem().getPreferredName() %>"/>
-          <bean:write name="de" property="item.preferredName"/>
-        </td>
-        <td class="OraFieldText">
           <html:radio property="selectedText" value="<%= itemId + \",\" + de.getItem().getLongName() %>"/>
           <bean:write name="de" property="item.longName"/>
         </td>
         <td class="OraFieldText">
+          <%--
+          <html:radio property="selectedText" value="<%= itemId + \",\" + de.getItem().getPreferredName() %>"/>
+            --%>
+          <bean:write name="de" property="item.preferredName"/>
+        </td>
+        <td class="OraFieldText">
+          <bean:write name="de" property="item.longCDEName"/>
+          <%--
           <logic:notEmpty name="de" property="item.longCDEName">
             <html:radio property="selectedText" value="<%= itemId + \",\" + ((gov.nih.nci.ncicb.cadsr.resource.DataElement)de.getItem()).getLongCDEName() %>"/>
               <bean:write name="de" property="item.longCDEName"/>
           </logic:notEmpty>
+          --%>
         </td>
         <td class="OraFieldText">
           <bean:write name="de" property="item.contextName"/>

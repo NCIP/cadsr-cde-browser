@@ -18,7 +18,7 @@
       
     </SCRIPT>
   </HEAD>
-  <BODY bgcolor="#ffffff">
+  <BODY topmargin=0 bgcolor="#ffffff">
     <% String urlPrefix = "";
       String pageUrl = "&PageId=DataElementsGroup";
       String protoLOVUrl= 

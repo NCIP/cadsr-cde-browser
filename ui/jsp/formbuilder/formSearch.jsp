@@ -21,7 +21,7 @@
 <LINK REL=STYLESHEET TYPE="text/css" HREF="<%=urlPrefix%>cdebrowserCommon_html/blaf.css">
 
 </HEAD>
-<BODY bgcolor="#ffffff">
+<BODY topmargin=0 bgcolor="#ffffff">
 
 <%@ include  file="/formbuilder/common_header_inc.jsp" %>
 

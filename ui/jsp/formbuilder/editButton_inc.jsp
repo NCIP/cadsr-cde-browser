@@ -16,6 +16,17 @@
                 <html:img src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
              </a> 
           </td>          
+         <td>
+           <html:link action='<%="/gotoManageClassifications.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_CLASSIFICATIONS%>'
+             paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+             paramName="<%=FormConstants.CRF%>"
+             paramProperty="formIdseq"
+             >
+
+             <html:img src='<%=urlPrefix+"i/classifications.gif"%>' border="0" alt="Manage Classifications"/>
+
+           </html:link>
+          </td>          
         </tr> 
                 
       </table>

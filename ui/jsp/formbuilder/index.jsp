@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 <title>untitled</title>
 </head>
-<body>
+<body topmargin="0">
   <P>CDE Browser Functions</P>
   <html:link page="/formbuilder/formSearch.jsp">
     <bean:message key="link.formSearch"/>
