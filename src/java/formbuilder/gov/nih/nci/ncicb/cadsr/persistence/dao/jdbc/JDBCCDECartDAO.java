@@ -75,8 +75,10 @@ public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
   public int deleteCartItem(String itemId, String username) {
     int res = deleteItemQuery.deleteItem(itemId,username.toUpperCase());
     if (res != 1) {
-      throw new DMLException("Did not succeed in deleting  the " + 
+        DMLException dmlExp = new DMLException("Did not succeed in deleting  the " + 
         " cde_cart_items table.");
+        dmlExp.setErrorCode(ERROR_DELETING_CART_ITEM);
+         throw dmlExp;         
     }
     return 1;
 }

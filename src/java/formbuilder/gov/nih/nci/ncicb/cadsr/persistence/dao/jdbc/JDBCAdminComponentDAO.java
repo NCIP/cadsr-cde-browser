@@ -133,8 +133,10 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       int res = insertAcCsi.insertOneAcCsiRecord(csCsiId, acId);
       
     } catch (DataIntegrityViolationException e) {
-      throw new DMLException(
-        "Did not succeed. Classification is already assigned.");
+
+        DMLException dmlExp = new DMLException("Did not succeed. Classification is already assigned.");
+        dmlExp.setErrorCode(ERROR_DUPLICATE_CLASSIFICATION);
+         throw dmlExp;      
     }
 
     return 1;
@@ -153,8 +155,9 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     int res = deleteAcCsi.deleteOneAcCsiRecord(acCsiId);
 
     if (res != 1) {
-      throw new DMLException(
-        "Did not succeed removing classification for an AC.");
+         DMLException dmlExp = new DMLException("Did not succeed removing classification for an AC.");
+	       dmlExp.setErrorCode(ERROR_REMOVEING_CLASSIFICATION);
+           throw dmlExp;        
     }
 
     return 1;

@@ -17,5 +17,11 @@ public interface ErrorCodeConstants
  public static final String ERROR_DELETEING_VALID_VALUE = "DML0013";
  public static final String ERROR_UPDATING_VALID_VALUE = "DML0014";
  public static final String NO_MATCH_FOUND = "DML0015";
+public static final String ERROR_REMOVEING_CLASSIFICATION = "DML0016";
+public static final String ERROR_DUPLICATE_CLASSIFICATION = "DML0017";
+public static final String ERROR_DELETING_CART_ITEM="DML0018";
+public static final String ERROR_COPYING_FORM="DML0019";
+ public static final String ERROR_CREATEING_FORM = "DML0020";
+  public static final String ERROR_UPDATING_FORM = "DML0021";
 
 }

@@ -100,7 +100,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       return (String) out.get("p_new_idseq");
     }
     else {
-      throw new DMLException((String) out.get("p_return_desc"));
+        DMLException dmlExp = new DMLException((String) out.get("p_return_desc"));
+        dmlExp.setErrorCode(ERROR_COPYING_FORM);
+         throw dmlExp;      
     }
   }
 
@@ -120,7 +122,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         sourceForm.getCreatedBy(), "QUEST_CONTENT", sourceForm.getConteIdseq());
 
     if (!create) {
-      new DMLException("The user does not have the create form privilege.");
+         DMLException dmlExp = new DMLException("The user does not have the create form privilege.");
+	       dmlExp.setErrorCode(INSUFFICIENT_PRIVILEGES);
+           throw dmlExp;      
     }
 
     InsertQuestContent insertQuestContent =
@@ -133,9 +137,10 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       return qcIdseq;
     }
     else {
-      throw new DMLException(
-        "Did not succeed creating form record in the " +
+         DMLException dmlExp = new DMLException("Did not succeed creating form record in the " +
         " quest_contents_ext table.");
+	       dmlExp.setErrorCode(ERROR_CREATEING_FORM);
+           throw dmlExp;            
     }
   }
 
@@ -171,8 +176,10 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       new UpdateFormComponent (this.getDataSource());
     int res = updateFormComponent.updateFormFields(newForm);
     if (res != 1) {
-      throw new DMLException("Did not succeed updating form record in the " + 
+         DMLException dmlExp = new DMLException("Did not succeed updating form record in the " + 
         " quest_contents_ext table.");
+	       dmlExp.setErrorCode(ERROR_UPDATING_FORM);
+           throw dmlExp;             
     }
     return res;
   }
@@ -209,7 +216,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     }
     else
     {
-      throw new DMLException("No matching record found");
+         DMLException dmlExp = new DMLException("No matching record found.");
+	       dmlExp.setErrorCode(NO_MATCH_FOUND);
+           throw dmlExp;         
     }
 
     return myForm;
@@ -230,7 +239,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     }
     else
     {
-      throw new DMLException("No matching record found");
+         DMLException dmlExp = new DMLException("No matching record found.");
+	       dmlExp.setErrorCode(NO_MATCH_FOUND);
+           throw dmlExp;       
     }
 
     return myForm;
