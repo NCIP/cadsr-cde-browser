@@ -1,70 +1,63 @@
 package gov.nih.nci.ncicb.cadsr.dto;
+
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
-import java.util.List;
-import java.sql.Date;
-import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 
-public class QuestionTransferObject extends AdminComponentTransferObject implements Question
-{
-  Form crf;
-  Module module;
-  List validValues;
-  String quesIdseq;
-  int dispOrder;
+import java.sql.Date;
 
-  public QuestionTransferObject()
-  {
+import java.util.List;
+
+
+public class QuestionTransferObject extends AdminComponentTransferObject
+  implements Question {
+  private Form crf;
+  private Module module;
+  private List validValues;
+  private String quesIdseq;
+  private int dispOrder;
+
+  public QuestionTransferObject() {
   }
-  
-  public String getQuesIdseq()
-  {
+
+  public String getQuesIdseq() {
     return quesIdseq;
   }
 
-  public void setQuesIdseq(String idseq)
-  {
+  public void setQuesIdseq(String idseq) {
     this.quesIdseq = idseq;
   }
 
-  public Module getModule()
-  {
+  public Module getModule() {
     return module;
   }
-  
-  public void setModule(Module module)
-  {
-    this.module = module;
-  }  
 
-  public Form getForm()
-  {
+  public void setModule(Module module) {
+    this.module = module;
+  }
+
+  public Form getForm() {
     return crf;
   }
-  
-  public void setForm(Form crf)
-  {
+
+  public void setForm(Form crf) {
     this.crf = crf;
   }
-  
-  public List getValidValues()
-  {
+
+  public List getValidValues() {
     return validValues;
   }
 
-  public void setValidValues(List validValues)
-  {
+  public void setValidValues(List validValues) {
     this.validValues = validValues;
   }
 
-  public int getDisplayOrder()
-  {
+  public int getDisplayOrder() {
     return dispOrder;
   }
-  
-  public void setDisplayOrder(int dispOrder)
-  {
+
+  public void setDisplayOrder(int dispOrder) {
     this.dispOrder = dispOrder;
   }
 }

@@ -3,10 +3,9 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.impl;
 import gov.nih.nci.ncicb.cadsr.ejb.common.SessionBeanAdapter;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service.FormBuilderServiceRemote;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.*;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
-import gov.nih.nci.ncicb.cadsr.resource.Form;
-import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.*;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
@@ -15,6 +14,8 @@ import java.rmi.RemoteException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
@@ -59,7 +60,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
     String contextIdSeq,
     String workflow,
     String categoryName,
-    String type, String classificationIdSeq) throws DMLException {
+    String type,
+    String classificationIdSeq) throws DMLException {
     //        JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory((ServiceLocator)new TestServiceLocatorImpl());
     FormDAO dao = daoFactory.getFormDAO();
     Collection forms = null;
@@ -68,7 +70,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
       forms =
         dao.getAllForms(
           formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
-          type,classificationIdSeq);
+          type, classificationIdSeq);
     }
     catch (Exception ex) {
       throw new DMLException("Cannot get Forms", ex);
@@ -78,11 +80,50 @@ public class FormBuilderEJB extends SessionBeanAdapter
   }
 
   public Form getFormDetails(String formPK) throws DMLException {
-    return null;
+    Form myForm = null;
+    FormDAO fdao = daoFactory.getFormDAO();
+    ModuleDAO mdao = daoFactory.getModuleDAO();
+    QuestionDAO qdao = daoFactory.getQuestionDAO();
+    FormValidValueDAO vdao = daoFactory.getFormValidValueDAO();
+    myForm = getFormRow(formPK);
+
+    List modules = (List) fdao.getModulesInAForm(formPK);
+    Iterator mIter = modules.iterator();
+    List questions;
+    Iterator qIter;
+    List values;
+    Iterator vIter;
+    Module block;
+    Question term;
+    FormValidValue value;
+
+    while (mIter.hasNext()) {
+      block = (Module) mIter.next();
+
+      String moduleId = block.getModuleIdseq();
+      questions = (List) mdao.getQuestionsInAModule(moduleId);
+      qIter = questions.iterator();
+
+      while (qIter.hasNext()) {
+        term = (Question) qIter.next();
+
+        String termId = term.getQuesIdseq();
+        values = (List) qdao.getValidValues(termId);
+        term.setValidValues(values);
+      }
+
+      block.setQuestions(questions);
+    }
+
+    myForm.setModules(modules);
+
+    return myForm;
   }
 
   public Form getFormRow(String formPK) throws DMLException {
-    return null;
+    FormDAO dao = daoFactory.getFormDAO();
+
+    return dao.findFormByPrimaryKey(formPK);
   }
 
   public Form copyForm(Form form) throws DMLException {
@@ -156,7 +197,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
   }
 
   public Collection getAllContexts() throws DMLException {
-    return daoFactory.getContextDAO().getAllContexts();  
+    return daoFactory.getContextDAO().getAllContexts();
   }
 
   public Collection getAllFormCategories() throws DMLException {
@@ -165,19 +206,18 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
   public Collection getStatusesForACType(String acType)
     throws DMLException {
-    return daoFactory.getWorkFlowStatusDAO().getWorkFlowStatusesForACType(acType);
+    return daoFactory.getWorkFlowStatusDAO().getWorkFlowStatusesForACType(
+      acType);
   }
 
   public boolean validateUser(
     String username,
     String password) throws DMLException {
     return false;
-    }
+  }
 
- /** public Collection getContextsForUserAndRole(
-    String username,
-    String role) throws DMLException {
-    return null;
-    }
-    **/
+  /**
+   * public Collection getContextsForUserAndRole( String username, String role)
+   * throws DMLException { return null; }
+   */
 }
