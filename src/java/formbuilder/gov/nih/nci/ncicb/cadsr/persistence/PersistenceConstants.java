@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence;
 
-public interface PersistenceContants {
+public interface PersistenceConstants {
   public static final String DAO_FACTORY_CLASS_KEY = "DAOFactoryClassName";
   public static final String DATASOURCE_LOCATION_KEY = "FormBuilderDS";
   public static final String DATASOURCE_KEY = "DataSourceKey";

@@ -4,7 +4,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 
-import gov.nih.nci.ncicb.cadsr.jsp.bean.PagenationBean;
+import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import java.util.List;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -61,7 +61,7 @@ public class FormAction extends FormBuilderBaseDispatchAction {
         formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type);
 
     setSessionObject(request, this.FORM_SEARCH_RESULTS, forms);
-    PagenationBean pb = new PagenationBean();
+    PaginationBean pb = new PaginationBean();
     if(forms!=null)
       pb.setListSize(forms.size());
     setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb);
