@@ -138,7 +138,7 @@
 
       <tr >
         <td>
-          <a href='<%= "cdeBrowse.jsp?moduleIndex=" +  request.getParameter("moduleIndex") + "&amp;questionIndex=" + request.getParameter("questionIndex") %>'><html:img src='<%=urlPrefix+"i/add_more_data_elements.gif"%>' border="0" alt="Add more data elements"/></a>
+          <a href='<%= "cdeBrowse.jsp?src=gotoAddQuestion$amp;moduleIndex=" +  request.getParameter("moduleIndex") + "&amp;questionIndex=" + request.getParameter("questionIndex") %>'><html:img src='<%=urlPrefix+"i/add_more_data_elements.gif"%>' border="0" alt="Add more data elements"/></a>
         </td>
       </tr>
     </table>    
