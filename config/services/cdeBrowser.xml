@@ -5,7 +5,7 @@
 ]>
 <service name="CDEBrowser" class="oracle.cle.process.Service" initial="SearchRouter">
     <process name="SearchRouter" class="oracle.clex.process.ProcessRouter" end="false">
-        <argument type="Integer" value="30"/>
+        <argument type="Integer" value="13"/>
         <argument type="Boolean" value="false"/>
         <argument type="String" value="success"/>
         <infoalias local="pp1" global="searchDataElements"/>
@@ -21,23 +21,6 @@
         <infoalias local="pp11" global="valueDomainsLOV"/>
         <infoalias local="pp12" global="dataElementConceptsLOV"/>
         <infoalias local="pp13" global="dataElementConceptDetails"/>
-        <infoalias local="pp14" global="copyTemplateForm"/>
-        <infoalias local="pp15" global="copyTemplate"/>
-        <infoalias local="pp16" global="deleteModule"/>
-        <infoalias local="pp17" global="deleteQuestion"/>
-        <infoalias local="pp18" global="deleteValidValue"/>
-        <infoalias local="pp19" global="editCRFElement"/>
-        <infoalias local="pp20" global="updateCRFElement"/>
-        <infoalias local="pp21" global="addModuleForm"/>
-        <infoalias local="pp22" global="addModule"/>
-        <infoalias local="pp23" global="searchModules"/>
-        <infoalias local="pp24" global="copyModules"/>
-        <infoalias local="pp25" global="addQuestionForm"/>
-        <infoalias local="pp26" global="addQuestion"/>
-        <infoalias local="pp27" global="addValidValuesForm"/>
-        <infoalias local="pp28" global="addValidValues"/>
-        <infoalias local="pp29" global="displayCRFForEdit"/>
-        <infoalias local="pp30" global="readCRFElement"/>
     </process>
     <processgroup name="DataElementsGroup" class="oracle.cle.process.DisplayGroup" end="true" initial="DataElementsRouter">
     <process name="ResetParameters" class="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ResetParameters" end="false">
@@ -247,174 +230,6 @@
 <transition src="GetDataElementConceptDetails" condition="failure" dest="FailurePage"/>
 <transition src="DataElementConceptDetailsRouter" condition="tc1" dest="GetDataElementConceptDetails"/>
     </processgroup>
-<processgroup name="CreateCRFFromTemplateGroup" class="oracle.cle.process.DisplayGroup" end="true" initial="CreateCRFFromTemplateRouter">
-    <process name="CreateCRFFromTemplateRouter" class="oracle.clex.process.ProcessRouter" end="false">
-        <argument type="Integer" value="3"/>
-        <argument type="Boolean" value="true"/>
-        <argument type="String" value="success"/>
-        <infoalias local="pp1" global="copyTemplateForm"/>
-        <infoalias local="pp2" global="copyTemplate"/>
-        <infoalias local="pp3" global="displayCRFForEdit"/>
-    </process>
-    <process name="GetCopyTemplateForm" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.GetCopyTemplateForm" end="false">
-    </process>
-    <process name="CopyTemplatePage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/copyTemplate.jsp"/>
-    </process>
-    <process name="CopyTemplate" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.CopyTemplate" end="false">
-    </process>
-    <process name="DisplayCRFPage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/crfBrowse.jsp"/>
-    </process>
-    <process name="BuildCRFTree" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.BuildCRFTree" end="false">
-    </process>
-    <process name="FailurePage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;failurePage.jsp"/>
-    </process>
-<transition src="CreateCRFFromTemplateRouter" condition="tc1" dest="GetCopyTemplateForm"/>
-<transition src="CreateCRFFromTemplateRouter" condition="tc2" dest="CopyTemplate"/>
-<transition src="CreateCRFFromTemplateRouter" condition="tc3" dest="BuildCRFTree"/>
-<transition src="GetCopyTemplateForm" condition="success" dest="CopyTemplatePage"/>
-<transition src="GetCopyTemplateForm" condition="failure" dest="FailurePage"/>
-<transition src="CopyTemplate" condition="success" dest="DisplayCRFPage"/>
-<transition src="CopyTemplate" condition="success" dest="BuildCRFTree"/>
-<transition src="CopyTemplate" condition="failure" dest="FailurePage"/>
-<transition src="BuildCRFTree" condition="success" dest="DisplayCRFPage"/>
-<transition src="BuildCRFTree" condition="failure" dest="FailurePage"/>
-    </processgroup>
-    <processgroup name="MaintainCRFElementsGroup" class="oracle.cle.process.DisplayGroup" end="true" initial="MaintainCRFElementsRouter">
-    <process name="MaintainCRFElementsRouter" class="oracle.clex.process.ProcessRouter" end="false">
-        <argument type="Integer" value="6"/>
-        <argument type="Boolean" value="true"/>
-        <argument type="String" value="success"/>
-        <infoalias local="pp1" global="deleteModule"/>
-        <infoalias local="pp2" global="deleteQuestion"/>
-        <infoalias local="pp3" global="deleteValidValue"/>
-        <infoalias local="pp4" global="editCRFElement"/>
-        <infoalias local="pp5" global="updateCRFElement"/>
-        <infoalias local="pp6" global="readCRFElement"/>
-    </process>
-    <process name="DeleteModule" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.DeleteModule" end="false">
-    </process>
-    <process name="BuildCRFTree" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.BuildCRFTree" end="false">
-    </process>
-    <process name="DeleteQuestion" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.DeleteQuestion" end="false">
-    </process>
-    <process name="DeleteValidValue" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.DeleteValidValue" end="false">
-    </process>
-    <process name="CRFDisplayPage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/crfBrowse.jsp"/>
-    </process>
-    <process name="FailurePage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;failurePage.jsp"/>
-    </process>
-    <process name="GetCRFElementForEdit" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.GetCRFElementForEdit" end="false">
-    </process>
-    <process name="EditCRFElementPage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/editCRFElement.jsp"/>
-    </process>
-    <process name="UpdateCRFElement" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.UpdateCRFElement" end="false">
-    </process>
-    <process name="GetCRFElementForRead" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.GetCRFElementForRead" end="false">
-    </process>
-    <process name="ReadCRFElementPage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/readCRFElement.jsp"/>
-    </process>
-<transition src="MaintainCRFElementsRouter" condition="tc1" dest="DeleteModule"/>
-<transition src="MaintainCRFElementsRouter" condition="tc2" dest="DeleteQuestion"/>
-<transition src="MaintainCRFElementsRouter" condition="tc3" dest="DeleteValidValue"/>
-<transition src="MaintainCRFElementsRouter" condition="tc4" dest="GetCRFElementForEdit"/>
-<transition src="MaintainCRFElementsRouter" condition="tc5" dest="UpdateCRFElement"/>
-<transition src="MaintainCRFElementsRouter" condition="tc6" dest="GetCRFElementForRead"/>
-<transition src="DeleteModule" condition="success" dest="BuildCRFTree"/>
-<transition src="BuildCRFTree" condition="failure" dest="FailurePage"/>
-<transition src="BuildCRFTree" condition="success" dest="CRFDisplayPage"/>
-<transition src="DeleteQuestion" condition="success" dest="BuildCRFTree"/>
-<transition src="DeleteValidValue" condition="success" dest="BuildCRFTree"/>
-<transition src="GetCRFElementForEdit" condition="success" dest="EditCRFElementPage"/>
-<transition src="GetCRFElementForEdit" condition="failure" dest="FailurePage"/>
-<transition src="UpdateCRFElement" condition="success" dest="BuildCRFTree"/>
-<transition src="GetCRFElementForRead" condition="success" dest="ReadCRFElementPage"/>
-<transition src="GetCRFElementForRead" condition="failure" dest="FailurePage"/>
-    </processgroup>
-    <processgroup name="AddCRFElementsGroup" class="oracle.cle.process.DisplayGroup" end="true" initial="AddCRFElementsRouter">
-    <process name="AddCRFElementsRouter" class="oracle.clex.process.ProcessRouter" end="false">
-        <argument type="Integer" value="8"/>
-        <argument type="Boolean" value="true"/>
-        <argument type="String" value="success"/>
-        <infoalias local="pp1" global="addModuleForm"/>
-        <infoalias local="pp2" global="addModule"/>
-        <infoalias local="pp3" global="searchModules"/>
-        <infoalias local="pp4" global="copyModules"/>
-        <infoalias local="pp5" global="addQuestionForm"/>
-        <infoalias local="pp6" global="addQuestion"/>
-        <infoalias local="pp7" global="addValidValuesForm"/>
-        <infoalias local="pp8" global="addValidValues"/>
-    </process>
-    <process name="GetCreateModuleForm" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.GetModuleCreateForm" end="false">
-    </process>
-    <process name="CreateNewModule" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.CreateModule" end="false">
-    </process>
-    <process name="CreateNewModulePage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/createModule.jsp"/>
-    </process>
-    <process name="FailurePage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;failurePage.jsp"/>
-    </process>
-    <process name="GetModules" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.GetModules" end="false">
-    </process>
-    <process name="ModuleSearchPage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/searchModule.jsp"/>
-    </process>
-    <process name="CopyModules" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.CopyModules" end="false">
-    </process>
-    <process name="ModuleSuccessPage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/moduleSuccess.jsp"/>
-    </process>
-    <process name="GetCreateQuestionForm" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.GetQuestionCreateForm" end="false">
-    </process>
-    <process name="CreateQuestionPage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/createQuestion.jsp"/>
-    </process>
-    <process name="CreateNewQuestion" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.CreateQuestion" end="false">
-    </process>
-    <process name="QuestionSuccessPage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/questionSuccess.jsp"/>
-    </process>
-    <process name="GetValidValuesCreateForm" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.GetValidValuesCreateForm" end="false">
-    </process>
-    <process name="CreateNewValidValuesPage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/createValidValue.jsp"/>
-    </process>
-    <process name="AddValidValues" class="gov.nih.nci.ncicb.cadsr.crfbuilder.process.CreateValidValues" end="false">
-    </process>
-    <process name="ValidValuesSuccessPage" class="oracle.clex.process.CreateJSPPage" end="true">
-        <argument type="String" value="&docpath;/crfbuilder/validValueSuccess.jsp"/>
-    </process>
-<transition src="AddCRFElementsRouter" condition="tc2" dest="CreateNewModule"/>
-<transition src="AddCRFElementsRouter" condition="tc1" dest="GetCreateModuleForm"/>
-<transition src="AddCRFElementsRouter" condition="tc3" dest="GetModules"/>
-<transition src="AddCRFElementsRouter" condition="tc4" dest="CopyModules"/>
-<transition src="AddCRFElementsRouter" condition="tc5" dest="GetCreateQuestionForm"/>
-<transition src="AddCRFElementsRouter" condition="tc6" dest="CreateNewQuestion"/>
-<transition src="AddCRFElementsRouter" condition="tc7" dest="GetValidValuesCreateForm"/>
-<transition src="AddCRFElementsRouter" condition="tc8" dest="AddValidValues"/>
-<transition src="GetCreateModuleForm" condition="success" dest="CreateNewModulePage"/>
-<transition src="GetCreateModuleForm" condition="failure" dest="FailurePage"/>
-<transition src="CreateNewModule" condition="success" dest="CreateNewModulePage"/>
-<transition src="GetModules" condition="success" dest="ModuleSearchPage"/>
-<transition src="GetModules" condition="failure" dest="FailurePage"/>
-<transition src="CopyModules" condition="success" dest="ModuleSuccessPage"/>
-<transition src="CopyModules" condition="failure" dest="FailurePage"/>
-<transition src="GetCreateQuestionForm" condition="success" dest="CreateQuestionPage"/>
-<transition src="GetCreateQuestionForm" condition="failure" dest="FailurePage"/>
-<transition src="CreateNewQuestion" condition="success" dest="QuestionSuccessPage"/>
-<transition src="CreateNewQuestion" condition="failure" dest="CreateQuestionPage"/>
-<transition src="GetValidValuesCreateForm" condition="success" dest="CreateNewValidValuesPage"/>
-<transition src="GetValidValuesCreateForm" condition="failure" dest="FailurePage"/>
-<transition src="AddValidValues" condition="failure" dest="CreateNewValidValuesPage"/>
-<transition src="AddValidValues" condition="success" dest="ValidValuesSuccessPage"/>
-    </processgroup>
 <transition src="SearchRouter" condition="success" dest="DataElementsGroup"/>
 <transition src="SearchRouter" condition="tc1" dest="DataElementsGroup"/>
 <transition src="SearchRouter" condition="tc2" dest="DataElementsGroup"/>
@@ -430,23 +245,6 @@
 <transition src="SearchRouter" condition="tc11" dest="ListOfValuesGroup"/>
 <transition src="SearchRouter" condition="tc12" dest="ListOfValuesGroup"/>
 <transition src="SearchRouter" condition="tc13" dest="DataElementConceptDetails"/>
-<transition src="SearchRouter" condition="tc15" dest="CreateCRFFromTemplateGroup"/>
-<transition src="SearchRouter" condition="tc14" dest="CreateCRFFromTemplateGroup"/>
-<transition src="SearchRouter" condition="tc16" dest="MaintainCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc18" dest="MaintainCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc17" dest="MaintainCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc19" dest="MaintainCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc20" dest="MaintainCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc21" dest="AddCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc22" dest="AddCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc23" dest="AddCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc24" dest="AddCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc25" dest="AddCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc26" dest="AddCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc27" dest="AddCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc28" dest="AddCRFElementsGroup"/>
-<transition src="SearchRouter" condition="tc29" dest="CreateCRFFromTemplateGroup"/>
-<transition src="SearchRouter" condition="tc30" dest="MaintainCRFElementsGroup"/>
 <grouptransition srcgroup="DataElementsGroup" srcprocess="DataElementsPage" dest="SearchRouter"/>
 <grouptransition srcgroup="DataElementsGroup" srcprocess="FailurePage" dest="SearchRouter"/>
 <grouptransition srcgroup="DisplayFailureGroup" srcprocess="FailurePage" dest="SearchRouter"/>
@@ -468,19 +266,4 @@
 <grouptransition srcgroup="ProtocolsGroup" srcprocess="ProtocolsListPage" dest="SearchRouter"/>
 <grouptransition srcgroup="DataElementConceptDetails" srcprocess="DataElementConceptDetailsPage" dest="SearchRouter"/>
 <grouptransition srcgroup="DataElementConceptDetails" srcprocess="FailurePage" dest="SearchRouter"/>
-<grouptransition srcgroup="CreateCRFFromTemplateGroup" srcprocess="CopyTemplatePage" dest="SearchRouter"/>
-<grouptransition srcgroup="CreateCRFFromTemplateGroup" srcprocess="DisplayCRFPage" dest="SearchRouter"/>
-<grouptransition srcgroup="CreateCRFFromTemplateGroup" srcprocess="FailurePage" dest="SearchRouter"/>
-<grouptransition srcgroup="MaintainCRFElementsGroup" srcprocess="CRFDisplayPage" dest="SearchRouter"/>
-<grouptransition srcgroup="MaintainCRFElementsGroup" srcprocess="FailurePage" dest="SearchRouter"/>
-<grouptransition srcgroup="MaintainCRFElementsGroup" srcprocess="EditCRFElementPage" dest="SearchRouter"/>
-<grouptransition srcgroup="MaintainCRFElementsGroup" srcprocess="ReadCRFElementPage" dest="SearchRouter"/>
-<grouptransition srcgroup="AddCRFElementsGroup" srcprocess="CreateNewModulePage" dest="SearchRouter"/>
-<grouptransition srcgroup="AddCRFElementsGroup" srcprocess="FailurePage" dest="SearchRouter"/>
-<grouptransition srcgroup="AddCRFElementsGroup" srcprocess="ModuleSearchPage" dest="SearchRouter"/>
-<grouptransition srcgroup="AddCRFElementsGroup" srcprocess="ModuleSuccessPage" dest="SearchRouter"/>
-<grouptransition srcgroup="AddCRFElementsGroup" srcprocess="CreateQuestionPage" dest="SearchRouter"/>
-<grouptransition srcgroup="AddCRFElementsGroup" srcprocess="QuestionSuccessPage" dest="SearchRouter"/>
-<grouptransition srcgroup="AddCRFElementsGroup" srcprocess="CreateNewValidValuesPage" dest="SearchRouter"/>
-<grouptransition srcgroup="AddCRFElementsGroup" srcprocess="ValidValuesSuccessPage" dest="SearchRouter"/>
 </service>
