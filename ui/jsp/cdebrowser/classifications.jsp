@@ -132,6 +132,7 @@ function listChanged(urlInfo) {
   <tr class="OraTableColumnHeader">
     <th>CS* Preferred Name</th>
     <th>CS* Definition</th>
+    <th>CS* Public ID</th>
     <th>CSI* Name</th>
     <th>CSI* Type</th>
   </tr>
@@ -145,6 +146,9 @@ function listChanged(urlInfo) {
       <tr class="OraTabledata">
         <td class="OraFieldText"><%=classification.getClassSchemeName()%> </td>
         <td class="OraFieldText"><%=classification.getClassSchemeDefinition()%> </td>
+        <td class="OraFieldText">
+          <%= classification.getClassSchemePublicId()%>
+         </td>
         <td class="OraFieldText"><%=classification.getClassSchemeItemName()%> </td>
         <td class="OraFieldText"><%=classification.getClassSchemeItemType()%> </td>
       </tr>
@@ -154,7 +158,7 @@ function listChanged(urlInfo) {
   else {
 %>
        <tr class="OraTabledata">
-         <td colspan="4">There are no classifications for the selected CDE.</td>
+         <td colspan="5">There are no classifications for the selected CDE.</td>
        </tr>
 <%
   }
