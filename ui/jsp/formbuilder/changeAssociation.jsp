@@ -87,6 +87,11 @@
         </td>
       </tr>
     </logic:iterate>
+      <tr>
+        <td colspan="8">
+          <html:radio property="selectedText" value=""/><bean:message key="cadsr.formbuilder.question.noAssociation"/>
+        </td>
+      </tr>
     </table>
     <br>
 
