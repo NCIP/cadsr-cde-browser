@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  Log4j Configuration                                                  -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+<!-- $Id: log4j.xml,v 1.1 2005-02-01 18:09:04 chilukur Exp $ -->
+<!--
+   | For more configuration infromation and examples see the Jakarta Log4j
+   | owebsite: http://jakarta.apache.org/log4j
+ -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+	<!-- ======================= -->
+	<!-- Setup the CDE Browser Appender -->
+	<!-- ======================= -->
+	<appender name="CDEBROWSER_FILE" class="org.jboss.logging.appender.RollingFileAppender">
+		<errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
+		<param name="File" value="${jboss.server.home.dir}/log/cdebrowser.log"/>
+		<param name="Append" value="false"/>
+		<param name="MaxFileSize" value="1MB"/>
+		<param name="MaxBackupIndex" value="3"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+		</layout>
+	</appender>
+	<!-- ======================= -->
+	<!-- Setup the CDE Browser category -->
+	<!-- ======================= -->
+	<category name="gov.nih.nci.ncicb.cadsr" additivity="false">
+		<priority value="DEBUG"/>
+		<appender-ref ref="CDEBROWSER_FILE"/>
+	</category>
+</log4j:configuration>

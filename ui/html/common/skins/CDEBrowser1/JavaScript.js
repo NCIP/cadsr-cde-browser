@@ -27,10 +27,10 @@ function formSearchAction(urlParams){
     var frm = findFrameByName('body');
     document.body.style.cursor = "wait";
     frm.document.body.style.cursor = "wait";
-    frm.document.location = "/cdebrowser/formSearchAction.do?method=getAllFormsForTreeNode&"+urlParams;
+    frm.document.location = "/CDEBrowser/formSearchAction.do?method=getAllFormsForTreeNode&"+urlParams;
 }
 
 function formDetailsAction(urlParams){
-    top.document.location = "/cdebrowser/formDetailsAction.do?method=getFormDetails&"+urlParams;
+    top.document.location = "/CDEBrowser/formDetailsAction.do?method=getFormDetails&"+urlParams;
 }
 

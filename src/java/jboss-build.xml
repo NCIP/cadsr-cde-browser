@@ -323,19 +323,13 @@
          </fileset>
       </copy>   
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.qa}/properties">
+         <fileset dir="${config.qa}/properties/jboss">
            <patternset>
              <include name="cdebrowser.properties"/>
            </patternset>
          </fileset>
       </copy>   
-     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
-         <fileset dir="${config.qa}/properties">
-           <patternset>
-             <include name="log4j.properties"/>
-           </patternset>
-         </fileset>
-      </copy>         
+     
     </target>
   <!-- =========== END TEST CONFIG ======================= -->
   
@@ -363,19 +357,13 @@
          </fileset>
       </copy>   
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.stage}/properties">
+         <fileset dir="${config.stage}/properties/jboss">
            <patternset>
              <include name="cdebrowser.properties"/>
            </patternset>
          </fileset>
       </copy>   
-     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
-         <fileset dir="${config.stage}/properties">
-           <patternset>
-             <include name="log4j.properties"/>
-           </patternset>
-         </fileset>
-      </copy>         
+          
     </target>
   <!-- =========== END TEST CONFIG ======================= -->  
   

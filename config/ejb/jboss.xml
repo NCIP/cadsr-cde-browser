@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss>
+<enterprise-beans>
+    
+    <session>
+      <ejb-name>FormBuilder</ejb-name>
+      <resource-ref>
+        <res-ref-name>jdbc/FormBuilderDS</res-ref-name>
+        <resource-name>FormBuilderDS</resource-name>
+      </resource-ref>
+    </session>
+
+  </enterprise-beans>
+
+  <resource-managers>
+
+    <resource-manager>
+      <res-name>FormBuilderDS</res-name>
+      <res-jndi-name>java:/jdbc/FormBuilderDS</res-jndi-name>
+    </resource-manager>
+
+  </resource-managers>
+    
+</jboss>
+
