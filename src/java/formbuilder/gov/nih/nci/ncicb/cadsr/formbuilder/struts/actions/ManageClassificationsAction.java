@@ -103,6 +103,7 @@ public class ManageClassificationsAction extends FormBuilderBaseDispatchAction {
             }
         }
 
+	saveMessage("cadsr.formbuilder.classification.add.success", request);
         return mapping.findForward("success");
     }
 
@@ -130,6 +131,7 @@ public class ManageClassificationsAction extends FormBuilderBaseDispatchAction {
             }
         }
 
+	saveMessage("cadsr.formbuilder.classification.delete.success", request);
         return mapping.findForward("success");
     }
 }
