@@ -21,6 +21,8 @@ if(confirm(message)) location.href = url;
                           showDefault="Y"
                           labelMapping="longName,Long Name,aslName,Workflow Status"
                           defaultText=" (Default) "
+                          ascendingText=" [Ascending]"
+                          descendingText=" [Descending]"                          
                    />           
                  </td> 
            

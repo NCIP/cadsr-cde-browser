@@ -91,7 +91,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
         try {
             Context ctep = contextDao.getContextByName(Context.CTEP);
             String contextRestriction =null;
-            if(user!=null&&!user.hasRoleAccess(CaDSRConstants.CDE_MANAGER,ctep))
+            if((user!=null&&!user.hasRoleAccess(CaDSRConstants.CDE_MANAGER,ctep))&&
+               (user!=null&&!user.hasRoleAccess(CaDSRConstants.CONTEXT_ADMIN,ctep)))
             {
                contextRestriction= ctep.getConteIdseq();
             }

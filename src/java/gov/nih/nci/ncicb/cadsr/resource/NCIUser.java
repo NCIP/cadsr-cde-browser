@@ -9,4 +9,5 @@ public interface NCIUser extends Serializable
   public boolean hasRoleAccess(String role, Context context);
   public Map getContextsByRole();
   public void setContextsByRole(Map contextsMap);
+  public Collection getContextsByRoleAccess(String role);
 }

@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
@@ -186,8 +187,8 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
 
     if (obj == null) {
       NCIUser nciUser = (NCIUser) getSessionObject(req, USER_KEY);
-      Collection contexts =
-        (Collection) ((Map) nciUser.getContextsByRole()).get(CDE_MANAGER);
+      //Change order Context Admin Check
+      Collection contexts =nciUser.getContextsByRoleAccess(CDE_MANAGER);
       setSessionObject(req, USER_CONTEXTS, contexts);
     }
    

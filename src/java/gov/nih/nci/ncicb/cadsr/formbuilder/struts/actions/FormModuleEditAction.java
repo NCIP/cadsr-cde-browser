@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
@@ -16,6 +17,7 @@ import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -670,6 +672,156 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     return mapping.findForward(SUCCESS);
 
     }
+    
+  /**
+   * Get all related VDs and prepare for display
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward viewSubsettedVDs(    
+      ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    FormBuilderBaseDynaFormBean moduleEditForm = (FormBuilderBaseDynaFormBean) form;
+    
+    Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
+    int currQuestionIndex = questionIndex.intValue();
+    Module module = (Module) getSessionObject(request, MODULE);
+    List questions = module.getQuestions();
+    Question currQuestion = (Question) questions.get(currQuestionIndex);
+    Question nextQuestion = (Question) questions.get(currQuestionIndex+1);
+    DataElement cde = currQuestion.getDataElement();
+    // Need to change the code after the prototype
+    FormBuilderServiceDelegate service = getFormBuilderService();
+    Collection allVdIds = new ArrayList();
+    allVdIds.add(cde.getValueDomain().getVdIdseq());
+    Map validValueMap1 =null;
+    Map validValueMap2 = null;
+    Map validValueMap3 = null;
+
+    try {
+      validValueMap1 = service.getValidValues(allVdIds);
+      validValueMap2 = service.getValidValues(allVdIds);
+      validValueMap3 = service.getValidValues(allVdIds);
+    }
+    catch (FormBuilderException exp) {
+      saveError(ERROR_MODULE_RETRIEVE, request);
+      saveError(exp.getErrorCode(),request);
+      if (log.isErrorEnabled()) {
+        log.error("Exp while getting validValue", exp);
+      }
+      mapping.findForward(FAILURE);
+    }
+    List vvList1 = (List)validValueMap1.get(cde.getValueDomain().getVdIdseq());
+    List vvList2 = (List)validValueMap2.get(cde.getValueDomain().getVdIdseq());
+    List vvList3 = (List)validValueMap3.get(cde.getValueDomain().getVdIdseq());
+    
+    ValueDomain vd = cde.getValueDomain();
+    ValueDomain vd1 = new ValueDomainTransferObject();
+    ValueDomain vd2 = new ValueDomainTransferObject();
+    ValueDomain vd3 = new ValueDomainTransferObject();
+    
+    if(vvList1.size()>4)
+    {
+
+      while( vvList1.size()>2)
+      {
+        vvList1.remove(0);
+      }
+      while( vvList2.size()>3)
+      {
+        vvList2.remove(0);
+      }      
+      while( vvList3.size()>4)
+      {
+        vvList3.remove(0);
+      }  
+
+      vd1.setValidValues(vvList1);
+      
+      vd2.setValidValues(vvList2);
+      
+      vd3.setValidValues(vvList3);
+      
+      Collection subsettedVDs = new ArrayList();
+      subsettedVDs.add(vd1);
+      subsettedVDs.add(vd2);
+      subsettedVDs.add(vd3);
+      setSessionObject(request,"subsettedVDs",subsettedVDs,true);
+      //request.setAttribute("subsettedVDs",subsettedVDs);
+
+      //request.setAttribute("currentQuestion",currQuestion);
+      setSessionObject(request,"currentQuestion",currQuestion,true);
+      setSessionObject(request,"nextQuestion",nextQuestion,true);
+      
+     }
+     return mapping.findForward("viewSubsets");
+    }
+    
+  /**
+   * Get all related VDs and prepare for display
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward addSelectedVDSubset(    
+      ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    FormBuilderBaseDynaFormBean subsetForm = (FormBuilderBaseDynaFormBean) form;
+    Question currQuestion = (Question) getSessionObject(request, "currentQuestion");
+    List subsettedVDs = (List)getSessionObject(request, "subsettedVDs");
+    Integer vdIndex = (Integer)subsetForm.get("selectedSubsetIndex");
+    
+    ValueDomain selectedVD = (ValueDomain)subsettedVDs.get(vdIndex.intValue());
+    
+    List newValidValues = DTOTransformer.toFormValidValueList(
+                    selectedVD.getValidValues(), currQuestion);
+    currQuestion.setValidValues(newValidValues);               
+
+     return mapping.findForward(MODULE_EDIT);
+     //return mapping.findForward("useSubsets");
+    }
+  
+  /**
+   * This need to rewritten
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward subsetSave(    
+      ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+            
+     return mapping.findForward("useSubsets");
+    }
+    
  private Map getAvailableValidValuesForQuestions(Module module,List questions, Map vdvvMap)
  {
    ListIterator questionIterator = questions.listIterator();
@@ -922,6 +1074,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
    }
    return resultMap;
  }
+
 
   /**
   * Gets the validvalue Changes in a map

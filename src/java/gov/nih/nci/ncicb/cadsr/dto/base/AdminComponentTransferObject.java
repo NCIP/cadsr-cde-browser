@@ -29,6 +29,9 @@ public class AdminComponentTransferObject extends BaseValueObject
   protected String idseq;
   protected String registrationStatus;
 
+  //Publish Change Order
+  protected boolean published;  
+
 	public AdminComponentTransferObject() {
 		super();
 		preferredName = null;
@@ -209,5 +212,16 @@ public class AdminComponentTransferObject extends BaseValueObject
   public Object clone() throws CloneNotSupportedException {
     return super.clone();
 
+  }  
+  
+//Publish Change Order
+  public boolean isPublished()
+  {
+    return published;
+  }
+
+  public void setPublished(boolean published)
+  {
+    this.published = published;
   }  
 }

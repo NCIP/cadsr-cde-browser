@@ -7,6 +7,7 @@ import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
@@ -36,14 +37,40 @@ public class NCIUserTransferObject implements NCIUser,CaDSRConstants {
           return true;
         }
       }
+      roleContexts = (Collection)contexts.get(CONTEXT_ADMIN);
+      if (roleContexts != null) {
+        if (roleContexts.contains(context)) {
+          return true;
+        }
+      }      
     }
+    
     return false;
   }
 
   public Map getContextsByRole() {
     return contexts;
   }
-
+  
+   public Collection getContextsByRoleAccess(String role) {
+        Collection roleContexts = (Collection) contexts.get(CDE_MANAGER);
+        
+        Collection adminContexts  =(Collection) contexts.get(CONTEXT_ADMIN);
+        if(roleContexts==null)
+          roleContexts=adminContexts;
+        if(adminContexts!=null&&roleContexts!=null)
+        {
+          Iterator it = adminContexts.iterator();
+        
+        while(it.hasNext())
+        {
+          Context context = (Context)it.next();
+          if(!roleContexts.contains(context))
+            roleContexts.add(context);           
+          }
+        }
+        return roleContexts;
+  } 
   public void setContextsByRole(Map contextsMap) {
     contexts = contextsMap;
   }

@@ -75,7 +75,8 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String VALID_VALUE_INDEX = "validValueIndex";
   public static final String AVAILABLE_VALID_VALUES = "AvailableValidValue";
   public static final String ADD_AVAILABLE_VALID_VALUE_INDEX =
-      "addAvailableValidValueIndex";
+      "addAvailableValidValueIndex";     
+  public static final String SELECTED_SUBSET_INDEX = "selectedSubsetIndex";     
   public static final String VALUE_DOMAIN_VALID_VALUES_MAP =
     "valueDomainValidValueMap";
   public static final String AVAILABLE_VALID_VALUES_MAP =
@@ -84,6 +85,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String SELECTED_ITEM = "selectedItem";
   public static final String CLASSIFICATIONS = "classifications";
   public static final String DE_SEARCH_SRC = "src";
+  
   
   public static final String SELECTED_DATAELEMENTS = "selectedDataElements";
   

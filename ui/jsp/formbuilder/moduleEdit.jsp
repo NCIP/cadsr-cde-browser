@@ -33,6 +33,12 @@ function submitModuleEdit(methodName,questionIndexValue) {
   document.forms[0].<%=FormConstants.QUESTION_INDEX%>.value=questionIndexValue;
   document.forms[0].submit();
 }
+
+function submitToSubsets(methodName,questionIndexValue) {
+  document.forms[0].<%=FormConstants.QUESTION_INDEX%>.value=questionIndexValue;
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].submit();  
+}
 function submitModuleToSave(methodName) {
   if(validateModuleEditForm(moduleEditForm)) {
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
@@ -473,16 +479,29 @@ function clearProtocol() {
                                   <tr class="OraTabledata">
                                     <td class="OraTabledata" >&nbsp;</td>
                                     <td class="OraTabledata" align="left" width="90%"> 
-                                        <a href="javascript:CheckAll('<%= FormConstants.SELECTED_ITEMS+questionIndex %>')">Check All
-                                        </a>&nbsp; &nbsp;
-                                        <a href="javascript:ClearAll('<%= FormConstants.SELECTED_ITEMS+questionIndex %>')">Clear All
-                                        </a>     
-                                         &nbsp; &nbsp;
-                                        <a href="javascript:submitValidValueEdit()">                                              
-                                            <img src="<%=urlPrefix%>i/delete.gif" border="0" alt="Delete"/>
-                                        </a>
-                                    </td>
-                                
+                                       <table width="35%" align="left" cellpadding="0" cellspacing="0" border="0" >
+                                         </tr >
+                                            <td width="30%" align="left" >
+                                             <a href="javascript:CheckAll('<%= FormConstants.SELECTED_ITEMS+questionIndex %>')">Check All
+                                             </a>
+                                           </td>
+                                           <td align="left">
+                                             <a href="javascript:ClearAll('<%= FormConstants.SELECTED_ITEMS+questionIndex %>')">Clear All
+                                             </a>     
+                                           </td>
+                                           <td align="left">
+                                              <a href="javascript:submitValidValueEdit()">                                              
+                                                <img src="<%=urlPrefix%>i/delete.gif" border="0" alt="Delete"/>
+                                              </a>
+                                            </td>
+                                            <td align="left">
+                                             <a href="javascript:submitToSubsets('<%=NavigationConstants.VIEW_SUBSETTEDVDS_LIST%>','<%=questionIndex %>')">
+                                                 <img src=<%=urlPrefix%>i/subset.gif border=0 alt="Select from existing subsets">
+                                             </a>
+                                            </td>
+                                        </tr>
+                                      </table>
+                                    </td>                               
                                 <logic:iterate id="validValue" name="question" indexId="validValueIndex" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
                                 <bean:size id="validValueSize" name="question" property="validValues"/>                                  
                                   <tr class="OraTabledata">

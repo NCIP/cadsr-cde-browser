@@ -418,13 +418,10 @@ function clearProtocol() {
                                         <td >
                                           <table align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
                                              <tr class="OraTabledata">
-                                              <td class="OraTableColumnHeader" width="10%" nowrap>
-                                                <b>ValueMeaning</b> 
-                                             </td>
-                                             <td class="OraFieldText">
-                                                &nbsp;
-                                             </td>
+                                             <td  class="OraTableColumnHeader" width="10%" nowrap ><bean:message key="cadsr.formbuilder.valueMeaning.name" /></td>
+                                             <td class="OraFieldText" ><bean:write name="validValue" property="shortMeaning"/></td>                                          
                                             </tr>
+                                            
                                              <tr class="OraTabledata">
                                               <td class="OraTableColumnHeader" width="10%" nowrap>
                                                 <bean:message key="cadsr.formbuilder.form.instruction"/> 

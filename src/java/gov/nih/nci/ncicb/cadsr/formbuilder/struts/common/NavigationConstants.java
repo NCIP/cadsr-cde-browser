@@ -41,6 +41,7 @@ public interface NavigationConstants
   public static final String ADD_FROM_AVAILABLE_VALID_VALUE_LIST="addFromAvailableValidValueList";
   public static final String SAVE_MODULE="saveModule";
   public static final String CANCEL_MODULE_EDIT ="cancelModuleEdit";
+  public static final String VIEW_SUBSETTEDVDS_LIST = "viewSubsettedVDs";
   //Edit Form
   public static final String GET_FORM_TO_EDIT="getFormToEdit";
   public static final String DELETE_FORM="deleteForm";

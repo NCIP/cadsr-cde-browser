@@ -1,0 +1,32 @@
+Changes done for Jboss migration
+
+SessionFilter.java
+- Added code to populate user in the session(Key: CaDSRConstants.USER_KEY)
+
+Web.xml
+- Jboss does not like wild card characters in URL patterns. Replaced then.
+
+Serializable
+- Made user object in session serializable
+Eg. UserErrorMessage
+
+Formbuilder.jsp
+	<jsp:UseBean> -> Remove empty closing tag
+
+CDEBrowserTree classes
+-	removed  all result type declaration for prepared statements
+
+Jsp Changes
+  Change maxlengh assignment to maxlength="<%= Integer.toString(FormConstants.LONG_NAME_MAX_LENGTH)%>
+  In the code below
+  FormDetails
+  - line 261
+  FormEdit
+   -line 105
+
+Descriptors added
+   oracle-ds.xml
+  jboss.xml in ejb jar file
+  Jboss-web.xml
+
+

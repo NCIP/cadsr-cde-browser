@@ -1,7 +1,8 @@
       <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
         <tr >
          <td>
-            <a href="javascript:submitModuleToSave('<%=NavigationConstants.SAVE_MODULE%>')">
+            <!-- <a href="javascript:submitModuleToSave('<%=NavigationConstants.SAVE_MODULE%>')"> -->
+             <a href="javascript:submitModuleToSave('<%="subsetSave"%>')">
                 <html:img src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
              </a> 
           </td>  
