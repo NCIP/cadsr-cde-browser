@@ -14,6 +14,7 @@
     <TITLE>Welcome to Form Builder..</TITLE>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
+    <SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/checkbox.js"></SCRIPT>
     <SCRIPT LANGUAGE="JavaScript">
 
  function submitForm(methodName) {
@@ -29,6 +30,14 @@
     document.forms[0].<%=FormConstants.REFDOC_INDEX%>.value=refDocIndexValue;
     document.forms[0].submit();
  }
+
+  function deleteAttachments(methodName, refDocIndexValue) {
+    if (validateSelection('selectedItems','Please select at least one attachment to delete from your reference document.')) {
+    document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+    document.forms[0].<%=FormConstants.REFDOC_INDEX%>.value=refDocIndexValue;
+    document.forms[0].submit();
+    }
+}
 
   
     </SCRIPT>
@@ -324,7 +333,7 @@
                                </td> 
                               <logic:notEmpty name="refDoc" property="attachments">
                                 <td align="center">
-                      <a href="javascript:submitFormEdit('<%=NavigationConstants.DELETE_ATTACHMENT%>', '<%=refDocIndex%>')">
+                      <a href="javascript:deleteAttachments('<%=NavigationConstants.DELETE_ATTACHMENT%>', '<%=refDocIndex%>')">
                          <img src=<%=urlPrefix%>i/delete.gif border=0 alt="Delete Attachments">
                       </a>                          
                             </td>
