@@ -43,7 +43,7 @@ public class CSITransferObject implements ClassSchemeItem  {
   }
 
   public void setClassSchemeItemType(String aClassSchemeItemType) {
-    aClassSchemeItemType = csiType;
+    csiType = aClassSchemeItemType;
   }
 
   public String getCsiIdseq() {
