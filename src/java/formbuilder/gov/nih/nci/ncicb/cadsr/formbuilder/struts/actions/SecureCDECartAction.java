@@ -157,10 +157,11 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       newValidValues = DTOTransformer.toFormValidValueList(values, q);
 
       q.setLongName(newLongName);
+      q.setValidValues(newValidValues);
     }
 
     q.setDataElement(de);
-    q.setValidValues(newValidValues);
+    
 
     return mapping.findForward("success");
   }
