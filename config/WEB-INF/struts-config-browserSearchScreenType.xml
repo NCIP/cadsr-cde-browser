@@ -2,14 +2,14 @@
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
   <form-beans>
-    <form-bean name="compareCDEForm"
+    <form-bean name="screenChangeCDEForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
       <form-property name="browserSearchScreenType" type="java.lang.String"/>
     </form-bean>
 </form-beans>
   <action-mappings>
-    <action name="compareCDEForm" path="/cdebrowser/screenTypeAction" parameter="method"
+    <action name="screenChangeCDEForm" path="/cdebrowser/screenTypeAction" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.ScreenTypeAction"
       validate="false">
