@@ -60,6 +60,14 @@ function details(linkParms ){
   <jsp:param name="urlPrefix" value=""/>
 </jsp:include>
 
+<table>
+    <tr>    
+      <td align="left" class="AbbreviatedText">
+        <bean:message key="cadsr.formbuilder.helpText.form.module.changeAssosiation"/>
+      </td>
+    </tr>  
+</table> 
+
 <html:form action='<%= "/changeAssociation?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.CHANGE_DE_ASSOCIATION %>' >
 
 <html:hidden property="<%= FormConstants.QUESTION_INDEX %>"/>
