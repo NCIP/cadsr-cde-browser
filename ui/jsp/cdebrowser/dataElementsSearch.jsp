@@ -25,7 +25,7 @@
   HTMLPageScroller topScroller = (HTMLPageScroller)infoBean.getInfo(
                            ProcessConstants.DE_SEARCH_TOP_PAGE_SCROLLER);
   
-  TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
+  TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tibSearchDE");
   String pageId = infoBean.getPageId();
   String pageName = PageConstants.PAGEID;
   String pageUrl = "&"+pageName+"="+pageId;
@@ -68,12 +68,14 @@
   String modIndex = "";
   String quesIndex = "";
   String urlParams = "";
+  String newSearchURL = "search?PageId=DataElementsGroup";
   
   if ((src != null) && (!"".equals(src))) {
     modIndex = request.getParameter("moduleIndex");
     quesIndex = request.getParameter("questionIndex");
     doneURL= src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
     urlParams = "&src="+src+"&method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
+    newSearchURL += urlParams;
   }
     
 %>
@@ -213,11 +215,8 @@ function done() {
   top.location.href = "<%=doneURL%>";
 }
 
-function newSearch()
-{
-  
-  document.location.href="search"
-
+function newSearch(){
+  top.location.href= "<%=newSearchURL%>";
 }
 //-->
 </SCRIPT>

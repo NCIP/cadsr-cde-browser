@@ -169,6 +169,7 @@
             <patternset>
               <include name="gov/nih/nci/ncicb/cadsr/resource/*"/>
               <include name="gov/nih/nci/ncicb/cadsr/resource/impl/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/cdecart/**"/>
               <include name="gov/nih/nci/ncicb/cadsr/dto/*"/>
               <include name="gov/nih/nci/ncicb/cadsr/dto/base/*"/>
               <include name="gov/nih/nci/ncicb/cadsr/dto/jdbc/*"/>
@@ -338,7 +339,7 @@
              <include name="gov/nih/nci/ncicb/cadsr/cdebrowser/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/crfbuilder/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/database/**"/>
-             <include name="gov/nih/nci/ncicb/cadsr/database/**"/>                        
+             <include name="gov/nih/nci/ncicb/cadsr/database/**"/>
            </patternset>
        </fileset>
        <fileset dir="${classes.build.dir}">
