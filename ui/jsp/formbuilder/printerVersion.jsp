@@ -90,8 +90,8 @@
                               </td>
                               <logic:present name="question" property = "dataElement">
                                 <td align="center" width="70" class="PrinterUnderlineOraFieldText" >
-				    <bean:write name="question" property="dataElement.cDEId"/>
-	    			 </td>
+				                          <bean:write name="question" property="dataElement.CDEId"/>
+	    			                    </td>
                               </logic:present>
                               <td align="center" width="70" class="PrinterUnderlineOraFieldText">
                                 	<bean:write name="question" property="dataElement.version"/>

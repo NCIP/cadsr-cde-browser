@@ -12,4 +12,6 @@ public interface FormValidValue extends AdminComponent {
   
   public int getDisplayOrder();
   public void setDisplayOrder(int dispOrder);
+  
+  public Object clone() throws CloneNotSupportedException ;
 }

@@ -20,7 +20,6 @@
 <BODY bgcolor="#ffffff">
 <%
   String urlPrefix = "";
-
 %>
 <%@ include  file="/formbuilder/common_header_inc.jsp" %>
 
@@ -29,11 +28,21 @@
 	<jsp:param name="urlPrefix" value="" />
 </jsp:include>
 
-<html:form action="/formAction.do">
+<html:form action="/formSearchAction.do">
  <%@ include  file="/formbuilder/formSearch_inc.jsp" %>
   <P>
-<%@ include  file="/formbuilder/formResults_inc.jsp" %>
+<logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
+  <%@ include  file="/formbuilder/formResults_inc.jsp" %>
+</logic:present> 
+<logic:notPresent name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
+	<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  	  <tr class="OraTabledata">
+         	<td ><bean:message key="cadsr.formbuilder.search.message"/></td>
+  	  </tr>
+  	</table>   
+</logic:notPresent>
    </P>
+   
 </html:form>
 <P>&nbsp;</P>
 <P>&nbsp;</P>

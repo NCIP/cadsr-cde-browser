@@ -18,6 +18,7 @@ public abstract class NestedCheckedException extends Exception
   * Nested Exception to hold wrapped exception.
   */
   private Throwable rootCause;
+  private String errorCode;
     
     
  /**
@@ -98,6 +99,16 @@ public abstract class NestedCheckedException extends Exception
   public void printStackTrace() {
     printStackTrace(System.err);
     
+  }
+
+  public String getErrorCode()
+  {
+    return errorCode;
+  }
+
+  public void setErrorCode(String newErrorCode)
+  {
+    errorCode = newErrorCode;
   }
   
 }	// ExceptionWrapperException

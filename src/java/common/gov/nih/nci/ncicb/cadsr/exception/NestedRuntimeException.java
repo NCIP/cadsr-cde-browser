@@ -14,6 +14,7 @@ public abstract class NestedRuntimeException extends RuntimeException
   implements HasRootCause {
   /** Nested Exception to hold wrapped exception. */
   private Throwable rootCause;
+  private String errorCode;
 
   /**
    * Constructs a <code>ExceptionWrapperException</code> with the specified
@@ -101,6 +102,16 @@ public abstract class NestedRuntimeException extends RuntimeException
     printStackTrace(System.err);
 
     // printStackTrace(System.out);
+  }
+
+  public String getErrorCode()
+  {
+    return errorCode;
+  }
+
+  public void setErrorCode(String newErrorCode)
+  {
+    errorCode = newErrorCode;
   }
 }
  // ExceptionWrapperException

@@ -66,4 +66,13 @@ public class ValidValuesValueObject implements ValidValue {
   public void setDescription(String vmDescription) {
     this.vmDescription = vmDescription;
   }
+    /**
+   * Clones the Object
+   * @return 
+   * @throws CloneNotSupportedException
+   */
+  public Object clone() throws CloneNotSupportedException {
+    return super.clone();
+
+  }
 }

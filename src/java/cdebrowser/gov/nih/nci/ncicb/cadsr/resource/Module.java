@@ -14,5 +14,5 @@ public interface Module extends AdminComponent {
 
   public int getDisplayOrder();
   public void setDisplayOrder(int dispOrder);
-  
+  public Object clone() throws CloneNotSupportedException ; 
 }

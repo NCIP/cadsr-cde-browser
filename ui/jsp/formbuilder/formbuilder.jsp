@@ -1,6 +1,11 @@
 <%@ page contentType="text/html;charset=windows-1252"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
+<%@page import="java.util.HashMap " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%
   String treeURL;
   String formbuilderURL;
@@ -22,11 +27,29 @@
 FormBuilder
 </TITLE>
 </HEAD>
+  <jsp:useBean id="requestMap" scope="request" class="java.util.HashMap" />
+  
+  </jsp:useBean>
+
+
   <frameset cols="25%,*">
     <frameset rows="15%,*">
-       <frame src="cdebrowserCommon_html/tree_hdr.html" frameborder="0" name="tree_header" scrolling = "no">
-       <frame src="<%=treeURL%>" frameborder="0" name="tree">
+       <html:frame page="/cdebrowserCommon_html/tree_hdr.html"
+              name="requestMap"
+              frameborder="0"
+              frameName="tree_header"
+              scrolling = "no"/>
+       <html:frame page='<%="/"+treeURL%>'
+              name="requestMap"
+              frameborder="0"
+              frameName="tree"
+              />              
     </frameset>
-    <frame src="<%=formbuilderURL%>" frameborder="0" name="body">
+       <html:frame action="/setMessagesForFrameAction?method=setMessagesFormKeys"
+              name="requestMap"
+              frameborder="0"
+              frameName="body"
+              />      
   </frameset>
+   
 </HTML>

@@ -20,4 +20,6 @@ public interface ValidValue {
   public String getDescription();
 
   public void setDescription(String vmDescription);
+  
+  public Object clone() throws CloneNotSupportedException ;
 }

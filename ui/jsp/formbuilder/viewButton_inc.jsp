@@ -4,7 +4,7 @@
 	            &nbsp;
           </td> 
           <td >
- 	    <html:link action='<%="/formAction"%>' >				
+ 	    <html:link action='<%="/formSearchAction"%>' >				
 		<html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Back"/>
 	    </html:link>             
           </td>                
@@ -21,11 +21,11 @@
 	    </html:link>             
           </td>           
           <td >
- 	    <html:link action='<%="/formDeleteAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
- 				paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">
-		<html:img src='<%=urlPrefix+"i/deleteButton.gif"%>' border="0" alt="Delete"/>
-	    </html:link>
-	   </td>
+            <html:link action='<%="/formViewDeleteAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+                paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq">
+              <html:img src='<%=urlPrefix+"i/deleteButton.gif"%>' border="0" alt="Delete"/>
+	          </html:link>             
+          </td>  
           <td width="40%" align="right">
  	    <html:link action='<%="/formPrinterAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_PRINT%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
  				paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq"
@@ -34,11 +34,5 @@
 	    </html:link>
 	   </td>	             
           </td>           
-        </tr> 
-        <tr >
-          <td >
-            &nbsp;
-          </td>                          
-        </tr>         
-        
+        </tr>                 
       </table>

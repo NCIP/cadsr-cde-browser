@@ -1,4 +1,16 @@
-
+  <logic:messagesPresent message="true">
+       <table width="100%" align="center">
+        <html:messages id="message" 
+          message="true">
+            <tr align="center" >
+               <td  align="left" class="OraErrorText" >
+                <b><bean:write  name="message"/></b><br>
+              </td>
+            </tr>
+        </html:messages>      
+       </table>
+   </logic:messagesPresent> 
+   
    <logic:notEmpty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
         <bean:define id="pageBean" name="<%=FormConstants.FORM_SEARCH_RESULTS_PAGINATION%>" 
         	type="gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean"/>
@@ -42,6 +54,7 @@
 		   	   	urlPrefix="<%=urlPrefix%>"
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
+            inactiveImageSource="i/copy_inactive.gif"
 		   	   	altMessage="Copy"
 		   	   	target="_parent"/>
 		 </td>                  
@@ -52,18 +65,21 @@
 		   	   	urlPrefix="<%=urlPrefix%>"
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
+            inactiveImageSource="i/edit_inactive.gif"
 		   	   	altMessage="Edit"
 		   	   	target="_parent"/>		            
 		  </td>
 		 <td align=center>
 		       <cde:secureIcon  formId="form" activeImageSource="i/delete.gif" 
-		       		activeUrl='<%="/formDeleteAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>' 
+		       		activeUrl='<%="/formHrefDeleteAction.do?"
+                         +NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>'
 		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
 		   	   	urlPrefix="<%=urlPrefix%>"
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
+            inactiveImageSource="i/delete_inactive.gif"
 		   	   	altMessage="Delete"
-		   	   	target="_parent"/>		           	
+		   	   	/>		           	
 		</td>                
           	<td class="OraFieldText">
  			<html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"

@@ -1,7 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.resource.Audit;
-
+import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 import java.io.Serializable;
 
 import java.sql.Date;
@@ -48,19 +48,22 @@ public class BaseTransferObject implements Serializable, Audit {
   public void setDateModified(Timestamp p0) {
     this.modifiedDate = p0;
   }
-
+   public Object clone() throws CloneNotSupportedException 
+   {
+     return super.clone();
+   }
   public String toString() {
-    StringBuffer sb = new StringBuffer();
-    sb.append(ATTR_SEPARATOR + "createdBy=" + getCreatedBy());
+    DebugStringBuffer sb = new DebugStringBuffer();
+    sb.append(ATTR_SEPARATOR + "createdBy=" + getCreatedBy(),getCreatedBy());
     if (this.getDateCreated() == null)
       sb.append(ATTR_SEPARATOR + "dateCreated=null");
     else
-      sb.append(ATTR_SEPARATOR + "dateCreated=" + getDateCreated().toString());
-    sb.append(ATTR_SEPARATOR + "modifiedBy=" + getModifiedBy());
+      sb.append(ATTR_SEPARATOR + "dateCreated=" + getDateCreated().toString(),getDateCreated().toString());
+    sb.append(ATTR_SEPARATOR + "modifiedBy=" + getModifiedBy(),getModifiedBy());
     if (this.getDateModified() == null)
       sb.append(ATTR_SEPARATOR + "dateModified=null");
     else 
-      sb.append(ATTR_SEPARATOR + "dateModified=" + getDateModified().toString());
+      sb.append(ATTR_SEPARATOR + "dateModified=" + getDateModified().toString(),getDateModified().toString());
     
     return sb.toString();
     //return " ";

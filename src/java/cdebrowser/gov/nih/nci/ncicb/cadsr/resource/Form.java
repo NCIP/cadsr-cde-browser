@@ -20,5 +20,7 @@ public interface Form extends AdminComponent  {
   
   public String getFormCategory();
   public void setFormCategory (String formCategory);
+  
+  public Object clone() throws CloneNotSupportedException ;
 
 }

@@ -44,5 +44,13 @@ public class AuditTransferObject {
 	public void setDateModified(Timestamp pModifiedDate) {
 		modifiedDate = pModifiedDate;
 	} //end method 
+  /**
+   * Clones the Object
+   * @return 
+   * @throws CloneNotSupportedException
+   */
+  public Object clone() throws CloneNotSupportedException {
+    return super.clone();
 
+  }
 }

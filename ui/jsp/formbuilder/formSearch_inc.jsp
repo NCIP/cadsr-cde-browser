@@ -34,17 +34,17 @@ function clearProtocol() {
           <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="20" />
         </td>
 
-    <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/>:</td>
-    <td class="OraFieldText" nowrap>
-      <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
-      	     readonly="true" 
-      	     size="19"
-      	     styleClass="LOVField"
-      	     onfocus="this.blur();"/>
-      &nbsp;<a href="<%=protoLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
-      <a href="javascript:clearProtocol()"><i>Clear</i></a>
-      <html:hidden  property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
-    </td>
+        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/>:</td>
+        <td class="OraFieldText" nowrap>
+          <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
+                 readonly="true" 
+                 size="19"
+                 styleClass="LOVField"
+                 onfocus="this.blur();"/>
+          &nbsp;<a href="<%=protoLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
+          <a href="javascript:clearProtocol()"><i>Clear</i></a>
+          <html:hidden  property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
+        </td>
 
 
     </tr>
@@ -52,11 +52,11 @@ function clearProtocol() {
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
         <td class="OraFieldText" nowrap>
-        <html:select styleClass = "Dropdown" property="<%=FormConstants.CONTEXT_ID_SEQ%>">
-        	<html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
-		<html:options collection="<%=FormConstants.ALL_CONTEXTS%>" 
-		   property="conteIdseq" labelProperty="name" />
-	</html:select>
+          <html:select styleClass = "Dropdown" property="<%=FormConstants.CONTEXT_ID_SEQ%>">
+        	   <html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
+		         <html:options collection="<%=FormConstants.ALL_CONTEXTS%>" 
+		           property="conteIdseq" labelProperty="name" />
+	         </html:select>
         </td>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
         <td class="OraFieldText" nowrap>
@@ -71,7 +71,7 @@ function clearProtocol() {
         <td class="OraFieldText" nowrap>
         <html:select styleClass = "Dropdown" property="<%=FormConstants.CATEGORY_NAME%>">
         	<html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
-		<html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> \
+		<html:options name="<%=FormConstants.ALL_FORM_CATEGORIES%>" /> 
 	</html:select> 
         </td>
 

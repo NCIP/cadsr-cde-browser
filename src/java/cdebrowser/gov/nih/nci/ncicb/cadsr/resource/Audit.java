@@ -6,7 +6,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 
-public interface Audit extends CaDSRConstants {
+public interface Audit extends CaDSRConstants,Cloneable {
   public String getCreatedBy();
 
   public void setCreatedBy(String pCreatedBy);
@@ -23,5 +23,6 @@ public interface Audit extends CaDSRConstants {
 
   public void setDateModified(Timestamp pModifiedDate);
 
+  
   public String toString();
 }

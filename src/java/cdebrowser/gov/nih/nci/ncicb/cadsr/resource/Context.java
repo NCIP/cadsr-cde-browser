@@ -20,4 +20,6 @@ public interface Context extends Audit
 
   public String getLanguage();
   public void setLanguage(String aLanguage);
+  
+  public Object clone() throws CloneNotSupportedException ;
 }

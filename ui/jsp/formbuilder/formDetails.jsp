@@ -28,6 +28,25 @@
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
     <%@ include file="/formbuilder/viewButton_inc.jsp"%>
+   
+      <logic:messagesPresent message="true">
+       <table width="80%" align="center">
+        <html:messages id="message" 
+          message="true">
+            <tr align="center" >
+               <td  align="left" class="OraErrorText" >
+                <b><bean:write  name="message"/></b><br>
+              </td>
+            </tr>
+        </html:messages> 
+           <tr align="center" >
+             <td>
+                &nbsp;
+            </td>
+           </tr>        
+       </table>
+      </logic:messagesPresent>  
+    
     <logic:present name="<%=FormConstants.CRF%>">
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
         <tr class="OraTabledata">
@@ -95,15 +114,15 @@
                                 <bean:write name="question" property="longName"/>
                               </td>
                               <logic:present name="question" property = "dataElement">
-                                <td align="center" width="70" class="UnderlineOraFieldText" >
- 	    			    <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
- 	    			        paramId = "p_de_idseq"
- 					paramName="question"
- 					paramProperty="dataElement.deIdseq"
- 					target="_blank">
-					<bean:write name="question" property="dataElement.CDEId"/>
-	    			    </html:link>
-	    			 </td>
+                                <td align="center" width="70" class="UnderlineOraFieldText" >                        
+ 	    			                              <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
+                                             paramId = "p_de_idseq"
+                                              paramName="question"
+                                              paramProperty="dataElement.deIdseq"
+                                              target="_blank">
+                                          <bean:write name="question" property="dataElement.CDEId"/>
+                                          </html:link>
+                                  </td>
                               </logic:present>
                               <td align="center" width="70" class="UnderlineOraFieldText">
                                 	<bean:write name="question" property="dataElement.version"/>

@@ -190,4 +190,13 @@ public class AdminComponentTransferObject extends BaseValueObject
   public void setIdseq(String idseq) {
     this.idseq = idseq;
   }
+    /**
+   * Clones the Object
+   * @return 
+   * @throws CloneNotSupportedException
+   */
+  public Object clone() throws CloneNotSupportedException {
+    return super.clone();
+
+  }  
 }
