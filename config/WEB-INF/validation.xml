@@ -143,6 +143,13 @@
       </field>
 -->
     </form>
+    <form name="createReferenceDocForm">
+      <field   property="docName"
+        depends="required">
+        <arg0 key="cadsr.formbuilder.refdoc.name"/>
+      </field>
+    </form>
+
 
   </formset>
 </form-validation>
