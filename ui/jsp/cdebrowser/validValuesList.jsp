@@ -13,6 +13,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants " %>
 <%@page import="java.util.List " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.util.StringUtils" %>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
@@ -254,7 +255,8 @@ function listChanged(urlInfo) {
                           <td class="OraTableColumnHeader">Concept Code</td>
                           <td class="OraTableColumnHeader">Public ID</td>                          
                           <td class="OraTableColumnHeader">Definition Source</td>
-                          <td class="OraTableColumnHeader">EVS Source</td>                      
+                          <td class="OraTableColumnHeader">EVS Source</td>
+                          <td class="OraTableColumnHeader">Primary</td>
                         </tr>   
                        <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.resource.ComponentConcept" property="valueDomain.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
                         <tr class="OraTabledata">
@@ -265,6 +267,7 @@ function listChanged(urlInfo) {
                            <td class="OraFieldText"><%=comp.getConcept().getPublicId()%> </td> 
                            <td class="OraFieldText"><%=comp.getConcept().getDefinitionSource()%> </td> 
                            <td class="OraFieldText"><%=comp.getConcept().getEvsSource()%> </td>
+                          <td class="OraFieldText"><%=StringUtils.booleanToStr(comp.getIsPrimary())%> </td>
                         </tr>
                        </logic:iterate>
                     </table>                      

@@ -22,13 +22,20 @@ public class CDEDetailsUtils
     if(rule!=null)
     {
       List comps = rule.getComponentConcepts();
+      int compsSize = 0 ; 
       if(comps==null)
+       {
        return codes;
+       }
+      compsSize = comps.size();
       Iterator it = comps.iterator();
       while(it.hasNext())
       {
         ComponentConcept comp = (ComponentConcept)it.next();
         Concept con = comp.getConcept();
+        String codeSuffix = "";
+        if(comp.getIsPrimary()&&compsSize>1)
+          codeSuffix = "(Primary)";
         if(con!=null)
         {
            String code = con.getPreferredName();
@@ -39,7 +46,7 @@ public class CDEDetailsUtils
               hrefBegin1  = "<a class=\""+anchorClass+"\" TARGET=\"_blank\"  href=\""+evsStr;
               hrefBegin2 = "\">";
               hrefClose = "</a>";
-              str = hrefBegin1+code+hrefBegin2+code+hrefClose; 
+              str = hrefBegin1+code+hrefBegin2+code+codeSuffix+hrefClose; 
              }
            else
            {

@@ -20,5 +20,8 @@ public interface ComponentConcept extends Orderable {
    */
   public void setIdseq(String newId);
   
+  public boolean getIsPrimary();
+  
+  public void setIsPrimary(boolean isPrimary);
 
 }

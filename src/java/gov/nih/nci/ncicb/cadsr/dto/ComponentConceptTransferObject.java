@@ -11,6 +11,7 @@ public class ComponentConceptTransferObject implements ComponentConcept,
   private String idseq = null;
   private Concept concept = null;
   private int displayOrder;
+  private boolean isPrimary = false;
 
   public ComponentConceptTransferObject() {
   }
@@ -52,5 +53,15 @@ public class ComponentConceptTransferObject implements ComponentConcept,
 
   public void setConcept(Concept newConcept) {
     concept = newConcept;
+  }
+
+  public boolean getIsPrimary()
+  {
+    return isPrimary;
+  }
+
+  public void setIsPrimary(boolean isPrimary)
+  {
+    this.isPrimary = isPrimary;
   }
 }

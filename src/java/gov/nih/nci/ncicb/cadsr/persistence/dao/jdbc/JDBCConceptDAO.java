@@ -12,6 +12,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
+import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -143,13 +144,15 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
         " ,con.PREFERRED_DEFINITION, con.CONTE_IDSEQ " +
         " , contexts.name conteName, con.VERSION " +
         " ,con.ASL_NAME, con.LATEST_VERSION_IND, con.CHANGE_NOTE " +
-        " ,con.ORIGIN ,con.CON_ID, con.EVS_SOURCE " + " from " +
+        " ,con.ORIGIN ,con.CON_ID, con.EVS_SOURCE " +
+         " , comp.PRIMARY_FLAG_IND " +
+        " from " +
         " con_derivation_rules_ext der,component_concepts_ext comp " +
         " , contexts ,concepts_ext con  where " +
         "comp.CONDR_IDSEQ=der.CONDR_IDSEQ " +
         " and comp.CON_IDSEQ=con.CON_IDSEQ and der.CONDR_IDSEQ = ?" +
         " and con.CONTE_IDSEQ=contexts.CONTE_IDSEQ " +
-        " order by der.CONDR_IDSEQ";
+        " order by der.CONDR_IDSEQ , comp.DISPLAY_ORDER";
 
       this.setDataSource(ds);
       this.setSql(sql);
@@ -174,7 +177,10 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
         comp.setIdseq(rs.getString("CC_IDSEQ"));
         comp.setDisplayOrder(
           (new Integer(rs.getString("DISPLAY_ORDER"))).intValue());
-
+        String primaryInd = rs.getString("PRIMARY_FLAG_IND");
+        if(primaryInd!=null)
+            comp.setIsPrimary(StringUtils.toBoolean(primaryInd));
+            
         Concept concept = new ConceptTransferObject();
         concept.setIdseq(rs.getString("CON_IDSEQ"));
         concept.setLongName(rs.getString("LONG_NAME"));
@@ -270,12 +276,15 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
         " ,con.PREFERRED_DEFINITION, con.CONTE_IDSEQ " +
         " , contexts.name conteName, con.VERSION " +
         " ,con.ASL_NAME, con.LATEST_VERSION_IND, con.CHANGE_NOTE " +
-        " ,con.ORIGIN ,con.CON_ID, con.EVS_SOURCE " + " from " +
+        " ,con.ORIGIN ,con.CON_ID, con.EVS_SOURCE " +
+         " , comp.PRIMARY_FLAG_IND " +
+        " from " +
         " con_derivation_rules_ext der,component_concepts_ext comp " +
         " , contexts ,concepts_ext con  where " +
         "comp.CONDR_IDSEQ=der.CONDR_IDSEQ " +
         " and comp.CON_IDSEQ=con.CON_IDSEQ " +
-        " and con.CONTE_IDSEQ=contexts.CONTE_IDSEQ " ;
+        " and con.CONTE_IDSEQ=contexts.CONTE_IDSEQ ";
+
 
       this.setDataSource(ds);
 
@@ -285,7 +294,7 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
     {
       
       String startStr = " and der.CONDR_IDSEQ in ( ";
-      String endStr = " ) ";
+      String endStr = " ) order by comp.DISPLAY_ORDER ";
       String where=startStr;
       Iterator it = cdridseqs.iterator();
       while(it.hasNext())
@@ -331,6 +340,9 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
         comp.setIdseq(rs.getString("CC_IDSEQ"));
         comp.setDisplayOrder(
           (new Integer(rs.getString("DISPLAY_ORDER"))).intValue());
+        String primaryInd = rs.getString("PRIMARY_FLAG_IND");
+        if(primaryInd!=null)
+            comp.setIsPrimary(StringUtils.toBoolean(primaryInd));
 
         Concept concept = new ConceptTransferObject();
         concept.setIdseq(rs.getString("CON_IDSEQ"));
