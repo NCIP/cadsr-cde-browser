@@ -471,7 +471,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         makeWhereClause(
           formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
           type, classificationIdseq,contextRestriction);
-      super.setSql("SELECT * FROM FB_FORMS_VIEW " + whereClause);
+      super.setSql("SELECT * FROM FB_FORMS_VIEW " + whereClause + "ORDER BY upper(protocol_long_name), upper(context_name)");
     }
 
     protected Object mapRow(
