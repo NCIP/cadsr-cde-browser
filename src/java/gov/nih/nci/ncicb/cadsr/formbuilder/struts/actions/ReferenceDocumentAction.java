@@ -80,14 +80,14 @@ public class ReferenceDocumentAction
   }
 
   setSessionObject(request, DELETED_REFDOCS, deletedRefDocs);
-  
+
   List deletedAtts = (List)getSessionObject(request, DELETED_ATTACHMENTS);
 
   if (deletedAtts == null) {
    deletedAtts = new ArrayList();
   }
 
-  setSessionObject(request,  DELETED_ATTACHMENTS, deletedAtts);
+  setSessionObject(request, DELETED_ATTACHMENTS, deletedAtts);
 
   List clonedRefDocs = orgCRF.getRefereceDocs();
   setSessionObject(request, REFDOCS_CLONED, clonedRefDocs);
@@ -130,66 +130,84 @@ public class ReferenceDocumentAction
   */
  public ActionForward viewReferenceDocAttchment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                                 HttpServletResponse response) throws IOException, ServletException {
-  Blob theBlob = null;
+  OutputStream out = null;
 
   InputStream is = null;
-  OutputStream out = null;
-  Connection conn = null;
+  out = response.getOutputStream();
+  String attachmentName = request.getParameter(FormConstants.REFERENCE_DOC_ATTACHMENT_NAME);
+  response.addHeader("Content-Disposition", "attachment; filename=" + attachmentName);
+  response.addHeader("Pragma", "No-cache");
+  response.addHeader("Cache-Control", "no-cache");
+  response.addHeader("Expires", "0");
 
-  try {
-   DBUtil dbUtil = new DBUtil();
+  // first find out if the attachment is new and saved in the session
 
-   String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
-   dbUtil.getConnectionFromContainer(dsName);
-   out = response.getOutputStream();
-   String attachmentName = request.getParameter(FormConstants.REFERENCE_DOC_ATTACHMENT_NAME);
-   response.addHeader("Content-Disposition", "attachment; filename=" + attachmentName);
-   response.addHeader("Pragma", "No-cache");
-   response.addHeader("Cache-Control", "no-cache");
-   response.addHeader("Expires", "0");
+  Map attMap = (Map)getSessionObject(request, REFDOC_ATTACHMENT_MAP);
+  Attachment attachment = getAttachmentFromSession(attMap, attachmentName);
 
-   String sqlStmt = "SELECT blob_content, mime_type from reference_blobs where name = ?";
-   log.info(sqlStmt);
-   conn = dbUtil.getConnection();
-   PreparedStatement ps = conn.prepareStatement(sqlStmt);
-   ps.setString(1, attachmentName);
-   ResultSet rs = ps.executeQuery();
-   boolean exists = false;
+  if (attachment != null) {
+   FormFile attFile = (FormFile)attMap.get(attachment);
 
-   if (rs.next()) {
-    exists = true;
+   is = attFile.getInputStream();
+   response.setContentType(attachment.getMimeType());
+  } else {
+   Blob theBlob = null;
 
-    String mimeType = rs.getString(2);
-    response.setContentType(mimeType);
-    //theBlob = ((OracleResultSet)rs).getBLOB(1);
-    theBlob = rs.getBlob(1);
-    is = theBlob.getBinaryStream();
+   Connection conn = null;
 
-    //Writing to the OutputStream
-    byte [] buf = new byte[4 * 1024]; // 4K buffer
-    int bytesRead;
-
-    while ((bytesRead = is.read(buf)) != -1) {
-     out.write(buf, 0, bytesRead);
-    }
-   }
-  } catch (Exception ex) {
-   log.error("Exception Caught:", ex);
-  } finally {
    try {
-    if (conn != null)
-     conn.close();
+    DBUtil dbUtil = new DBUtil();
 
-    if (is != null)
-     is.close();
+    String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
+    dbUtil.getConnectionFromContainer(dsName);
 
-    if (out != null)
-     out.close();
-   //if (db != null) db.closeDB();  
+    String sqlStmt = "SELECT blob_content, mime_type from reference_blobs where name = ?";
+    log.info(sqlStmt);
+    conn = dbUtil.getConnection();
+    PreparedStatement ps = conn.prepareStatement(sqlStmt);
+    ps.setString(1, attachmentName);
+    ResultSet rs = ps.executeQuery();
+    boolean exists = false;
+
+    if (rs.next()) {
+     exists = true;
+
+     String mimeType = rs.getString(2);
+     response.setContentType(mimeType);
+     //theBlob = ((OracleResultSet)rs).getBLOB(1);
+     theBlob = rs.getBlob(1);
+     is = theBlob.getBinaryStream();
+    }
    } catch (Exception ex) {
-    log.error("Exception Caught cleaning up:", ex);
-   } finally { }
+    log.error("Exception Caught:", ex);
+   } finally {
+    try {
+     if (conn != null)
+      conn.close();
+
+    //if (db != null) db.closeDB();  
+    } catch (Exception ex) {
+     log.error("Exception Caught cleaning up:", ex);
+    } finally { }
+   }
   }
+
+  //Writing to the OutputStream
+  if (is != null) {
+   byte [] buf = new byte[4 * 1024]; // 4K buffer
+
+   int bytesRead;
+
+   while ((bytesRead = is.read(buf)) != -1) {
+    out.write(buf, 0, bytesRead);
+   }
+  }
+
+  if (is != null)
+   is.close();
+
+  if (out != null)
+   out.close();
 
   return mapping.findForward(SUCCESS);
  }
@@ -398,32 +416,30 @@ public class ReferenceDocumentAction
    }
 
    List deletedAtts = (List)getSessionObject(request, DELETED_ATTACHMENTS);
+
    for (int i = 0; i < deletedAtts.size(); i++) {
     Attachment deleteAttachment = (Attachment)deletedAtts.get(i);
 
     service.deleteAttachment(deleteAttachment.getName());
     anythingChanged = true;
    }
-  }  catch (DMLException dmle)
-  {
-  
-     if (dmle.getMessage().indexOf("Document name already exist") >= 0)
-        saveError("cadsr.formbuilder.refdoc.save.duplicate.error", request);
-      else
-        saveError("cadsr.formbuilder.refdoc.save.error", request);
-     return mapping.findForward("success"); //simply reload the form
-    
-  }
-  
-  catch (FormBuilderException fe) {
-   log.error("Error occurred trying to save reference documents", fe);
-          saveError(ERROR_REFERENCE_DOC_SAVE_FAILED, request);
-          saveError(fe.getErrorCode(), request);
-          
- //         return mapping.findForward(FAILURE);
+  } catch (DMLException dmle) {
+   if (dmle.getMessage().indexOf("Document name already exist") >= 0)
+    saveError("cadsr.formbuilder.refdoc.save.duplicate.error", request);
+   else
+    saveError("cadsr.formbuilder.refdoc.save.error", request);
 
-     saveError("cadsr.formbuilder.refdoc.save.error", request);
-     return mapping.findForward("success"); //simply reload the form
+   return mapping.findForward("success"); //simply reload the form
+  } catch (FormBuilderException fe) {
+   log.error("Error occurred trying to save reference documents", fe);
+
+   saveError(ERROR_REFERENCE_DOC_SAVE_FAILED, request);
+   saveError(fe.getErrorCode(), request);
+
+   //         return mapping.findForward(FAILURE);
+
+   saveError("cadsr.formbuilder.refdoc.save.error", request);
+   return mapping.findForward("success"); //simply reload the form
   }
 
   // now save attachments  
@@ -900,7 +916,7 @@ public class ReferenceDocumentAction
   return false;
  }
 
- private boolean saveRefDocAttachment(Attachment attachment, String rd_idseq, FormFile attFile) throws DMLException{
+ private boolean saveRefDocAttachment(Attachment attachment, String rd_idseq, FormFile attFile) throws DMLException {
   String
      sqlNewRow = "INSERT INTO reference_blobs (rd_idseq,name,mime_type,doc_size,content_type,blob_content) "
                     + "VALUES (?,?,?,?,?,EMPTY_BLOB())",
@@ -939,16 +955,14 @@ public class ReferenceDocumentAction
 
    ps.setBlob(1, dbBlob);
    conn.commit();
-  } catch (SQLException sqlE) 
-  {
-    if (sqlE.getMessage().indexOf("unique constraint") >0) 
-    {
-      throw new DMLException("Document name already exists in the database.");
-    }
-  }
-  catch (Exception ex) {
+  } catch (SQLException sqlE) {
+   if (sqlE.getMessage().indexOf("unique constraint") > 0) {
+    throw new DMLException("Document name already exists in the database.");
+   }
+  } catch (Exception ex) {
    log.error("Exception Caught:", ex);
-   throw new DMLException("Exception occurred while saving attachment to the database",ex);
+
+   throw new DMLException("Exception occurred while saving attachment to the database", ex);
   } finally {
    try {
     if (conn != null)
@@ -975,5 +989,21 @@ public class ReferenceDocumentAction
   }
 
   return true;
+ }
+
+ private Attachment getAttachmentFromSession(Map attMap, String fileName) {
+  if (attMap == null)
+   return null;
+
+  Iterator iter = attMap.keySet().iterator();
+
+  while (iter.hasNext()) {
+   Attachment attachment = (AttachmentTransferObject)iter.next();
+
+   if (attachment.getName().equals(fileName))
+    return attachment;
+  }
+
+  return null;
  }
 }
