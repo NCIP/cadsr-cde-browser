@@ -75,7 +75,8 @@
   <property name="open.source.dir.raw.lib" value="${open.source.dir.raw}/lib" />
   <property name="open.source.dir.raw.src" value="${open.source.dir.raw}/src" />
   <property name="open.source.dir.raw.ui" value="${open.source.dir.raw}/ui" />
-  <property name="app.docs.setup.readme.name" value="Readme" /> 
+  <property name="app.docs.setup.distribution.readme.name" value="CDEBrowserDistributionReadme" /> 
+  <property name="app.docs.setup.distribution.src.readme.name" value="CDEBrowserSrcDistributionReadme" /> 
   <property name="open.source.readme.name" value="source_readme" /> 
   
   <!-- base dir in the zip file -->
@@ -824,9 +825,7 @@
   <!-- =========== PROD DISTRIBUTION Complete============== -->
         <target name="dist_download_full" depends="dist_download,
                                                              dist_opensource ">  
-               <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
-               includes="${app.docs.setup.readme.name}.txt"               
-               />        
+     
         </target>      
   <!-- =========== END PROD DISTRIBUTION ======================= -->
 
@@ -834,7 +833,7 @@
         <target name="dist_opensource" depends="clean_build_dir,opensource_config,opensource_windows,
                 opensource_unix">  
                <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
-               includes="${app.docs.setup.readme.name}.txt"               
+               includes="${app.docs.setup.distribution.src.readme.name}.txt"               
                />        
         </target>      
   <!-- =========== END PROD DISTRIBUTION ======================= --> 
@@ -879,7 +878,10 @@
                  longfile="gnu"/>
             <gzip zipfile="${dist.dir}/${download.file.name.unix}.tar.gz" 
                 src="${dist.dir}/${download.file.name.unix}.tar"
-                />                               
+                />   
+               <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
+               includes="${app.docs.setup.distribution.readme.name}.txt"               
+               />                   
         </target>      
   <!-- =========== END Download DISTRIBUTION ======================= -->  
   
