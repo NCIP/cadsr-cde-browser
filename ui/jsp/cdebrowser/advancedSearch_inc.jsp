@@ -258,7 +258,7 @@
                                     <td class="OraTableColumnHeaderNoBG" nowrap>
                                       <input type="radio" name="jspLatestVersion" value="Yes" > Latest Version
                                       <input type="radio" name="jspLatestVersion" value="No" checked > All Versions
-                                   </td>pe="radio" name="jspLatestVersion" value="No" checked></td>
+                                   </td>
                           <%
                             }
                           %>
