@@ -5,7 +5,8 @@
 function submitForm() {
   if((document.forms[0].<%=FormConstants.FORM_TYPE%>.value == "TEMPLATE") && (document.forms[0].<%=FormConstants.PROTOCOLS_LOV_ID_FIELD%>.value != '')) {
      alert('Protocol must be left blank for a type TEMPLATE');
-     }
+     return;
+  }
   if(validateCreateForm(createForm))
     document.forms[0].submit();
 }
