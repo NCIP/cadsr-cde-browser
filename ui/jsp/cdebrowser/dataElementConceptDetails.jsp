@@ -155,6 +155,10 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=dec.getVersion()%> </td>
  </tr>
  <tr class="OraTabledata">
+    <td class="TableRowPromptText">Conceptual Domain Public ID:</td>
+    <td class="OraFieldText"><%=dec.getCDPublicId()%></td>
+ </tr>
+ <tr class="OraTabledata">
     <td class="TableRowPromptText">Conceptual Domain Preferred Name:</td>
     <td class="OraFieldText"><%=dec.getCDPrefName()%> </td>
  </tr>
@@ -165,6 +169,10 @@ function goPage(pageInfo) {
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Conceptual Domain Version:</td>
     <td class="OraFieldText"><%=dec.getCDVersion()%> </td>
+ </tr>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Object Class Public ID:</td>
+    <td class="OraFieldText"><%=dec.getObjClassPublicId()%> </td>
  </tr>
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Object Class Preferred Name:</td>
@@ -181,6 +189,10 @@ function goPage(pageInfo) {
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Object Class Qualifier:</td>
     <td class="OraFieldText"><%=dec.getObjClassQualifier()%> </td>
+ </tr>
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Property Public ID:</td>
+    <td class="OraFieldText"><%=dec.getPropertyPublicId()%></td>
  </tr>
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Property Preferred Name:</td>
