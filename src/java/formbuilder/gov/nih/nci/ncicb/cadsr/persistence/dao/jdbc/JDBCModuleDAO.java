@@ -65,8 +65,10 @@ public class JDBCModuleDAO extends JDBCBaseDAO implements ModuleDAO {
 
     JDBCModuleDAO test = new JDBCModuleDAO(locator);
 
+    //System.out.println(
+    //  test.getQuestionsInAModule("99CD59C5-B13D-3FA4-E034-080020C9C0E0"));
     System.out.println(
-      test.getQuestionsInAModule("99CD59C5-B13D-3FA4-E034-080020C9C0E0"));
+      test.getQuestionsInAModule("99CD59C5-A9C3-3FA4-E034-080020C9C0E0"));
   }
 
   /**
