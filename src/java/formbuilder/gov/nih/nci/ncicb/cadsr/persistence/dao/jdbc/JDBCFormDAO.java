@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -84,6 +85,20 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
     return null;
   }
 
+  public int deleteForm(String formId) throws DMLException {
+    return 0;
+  }
+
+  public int updateFormComponent(Form newForm) throws DMLException {
+    return 0;
+  }
+
+  public Form addModule(
+    String formId,
+    Module module) throws DMLException {
+    return null;
+  }
+
   public Form addModules(
     String formId,
     Collection modules) throws DMLException {
@@ -98,53 +113,42 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
    * @return form that has the formId as the primary key
    */
   public Form findFormByPrimaryKey(String formId) throws DMLException {
+    Form myForm = null;
     FormByPrimaryKey query = new FormByPrimaryKey();
     query.setDataSource(getDataSource());
     query.setSql();
+    List result= (List)query.execute(formId);
+    if (result.size() != 0)
+      myForm = (Form)(query.execute(formId).get(0));
+    else
+      throw new DMLException("No matching record found");
 
-    return (Form) query.execute(formId).get(0);
+    return myForm;
   }
 
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
-
     //formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, 
     // type, classificationIdseq
-
     /*
-       System.out.println(formTest.getAllForms(
-         "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "",
-         "99BA9DC8-A622-4E69-E034-080020C9C0E0"));
-       System.out.println(formTest.getAllForms(
-         "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", null));
-     */
+    System.out.println(formTest.getAllForms(
+      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "",
+      "99BA9DC8-A622-4E69-E034-080020C9C0E0"));
+    System.out.println(formTest.getAllForms(
+      "", "", "99BA9DC8-2095-4E69-E034-080020C9C0E0", "", "", "", null));
+    */
     System.out.println(
       formTest.getModulesInAForm("99CD59C5-A9A0-3FA4-E034-080020C9C0E0"));
 
-    String formId = "99CD59C5-A9A0-3FA4-E034-080020C9C0E0";
-
+    String formId = "9E343E83-5FEB-119F-E034-080020C9C0E0";
     try {
       System.out.println(formTest.findFormByPrimaryKey(formId));
     }
     catch (DMLException e) {
       System.out.println("Failed to get a form for " + formId);
     }
-  }
-
-  public Form addModule(
-    String formId,
-    Module module) throws DMLException {
-    return null;
-  }
-
-  public int updateFormComponent(Form newForm) throws DMLException {
-    return 0;
-  }
-
-  public int deleteForm(String formId) throws DMLException {
-    return 0;
   }
 
   /**
@@ -231,7 +235,6 @@ public class JDBCFormDAO extends JDBCBaseDAO implements FormDAO {
       String where = "";
       StringBuffer whereBuffer = new StringBuffer("");
       boolean hasWhere = false;
-
       if (StringUtils.doesValueExist(formName)) {
         String temp = StringUtils.strReplace(formName, "*", "%");
 
