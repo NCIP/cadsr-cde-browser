@@ -70,8 +70,8 @@
   <property name="app.setup.9ias.install.name" value="Install_CDBrowser_on_OC4J.txt" />
   <property name="app.setup.oc4j.install.out.name" value="Install_CDBrowser_2.1_9ias.txt" />
   <property name="app.setup.9ias.install.out.name" value="Install_CDBrowser_2.1_on_OC4J.txt" />  
-  <property name="download.file.name.unix" value="CDEBrowser_Windows_2.1" />
-  <property name="download.file.name.windows" value="CDEBrowser_Unix_2.1" />
+  <property name="download.file.name.unix" value="CDEBrowser_Unix_2.1" />
+  <property name="download.file.name.windows" value="CDEBrowser_Windows_2.1" />
   
   
     <!-- Open source directoris -->
@@ -81,7 +81,9 @@
   <property name="open.source.dir.raw.lib" value="${open.source.dir.raw}/lib" />
   <property name="open.source.dir.raw.src" value="${open.source.dir.raw}/src" />
   <property name="open.source.dir.raw.ui" value="${open.source.dir.raw}/ui" />
-  <property name="app.docs.setup.readme.name" value="source_readme" /> 
+  <property name="app.docs.setup.readme.name" value="Readme" /> 
+  <property name="open.source.readme.name" value="source_readme" /> 
+  
   <!-- base dir in the zip file -->
   <property name="open.source.dir.base.name" value="cdebrowser2_1" />    
 
@@ -941,7 +943,7 @@
                 ,ear_cdebrowser,dist_ear_copy,dist_download,opensource_windows,
                 opensource_unix">  
                <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
-               includes="${app.docs.setup.readme.name}"               
+               includes="${app.docs.setup.readme.name}.txt"               
                />        
         </target>      
   <!-- =========== END PROD DISTRIBUTION ======================= -->
