@@ -132,6 +132,11 @@
         </td>
       </tr>
     </logic:iterate>
+    <tr class="OraTabledata">
+      <td colspan=9 class="OraFieldText">
+        <a href="javascript:CheckAll()">Check All</a>&nbsp;-&nbsp;<a href="javascript:ClearAll()">Clear All</a>
+      </td>
+    </tr>
     </table>
     <br>
 
