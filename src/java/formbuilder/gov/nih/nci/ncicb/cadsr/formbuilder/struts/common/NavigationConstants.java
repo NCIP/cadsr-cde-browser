@@ -31,6 +31,8 @@ public interface NavigationConstants
   public static final String DELETE_MODULE="deleteModule";
   public static final String ADD_FROM_DELETED_LIST="addFromDeletedList";
   public static final String SAVE_FORM="saveForm";
+
+  public static final String CREATE_MODULE = "createModule";
   
   public static final String GET_PROTOCOL_LOV_METHOD="getProtocolsLOV";
 
