@@ -82,7 +82,7 @@
       <form-property name="moduleQuestions" type="java.lang.String[]"/>
       <form-property name="addDeletedQuestionIdSeq" type="java.lang.String"/>
       <form-property name="validValueIndex" type="java.lang.Integer"/>
-      <form-property name="addAvailableValidValueVPIdSeq" type="java.lang.String"/>    
+      <form-property name="addAvailableValidValueIndex" type="java.lang.Integer"/>      
     </form-bean>       
     <form-bean name="displayCartForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.CDECartFormBean"/>
