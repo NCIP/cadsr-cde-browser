@@ -152,8 +152,11 @@ public class FormCreateAction extends FormBuilderBaseDispatchAction {
         }
     }
     
-	  setSessionObject(request, CRF, createdForm);  
-	  request.setAttribute(FORM_ID_SEQ, createdForm.getFormIdseq());
+    setSessionObject(request, CRF, createdForm);  
+    request.setAttribute(FORM_ID_SEQ, createdForm.getFormIdseq());
+    
+    saveMessage("cadsr.formbuilder.form.create.success", request);
+
     return mapping.findForward("gotoEdit");
     
   }

@@ -145,6 +145,9 @@ public class FormCopyAction extends FormBuilderBaseDispatchAction {
 
 	setSessionObject(request, CRF, newForm);  
 	request.setAttribute(FORM_ID_SEQ, newForm.getFormIdseq());
+
+	saveMessage("cadsr.formbuilder.form.copy.success", request);
+
 	if (dynaForm.get(FORM_GOTO_EDIT) == null) {
 	    return mapping.findForward("gotoView");
 	} else if (((Boolean)dynaForm.get(FORM_GOTO_EDIT)).booleanValue()) {

@@ -117,6 +117,7 @@ public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
 	    modules.add(newModule);
 	}
 
+	saveMessage("cadsr.formbuilder.module.add.success", request);
 	return mapping.findForward("toFormEdit");
 
     }
