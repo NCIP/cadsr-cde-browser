@@ -14,6 +14,7 @@ import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import org.apache.commons.beanutils.PropertyUtils;
+import gov.nih.nci.ncicb.cadsr.util.*;
 
 /**
  * This Handler is used to display Alternate Question text from a Dataelement property
@@ -117,12 +118,13 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
   private String generateJavaScript(String methodPrefix, String formIndex,String questionIndex
                                     , String property, String propValue)
   {
+ 
     StringBuffer script = new StringBuffer("\n<SCRIPT LANGUAGE=\"JavaScript\"><!--");
     script.append(" \nfunction  "+methodPrefix+questionIndex+property+"populate() \n") ;
     script.append("\n {");
     script.append("\n var objForm"+questionIndex+" = document.forms["+formIndex+"];");
     script.append("\n var objQuestion"+questionIndex+" = objForm"+questionIndex+"['"+htmlObjectRef+"'];");
-    script.append("\n objQuestion"+questionIndex+".value = \""+propValue+"\";");
+    script.append("\n objQuestion"+questionIndex+".value = \""+StringUtils.strReplace(propValue,"\"","\\\"")+"\";");
     script.append("\n}"); 
     script.append("\n--> </SCRIPT>\n");
     return script.toString();
