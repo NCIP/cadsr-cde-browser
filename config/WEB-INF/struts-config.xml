@@ -166,11 +166,12 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
       validate="false">
       <forward name="formEdit" path="/formbuilder/formEdit.jsp" redirect="false"/>
-      <forward name="success" path="/formbuilder/formDetails.jsp"
+      <forward name="success" path="/formToEditAction.do?method=getFormToEdit"
         redirect="false"/>
       <forward name="failure" path="/formbuilder/formEdit.jsp" redirect="false"/>
-      <forward name="moduleEdit" path="/moduleToEditAction?method=getModuleToEdit" redirect="false"/>
-     <forward name="saveConfirm" path="/formbuilder/formSaveConfirm.jsp" redirect="false"/>
+      <forward name="moduleEdit" path="/moduleToEditAction.do?method=getModuleToEdit" redirect="false"/>
+      <forward name="saveConfirm" path="/formbuilder/formSaveConfirm.jsp" redirect="false"/>
+      <forward name="saveFormModuleEdit" path="/formSaveAction.do?method=saveFormModuleEdit" redirect="false"/>
     </action>
     <action name="formEditForm" path="/cancelFormEditAction" parameter="method"
       scope="session"

@@ -260,7 +260,7 @@ function clearProtocol() {
                                 </logic:notEqual> 
                               </td>
                               <td align="center">
-                                  <a href="javascript:submitFormEdit('<%="checkChangesModuleEdit"%>','<%=moduleIndex%>')">
+                                  <a href="javascript:submitFormEdit('<%=NavigationConstants.CHECK_CHANGES_MODULE_EDIT%>','<%=moduleIndex%>')">
                                      <img src=<%=urlPrefix%>i/edit.gif border=0 alt="Edit">
                                   </a>                                    
                                 </td>

@@ -47,6 +47,8 @@ public interface NavigationConstants
   public static final String ADD_FROM_DELETED_LIST="addFromDeletedList";
   public static final String CHECK_FOR_UPDATE="checkForUpdate";
   public static final String SAVE_FORM="saveForm";
+  public static final String SAVE_FORM_MODULE_EDIT="saveFormModuleEdit";
+  public static final String CHECK_CHANGES_MODULE_EDIT="checkChangesModuleEdit";
 
 
   public static final String CREATE_MODULE = "createModule";
