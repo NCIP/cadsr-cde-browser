@@ -70,6 +70,11 @@
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute>      
+    <attribute>
+    <name>workflowRestrictionListId</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>      
   </tag> 
   <tag>
     <name>pagination</name>

@@ -4,7 +4,11 @@ import gov.nih.nci.ncicb.cadsr.resource.Context;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -40,6 +44,7 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
   private String paramProperty;
   private String target;
   private String formScope;
+  private String workflowRestrictionListId;
 
   public SecureIconDisplay()
   {
@@ -98,6 +103,7 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
       if(target!=null)
         targetStr="target=\""+target+"\" ";        
        if( nciUser.hasRoleAccess(role,userContext))
+       if(hasPrivilege(role,nciUser,form))
         {
           out.print("<a href='"+getHrefUrl(req,form)+"'"+targetStr+"/><img src=\""+urlPrefix+activeImageSource+"\" border=0 alt='"+altMessage+"'></a>");
         }
@@ -112,7 +118,32 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
       return Tag.SKIP_BODY;
 
     }//end doStartTag()
-
+ 
+  protected boolean hasPrivilege(String userRole,NCIUser user,Form form) throws JspException
+  {
+    Context userContext = form.getContext();
+    Collection workflowList = null;
+    if(workflowRestrictionListId!=null)
+      workflowList=(Collection)pageContext.getSession().getAttribute(workflowRestrictionListId);
+    if(workflowList==null)
+     throw new JspException( "No bean with name workflowRestriction found in session" );
+     
+    if(!workflowList.isEmpty())
+    {
+      if(user.hasRoleAccess(userRole,userContext)&&workflowList.contains(form.getAslName()))
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    else
+    {
+      return user.hasRoleAccess(role,userContext);
+    }
+  }
   public String getRole()
   {
     return role;
@@ -220,6 +251,16 @@ public class SecureIconDisplay extends TagSupport implements CaDSRConstants
   public void setFormScope(String newFormScope)
   {
     formScope = newFormScope;
+  }
+
+  public String getWorkflowRestrictionListId()
+  {
+    return workflowRestrictionListId;
+  }
+
+  public void setWorkflowRestrictionListId(String newWorkflowRestrictionListId)
+  {
+    workflowRestrictionListId = newWorkflowRestrictionListId;
   }
 
 

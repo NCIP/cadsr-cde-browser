@@ -8,6 +8,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
 
 <HTML>

@@ -56,7 +56,8 @@
 		   	   	paramProperty="formIdseq"
             inactiveImageSource="i/copy_inactive.gif"
 		   	   	altMessage="Select for Copy"
-		   	   	target="_parent"/>
+		   	   	target="_parent"
+            workflowRestrictionListId="<%=FormBuilderConstants.COPYABLE_WORKFLOW_STATUS_LIST%>"/>            
 		 </td>                  
 		  <td align=center>
 		       <cde:secureIcon  formId="form" 
@@ -69,7 +70,9 @@
 		   	   	paramProperty="formIdseq"
             inactiveImageSource="i/edit_inactive.gif"
 		   	   	altMessage="Edit"
-		   	   	target="_parent"/>		            
+		   	   	target="_parent"
+            workflowRestrictionListId="<%=FormBuilderConstants.EDITABLE_WORKFLOW_STATUS_LIST%>"
+            />		            
 		  </td>
 		 <td align=center>
 		       <cde:secureIcon  formId="form" 
@@ -83,6 +86,7 @@
 		   	   	paramProperty="formIdseq"
             inactiveImageSource="i/delete_inactive.gif"
 		   	   	altMessage="Delete"
+            workflowRestrictionListId="<%=FormBuilderConstants.DELETABLE_WORKFLOW_STATUS_LIST%>"
 		   	   	/>		           	
 		</td>                
           	<td class="OraFieldText">

@@ -814,7 +814,7 @@ public class FormEditAction extends FormBuilderBaseDispatchAction {
       Module orgModule =
         (Module) getModuleFromList(newModule.getModuleIdseq(), orgModules);
 
-      if (orgModule != null) {
+      if (orgModule != null&&newModule.getModuleIdseq()!=null) {
         if (orgModule.getDisplayOrder() != newModule.getDisplayOrder()) {
           updatedModules.add(newModule);
         }
