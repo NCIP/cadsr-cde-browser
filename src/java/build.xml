@@ -454,14 +454,14 @@
    <target name="war_cdebrowser" depends="compile,jar_security">  
 
      <copy todir="${classes.build.dir}/WEB-INF/classes">      
-         <fileset dir="${formbuilder.java.src.dir}">
+         <fileset dir="${java.src.dir}">
            <patternset>
              <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/common/*.properties"/>
            </patternset>
          </fileset>      
       </copy>
      <copy todir="${classes.build.dir}/WEB-INF/classes">      
-         <fileset dir="${cdebrowser.java.src.dir}">
+         <fileset dir="${java.src.dir}">
            <patternset>
              <include name="gov/nih/nci/ncicb/cadsr/persistence/**/*.xml"/>
            </patternset>
@@ -703,7 +703,7 @@
       
      <!-- copy src -->
      <copy todir="${open.source.dir.raw.src}">      
-         <fileset dir="${cdebrowser.java.src.dir}">
+         <fileset dir="${java.src.dir}">
            <patternset>
              <include name="**/*.xml"/>
              <include name="**/*.java"/>
@@ -715,7 +715,7 @@
              <include name="**/*.java"/>
            </patternset>
          </fileset>   
-         <fileset dir="${formbuilder.java.src.dir}">
+         <fileset dir="${java.src.dir}">
            <patternset>
              <include name="**/*.xml"/>
              <include name="**/*.properties"/>
