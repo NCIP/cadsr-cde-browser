@@ -189,7 +189,7 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCreateAction"
       validate="false">
       <forward name="success"
-        path="/formSearchFramedAction.do?method=getAllForms"
+        path="/formSearchAction.do?method=getAllForms"
         redirect="false"/>
     </action>      
     <action name="copyForm" path="/formToCopyAction" parameter="method"
