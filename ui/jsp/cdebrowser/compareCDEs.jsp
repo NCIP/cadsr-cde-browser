@@ -668,7 +668,7 @@ function done() {
                              </TR>
                              <TR class=OraTabledata>
                                 <TD colspan=3>
-                                  CDE does not Permissible Values
+                                  CDE does not have Permissible Values
                                 </TD>                         
                               </TR> 
                           </table>
