@@ -255,20 +255,26 @@ public class FormAction extends FormBuilderBaseDispatchAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     String protocolIdSeq = "";
+    String formIdSeq = "";
     String nodeType = request.getParameter("P_PARAM_TYPE");
     String nodeIdSeq = request.getParameter("P_IDSEQ");
     String contextIdSeq = request.getParameter("P_CONTE_IDSEQ");
 
-    if ("PROTOCOL".equals(nodeType)) {
+    if ("PROTOCOL".equals(nodeType))
       protocolIdSeq = nodeIdSeq;
-    }
+    else if ("CRF".equals(nodeType) || "TEMPLATE".equals(nodeType))
+      formIdSeq = nodeIdSeq;
 
     FormBuilderBaseDynaFormBean searchForm = (FormBuilderBaseDynaFormBean) form;
     searchForm.clear();
     searchForm.set(this.PROTOCOL_ID_SEQ, protocolIdSeq);
     searchForm.set(this.CONTEXT_ID_SEQ, contextIdSeq);
+    searchForm.set(this.FORM_ID_SEQ,formIdSeq);
 
-    return this.getAllForms(mapping, form, request, response);
+    if ("CRF".equals(nodeType) || "TEMPLATE".equals(nodeType))
+      return this.getFormDetails(mapping, form, request, response);
+    else
+      return this.getAllForms(mapping, form, request, response);
   }
 }
   

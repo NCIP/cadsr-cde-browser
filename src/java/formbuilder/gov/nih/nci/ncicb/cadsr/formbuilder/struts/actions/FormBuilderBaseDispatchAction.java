@@ -146,7 +146,8 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     ServiceDelegateFactory svcFactory =
       (ServiceDelegateFactory) getApplicationObject(
         FormBuilderConstants.SERVICE_DELEGATE_FACTORY_KEY);
-    svcDelegate = svcFactory.createService();
+    //svcDelegate = svcFactory.createService();
+    svcDelegate = svcFactory.findService();
 
     return svcDelegate;
   }
