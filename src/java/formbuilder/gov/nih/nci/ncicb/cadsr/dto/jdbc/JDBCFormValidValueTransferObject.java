@@ -8,6 +8,7 @@ public class JDBCFormValidValueTransferObject extends FormValidValueTransferObje
   public JDBCFormValidValueTransferObject(ResultSet rs) throws SQLException
   {
     setValueIdseq(rs.getString(1));     // VV_IDSEQ
+    setVpIdseq(rs.getString(8));        // VP_IDSEQ
     setLongName(rs.getString(9));       // LONG_NAME
     setDisplayOrder(rs.getInt(14));     // DISPLAY_ORDER
   }
