@@ -25,6 +25,10 @@ public abstract class FormBuilderDynamicServiceDelegateImpl implements Invocatio
   }
   protected abstract void init() throws FormBuilderException;
   
+  /**
+   * Caches all the methods in FormBuilderServiceDelegate object
+   * @param obj
+   */
   protected void loadMethods(Object obj)
   {
     formBuilderMethodMap = new HashMap();

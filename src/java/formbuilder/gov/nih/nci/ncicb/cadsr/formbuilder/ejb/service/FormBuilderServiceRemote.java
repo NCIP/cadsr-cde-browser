@@ -11,8 +11,8 @@ import java.util.Collection;
 
 public interface FormBuilderServiceRemote {
 
-  public Collection getAllForms(String formName, String protocol, String context, 
-    String workflow, String category, String type)
+  public Collection getAllForms(String formLongName, String protocolIdSeq, String contextIdSeq, 
+    String workflow, String categoryName, String type)
      throws DMLException, RemoteException;
   
   public Form getFormDetails(String formPK)

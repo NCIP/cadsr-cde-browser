@@ -3,6 +3,8 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceStartupException;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
@@ -11,10 +13,14 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.action.ActionForward;
 import javax.servlet.http.HttpServletResponse;
 
-public class FormBuilderBaseDispatchAction extends DispatchAction 
+/**
+ * Base DispatchAction for all formbuilder DispatchActions
+ * 
+ */
+public class FormBuilderBaseDispatchAction extends DispatchAction implements FormConstants,NavigationConstants
 {
 
- public static final String DEFAULT_METHOD_NAME= "sendHome";
+ public static final String DEFAULT_METHOD_NAME= SEND_HOME_METHOD;
  
 
   /**
@@ -55,7 +61,12 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     }
   }
 
-
+/**
+   * Gets the ServiceDelegateFactory form the application scope
+   * and instantiates a FormBuilderServiceDelegate from the factory
+   * @return FormBuilderServiceDelegate
+   * @throws ServiceStartupException
+   */
   protected FormBuilderServiceDelegate getFormBuilderService()
     throws ServiceStartupException {
     FormBuilderServiceDelegate svcDelegate = null;
@@ -66,14 +77,15 @@ public class FormBuilderBaseDispatchAction extends DispatchAction
     return svcDelegate;
   }
     /**
-     * Sets default method name if no method is specified
-     * 
+      * Sets default method name if no method is specified
+      * @return ActionForward
+      * @throws Exception
      */
   protected ActionForward dispatchMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, String name) throws Exception
   {
     if(name==null||name.equals(""))
     {
-      name=this.DEFAULT_METHOD_NAME;
+      name= DEFAULT_METHOD_NAME;
     }
     return super.dispatchMethod(mapping, form, request, response, name);
   }

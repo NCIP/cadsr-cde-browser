@@ -16,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import com.evermind.security.User;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 
 public class DBUserManager extends BaseUserManager implements PersistenceContants,CaDSRConstants {
 
@@ -24,27 +26,19 @@ public class DBUserManager extends BaseUserManager implements PersistenceContant
 
   /**
    * Init method to initialise the variables.
+   * daoFactoryClassName and serviceLocatorClassName are read from the config files
    * @param <b>properties </b> Properties to get dburl.
    */
   public void init(Properties properties) {
    
-    String debugStr = properties.getProperty(DEBUG_KEY);
-    try
-    {
-      this.setDebug(Boolean.valueOf(debugStr).booleanValue());
-    }
-    catch (Exception e)
-    { 
-      System.out.println("debug error"+e);
-    }
-    if(isDebug())
-      System.out.println("initializing Usermanager"+this);
+    if(log.isDebugEnabled())
+      log.debug("Initializing DBUserManager"+this);
     String daoFactoryClassName = properties.getProperty(DAO_FACTORY_CLASS_KEY);
     String serviceLocatorClassName = properties.getProperty(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
-    if(isDebug())
+    if(log.isDebugEnabled())
     {
-      System.out.println("daoFactoryClassName ="+daoFactoryClassName);  
-      System.out.println("serviceLocatorClassName ="+serviceLocatorClassName);       
+      log.debug("daoFactoryClassName ="+daoFactoryClassName);  
+      log.debug("serviceLocatorClassName ="+serviceLocatorClassName);       
     }
     ServiceLocator locator = ServiceLocatorFactory.getLocator(serviceLocatorClassName);
     daoFactory=AbstractDAOFactory.getDAOFactory(locator);    
@@ -73,8 +67,8 @@ public class DBUserManager extends BaseUserManager implements PersistenceContant
    * @return <b>boolean </b> returns boolean flag to indicate that the user exists.
    */
   protected boolean checkPassword(String username, String password) {
-    if(isDebug())
-        System.out.println("in checkPassword");
+    if(log.isDebugEnabled())
+        log.debug("Check password for user ="+username);
     if(daoFactory==null)
       return false;
     if(userManagerDAO==null)
@@ -92,8 +86,8 @@ public class DBUserManager extends BaseUserManager implements PersistenceContant
    *                        exists and user belongs to that group/role
    */
   protected boolean inGroup(String username, String groupname) {
-    if(isDebug())
-        System.out.println("in inGroup username="+username+":groupname"+groupname);
+    if(log.isDebugEnabled())
+        log.debug("Check if user = "+username+" in group = "+groupname);
     if(daoFactory==null)
       return false;
     if(userManagerDAO==null)

@@ -8,7 +8,7 @@
       <form-property name="contextIdSeq" type="java.lang.String"/>
       <form-property name="workflow" type="java.lang.String"/>
       <form-property name="categoryName" type="java.lang.String"/>
-      <form-property name="type" type="java.lang.String"/>
+      <form-property name="formType" type="java.lang.String"/>
     </form-bean>
   </form-beans>
   <global-forwards>

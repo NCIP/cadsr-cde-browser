@@ -4,9 +4,14 @@ import javax.ejb.EJBHome;
 import javax.sql.DataSource;
 import java.net.URL;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceContants;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class AbstractServiceLocator implements ServiceLocator,PersistenceContants
 {
+
+  protected Log log =  LogFactory.getLog(AbstractServiceLocator.class.getName());
+  
   protected String dsLookupPrefix;
   protected String ejbLookupPrefix;
   protected String envLookupPrefix;

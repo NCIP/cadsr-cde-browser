@@ -5,6 +5,8 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.html.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants" %>
 <HTML>
 <HEAD>
 <TITLE>Welcome to Form Builder..</TITLE>
@@ -32,41 +34,41 @@ function submitForm() {
 <html:form action="/formAction.do">
   <table cellspacing="2" cellpadding="3" border="0">
     <tr>
-        <td class="OraFieldtitlebold" nowrap>Form Name:</td>
+        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="formLongName" value="" size ="20"> 
+          <input type="text" name="<%=FormConstants.FORM_LONG_NAME%>" value="" size ="20"> 
         </td>
 
-        <td class="OraFieldtitlebold" nowrap>Protocol:</td>
+        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol" />:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="protocolIdSeq" value="" size ="20"> 
+          <input type="text" name="<%=FormConstants.PROTOCOL_ID_SEQ%>" value="" size ="20"> 
         </td>      
     </tr>
     <tr>
-        <td class="OraFieldtitlebold" nowrap>Context:</td>
+        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="contextIdSeq" value="" size ="20"> 
+          <input type="text" name="<%=FormConstants.CONTEXT_ID_SEQ%>" value="" size ="20"> 
         </td>
 
-        <td class="OraFieldtitlebold" nowrap>Workflow:</td>
+        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="workflow" value="" size ="20"> 
+          <input type="text" name="<%=FormConstants.WORKFLOW%>" value="" size ="20"> 
         </td>      
     </tr>
     <tr>
-        <td class="OraFieldtitlebold" nowrap>Category:</td>
+        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="categoryName" value="" size ="20"> 
+          <input type="text" name="<%=FormConstants.CATEGORY_NAME%>" value="" size ="20"> 
         </td>
 
-        <td class="OraFieldtitlebold" nowrap>Type:</td>
+        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="type" value="" size ="20"> 
+          <input type="text" name="<%=FormConstants.FORM_TYPE%>" value="" size ="20"> 
         </td>      
     </tr>    
     <tr>
       <td>
-        <html:hidden value="getAllForms" property="method"/>
+        <html:hidden value="<%=NavigationConstants.GET_ALL_FORMS_METHOD%>" property="<%=NavigationConstants.METHOD_PARAM%>"/>
       </td>
     </tr>
   <tr>

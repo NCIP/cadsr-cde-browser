@@ -4,15 +4,19 @@ package gov.nih.nci.ncicb.cadsr.security.oc4j;
 import com.evermind.security.AbstractUserManager;
 import com.evermind.security.User;
 import com.evermind.security.Group;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 /**
- * Utility to create simple read only UserManagers very quickly.
+ * 
  */
 public abstract class BaseUserManager extends AbstractUserManager {
 
-   public static final String DEBUG_KEY = "debug";
+   protected static Log log = LogFactory.getLog(BaseUserManager.class.getName());
+   
    private boolean debug = false;
+   
   /**
    * Method to determine if the given username is a valid user on the system.
    * @param <b>username</b> name of the user
@@ -48,8 +52,9 @@ public abstract class BaseUserManager extends AbstractUserManager {
    * @return <b>User</b> returns User object
    */ 
   public User getUser(String username) {
-    if(isDebug())
-      System.out.println("In getUser username="+username);
+
+    if(log.isInfoEnabled())
+      log.info("Geting User with username= "+username);
     if(username != null && userExists(username)) {
       OC4JUserObject user = new OC4JUserObject(username);
       user.setUserManager(this);
@@ -60,14 +65,5 @@ public abstract class BaseUserManager extends AbstractUserManager {
     }
   }  
 
-  public boolean isDebug()
-  {
-    return debug;
-  }
-
-  public void setDebug(boolean newDebug)
-  {
-    debug = newDebug;
-  }
 }
 

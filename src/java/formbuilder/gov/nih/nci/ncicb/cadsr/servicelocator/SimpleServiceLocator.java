@@ -10,6 +10,7 @@ import javax.ejb.EJBHome;
 import javax.ejb.EJBLocalHome;
 
 import javax.sql.DataSource;
+
 public class SimpleServiceLocator extends AbstractServiceLocator 
 {
   private Map envEntrys =  new HashMap();
@@ -67,7 +68,8 @@ public class SimpleServiceLocator extends AbstractServiceLocator
 
   public DataSource getDataSource(String dataSourceName)
   {
-  
+    if(log.isDebugEnabled())
+      log.debug("Lookup Datasource with key "+ resolveDsLookupKey(dataSourceName));
     return (DataSource)dataSources.get(resolveDsLookupKey(dataSourceName));
   }
   
@@ -88,6 +90,8 @@ public class SimpleServiceLocator extends AbstractServiceLocator
 
   public String getString(String envName)
   {
+   if(log.isDebugEnabled())
+      log.debug("Lookup String with key "+ resolveEnvLookupKey(envName));
     return (String)envEntrys.get(resolveEnvLookupKey(envName));
   }
  public static void main(String[] args)

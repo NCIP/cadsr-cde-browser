@@ -1,5 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.apache.struts.action.ActionForm;
@@ -16,7 +18,7 @@ import org.apache.struts.action.DynaActionForm;
 public class FormAction extends FormBuilderBaseDispatchAction 
 {
   /**
-   * This is the main action called from the Struts framework.
+   * Returns all forms for the given criteria.
    * @param mapping The ActionMapping used to select this instance.
    * @param form The optional ActionForm bean for this request.
    * @param request The HTTP Request we are processing.
@@ -30,17 +32,16 @@ public class FormAction extends FormBuilderBaseDispatchAction
   
     FormBuilderServiceDelegate service = getFormBuilderService();
     DynaActionForm searchForm = (DynaActionForm) form;
-    String formLongName = (String)searchForm.get("formLongName");
-    String protocolIdSeq = (String)searchForm.get("protocolIdSeq");
-    String contextIdSeq = (String)searchForm.get("contextIdSeq");
-    String workflow = (String)searchForm.get("workflow");
-    String categoryName = (String)searchForm.get("categoryName");
-    String type = (String)searchForm.get("type");    
+    String formLongName = (String)searchForm.get(this.FORM_LONG_NAME);
+    String protocolIdSeq = (String)searchForm.get(this.PROTOCOL_ID_SEQ);
+    String contextIdSeq = (String)searchForm.get(this.CONTEXT_ID_SEQ);
+    String workflow = (String)searchForm.get(this.WORKFLOW);
+    String categoryName = (String)searchForm.get(this.CATEGORY_NAME);
+    String type = (String)searchForm.get(this.FORM_TYPE);    
     Collection forms = service.getAllForms(formLongName,protocolIdSeq,contextIdSeq, 
                         workflow,categoryName,type);
-    setSessionObject(request,"FormSearchResults",forms);
-    System.out.println("In ActionForm");
-    return mapping.findForward("success");
+    setSessionObject(request,this.FORM_SEARCH_RESULTS,forms);
+    return mapping.findForward(SUCCESS);
   }
 
   /**
@@ -55,7 +56,7 @@ public class FormAction extends FormBuilderBaseDispatchAction
    */
   public ActionForward sendHome(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
   {
-       return mapping.findForward("defaultHome");  
+       return mapping.findForward(DEFAULT_HOME);  
   }
   
 }

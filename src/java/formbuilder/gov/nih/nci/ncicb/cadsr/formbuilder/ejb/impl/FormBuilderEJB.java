@@ -27,26 +27,41 @@ public class FormBuilderEJB extends SessionBeanAdapter
   ServiceLocator locator;
   AbstractDAOFactory daoFactory;
 
+/**
+ * Uses the ServiceLoactor returned by  ServiceLocatorFactory.getEJBLocator()
+ * to instantiate the daoFactory. It could also be changed so that
+ * the ServiceLocator be a input param to the ejbCreate. 
+ */
   public void ejbCreate() {
     locator = null;
     ServiceLocator locator = ServiceLocatorFactory.getEJBLocator();
     daoFactory = AbstractDAOFactory.getDAOFactory(locator);
   }
-
- public Collection getAllForms(String formName, String protocol, String context, 
-    String workflow, String category, String type) throws DMLException
+/**
+   * Uses the formDAO to get all the forms that match the given criteria
+   * @param formName
+   * @param protocol
+   * @param context
+   * @param workflow
+   * @param category
+   * @param type
+   * @return forms that match the criteria.
+   * @throws DMLException
+   */
+ public Collection getAllForms(String formLongName, String protocolIdSeq, String contextIdSeq, 
+    String workflow, String categoryName, String type) throws DMLException
  {
     //        JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory((ServiceLocator)new TestServiceLocatorImpl());
     FormDAO dao = daoFactory.getFormDAO();
-    Collection test = null;
+    Collection forms = null;
     try{
-     test = dao.getAllForms(formName,protocol, context,workflow,category,type);
+     forms = dao.getAllForms(formLongName,protocolIdSeq, contextIdSeq,workflow,categoryName,type);
     }
     catch(Exception ex)
     {
       throw new DMLException("Cannot get Forms",ex);
     }
-    return test;
+    return forms;
  }
  
   public Form getFormDetails(String formPK) throws DMLException {

@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.servicelocator.ejb;
 
 import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.util.DataSourceUtil;
+import gov.nih.nci.ncicb.cadsr.security.oc4j.BaseUserManager;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 
@@ -24,6 +25,7 @@ import javax.rmi.PortableRemoteObject;
 import javax.sql.DataSource;
 
 import gov.nih.nci.ncicb.cadsr.servicelocator.AbstractServiceLocator;
+import org.apache.commons.logging.LogFactory;
 
 
 /**
@@ -32,7 +34,7 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.AbstractServiceLocator;
  */
 public class ServiceLocatorImpl extends AbstractServiceLocator{
   private transient InitialContext ic;
-
+  
   
   public ServiceLocatorImpl()  {
     ejbLookupPrefix = "java:comp/env/ejb/";
@@ -56,6 +58,8 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
     {
 
     try {
+      if(log.isDebugEnabled())
+        log.debug("Lookup EJB Local Home with key "+resolveEJBLookupKey(jndiHomeName));
       return (EJBLocalHome) ic.lookup(resolveEJBLookupKey(jndiHomeName));
     }
     catch (Exception e) {
@@ -74,7 +78,8 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
     Class className)  {      
     try {
       String key = resolveEJBLookupKey(jndiHomeName);
-      System.out.println("Key="+key);
+      if(log.isDebugEnabled())
+        log.debug("Lookup EJB Remote Home with key "+key);
       Object objref = ic.lookup(key);
 
       return (EJBHome) PortableRemoteObject.narrow(objref, className);
@@ -94,7 +99,8 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
     {
       try {
           String key = resolveDsLookupKey(dataSourceName);
-          System.out.println("DS key "+key);
+          if(log.isDebugEnabled())
+            log.debug("Lookup DataSource with key "+key);
           return (DataSource) ic.lookup(key);
       }
       catch (Exception e) {
@@ -108,6 +114,8 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
   public URL getUrl(String envName) throws ServiceLocatorException {
   
       try {
+          if(log.isDebugEnabled())
+            log.debug("Lookup URL with key "+resolveEnvLookupKey(envName));
         return (URL) ic.lookup(resolveEnvLookupKey(envName));
       }
       catch (Exception e) {
@@ -119,10 +127,10 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
    * @return the boolean value corresponding to the env entry such as
    *         SEND_CONFIRMATION_MAIL property.
    */
-  public boolean getBoolean(String envName)  {
-
-        
+  public boolean getBoolean(String envName)  {        
       try {
+          if(log.isDebugEnabled())
+            log.debug("Lookup Boolean with key "+resolveEnvLookupKey(envName));       
         return ((Boolean) ic.lookup(resolveEnvLookupKey(envName))).booleanValue();
       }
       catch (Exception e) {
@@ -137,7 +145,8 @@ public class ServiceLocatorImpl extends AbstractServiceLocator{
 
       try {
           String key = resolveEnvLookupKey(envName);
-          System.out.println("DS key "+key);
+          if(log.isDebugEnabled())
+            log.debug("Lookup String with key "+key);
         return (String) ic.lookup(key);
       }
       catch (Exception e) {
