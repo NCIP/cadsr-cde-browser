@@ -122,7 +122,10 @@ function clearProtocol() {
               <bean:message key="cadsr.formbuilder.form.protocol"/>
             </td>
             <td class="OraFieldText" nowrap>
-              <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" readonly="true" size="19" styleClass="LOVField" onfocus="this.blur();"></html:text>
+              <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
+                readonly="true"
+                size="19"
+                styleClass="LOVField"/>
                   <a href="<%=protoLOVUrl%>">
                 <img src="<%=urlPrefix%>i/blankSearchLight.gif" border="0" alt="Search for Classification Scheme Items"/>
               </a> <a href="javascript:clearProtocol()"><i>Clear</i></a> 

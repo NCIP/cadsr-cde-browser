@@ -100,7 +100,7 @@ function clearProtocol() {
                  readonly="true" 
                  size="19"
                  styleClass="LOVField"
-                 onfocus="this.blur();"/>
+                 />
           &nbsp;<a href="<%=protoLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Protocols"></a>&nbsp;
           <a href="javascript:clearProtocol()"><i>Clear</i></a>
           <html:hidden  property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
@@ -117,7 +117,6 @@ function clearProtocol() {
           readonly="true" 
           size="19"
           styleClass="LOVField"
-          onfocus="this.blur();"
           value="DRAFT NEW"
           />
           -->

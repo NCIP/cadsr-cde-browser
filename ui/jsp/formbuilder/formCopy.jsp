@@ -114,7 +114,6 @@ function submitForm() {
               readonly="true" 
               size="19"
               styleClass="LOVField"
-              onfocus="this.blur();"
               />
             <html:select styleClass = "Dropdown" property="<%=FormConstants.WORKFLOW%>">
               <html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
@@ -140,7 +139,6 @@ function submitForm() {
               readonly="true" 
               size="19"
               styleClass="LOVField"
-              onfocus="this.blur();"
               />
               &nbsp;<a href="<%=protoLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
             <a href="javascript:clearProtocol()"><i>Clear</i></a>

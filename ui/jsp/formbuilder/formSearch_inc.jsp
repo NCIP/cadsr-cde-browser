@@ -35,7 +35,7 @@ function clearForm() {
     <tr>
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
         <td class="OraFieldText" nowrap>
-          <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="20" />
+          <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="20"/>
         </td>
 
         <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/>:</td>
@@ -44,7 +44,7 @@ function clearForm() {
                  readonly="true" 
                  size="19"
                  styleClass="LOVField"
-                 onfocus="this.blur();"/>
+                 />
           &nbsp;<a href="<%=protoLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Protocol Items"></a>&nbsp;
           <a href="javascript:clearProtocol()"><i>Clear</i></a>
           <html:hidden  property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
@@ -86,7 +86,7 @@ function clearForm() {
       	     readonly="true" 
       	     size="19"
       	     styleClass="LOVField"
-      	     onfocus="this.blur();"/>
+      	     />
       &nbsp;<a href="<%=csLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Classification Scheme Items"></a>&nbsp;
       <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
       <html:hidden  property="<%=FormConstants.CS_CSI_ID%>"/>
