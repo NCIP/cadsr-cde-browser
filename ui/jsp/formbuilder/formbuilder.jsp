@@ -8,7 +8,15 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
+
+<cde:checkAccess
+  role="<%=CaDSRConstants.CDE_MANAGER%>"
+  key="accessValue"
+  contextName="<%=Context.CTEP%>"
+  />
+  
 <%
+  String ctepUser = (String)pageContext.getAttribute("accessValue");
   String treeURL;
   String formbuilderURL;
     treeURL = 
@@ -33,11 +41,7 @@ FormBuilder
   <jsp:useBean id="requestMap" scope="request" class="java.util.HashMap" />
   
   </jsp:useBean>
-  <cde:checkAccess
-  role="<%=CaDSRConstants.CDE_MANAGER%>"
-  key="accessValue"
-  contextName="<%=Context.CTEP%>"
-  />
+  
   
   <frameset cols="25%,*">
     <frameset rows="15%,*">
