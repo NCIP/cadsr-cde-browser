@@ -15,6 +15,8 @@ public interface FormConstants
     public static final String CONTEXTS = "Contexts";
     public static final String WORKFLOWS = "Workflows";
     public static final String PROTOCOLS = "Protocols";
-    
+
+    public static final String PROTOCOLS_LOV_ID_FIELD = "protocolIdSeq";
+    public static final String PROTOCOLS_LOV_NAME_FIELD = "protocolLongName";    
     
 }
