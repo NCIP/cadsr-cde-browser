@@ -284,7 +284,35 @@ function goPage(pageInfo) {
                     </table>                      
              </logic:present>
       </logic:present>
+      <logic:notPresent name="de" property = "dataElementConcept.objectClass.conceptDerivationRule"> 
+               <br>
+               <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                <tr  valign="bottom" >
+                 <td class="OraHeaderSubSubSub" width="100%">Object Class Concept Derivation Rule</td>
+                </tr>
+               </table>
+               <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                 <tr class="OraTabledata">
+                    <td  width="20%" >Object Class does not have any Concept Derivation Rules.</td>
+                 </tr>
+                 </tr>                 
+               </table>    
+       </logic:notPresent >        
  </logic:present>
+ <logic:notPresent name="de" property = "dataElementConcept.objectClass"> 
+         <br>
+         <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+          <tr  valign="bottom" >
+           <td class="OraHeaderSubSubSub" width="100%">Object Class</td>
+          </tr>
+         </table>
+         <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+           <tr class="OraTabledata">
+              <td   width="20%" >Data Element Concept does not have an Object Class.</td>
+           </tr>
+           </tr>                 
+         </table>    
+ </logic:notPresent> 
 
  <logic:present name="de" property = "dataElementConcept.property">    
      <% Property prop = dec.getProperty(); %>
@@ -383,7 +411,36 @@ function goPage(pageInfo) {
                      </table>                      
               </logic:present>
        </logic:present>
+       <logic:notPresent name="de" property = "dataElementConcept.property.conceptDerivationRule"> 
+               <br>
+               <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                <tr  valign="bottom" >
+                 <td class="OraHeaderSubSubSub" width="100%">Property Concept Derivation Rule</td>
+                </tr>
+               </table>
+               <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                 <tr class="OraTabledata">
+                    <td  width="20%" >Property does not have any Concept Derivation Rules.</td>
+                 </tr>
+                 </tr>                 
+               </table>    
+       </logic:notPresent >        
  </logic:present>
+ <logic:notPresent name="de" property = "dataElementConcept.property"> 
+         <br>
+         <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+          <tr  valign="bottom" >
+           <td class="OraHeaderSubSubSub" width="100%">Property</td>
+          </tr>
+         </table>
+         <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+           <tr class="OraTabledata">
+              <td   width="20%" >Data Element Concept does not have a Property.</td>
+           </tr>
+           </tr>                 
+         </table>    
+ </logic:notPresent > 
+ 
 </form>
 
 <%@ include file="../common/common_bottom_border.jsp"%>

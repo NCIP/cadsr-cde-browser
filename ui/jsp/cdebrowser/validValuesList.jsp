@@ -272,6 +272,21 @@ function listChanged(urlInfo) {
                     </table>                      
              </logic:present>
       </logic:present>
+      
+      <logic:notPresent name="de" property = "valueDomain.conceptDerivationRule">
+            <br>
+              <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                <tr  valign="bottom" >
+                  <td class="OraHeaderSubSubSub" width="100%">Value Domain Concept Derivation Rule</td>
+                </tr>
+             </table>
+             <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+               <tr class="OraTabledata">
+                  <td   width="20%" >Value Domain does have any Concept Derivation Rules.</td>
+               </tr>
+               </tr>                 
+             </table>      
+      </logic:notPresent>
 
  
 <br>
