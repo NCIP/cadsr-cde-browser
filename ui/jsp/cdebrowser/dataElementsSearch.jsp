@@ -238,6 +238,12 @@ function turnOff() {
     var treeFrame = findFrameByName('tree');
     treeFrame.document.body.style.cursor = "default";
   }
+  
+  if ("<%= queryFlag %>" != "") { 
+    location.hash="#results";
+  }
+
+  
 }
 
 turnOn();
@@ -400,13 +406,13 @@ function gotoCDESearchPrefs() {
       <%@ include file="simpleSearch_inc.jsp"%>
 </logic:notPresent>
 <br>
-<A NAME="results"></A>
 
 
 <%
   if (!queryFlag.equals("")) {
     if (deList!=null&&deList.size()!=0) {
 %>
+<A NAME="results"></A>
 <table width="100%"   border="0">
    <tr>
            <td  nowrap>&nbsp;</td>

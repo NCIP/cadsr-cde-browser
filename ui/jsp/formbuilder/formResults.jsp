@@ -18,7 +18,8 @@
 <LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
 
 </HEAD>
-<BODY topmargin=0 bgcolor="#ffffff">
+<BODY topmargin=0 bgcolor="#ffffff" onload="location.hash='#results'">
+
 <%
   String urlPrefix = "";
 %>
