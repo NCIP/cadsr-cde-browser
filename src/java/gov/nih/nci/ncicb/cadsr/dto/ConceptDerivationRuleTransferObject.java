@@ -3,12 +3,13 @@ package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.ComponentConcept;
 import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ConceptDerivationRuleTransferObject
-  implements ConceptDerivationRule {
+  implements ConceptDerivationRule, Serializable {
   private String idseq;
   private String name;
   private String type;

@@ -3,8 +3,11 @@ package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.ComponentConcept;
 import gov.nih.nci.ncicb.cadsr.resource.Concept;
 
+import java.io.Serializable;
 
-public class ComponentConceptTransferObject implements ComponentConcept {
+
+public class ComponentConceptTransferObject implements ComponentConcept,
+  Serializable {
   private String idseq = null;
   private Concept concept = null;
   private int displayOrder;
@@ -24,7 +27,7 @@ public class ComponentConceptTransferObject implements ComponentConcept {
   public void setIdseq(String newId) {
     idseq = newId;
   }
-  
+
   public Concept getConcept() {
     return concept;
   }
