@@ -27,29 +27,46 @@ function clearProtocol() {
     "javascript:newWin('"+contextPath+"/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl+"','protoLOV',700,600)";
 
 %>
-  <table cellspacing="2" cellpadding="3" border="0" width="100%">
 
-
+  <table cellpadding="0" cellspacing="0" width="80%" align="center">
+    <tr >
+      <td >
+        &nbsp;
+      </td>
+    </tr>         
     <tr>
+      <td class="OraHeaderSubSub" width="100%">New Form Header</td>
+    </tr>
+    <tr>
+      <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    </tr>
+  </table>
 
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.longName" />:</td>
-        <td class="OraFieldText" nowrap>
-          <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="20" />
-        </td>
+  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+    <tr class="OraTabledata">
+      
+      <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.longName" />:</td>
+      <td class="OraFieldText" nowrap>
+        <html:textarea 
+          property="<%= FormConstants.FORM_LONG_NAME %>"
+          cols="30"
+          rows="5"
+          />
+      </td>
         
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
-        <td><B>DRAFT NEW</B></td>      
-        
+      <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
+      <td><B>DRAFT NEW</B></td>      
+      
     </tr>
 
-    <tr>
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
+    <tr class="OraTabledata">
+        <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
         <td class="OraFieldText" nowrap>
           <html:select styleClass = "Dropdown" property="<%=FormConstants.FORM_TYPE%>">
 	    <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
 	  </html:select> 
         </td>        
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/>:</td>
+        <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/>:</td>
         <td class="OraFieldText" nowrap>
           <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
                  readonly="true" 
@@ -62,8 +79,8 @@ function clearProtocol() {
         </td>
     </tr>
 
-    <tr>
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
+    <tr class="OraTabledata">
+        <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
         <td class="OraFieldText" nowrap>
           <html:select styleClass = "Dropdown" property="<%=FormConstants.CONTEXT_ID_SEQ%>">
         	   <html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
@@ -71,7 +88,7 @@ function clearProtocol() {
 		           property="<%=FormConstants.CRF_CONTEXT_ID_SEQ%>" labelProperty="name" />
 	        </html:select>
         </td>
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
+        <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
         <td class="OraFieldText" nowrap>
         <html:select styleClass = "Dropdown" property="<%=FormConstants.FORM_CATEGORY%>">
         	<html:option key="cadsr.formbuilder.form.blank" value="<%=FormConstants.SEARCH_ALL%>" /> 
@@ -79,12 +96,14 @@ function clearProtocol() {
 	      </html:select> 
         </td>
     </tr>
-    
-    <tr>
-    </tr>   
 
-    <tr>
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
+    <!--
+    <tr class="OraTabledata">
+    </tr>   
+    -->
+
+    <tr class="OraTabledata">
+        <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
         <td class="OraFieldText" nowrap>
           <html:textarea 
             property="<%= FormConstants.PREFERRED_DEFINITION %>"
@@ -93,7 +112,7 @@ function clearProtocol() {
           />
         </td>
         
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.comments" />:</td>
+        <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.comments" />:</td>
         <td class="OraFieldText" nowrap>
           <html:textarea 
             property="<%= FormConstants.FORM_COMMENTS %>"
@@ -109,25 +128,21 @@ function clearProtocol() {
   <hr/>
   <br/>
   
-  <table cellspacing="2" cellpadding="3" border="0" width="100%">
+  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
 
-    <tr>
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.header" />:</td>
+    <tr class="OraTabledata">
+        <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.header" />:</td>
         <td class="OraFieldText" nowrap>
           <html:text property="<%=FormConstants.FORM_HEADER%>" size="80" />
         </td>
     </tr>
 
-    <tr>
-        <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.footer" />:</td>
+    <tr class="OraTabledata">
+        <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.footer" />:</td>
         <td class="OraFieldText" nowrap>
           <html:text property="<%=FormConstants.FORM_FOOTER%>" size="80" />
+            <html:hidden value="<%=NavigationConstants.GET_ALL_FORMS_METHOD%>" property="<%=NavigationConstants.METHOD_PARAM%>"/>
         </td>
-    </tr>
-    <tr>    
-      <td>
-        <html:hidden value="<%=NavigationConstants.GET_ALL_FORMS_METHOD%>" property="<%=NavigationConstants.METHOD_PARAM%>"/>
-      </td>
     </tr>
   </table>
 
