@@ -1,7 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+import java.io.Serializable;
 
-public class CSITransferObject implements ClassSchemeItem  {
+public class CSITransferObject implements ClassSchemeItem, Serializable  {
   private String csiName = null;
   private String csiType = null;
   private String csiIdseq = null;
