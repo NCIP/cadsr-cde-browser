@@ -8,7 +8,7 @@ public class JDBCContextTransferObject extends ContextTransferObject
 {
   public JDBCContextTransferObject(ResultSet rs) throws SQLException
   {
-    setName(rs.getString("name"));
-    setConteIdseq(rs.getString("conte_idseq"));
+    setConteIdseq(rs.getString(1)); //CONTE_IDSEQ
+    setName(rs.getString(2));  // NAME
   }
 }

@@ -11,16 +11,16 @@ public class JDBCFormTransferObject extends FormTransferObject
 {
   public JDBCFormTransferObject(ResultSet rs) throws SQLException
   {
-    setLongName(rs.getString("long_name"));
-    setPreferredName(rs.getString("preferred_Name"));
+    setLongName(rs.getString(9));       //LONG_NAME
+    setPreferredName(rs.getString(7));  // PREFERRED_NAME
     
     //setContext(new ContextTransferObject(rs.getString("context_name")));
     ContextTransferObject contextTransferObject = new ContextTransferObject();
-    contextTransferObject.setName(rs.getString("context_name"));
+    contextTransferObject.setName(rs.getString(12));  // CONTEXT_NAME
     setContext(contextTransferObject);
     
-    setProtocol(new ProtocolTransferObject(rs.getString("PROTOCOL_LONG_NAME")));
-    setFormType(rs.getString("type"));
-    setAslName("workflow");
+    setProtocol(new ProtocolTransferObject(rs.getString(11))); //PROTOCOL_LONG_NAME
+    setFormType(rs.getString(3)); // TYPE
+    setAslName(rs.getString(6)); // WORKFLOW
   }
 }
