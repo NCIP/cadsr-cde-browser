@@ -69,6 +69,10 @@ public class DESearchQueryBuilder extends Object {
     // release 3.0 updated to add display order for registration status
     String registrationFrom = " , sbr.ac_registrations acr , sbr.reg_status_lov rsl";
     String registrationWhere = " and de.de_idseq = acr.ac_idseq (+) and acr.registration_status = rsl.registration_status (+) ";
+
+    String wkFlowFrom = " , sbr.ac_status_lov asl ";
+    String workFlowWhere = " and de.asl_name = asl.asl_name (+)";
+
     if (strArray == null) {
       searchStr = "";
       whereClause = "";
@@ -231,6 +235,7 @@ public class DESearchQueryBuilder extends Object {
                             decFrom +
                             fromClause+
                             registrationFrom+
+                            wkFlowFrom+
                      " where de.deleted_ind = 'No'  "+
                      " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
                      //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
@@ -239,7 +244,7 @@ public class DESearchQueryBuilder extends Object {
                      //" and de.de_idseq = dc.ac_idseq (+) "+
                      //" and vd.vd_idseq = de.vd_idseq " +
                      //" and dec.dec_idseq = de.dec_idseq " +
-                     csiWhere + whereClause + registrationWhere;
+                     csiWhere + whereClause + registrationWhere + workFlowWhere;
 
       }
       else if (treeParamType.equals("CONTEXT")){
@@ -253,6 +258,7 @@ public class DESearchQueryBuilder extends Object {
                              decFrom +
                              fromClause+
                              registrationFrom+
+                             wkFlowFrom+
                    " where de.deleted_ind = 'No' "+
                    " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
@@ -263,7 +269,7 @@ public class DESearchQueryBuilder extends Object {
                    //" and vd.vd_idseq = de.vd_idseq " +
                    //" and dec.dec_idseq = de.dec_idseq " +
                    //usageWhere +
-                    csiWhere + whereClause + registrationWhere;
+                    csiWhere + whereClause + registrationWhere+ workFlowWhere;
 
       }
       else if (treeParamType.equals("PROTOCOL")){
@@ -280,6 +286,7 @@ public class DESearchQueryBuilder extends Object {
                                decFrom +
                                fromClause+
                                registrationFrom+
+                               wkFlowFrom+
                    " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
@@ -294,7 +301,7 @@ public class DESearchQueryBuilder extends Object {
                          " and pt.proto_idseq = '"+treeParamIdSeq+"'" +
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " +
-                         csiWhere + whereClause + registrationWhere;
+                         csiWhere + whereClause + registrationWhere + workFlowWhere;
       }
       //Published Change Order
       else if (treeParamType.equals("PUBLISHING_PROTOCOL")){
@@ -312,6 +319,7 @@ public class DESearchQueryBuilder extends Object {
                                decFrom +
                                fromClause+
                                registrationFrom+
+                               wkFlowFrom+
                    " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
@@ -327,7 +335,7 @@ public class DESearchQueryBuilder extends Object {
                          " and pt.proto_idseq = '"+treeParamIdSeq+"'" +
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " +
-                         csiWhere + whereClause + registrationWhere;
+                         csiWhere + whereClause + registrationWhere + workFlowWhere;
       }
       else if (treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")){
         fromWhere = " from  sbr.data_elements de , " +
@@ -341,6 +349,7 @@ public class DESearchQueryBuilder extends Object {
                                decFrom +
                                fromClause+
                                registrationFrom+
+                               wkFlowFrom+
                     " where de.deleted_ind = 'No'  "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
@@ -352,7 +361,7 @@ public class DESearchQueryBuilder extends Object {
                          " and qc.de_idseq = de.de_idseq " +
                         // " and vd.vd_idseq = de.vd_idseq " +
                         // " and dec.dec_idseq = de.dec_idseq " +
-                         csiWhere + whereClause + registrationWhere;
+                         csiWhere + whereClause + registrationWhere+ workFlowWhere;
 
       }
       else if (treeParamType.equals("CSI")){
@@ -370,6 +379,7 @@ public class DESearchQueryBuilder extends Object {
                                vdFrom +
                                decFrom +
                                registrationFrom +
+                               wkFlowFrom+
                          " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
@@ -380,7 +390,7 @@ public class DESearchQueryBuilder extends Object {
                          " and acs.ac_idseq = de.de_idseq " +
                          //" and vd.vd_idseq = de.vd_idseq " +
                          //" and dec.dec_idseq = de.dec_idseq " +
-                         whereClause+ registrationWhere;
+                         whereClause+ registrationWhere+ workFlowWhere;
 
       }
       else if (treeParamType.equals("CLASSIFICATION")){
@@ -399,6 +409,7 @@ public class DESearchQueryBuilder extends Object {
                                vdFrom +
                                decFrom +
                                registrationFrom +
+                               wkFlowFrom+
                          " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
                          " and de.asl_name != 'RETIRED DELETED' " +
@@ -420,6 +431,7 @@ public class DESearchQueryBuilder extends Object {
                                 decFrom +
                                 fromClause+
                                 registrationFrom +
+                                wkFlowFrom +
                          " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
@@ -445,6 +457,7 @@ public class DESearchQueryBuilder extends Object {
                                 decFrom +
                                 fromClause+
                                 registrationFrom+
+                                wkFlowFrom+
                          " where de.deleted_ind = 'No' "+
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
@@ -477,8 +490,9 @@ public class DESearchQueryBuilder extends Object {
                            +"      ,de.conte_idseq "
                            +"      ,de.preferred_definition "
                            +"      ,acr.registration_status "
-                           +"      ,rsl.display_order ";
-      finalSqlStmt.append(selectClause);
+                           +"      ,rsl.display_order "
+                           +"      ,asl.display_order wkflow_order";
+     finalSqlStmt.append(selectClause);
       finalSqlStmt.append(fromWhere);
       sqlWithoutOrderBy = finalSqlStmt.toString();
       finalSqlStmt.append(orderBy);
@@ -489,7 +503,7 @@ public class DESearchQueryBuilder extends Object {
       //release 3.0, sort search result by column
       sortColumnHeader = new SimpleSortableColumnHeader();
       sortColumnHeader.setPrimary("display_order");
-      sortColumnHeader.setSecondary("asl_name");
+      sortColumnHeader.setSecondary("wkflow_order");
       sortColumnHeader.setTertiary("long_name");
       sortColumnHeader.setDefaultOrder(true);
       sortColumnHeader.setOrder(SimpleSortableColumnHeader.ASCENDING);
@@ -579,7 +593,7 @@ public class DESearchQueryBuilder extends Object {
     return usageWhere;
   }
 
-  private String buildStatusWhereClause(String [] statusList) {
+  private String buildStatusWhereClause (String [] statusList) {
     String wkFlowWhere = "";
     String wkFlow = "";
     if (statusList.length == 1) {
