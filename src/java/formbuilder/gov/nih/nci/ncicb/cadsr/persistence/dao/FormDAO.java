@@ -9,12 +9,13 @@ import java.util.List;
 
 public interface FormDAO {
   public Collection getAllForms(
-    String formName,
-    String protocol,
-    String context,
+    String formLongName,
+    String protocolIdSeq,
+    String contextIdSeq,
     String workflow,
-    String category,
-    String type);
+    String categoryName,
+    String type,
+    String classificationIdseq);
 
   /**
    * Gets all the modules in a form

@@ -31,7 +31,10 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
      return query.execute();  
   }
 
-  // inner class
+  /**
+   * Inner class that accesses database to get all the contexts in caDSR
+   * 
+   */
 	class ContextQuery extends MappingSqlQuery {
 
     ContextQuery(){
