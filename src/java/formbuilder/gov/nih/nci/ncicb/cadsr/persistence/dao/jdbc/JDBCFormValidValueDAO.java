@@ -62,6 +62,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     if (!create) {
       DMLException dml = new DMLException("The user does not have the privilege to create valid value.");
       dml.setErrorCode(INSUFFICIENT_PRIVILEGES);
+      throw dml;
     }
 
     InsertQuestContent  insertQuestContent  = 
