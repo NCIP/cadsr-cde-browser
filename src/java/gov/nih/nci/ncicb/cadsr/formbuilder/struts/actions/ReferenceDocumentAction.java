@@ -8,25 +8,39 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 
 
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.ReferenceDocFormBean;
 import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
+import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import java.io.IOException;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.sql.DataSource;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
+import oracle.sql.BLOB;
+import oracle.jdbc.OracleResultSet;
 
 public class ReferenceDocumentAction extends FormBuilderSecureBaseDispatchAction {
 
@@ -83,19 +97,84 @@ public class ReferenceDocumentAction extends FormBuilderSecureBaseDispatchAction
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
     
-    //Create a dummy list of RefDocs and attach to Form
     Form crf = (Form) getSessionObject(request, CRF);
-    
-    if(crf.getRefereceDocs()==null)
-        crf.setReferenceDocs(getDummyRefDocs());
-    else if (crf.getRefereceDocs().isEmpty())
-        crf.setReferenceDocs(getDummyRefDocs());
-
     return mapping.findForward(SUCCESS);
 
   }
 
+  /**
+   * 
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward viewReferenceDocAttchment(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    Blob theBlob = null;
+    InputStream is = null;
+    OutputStream out = null;
+    try {
+      DBUtil dbUtil = new DBUtil();
+      String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
+      dbUtil.getConnectionFromContainer(dsName);
+      out = response.getOutputStream();
+      String attachmentName = request.getParameter(FormConstants.REFERENCE_DOC_ATTACHMENT_NAME);
+      response.addHeader("Content-Disposition", "attachment; filename=" + attachmentName);
+      response.addHeader("Pragma", "No-cache");
+      response.addHeader("Cache-Control", "no-cache");
+      response.addHeader("Expires", "0");    
+  
+      String sqlStmt = "SELECT blob_content, mime_type from reference_blobs where name = ?";
+      log.info(sqlStmt);
+      PreparedStatement ps = dbUtil.getConnection().prepareStatement(sqlStmt);
+      ps.setString(1,attachmentName);
+      ResultSet rs = ps.executeQuery();
+      boolean exists = false;
+      if (rs.next()) {
+        exists = true;
+        String mimeType = rs.getString(2);
+        response.setContentType(mimeType);
+        theBlob = ((OracleResultSet)rs).getBLOB(1);
+        is = theBlob.getBinaryStream();
 
+        //Writing to the OutputStream
+        byte[] buf = new byte[4 * 1024];  // 4K buffer
+        int bytesRead;
+        while ((bytesRead = is.read(buf)) != -1) {
+          out.write(buf, 0, bytesRead);
+        }
+      }
+    } 
+    catch (Exception ex) {
+      log.error("Exception Caught:", ex);
+    } 
+    finally {
+      try {
+        if (is != null) is.close();
+        if (out != null) out.close();
+        //if (db != null) db.closeDB();  
+      } 
+      catch (Exception ex) {
+         log.error("Exception Caught cleaning up:", ex);
+      } 
+      finally {
+      }
+    }
+    
+  
+    return mapping.findForward(SUCCESS);
+
+  }
   /**
    * 
    *
