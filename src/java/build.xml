@@ -217,6 +217,13 @@
            </patternset>
          </fileset>      
       </copy>   
+      <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.home}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy>       
      <copy todir="${classes.build.dir}/WEB-INF/classes">
          <fileset dir="${config.home}/properties">
            <patternset>
@@ -240,7 +247,14 @@
              <include name="crfBuilder.xml"/>
            </patternset>
          </fileset>      
-      </copy>      
+      </copy>    
+     <copy todir="${classes.build.dir}/META-INF/properties" overwrite="Yes">    
+         <fileset dir="${config.home}/properties">
+           <patternset>
+             <include name="log4j.properties"/>
+           </patternset>
+         </fileset>
+      </copy>        
     </target>
   <!-- =========== END DEV CONFIG ======================= -->
   

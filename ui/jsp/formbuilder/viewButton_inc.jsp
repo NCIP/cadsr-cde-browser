@@ -19,7 +19,7 @@
 		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
 		   	   	paramProperty="formIdseq"
 		   	   	altMessage="Select for Copy" 
-            workflowRestrictionListId="<%=FormBuilderConstants.COPYABLE_WORKFLOW_STATUS_LIST%>"/>/>    
+            workflowRestrictionListId="<%=FormBuilderConstants.COPYABLE_WORKFLOW_STATUS_LIST%>"/>    
           </td> 
           <td >
 		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 

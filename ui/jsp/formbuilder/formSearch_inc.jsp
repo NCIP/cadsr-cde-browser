@@ -15,7 +15,11 @@ function clearProtocol() {
   document.forms[0].protocolIdSeq.value = "";
   document.forms[0].protocolLongName.value = "";
 }
-
+function clearForm() {
+  clearProtocol();
+  clearClassSchemeItem();
+  document.forms[0].reset();
+}
 -->
 </SCRIPT>
 <%
@@ -108,7 +112,7 @@ function clearProtocol() {
  </tr>
  <TR>
     <td colspan="2" align="right" nowrap><a href="javascript:submitForm()"><img src=<%=urlPrefix%>i/searchButton.gif border=0></a></td>
-    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=urlPrefix%>i/clearAllButton.gif border=0></a></td>
+    <td colspan="2" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=urlPrefix%>i/clear.gif border=0></a></td>
  </TR>
  <TR>
     <td colspan="3" align="right" nowrap>
