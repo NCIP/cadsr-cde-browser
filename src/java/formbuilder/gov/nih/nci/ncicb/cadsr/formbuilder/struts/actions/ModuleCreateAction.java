@@ -105,6 +105,10 @@ public class ModuleCreateAction extends FormBuilderBaseDispatchAction {
 	Form crf = (Form) getSessionObject(request, CRF);
 	
 	List modules = crf.getModules();
+	if(modules == null) {
+	    modules = new ArrayList();
+	    crf.setModules(modules);
+	}
 
 	if(displayOrder < modules.size()) {
 	    modules.add(displayOrder, newModule);
