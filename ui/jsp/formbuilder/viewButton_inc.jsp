@@ -64,12 +64,27 @@ if(confirm(message)) location.href = url;
 		   	   	/>		                
           </td>  
           <td width="40%" align="right">
- 	    <html:link action='<%="/formPrinterAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_PRINT%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+           <table>
+            <tr>
+             <td>
+ 	       <html:link action='<%="/formPrinterAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_PRINT%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
  				paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq"
  				target="_blank">
 		Printer Friendly Version
-	    </html:link>
-	   </td>	             
+	      </html:link>
+	    </td>
+	    </tr>
+            <tr>
+             <td>
+              <html:link action='<%="/excelDownload.do?"+NavigationConstants.METHOD_PARAM+"=downloadFormInExcel"%>' 
+                paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+                paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq"
+                target="_parent" >
+                Excel Version
+              </html:link> 
+	    </td>
+	    </tr>	    
+	   </table>
           </td>           
         </tr>                 
       </table>

@@ -311,10 +311,10 @@ public class ReferenceDocumentAction extends FormBuilderSecureBaseDispatchAction
       
       List attachments =  new ArrayList(); 
       Attachment aAttachment = new AttachmentTransferObject();
-      aAttachment.setName("form.PDF");
+      aAttachment.setName("ADVERSE_EVENTS.PDF");
       attachments.add(aAttachment);
       aAttachment = new AttachmentTransferObject();
-      aAttachment.setName("form.doc");      
+      aAttachment.setName("ADVERSE_EVENTS.doc");      
       attachments.add(aAttachment);
       ref.setAttachments(attachments);
       refDocs.add(ref);
@@ -326,10 +326,10 @@ public class ReferenceDocumentAction extends FormBuilderSecureBaseDispatchAction
       ref.setContext(aContext); 
       attachments =  new ArrayList(); 
       aAttachment = new AttachmentTransferObject();
-      aAttachment.setName("ref1.doc");
+      aAttachment.setName("TrialInformation.doc");
       attachments.add(aAttachment);
       aAttachment = new AttachmentTransferObject();
-      aAttachment.setName("ref2.doc");      
+      aAttachment.setName("HistoricalData.pdf");      
       attachments.add(aAttachment);      
       ref.setAttachments(attachments);
       refDocs.add(ref);

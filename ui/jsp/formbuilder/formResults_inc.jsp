@@ -63,12 +63,16 @@ if(confirm(message)) location.href = url;
             <tr class="OraTabledata">
              <td width="100">
               <table  >
-               <tr>
-               
+               <tr>               
               <td width="25" class="OraTabledata" align=center>
-                <a href="search?viewTemplate=9&templateIdseq=<%= form.getFormIdseq() %>&PageId=DataElementsGroup" target="_blank">
-                  <html:img src='<%=urlPrefix+"i/dload-sm.gif"%>' border="0" alt="Download"/>
-		            </a>			
+              
+              <html:link action='<%="/excelDownload.do?"+NavigationConstants.METHOD_PARAM+"=downloadFormInExcel"%>' 
+                paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+                paramName="form" paramProperty="formIdseq"
+                target="_parent" >
+               <html:img src='<%=urlPrefix+"i/excel-icon.jpg"%>' border="0" alt="Excel Version"/>
+              </html:link>                 
+              
               </td>
 		  <td width="25" class="OraTabledata" align=center>
 		       <cde:secureIcon  formId="form" 
