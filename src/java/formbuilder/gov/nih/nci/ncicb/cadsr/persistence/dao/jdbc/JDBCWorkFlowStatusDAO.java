@@ -6,6 +6,8 @@ import org.springframework.jdbc.object.MappingSqlQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
+import java.util.Iterator;
 
 public class JDBCWorkFlowStatusDAO extends JDBCBaseDAO implements WorkFlowStatusDAO  {
   public JDBCWorkFlowStatusDAO(ServiceLocator locator) {
@@ -34,7 +36,7 @@ public class JDBCWorkFlowStatusDAO extends JDBCBaseDAO implements WorkFlowStatus
     
     public void setSql(String adminComponentType, String dummy){
       String sqlStmt = "select ASL_NAME from ASL_ACTL_EXT " + 
-        " where ACTL_NAME = " + adminComponentType + " " + 
+        " where ACTL_NAME = '" + adminComponentType + "' " + 
         "   and ASL_NAME != 'RETIRED DELETED' ";
       super.setSql(sqlStmt);
     }
@@ -43,6 +45,20 @@ public class JDBCWorkFlowStatusDAO extends JDBCBaseDAO implements WorkFlowStatus
       // handles only one row
       return rs.getString("ASL_NAME");
     }
+  } // end inner class
+  
+  public static void main(String[] args) {
+    ServiceLocator locator = new SimpleServiceLocator();
+
+    //JDBCDAOFactory factory = (JDBCDAOFactory)new JDBCDAOFactory().getDAOFactory(locator);
+    JDBCWorkFlowStatusDAO test = new JDBCWorkFlowStatusDAO(locator);
+
+    Collection coll = test.getWorkFlowStatusesForACType("DATAELEMENT");
+    for (Iterator it=coll.iterator(); it.hasNext( ); ) { 
+        Object anObject = it.next( ); 
+        System.out.println( "workflow status display = " + anObject ); 
+    }
+
   }
           
   
