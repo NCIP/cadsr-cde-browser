@@ -6,6 +6,8 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import java.util.Iterator;
 import java.util.Set;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jboss.security.SimpleGroup;
 import org.jboss.security.SimplePrincipal;
 import org.jboss.security.auth.spi.AbstractServerLoginModule;
@@ -27,6 +29,9 @@ import java.util.Map;
 
 
 public class DBLoginModule extends AbstractServerLoginModule {
+ 
+  protected Log log =  LogFactory.getLog(DBLoginModule.class.getName());
+  
   private Principal identity;
   private char[] credential;
   private AbstractDAOFactory daoFactory = null;
@@ -44,12 +49,13 @@ public class DBLoginModule extends AbstractServerLoginModule {
     Set roles = rolesAndContexts.keySet();
     SimpleGroup grp = new SimpleGroup("Roles");
     Group[] groups = { grp };
+    log.debug("Roles for user : "+this.getUsername());
     for (Iterator it = roles.iterator(); it.hasNext();) {
       String role = (String)it.next();
       grp.addMember(new SimplePrincipal(role));
-      System.out.println("Role: "+role);
+      log.debug("Role: "+role);
     }
-
+    log.debug("Groups : "+groups);
     return groups;
   }
 
@@ -58,7 +64,7 @@ public class DBLoginModule extends AbstractServerLoginModule {
   }
 
   public boolean login() throws LoginException {
-    System.out.println("in another login");
+    log.info("In another login");
     
         
     if (super.login()) {
@@ -111,7 +117,7 @@ public class DBLoginModule extends AbstractServerLoginModule {
       sharedState.put("javax.security.auth.login.password", credential);
     }
     super.loginOk = true;
-
+    log.debug("loginOk="+loginOk);
     return true;
   }
 
@@ -146,8 +152,9 @@ public class DBLoginModule extends AbstractServerLoginModule {
     }
     info[0] = username;
     info[1] = password;
-    System.out.println("Username: "+username);
-    System.out.println("Password: "+password);
+    log.debug("Username="+username);
+    log.debug("Password="+password);
+
     return info;
   }
   
@@ -159,15 +166,14 @@ public class DBLoginModule extends AbstractServerLoginModule {
   public void initialize(Subject p0, CallbackHandler p1, Map p2, Map p3) {
     super.initialize(p0, p1, p2, p3);
     for (Iterator it = p3.entrySet().iterator(); it.hasNext();) {
-      System.out.println("Option: " +it.next().toString());
+      log.info("Option: " +it.next().toString());
     }
     
     
     String serviceLocatorClassName =
       (String) p3.get(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
     locator = ServiceLocatorFactory.getLocator(serviceLocatorClassName);
-    
-    System.out.println("Service Locator class: "+locator);
+    log.info("Service Locator class: "+locator);
     
     if (daoFactory == null) {
       setAbstractDAOFactory();

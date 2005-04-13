@@ -815,7 +815,45 @@
       <target  name="deploy_qa_start" depends="deploy_qa,jboss_startdebug"> 
    </target>
 
-
+   <target  name="deploy_stage" depends="clean,clean_jboss,stage_config,ear_cdebrowser"> 
+     <copy todir="${jboss.home}/server/default/deploy">      
+         <fileset dir="${build.dir}">
+           <patternset>
+             <include name="${ear.name}.ear"/>
+           </patternset>
+         </fileset> 
+     </copy>  
+     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes">    
+         <fileset dir="${config.stage}/connections">
+           <patternset>
+             <include name="oracle-ds.xml"/>
+           </patternset>
+         </fileset>
+      </copy>       
+   </target> 
+   
+      <target  name="deploy_stage_start" depends="deploy_stage,jboss_startdebug"> 
+   </target>
+   
+   <target  name="deploy_prod" depends="clean,clean_jboss,prod_config,ear_cdebrowser"> 
+     <copy todir="${jboss.home}/server/default/deploy">      
+         <fileset dir="${build.dir}">
+           <patternset>
+             <include name="${ear.name}.ear"/>
+           </patternset>
+         </fileset> 
+     </copy>  
+     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes">    
+         <fileset dir="${config.prod}/connections">
+           <patternset>
+             <include name="oracle-ds.xml"/>
+           </patternset>
+         </fileset>
+      </copy>       
+   </target> 
+   
+      <target  name="deploy_prod_start" depends="deploy_prod,jboss_startdebug"> 
+   </target>   
 <!-- =========== End Deployment targets  ======================= -->
 
 <!-- =========== Test Targets ========================== -->
@@ -951,6 +989,12 @@
        dist_stage	      - Creates Stage Clean distribution.
        dist_prod	      - Creates Prod Clean distribution.
 
+       deploy_dev_start       - Deploy to dev and Start JOSS
+       deploy_qa_start	      - Deploy to QA and Start JOSS
+       deploy_stage_start     - Deploy to Stage and Start JBoSS
+       deploy_prod_start      - Deploy to Prod and Start JOSS
+       
+       jboss_startdebug       - Start JOSS in debug mod
        help                   - This help screen.
  
        Settings:
