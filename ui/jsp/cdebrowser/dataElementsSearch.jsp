@@ -436,11 +436,16 @@ function gotoCDESearchPrefs() {
       <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
     </td>
   </tr>
-          <tr valign="top">    
+        <tr valign="top">    
+          <td valign="top" align="left" class="AbbreviatedTextBold">
+            <bean:message key="cadsr.cdebrowser.helpText.results.searchpref"/>
+          </td>
+        </tr>
+        <tr valign="top">    
           <td valign="top" align="left" class="AbbreviatedText">
             <bean:message key="cadsr.cdebrowser.helpText.results"/>
           </td>
-        </tr>
+        </tr>        
 </table>
 
 <table cellpadding="0" cellspacing="0" width="100%" align="center" border="0">
@@ -629,8 +634,13 @@ function gotoCDESearchPrefs() {
       <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
     </td>
   </tr>
-        <tr>    
-          <td align="left" class="AbbreviatedText">
+        <tr valign="top">    
+          <td valign="top" align="left" class="AbbreviatedTextBold">
+            <bean:message key="cadsr.cdebrowser.helpText.results.searchpref"/>
+          </td>
+        </tr>
+        <tr valign="top">    
+          <td valign="top" align="left" class="AbbreviatedText">
             <bean:message key="cadsr.cdebrowser.helpText.results"/>
           </td>
         </tr>  
