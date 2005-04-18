@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -24,6 +25,11 @@ public class CDEBrowserTreeCache
 {
 
   
+  private static  String contextQueryStmt =
+                                              "SELECT conte_idseq " +
+                                              "      ,name " +
+                                              "      ,description " +
+                                              "FROM  sbr.contexts " ;
 
   private static final String allFormsbyProtocolQueryStmt = " SELECT qc_idseq "
                                         +" ,quest.long_name long_name "
@@ -111,7 +117,7 @@ public class CDEBrowserTreeCache
   private Map allFormsWithNoProtocol = new HashMap();
   private Map allTemplatesByContext = null;
   private List allTemplatesForCtep = null;  
-
+  private List allContexts = null;
 
   
   public static CDEBrowserTreeCache getAnInstance(Connection conn,BaseTreeNode baseTree) throws Exception
@@ -140,9 +146,13 @@ public class CDEBrowserTreeCache
   {
     return (List)allFormsWithNoProtocol.get(contextIdSeq);
   }
-  public void init(Connection conn,BaseTreeNode baseTree) throws Exception
+  public void init(Connection conn,BaseTreeNode baseTree,Hashtable treeParams) throws Exception
   {
    System.out.println("Init start"+TimeUtils.getEasternTime());
+    String treeType = (String)treeParams.get("treeType");
+    String contextExcludeListStr = (String)treeParams.get(TreeConstants.BR_CONTEXT_EXCLUDE_LIST_STR);   
+   
+    setContexts(conn,baseTree,treeType,contextExcludeListStr);
     setDataTemplateNodes(conn,baseTree);
     //setFormNodes(conn,baseTree);
     setFormByProtocolNodes(conn,baseTree);
@@ -157,6 +167,36 @@ public class CDEBrowserTreeCache
    System.out.println("InitCtep end"+TimeUtils.getEasternTime());
   }  
   
+  /**
+   * This method returns a list of DefaultMutableTreeNode objects. Each
+   * DefaultMutableTreeNode object in the list represents a Context 
+   * node.
+   *
+   */
+  public void setContexts(Connection conn,BaseTreeNode baseTreeNode,String treeType, String excludeList) throws Exception 
+  {
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    allContexts = new ArrayList();
+    if(!treeType.equals(TreeConstants.DE_SEARCH_TREE) || excludeList==null)
+      {
+        contextQueryStmt = contextQueryStmt +" ORDER BY name ";
+      }
+    else
+      {
+        contextQueryStmt = contextQueryStmt +" where name NOT IN ( " +excludeList + ") ORDER BY name ";
+      }  
+
+      pstmt =
+         (PreparedStatement)conn.prepareStatement(contextQueryStmt);
+      pstmt.setFetchSize(25);
+      rs = pstmt.executeQuery();
+      
+     // Can be done with no issues
+      while (rs.next()){
+        allContexts.add(this.getContextNode(rs,baseTreeNode));
+      }
+  }
   /**
    * This method returns a list of DefaultMutableTreeNode objects. Each
    * DefaultMutableTreeNode object in the list represents a Protocol Form Template
@@ -470,6 +510,24 @@ public class CDEBrowserTreeCache
         if (pstmt != null) pstmt.close();  
     }
     return cscsiMap;
+  }
+  
+  private DefaultMutableTreeNode getContextNode(ResultSet rs,BaseTreeNode baseTree) throws Exception
+  {
+     
+        String currContextId = rs.getString(1);
+        String name = rs.getString(2);
+        String desc = rs.getString(3);
+        
+      DefaultMutableTreeNode contextNode = new DefaultMutableTreeNode
+                (new WebNode(currContextId
+                            ,name+ " ("+desc+")"
+                            ,"javascript:"+baseTree.getJsFunctionName()+"('P_PARAM_TYPE=CONTEXT&P_IDSEQ="+
+                            currContextId+"&P_CONTE_IDSEQ="+currContextId
+                            +baseTree.getExtraURLParameters()+"')"
+                            ,desc+ " ("+name+")"
+                            ));
+      return contextNode;
   }
   private DefaultMutableTreeNode getFormNode(ResultSet rs,String currContextId,BaseTreeNode baseTree) throws Exception
   {
