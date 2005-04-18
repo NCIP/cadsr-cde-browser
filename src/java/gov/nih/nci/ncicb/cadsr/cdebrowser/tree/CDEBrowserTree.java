@@ -82,7 +82,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
       }
       baseNode = new BaseTreeNode(dbHelper,treeParams);
       CDEBrowserTreeCache cache = CDEBrowserTreeCache.getAnInstance(conn,baseNode);
-      cache.init(conn,baseNode);
+      cache.init(conn,baseNode,treeParams);
       WebNode contexts =
         new WebNode(
           dbHelper.getUniqueId(IDSEQ_GENERATOR)
@@ -127,7 +127,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
         List otherTempNodes;
 
         if ("CTEP".equals(rs.getString(2))) {
-        
+
           System.out.println("CTEP Templates Start "+TimeUtils.getEasternTime());
           cache.setCtepIdSeq(currContextId);
           cache.initCtepInfo(conn,baseNode,ctxNode.getTemplateTypes());
@@ -136,16 +136,16 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
               new WebNode(
                 dbHelper.getUniqueId(IDSEQ_GENERATOR), "Protocol Form Templates"));
           List ctepNodes = cache.getAllTemplatesForCtep();
-          tmpLabelNode.add((DefaultMutableTreeNode)ctepNodes.get(0));  
+          tmpLabelNode.add((DefaultMutableTreeNode)ctepNodes.get(0));
           tmpLabelNode.add((DefaultMutableTreeNode)ctepNodes.get(1));
           ctxTreeNode.add(tmpLabelNode);
-          
+
           /**
           templateNodes = ctxNode.getCTEPDataTemplateNodes();
           phaseLabelNode = templateNodes[0];
           disLabelNode = templateNodes[1];
           tmpLabelNode.add(disLabelNode);
-          tmpLabelNode.add(phaseLabelNode);  
+          tmpLabelNode.add(phaseLabelNode);
           **/
           System.out.println("CTEP Templates End "+TimeUtils.getEasternTime());
         }
@@ -201,12 +201,12 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                 && treeType.equals(TreeConstants.DE_SEARCH_TREE))
               //Publish Change order
              || (baseNode.isCTEPUser().equals("Yes")&& treeType.equals(TreeConstants.DE_SEARCH_TREE))
-             || (treeType.equals(TreeConstants.FORM_SEARCH_TREE))) 
+             || (treeType.equals(TreeConstants.FORM_SEARCH_TREE)))
              {
 
           if ((ctx.getName().equals("CTEP")
                && baseNode.isCTEPUser().equals("Yes"))
-             || (!ctx.getName().equals("CTEP"))) 
+             || (!ctx.getName().equals("CTEP")))
              {
 
 
@@ -218,14 +218,14 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                 DefaultMutableTreeNode protocolFormsLabelNode =null;
                 DefaultMutableTreeNode formsLabelNode =null;
 
-                if ((protoNodes!=null&&!protoNodes.isEmpty())|| 
+                if ((protoNodes!=null&&!protoNodes.isEmpty())||
                     (formNodes!=null&&!formNodes.isEmpty()))
-                {                
+                {
                   protocolFormsLabelNode =
                     new DefaultMutableTreeNode(
                       new WebNode(
                         dbHelper.getUniqueId(IDSEQ_GENERATOR), "Protocol Forms"));
-              
+
                  // Add form with no protocol
                   if(formNodes!=null&&!formNodes.isEmpty())
                   {
@@ -233,7 +233,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                     while (tmpIter.hasNext()) {
                       protocolFormsLabelNode.add((DefaultMutableTreeNode) tmpIter.next());
                       }
-                  }   
+                  }
                   // Add form with no protocol
                   if(protoNodes!=null&&!protoNodes.isEmpty())
                   {
@@ -241,7 +241,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                     while (tmpIter.hasNext()) {
                       protocolFormsLabelNode.add((DefaultMutableTreeNode) tmpIter.next());
                       }
-                  }              
+                  }
               ctxTreeNode.add(protocolFormsLabelNode);
             }
          }
