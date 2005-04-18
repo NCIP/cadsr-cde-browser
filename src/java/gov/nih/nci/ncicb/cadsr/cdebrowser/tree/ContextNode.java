@@ -43,6 +43,7 @@ public class ContextNode extends BaseTreeNode  {
                                        +"AND    latest_version_ind = 'Yes' "
                                        +"AND    qcdl_name is not null "
                                        +"ORDER BY upper(qcdl_name) ";
+                                       
   final String protoQueryStmt =     "SELECT  proto_idseq "
                                     +"      ,preferred_name "
                                     +"      ,long_name "
@@ -146,7 +147,9 @@ public class ContextNode extends BaseTreeNode  {
                                 +"AND   deleted_ind = 'No' "
                                 +"AND   latest_version_ind = 'Yes' "
                                 +"AND   nvl(quest_contents_ext.PROTO_IDSEQ,'-1') = '-1' "
-                                +"ORDER BY upper(long_name) ";                                
+                                +"ORDER BY upper(long_name) ";       
+
+                                
                                 
   Context myContext = null;
   DefaultMutableTreeNode myContextNode = null;
@@ -730,7 +733,7 @@ public class ContextNode extends BaseTreeNode  {
   }
 
 
-  private List getTemplateTypes() {
+  public List getTemplateTypes() {
     PreparedStatement pstmt = null;
     ResultSet rs = null;
     List tmpTypes = new ArrayList(11);
