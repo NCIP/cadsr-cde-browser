@@ -35,7 +35,19 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
      query.setSql();
      return query.execute();
   }
-
+  /**
+   * Gets all the contexts excluding the contexts 
+   */
+  public List getAllContexts(String excludeList)
+  {
+     ContextQuery query = new ContextQuery();
+     if(excludeList!=null&&excludeList.equals(""))
+        query.setSqlWithExcludeList(excludeList);
+    else
+        query.setSql();
+     query.setDataSource(getDataSource());
+     return query.execute();    
+  }
   /**
    * Gets all the contexts in caDSR
    *
@@ -63,15 +75,22 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
    *
    */
 	class ContextQuery extends MappingSqlQuery {
-
+    
+    String contextsql = " select conte_idseq, name, description from contexts order by upper(name) ";
+    String contextsqlNoOrderBy = " select conte_idseq, name , description from contexts  ";
+    
     ContextQuery(){
       super();
     }
 
     public void setSql(){
-      super.setSql("select conte_idseq, name from contexts order by upper(name)");
+      super.setSql(contextsql);
     }
-
+    public void setSqlWithExcludeList(String excludeList){
+     String contextQueryStmt = contextsqlNoOrderBy +" where name NOT IN ( " +excludeList + ") ORDER BY name ";
+      
+      super.setSql(contextQueryStmt);
+    }
    /**
     * 3.0 Refactoring- Removed JDBCTransferObject
     */
@@ -79,6 +98,7 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
       Context aContext = new ContextTransferObject();
       aContext.setConteIdseq(rs.getString(1)); //CONTE_IDSEQ
       aContext.setName(rs.getString(2));  // NAME
+      aContext.setDescription(rs.getString(3)); //DESC
       return aContext;
     }
   }
@@ -153,9 +173,9 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
 
-    //JDBCContextDAO test = new JDBCContextDAO(locator);
+    JDBCContextDAO test = new JDBCContextDAO(locator);
     //Collection coll = test.getAllContexts();
-    //System.out.println(test.getAllContexts());
+    System.out.println(test.getAllContexts("'caBIG'"));
   }
 
 }

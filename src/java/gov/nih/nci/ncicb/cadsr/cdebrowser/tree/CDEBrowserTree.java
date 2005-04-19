@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.tree;
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.ContextHolder;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.ConnectionHelper;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
@@ -15,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.ListIterator;
 import java.util.Map;
 
 
@@ -91,7 +93,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
           +"('P_PARAM_TYPE=P_PARAM_TYPE&P_IDSEQ=P_IDSEQ&"
           +baseNode.getExtraURLParameters()+"')");
       tree = new DefaultMutableTreeNode(contexts);
-
+      /**
       if(!treeType.equals(TreeConstants.DE_SEARCH_TREE) || contextExcludeListStr==null)
       {
         contextQueryStmt = contextQueryStmt +" ORDER BY name ";
@@ -108,15 +110,20 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
       //pstmt.defineColumnType(3, Types.VARCHAR);
       rs = pstmt.executeQuery();
       ctx = new BC4JContextTransferObject();
-
-      while (rs.next()) {
-        String currContextId = rs.getString(1);
-        ctx.setConteIdseq(rs.getString(1));
-        ctx.setName(rs.getString(2));
-        ctx.setDescription(rs.getString(3));
-
-        ContextNode ctxNode = new ContextNode(ctx, dbHelper, treeParams);
-        DefaultMutableTreeNode ctxTreeNode = ctxNode.getTreeNode();
+       **/
+      List allContexts = cache.getAllContextHolders();
+      if(allContexts==null)
+        return tree;
+      ListIterator contextIt = allContexts.listIterator();
+      
+      while (contextIt.hasNext()) {
+        
+        ContextHolder currContextHolder = (ContextHolder)contextIt.next();
+        Context currContext = currContextHolder.getContext();
+        DefaultMutableTreeNode contextNode = currContextHolder.getNode();
+        //Need to be removed
+        ContextNode ctxNode = new ContextNode(currContext, dbHelper, treeParams);
+        //DefaultMutableTreeNode ctxTreeNode = ctxNode.getTreeNode();
 
         //Adding data template nodes
 
@@ -126,10 +133,9 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
         DefaultMutableTreeNode[] templateNodes;
         List otherTempNodes;
 
-        if ("CTEP".equals(rs.getString(2))) {
-
-          System.out.println("CTEP Templates Start "+TimeUtils.getEasternTime());
-          cache.setCtepIdSeq(currContextId);
+        if (Context.CTEP.equals(currContext.getName())) {
+          cache.setCtepIdSeq(currContext.getConteIdseq());
+          //Need to add this to DAO
           cache.initCtepInfo(conn,baseNode,ctxNode.getTemplateTypes());
           tmpLabelNode =
             new DefaultMutableTreeNode(
@@ -138,7 +144,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
           List ctepNodes = cache.getAllTemplatesForCtep();
           tmpLabelNode.add((DefaultMutableTreeNode)ctepNodes.get(0));
           tmpLabelNode.add((DefaultMutableTreeNode)ctepNodes.get(1));
-          ctxTreeNode.add(tmpLabelNode);
+          contextNode.add(tmpLabelNode);
 
           /**
           templateNodes = ctxNode.getCTEPDataTemplateNodes();
@@ -152,7 +158,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
         else
         {
           System.out.println("Other Templates Start "+TimeUtils.getEasternTime());
-           otherTempNodes = cache.getTemplateNodes(currContextId);
+           otherTempNodes = cache.getTemplateNodes(currContext.getConteIdseq());
 
           if (otherTempNodes!=null&&!otherTempNodes.isEmpty() ) {
             tmpLabelNode =
@@ -165,7 +171,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
               tmpLabelNode.add((DefaultMutableTreeNode) tempIter.next());
             }
 
-           ctxTreeNode.add(tmpLabelNode);
+           contextNode.add(tmpLabelNode);
          }
          System.out.println("Other Templates End "+TimeUtils.getEasternTime());
         }
@@ -189,7 +195,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
             csLabelNode.add((DefaultMutableTreeNode) iter.next());
           }
 
-          ctxTreeNode.add(csLabelNode);
+          contextNode.add(csLabelNode);
         }
         System.out.println("Classification End "+TimeUtils.getEasternTime());
         //End Adding Classification Node
@@ -197,23 +203,23 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
         //Adding protocols nodes
         //Filtering CTEP context in data element search tree
         System.out.println("Proto forms Start "+TimeUtils.getEasternTime());
-        if ((!ctx.getName().equals("CTEP")
+        if ((!currContext.getName().equals(Context.CTEP)
                 && treeType.equals(TreeConstants.DE_SEARCH_TREE))
               //Publish Change order
              || (baseNode.isCTEPUser().equals("Yes")&& treeType.equals(TreeConstants.DE_SEARCH_TREE))
              || (treeType.equals(TreeConstants.FORM_SEARCH_TREE)))
              {
 
-          if ((ctx.getName().equals("CTEP")
+          if ((currContext.getName().equals(Context.CTEP)
                && baseNode.isCTEPUser().equals("Yes"))
-             || (!ctx.getName().equals("CTEP")))
+             || (!currContext.getName().equals(Context.CTEP)))
              {
 
 
-                List protoNodes = cache.getProtocolNodes(currContextId);
+                List protoNodes = cache.getProtocolNodes(currContext.getConteIdseq());
 
                 List formNodes = new ArrayList();
-                formNodes = cache.getFormNodesWithNoProtocol(currContextId);
+                formNodes = cache.getFormNodesWithNoProtocol(currContext.getConteIdseq());
 
                 DefaultMutableTreeNode protocolFormsLabelNode =null;
                 DefaultMutableTreeNode formsLabelNode =null;
@@ -242,7 +248,7 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                       protocolFormsLabelNode.add((DefaultMutableTreeNode) tmpIter.next());
                       }
                   }
-              ctxTreeNode.add(protocolFormsLabelNode);
+              contextNode.add(protocolFormsLabelNode);
             }
          }
       }
@@ -336,13 +342,13 @@ public class CDEBrowserTree extends WebTree implements TreeConstants {
                   }
               }
               if(addPublishingNodes)
-                  ctxTreeNode.add(publishNode);
+                  contextNode.add(publishNode);
             }
           }
         System.out.println("Publish end "+TimeUtils.getEasternTime());
         //End Catalog
 
-        tree.add(ctxTreeNode);
+        tree.add(contextNode);
     }
      System.out.println("Tree End "+TimeUtils.getEasternTime());
     } catch (Exception ex) {

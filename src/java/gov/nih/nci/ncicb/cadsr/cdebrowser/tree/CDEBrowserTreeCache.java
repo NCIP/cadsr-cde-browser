@@ -1,4 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.tree;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.CDEBrowserTreeService;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.impl.CDEBrowserTreeServiceImpl;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.jdbc.ProtocolValueObject;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
@@ -105,8 +107,11 @@ public class CDEBrowserTreeCache
                                +"AND   cs.preferred_name in( 'CRF_DISEASE','Phase') "
                                +"ORDER BY upper(csi.csi_name) " ;
                                
+                               
   private String ctepIdSeq = "";
   private final String CTEP="CTEP";
+  
+  private CDEBrowserTreeService treeService = new CDEBrowserTreeServiceImpl();
   
   public CDEBrowserTreeCache()
   {
@@ -117,7 +122,7 @@ public class CDEBrowserTreeCache
   private Map allFormsWithNoProtocol = new HashMap();
   private Map allTemplatesByContext = null;
   private List allTemplatesForCtep = null;  
-  private List allContexts = null;
+  private List allContextHolders = null;
 
   
   public static CDEBrowserTreeCache getAnInstance(Connection conn,BaseTreeNode baseTree) throws Exception
@@ -149,10 +154,11 @@ public class CDEBrowserTreeCache
   public void init(Connection conn,BaseTreeNode baseTree,Hashtable treeParams) throws Exception
   {
    System.out.println("Init start"+TimeUtils.getEasternTime());
-    String treeType = (String)treeParams.get("treeType");
+    CDEBrowserTreeService service = new CDEBrowserTreeServiceImpl();
+    TreeIdGenerator idGen = new TreeIdGenerator();
     String contextExcludeListStr = (String)treeParams.get(TreeConstants.BR_CONTEXT_EXCLUDE_LIST_STR);   
-   
-    setContexts(conn,baseTree,treeType,contextExcludeListStr);
+    allContextHolders = service.getContextNodeHolders(baseTree,idGen,contextExcludeListStr);
+
     setDataTemplateNodes(conn,baseTree);
     //setFormNodes(conn,baseTree);
     setFormByProtocolNodes(conn,baseTree);
@@ -167,36 +173,7 @@ public class CDEBrowserTreeCache
    System.out.println("InitCtep end"+TimeUtils.getEasternTime());
   }  
   
-  /**
-   * This method returns a list of DefaultMutableTreeNode objects. Each
-   * DefaultMutableTreeNode object in the list represents a Context 
-   * node.
-   *
-   */
-  public void setContexts(Connection conn,BaseTreeNode baseTreeNode,String treeType, String excludeList) throws Exception 
-  {
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    allContexts = new ArrayList();
-    if(!treeType.equals(TreeConstants.DE_SEARCH_TREE) || excludeList==null)
-      {
-        contextQueryStmt = contextQueryStmt +" ORDER BY name ";
-      }
-    else
-      {
-        contextQueryStmt = contextQueryStmt +" where name NOT IN ( " +excludeList + ") ORDER BY name ";
-      }  
 
-      pstmt =
-         (PreparedStatement)conn.prepareStatement(contextQueryStmt);
-      pstmt.setFetchSize(25);
-      rs = pstmt.executeQuery();
-      
-     // Can be done with no issues
-      while (rs.next()){
-        allContexts.add(this.getContextNode(rs,baseTreeNode));
-      }
-  }
   /**
    * This method returns a list of DefaultMutableTreeNode objects. Each
    * DefaultMutableTreeNode object in the list represents a Protocol Form Template
@@ -512,6 +489,7 @@ public class CDEBrowserTreeCache
     return cscsiMap;
   }
   
+  //Moved to service start
   private DefaultMutableTreeNode getContextNode(ResultSet rs,BaseTreeNode baseTree) throws Exception
   {
      
@@ -625,6 +603,7 @@ public class CDEBrowserTreeCache
               (new WebNode(id,name));
   }
   
+  // Moved to service end
   private void clearCache()
   {
     
@@ -649,4 +628,19 @@ public class CDEBrowserTreeCache
   {
     this.allTemplatesForCtep = allTemplatesForCtep;
   }
+
+
+  public void setAllContextHolders(List allContextHolders)
+  {
+    this.allContextHolders = allContextHolders;
+  }
+
+
+  public List getAllContextHolders()
+  {
+    return allContextHolders;
+  }
+
+
+
 }

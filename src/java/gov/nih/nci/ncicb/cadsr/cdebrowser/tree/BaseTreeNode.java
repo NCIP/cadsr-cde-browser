@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
-public class BaseTreeNode implements TreeConstants, CaDSRConstants  {
+public class BaseTreeNode implements TreeConstants, CaDSRConstants,TreeFunctions  {
   protected Connection myConn = null;
   protected DBUtil myDbUtil = null;
   protected Hashtable treeParams = null;
@@ -18,18 +18,18 @@ public class BaseTreeNode implements TreeConstants, CaDSRConstants  {
     treeParams = params;
   }
 
-  protected String getJsFunctionName() {
+  public String getJsFunctionName() {
     String functionName = (String)treeParams.get(FUNCTION_NAME_URL_PARAM);
     if (functionName == null) functionName = "performAction";
     return functionName;
   }
 
-  protected String getTreeType() {
+  public String getTreeType() {
     String treeType = (String)treeParams.get(TREE_TYPE_URL_PARAM);
     if (treeType == null) treeType = DE_SEARCH_TREE;
     return treeType;
   }
-  protected String getExtraURLParameters() {
+  public String getExtraURLParameters() {
     String extraURLParameters = (String)treeParams.get(EXTRA_URL_PARAMS);
     if ( extraURLParameters == null || getTreeType().equals(DE_SEARCH_TREE) ) {
       extraURLParameters = 
@@ -49,7 +49,7 @@ public class BaseTreeNode implements TreeConstants, CaDSRConstants  {
     return extraURLParameters;
   }
 
-  protected String getFormJsFunctionName() {
+  public String getFormJsFunctionName() {
     String functionName = "performAction";
     if (this.FORM_SEARCH_TREE.equals(this.getTreeType()))
       functionName = this.FORM_DETAILS_FUNCTION;
@@ -59,7 +59,7 @@ public class BaseTreeNode implements TreeConstants, CaDSRConstants  {
     return functionName;
   }
 
-  protected String isCTEPUser() {
+  public String isCTEPUser() {
     String ctepUser = CaDSRConstants.NO;
     if (treeParams.containsKey(this.CTEP_USER_FLAG))
       ctepUser = (String)treeParams.get(this.CTEP_USER_FLAG);

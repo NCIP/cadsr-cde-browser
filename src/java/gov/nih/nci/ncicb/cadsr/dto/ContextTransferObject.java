@@ -7,7 +7,7 @@ import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 public class ContextTransferObject extends BaseTransferObject implements Context {
   private String conteIdSeq = null;
   private String name = null;
-
+  private String description = null;
   public ContextTransferObject() {
   }
 
@@ -46,10 +46,11 @@ public class ContextTransferObject extends BaseTransferObject implements Context
   }
 
   public String getDescription() {
-    return null;
+    return description;
   }
 
-  public void setDescription(String p0) {
+  public void setDescription(String desc) {
+    description = desc;
   }
 
   public String getLanguage() {
