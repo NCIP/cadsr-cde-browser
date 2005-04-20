@@ -35,12 +35,18 @@ public class CDEBrowserTreeServiceImpl implements CDEBrowserTreeService
    ServiceLocator locator;
    AbstractDAOFactory daoFactory;
 
+  /**
+   * Currently the locator classname is hard code need to be refactored
+   */
   public CDEBrowserTreeServiceImpl()
   {
     locator = ServiceLocatorFactory.getLocator("gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl");
     daoFactory = AbstractDAOFactory.getDAOFactory(locator);
   }
   
+  /**
+   * @returns a Context holder that contains a contect object and context we node
+   */
   public List getContextNodeHolders(TreeFunctions treeFunctions,TreeIdGenerator idGen,String excludeList) throws Exception
   {
     ContextDAO dao = daoFactory.getContextDAO();
@@ -58,14 +64,24 @@ public class CDEBrowserTreeServiceImpl implements CDEBrowserTreeService
     }
     return holders;
   }
+   /**
+   * @returns a map with contextid as key and value a holder object containing two web node
+   * one containg the forms with no protocol and other a list of protocol we nodes
+   */
   public List getAllContextProtocolNodes(TreeFunctions treeFunctions,TreeIdGenerator idGen) throws Exception
   {
     return null;
   }
+   /**
+   * @returns a map with contextid as key and value a list of template nodes
+   */  
   public List getAllContextTemplateNodes(TreeFunctions treeFunctions,TreeIdGenerator idGen) throws Exception
   {
     return null;
   }
+  /**
+   * @returns a map with contextid as key and value a list of Classification nodes
+   */ 
   public List getAllClassificationNodes(TreeFunctions treeFunctions,TreeIdGenerator idGen) throws Exception
   {
     return null;
