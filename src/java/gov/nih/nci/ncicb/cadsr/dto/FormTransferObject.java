@@ -65,7 +65,11 @@ public class FormTransferObject extends AdminComponentTransferObject
   }
 
   public String getProtoIdseq() {
-    return null;
+  
+    if (protocol == null) 
+      return null;
+    else 
+      return this.getProtocol().getIdseq();
   }
 
   public void setProtoIdseq(String p0) {
