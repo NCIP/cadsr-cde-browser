@@ -33,22 +33,6 @@ public class CDEBrowserTreeCache
                                               "      ,description " +
                                               "FROM  sbr.contexts " ;
 
-  private static final String allFormsbyProtocolQueryStmt = " SELECT qc_idseq "
-                                        +" ,quest.long_name long_name "
-                                       +" ,quest.preferred_name preffered_name "
-                                       +" ,quest.preferred_definition preferred_definition "
-                                      + " ,quest.CONTE_IDSEQ "
-									                    + " ,quest.PROTO_IDSEQ PROTO_IDSEQ "
-									                    + " ,proto.LONG_NAME   proto_name "
-                                      + " ,proto.preferred_name proto_preferred_name "
-                                      +"  ,proto.preferred_definition proto_preferred_definition "
-                                      + " FROM  sbrext.quest_contents_ext quest,protocols_ext proto "
-                                      + " WHERE "
-                                      + " quest.qtl_name = 'CRF' "
-								                      + " AND   proto.PROTO_IDSEQ(+) =quest.PROTO_IDSEQ "
-                                      + " AND   quest.deleted_ind = 'No' "
-                                      + " AND   quest.latest_version_ind = 'Yes' "
-                                      + " ORDER BY conte_idseq,upper(proto.LONG_NAME),upper(quest.long_name) "; 
                                       
  final String allFormsQueryStmt =  " SELECT qc_idseq ,long_name "
                                    +" ,preferred_name "
@@ -161,7 +145,11 @@ public class CDEBrowserTreeCache
 
     setDataTemplateNodes(conn,baseTree);
     //setFormNodes(conn,baseTree);
-    setFormByProtocolNodes(conn,baseTree);
+    //setFormByProtocolNodes(conn,baseTree);
+    List protocolNodes = service.getAllContextProtocolNodes(baseTree,idGen);
+    allFormsWithNoProtocol = (Map) protocolNodes.get(0);
+    allFormsWithProtocol = (Map) protocolNodes.get(1);
+    
     //setCtepTemplateCtepNodes(conn,baseTree);
   System.out.println("Init end"+TimeUtils.getEasternTime());
   }
@@ -253,67 +241,6 @@ public class CDEBrowserTreeCache
         if (pstmt != null) pstmt.close();  
       }     
   } 
-  
-  /**
-   * This method returns a list of DefaultMutableTreeNode objects. Each
-   * DefaultMutableTreeNode object in the list represents a Protocol
-   * node for this context in the tree.
-   *
-   */
-  public void setFormByProtocolNodes(Connection conn,BaseTreeNode baseTree) throws Exception {
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    Map protocolHolder = new HashMap(); 
-    try {
-          pstmt =
-             (PreparedStatement)conn.prepareStatement(allFormsbyProtocolQueryStmt);
-          pstmt.setFetchSize(25);
-          rs = pstmt.executeQuery();
-    
-          while (rs.next()){
-            String currContextId = rs.getString(5);
-            String currProtoIdSeq = rs.getString(6);
-            //
-            if(currProtoIdSeq!=null&&!currProtoIdSeq.equals(""))
-            {
-              List protocolList = (List)allFormsWithProtocol.get(currContextId);
-              if(protocolList==null)
-              {
-                protocolList = new ArrayList();
-                allFormsWithProtocol.put(currContextId,protocolList);
-              }
-              DefaultMutableTreeNode protoNode = (DefaultMutableTreeNode)protocolHolder.get(currProtoIdSeq);
-              if(protoNode==null)
-              {
-                protoNode = getProtocolNode(rs,currContextId,baseTree);
-                protocolHolder.put(currProtoIdSeq,protoNode);
-                protocolList.add(protoNode);
-              }
-              DefaultMutableTreeNode formNode = getFormNode(rs,currContextId,baseTree);
-              protoNode.add(formNode);
-            }
-            else
-            {
-             DefaultMutableTreeNode formNode = getFormNode(rs,currContextId,baseTree);
-             List formWithNoProto = (List)allFormsWithNoProtocol.get(currContextId);        
-             if(formWithNoProto==null)
-              {
-                formWithNoProto = new ArrayList();
-                allFormsWithNoProtocol.put(currContextId,formWithNoProto);
-              }
-              formWithNoProto.add(formNode);
-            }
-          }
-     }
-      catch (SQLException ex) {
-      ex.printStackTrace();
-      throw ex;
-    }
-    finally {
-        if (rs != null) rs.close();
-        if (pstmt != null) pstmt.close();
-    }
-  }  
   
   
     /**
