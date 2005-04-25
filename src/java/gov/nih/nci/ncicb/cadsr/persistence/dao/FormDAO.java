@@ -161,6 +161,22 @@ public interface FormDAO extends AdminComponentDAO {
    */  
   public Collection getPublishingCSCSIsForTemplate(String contextIdSeq);   
  
+  /**
+   * Gets all the forms ordered by context and protocol
+   *
+   * @param 
+   *
+   * 
+   */  
   public List getAllFormsOrderByContextProtocol() ;
+    /**
+   * Gets all templates ordered by context
+   *
+   * @param 
+   *
+   * 
+   */  
   
+  public List getAllTemplatesOrderByContext() ;
+
 }
