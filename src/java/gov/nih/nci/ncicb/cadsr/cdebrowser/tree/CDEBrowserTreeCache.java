@@ -2,62 +2,30 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.tree;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.CDEBrowserTreeService;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.impl.CDEBrowserTreeServiceImpl;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.jdbc.ProtocolValueObject;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
-import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.util.TimeUtils;
 import gov.nih.nci.ncicb.webtree.WebNode;
+
 import java.net.URLEncoder;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class CDEBrowserTreeCache 
 {
-
-  
-  private static  String contextQueryStmt =
-                                              "SELECT conte_idseq " +
-                                              "      ,name " +
-                                              "      ,description " +
-                                              "FROM  sbr.contexts " ;
-
-                                      
- final String allFormsQueryStmt =  " SELECT qc_idseq ,long_name "
-                                   +" ,preferred_name "
-                                   +" ,preferred_definition "
-									                 +" ,context.CONTE_IDSEQ "
-									                 +" ,context.NAME	"	
-                                   +" FROM  sbrext.quest_contents_ext quest, contexts context "
-								                   +" where  context.CONTE_IDSEQ=quest.CONTE_IDSEQ "
-                                   +" AND   qtl_name = 'CRF' "
-                                   +" AND   deleted_ind = 'No' "
-                                   +" AND   latest_version_ind = 'Yes' "
-                                   +" ORDER BY conte_idseq,upper(long_name) ";      
-                                
-  final String templateQueryStmt =  "SELECT  qc_idseq ,long_name "
-                                    +" ,preferred_name  "
-                                    +" ,preferred_definition "
-                                    +" ,context.CONTE_IDSEQ "
-                                    +" ,context.NAME "										  
-                                    +" FROM  sbrext.quest_contents_ext quest, contexts context "
-                                    +" where  context.CONTE_IDSEQ=quest.CONTE_IDSEQ "
-                                    +" AND   deleted_ind = 'No' "
-                                    +" AND   latest_version_ind = 'Yes' "
-                                    +" AND   qtl_name = 'TEMPLATE' "
-                                    +" ORDER BY conte_idseq, upper(long_name) " ;    
-                                    
+                                   
  final String templateQueryForCtep = " SELECT distinct qc.qc_idseq "
                                        +" ,qc.long_name "
                                        +" ,qc.preferred_name "
@@ -102,7 +70,6 @@ public class CDEBrowserTreeCache
   }
   //All crf by contextId - Protocols(List) -crf(Collection) 
   private Map allFormsWithProtocol = new HashMap();
-  private Map allForms = new HashMap();
   private Map allFormsWithNoProtocol = new HashMap();
   private Map allTemplatesByContext = null;
   private List allTemplatesForCtep = null;  
@@ -121,11 +88,6 @@ public class CDEBrowserTreeCache
 
   }
   
-  public List getFormNodes(String contextIdSeq)
-  {
-    return (List)allForms.get(contextIdSeq);
-  }
-  
   public List getTemplateNodes(String contextIdSeq)
   {
     return (List)allTemplatesByContext.get(contextIdSeq);
@@ -142,8 +104,8 @@ public class CDEBrowserTreeCache
     TreeIdGenerator idGen = new TreeIdGenerator();
     String contextExcludeListStr = (String)treeParams.get(TreeConstants.BR_CONTEXT_EXCLUDE_LIST_STR);   
     allContextHolders = service.getContextNodeHolders(baseTree,idGen,contextExcludeListStr);
-
-    setDataTemplateNodes(conn,baseTree);
+    allTemplatesByContext = service.getAllContextTemplateNodes(baseTree,idGen);
+    //setDataTemplateNodes(conn,baseTree);
     //setFormNodes(conn,baseTree);
     //setFormByProtocolNodes(conn,baseTree);
     List protocolNodes = service.getAllContextProtocolNodes(baseTree,idGen);
@@ -160,88 +122,7 @@ public class CDEBrowserTreeCache
     setCtepTemplateCtepNodes(conn,baseTree,templateTypes);
    System.out.println("InitCtep end"+TimeUtils.getEasternTime());
   }  
-  
-
-  /**
-   * This method returns a list of DefaultMutableTreeNode objects. Each
-   * DefaultMutableTreeNode object in the list represents a Protocol Form Template
-   * node for a context other than CTEP.
-   *
-   */
-  public void setDataTemplateNodes(Connection conn,BaseTreeNode baseTree) throws Exception 
-  {
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    allTemplatesByContext = new HashMap();
-    try {
-      pstmt =
-         (PreparedStatement)conn.prepareStatement(templateQueryStmt);
-      pstmt.setFetchSize(25);
-      rs = pstmt.executeQuery();
-
-     // Can be done with no issues
-      while (rs.next()){
-        String currContextId = rs.getString(5);
-        DefaultMutableTreeNode tmpNode = getTemplateNode(rs,currContextId,baseTree);     
-                     
-        List nodes = (List)allTemplatesByContext.get(currContextId);
-        if(nodes==null)
-        {
-          nodes= new ArrayList(); 
-          allTemplatesByContext.put(currContextId,nodes);
-        }
-        nodes.add(tmpNode);        
-      }
-    }
-    catch (SQLException ex) {
-      ex.printStackTrace();
-      throw ex;
-    }
-    finally {
-      try {
-        if (rs != null) rs.close();
-        if (pstmt != null) pstmt.close();
-      }
-      catch (Exception ex) {
-        ex.printStackTrace();
-      }
-    }
-  }  
-  
-  
-  /**
-   * Get form in Aphabetical order
-   */
-   public void setFormNodes(Connection conn,BaseTreeNode baseTree) throws Exception{
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    allForms = new HashMap();
-    try {
-      pstmt =  
-         (PreparedStatement)conn.prepareStatement(allFormsQueryStmt);
-      rs = pstmt.executeQuery();
-      
-      while (rs.next()){
-        String currContextId = rs.getString(5);
-        DefaultMutableTreeNode formNode = getFormNode(rs,currContextId,baseTree);
-        List nodes = (List)allForms.get(currContextId);
-        if(nodes==null)
-        {
-          nodes= new ArrayList(); 
-          allForms.put(currContextId,nodes);
-        }                     
-        nodes.add(formNode);
-      }
-    } 
-    catch (Exception ex) {
-      throw ex;
-    } 
-    finally {
-        if (rs != null) rs.close();
-        if (pstmt != null) pstmt.close();  
-      }     
-  } 
-  
+ 
   
     /**
    * Returns Map With cscisid and List of Nodes with Templates
@@ -500,24 +381,6 @@ public class CDEBrowserTreeCache
   }     
   
 
-  private DefaultMutableTreeNode getProtocolNode(ResultSet rs,String currContextId,BaseTreeNode baseTree) throws Exception
-  {
-  
-          String protoIdseq = rs.getString("PROTO_IDSEQ");
-          String longName = rs.getString("proto_name");
-          String preferred_definition = rs.getString("proto_preferred_definition");
-          
-          DefaultMutableTreeNode protocolNode = new DefaultMutableTreeNode(
-                  new WebNode(protoIdseq+currContextId
-                     ,longName
-                     ,"javascript:"+baseTree.getJsFunctionName()+"('P_PARAM_TYPE=PROTOCOL&P_IDSEQ="+
-                       protoIdseq+"&P_CONTE_IDSEQ="+currContextId+
-                       "&protocolLongName="+longName+baseTree.getExtraURLParameters()+"')"
-                     ,preferred_definition));
-          return protocolNode;
-                     
-  }  
-  
   private  DefaultMutableTreeNode getWebNode(Connection conn, String name) throws Exception
   {
        return new DefaultMutableTreeNode
@@ -567,7 +430,5 @@ public class CDEBrowserTreeCache
   {
     return allContextHolders;
   }
-
-
 
 }

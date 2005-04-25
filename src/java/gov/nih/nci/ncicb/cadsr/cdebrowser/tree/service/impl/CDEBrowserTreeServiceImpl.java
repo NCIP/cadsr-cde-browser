@@ -90,7 +90,7 @@ public class CDEBrowserTreeServiceImpl
    String currProtoIdSeq = null;
 
    currProtoIdSeq = currForm.getProtoIdseq();
-   DefaultMutableTreeNode formNode = getFormNode(idGen.getNewId(), currForm, currContextId, treeFunctions);
+   DefaultMutableTreeNode formNode = getFormNode(idGen.getNewId(), currForm, treeFunctions);
 
    //
    if (currProtoIdSeq != null && !currProtoIdSeq.equals("")) {
@@ -134,8 +134,29 @@ public class CDEBrowserTreeServiceImpl
  /**
  * @returns a map with contextid as key and value a list of template nodes
  */
- public List getAllContextTemplateNodes(TreeFunctions treeFunctions, TreeIdGenerator idGen) throws Exception {
-  return null;
+ public Map getAllContextTemplateNodes(TreeFunctions treeFunctions, TreeIdGenerator idGen) throws Exception {
+  Map allTemplatesByContext = new HashMap();
+  FormDAO dao = daoFactory.getFormDAO();
+  List templates = dao.getAllTemplatesOrderByContext();
+
+  Iterator iter = templates.iterator();
+
+  while (iter.hasNext()) {
+    Form currTemplate = (Form)iter.next();
+    
+    String currContextId = currTemplate.getContext().getConteIdseq();
+    DefaultMutableTreeNode tmpNode = getTemplateNode(idGen.getNewId(), currTemplate, treeFunctions);     
+                 
+    List nodes = (List)allTemplatesByContext.get(currContextId);
+    if(nodes==null)
+    {
+      nodes= new ArrayList(); 
+      allTemplatesByContext.put(currContextId,nodes);
+    }
+    nodes.add(tmpNode);        
+  }
+ 
+  return allTemplatesByContext;
  }
  /**
   * @returns a map with contextid as key and value a list of Classification nodes
@@ -162,31 +183,32 @@ public class CDEBrowserTreeServiceImpl
   return contextNode;
  }
 
- private DefaultMutableTreeNode getFormNode(String nodeId, Form form, String currContextId,
+ private DefaultMutableTreeNode getFormNode(String nodeId, Form form, 
                                             TreeFunctions treeFunctions) throws Exception {
   String formIdseq = form.getFormIdseq();
 
   String longName = form.getLongName();
   String preferred_definition = form.getPreferredDefinition();
-
+  String currContextId = form.getContext().getConteIdseq();
+  
   DefaultMutableTreeNode
-     formNode = new DefaultMutableTreeNode(
-                   new WebNode(nodeId,
-                               longName,
-                               "javascript:" + treeFunctions.getFormJsFunctionName() + "('P_PARAM_TYPE=CRF&P_IDSEQ="
-                                  + formIdseq + "&P_CONTE_IDSEQ=" + " " + "&P_PROTO_IDSEQ=" + ""
-                                  + treeFunctions.getExtraURLParameters() + "')",
-                               preferred_definition));
+     formNode = new DefaultMutableTreeNode( new WebNode(nodeId,
+         longName,
+         "javascript:" + treeFunctions.getFormJsFunctionName() + "('P_PARAM_TYPE=CRF&P_IDSEQ="
+            + formIdseq + "&P_CONTE_IDSEQ=" + " " + "&P_PROTO_IDSEQ=" + ""
+            + treeFunctions.getExtraURLParameters() + "')",
+         preferred_definition));
   return formNode;
  }
 
- private DefaultMutableTreeNode getTemplateNode(String nodeId, Form template, String contextName, String currContextId,
+ private DefaultMutableTreeNode getTemplateNode(String nodeId, Form template, 
                                                 TreeFunctions treeFunctions) throws Exception {
   String templateIdseq = template.getFormIdseq();
 
   String longName = template.getLongName();
   String preferred_definition = template.getPreferredDefinition();
-
+  String contextName = template.getContext().getName();
+  String currContextId = template.getContext().getConteIdseq();
   DefaultMutableTreeNode tmpNode =
                             new DefaultMutableTreeNode(new WebNode(nodeId,
                                                                    longName                                              //long name

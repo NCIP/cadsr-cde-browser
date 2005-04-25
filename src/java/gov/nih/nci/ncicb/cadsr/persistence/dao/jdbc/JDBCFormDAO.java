@@ -323,6 +323,22 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   return query.execute();
  }
 
+ /**
+  * Gets all the forms sort by context id, protocol name, form name
+  *
+  * @param 
+  *
+  * @return forms that match the criteria.
+  */
+ public List getAllTemplatesOrderByContext() {
+  TemplateByContextQuery query = new TemplateByContextQuery();
+
+  query.setDataSource(getDataSource());
+  query.setSql();
+  return query.execute();
+ }
+
+
   // Publish Change Order
 
   /**
@@ -1046,4 +1062,51 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    return form;
   }
  }
+ 
+  /**
+  * Inner class that accesses database to get all the templates 
+  * sort by context and protocol
+  */
+ class TemplateByContextQuery  extends MappingSqlQuery {
+  TemplateByContextQuery() {
+   super();
+  }
+
+  public void setSql() {
+   String allTemplatesQueryStmt = "SELECT  qc_idseq ,long_name "
+                                    +" ,preferred_name  "
+                                    +" ,preferred_definition "
+                                    +" ,context.CONTE_IDSEQ "
+                                    +" ,context.NAME  "										  
+                                    +" FROM  sbrext.quest_contents_ext quest, contexts context "
+                                    +" where  context.CONTE_IDSEQ=quest.CONTE_IDSEQ "
+                                    +" AND   deleted_ind = 'No' "
+                                    +" AND   latest_version_ind = 'Yes' "
+                                    +" AND   qtl_name = 'TEMPLATE' "
+                                    +" ORDER BY conte_idseq, upper(long_name) " ;    
+   log.debug(allTemplatesQueryStmt);                                 
+   super.setSql(allTemplatesQueryStmt);
+  }
+
+  protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
+   String currContextId = rs.getString("CONTE_IDSEQ");
+
+   Form form = new FormTransferObject();
+   form.setFormIdseq(rs.getString("qc_idseq"));                       // QC_IDSEQ
+   form.setIdseq(rs.getString("qc_idseq"));
+   form.setLongName(rs.getString("long_name"));                       //LONG_NAME
+   form.setPreferredName(rs.getString("preferred_name"));             // PREFERRED_NAME
+   form.setPreferredDefinition(rs.getString("preferred_definition")); // preferred_definition
+
+   //setContext(new ContextTransferObject(rs.getString("context_name")));
+   ContextTransferObject contextTransferObject = new ContextTransferObject();
+   contextTransferObject.setConteIdseq(rs.getString("CONTE_IDSEQ")); //CONTE_IDSEQ
+   contextTransferObject.setName(rs.getString("NAME")); //context name
+   form.setContext(contextTransferObject);
+
+   return form;
+  }
+ }
+ 
+ 
 }
