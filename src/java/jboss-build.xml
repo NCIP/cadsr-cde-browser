@@ -118,7 +118,7 @@
    <path id="classpath">
       <!--browser libs -->
 
-      <pathelement location="${java.lib.dir}/classes12.jar"/>
+      <pathelement location="${java.lib.dir}/ojdbc14.jar"/>
       <pathelement location="${java.lib.dir}/cle20.jar"/>
       <pathelement location="${java.lib.dir}/collections.jar"/>
       <pathelement location="${java.lib.dir}/healthtoolkit.zip"/>
@@ -148,8 +148,13 @@
       <pathelement location="${java.lib.dir}/jakarta-oro.jar"/> 
       
       <!-- Springframework libs -->
-      <pathelement location="${java.lib.dir}/spring.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-jdbc.jar"/> 
+      <pathelement location="${java.lib.dir}/spring115.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-context115.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-core115.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-dao115.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-orm115.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-context115.jar"/>
+      <pathelement location="${java.lib.dir}/spring-web115.jar"/>
             
       <!--J2EE  libs -->
       <pathelement location="${java.lib.dir}/servlet.jar"/>
@@ -186,6 +191,7 @@
             <patternset>
               <include name="gov/nih/nci/ncicb/cadsr/persistence/base/**"/> 
               <include name="gov/nih/nci/ncicb/cadsr/persistence/dao/**"/> 
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/jdbc/**"/> 
             </patternset>
           </fileset>
           <manifest>

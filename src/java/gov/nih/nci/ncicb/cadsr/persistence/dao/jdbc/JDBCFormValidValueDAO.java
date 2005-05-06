@@ -1,8 +1,24 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
+import gov.nih.nci.ncicb.cadsr.exception.FatalException;
+import gov.nih.nci.ncicb.cadsr.persistence.jdbc.oracle.ObjectTransformer;
+import gov.nih.nci.ncicb.cadsr.persistence.jdbc.oracle.OracleFormValidvalueList;
+import gov.nih.nci.ncicb.cadsr.persistence.jdbc.spring.OracleJBossNativeJdbcExtractor;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+import gov.nih.nci.ncicb.cadsr.util.TimeUtils;
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import oracle.jdbc.driver.OracleTypes;
+import oracle.jdbc.driver.OracleConnection;
+import oracle.jdbc.driver.OracleCallableStatement;
+
+//import oracle.jdbc.OracleConnection;
+//import oracle.jdbc.OracleCallableStatement;
+
+
 import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
@@ -67,32 +83,6 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     }
     **/
     
-/**
-    InsertQuestContent  insertQuestContent  = 
-      new InsertQuestContent (this.getDataSource());
-     String qcIdseq = generateGUID();
-    int res = insertQuestContent.createContent(newValidValue, qcIdseq);
-    if (res != 1) {
-      DMLException dml = new DMLException("Did not succeed creating valid value record " + 
-        " in the quest_contents_ext table.");
-      dml.setErrorCode(ERROR_CREATEING_VALID_VALUE);
-      throw dml;
-    }
-
-    InsertQuestRec  insertQuestRec  = 
-      new InsertQuestRec (this.getDataSource());
-    String qrIdseq = generateGUID();
-    int resRec = insertQuestRec.createContent(newValidValue, qcIdseq, qrIdseq);
-    if (resRec == 1) {
-      return qcIdseq;
-    }
-    else {
-      DMLException dml =  new DMLException("Did not succeed creating question value relationship " +  
-        "record in the quest_recs_ext table.");
-       dml.setErrorCode(this.ERROR_CREATEING_VALID_VALUE);
-      throw  dml;
-    }
-  **/
   
     InsertFormValidValue insertValidValue = new InsertFormValidValue(this.getDataSource());
     Map out = insertValidValue.executInsertCommand(newValidValue);
@@ -112,9 +102,35 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     
   }
 
-  public int createFormValidValueComponents(Collection validValues)
+  public void createFormValidValueComponents(List validValues,String parentId)
     throws DMLException {
-    return 0;
+    
+    OracleFormValidvalueList list = null;
+    InsertFormValidValues insertValidValues = new InsertFormValidValues(this.getDataSource());
+
+    try
+    {
+      list = ObjectTransformer.toOracleFormValidvalueList(validValues,parentId);
+    }
+    catch (Exception e)
+    {
+      throw new FatalException("Error While crating Oracle Types",e);
+    }
+    Map out = insertValidValues.executInsertCommand(list);
+
+    String returnCode = (String) out.get("p_return_code");
+    String returnDesc = (String) out.get("p_return_desc");
+    
+   
+    if (!StringUtils.doesValueExist(returnCode)) {
+      return ;
+    }
+    else{
+      DMLException dml =  new DMLException(returnDesc);
+      dml.setErrorCode(this.ERROR_CREATEING_VALID_VALUE);
+      throw dml;
+    }    
+    
   }
 
   /**
@@ -185,7 +201,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
       module.setForm(form);
       Question question = new QuestionTransferObject();
-      question.setQuesIdseq("D4A91DCA-3567-0D59-E034-0003BA0B1A09");
+      question.setQuesIdseq("99CD59C6-17B8-3FA4-E034-080020C9C0E0");
       question.setModule(module);
       
       formValidValue.setQuestion(question);
@@ -193,15 +209,21 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       formValidValue.setLongName("Test ValidValue Long Name 022904 1");
       formValidValue.setPreferredDefinition("Test Valid Value pref def");
       Context conte = new ContextTransferObject();
-      conte.setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+      conte.setConteIdseq("29A8FB18-0AB1-11D6-A42F-0010A4C1E842");
       formValidValue.setContext(conte);
       formValidValue.setAslName("DRAFT NEW");
       formValidValue.setCreatedBy("Hyun Kim");
       formValidValue.setVpIdseq("99BA9DC8-5B9F-4E69-E034-080020C9C0E0"); 
       formValidValue.setDisplayOrder(100);
 
-     String res = test.createFormValidValueComponent(formValidValue);
-      System.out.println("\n*****Create Valid Value Result 2: " + res);
+      //String res = test.createFormValidValueComponent(formValidValue);
+      //System.out.println("\n*****Create Valid Value Result 2: " + res);
+      
+      //Test a List
+      List list = new ArrayList();
+      list.add(formValidValue);
+      test.createFormValidValueComponents(list,"99CD59C6-17B8-3FA4-E034-080020C9C0E0");
+      
     }
     catch (DMLException de) {
       de.printStackTrace();
@@ -367,7 +389,6 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       declareParameter(new SqlOutParameter("p_qr_idseq", Types.VARCHAR));
       declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
       declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
-          
       
       compile();
     }
@@ -395,6 +416,57 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
 
       Map out = execute(in);
       return out;
+    }
+  }
+  
+    /**
+   * This Class uses Oracle database objects to save a
+   * Collection of VV in one short 
+   * Oracle Native jdbc object are used since this is a propritery way
+   * to same a collection of records to 9idb
+   */
+  private class InsertFormValidValues extends StoredProcedure {
+  
+    static final String insertvalidvaluesSql = "begin sbrext_form_builder_pkg.ins_multi_values(?,?,?); end;";
+    static final String oracleCollectionClass = "gov.nih.nci.ncicb.cadsr.persistence.jdbc.oracle.OracleFormValidvalueList";
+    
+    public InsertFormValidValues(DataSource ds) {
+     super(ds,"dummySql");
+      getJdbcTemplate().setNativeJdbcExtractor(new OracleJBossNativeJdbcExtractor());
+    }
+
+    public Map executInsertCommand(OracleFormValidvalueList fvvs) {
+        
+        try
+        {
+          HashMap querymap = new HashMap();
+          OracleJBossNativeJdbcExtractor ext = (OracleJBossNativeJdbcExtractor)getJdbcTemplate().getNativeJdbcExtractor();
+          OracleConnection conn =(OracleConnection) ext.doGetOracleConnection(getJdbcTemplate().getDataSource().getConnection());
+          //For testing outside jboss 
+          //OracleConnection conn =(OracleConnection) getJdbcTemplate().getDataSource().getConnection();
+          querymap.put("SBREXT.FB_VALIDVALUELIST", Class.forName(oracleCollectionClass));
+          conn.setTypeMap(querymap);
+          OracleCallableStatement stmt = (OracleCallableStatement)conn.prepareCall(insertvalidvaluesSql); 
+          stmt.setORAData(1,fvvs);
+          stmt.registerOutParameter(2, Types.VARCHAR);
+          stmt.registerOutParameter(3, Types.VARCHAR);
+          stmt.execute();
+          Object code = stmt.getString(2);
+          Object desc = stmt.getString(3);
+          HashMap resultmap = new HashMap();
+          resultmap.put("p_return_code",code);
+          resultmap.put("p_return_desc",desc);
+          return resultmap;
+        }
+        catch (SQLException e)
+        {
+          throw new DMLException("SqlExcption on bulk valid value insert",e);
+        }
+        catch (ClassNotFoundException e)
+        {
+          throw new DMLException("ClassNotFoundException-" +oracleCollectionClass+ "on bulk valid value insert",e);
+        }
+
     }
   }
   

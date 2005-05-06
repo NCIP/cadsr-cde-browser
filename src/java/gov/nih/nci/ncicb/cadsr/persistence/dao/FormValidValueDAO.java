@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 
 import java.util.Collection;
+import java.util.List;
 
 
 public interface FormValidValueDAO {
@@ -28,7 +29,7 @@ public interface FormValidValueDAO {
    *
    * @throws <b>DMLException</b>
    */
-  public int createFormValidValueComponents (Collection validValues)
+  public void createFormValidValueComponents (List validValues,String parentId)
     throws DMLException;
 
   /**

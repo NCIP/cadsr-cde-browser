@@ -18,7 +18,6 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.SqlFunction;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.jdbc.object.MappingSqlQuery;
-import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.jdbc.object.SqlUpdate;
 
 import java.sql.Connection;

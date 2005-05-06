@@ -729,8 +729,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
                                     FormValidValueInstructionDAO fvvInstrDao,
                                     List newValidValues,String parentId)
   {
+      
            if(newValidValues!=null&&!newValidValues.isEmpty())
            {
+            /**
              Iterator newIt = newValidValues.iterator();
              while(newIt.hasNext())
              {
@@ -743,6 +745,9 @@ public class FormBuilderEJB extends SessionBeanAdapter
                     fvvInstrDao.createInstruction(vvInstr,newfvvIdseq);
                  }
              }
+             **/
+             fvvDao.createFormValidValueComponents(newValidValues,parentId);
+             
            }
   }
   private void deleteQuestions(QuestionDAO questionDao,
@@ -807,8 +812,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
                   questionInstrDao.createInstruction(qInstr,newQusetion.getQuesIdseq());
                }
              List currQuestionValidValues = currQuestion.getValidValues();
+             
              if (currQuestionValidValues!=null)
              {
+              /**
                ListIterator currQuestionValidValuesIt = currQuestionValidValues.listIterator();
                while(currQuestionValidValuesIt!=null&&currQuestionValidValuesIt.hasNext())
                {
@@ -824,6 +831,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
                     fvvInstrDao.createInstruction(vvInstr,newFVVIdseq);
                  }
                }
+               **/
+               fvvDao.createFormValidValueComponents(currQuestionValidValues,newQusetion.getQuesIdseq());
              }
            }
          }
