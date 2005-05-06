@@ -68,14 +68,14 @@
       Name="Name"
       IsUnique="true"
       IsNotNull="true"
-      Precision="255"
+      Precision="30"
       ColumnName="NAME"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
       SQLType="VARCHAR"
       TableName="DESIGNATIONS" >
       <DesignTime>
-         <Attr Name="_DisplaySize" Value="255" />
+         <Attr Name="_DisplaySize" Value="30" />
       </DesignTime>
    </Attribute>
    <Attribute
