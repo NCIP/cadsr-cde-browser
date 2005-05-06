@@ -508,7 +508,7 @@ public class DESearchQueryBuilder extends Object {
                                               " from   sbrext.core_noncore_de_view " +
                                               " where csi_idseq = '"+treeParamIdSeq+"'" +
                                               " and de_group = 'CORE') "+
-                         csiWhere + whereClause+ ++ workFlowWhere+registrationWhere;
+                         csiWhere + whereClause+workFlowWhere+registrationWhere;
       }
       else if (treeParamType.equals("NON-CORE")) {
         fromWhere = " from sbr.data_elements de , "+
