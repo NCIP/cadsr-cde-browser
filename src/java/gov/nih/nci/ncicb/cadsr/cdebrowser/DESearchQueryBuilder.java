@@ -480,7 +480,7 @@ public class DESearchQueryBuilder extends Object {
                          //" and csc.cs_idseq = '"+treeParamIdSeq+"'" +
                          //" and csc.cs_csi_idseq = acs.cs_csi_idseq " +
                          //" and acs.ac_idseq = de.de_idseq " +
-                         csiWhere + whereClause+ registrationWhere + csWhere;
+                         csiWhere + whereClause+ registrationWhere + workFlowWhere+csWhere;
 
       }
       else if (treeParamType.equals("CORE")) {
@@ -508,7 +508,7 @@ public class DESearchQueryBuilder extends Object {
                                               " from   sbrext.core_noncore_de_view " +
                                               " where csi_idseq = '"+treeParamIdSeq+"'" +
                                               " and de_group = 'CORE') "+
-                         csiWhere + whereClause+ registrationWhere;
+                         csiWhere + whereClause+ ++ workFlowWhere+registrationWhere;
       }
       else if (treeParamType.equals("NON-CORE")) {
         fromWhere = " from sbr.data_elements de , "+
@@ -535,7 +535,7 @@ public class DESearchQueryBuilder extends Object {
                                               " from   sbrext.core_noncore_de_view " +
                                               " where csi_idseq = '"+treeParamIdSeq+"'" +
                                               " and de_group = 'NON-CORE') "+
-                         csiWhere + whereClause+ registrationWhere;
+                         csiWhere + whereClause+ workFlowWhere+registrationWhere;
       }
       //String orderBy = " order by de.preferred_name, de.version ";
       StringBuffer finalSqlStmt = new StringBuffer ();
