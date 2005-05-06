@@ -33,6 +33,7 @@ public class DesignationsImpl extends EntityImpl  {
 
 
 
+
   private static EntityDefImpl mDefinitionObject;
 
   /**
@@ -54,6 +55,7 @@ public class DesignationsImpl extends EntityImpl  {
     }
     return mDefinitionObject;
   }
+
 
 
 
@@ -377,6 +379,7 @@ public class DesignationsImpl extends EntityImpl  {
   {
     return new Key(new Object[] {desigIdseq});
   }
+
 
 
 

@@ -68,7 +68,7 @@
       Name="Name"
       IsUnique="true"
       IsNotNull="true"
-      Precision="30"
+      Precision="255"
       ColumnName="NAME"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
