@@ -111,7 +111,23 @@ public interface AdminComponentDAO {
    *
    * 
    */  
-    Collection getCSIByType(String csType, String csiType, String contextIdseq);
+    List getCSIByType(String csType, String csiType, String contextIdseq);
    
+  /**
+   * Gets all CSCSI for CS named 'CRF_DISEASE' and 'Phase', for given context id
+   *
+   * @param contextId
+   *
+   * 
+   */  
+  public List getCSIForContextId(String contextId);
 
+  /**
+   * Gets classification hierachy
+   *
+   * @param contextId
+   *
+   * 
+   */  
+  public List getCSCSIHierarchy();
 }

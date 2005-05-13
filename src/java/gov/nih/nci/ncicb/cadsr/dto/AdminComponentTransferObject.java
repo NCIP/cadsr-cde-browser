@@ -110,6 +110,7 @@ public class AdminComponentTransferObject extends BaseTransferObject
 
   public void setContext(Context pContext) {
     context = pContext;
+    conteIdseq = pContext.getConteIdseq();
   }
 
   public List getRefereceDocs() {

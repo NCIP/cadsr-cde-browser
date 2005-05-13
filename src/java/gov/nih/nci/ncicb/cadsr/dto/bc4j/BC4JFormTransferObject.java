@@ -131,5 +131,16 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
   {
 
   }
+  public void setClassifications(Collection classifications)
+  {
+   
+  }
+
+
+  public Collection getClassifications()
+  {
+    return null;
+  }
+
 
 }

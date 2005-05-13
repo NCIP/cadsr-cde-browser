@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.resource;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface Form extends AdminComponent,Instructionable  {
@@ -29,4 +30,8 @@ public interface Form extends AdminComponent,Instructionable  {
   
   public Object clone() throws CloneNotSupportedException ;
 
+  public void setClassifications(Collection classifications);
+
+
+  public Collection getClassifications();
 }

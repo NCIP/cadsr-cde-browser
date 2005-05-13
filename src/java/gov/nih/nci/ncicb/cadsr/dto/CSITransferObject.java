@@ -7,11 +7,15 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
   private String csiType = null;
   private String csiIdseq = null;
   private String csCsiIdseq = null;
+  private String csiDescription = null;
+  private String parentCscsiId = null;
   private String csIdseq = null;
   private String csDefinition = null;
   private String csLongName = null;
+  private String csPrefName = null;
+  private String csConteIdseq = null;
   private String acCsiIdseq = null;
-
+  
   public CSITransferObject() {
   }
 
@@ -21,6 +25,14 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
 
   public void setClassSchemeLongName(String aClassSchemeName) {
     csLongName = aClassSchemeName;
+  }
+
+  public String getClassSchemePrefName() {
+    return csPrefName;
+  }
+
+  public void setClassSchemePrefName(String aName) {
+    csPrefName = aName;
   }
 
   public String getClassSchemeDefinition() {
@@ -76,5 +88,41 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
   }
   public void setAcCsiIdseq(String acCsiIdseq) {
     this.acCsiIdseq = acCsiIdseq;
+  }
+
+
+  public void setCsiDescription(String csiDescription)
+  {
+    this.csiDescription = csiDescription;
+  }
+
+
+  public String getCsiDescription()
+  {
+    return csiDescription;
+  }
+
+
+  public void setParentCscsiId(String parentCscsiId)
+  {
+    this.parentCscsiId = parentCscsiId;
+  }
+
+
+  public String getParentCscsiId()
+  {
+    return parentCscsiId;
+  }
+
+
+  public void setCsConteIdseq(String csConteIdseq)
+  {
+    this.csConteIdseq = csConteIdseq;
+  }
+
+
+  public String getCsConteIdseq()
+  {
+    return csConteIdseq;
   }
 }

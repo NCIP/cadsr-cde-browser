@@ -1,8 +1,10 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeFunctions;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeIdGenerator;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import java.util.List;
 import java.util.Map;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * This service provivides operations for building the CDEBrowser tree
@@ -16,6 +18,10 @@ public interface CDEBrowserTreeService
   public List getContextNodeHolders(TreeFunctions treeFunctions,TreeIdGenerator idGen,String excludeList) throws Exception;
   public List getAllContextProtocolNodes(TreeFunctions treeFunctions,TreeIdGenerator idGen) throws Exception;
   public Map getAllContextTemplateNodes(TreeFunctions treeFunctions,TreeIdGenerator idGen) throws Exception;
-  public List getAllClassificationNodes(TreeFunctions treeFunctions,TreeIdGenerator idGen) throws Exception;
+  public Map getAllClassificationNodes(TreeFunctions treeFunctions,TreeIdGenerator idGen) throws Exception;
+  public List getAllTemplateNodesForCTEP(TreeFunctions treeFunctions, TreeIdGenerator idGen, Context currContext, List templateTypes) throws Exception ;
+  public DefaultMutableTreeNode getPublishingNode(TreeFunctions treeFunctions, 
+                   TreeIdGenerator idGen, Context currContext,
+                   boolean showFormsAlphebetically) throws Exception ;
 
 }

@@ -37,7 +37,7 @@ public interface FormDAO extends AdminComponentDAO {
    *
    * @return <b>Collection</b> List of Forms
    */
-  public Collection getAllPublishedFormsForProtocol(String protocolIdSeq); 
+  public List getAllPublishedFormsForProtocol(String protocolIdSeq); 
   
   /**
    * Gets all the modules in a form
@@ -150,7 +150,7 @@ public interface FormDAO extends AdminComponentDAO {
    * 
    */  
     
-  public Collection getPublishingCSCSIsForForm(String contextIdSeq);
+  public List getPublishingCSCSIsForForm(String contextIdSeq);
 
     /**
    * Gets all the publishing Classifications for a Template
@@ -159,7 +159,7 @@ public interface FormDAO extends AdminComponentDAO {
    *
    * 
    */  
-  public Collection getPublishingCSCSIsForTemplate(String contextIdSeq);   
+  public List getPublishingCSCSIsForTemplate(String contextIdSeq);   
  
   /**
    * Gets all the forms ordered by context and protocol
@@ -178,5 +178,43 @@ public interface FormDAO extends AdminComponentDAO {
    */  
   
   public List getAllTemplatesOrderByContext() ;
+
+ /**
+  * Gets all the templates for given context id
+  *
+  * @param 
+  *
+  * @return forms that match the criteria.
+  */
+ public List getAllTemplatesForContextId(String contextIdseq);
+ 
+ 
+  /**
+   * Gets all the templatess that has been published by the given context
+   *
+   * @param <b>contextId</b> Idseq of the Context
+   *
+   * @return <b>List</b> List of Templates
+   */
+ public List getAllPublishedTemplates (String contextId);
+ 
+  /**
+   * Gets all the forms that has been published by given context
+   *
+   * @param <b>contextId</b> Idseq of the Context
+   *
+   * @return <b>List</b> List of Forms
+   */
+  public List getAllPublishedForms(String contextId);
+
+
+  /**
+   * Gets all the protocols 
+   *
+   * @param <b>contextId</b> Idseq of the Context
+   *
+   * @return <b>Collection</b> List of Protocols
+   */
+  public List getAllProtocolsForPublishedForms(String contextIdSeq);
 
 }

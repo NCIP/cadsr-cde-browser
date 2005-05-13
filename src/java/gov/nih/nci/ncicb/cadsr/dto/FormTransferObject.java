@@ -29,6 +29,7 @@ public class FormTransferObject extends AdminComponentTransferObject
    private List footerInstructions = null;
    private String contextName = null;
    private String protocolLongName = null;
+   private Collection classifications = null;
 
   public FormTransferObject() {
     
@@ -73,6 +74,10 @@ public class FormTransferObject extends AdminComponentTransferObject
   }
 
   public void setProtoIdseq(String p0) {
+    if (protocol == null) 
+      protocol = new ProtocolTransferObject();
+    
+    protocol.setIdseq(p0);
   }
 
   public List getModules() {
@@ -312,5 +317,17 @@ public class FormTransferObject extends AdminComponentTransferObject
        else 
           setProtocolLongName("");
     return protocolLongName;
+  }
+
+
+  public void setClassifications(Collection classifications)
+  {
+    this.classifications = classifications;
+  }
+
+
+  public Collection getClassifications()
+  {
+    return classifications;
   }
 }
