@@ -7,6 +7,7 @@ import gov.nih.nci.ncicb.cadsr.dto.ReferenceDocumentTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Attachment;
+import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
@@ -254,11 +255,42 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
    *
    *
    */
-  public Collection getCSIByType(String csType, String csiType, String contextIdseq)
+  public List getCSIByType(String csType, String csiType, String contextIdseq)
     {
       CSCSIsByTypeQuery query = new CSCSIsByTypeQuery(getDataSource());
       return query.getCSCSIs(csType,csiType,contextIdseq);
     }
+    
+    /**
+   * Gets all CSI for CTEP
+   *
+   * @param 
+   *
+   *
+   */
+  public List getCSIForContextId(String contextId)
+    {
+      
+      CSCSIsByContextIDQuery query = new CSCSIsByContextIDQuery(getDataSource());
+      return query.getCSCSIs(contextId);
+    }
+
+    /**
+   * Gets all CSCSI
+   *
+   * @param 
+   *
+   *
+   */
+  public List getCSCSIHierarchy()
+    {
+      
+      CSCSIsHierQuery query = new CSCSIsHierQuery();
+      query.setDataSource(getDataSource());
+      query.setSql();
+      return query.execute();
+    }
+
 
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
@@ -275,10 +307,14 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     int deleteRes = jdbcAdminComponentDAO.removeClassification
       ("D66B85B6-4EDA-469B-E034-0003BA0B1A09");
     System.out.println ("deleteRes = " + deleteRes);
-    */
     Collection csito = jdbcAdminComponentDAO.retrieveClassifications(
       "29A8FB19-0AB1-11D6-A42F-0010A4C1E842");
-    System.out.println (csito);
+    */
+    
+    
+    Collection csito = jdbcAdminComponentDAO.getCSCSIHierarchy();
+   System.out.println (csito.size());
+    
   }
 
   /**
@@ -600,11 +636,56 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
   }
 
     //Publish Change Order
+  class CSCSIsByContextIDQuery extends MappingSqlQuery {
+    
+    CSCSIsByContextIDQuery(DataSource ds)  {
+      super(ds, "SELECT  csi.csi_idseq "
+                               +"       ,csi_name "
+                               +"       ,csitl_name "
+                               +"       ,description "
+                               +"       ,csc.cs_csi_idseq "
+                               +"       ,cs.preferred_name "
+                               +"FROM   sbr.class_scheme_items csi "
+                               +"      ,sbr.cs_csi csc "
+                               +"      ,sbr.classification_schemes cs "
+                               +"WHERE csi.csi_idseq = csc.csi_idseq "
+                               +"AND cs.CONTE_IDSEQ = ? "
+                               +"AND csc.cs_idseq = cs.cs_idseq "
+                               +"AND   cs.preferred_name in( 'CRF_DISEASE','Phase' ) "
+                               +"ORDER BY upper(csi.csi_name) " );
+      declareParameter(new SqlParameter("context_id", Types.VARCHAR));
+      compile();
+    }
+
+  protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
+
+        ClassSchemeItem csiTO = new CSITransferObject();
+        csiTO.setCsiIdseq(rs.getString("csi_idseq"));
+        csiTO.setClassSchemeItemName(rs.getString("csi_name"));
+        csiTO.setClassSchemeItemType(rs.getString("csitl_name"));
+        csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
+        csiTO.setClassSchemeLongName(rs.getString("preferred_name"));
+
+   return csiTO;
+  }
+
+    protected List getCSCSIs( String contextIdSeq) {
+      Object[] obj =
+        new Object[] { contextIdSeq
+        };
+
+      return execute(obj);
+
+    }
+ }
+  
+      //Publish Change Order
   class CSCSIsByTypeQuery extends MappingSqlQuery {
     CSCSIsByTypeQuery(DataSource ds) {
       super(
         ds,
-          "select distinct cscsi.CS_CSI_IDSEQ from  classification_schemes cs, "
+          "select distinct cscsi.CS_CSI_IDSEQ, i.CSITL_NAME , "  +
+          " cs.LONG_NAME, cscsi.LABEL from  classification_schemes cs, "
           + " sbr.class_scheme_items i , cs_csi cscsi "
 	   			+" where cs.CSTL_NAME=? and i.CSITL_NAME=? "
 					+" and cscsi.CSI_IDSEQ=i.CSI_IDSEQ "
@@ -620,10 +701,16 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     protected Object mapRow(
       ResultSet rs,
       int rownum) throws SQLException {
-      return rs.getString("CS_CSI_IDSEQ");
-    }
+        ClassSchemeItem csiTO = new CSITransferObject();
+        csiTO.setClassSchemeItemName(rs.getString("LABEL"));
+        csiTO.setClassSchemeItemType(rs.getString("csitl_name"));
+        csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
+        csiTO.setClassSchemeLongName(rs.getString("LONG_NAME"));
+ 
+   return csiTO;
+   }
 
-    protected Collection getCSCSIs(
+    protected List getCSCSIs(
       String csType,
       String csiType,
       String contextIdSeq) {
@@ -639,6 +726,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       return execute(obj);
     }
   }
+
 
   //Publish Chnage Order
 
@@ -671,4 +759,48 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       return res;
     }
   }
+  
+    //Load all CsCSI Hierarchy
+  private class CSCSIsHierQuery extends MappingSqlQuery {
+    CSCSIsHierQuery() {
+      super();
+    }
+
+    public void setSql() {
+      super.setSql(
+        "select cs_idseq, cs_preffered_name, cs_long_name, "
+        + "CS_PREFFRED_DEFINITION, "
+        + "csi_idseq, csi_name, csitl_name, csi_description, "
+        + "cs_csi_idseq, csi_level, parent_csi_idseq, cs_conte_idseq "
+        + " from SBREXT.BR_CS_CSI_HIER_VIEW_EXT "
+        + " where CS_ASL_NAME = 'RELEASED' "
+        + " and CSTL_NAME != 'Publishing' "
+        + " order by cs_conte_idseq, CSI_LEVEL, upper(cs_long_name), upper(csi_name)"
+        );
+    }
+
+
+    protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
+      
+        ClassSchemeItem csiTO = new CSITransferObject();
+        csiTO.setCsIdseq(rs.getString("cs_idseq"));
+        csiTO.setClassSchemeLongName(rs.getString("cs_long_name"));
+        csiTO.setClassSchemePrefName(rs.getString("cs_preffered_name"));
+        csiTO.setClassSchemeDefinition(rs.getString("CS_PREFFRED_DEFINITION"));
+
+        csiTO.setCsiIdseq(rs.getString("csi_idseq"));
+        csiTO.setClassSchemeItemName(rs.getString("csi_name"));
+        csiTO.setClassSchemeItemType(rs.getString("csitl_name"));
+        csiTO.setCsiDescription(rs.getString("csi_description"));
+        
+        csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
+        csiTO.setParentCscsiId(rs.getString("parent_csi_idseq"));
+        csiTO.setCsConteIdseq(rs.getString("cs_conte_idseq"));
+ 
+   return csiTO;
+    }
+  }
+
+
+  
 }

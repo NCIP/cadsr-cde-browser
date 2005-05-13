@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
@@ -100,7 +101,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    *
    * @return <b>Collection</b> List of Forms
    */
-  public Collection getAllPublishedFormsForProtocol(String protocolIdSeq)
+  public List getAllPublishedFormsForProtocol(String protocolIdSeq)
   {
     PublishedFormsByProtocol query = new PublishedFormsByProtocol();
     query.setDataSource(getDataSource());
@@ -108,6 +109,56 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     return query.execute();
   }
   
+  /**
+   * Gets all the protocols 
+   *
+   * @param <b>contextId</b> Idseq of the Context
+   *
+   * @return <b>Collection</b> List of Protocols
+   */
+  public List getAllProtocolsForPublishedForms(String contextIdSeq)
+  {
+    PublishedProtocolsQuery query = new PublishedProtocolsQuery(getDataSource());
+    return query.getProtocols(contextIdSeq);
+  }
+  
+  
+  /**
+   * Gets all the forms that has been publish by Form Type
+   *
+   * @param <b>formType</b> Idseq of the Classification
+   *
+   * @return <b>List</b> List of Forms
+   */
+  private List getAllPublishedFormsByType(String formType, String contextId)
+  {
+    PublishedFormsByTypeQuery query = new PublishedFormsByTypeQuery(getDataSource());
+    return query.getPublishedForms(formType, contextId);
+  }
+  /**
+   * Gets all the forms that has been published by given context
+   *
+   * @param <b>contextId</b> Idseq of the Context
+   *
+   * @return <b>List</b> List of Forms
+   */
+  public List getAllPublishedForms(String contextId)
+  {
+    PublishedFormsByTypeQuery query = new PublishedFormsByTypeQuery(getDataSource());
+    return query.getPublishedForms(PersistenceConstants.FORM_TYPE_CRF, contextId);
+  }
+  /**
+   * Gets all the templatess that has been published by the given context
+   *
+   * @param <b>contextId</b> Idseq of the Context
+   *
+   * @return <b>List</b> List of Templates
+   */
+  public List getAllPublishedTemplates (String contextId)
+  {
+    PublishedFormsByTypeQuery query = new PublishedFormsByTypeQuery(getDataSource());
+    return query.getPublishedForms(PersistenceConstants.FORM_TYPE_TEMPLATE, contextId);
+  }
   
   /**
    * Gets all the modules that belong to the specified form
@@ -302,7 +353,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   /**
    * Gets all the publishing Classifications for a form
    */
-  public Collection getPublishingCSCSIsForForm(String contextIdSeq) {
+  public List getPublishingCSCSIsForForm(String contextIdSeq) {
     return getCSIByType(PersistenceConstants.CS_TYPE_PUBLISH
                     , PersistenceConstants.CSI_TYPE_PUBLISH_FORM
                     ,  contextIdSeq);
@@ -338,13 +389,26 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   return query.execute();
  }
 
+ /**
+  * Gets all the templates for given context id
+  *
+  * @param 
+  *
+  * @return forms that match the criteria.
+  */
+ public List getAllTemplatesForContextId(String contextIdseq) {
+  TemplateForContextIdQuery query = new TemplateForContextIdQuery(getDataSource());
+  return query.execute(contextIdseq);
+ }
+
+
 
   // Publish Change Order
 
   /**
    * Gets all the publishing Classifications for a form
    */
-  public Collection getPublishingCSCSIsForTemplate(String contextIdSeq) {
+  public List getPublishingCSCSIsForTemplate(String contextIdSeq) {
     return getCSIByType(PersistenceConstants.CS_TYPE_PUBLISH
                     , PersistenceConstants.CSI_TYPE_PUBLISH_TEMPLATE
                     ,  contextIdSeq);
@@ -473,21 +537,36 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
      */
     Form formX = null;
     try {
+    /*
+    //Test getAllTemplatesForContextId
+    Collection temps = formTest.getAllTemplatesForContextId("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+    System.out.println(temps.size() + " templates retrieved");
+     
+    // Test getAllPublishedFormsByType 
+    Collection temps = formTest.getAllPublishedFormsByType("CRF", "D9344734-8CAF-4378-E034-0003BA12F5E7");
+    System.out.println(temps.size() + " templates retrieved");
+  */   
+    // Test getAllPublishedFormsByType 
+    Collection temps = formTest.getAllProtocolsForPublishedForms("D9344734-8CAF-4378-E034-0003BA12F5E7");
+    System.out.println(temps.size() + " protocols retrieved");
+   
       formX = formTest.findFormByPrimaryKey("D4D75662-033F-6DD1-E034-0003BA0B1A09");
     }
+    
     catch (DMLException e) {
       System.out.println("Failed to get a form for " + formX);
     }
-
-    formX.setFormType("CRF");
-    formX.getContext().setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
-    formX.setAslName("CRF TEMPLATE");
-    formX.setPreferredName("Form update test");
-    formX.setPreferredDefinition("Form update test definition");
-    formX.getProtocol().setProtoIdseq("9B0EAC7E-6A62-0DEB-E034-080020C9C0E0");
-    formX.setLongName("Form update test long name");
-    formX.setFormCategory("Lab");
-    formTest.updateFormComponent(formX);
+    if (formX != null) {
+      formX.setFormType("CRF");
+      formX.getContext().setConteIdseq("99BA9DC8-2095-4E69-E034-080020C9C0E0");
+      formX.setAslName("CRF TEMPLATE");
+      formX.setPreferredName("Form update test");
+      formX.setPreferredDefinition("Form update test definition");
+      formX.getProtocol().setProtoIdseq("9B0EAC7E-6A62-0DEB-E034-080020C9C0E0");
+      formX.setLongName("Form update test long name");
+      formX.setFormCategory("Lab");
+      formTest.updateFormComponent(formX);
+    }
   }
 
   /**
@@ -1108,5 +1187,149 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   }
  }
  
- 
+   /**
+  * Inner class that accesses database to get all the templates 
+  * sort by context and protocol
+  */
+ class TemplateForContextIdQuery  extends MappingSqlQuery {
+  TemplateForContextIdQuery() {
+   super();
+  }
+  TemplateForContextIdQuery (DataSource ds) 
+    {
+      super(ds, " SELECT distinct qc.qc_idseq "
+                                       +" ,qc.long_name "
+                                       +" ,qc.preferred_name "
+                                       +" ,qc.preferred_definition "
+                                       +" ,qc.qcdl_name "
+                                       +" ,acs.cs_csi_idseq "
+                                       +" FROM  sbrext.quest_contents_ext qc, contexts context"
+                                       +" ,sbr.ac_csi acs "
+                                       +" WHERE "
+                                       +" context.CONTE_IDSEQ=qc.CONTE_IDSEQ "
+                                       +" AND    qcdl_name is not null "
+                                       +" AND    qc.conte_idseq =  ? "
+                                       +" AND   qc.deleted_ind = 'No' "
+                                       +" AND   qc.latest_version_ind = 'Yes'  "
+                                       +" AND   qc.qtl_name = 'TEMPLATE' "
+                                       +" AND   qc.qc_idseq = acs.ac_idseq "
+                                       +" ORDER BY cs_csi_idseq,qc.qcdl_name,long_name ");      
+
+      declareParameter(new SqlParameter("ContextIDSeq", Types.VARCHAR));
+      compile();
+    }
+
+  protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
+
+   Form form = new FormTransferObject();
+   form.setFormIdseq(rs.getString("qc_idseq"));                       // QC_IDSEQ
+   form.setIdseq(rs.getString("qc_idseq"));
+   form.setLongName(rs.getString("long_name"));                       //LONG_NAME
+   form.setPreferredName(rs.getString("preferred_name"));             // PREFERRED_NAME
+   form.setPreferredDefinition(rs.getString("preferred_definition")); // preferred_definition
+   form.setFormCategory(rs.getString("qcdl_name"));   //form category
+   
+   String cscsiId = rs.getString("cs_csi_idseq");
+   if (cscsiId != null && !cscsiId.equals("")) 
+   {
+     CSITransferObject csi = new CSITransferObject();
+     csi.setCsCsiIdseq(cscsiId);
+     Collection formCs = new ArrayList();
+     formCs.add(csi);
+     form.setClassifications(formCs);
+   }
+
+   return form;
+  }
+ }
+
+  class PublishedFormsByTypeQuery extends MappingSqlQuery {
+    
+    PublishedFormsByTypeQuery(DataSource ds)  {
+      super(ds, " select  published.QC_IDSEQ "
+                                    +" ,published.QC_LONG_NAME "
+                                    +",published.QC_PREFERRED_NAME"
+                                    +" ,published.QC_PREFERRED_DEFINITION "
+                                    +" ,published.FORM_CONTE_IDSEQ "
+                                    +" ,published.FORM_CONTEXT "
+                                    +" from published_forms_view published "
+                                    +" where "
+                                    +" published.QTL_NAME = ? "
+                                    +" and published.PUBLISH_CONTE_IDSEQ = ? "
+                                    +" order by upper(QC_LONG_NAME) " );
+      declareParameter(new SqlParameter("form_type", Types.VARCHAR));
+      declareParameter(new SqlParameter("context_id", Types.VARCHAR));
+      compile();
+    }
+
+  protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
+
+   Form form = new FormTransferObject();
+   form.setFormIdseq(rs.getString("qc_idseq"));                       // QC_IDSEQ
+   form.setIdseq(rs.getString("qc_idseq"));
+   form.setLongName(rs.getString("qc_long_name"));                       //LONG_NAME
+   form.setPreferredName(rs.getString("qc_preferred_name"));             // PREFERRED_NAME
+   form.setPreferredDefinition(rs.getString("qc_preferred_definition")); // preferred_definition
+   ContextTransferObject contextTransferObject = new ContextTransferObject();
+   contextTransferObject.setConteIdseq(rs.getString("FORM_CONTE_IDSEQ")); //CONTE_IDSEQ
+   contextTransferObject.setName(rs.getString("FORM_CONTEXT")); //context name
+   form.setContext(contextTransferObject);
+
+   return form;
+  }
+
+    protected List getPublishedForms( String formType, String contextId) {
+      Object[] obj =
+        new Object[] {formType, 
+        contextId
+        };
+
+      return execute(obj);
+
+    }
+ }
+  
+  class PublishedProtocolsQuery extends MappingSqlQuery {
+    
+    PublishedProtocolsQuery(DataSource ds)  {
+      super(ds, " select distinct proto_idseq, proto.preferred_name "
+                                            +" ,proto.long_name ,proto.preferred_definition "
+                                            +" ,proto.conte_idseq "
+                                            +" from protocols_ext proto "
+                                            +" , published_forms_view "
+                                            +" where "
+                                            +" proto.PROTO_IDSEQ=published_forms_view.PROTOCOL_IDSEQ "
+                                            +" and proto.PROTO_IDSEQ=published_forms_view.PROTOCOL_IDSEQ "
+                                            +" and   proto.deleted_ind = 'No' "
+                                            +" and	 proto.latest_version_ind = 'Yes' "
+                                            +" and   PUBLISH_CONTE_IDSEQ=? "
+                                            +" order by upper(proto.long_name) " );
+      declareParameter(new SqlParameter("context_id", Types.VARCHAR));
+      compile();
+    }
+
+  protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
+
+   Protocol protocol = new ProtocolTransferObject();
+   protocol.setIdseq(rs.getString("proto_idseq"));
+   protocol.setPreferredName(rs.getString("preferred_name"));
+   protocol.setLongName(rs.getString("long_name"));
+   protocol.setPreferredDefinition(rs.getString("preferred_definition"));
+   protocol.setConteIdseq(rs.getString("conte_idseq"));
+   
+   return protocol;
+  }
+
+    protected List getProtocols( String contextId) {
+      Object[] obj =
+        new Object[] {
+        contextId
+        };
+
+      return execute(obj);
+
+    }
+ }
+
+
 }
