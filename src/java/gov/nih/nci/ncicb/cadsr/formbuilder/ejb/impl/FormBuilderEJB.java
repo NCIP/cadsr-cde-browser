@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.impl;
 import com.evermind.sql.OrionCMTDataSource;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
@@ -604,9 +605,9 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
         while(it.hasNext())
         {
-          String  cscsi = (String)it.next();
+          CSITransferObject  cscsi = (CSITransferObject)it.next();
           try{
-            myDAO.assignClassification(formIdSeq,cscsi);
+            myDAO.assignClassification(formIdSeq,cscsi.getCsCsiIdseq());
 
           }
         catch(DMLException exp)
