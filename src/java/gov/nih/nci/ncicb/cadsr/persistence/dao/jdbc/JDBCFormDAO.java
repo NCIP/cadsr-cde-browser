@@ -1135,6 +1135,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
      protocol.setLongName(rs.getString("proto_name"));
      protocol.setPreferredDefinition(rs.getString("proto_preferred_definition"));
      protocol.setIdseq(rs.getString("PROTO_IDSEQ"));
+     protocol.setProtoIdseq(rs.getString("PROTO_IDSEQ"));
      form.setProtocol(protocol);
    }
 
