@@ -90,7 +90,17 @@ public class CDEBrowserTreeServiceImpl
   while (iter.hasNext()) {
    Form currForm = (Form)iter.next();
 
-   String currContextId = currForm.getContext().getConteIdseq();
+   String currContextId = null;
+   // When the form and the Protocol belongs to different context, the Protocol
+   // context takes priority
+   if (currForm.getProtocol() != null) 
+   {
+     currContextId = currForm.getProtocol().getConteIdseq();
+   }
+   
+   if (currContextId == null) 
+     currContextId = currForm.getContext().getConteIdseq();
+     
    String currProtoIdSeq = null;
 
    currProtoIdSeq = currForm.getProtoIdseq();

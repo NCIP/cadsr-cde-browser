@@ -1104,11 +1104,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
                 + " ,quest.preferred_definition preferred_definition " + " ,quest.CONTE_IDSEQ "
                 + " ,quest.PROTO_IDSEQ PROTO_IDSEQ " + " ,proto.LONG_NAME   proto_name "
                 + " ,proto.preferred_name proto_preferred_name "
-                + "  ,proto.preferred_definition proto_preferred_definition "
+                + "  ,proto.preferred_definition proto_preferred_definition, proto.CONTE_IDSEQ proto_context "
                 + " FROM  sbrext.quest_contents_ext quest,protocols_ext proto " + " WHERE " + " quest.qtl_name = 'CRF' "
                 + " AND   proto.PROTO_IDSEQ(+) =quest.PROTO_IDSEQ " + " AND   quest.deleted_ind = 'No' "
                 + " AND   quest.latest_version_ind = 'Yes' "
-                + " ORDER BY conte_idseq,upper(proto.LONG_NAME),upper(quest.long_name) ";
+                + " ORDER BY proto.conte_idseq,upper(proto.LONG_NAME),upper(quest.long_name) ";
 
    super.setSql(allFormsbyProtocolQueryStmt);
   }
@@ -1136,6 +1136,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
      protocol.setPreferredDefinition(rs.getString("proto_preferred_definition"));
      protocol.setIdseq(rs.getString("PROTO_IDSEQ"));
      protocol.setProtoIdseq(rs.getString("PROTO_IDSEQ"));
+     protocol.setConteIdseq(rs.getString("proto_context"));
      form.setProtocol(protocol);
    }
 
