@@ -84,7 +84,11 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
       <td width="60%" valign="top" align="left" class="AbbreviatedText">Tip: The wildcard character is *.</td>
       <td  width="20%" nowrap>&nbsp;</td>
      </tr>
-    
+     <tr valign="top">    
+          <td colspan=2 width="100%" valign="top" align="left" class="AbbreviatedText">
+            <bean:message key="cadsr.cdebrowser.helpText.results"/>
+          </td>
+      </tr>      
     <tr>
       <td  align="left" nowrap >
         <table  border="0" >

@@ -426,4 +426,30 @@
     <rtexprvalue>true</rtexprvalue>
     </attribute>      
   </tag>   
+  <tag>
+    <name>ocrNavigation</name>
+    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.OCRNavigationDisplay</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>Display OCR Navigation</info>  
+    <attribute>
+    <name>navigationListId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>outGoingImage</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>inCommingImage</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>biDirectionalImage</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>      
+  </tag>   
 </taglib>

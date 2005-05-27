@@ -1,12 +1,15 @@
 package gov.nih.nci.ncicb.cadsr.struts.common;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.CommonNavigationConstants;
 import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 
+import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -32,10 +35,9 @@ import org.apache.struts.actions.DispatchAction;
  * Base DispatchAction for all  DispatchActions
  */
 abstract public class BaseDispatchAction extends DispatchAction
-  implements FormConstants, NavigationConstants, PersistenceConstants,
-    FormBuilderConstants, CaDSRConstants {
+  implements PersistenceConstants, CaDSRConstants,CommonNavigationConstants {
   protected static Log log = LogFactory.getLog(BaseDispatchAction.class.getName());
-
+  private ApplicationServiceLocator appServiceLocator = null;
   /**
    * Retrieve an object from the application scope by its name. This is a
    * convience method.
@@ -215,18 +217,37 @@ abstract public class BaseDispatchAction extends DispatchAction
     return true;
   }
   
+  /**
+   * Gets the ServiceDelegateFactory form the application scope and
+   * instantiates a FormBuilderServiceDelegate from the factory
+   *
+   * @return FormBuilderServiceDelegate
+   *
+   * @throws ServiceStartupException
+   */
+  protected ApplicationServiceLocator getApplicationServiceLocator()
+    throws ServiceLocatorException {
+    if(appServiceLocator==null)
+    appServiceLocator =
+      (ApplicationServiceLocator) getApplicationObject(
+        ApplicationServiceLocator.APPLICATION_SERVICE_LOCATOR_CLASS_KEY);
+    if(appServiceLocator==null)
+      throw new ServiceLocatorException("Could no find ApplicationServiceLocator with key ="+ ApplicationServiceLocator.APPLICATION_SERVICE_LOCATOR_CLASS_KEY);
+    return appServiceLocator;
+  }  
+  
   private void setObjectsForClear(HttpSession session, String attrName)
   {
         Collection keys =
           (Collection) session.getAttribute(
-            FormBuilderConstants.CLEAR_SESSION_KEYS);
+            CLEAR_SESSION_KEYS);
 
         if (keys == null) {
           keys = new ArrayList();
         }
 
         keys.add(attrName);
-        session.setAttribute(FormBuilderConstants.CLEAR_SESSION_KEYS, keys);
+        session.setAttribute(CLEAR_SESSION_KEYS, keys);
 
   }
 }

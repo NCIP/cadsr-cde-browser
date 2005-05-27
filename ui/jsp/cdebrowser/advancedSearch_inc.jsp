@@ -62,9 +62,15 @@
          </tr>
          <tr vlign="top">
             <td nowrap>&nbsp;</td>
-            <td width="90%" valign="top" align="center" class="AbbreviatedText">Tip: The wildcard character is *.</td>
+            <td width="100%" valign="top" align="center" class="AbbreviatedText">Tip: The wildcard character is *.</td>
           </td>
          </tr>
+         <tr valign="top">  
+          <td nowrap>&nbsp;</td>
+          <td  width="100%" valign="top" align="left" class="AbbreviatedText">
+            <bean:message key="cadsr.cdebrowser.helpText.results"/>
+          </td>
+         </tr>           
      	</table>     
        
      </td>

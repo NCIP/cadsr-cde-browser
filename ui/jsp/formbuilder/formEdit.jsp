@@ -41,7 +41,11 @@ function clearProtocol() {
 }
 
 -->
-<% String urlPrefix = "";
+<% 
+
+    System.out.println(" In form edit JSP");
+
+ String urlPrefix = "";
     String startIndex="0";
     pageContext.setAttribute("startIndex", startIndex); 
   String contextPath = request.getContextPath();
@@ -83,8 +87,9 @@ function clearProtocol() {
       <%@ include file="/formbuilder/editButton_inc.jsp"%>
     <%@ include file="showMessages.jsp" %>
 
-    
+    <% System.out.println(" In form edit :1"); %>
       <logic:present name="<%=FormConstants.CRF%>">
+       <% System.out.println(" In form edit :2"); %>
        <html:hidden property="<%=FormConstants.FORM_ID_SEQ%>"/>
 
       <table cellpadding="0" cellspacing="0" width="80%" align="center">
@@ -227,8 +232,9 @@ function clearProtocol() {
         </tr>
       </table>        
         <!-- If the Modules Collection is empty and deleted modules Exists -->
-
+            <% System.out.println(" In form edit :3"); %>
             <logic:empty name="<%=FormConstants.CRF%>" property="modules">
+            <% System.out.println(" In form edit :4"); %>
              <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
               <tr align="right">
                 <logic:notEmpty name="<%=FormConstants.DELETED_MODULES%>">
@@ -262,10 +268,13 @@ function clearProtocol() {
         
         
         <!-- If the Modules Collection is empty and deleted modules Exists end -->
-         
+         <% System.out.println(" In form edit :5"); %>
         <logic:notEmpty name="<%=FormConstants.CRF%>" property="modules">
+          <% System.out.println(" In form edit :6"); %>
           <logic:iterate id="module" indexId="moduleIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
-            <bean:size id="moduleSize" name="<%=FormConstants.CRF%>" property="modules"/>            
+            <% System.out.println(" In form edit :6.1"); %>
+            <bean:size id="moduleSize" name="<%=FormConstants.CRF%>" property="modules"/>  
+            <% System.out.println(" In form edit :6.2"); %>
             <!-- and anchor -->
             <A NAME="<%="M"+moduleIndex%>"></A>
             <!-- Add for delete and new Module -->
@@ -299,7 +308,7 @@ function clearProtocol() {
              
               </table> 
             <!-- Add for delete and new Module end -->             
-            
+            <% System.out.println(" In form edit :6.4"); %>
             <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
               <tr class="OraTableColumnHeader">
                 <td class="OraTableColumnHeader">
@@ -339,6 +348,7 @@ function clearProtocol() {
                            </table>
                       </td>
                     </tr>
+                    <% System.out.println(" In form edit :6.5"); %>
                    <logic:present name="module" property="instruction">                   
                       <tr>  
                        <td colspan="2">
@@ -359,7 +369,9 @@ function clearProtocol() {
                </td>
               </tr>
               <logic:present name="module">
+               <% System.out.println(" In form edit :6.6"); %>
                 <logic:notEmpty name="module" property="questions">
+                 <% System.out.println(" In form edit :6.7"); %>
                   <tr class="OraTabledata">
                     <td>                
                         <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraTabledata">      
@@ -488,12 +500,15 @@ function clearProtocol() {
                   </tr>
                 </logic:notEmpty>
               </logic:present>
-            </table>         
+            </table>   
+            <% System.out.println(" In form edit :6.8"); %>
             <logic:equal value="<%= String.valueOf(moduleSize.intValue()-1) %>" name="moduleIndex">
             <!-- Add for delete and new Module -->
              <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
               <tr align="right">
+                <% System.out.println(" In form edit :6.9"); %>
                 <logic:notEmpty name="<%=FormConstants.DELETED_MODULES%>">
+                  <% System.out.println(" In form edit :6.91"); %>
                   <td align="right"   class="OraFieldText" nowrap>    
                       <html:select styleClass="Dropdown" property="<%=FormConstants.ADD_DELETED_MODULE_IDSEQ%>">
                         <html:options collection="<%=FormConstants.DELETED_MODULES%>" 
@@ -506,7 +521,9 @@ function clearProtocol() {
                       </a>                          
                   </td>   
                 </logic:notEmpty>
+                <% System.out.println(" In form edit :6.92"); %>
                 <logic:empty name="<%=FormConstants.DELETED_MODULES%>">
+                <% System.out.println(" In form edit :6.93"); %>
                 <td >
                   &nbsp;
                 </td>  
@@ -522,13 +539,18 @@ function clearProtocol() {
             <!-- Add for delete and new Module end -->  
             </logic:equal>
           </logic:iterate>
-           
-        </logic:notEmpty>        
+           <% System.out.println(" In form edit :7"); %>
+        </logic:notEmpty>   
+          <% System.out.println(" In form edit :8"); %>
       </logic:present>
      <%@ include file="/formbuilder/editButton_inc.jsp"%>
     </html:form>
+      <% System.out.println(" In form edit :9"); %>
     <%@ include file="/common/common_bottom_border.jsp"%>
 
     <html:javascript formName="formEditForm"/>
+  <%
+    System.out.println(" In form edit JSP- Done");
+  %>    
   </BODY>
 </HTML>

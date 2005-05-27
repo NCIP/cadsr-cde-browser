@@ -47,6 +47,7 @@ import javax.servlet.http.HttpSession;
  * Base DispatchAction for all formbuilder DispatchActions
  */
 public class FormBuilderBaseDispatchAction extends BaseDispatchAction
+   implements FormConstants, NavigationConstants,FormBuilderConstants
    {
   protected static Log log = LogFactory.getLog(FormBuilderBaseDispatchAction.class.getName());
 

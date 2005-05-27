@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.servicelocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl;
+import gov.nih.nci.ncicb.cadsr.util.ObjectFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -27,8 +28,7 @@ public class ServiceLocatorFactory
         
         if(log.isDebugEnabled())
           log.debug("Instatiating ServiceLocator = "+locatorClassName);
-        Class locatorClass = Class.forName(locatorClassName);
-        locator = (ServiceLocator) locatorClass.newInstance();
+        locator= (ServiceLocator)ObjectFactory.createObect(locatorClassName);
       }
       catch (Exception ex) {
         throw new ServiceLocatorException(
@@ -36,4 +36,6 @@ public class ServiceLocatorFactory
       }
       return locator;
   }   
+
+
 }

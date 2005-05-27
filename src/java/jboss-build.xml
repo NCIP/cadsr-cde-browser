@@ -24,6 +24,14 @@
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
+   <!-- cadsr api  -->
+  <property name="cadsrapi.home" value="D:/projects/NCI3/cadsrapi" /> 
+  <property name="cadsrapi.location.build" value="${cadsrapi.home}" /> 
+  <property name="cadsrapi.buildfile.name" value="build.xml" /> 
+  <property name="cadsrapi.lib.name" value="cadsr-api.jar" />
+  <property name="cadsrapi.dist.dir" value="dist" />
+  
+  
   
   <property name="project.home" value="${basedir}/../.."/>
   
@@ -170,6 +178,10 @@
       
       <!-- Apache POI  libs -->
       <pathelement location="${java.lib.dir}/poi-2.5.1-final-20040804.jar"/>
+      
+      <!-- cadsr api lib -->
+      <pathelement location="${java.lib.dir}/cadsr-api.jar"/>
+      
    </path>
    
    <path id="srcpath">
@@ -222,9 +234,13 @@
               <include name="gov/nih/nci/ncicb/cadsr/util/SessionUtils.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/util/DebugStringBuffer.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/util/TimeUtils.class"/>
-              <include name="gov/nih/nci/ncicb/cadsr/CaDSRConstants.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/ObjectFactory.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/*"/>
               <include name="gov/nih/nci/ncicb/cadsr/persistence/PersistenceConstants.class"/>
               <include name="gov/nih/nci/ncicb/cadsr/persistence/ErrorCodeConstants.class"/>
+              <exclude name="gov/nih/nci/ncicb/cadsr/servicelocator/ApplicationServiceLocator.class"/>
+              <exclude name="gov/nih/nci/ncicb/cadsr/servicelocator/ObjectLocator.class"/>
+              <exclude name="gov/nih/nci/ncicb/cadsr/servicelocator/spring/*"/>              
             </patternset>
           </fileset>           
         </jar>
@@ -263,7 +279,6 @@
          <fileset dir="${config.home}/services">
            <patternset>
              <include name="cdeBrowser.xml"/>
-             <include name="crfBuilder.xml"/>
            </patternset>
          </fileset>      
       </copy>  
@@ -415,7 +430,7 @@
              <include name="gov/nih/nci/ncicb/cadsr/base/process/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/cdebrowser/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/struts/common/**"/>
-             <include name="gov/nih/nci/ncicb/cadsr/crfbuilder/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/servicelocator/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/database/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/security/jboss/**"/>
              <include name="gov/nih/nci/ncicb/cadsr/security/LogoutServlet.class"/>
@@ -444,6 +459,10 @@
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/common/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/service/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/common/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/struts/**"/> 
+                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/service/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/util/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/jsp/**"/>
               </patternset>
         </fileset>       
@@ -455,8 +474,10 @@
         <patternset>
           <include name="WEB-INF/*.tld"/>
           <include name="WEB-INF/struts-config*.xml"/>
+          <include name="WEB-INF/umlbrowser/struts-config*.xml"/>
           <include name="WEB-INF/validat*.xml"/>
           <include name="WEB-INF/jboss-web.xml"/>
+          <include name="WEB-INF/spring/*.xml"/>
         </patternset>
       </fileset>
       <fileset dir="${classes.build.dir}">
@@ -470,6 +491,7 @@
           <include name="formbuilder/**/*.*"/>  
          <!-- release 3.0, reorganze ui directory -->
           <include name="cdebrowser/**/*.*"/>  
+          <include name="umlbrowser/**/*.*"/>  
           <include name="*.jsp"/>
         </patternset>
       </fileset>
@@ -743,6 +765,8 @@
       src="${build.dir}/${open.source.file.name.unix}.tar"
        />
  </target> 
+ 
+
 
 
 <!-- ===========  End OPEN SOURCE ======================= -->
@@ -972,6 +996,27 @@
         </target>      
   <!-- =========== END Download DISTRIBUTION ======================= -->  
   
+  <!-- ===========cadsr api ========================== -->
+
+ <target name="cadsrapi_build">
+   <ant antfile="${cadsrapi.location.build}/${cadsrapi.buildfile.name}"
+       inheritAll= "false" target="clean"/>
+   <ant antfile="${cadsrapi.location.build}/${cadsrapi.buildfile.name}"
+       inheritAll= "false" target="dist_ext"/>
+ </target> 
+ 
+ <target name="cadsrapi_update" depends="cadsrapi_build" >
+   <copy todir="${java.lib.dir}">      
+        <fileset dir="${cadsrapi.home}/${cadsrapi.dist.dir}">
+           <patternset>
+             <include name="${cadsrapi.lib.name}"/>
+           </patternset>
+         </fileset>    
+    </copy>  
+ </target>  
+ 
+ <!-- ===========cadsr api end ========================== -->
+ 
  <!-- =========== BUILD HELPERS ======================= -->
    <target name="help" depends="init">
      <echo>
@@ -994,6 +1039,8 @@
        dist_qa		      - Creates QA Clean distribution.
        dist_stage	      - Creates Stage Clean distribution.
        dist_prod	      - Creates Prod Clean distribution.
+       
+       cadsrapi_update	      - Creates a new cadsr-api lib file
 
        deploy_dev_start       - Deploy to dev and Start JOSS
        deploy_qa_start	      - Deploy to QA and Start JOSS

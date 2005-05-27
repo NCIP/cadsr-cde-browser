@@ -440,12 +440,7 @@ function gotoCDESearchPrefs() {
           <td valign="top" align="left" class="AbbreviatedTextBold">
             <bean:message key="cadsr.cdebrowser.helpText.results.searchpref"/>
           </td>
-        </tr>
-        <tr valign="top">    
-          <td valign="top" align="left" class="AbbreviatedText">
-            <bean:message key="cadsr.cdebrowser.helpText.results"/>
-          </td>
-        </tr>        
+        </tr>      
 </table>
 
 <table cellpadding="0" cellspacing="0" width="100%" align="center" border="0">
@@ -639,11 +634,6 @@ function gotoCDESearchPrefs() {
             <bean:message key="cadsr.cdebrowser.helpText.results.searchpref"/>
           </td>
         </tr>
-        <tr valign="top">    
-          <td valign="top" align="left" class="AbbreviatedText">
-            <bean:message key="cadsr.cdebrowser.helpText.results"/>
-          </td>
-        </tr>  
 </table>
 
 

@@ -24,5 +24,11 @@ public interface CaDSRConstants {
   public static final String CDEBROWSER_SERVICE_LOCATOR_CLASSNAME = "gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl";
   public static final String TREE_REFRESH_INDICATOR="treeRefreshIndicator";
   public static final String ANCHOR="anchor";
+  
+  public static final String ERROR_FATAL="FB911";
+  
+  public static final String CLEAR_SESSION_KEYS="clearSessionKeys";
+  
+
 
 }

@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common;
+import gov.nih.nci.ncicb.cadsr.CommonNavigationConstants;
 
-public interface  BrowserNavigationConstants 
+public interface  BrowserNavigationConstants extends CommonNavigationConstants
 {
   
   //Method Names

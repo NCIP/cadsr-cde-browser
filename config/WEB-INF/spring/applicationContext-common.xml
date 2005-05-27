@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+
+<beans>
+
+  <bean id="treeCache" class="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTreeCache">
+    <property name="appServiceLocator"><ref local="appServiceLocator"/></property>
+  </bean>
+
+  <bean id="treeService" class="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.impl.CDEBrowserTreeServiceImpl">
+     <property name="locator"><ref local="serviceLocator"/></property>
+     <property name="daoFactory"><ref local="daoFactory"/></property>
+  </bean>
+  
+  <bean id="appServiceLocator" class="gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl">
+  </bean>
+
+  <bean id="daoFactory" class="gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory"
+  	factory-method="getDAOFactory">
+     <constructor-arg> <ref bean="serviceLocator"/></constructor-arg>
+  </bean>  
+  
+  <bean id="serviceLocator" class="gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl">
+  </bean>  
+  
+</beans>

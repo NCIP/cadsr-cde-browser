@@ -28,8 +28,14 @@
     <error-code>403</error-code>
     <location>logout?FirstTimer=0&amp;authorizationError=yes</location>
   </error-page>
+  <context-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/spring/applicationContext-common.xml /WEB-INF/spring/applicationContext-domainDao.xml /WEB-INF/spring/applicationContext-umlbrowser.xml</param-value>
+      <description> Spring application context xml files</description>
+  </context-param>
   <listener>
     <listener-class>oracle.clex.util.ServletEventListener</listener-class>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <servlet>
     <servlet-name>CDEBrowserServletController</servlet-name>
@@ -43,18 +49,6 @@
     <servlet-name>DownloadTemplateServlet</servlet-name>
     <servlet-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.DownloadTemplateServlet</servlet-class>
   </servlet>
-  <servlet>
-    <servlet-name>CRFBuilderServletController</servlet-name>
-    <servlet-class>oracle.clex.process.controller.HttpServletController</servlet-class>
-    <init-param>
-      <param-name>cle-service-descriptor</param-name>
-      <param-value>crfBuilder.xml</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CRFBuilderServletController</servlet-name>
-    <url-pattern>/formbuild</url-pattern>
-  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CDEBrowserServletController</servlet-name>
     <url-pattern>/search</url-pattern>
@@ -86,7 +80,7 @@
            /WEB-INF/struts-config-formCreate.xml, /WEB-INF/struts-config-cdeSideBySide.xml,
            /WEB-INF/struts-config-manageReferenceDocs.xml,/WEB-INF/struts-config-downloadFormToExcel.xml,
            /WEB-INF/struts-config-browserSearchScreenType.xml,/WEB-INF/struts-config-publish.xml,
-           /WEB-INF/struts-config-cde-search-preferences.xml
+           /WEB-INF/struts-config-cde-search-preferences.xml,/WEB-INF/umlbrowser/struts-config-ocDetails.xml
        </param-value>
     </init-param>
     <init-param>
@@ -105,6 +99,10 @@
       <param-name>ServiceLocatorClassName</param-name>
       <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</param-value>
     </init-param>
+    <init-param>
+      <param-name>ApplicationServiceLocatorClassName</param-name>
+      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl</param-value>
+    </init-param>    
     
     <load-on-startup>1</load-on-startup>
   </servlet>

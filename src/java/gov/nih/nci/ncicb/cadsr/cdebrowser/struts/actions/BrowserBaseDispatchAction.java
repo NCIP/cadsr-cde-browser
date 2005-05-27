@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserNavigationConstants;
 import gov.nih.nci.ncicb.cadsr.struts.common.BaseDispatchAction;
@@ -15,7 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class BrowserBaseDispatchAction extends BaseDispatchAction implements BrowserFormConstants 
-              ,BrowserNavigationConstants
+              ,BrowserNavigationConstants,CaDSRConstants
 {
 
   /**

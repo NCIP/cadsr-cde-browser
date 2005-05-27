@@ -1,28 +1,25 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.common;
+import gov.nih.nci.ncicb.cadsr.CommonNavigationConstants;
 
-public interface NavigationConstants
+public interface NavigationConstants extends CommonNavigationConstants
 {
   //struts forward names
-  public static final String SUCCESS = "success";
-  public static final String FAILURE = "failure";
-  public static final String CANCEL = "cancel";
+
   public static final String FORM_DETAILS ="formDetails";
   public static final String FORM_EDIT ="formEdit";
   public static final String MODULE_EDIT ="moduleEdit";
   public static final String SEARCH_RESULTS ="searchResults";
-  public static final String LOGIN = "login";
 
-  //Method names
 
-  public static final String METHOD_PARAM="method";
+
   //Used to define the forward to use in the target action
   //When Chaining actions
 
   public static final String GET_ALL_FORMS_METHOD="getAllForms";
   public static final String CLEAR_FORM_SEARCH_METHOD="clearFormSearch";
   public static final String NEW_SEARCH_METHOD="newSearch";
-  public static final String SEND_HOME_METHOD="sendHome";
-  public static final String DEFAULT_METHOD=SEND_HOME_METHOD;
+
+
   public static final String FORWARD_FRAMED_SEARCH_RESULTS_PAGE="framedSearchResultsPage";
   public static final String DEFAULT_HOME = FORWARD_FRAMED_SEARCH_RESULTS_PAGE;
   public static final String GET_FORM_DETAILS="getFormDetails";

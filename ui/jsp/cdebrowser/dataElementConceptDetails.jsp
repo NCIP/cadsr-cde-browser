@@ -11,6 +11,8 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.StringUtils" %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserNavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserFormConstants"%>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
@@ -190,11 +192,18 @@ function goPage(pageInfo) {
 
 <logic:present name="de" property = "dataElementConcept.objectClass">    
     <% ObjectClass objClass = dec.getObjectClass(); %>
-
+    <%
+      String contextPath = request.getContextPath();
+      String ocId = objClass.getIdseq();
+      String ocDetailsWindow= 
+        "javascript:newBrowserWin('"+contextPath+"/umlbrowser/ocDetailsAction.do?"+UmlBrowserNavigationConstants.METHOD_PARAM+"="+UmlBrowserNavigationConstants.OC_DETAILS+"&"+UmlBrowserFormConstants.OC_IDSEQ+"="+ocId+"',"+"'OCDetails',800,600)";
+    
+    %>
          <br>
          <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
           <tr  valign="bottom" >
-           <td class="OraHeaderSubSubSub" width="100%">Object Class</td>
+           <td class="OraHeaderSubSubSub" width="80%">Object Class</td>
+           <td class="OraHeaderSubSubSub" width="20%"><a href="<%=ocDetailsWindow%>"> More Info </a></td>
           </tr>
          </table>
          <table valign="top"  width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">

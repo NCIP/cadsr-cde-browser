@@ -39,16 +39,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 public class CDEBrowserTreeServiceImpl
  implements CDEBrowserTreeService {
- ServiceLocator locator;
- AbstractDAOFactory daoFactory;
+ private ServiceLocator locator;
+ private AbstractDAOFactory daoFactory;
 
  /**
   * Currently the locator classname is hard code need to be refactored
   */
  public CDEBrowserTreeServiceImpl() {
-  locator = ServiceLocatorFactory.getLocator("gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl");
-
-  daoFactory = AbstractDAOFactory.getDAOFactory(locator);
  }
 
  /**
@@ -676,4 +673,28 @@ public class CDEBrowserTreeServiceImpl
    cscsiholderMap.put(cscsiId, cscsiCatHolder);
   }
  }
+
+
+  public void setLocator(ServiceLocator locator)
+  {
+    this.locator = locator;
+  }
+
+
+  public ServiceLocator getLocator()
+  {
+    return locator;
+  }
+
+
+  public void setDaoFactory(AbstractDAOFactory daoFactory)
+  {
+    this.daoFactory = daoFactory;
+  }
+
+
+  public AbstractDAOFactory getDaoFactory()
+  {
+    return daoFactory;
+  }
 }

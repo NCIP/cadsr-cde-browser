@@ -75,6 +75,7 @@ public class BC4JDataElementConceptTransferObject extends AdminComponentTransfer
     if(objectClassPrefName!=null&&!objectClassPrefName.equals(""))
     {
         ObjectClass objClass = new ObjectClassTransferObject();
+        objClass.setIdseq(dataElementConceptsViewRowImpl.getOcIdseq());
         objClass.setLongName(checkForNull(dataElementConceptsViewRowImpl.getObjectClassLongName()));
         String objClassPrefName =
           checkForNull(objectClassPrefName);
