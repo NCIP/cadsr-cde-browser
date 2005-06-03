@@ -196,14 +196,14 @@ function goPage(pageInfo) {
       String contextPath = request.getContextPath();
       String ocId = objClass.getIdseq();
       String ocDetailsWindow= 
-        "javascript:newBrowserWin('"+contextPath+"/umlbrowser/ocDetailsAction.do?"+UmlBrowserNavigationConstants.METHOD_PARAM+"="+UmlBrowserNavigationConstants.OC_DETAILS+"&"+UmlBrowserFormConstants.OC_IDSEQ+"="+ocId+"',"+"'OCDetails',800,600)";
+        "javascript:newBrowserWin('"+contextPath+"/umlbrowser/ocDetailsAction.do?"+UmlBrowserNavigationConstants.METHOD_PARAM+"="+UmlBrowserNavigationConstants.OC_DETAILS+"&"+UmlBrowserFormConstants.RESET_CRUMBS+"=true&"+UmlBrowserFormConstants.OC_IDSEQ+"="+ocId+"',"+"'OCDetails',800,600)";
     
     %>
          <br>
          <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
           <tr  valign="bottom" >
            <td class="OraHeaderSubSubSub" width="80%">Object Class</td>
-           <td class="OraHeaderSubSubSub" width="20%"><a href="<%=ocDetailsWindow%>"> More Info </a></td>
+           <td class="OraHeaderSubSubSub" width="20%"><a href="<%=ocDetailsWindow%>"> More Details </a></td>
           </tr>
          </table>
          <table valign="top"  width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">

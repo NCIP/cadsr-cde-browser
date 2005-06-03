@@ -23,7 +23,8 @@ public class OCRNavigationDisplay extends TagSupport
   private String outGoingImage = null;
   private String inCommingImage = null;
   private String biDirectionalImage = null;
-  
+  private String scope = null;
+  private String activeNodes = "true";
 
   
   public OCRNavigationDisplay()
@@ -39,7 +40,11 @@ public class OCRNavigationDisplay extends TagSupport
       out = pageContext.getOut();
       req = ( HttpServletRequest )pageContext.getRequest();
       
-      LinkedList navigationList = (LinkedList)req.getSession().getAttribute(navigationListId);
+      LinkedList navigationList = null;
+      if(scope.equals("session"))
+        navigationList = (LinkedList)req.getSession().getAttribute(navigationListId);
+      else
+        navigationList = (LinkedList)pageContext.getAttribute(navigationListId);
 
       if(navigationList==null)
         return Tag.SKIP_BODY;
@@ -74,7 +79,7 @@ public class OCRNavigationDisplay extends TagSupport
     ListIterator it = list.listIterator();
     StringBuffer str = new StringBuffer("<table align=\"center\">");
     str.append("<tr align=\"center\" >");
-    
+    int index=0;
     while(it.hasNext())
     {
       OCRNavigationBean currBean = (OCRNavigationBean)it.next();
@@ -85,27 +90,28 @@ public class OCRNavigationDisplay extends TagSupport
       str.append("<td>");
         str.append("<table vAlign=top cellSpacing=1 cellPadding=1  width=\"100%\" align=center border=0 class=\"OraBGAccentVeryDark\">");
           str.append("<tr class=OraTabledata align=\"center\" >");
-             str.append("<td class="+tdClass+" >");
-               str.append("<table><tr><td>");
-                str.append(getObjectString(currBean,req,currObject));
+             str.append("<td class="+tdClass+">");
+               str.append("<table><tr><td >");
+                str.append(getObjectString(currBean,req,currObject,index));
                str.append("</td></tr></table>");
              str.append("</td>");
           str.append("</tr>");
          str.append("</table>");
       str.append("</td>");
+      index++; //used to track crumbs index
       if(currBean.isShowDirection())
       {
           str.append("<td>");
             str.append("<table border=0>");
               str.append("<tr>");
                  str.append("<td align=left>");
-                    str.append(getFirstMultiplicity(currBean.getDirection(),currBean.getOcr()));
+                    str.append(StringUtils.ifNullReplaceWithnbsp(getFirstMultiplicity(currBean.getDirection(),currBean.getOcr())));
                  str.append("</td>");
                  str.append("<td>");
                     str.append("&nbsp;");
                  str.append("</td>");                 
                  str.append("<td align=right>");
-                    str.append(getSecondMultiplicity(currBean.getDirection(),currBean.getOcr()));
+                    str.append(StringUtils.ifNullReplaceWithnbsp(getSecondMultiplicity(currBean.getDirection(),currBean.getOcr())));
                  str.append("</td>");             
               str.append("</tr>");
               str.append("<tr>");
@@ -115,13 +121,13 @@ public class OCRNavigationDisplay extends TagSupport
               str.append("</tr>"); 
               str.append("<tr>");
                  str.append("<td align=left>");
-                    str.append(getFirstRoleName(currBean.getDirection(),currBean.getOcr()));
+                    str.append(StringUtils.ifNullReplaceWithnbsp(getFirstRoleName(currBean.getDirection(),currBean.getOcr())));
                  str.append("</td>");
                  str.append("<td>");
                     str.append("&nbsp;");
                  str.append("</td>");                 
                  str.append("<td align=right>");
-                    str.append(getSecondRoleName(currBean.getDirection(),currBean.getOcr()));
+                    str.append(StringUtils.ifNullReplaceWithnbsp(getSecondRoleName(currBean.getDirection(),currBean.getOcr())));
                  str.append("</td>");             
               str.append("</tr>");              
              str.append("</table>");
@@ -132,10 +138,17 @@ public class OCRNavigationDisplay extends TagSupport
     return str.toString();
   }
 
- private String getObjectString(OCRNavigationBean bean,HttpServletRequest  req,ObjectClass currObject)
+ private String getObjectString(OCRNavigationBean bean,HttpServletRequest  req,ObjectClass currObject,int crumbIndex)
  {
   
-  String ocrurl = req.getContextPath()+"/umlbrowser/ocrDetailsAction.do?"+UmlBrowserNavigationConstants.METHOD_PARAM+"="+UmlBrowserNavigationConstants.OCR_DETAILS+"&"+UmlBrowserFormConstants.OC_IDSEQ+"="+bean.getObjectClass().getId();
+  if(activeNodes.equalsIgnoreCase("false"))
+  {
+    return bean.getObjectClass().getLongName();
+  }
+  String ocrurl = req.getContextPath()+"/umlbrowser/ocrDetailsAction.do?"
+          +UmlBrowserNavigationConstants.METHOD_PARAM+"="+UmlBrowserNavigationConstants.OCR_DETAILS
+          +"&"+UmlBrowserFormConstants.OC_IDSEQ+"="+bean.getObjectClass().getId()
+          +"&"+UmlBrowserFormConstants.OCR_BR_CRUMBS_INDEX+"="+String.valueOf(crumbIndex);
   StringBuffer str = new StringBuffer();
   str.append("<a href=");
   str.append(ocrurl);
@@ -225,6 +238,30 @@ public class OCRNavigationDisplay extends TagSupport
   public String getBiDirectionalImage()
   {
     return biDirectionalImage;
+  }
+
+
+  public void setScope(String scope)
+  {
+    this.scope = scope;
+  }
+
+
+  public String getScope()
+  {
+    return scope;
+  }
+
+
+  public void setActiveNodes(String activeNodes)
+  {
+    this.activeNodes = activeNodes;
+  }
+
+
+  public String getActiveNodes()
+  {
+    return activeNodes;
   }
  
 }

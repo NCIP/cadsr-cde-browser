@@ -9,6 +9,9 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.util.OCUtils"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.util.ObjectExtractor"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.Collection"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.domain.ObjectClass"%>
+
 
 <%@ page contentType="text/html;charset=windows-1252"%>
 
@@ -43,6 +46,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
 <html:hidden property="<%=UmlBrowserFormConstants.OC_IDSEQ%>"/>
 <html:hidden property="<%=UmlBrowserFormConstants.OCR_DIRECTION%>"/>
 <html:hidden property="<%=UmlBrowserFormConstants.OCR_INDEX%>"/>
+<html:hidden property="<%=UmlBrowserFormConstants.OCR_BR_CRUMBS_INDEX%>"/>
 <html:hidden value="" property="<%=UmlBrowserNavigationConstants.METHOD_PARAM%>"/>
 
 <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
@@ -74,7 +78,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
 
 <table cellpadding="0" cellspacing="0" width="100%" align="center" border=0>
         <tr valign="top">    
-          <td valign="top" align="left" width="100%" class="AbbreviatedTextBold">
+          <td valign="top" align="left" width="100%" class="AbbreviatedText">
             All Associations displayed below are for Object Class "<bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>".
             Details of this class can be seen under "Object Class" tab.
             Outgoing associations have "<bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as the source Object Class;
@@ -83,12 +87,45 @@ function navigateOCR(ocId,ocrIndex,direction) {
           </td>
         </tr>  
 </table>
-
+        
+        <table valign="top" width="90%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+            <td class="TableRowPromptText" width="20%">Public ID:</td>
+            <td class="OraFieldText">
+              <bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="publicId"/>
+            </td>
+          </tr>
+          <tr class="OraTabledata">
+            <td class="TableRowPromptText" width="20%">Long Name:</td>
+            <td class="OraFieldText">
+              <bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>
+            </td>
+          </tr>
+          <tr class="OraTabledata">
+            <td class="TableRowPromptText" width="20%">Preferred Name:</td>
+            <td class="OraFieldText">
+              <bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="preferredName"/>
+            </td>
+          </tr>
+          <tr class="OraTabledata">
+            <td class="TableRowPromptText" width="20%">Context:</td>
+            <td class="OraFieldText">
+              <bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="context.name"/>
+            </td>
+          </tr>
+          <tr class="OraTabledata">
+            <td class="TableRowPromptText" width="20%">Version:</td>
+            <td class="OraFieldText">
+              <bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="version"/>
+            </td>
+          </tr>
+        </table>
       <cde:ocrNavigation
               navigationListId="<%=UmlBrowserFormConstants.OCR_NAVIGATION_BEAN%>"   
               outGoingImage="/i/outgoing.gif"
               inCommingImage="/i/incomming.gif"
               biDirectionalImage="/i/bidirectional.gif"
+              scope="session"
        />           
                  
       <table cellpadding="0" cellspacing="0" width="90%" align="center" border=0>
@@ -125,21 +162,46 @@ function navigateOCR(ocId,ocrIndex,direction) {
     <logic:notEmpty  name="<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>" scope="session">  
       <logic:iterate id="currOutgoingOCR" name="<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>" type="gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship" indexId="ocrIndex" >                                 
          <%
-           List subs = ObjectExtractor.getSubProjects(currOutgoingOCR);
-           pageContext.setAttribute("subprojects",subs);
-           List packages = ObjectExtractor.getPackages(currOutgoingOCR);
-           pageContext.setAttribute("packages",packages);                   
+           Collection projects = ObjectExtractor.getProjects(currOutgoingOCR);
+           pageContext.setAttribute("projects",projects);                  
         %> 
  
-       <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+       <table vAlign=top cellSpacing=2 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
         <tr class=OraTabledata>
          <td class=OraFieldText>
              <table vAlign=top width="100%">
                  <tr  class=OraTabledata align="left">
+                 <% if(OCUtils.isNavigationAllowed(request,UmlBrowserFormConstants.OCR_NAVIGATION_BEAN,currOutgoingOCR))
+                 {
+                 %>
                     <td class=OraFieldText colspan="2">
-                        <a href="javascript:navigateOCR('<%=currOutgoingOCR.getTarget().getId()%>','<%=ocrIndex%>','<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>')">Navigate</a>
-                    </td>         
+                        <a href="javascript:navigateOCR('<%=currOutgoingOCR.getTarget().getId()%>','<%=ocrIndex%>','<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>')">Navigate to this association</a>
+                    </td>              
+                 <%}else{%>
+                      <td class=OraFieldText colspan="2">
+                        &nbsp;
+                     </td>                
+                <% }%>
                  </tr>
+                  <tr  class=OraTabledata align="center">
+                     <td class=OraFieldText colspan="2" align="center">
+                       <cde:DefineNavigationCrumbs
+                            beanId="<%=UmlBrowserFormConstants.OUT_GOING_OCRS+ocrIndex%>"   
+                            direction="<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>"
+                            ocrId="currOutgoingOCR"
+                       />                     
+                       <cde:ocrNavigation
+                            navigationListId="<%=UmlBrowserFormConstants.OUT_GOING_OCRS+ocrIndex%>"   
+                            outGoingImage="/i/outgoing.gif"
+                            inCommingImage="/i/incomming.gif"
+                            biDirectionalImage="/i/bidirectional.gif"
+                            scope="page"
+                            activeNodes="false"
+                       />                     
+                     </td>
+                 </tr>                
+                 
+       
                 <TR>
                  <td width ="50%">     
                   <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
@@ -198,7 +260,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
                     <TR class=OraTabledata>
                        <td class="OraTableColumnHeader" width="40%">Target Multiplicity</td>
                        <td class="OraFieldText">
-                        <%=OCUtils.getSourceMultiplicityDisplayString(currOutgoingOCR)%>
+                        <%=OCUtils.getTargetMultiplicityDisplayString(currOutgoingOCR)%>
                        </td>
                     </tr>
                     <TR class=OraTabledata>
@@ -218,57 +280,81 @@ function navigateOCR(ocId,ocrIndex,direction) {
               </TR>            
 
               <tr>
-                <td vAlign=top width="50%">
-                  <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
+                 <td colspan=2>
+                  <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                     <TR class=OraTableColumnHeader>
-                       <th class="OraTableColumnHeader" width="50%" >Project</th>
-                       <th class="OraTableColumnHeader">Sub Project</th>
+                       <th class="OraTableColumnHeader"  >Target Object Class Alternate Name</th>
+                       <th class="OraTableColumnHeader">Type</th>
+                       <th class="OraTableColumnHeader">Context</th>
                      </TR>   
-                    <logic:notEmpty  name="subprojects" > 
-                      <logic:iterate id="currSubProject" name="subprojects" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="subIndex" >                                 
+                    <logic:notEmpty  name="currOutgoingOCR" property="target.alternateNames" > 
+                      <logic:iterate id="alternateName" name="currOutgoingOCR" property="target.alternateNames" type="gov.nih.nci.ncicb.cadsr.domain.AlternateName" indexId="nameIndex" >                                 
                         <TR class=OraTabledata>
                            <td class="OraFieldText">
-                             <bean:write name="currSubProject" property="parent.longName"/>
+                             <bean:write name="alternateName" property="name"/>
                             </td>
                            <td class="OraFieldText">
-                             <bean:write name="currSubProject" property="longName"/>
+                             <bean:write name="alternateName" property="type"/>
                             </td>
+                           <td class="OraFieldText">
+                             <bean:write name="alternateName" property="context.name"/>
+                            </td>                     
                          </TR>  
                      </logic:iterate>
                     </logic:notEmpty>
-                   <logic:empty  name="subprojects" > 
+                   <logic:empty  name="currOutgoingOCR" property="target.alternateNames" > 
                         <TR class=OraTabledata>
-                           <td colspan=2 class="OraFieldText">Currently not used by any Projects/Subprojects</td>
+                           <td colspan=3 class="OraFieldText">No Alternate names for this Target Object Class exist</td>
                          </TR>  
                     </logic:empty>                    
-                  </table>
+                  </table> 
                 </td>
-                <td vAlign=top width="50%">
-                  <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=right border=0 class="OraBGAccentVeryDark">
-                    <TR class=OraTabledata>
-                       <th class="OraTableColumnHeader" width="50%" >Project</th>
-                       <th class="OraTableColumnHeader">Package</th>
-                     </TR>   
-                    <logic:notEmpty  name="packages" > 
-                      <logic:iterate id="currPackage" name="packages" type="gov.nih.nci.ncicb.cadsr.resource.OCRPackage" indexId="subIndex" >                                                      
+               </tr>
+               
+               <tr>
+                <td class="OraHeaderSubSubSub" vAlign=bottom align=left colspan=2 width="100%"> 
+                  Using Projects
+                </td>
+               </tr>
+              <tr>
+                <td vAlign=top colspan=2 width="100%">
+                  <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                   <TR class=OraTabledata>
+                    <td class="OraFieldText">
+                      <logic:notEmpty  name="projects" >                          
+                         <logic:iterate id="currProject" name="projects" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="prIndex" >
+                           <UL>
+                                 <li class="OraFieldText"><bean:write name="currProject" property="name"/>(Project)</li>
+                                 <logic:notEmpty  name="currProject" property="children">
+                                  <logic:iterate id="currSubProject" name="currProject" property="children" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="subIndex" >
+                                     <ul>
+                                       <li  class="OraFieldText"><bean:write name="currSubProject" property="name"/>(SubProject)</li>
+                                       <logic:notEmpty  name="currSubProject" property="packages">
+                                        <ul>
+                                        <logic:iterate id="currPackage" name="currSubProject" property="packages" type="gov.nih.nci.ncicb.cadsr.resource.OCRPackage" indexId="pkIndex" >
+                                             <li class="OraFieldText"> <bean:write name="currPackage" property="name"/>(Package)</li>                                                  
+                                        </logic:iterate>
+                                        </ul>
+                                       </logic:notEmpty> 
+                                      </ul>
+                                  </logic:iterate>                               
+                                 </logic:notEmpty>
+                           </UL>
+                         </logic:iterate>
+                      </logic:notEmpty>
+                     </td>
+                    </tr>
+                    </table>
+                     <logic:empty  name="projects" > 
+                       <table vAlign=top width="100%" align=center border=0 >
                         <TR class=OraTabledata>
-                           <td class="OraFieldText">
-                             <bean:write name="currPackage" property="parent.longName"/>
-                          </td>
-                           <td class="OraFieldText">
-                             <bean:write name="currPackage" property="longName"/>
-                           </td>
-                         </TR>   
-                      </logic:iterate>
-                  </logic:notEmpty>
-                   <logic:empty  name="packages" > 
-                        <TR class=OraTabledata>
-                           <td colspan=2 class="OraFieldText">Currently not assigened to any Packages</td>
+                           <td  class="OraFieldText">Currently not used by any Projects</td>
                          </TR>  
-                    </logic:empty>                    
-                  </table>
-                </td>
-              </tr>              
+                        </table>
+                      </logic:empty>
+                  </td>
+              </tr>
+              
              </table>  
           </td>
        </tr>
@@ -300,28 +386,50 @@ function navigateOCR(ocId,ocrIndex,direction) {
         <logic:notEmpty  name="<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>" scope="session">  
           <logic:iterate id="currIncommingOCR" name="<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>" type="gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship" indexId="ocrIndex" >                                 
              <%
-               List subs = ObjectExtractor.getSubProjects(currIncommingOCR);
-               pageContext.setAttribute("subprojects",subs);
-               List packages = ObjectExtractor.getPackages(currIncommingOCR);
-               pageContext.setAttribute("packages",packages);                   
+               Collection projects = ObjectExtractor.getProjects(currIncommingOCR);              
             %> 
      
-           <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+           <table vAlign=top cellSpacing=2 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
             <tr class=OraTabledata>
              <td class=OraFieldText>
                  <table vAlign=top width="100%">
-                     <tr  class=OraTabledata align="left">
-                        <td class=OraFieldText colspan="2">
-                         <a href="javascript:navigateOCR('<%=currIncommingOCR.getTarget().getId()%>','<%=ocrIndex%>','<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>')">Navigate</a>
-                        </td>         
+                     <tr  class=OraTabledata align="left">  
+                       <% if(OCUtils.isNavigationAllowed(request,UmlBrowserFormConstants.OCR_NAVIGATION_BEAN,currIncommingOCR))
+                       {
+                       %>
+                          <td class=OraFieldText colspan="2">
+                              <a href="javascript:navigateOCR('<%=currIncommingOCR.getSource().getId()%>','<%=ocrIndex%>','<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>')">Navigate to this association</a>
+                          </td>              
+                       <%}else{%>
+                            <td class=OraFieldText colspan="2">
+                              &nbsp;
+                           </td>                
+                      <% }%>                                           
                      </tr>
+                  <tr  class=OraTabledata align="center">
+                     <td class=OraFieldText colspan="2" align="center">
+                       <cde:DefineNavigationCrumbs
+                            beanId="<%=UmlBrowserFormConstants.IN_COMMING_OCRS+ocrIndex%>"   
+                            direction="<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>"
+                            ocrId="currIncommingOCR"
+                       />                     
+                       <cde:ocrNavigation
+                            navigationListId="<%=UmlBrowserFormConstants.IN_COMMING_OCRS+ocrIndex%>"   
+                            outGoingImage="/i/outgoing.gif"
+                            inCommingImage="/i/incomming.gif"
+                            biDirectionalImage="/i/bidirectional.gif"
+                            scope="page"
+                            activeNodes="false"
+                       />                     
+                     </td>
+                 </tr>                        
                     <TR>
                      <td width ="50%">     
                       <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
                         <TR class=OraTabledata>
-                           <td class="TableRowPromptTextLeft" width="40%" >Target Object Class</td>
+                           <td class="TableRowPromptTextLeft" width="40%" >Source Object Class</td>
                            <td class="OraFieldText">
-                              <bean:write name="currIncommingOCR" property="target.longName"/>
+                              <bean:write name="currIncommingOCR" property="source.longName"/>
                             </td>
                         </tr>
                         <TR class=OraTabledata>
@@ -367,13 +475,13 @@ function navigateOCR(ocId,ocrIndex,direction) {
                         <TR class=OraTabledata>
                            <td class="OraTableColumnHeader" width="40%">Source Role</td>
                            <td class="OraFieldText">
-                             <bean:write name="currOutgoingOCR" property="sourceRole"/>
+                             <bean:write name="currIncommingOCR" property="sourceRole"/>
                            </td>
                         </tr>
                         <TR class=OraTabledata>
                            <td class="OraTableColumnHeader" width="40%">Target Multiplicity</td>
                            <td class="OraFieldText">
-                            <%=OCUtils.getSourceMultiplicityDisplayString(currIncommingOCR)%>
+                            <%=OCUtils.getTargetMultiplicityDisplayString(currIncommingOCR)%>
                            </td>
                         </tr>
                         <TR class=OraTabledata>
@@ -391,59 +499,81 @@ function navigateOCR(ocId,ocrIndex,direction) {
                       </table>             
                      </td>
                   </TR>            
-    
                   <tr>
-                    <td vAlign=top width="50%">
-                      <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
-                        <TR class=OraTableColumnHeader>
-                           <th class="OraTableColumnHeader" width="50%" >Project</th>
-                           <th class="OraTableColumnHeader">Sub Project</th>
-                         </TR>   
-                        <logic:notEmpty  name="subprojects" > 
-                          <logic:iterate id="currSubProject" name="subprojects" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="subIndex" >                                 
-                            <TR class=OraTabledata>
-                               <td class="OraFieldText">
-                                 <bean:write name="currSubProject" property="parent.longName"/>
-                                </td>
-                               <td class="OraFieldText">
-                                 <bean:write name="currSubProject" property="longName"/>
-                                </td>
-                             </TR>  
-                         </logic:iterate>
-                        </logic:notEmpty>
-                       <logic:empty  name="subprojects" > 
-                            <TR class=OraTabledata>
-                               <td colspan=2 class="OraFieldText">Currently not used by any Projects/Subprojects</td>
-                             </TR>  
-                        </logic:empty>                    
-                      </table>
-                    </td>
-                    <td vAlign=top width="50%">
-                      <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=right border=0 class="OraBGAccentVeryDark">
-                        <TR class=OraTabledata>
-                           <th class="OraTableColumnHeader" width="50%" >Project</th>
-                           <th class="OraTableColumnHeader">Package</th>
-                         </TR>   
-                        <logic:notEmpty  name="packages" > 
-                          <logic:iterate id="currPackage" name="packages" type="gov.nih.nci.ncicb.cadsr.resource.OCRPackage" indexId="subIndex" >                                                      
-                            <TR class=OraTabledata>
-                               <td class="OraFieldText">
-                                 <bean:write name="currPackage" property="parent.longName"/>
+                   <td colspan=2>
+                    <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                      <TR class=OraTableColumnHeader>
+                         <th class="OraTableColumnHeader"  >Source Object Class Alternate Name</th>
+                         <th class="OraTableColumnHeader">Type</th>
+                         <th class="OraTableColumnHeader">Context</th>
+                       </TR>   
+                      <logic:notEmpty  name="currIncommingOCR" property="source.alternateNames" > 
+                        <logic:iterate id="alternateName" name="currIncommingOCR" property="source.alternateNames" type="gov.nih.nci.ncicb.cadsr.domain.AlternateName" indexId="nameIndex" >                                 
+                          <TR class=OraTabledata>
+                             <td class="OraFieldText">
+                               <bean:write name="alternateName" property="name"/>
                               </td>
-                               <td class="OraFieldText">
-                                 <bean:write name="currPackage" property="longName"/>
-                               </td>
-                             </TR>   
-                          </logic:iterate>
+                             <td class="OraFieldText">
+                               <bean:write name="alternateName" property="type"/>
+                              </td>
+                             <td class="OraFieldText">
+                               <bean:write name="alternateName" property="context.name"/>
+                              </td>                     
+                           </TR>  
+                       </logic:iterate>
                       </logic:notEmpty>
-                       <logic:empty  name="packages" > 
-                            <TR class=OraTabledata>
-                               <td colspan=2 class="OraFieldText">Currently not assigened to any Packages</td>
-                             </TR>  
-                        </logic:empty>                    
-                      </table>
+                     <logic:empty  name="currIncommingOCR" property="source.alternateNames" > 
+                          <TR class=OraTabledata>
+                             <td colspan=3 class="OraFieldText">No Alternate names for this Source Object Class exist</td>
+                           </TR>  
+                      </logic:empty>                    
+                    </table> 
+                  </td>
+               </tr> 
+
+               <tr>
+                <td class="OraHeaderSubSubSub" vAlign=bottom align=left colspan=2 width="100%"> 
+                  Using Projects
+                </td>
+               </tr>
+              <tr>
+                <td vAlign=top colspan=2 width="100%">
+                  <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                   <TR class=OraTabledata>
+                    <td class="OraFieldText">
+                      <logic:notEmpty  name="projects" >                          
+                         <logic:iterate id="currProject" name="projects" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="prIndex" >
+                           <UL>
+                                 <li class="OraFieldText"><bean:write name="currProject" property="name"/>(Project)</li>
+                                 <logic:notEmpty  name="currProject" property="children">
+                                  <logic:iterate id="currSubProject" name="currProject" property="children" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="subIndex" >
+                                     <ul>
+                                       <li  class="OraFieldText"><bean:write name="currSubProject" property="name"/>(SubProject)</li>
+                                       <logic:notEmpty  name="currSubProject" property="packages">
+                                        <ul>
+                                        <logic:iterate id="currPackage" name="currSubProject" property="packages" type="gov.nih.nci.ncicb.cadsr.resource.OCRPackage" indexId="pkIndex" >
+                                             <li class="OraFieldText"> <bean:write name="currPackage" property="name"/>(Package)</li>                                                  
+                                        </logic:iterate>
+                                        </ul>
+                                       </logic:notEmpty> 
+                                      </ul>
+                                  </logic:iterate>                               
+                                 </logic:notEmpty>
+                           </UL>
+                         </logic:iterate>
+                      </logic:notEmpty>
+                     </td>
+                    </tr>
+                    </table>
+                     <logic:empty  name="projects" > 
+                       <table vAlign=top width="100%" align=center border=0 >
+                        <TR class=OraTabledata>
+                           <td  class="OraFieldText">Currently not used by any Projects</td>
+                         </TR>  
+                        </table>
+                      </logic:empty>
                     </td>
-                  </tr>              
+                  </tr>               
                  </table>  
               </td>
            </tr>
@@ -470,32 +600,58 @@ function navigateOCR(ocId,ocrIndex,direction) {
         <tr >
            <td width="100%" ><img height=1 src="<%=contextPath%>/i/beigedot.gif" width="99%" align=top border=0> </td>
         </tr>  
-      </table>         
+      </table>   
+      <%
+        ObjectClass currObjClass = (ObjectClass)request.getSession().getAttribute(UmlBrowserFormConstants.OBJECT_CLASS);
+      %>
         <logic:notEmpty  name="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>" scope="session">  
           <logic:iterate id="currBidirectionalOCR" name="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>" type="gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship" indexId="ocrIndex" >                                 
              <%
-               List subs = ObjectExtractor.getSubProjects(currBidirectionalOCR);
-               pageContext.setAttribute("subprojects",subs);
-               List packages = ObjectExtractor.getPackages(currBidirectionalOCR);
-               pageContext.setAttribute("packages",packages);                   
+               Collection projects = ObjectExtractor.getProjects(currBidirectionalOCR);                 
             %> 
      
-           <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+           <table vAlign=top cellSpacing=2 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
             <tr class=OraTabledata>
              <td class=OraFieldText>
                  <table vAlign=top width="100%">
-                     <tr  class=OraTabledata align="left">
-                        <td class=OraFieldText colspan="2">
-                         <a href="javascript:navigateOCR('<%=currBidirectionalOCR.getTarget().getId()%>','<%=ocrIndex%>','<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>')">Navigate</a>
-                        </td>         
+                     <tr  class=OraTabledata align="left"> 
+                     
+                         <% if(OCUtils.isNavigationAllowed(request,UmlBrowserFormConstants.OCR_NAVIGATION_BEAN,currBidirectionalOCR))
+                         {
+                         %>
+                            <td class=OraFieldText colspan="2">
+                                <a href="javascript:navigateOCR('<%=OCUtils.getBiderectionalTarget(currBidirectionalOCR,currObjClass).getId()%>','<%=ocrIndex%>','<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>')">Navigate to this association</a>
+                            </td>              
+                         <%}else{%>
+                              <td class=OraFieldText colspan="2">
+                                &nbsp;
+                             </td>                
+                        <% }%>                                                
                      </tr>
+                      <tr  class=OraTabledata align="center">
+                         <td class=OraFieldText colspan="2" align="center">
+                           <cde:DefineNavigationCrumbs
+                                beanId="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS+ocrIndex%>"   
+                                direction="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>"
+                                ocrId="currBidirectionalOCR"
+                           />                     
+                           <cde:ocrNavigation
+                                navigationListId="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS+ocrIndex%>"   
+                                outGoingImage="/i/outgoing.gif"
+                                inCommingImage="/i/incomming.gif"
+                                biDirectionalImage="/i/bidirectional.gif"
+                                scope="page"
+                                activeNodes="false"
+                           />                     
+                         </td>
+                     </tr>                      
                     <TR>
                      <td width ="50%">     
                       <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
                         <TR class=OraTabledata>
-                           <td class="TableRowPromptTextLeft" width="40%" >Target Object Class</td>
+                           <td class="TableRowPromptTextLeft" width="40%" >Associated Object Class</td>
                            <td class="OraFieldText">
-                              <bean:write name="currBidirectionalOCR" property="target.longName"/>
+                              <%=(OCUtils.getBiderectionalTarget(currBidirectionalOCR,currObjClass)).getLongName()%>
                             </td>
                         </tr>
                         <TR class=OraTabledata>
@@ -547,7 +703,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
                         <TR class=OraTabledata>
                            <td class="OraTableColumnHeader" width="40%">Target Multiplicity</td>
                            <td class="OraFieldText">
-                            <%=OCUtils.getSourceMultiplicityDisplayString(currBidirectionalOCR)%>
+                            <%=OCUtils.getTargetMultiplicityDisplayString(currBidirectionalOCR)%>
                            </td>
                         </tr>
                         <TR class=OraTabledata>
@@ -565,59 +721,83 @@ function navigateOCR(ocId,ocrIndex,direction) {
                       </table>             
                      </td>
                   </TR>            
-    
                   <tr>
-                    <td vAlign=top width="50%">
-                      <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
-                        <TR class=OraTableColumnHeader>
-                           <th class="OraTableColumnHeader" width="50%" >Project</th>
-                           <th class="OraTableColumnHeader">Sub Project</th>
-                         </TR>   
-                        <logic:notEmpty  name="subprojects" > 
-                          <logic:iterate id="currSubProject" name="subprojects" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="subIndex" >                                 
-                            <TR class=OraTabledata>
-                               <td class="OraFieldText">
-                                 <bean:write name="currSubProject" property="parent.longName"/>
-                                </td>
-                               <td class="OraFieldText">
-                                 <bean:write name="currSubProject" property="longName"/>
-                                </td>
-                             </TR>  
-                         </logic:iterate>
-                        </logic:notEmpty>
-                       <logic:empty  name="subprojects" > 
-                            <TR class=OraTabledata>
-                               <td colspan=2 class="OraFieldText">Currently not used by any Projects/Subprojects</td>
-                             </TR>  
-                        </logic:empty>                    
-                      </table>
-                    </td>
-                    <td vAlign=top width="50%">
-                      <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=right border=0 class="OraBGAccentVeryDark">
-                        <TR class=OraTabledata>
-                           <th class="OraTableColumnHeader" width="50%" >Project</th>
-                           <th class="OraTableColumnHeader">Package</th>
-                         </TR>   
-                        <logic:notEmpty  name="packages" > 
-                          <logic:iterate id="currPackage" name="packages" type="gov.nih.nci.ncicb.cadsr.resource.OCRPackage" indexId="subIndex" >                                                      
-                            <TR class=OraTabledata>
-                               <td class="OraFieldText">
-                                 <bean:write name="currPackage" property="parent.longName"/>
+                   <td colspan=2>
+                    <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                      <TR class=OraTableColumnHeader>
+                         <th class="OraTableColumnHeader"  >Associated Object Class Alternate Name</th>
+                         <th class="OraTableColumnHeader">Type</th>
+                         <th class="OraTableColumnHeader">Context</th>
+                       </TR>   
+                      <%=OCUtils.getBiderectionalTargetAttributeName(currBidirectionalOCR,currObjClass)%>
+                      <logic:notEmpty  name="currBidirectionalOCR" property="target.alternateNames" > 
+                        <logic:iterate id="alternateName" name="currBidirectionalOCR" property="target.alternateNames" type="gov.nih.nci.ncicb.cadsr.domain.AlternateName" indexId="nameIndex" >                                 
+                          <TR class=OraTabledata>
+                             <td class="OraFieldText">
+                               <bean:write name="alternateName" property="name"/>
                               </td>
-                               <td class="OraFieldText">
-                                 <bean:write name="currPackage" property="longName"/>
-                               </td>
-                             </TR>   
-                          </logic:iterate>
+                             <td class="OraFieldText">
+                               <bean:write name="alternateName" property="type"/>
+                              </td>
+                             <td class="OraFieldText">
+                               <bean:write name="alternateName" property="context.name"/>
+                              </td>                     
+                           </TR>  
+                       </logic:iterate>
                       </logic:notEmpty>
-                       <logic:empty  name="packages" > 
-                            <TR class=OraTabledata>
-                               <td colspan=2 class="OraFieldText">Currently not assigened to any Packages</td>
-                             </TR>  
-                        </logic:empty>                    
-                      </table>
-                    </td>
-                  </tr>              
+                     <logic:empty  name="currBidirectionalOCR" property="target.alternateNames" > 
+                          <TR class=OraTabledata>
+                             <td colspan=3 class="OraFieldText">No Alternate names for this Target Object Class exist</td>
+                           </TR>  
+                      </logic:empty>                    
+                    </table> 
+                  </td>
+               </tr> 
+               
+               <tr>
+                <td class="OraHeaderSubSubSub" vAlign=bottom align=left colspan=2 width="100%"> 
+                  Using Projects
+                </td>
+               </tr>
+              <tr>
+                <td vAlign=top colspan=2 width="100%">
+                  <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+                   <TR class=OraTabledata>
+                    <td class="OraFieldText">
+                      <logic:notEmpty  name="projects" >                          
+                         <logic:iterate id="currProject" name="projects" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="prIndex" >
+                           <UL>
+                                 <li class="OraFieldText"><bean:write name="currProject" property="name"/>(Project)</li>
+                                 <logic:notEmpty  name="currProject" property="children">
+                                  <logic:iterate id="currSubProject" name="currProject" property="children" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="subIndex" >
+                                     <ul>
+                                       <li  class="OraFieldText"><bean:write name="currSubProject" property="name"/>(SubProject)</li>
+                                       <logic:notEmpty  name="currSubProject" property="packages">
+                                        <ul>
+                                        <logic:iterate id="currPackage" name="currSubProject" property="packages" type="gov.nih.nci.ncicb.cadsr.resource.OCRPackage" indexId="pkIndex" >
+                                             <li class="OraFieldText"> <bean:write name="currPackage" property="name"/>(Package)</li>                                                  
+                                        </logic:iterate>
+                                        </ul>
+                                       </logic:notEmpty> 
+                                      </ul>
+                                  </logic:iterate>                               
+                                 </logic:notEmpty>
+                           </UL>
+                         </logic:iterate>
+                      </logic:notEmpty>
+                     </td>
+                    </tr>
+                    </table>
+                     <logic:empty  name="projects" > 
+                       <table vAlign=top width="100%" align=center border=0 >
+                        <TR class=OraTabledata>
+                           <td  class="OraFieldText">Currently not used by any Projects</td>
+                         </TR>  
+                        </table>
+                      </logic:empty>
+                  </td>
+              </tr>               
+               
                  </table>  
               </td>
            </tr>

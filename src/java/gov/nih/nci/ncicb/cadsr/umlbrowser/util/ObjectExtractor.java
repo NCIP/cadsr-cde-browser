@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.resource.OCRPackage;
 
 import gov.nih.nci.ncicb.cadsr.resource.Project;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -23,72 +24,77 @@ public class ObjectExtractor
   {
   }
 
-  public static List getSubProjects(ObjectClassRelationship ocr)
+  public static Collection getProjects(ObjectClassRelationship ocr)
   {
      List acCSCSIS = ocr.getAcCsCsis();
      if(acCSCSIS==null) return null;
      ListIterator acCSCSISIt = acCSCSIS.listIterator();
-     List subprojects = new ArrayList();
-     Map tempSubProjectMap =  new HashMap();
+     List Projects = new ArrayList();   
+     
+     Map projectMap = new HashMap();
+     Map subProjectMap = new HashMap();
+
      while(acCSCSISIt.hasNext())
      {
        AdminComponentClassSchemeClassSchemeItem acCsCsi = (AdminComponentClassSchemeClassSchemeItem)acCSCSISIt.next();
-       ClassSchemeClassSchemeItem cscsi = acCsCsi.getCsCsi();
-       Project currSubProject = null;
+       ClassSchemeClassSchemeItem cscsi = acCsCsi.getCsCsi();   
+       Project newProject = (Project)projectMap.get(cscsi.getCs().getId());
+       if(newProject==null)
+       {
+         newProject = new ProjectTransferObject();
+         newProject.setId(cscsi.getCs().getId());
+         newProject.setName(cscsi.getCs().getLongName());
+         projectMap.put(cscsi.getCs().getId(),newProject);
+       }
+       //get Sub project
+
        if(cscsi.getCs().getType().equals(PROJECT_CS_TYPE) &&
              cscsi.getCsi().getType().equals(SUB_PROJECT_CSI_TYPE))
-       {
-         currSubProject =  (Project)tempSubProjectMap.get(cscsi.getId());
-         if(currSubProject==null)
-         {
-           Project currProject = new ProjectTransferObject();
-           currProject.setLongName(cscsi.getCs().getLongName()); 
-           
-           currSubProject =  new ProjectTransferObject();
-           currSubProject.setParent(currProject);
-           currSubProject.setLongName(cscsi.getCsi().getName());
-           
-           subprojects.add(currSubProject);
-           tempSubProjectMap.put(cscsi.getId(),currSubProject);           
-         }
+       {       
+           Project subProject = (Project)subProjectMap.get(cscsi.getId());
+           if(subProject==null)
+           {
+              subProject = new ProjectTransferObject();
+              subProject.setId(cscsi.getId());
+              subProject.setName(cscsi.getCsi().getName());
+              subProjectMap.put(cscsi.getId(),subProject);  
+              newProject.addChild(subProject);
+           }         
        }
      }
-     return subprojects;
-  }
-
-
-  public static List getPackages(ObjectClassRelationship ocr)
-  {
-  
-     List acCSCSIS = ocr.getAcCsCsis();
-     if(acCSCSIS==null) return null;
-     ListIterator acCSCSISIt = acCSCSIS.listIterator();
-     List packages = new ArrayList();
-     Map tempSubProjectMap =  new HashMap();
-     while(acCSCSISIt.hasNext())
+     acCSCSISIt = acCSCSIS.listIterator();
+      while(acCSCSISIt.hasNext())
      {
        AdminComponentClassSchemeClassSchemeItem acCsCsi = (AdminComponentClassSchemeClassSchemeItem)acCSCSISIt.next();
-       ClassSchemeClassSchemeItem cscsi = acCsCsi.getCsCsi();
-       Project currSubProject = null;
-       if(cscsi.getCs().getType().equals(PROJECT_CS_TYPE) &&
+       ClassSchemeClassSchemeItem cscsi = acCsCsi.getCsCsi();   
+        if(cscsi.getCs().getType().equals(PROJECT_CS_TYPE) &&
              cscsi.getCsi().getType().equals(PACKAGE_CSI_TYPE))
        {
-         currSubProject =  (Project)tempSubProjectMap.get(cscsi.getId());
-         if(currSubProject==null)
-         {
-           Project currProject = new ProjectTransferObject();
-           currProject.setLongName(cscsi.getCs().getLongName());        ;
-           
-           OCRPackage currPackage = new OCRPackageTransferObject();
-           currPackage.setParent(currProject);
-           currPackage.setLongName(cscsi.getCsi().getName());
-           
-           packages.add(currPackage);
-           tempSubProjectMap.put(cscsi.getId(),currPackage);           
-         }
-       }
-     }
-     return packages;
+
+          OCRPackage ocrPackage = new OCRPackageTransferObject();
+          ocrPackage.setId(cscsi.getId());
+          ocrPackage.setName(cscsi.getCsi().getName());       
+
+           if(cscsi.getParent()!=null)
+           {
+              ClassSchemeClassSchemeItem parentcscsi = cscsi.getParent();
+              if(parentcscsi.getCs().getType().equals(PROJECT_CS_TYPE) &&
+                   parentcscsi.getCsi().getType().equals(SUB_PROJECT_CSI_TYPE))
+               {
+                  Project subProject = (Project)subProjectMap.get(parentcscsi.getId());
+                  if(subProject!=null)
+                  {
+                    subProject.addPackage(ocrPackage);
+                  }
+               }
+           }
+       }       
+     } 
      
+     return projectMap.values();
   }
+
+
+
+
 }

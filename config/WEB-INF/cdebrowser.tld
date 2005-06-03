@@ -451,5 +451,36 @@
     <required>true</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute>      
-  </tag>   
+    <attribute>
+    <name>scope</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>     
+    <attribute>
+    <name>activeNodes</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>      
+  </tag> 
+  <tag>
+    <name>DefineNavigationCrumbs</name>
+    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.DefineNavigationCrumbs</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>Difine a new Navigation crumbs based on current OCR in pageContext</info>  
+    <attribute>
+    <name>beanId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>direction</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>ocrId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>        
+  </tag>    
 </taglib>

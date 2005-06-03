@@ -130,7 +130,7 @@ public class ObjectClassRelationshipAction extends UmlBrowserBaseDispatchAction
     String obcIdSeq = (String) dynaForm.get(OC_IDSEQ);
     String ocrIndex = (String) dynaForm.get(OCR_INDEX);
     String direction = (String) dynaForm.get(OCR_DIRECTION);
-    
+    Integer crumbsIndex = (Integer) dynaForm.get(OCR_BR_CRUMBS_INDEX);
     if (log.isDebugEnabled()) {
       log.info("ocr for With object class " + obcIdSeq);
       log.info("ocr index " + ocrIndex);
@@ -153,8 +153,28 @@ public class ObjectClassRelationshipAction extends UmlBrowserBaseDispatchAction
           bean.setObjectClass(currObjectClass);
           crumbs.add(bean);
         }
+      else
+      {
+        //Set the OCR_NAVIGATION_BEAN to current navigation path
+        int currSize = crumbs.size();
+        int currIndex = crumbsIndex.intValue();
+        boolean nodesRemoved = false;
+        for(int i=currIndex;i<currSize-1;++i)
+        {
+          crumbs.removeLast();
+          nodesRemoved=true;
+        }
+        if(nodesRemoved)
+        {
+          OCRNavigationBean newLastNavBean = (OCRNavigationBean)crumbs.getLast();
+          newLastNavBean.setOcr(null);
+          newLastNavBean.setShowDirection(false);
+        }
+      }
       
 
+      
+      
       OCRNavigationBean lastNavBean = (OCRNavigationBean)crumbs.getLast();
       //Make sure same object is not navigated // need review
       if(lastNavBean.getObjectClass().getId()!=obcIdSeq)
@@ -167,6 +187,8 @@ public class ObjectClassRelationshipAction extends UmlBrowserBaseDispatchAction
         
               ObjectClass objClass = service.getObjectClass(obcIdSeq);
               List ocrs = service.getAssociationsForOC(obcIdSeq);
+              //Set the current OCRID 
+              dynaForm.set(CURR_OCR_IDSEQ,navigatedOCR.getId());
               
               
               Map ocrMap = OCUtils.sortByOCRTypes(ocrs,obcIdSeq);
@@ -184,7 +206,9 @@ public class ObjectClassRelationshipAction extends UmlBrowserBaseDispatchAction
               //Add new link
               OCRNavigationBean bean = new OCRNavigationBean();
               bean.setObjectClass(objClass);
-              crumbs.add(bean);              
+              crumbs.add(bean); 
+              //set the crumbs index
+              dynaForm.set(OCR_BR_CRUMBS_INDEX,new Integer(crumbs.size()-1));
       }
     }
     catch (ServiceLocatorException exp) {

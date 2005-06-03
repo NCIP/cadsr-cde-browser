@@ -92,6 +92,20 @@ public class StringUtils {
       return obj.toString();
     }
   }
+  /**
+   * This method is used to replace null or empty string with  "&nbsp;";
+   * Used in jsp pages 
+   */
+  public static String ifNullReplaceWithnbsp(String obj) {
+    if (obj == null) {
+      return "&nbsp;";
+    }
+    else if(obj.equals("")){
+       return "&nbsp;";
+    }
+    else
+      return obj;
+  }
 
   public static String strReplace(
     String sourceStr,

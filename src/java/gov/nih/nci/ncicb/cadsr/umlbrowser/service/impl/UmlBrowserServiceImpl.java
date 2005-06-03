@@ -42,7 +42,10 @@ public class UmlBrowserServiceImpl implements UmlBrowserService
   public  ObjectClass getObjectClass(String ocIdseq)
   {
     ObjectClassDAO dao = domainObjectsDaoFactory.getObjectClassDAO();
-    return dao.findByPK(ocIdseq);
+    List eager = new ArrayList();
+	  //eager.add(EagerConstants.CS_CSI);
+    eager.add(EagerConstants.AC_CS_CSI);    
+    return dao.findByPK(ocIdseq,eager);
 
   }  
   

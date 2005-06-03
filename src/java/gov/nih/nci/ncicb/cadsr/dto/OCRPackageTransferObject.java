@@ -4,22 +4,31 @@ import gov.nih.nci.ncicb.cadsr.resource.Project;
 
 public class OCRPackageTransferObject extends AdminComponentTransferObject implements OCRPackage
 {
-  private Project parent = null;
-  
-  public OCRPackageTransferObject()
+  private String name;
+  private String id;
+
+  public void setName(String name)
   {
+    this.name = name;
   }
 
 
-  public void setParent(Project parent)
+  public String getName()
   {
-    this.parent = parent;
+    return name;
   }
 
 
-  public Project getParent()
+  public void setId(String id)
   {
-    return parent;
+    this.id = id;
   }
+
+
+  public String getId()
+  {
+    return id;
+  }
+
 
 }

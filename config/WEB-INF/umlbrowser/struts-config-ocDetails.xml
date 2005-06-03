@@ -7,7 +7,9 @@
       dynamic="true">
       <form-property name="objectClassIdseq" type="java.lang.String"/>
       <form-property name="ocrIndex" type="java.lang.String"/>
-      <form-property name="ocrDirection" type="java.lang.String"/>     
+      <form-property name="ocrDirection" type="java.lang.String"/>  
+      <form-property name="ocrBreadCrumbsIndex" type="java.lang.Integer"/> 
+      <form-property name="currOcrIdseq" type="java.lang.String"/>
     </form-bean>
   </form-beans>
   <form-beans>
@@ -15,7 +17,8 @@
       type="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.formbeans.UmlBrowserBaseDynaFormBean"
       dynamic="true">
       <form-property name="objectClassIdseq" type="java.lang.String"/>  
-      <form-property name="resetCrumbs" type="java.lang.String"/>        
+      <form-property name="resetCrumbs" type="java.lang.String"/>    
+      <form-property name="ocrBreadCrumbsIndex" type="java.lang.Integer"/> 
     </form-bean>
   </form-beans>  
   
@@ -46,9 +49,6 @@
       <forward name="success" path="/umlbrowser/ocrDetails.jsp"/>
     </action>  
     
-  </action-mappings>
-  
-  <action-mappings>
     <action name="ocform" path="/umlbrowser/ocDetailsAction" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.actions.ObjectClassAction"
