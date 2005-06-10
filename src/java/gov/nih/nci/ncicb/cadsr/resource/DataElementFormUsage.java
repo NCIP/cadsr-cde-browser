@@ -5,4 +5,5 @@ public interface DataElementFormUsage  {
   public String getFormLongName();
   public String getUsageType();
   public String getProtocolLeadOrg();
+  public String getQuestionLongName();
 }
