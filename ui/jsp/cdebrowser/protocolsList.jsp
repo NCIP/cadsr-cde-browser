@@ -133,7 +133,8 @@ function listChanged(urlInfo) {
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader">Protocol Number</th>
     <th class="OraTableColumnHeader">Lead Org</th>
-    <th class="OraTableColumnHeader">Used By</th>
+    <th class="OraTableColumnHeader">Form Name</th>
+    <th class="OraTableColumnHeader">Question Name</th>
     <th class="OraTableColumnHeader">Usage Type</th>
   </tr>
 <%
@@ -147,6 +148,7 @@ function listChanged(urlInfo) {
     <td class="OraFieldText"><%=frmUsage.getProtocolLongName()%> </td>
     <td class="OraFieldText"><%=frmUsage.getProtocolLeadOrg()%> </td>
     <td class="OraFieldText"><%=frmUsage.getFormLongName()%> </td>
+    <td class="OraFieldText"><%=frmUsage.getQuestionLongName()%> </td>
     <td class="OraFieldText"><%=frmUsage.getUsageType()%> </td>
   </tr>
 <%
