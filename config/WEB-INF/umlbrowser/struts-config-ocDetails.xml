@@ -11,8 +11,7 @@
       <form-property name="ocrBreadCrumbsIndex" type="java.lang.Integer"/> 
       <form-property name="currOcrIdseq" type="java.lang.String"/>
     </form-bean>
-  </form-beans>
-  <form-beans>
+
     <form-bean name="ocform"
       type="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.formbeans.UmlBrowserBaseDynaFormBean"
       dynamic="true">

@@ -9,4 +9,6 @@ public interface UmlBrowserService
   public  List getAssociationsForOC(String ocIdseq);
   
    public  ObjectClass getObjectClass(String ocIdseq);
+   
+   public List getInheritenceRelationships(ObjectClass oc);
 }

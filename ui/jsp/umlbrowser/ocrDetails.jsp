@@ -83,7 +83,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
             Details of this class can be seen under "Object Class" tab.
             Outgoing associations have "<bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as the source Object Class;
             Incoming associations have "<bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as the target Object Class;
-            Bidirection associations have "<bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as target and source Object Class.
+            Bidirection associations have "<bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as target or source Object Class.
           </td>
         </tr>  
 </table>
@@ -729,7 +729,6 @@ function navigateOCR(ocId,ocrIndex,direction) {
                          <th class="OraTableColumnHeader">Type</th>
                          <th class="OraTableColumnHeader">Context</th>
                        </TR>   
-                      <%=OCUtils.getBiderectionalTargetAttributeName(currBidirectionalOCR,currObjClass)%>
                       <logic:notEmpty  name="currBidirectionalOCR" property="target.alternateNames" > 
                         <logic:iterate id="alternateName" name="currBidirectionalOCR" property="target.alternateNames" type="gov.nih.nci.ncicb.cadsr.domain.AlternateName" indexId="nameIndex" >                                 
                           <TR class=OraTabledata>

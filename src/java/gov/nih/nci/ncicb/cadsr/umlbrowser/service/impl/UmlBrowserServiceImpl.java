@@ -49,7 +49,20 @@ public class UmlBrowserServiceImpl implements UmlBrowserService
 
   }  
   
-
+  public List getInheritenceRelationships(ObjectClass oc)
+  {
+    List superClasses =  new ArrayList();
+    ObjectClassRelationshipDAO dao = domainObjectsDaoFactory.getObjectClassRelationshipDAO();
+    ObjectClassRelationship ocr = dao.getInheritenceRelationship(oc);
+    while(ocr!=null&&ocr.getTarget()!=null)
+    {
+      superClasses.add(ocr.getTarget());
+      ocr = dao.getInheritenceRelationship(ocr.getTarget());
+    }
+    
+    return superClasses;
+    
+  }
 
   public void setDomainObjectsDaoFactory(AbstractDomainObjectsDAOFactory domainObjectsDaoFactory)
   {

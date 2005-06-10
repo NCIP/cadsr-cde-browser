@@ -65,7 +65,7 @@
       <jsp:include page="mltitab_inc.jsp" flush="true">
         <jsp:param name="label" value="Object&nbsp;Class"/>
       </jsp:include>
-      <table cellpadding="0" cellspacing="0" width="70%" align="center" border="0">
+      <table cellpadding="0" cellspacing="0" width="80%" align="center" border="0">
         <tr>
           <td>&nbsp;</td>
         </tr>
@@ -76,6 +76,9 @@
           <td>
             <a class="link" href="#concepts">Concepts</a>
           </td>
+          <td>
+            <a class="link" href="#inheritance">Inheritance</a>
+          </td>          
           <td>
             <a class="link" href="#classification">Classification</a>
           </td>          
@@ -208,6 +211,27 @@
         </logic:notPresent>
         <!-- end of concepts -->
         
+        
+        <A NAME="inheritance"/>
+        <br>
+        <table cellpadding="0" cellspacing="0" width="100%" align="center">
+          <tr>
+            <td class="OraHeaderSubSubSub" width="100%">Inheritance</td>
+          </tr>
+          <tr>
+            <td width="100%">
+              <img height="1" src="<%=contextPath%>/i/beigedot.gif" width="90%" align="top" border="0"/>
+            </td>
+          </tr>
+        </table>
+        <table valign="top" width="90%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+            <TR class="OraTabledata">
+              <td colspan="3" class="OraFieldText">Does not Inherit from any Object Class</td>
+            </TR>
+        </table>
+          
+          
+                  
         <!-- Classifications -->
         <A NAME="classification"/>
         <br>                
@@ -250,7 +274,7 @@
                </table>
                          
                          
-        <A NAME="alternateName"/>
+        <A NAME="alternateNames"/>
         <br>
         <table cellpadding="0" cellspacing="0" width="100%" align="center">
           <tr>
