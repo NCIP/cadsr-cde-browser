@@ -59,7 +59,7 @@ function clearForm()
   
   <form method="POST" action="j_security_check">
 
-  <table align=center cellspacing="2" cellpadding="3" border="0">
+  <table align=center cellspacing="2" cellpadding="3" border="0" onkeypress="if(window.event.keyCode==13){submitForm()};">
     <% if(request.getAttribute("msg") != null) { %>
     <tr>
       <b><td colspan=2 class="OraErrorText"><%= request.getAttribute("msg") %></td></b>
