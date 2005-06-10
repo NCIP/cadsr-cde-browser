@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
+
 // java imports
 //CDE Browser Application Imports
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
@@ -11,12 +12,12 @@ import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.util.ApplicationParameters;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -26,7 +27,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,42 +45,44 @@ import oracle.sql.Datum;
 import oracle.sql.NUMBER;
 import oracle.sql.STRUCT;
 
-import gov.nih.nci.ncicb.cadsr.util.logging.Log;
-import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
-
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
  *
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.6 2005-03-07 18:34:49 kakkodis Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.7 2005-06-10 14:45:07 jiangja Exp $
  */
-public class GetExcelDownload extends BasePersistingProcess{
-   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
-	private static final String EMPTY_STRING = "";
-   private static final int NUMBER_OF_DE_COLUMNS = 32;
+public class GetExcelDownload
+  extends BasePersistingProcess {
+  private static Log log = LogFactory.getLog(GetExcelDownload.class .getName());
+  private static final int NUMBER_OF_DE_COLUMNS = 32;
 
-	public GetExcelDownload(){
-		this(null);
+  public GetExcelDownload() {
+    this(null);
 
-		DEBUG = false;
-	}
+    DEBUG = false;
+  }
 
-	public GetExcelDownload(Service aService){
-		super(aService);
+  public GetExcelDownload(Service aService) {
+    super(aService);
 
-		DEBUG = false;
-	}
+    DEBUG = false;
+  }
 
-	/**
-	* Registers all the parameters and results
-	* (<code>ProcessInfo</code>) for this process
-	* during construction.
-	*
-	* @author Ram Chilukuri
-	*/
-	public void registerInfo(){
-		try{
-			registerParameterObject(ProcessConstants.ALL_DATA_ELEMENTS);
+  /**
+  * Registers all the parameters and results
+  * (<code>ProcessInfo</code>) for this process
+  * during construction.
+  */
+  public void registerInfo() {
+    try {
+      registerParameterObject(ProcessConstants.ALL_DATA_ELEMENTS);
+
       registerStringParameter("SBREXT_DSN");
       registerStringParameter("src");
       registerStringParameter("XML_DOWNLOAD_DIR");
@@ -89,123 +91,67 @@ public class GetExcelDownload extends BasePersistingProcess{
       registerStringParameter("SBR_DSN");
       registerParameterObject("desb");
       registerParameterObject(ProcessConstants.DE_SEARCH_QUERY_BUILDER);
+    } catch (ProcessInfoException pie) {
+      reportException(pie, true);
+    } catch (Exception e) { }
+  }
 
-		}
-		catch(ProcessInfoException pie){
-			reportException(pie,true);
-		}
-
-    catch(Exception e) {
-    }
-	}
-
-	/**
-	* persist: called by start to do all persisting
-	*   work for this process.  If this method throws
-	*   an exception, then the condition returned by
-	*   the <code>getPersistFailureCondition()</code>
-	*   is set.  Otherwise, the condition returned by
-	*   <code>getPersistSuccessCondition()</code> is
-	*   set.
-	*
-	* @author Ram Chilukuri
-	*/
-	public void persist() throws Exception{
+  /**
+  * persist: called by start to do all persisting
+  *   work for this process.  If this method throws
+  *   an exception, then the condition returned by
+  *   the <code>getPersistFailureCondition()</code>
+  *   is set.  Otherwise, the condition returned by
+  *   <code>getPersistSuccessCondition()</code> is
+  *   set.
+  */
+  public void persist() throws Exception {
     DBUtil dbUtil = null;
+
     String excelFileSuffix = "";
     String excelFilename = "";
 
-		try{
+    try {
       dbUtil = (DBUtil)getInfoObject("dbUtil");
+
       String dsName = getStringInfo("SBREXT_DSN");
       dbUtil.getConnectionFromContainer(dsName);
 
       excelFileSuffix = dbUtil.getUniqueId("SBREXT.XML_FILE_SEQ.NEXTVAL");
-      excelFilename = getStringInfo("XML_DOWNLOAD_DIR")+"DataElements"+"_"
-                          +excelFileSuffix+".csv";
+      excelFilename = getStringInfo("XML_DOWNLOAD_DIR") + "DataElements" + "_" + excelFileSuffix + ".csv";
       //writeToExcelFile(resultsVector,excelFilename);
-      generateExcelFile(excelFilename,dbUtil);
-      setResult("EXCEL_FILE_NAME",excelFilename);
+      generateExcelFile(excelFilename, dbUtil);
+      setResult("EXCEL_FILE_NAME", excelFilename);
 
-			setCondition(SUCCESS);
-		}
-		catch(Exception ex){
-      try{
-				setCondition(FAILURE);
-			}
-			catch(TransitionConditionException tce){
-				reportException(tce,DEBUG);
-			}
-		reportException(ex,DEBUG);
-		}
-    finally {
-      try{
+      setCondition(SUCCESS);
+    } catch (Exception ex) {
+      try {
+        setCondition(FAILURE);
+      } catch (TransitionConditionException tce) {
+        reportException(tce, DEBUG);
+      }
+
+      reportException(ex, DEBUG);
+    } finally {
+      try {
         dbUtil.returnConnection();
-			}
-      catch (Exception e){
+      } catch (Exception e) {
         e.printStackTrace();
       }
     }
-	}
-
-	protected TransitionCondition getPersistSuccessCondition(){
-		return getCondition(SUCCESS);
-	}
-
-	protected TransitionCondition getPersistFailureCondition(){
-		return getCondition(FAILURE);
-	}
-
-  private void writeToExcelFile(Vector resultsVector,String fn) throws Exception {
-    try {
-      PrintWriter out
-          = new PrintWriter(new BufferedWriter(new FileWriter(fn)));
-      out.println("Data Element Preferred Name,Data Element Long Name,Data Element Doc Text,Data Element Context,Data Element Workflow Status,CDE ID,Data Element Version");
-      Vector deVec = new Vector();
-      String excelRow = new String();
-      for (int i = 0; i < resultsVector.size(); i++)  {
-        excelRow = "";
-        deVec = (Vector)resultsVector.elementAt(i);
-        excelRow = "\""+checkForNull((String)deVec.elementAt(0))+"\"" +"," +
-                   "\""+checkForNull((String)deVec.elementAt(1))+"\"" +"," +
-                   "\""+checkForNull((String)deVec.elementAt(2))+"\"" +"," +
-                   "\""+checkForNull((String)deVec.elementAt(3))+"\"" +"," +
-                   "\""+checkForNull((String)deVec.elementAt(4))+"\"" +"," +
-                   "\""+checkForNull((String)deVec.elementAt(5))+"\"" +"," +
-                   "\""+checkForNull((String)deVec.elementAt(6))+"\"";
-        out.println(excelRow);
-      }
-      excelRow = null;
-      out.close();
-    }
-    catch (Exception ex) {
-      ex.printStackTrace();
-      throw ex;
-    }
-    finally {
-    }
-
   }
 
-  private String checkForNull(String s){
-    if (s==null) return "";
-    else return s;
+  protected TransitionCondition getPersistSuccessCondition() {
+    return getCondition(SUCCESS);
   }
 
-  private String convertToString(CHAR s){
-    if (s==null) return "";
-    else return s.toString();
+  protected TransitionCondition getPersistFailureCondition() {
+    return getCondition(FAILURE);
   }
-  private String convertToString(java.sql.Date s){
-    if (s==null) return "";
-    else return s.toString();
-  }
-  private String convertToString(NUMBER s){
-    if (s==null) return "";
-    else return String.valueOf(s.floatValue());
-  }
-  public void generateExcelFile(String filename, DBUtil dbUtil) throws Exception{
+
+  public void generateExcelFile(String filename, DBUtil dbUtil) throws Exception {
     Connection cn = null;
+
     Statement st = null;
     ResultSet rs = null;
     PrintWriter pw = null;
@@ -213,45 +159,48 @@ public class GetExcelDownload extends BasePersistingProcess{
     DataElementSearchBean desb = null;
     DESearchQueryBuilder deSearch = null;
     String source = null;
-
+    HSSFWorkbook wb = null;
+    FileOutputStream fileOut = null;
     source = getStringInfo("src");
 
     try {
-
       String dataSource = getStringInfo("SBREXT_DSN");
+
       //cn = dbUtil.getConnection(); -- Commented for JBoss deployment
       ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
-      cn = DBUtil.createOracleConnection(ap.getDBUrl(),ap.getUser(),ap.getPassword());
+      cn = DBUtil.createOracleConnection(ap.getDBUrl(), ap.getUser(), ap.getPassword());
       st = cn.createStatement();
+
       if ("deSearch".equals(source)) {
-        
         desb = (DataElementSearchBean)getInfoObject("desb");
-        deSearch = (DESearchQueryBuilder)getInfoObject(
-                                ProcessConstants.DE_SEARCH_QUERY_BUILDER);
+
+        deSearch = (DESearchQueryBuilder)getInfoObject(ProcessConstants.DE_SEARCH_QUERY_BUILDER);
         String searchQuery = deSearch.getSQLWithoutOrderBy();
         String orderBy = deSearch.getOrderBy();
-        DataElementHandler dh = (DataElementHandler) HandlerFactory.getHandler(DataElement.class);
-        List deList = (List)dh.findDataElementIdsFromQueryClause(searchQuery,orderBy,getSessionId());
-    
+        DataElementHandler dh = (DataElementHandler)HandlerFactory.getHandler(DataElement.class);
+        List deList = (List)dh.findDataElementIdsFromQueryClause(searchQuery, orderBy, getSessionId());
+
         String id = null;
         boolean firstOne = true;
-        StringBuffer whereBuffer = new StringBuffer("");        
+        StringBuffer whereBuffer = new StringBuffer("");
         ListIterator deIt = deList.listIterator();
+
         while (deIt.hasNext()) {
-           id = (String)deIt.next();
+          id = (String)deIt.next();
+
           if (firstOne) {
-            whereBuffer.append("'" +id+"'");
+            whereBuffer.append("'" + id + "'");
+
             firstOne = false;
-          }
-          else
-            whereBuffer.append(",'" +id+"'");
+          } else
+            whereBuffer.append(",'" + id + "'");
         }
-        where = whereBuffer.toString();        
-        //where = deSearch.getXMLQueryStmt();
-      }
-      else if ("cdeCart".equals(source)) {
-        HttpServletRequest myRequest =
-          (HttpServletRequest) getInfoObject("HTTPRequest");
+
+        where = whereBuffer.toString();
+      //where = deSearch.getXMLQueryStmt();
+      } else if ("cdeCart".equals(source)) {
+        HttpServletRequest myRequest = (HttpServletRequest)getInfoObject("HTTPRequest");
+
         HttpSession userSession = myRequest.getSession(false);
         CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
         Collection items = cart.getDataElements();
@@ -259,511 +208,377 @@ public class GetExcelDownload extends BasePersistingProcess{
         boolean firstOne = true;
         StringBuffer whereBuffer = new StringBuffer("");
         Iterator itemsIt = items.iterator();
+
         while (itemsIt.hasNext()) {
           item = (CDECartItem)itemsIt.next();
+
           if (firstOne) {
-            whereBuffer.append("'" +item.getId()+"'");
+            whereBuffer.append("'" + item.getId() + "'");
+
             firstOne = false;
-          }
-          else
-            whereBuffer.append(",'" +item.getId()+"'");
+          } else
+            whereBuffer.append(",'" + item.getId() + "'");
         }
+
         where = whereBuffer.toString();
-      }
-      else {
+      } else {
         throw new Exception("No result set to download");
       }
 
-      String sqlStmt = "SELECT * FROM DE_EXCEL_GENERATOR_VIEW "
-                      +"WHERE DE_IDSEQ IN "
-                      +" ( "+where+" )  ";
-                      //+" ORDER BY PREFERRED_NAME ";
+      String sqlStmt = "SELECT * FROM DE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " + " ( " + where + " )  ";
+      //+" ORDER BY PREFERRED_NAME ";
 
       rs = st.executeQuery(sqlStmt);
-      pw = getPrintWriter(filename);
+      List colInfo = this.initColumnInfo();
+      wb = new HSSFWorkbook();
+      HSSFSheet sheet = wb.createSheet();
+      int rowNumber = 0;
 
-      printHeader(pw);
+      HSSFCellStyle boldCellStyle = wb.createCellStyle();
+      HSSFFont font = wb.createFont();
+      font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+      boldCellStyle.setFont(font);
+      boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
 
-      String deStr = null;
-      List validValueStrList =null;
-      List clasStrList = null;
-      List desStrList = null;
-      List refStrList = null;
-      List ddeStrList = null; // Derived data elements
+      // Create a row and put the column header in it
+      HSSFRow row = sheet.createRow(rowNumber++);
+      short col = 0;
 
-      while (rs.next()){
-        List deList = new ArrayList(18);
-        deList.add(rs.getString("PREFERRED_NAME"));
-        deList.add(rs.getString("LONG_NAME"));
-        deList.add(rs.getString("DOC_TEXT"));
-        deList.add(rs.getString("PREFERRED_DEFINITION"));
-        deList.add(rs.getString("VERSION"));
-        deList.add(rs.getString("DE_CONTE_NAME"));
-        deList.add(rs.getString("DE_CONTE_VERSION"));
-        deList.add(rs.getString("VD_PREFERRED_NAME"));
-        deList.add(rs.getString("VD_VERSION"));
-        deList.add(rs.getString("VD_CONTE_NAME"));
-        deList.add(rs.getString("VD_CONTE_VERSION"));
-        deList.add(rs.getString("DEC_PREFERRED_NAME"));
-        deList.add(rs.getString("DEC_VERSION"));
-        deList.add(rs.getString("DEC_CONTE_NAME"));
-        deList.add(rs.getString("DEC_CONTE_VERSION"));
-        deList.add(rs.getString("CDE_ID"));
-        deList.add(convertToString(rs.getDate("BEGIN_DATE")));
-        deList.add(rs.getString("ORIGIN"));
-        //Added in 2.0.1
-        deList.add(Integer.toString(rs.getInt("DEC_ID"))); //18
-        deList.add(Integer.toString(rs.getInt("VD_ID"))); //19
-        deList.add(rs.getString("VD_TYPE")); //20
-        deList.add(rs.getString("DTL_NAME")); //21
-        deList.add(Integer.toString(rs.getInt("MIN_LENGTH_NUM"))); //22
-        deList.add(Integer.toString(rs.getInt("MAX_LENGTH_NUM"))); //23
-        deList.add(rs.getString("LOW_VALUE_NUM")); //24
-        deList.add(rs.getString("HIGH_VALUE_NUM")); //25
-        deList.add(Integer.toString(rs.getInt("DECIMAL_PLACE"))); //26
-        deList.add(rs.getString("FORML_NAME")); //27
-        deList.add(rs.getString("VD_LONG_NAME")); //28
-        deList.add(rs.getString("DEC_LONG_NAME")); //29
-        deList.add(rs.getString("DE_WK_FLOW_STATUS")); //30
-        deList.add(rs.getString("REGISTRATION_STATUS")); //31
+      for (int i = 0; i < colInfo.size(); i++) {
+        ColumnInfo currCol = (ColumnInfo)colInfo.get(i);
 
-        deStr= getDataElementStr(deList);
+        if (currCol.type.indexOf("Array") >= 0) {
+          for (int nestedI = 0; nestedI < currCol.nestedColumns.size(); nestedI++) {
+            ColumnInfo nestedCol = (ColumnInfo)currCol.nestedColumns.get(nestedI);
 
-        ARRAY array = ((OracleResultSet)rs).getARRAY ("VALID_VALUES");
-        ResultSet nestedRs = array.getResultSet();
-        List vvList = new ArrayList(9);
-        while (nestedRs.next()){
-          List vvAtrr = new ArrayList(2);
-          STRUCT vvStruct = (STRUCT)nestedRs.getObject(2);
-          Datum vv[] = vvStruct.getOracleAttributes();
-          CHAR value = (CHAR)vv[0];
-          CHAR vm =  (CHAR)vv[1];
-          vvAtrr.add(value.toString());
-          vvAtrr.add(vm.toString());
-          //vvList.add(value.toString());
-          vvList.add(vvAtrr);
+            HSSFCell cell = row.createCell(col++);
+            cell.setCellValue(currCol.displayName + nestedCol.displayName);
+            cell.setCellStyle(boldCellStyle);
+          }
+        } else {
+          HSSFCell cell = row.createCell(col++);
+
+          cell.setCellValue(currCol.displayName);
+          cell.setCellStyle(boldCellStyle);
         }
-        validValueStrList=this.getValidValuesStr(vvList);
-       // Print Classification
-
-         List clasList = new ArrayList(11);
-
-        ARRAY clasArray = ((OracleResultSet)rs).getARRAY ("CLASSIFICATIONS");
-        ResultSet nestedClassRs = clasArray.getResultSet();
-
-        while (nestedClassRs.next()){
-         List arrList = new ArrayList(9);
-          //Object obj = nestedClassRs.getObject(2);
-          //String str = obj.getClass().getName();
-          STRUCT clasStruct = (STRUCT)nestedClassRs.getObject(2);
-          Datum clas[] = clasStruct.getOracleAttributes();
-
-          STRUCT adminClas = (STRUCT)clas[0];
-          Datum admin[] = adminClas.getOracleAttributes();
-          NUMBER csId = (NUMBER)admin[0];
-          CHAR csContNAme = (CHAR)admin[1];
-          NUMBER csVersion = (NUMBER)admin[2];
-          CHAR csPreName = (CHAR)admin[3];
-          NUMBER csContVersion = (NUMBER)admin[4];
-
-          CHAR csiName = (CHAR)clas[1];
-          CHAR csTypeName = (CHAR)clas[2];
-
-          arrList.add(convertToString(csPreName));
-          arrList.add(convertToString(csVersion));
-          arrList.add(convertToString(csContNAme));
-          arrList.add(convertToString(csContVersion));
-          arrList.add(convertToString(csiName));
-          arrList.add(convertToString(csTypeName));
-          clasList.add(arrList);
-        }
-
-        clasStrList=this.getClassificationsStr(clasList);
-
-        // print Designation
-         List desList = new ArrayList(11);
-
-        ARRAY desArray = ((OracleResultSet)rs).getARRAY ("designations");
-        ResultSet nestedDesRs = desArray.getResultSet();
-
-        while (nestedDesRs.next()){
-          List arrList = new ArrayList(9);
-          STRUCT desStruct = (STRUCT)nestedDesRs.getObject(2);
-          Datum ref[] = desStruct.getOracleAttributes();
-
-          CHAR desContName = (CHAR)ref[0];
-          NUMBER desContVer = (NUMBER)ref[1];
-          CHAR desName = (CHAR)ref[2];
-          CHAR desType = (CHAR)ref[3];
-          CHAR desLae = (CHAR)ref[4];
-
-
-          arrList.add(convertToString(desContName));
-          arrList.add(convertToString(desContVer));
-          arrList.add(convertToString(desName));
-          arrList.add(convertToString(desType));
-          desList.add(arrList);
-        }
-        desStrList=getDesignationStr(desList);
-
-
-        // print reference docs
-         List refList = new ArrayList(11);
-        ARRAY refArray = ((OracleResultSet)rs).getARRAY ("reference_docs");
-        ResultSet nestedRefRs = refArray.getResultSet();
-
-        while (nestedRefRs.next()){
-          List arrList = new ArrayList(9);
-          STRUCT refStruct = (STRUCT)nestedRefRs.getObject(2);
-          Datum ref[] = refStruct.getOracleAttributes();
-
-          CHAR rdName = (CHAR)ref[0];
-          CHAR orgName = (CHAR)ref[1];
-          CHAR rdType = (CHAR)ref[2];
-          CHAR docText = (CHAR)ref[3];
-          CHAR rdUrl = (CHAR)ref[4];
-          CHAR laeName = (CHAR)ref[5];
-          CHAR displayOrder = (CHAR)ref[6];
-
-          arrList.add(convertToString(docText));
-          arrList.add(convertToString(rdName));
-          arrList.add(convertToString(rdType));
-          refList.add(arrList);
-        }
-
-        refStrList=this.getReferenceDocsStr(refList);
-
-        List ddeList = new ArrayList(11);
-
-        STRUCT ddeStruct = ((OracleResultSet)rs).getSTRUCT ("DE_DERIVATION");
-        Object[] dde = ddeStruct.getAttributes();
-        String controlName = (String)dde[0];
-        String description = (String)dde[1];
-        String method = (String)dde[2];
-        String rule = (String) dde[3];
-        String concatChar = (String) dde[4];
-
-        // Skip all the other multiple value columns
-        deStr += getEmptyStrings(15);
-        String ddeInfoString = "\""+checkForNull(controlName)+"\"" +"," +
-               "\""+checkForNull(method)+"\"" +"," +
-               "\""+checkForNull(rule)+"\"" +"," +
-               "\""+checkForNull(concatChar)+"\"";
-        deStr += ddeInfoString;
-
-        Array ddeArray = (ARRAY) dde[5];
-        if (ddeArray != null) {
-        Object[] ddeArray2 = (Object[]) ddeArray.getArray();
-        for (int i=0; i< ddeArray2.length; i++) {
-           List arrList = new ArrayList(8);
-           STRUCT dedStruct = (STRUCT)ddeArray2[i];
-           Datum ded[] = dedStruct.getOracleAttributes();
-
-           NUMBER deId = (NUMBER)ded[0];
-           CHAR longName = (CHAR)ded[1];
-           CHAR preferredName = (CHAR)ded[2];
-           CHAR preferredDefinition = (CHAR)ded[3];
-           NUMBER verion = (NUMBER)ded[4];
-           CHAR aslName = (CHAR)ded[5];
-           CHAR contextName = (CHAR)ded[6];
-           NUMBER displayOrder = (NUMBER)ded[7];
-
-           arrList.add(convertToString(deId));
-           arrList.add(convertToString(longName));
-           //arrList.add(convertToString(preferredName));
-           //arrList.add(convertToString(preferredDefinition));
-           arrList.add(convertToString(verion));
-           arrList.add(convertToString(aslName));
-           arrList.add(convertToString(contextName));
-           arrList.add(convertToString(displayOrder));
-           ddeList.add(arrList);
-        }
-
-        ddeStrList=this.getDdeStr(ddeList);
-        }
-
-        // write out single values first
-        pw.println(deStr);
-        printMultipleValus(validValueStrList,clasStrList,desStrList,refStrList, ddeStrList, pw);
-
-        vvList = null;
-        clasList = null;
-        refList=null;
-        desList=null;
-        deList = null;
-        ddeList = null;
-        ddeStrList = null;
-
       }
 
-    }
-    catch (Exception ex) {
+      int maxRowNumber = 0;
+
+      while (rs.next()) {
+        row = sheet.createRow(rowNumber++);
+
+        col = 0;
+
+        for (int i = 0; i < colInfo.size(); i++) {
+          ColumnInfo currCol = (ColumnInfo)colInfo.get(i);
+
+          if (currCol.type.indexOf("Array") >= 0) {
+            ARRAY array = null;
+
+            if (currCol.type.equalsIgnoreCase("Array"))
+              array = ((OracleResultSet)rs).getARRAY(currCol.rsColumnName); 
+            else if (currCol.type.equalsIgnoreCase("StructArray")) {
+              STRUCT struct = ((OracleResultSet)rs).getSTRUCT(currCol.rsColumnName);
+              Object [] valueStruct = struct.getAttributes();
+              array = (ARRAY)valueStruct[currCol.rsIndex];
+            }
+
+            if (array != null) {
+              ResultSet nestedRs = array.getResultSet();
+
+              int nestedRowNumber = 0;
+
+              while (nestedRs.next()) {
+                row = sheet.getRow(rowNumber + nestedRowNumber);
+
+                if (row == null) {
+                  row = sheet.createRow(rowNumber + nestedRowNumber);
+
+                  maxRowNumber = rowNumber + nestedRowNumber;
+                }
+
+                STRUCT valueStruct = (STRUCT)nestedRs.getObject(2);
+                Datum valueDatum [] = valueStruct.getOracleAttributes();
+
+                for (short nestedI = 0; nestedI < currCol.nestedColumns.size(); nestedI++) {
+                  ColumnInfo nestedCol = (ColumnInfo)currCol.nestedColumns.get(nestedI);
+
+                  HSSFCell cell = row.createCell((short)(col + nestedI));
+
+                  if (nestedCol.rsSubIndex < 0) {
+                    if (valueDatum[nestedCol.rsIndex] != null)
+                      if (nestedCol.type.equalsIgnoreCase("Number"))
+                        cell.setCellValue(((NUMBER)valueDatum[nestedCol.rsIndex]).floatValue());
+                      else
+                        cell.setCellValue(((CHAR)valueDatum[nestedCol.rsIndex]).stringValue());
+                  } else {
+                    STRUCT nestedStruct = (STRUCT)valueDatum[nestedCol.rsIndex];
+
+                    Datum nestedDatum [] = nestedStruct.getOracleAttributes();
+
+                    if (nestedCol.type.equalsIgnoreCase("Number"))
+                      cell.setCellValue(((NUMBER)nestedDatum[nestedCol.rsSubIndex]).floatValue());
+                    else if (nestedCol.type.equalsIgnoreCase("String"))
+                      cell.setCellValue(((CHAR)nestedDatum[nestedCol.rsSubIndex]).toString());
+                  }
+                }
+
+                nestedRowNumber++;
+              }
+            }
+
+            col += currCol.nestedColumns.size();
+          } else if (currCol.type.equalsIgnoreCase("Struct")) {
+            STRUCT struct = ((OracleResultSet)rs).getSTRUCT(currCol.rsColumnName);
+
+            Object [] valueStruct = struct.getAttributes();
+            HSSFCell cell = row.createCell(col++);
+            cell.setCellValue((String)valueStruct[currCol.rsIndex]);
+          } else {
+            HSSFCell cell = row.createCell(col++);
+
+            String columnName = ((ColumnInfo)colInfo.get(i)).rsColumnName;
+            cell.setCellValue(rs.getString(columnName));
+          }
+        }
+
+        rowNumber = maxRowNumber + 1;
+      }
+
+      fileOut = new FileOutputStream(filename);
+      wb.write(fileOut);
+    } catch (Exception ex) {
       log.error("Exception caught", ex);
-      throw ex;
-    }
-    finally {
-      try {
-        if (rs != null) rs.close();
-        if (st != null) st.close();
-        if (cn != null) cn.close(); // Uncommented for JBoss deployment
-        if (pw != null) pw.close();
-      }
 
-      catch (Exception e){
+      throw ex;
+    } finally {
+      try {
+        if (rs != null)
+          rs.close();
+
+        if (st != null)
+          st.close();
+
+        if (cn != null)
+          cn.close(); // Uncommented for JBoss deployment
+
+        if (fileOut != null)
+          fileOut.close();
+      } catch (Exception e) {
         log.error("Unable to perform clean up due to the following error ", e);
       }
-
-    }
-  }
-  private PrintWriter getPrintWriter(String newFilename) throws Exception{
-    PrintWriter pw = null;
-    try {
-      pw = new PrintWriter(new BufferedWriter(new FileWriter(newFilename)));
-    }
-    catch (Exception ex) {
-      throw ex;
-    }
-    return pw;
-  }
-  private void printHeader(PrintWriter pw) {
-    pw.println("Data Element Preferred Name,"
-                  +"Data Element Long Name,"
-                  +"Data Element Document Text,"
-                  +"Data Element Preferred Definition,"
-                  +"Data Element Version,"
-                  +"Data Element Context Name,"
-                  +"Data Element Context Version,"
-                  +"Value Domain Public ID,"
-                  +"Value Domain Preferred Name,"
-                  +"Value Domain Long Name,"
-                  +"Value Domain Version,"
-                  +"Value Domain Context Name,"
-                  +"Value Domain Context Version,"
-                  +"Value Domain Type,"
-                  +"Value Domain Datatype,"
-                  +"Value Domain Min Length,"
-                  +"Value Domain Max Length,"
-                  +"Value Domain Min Value,"
-                  +"Value Domain Max Value,"
-                  +"Value Domain Decimal Place,"
-                  +"Value Domain Format,"
-                  +"Data Element Concept Public ID,"
-                  +"Data Element Concept Preferred Name,"
-                  +"Data Element Concept Long Name,"
-                  +"Data Element Concept Version,"
-                  +"Data Element Concept Context Name,"
-                  +"Data Element Concept Context Version,"
-                  +"Public ID,"
-                  +"Workflow Status,"
-                  +"Registration Status,"
-                  +"Begin Date,"
-                  +"Source,"
-                  +"Valid Values,"
-                  +"Value Meaning,"
-
-                  +"Classification Scheme Preferred Name,"
-                  +"Classification Scheme Context Version,"
-                  +"Classification Scheme Context Name,"
-                  +"Classification Scheme Version,"
-                  +"Classification Scheme Item Name,"
-                  +"Classification Scheme Item Type Name,"
-
-                  +"Alternate Name Context Name,"
-                  +"Alternate Name Context Version,"
-                  +"Alternate Name,"
-                  +"Alternate Name Type,"
-
-                  +"Document,"
-                  +"Document Name,"
-                  +"Document Type,"
-
-                  + "Derivation Type,"
-                  + "Derivation Rule,"
-                  + "Derivation Method,"
-                  + "Concatenation Character,"
-
-                  + "DDE Public ID,"
-                  + "DDE Long Name,"
-                  + "DDE Version,"
-                  + "DDE Workflow Status,"
-                  + "DDE Context,"
-                  + "DDE Display Order,"
-
-                  );
-  }
-
-  private String getDataElementStr(List l) {
-    String excelRow = "";
-
-    excelRow = "\""+checkForNull((String)l.get(0))+"\"" +"," +
-               "\""+checkForNull((String)l.get(1))+"\"" +"," +
-               "\""+checkForNull((String)l.get(2))+"\"" +"," +
-               "\""+checkForNull((String)l.get(3))+"\"" +"," +
-               "\""+checkForNull((String)l.get(4))+"\"" +"," +
-               "\""+checkForNull((String)l.get(5))+"\"" +"," +
-               "\""+checkForNull((String)l.get(6))+"\"" +"," +
-               "\""+checkForNull((String)l.get(19))+"\"" +"," +
-               "\""+checkForNull((String)l.get(7))+"\"" +"," +
-               "\""+checkForNull((String)l.get(28))+"\"" +"," +
-               "\""+checkForNull((String)l.get(8))+"\"" +"," +
-               "\""+checkForNull((String)l.get(9))+"\"" +"," +
-               "\""+checkForNull((String)l.get(10))+"\"" +"," +
-               "\""+checkForNull((String)l.get(20))+"\"" +"," +
-               "\""+checkForNull((String)l.get(21))+"\"" +"," +
-               "\""+checkForNull((String)l.get(22))+"\"" +"," +
-               "\""+checkForNull((String)l.get(23))+"\"" +"," +
-               "\""+checkForNull((String)l.get(24))+"\"" +"," +
-               "\""+checkForNull((String)l.get(25))+"\"" +"," +
-               "\""+checkForNull((String)l.get(26))+"\"" +"," +
-               "\""+checkForNull((String)l.get(27))+"\"" +"," +
-               "\""+checkForNull((String)l.get(18))+"\"" +"," +
-               "\""+checkForNull((String)l.get(11))+"\"" +"," +
-               "\""+checkForNull((String)l.get(29))+"\"" +"," +
-               "\""+checkForNull((String)l.get(12))+"\"" +"," +
-               "\""+checkForNull((String)l.get(13))+"\"" +"," +
-               "\""+checkForNull((String)l.get(14))+"\"" +"," +
-               "\""+checkForNull((String)l.get(15))+"\"" +"," +
-               "\""+checkForNull((String)l.get(30))+"\"" +"," +   //Workflow Status
-               "\""+checkForNull((String)l.get(31))+"\"" +"," +   //Registration Status
-               "\""+checkForNull((String)l.get(16))+"\"" +"," +   //Begin Date
-               "\""+checkForNull((String)l.get(17))+"\"" +",";   //Source
-    //           "\""+EMPTY_STRING+"\"";
-    return excelRow;
-  }
-
-  private List getValidValuesStr(List l) {
-    List arrList = new ArrayList(9);
-    for(int i=0; i<l.size(); i++){
-      String excelRow = "";
-      List vvAttr = (ArrayList)l.get(i);
-      excelRow =  "\""+(String)vvAttr.get(0)+"\""+"," +
-                 "\""+(String)vvAttr.get(1)+"\""+"," ;
-      arrList.add(excelRow);
-    }
-    return arrList;
-  }
-  private List getClassificationsStr(List l) {
-    List arrList = new ArrayList(9);
-    for(int i=0; i<l.size(); i++){
-      String excelRow = "";
-      List vvAttr = (ArrayList)l.get(i);
-      excelRow =  "\""+(String)vvAttr.get(0)+"\""+"," +
-                 "\""+(String)vvAttr.get(1)+"\""+"," +
-                 "\""+(String)vvAttr.get(2)+"\""+"," +
-                 "\""+(String)vvAttr.get(3)+"\""+"," +
-                 "\""+(String)vvAttr.get(4)+"\""+"," +
-                 "\""+(String)vvAttr.get(5)+"\""+"," ;
-      arrList.add(excelRow);
-    }
-    return arrList;
-  }
-
-    private List getDdeStr(List l) {
-    List arrList = new ArrayList(8);
-    for(int i=0; i<l.size(); i++){
-      String excelRow = "";
-      List dedAttr = (ArrayList)l.get(i);
-      excelRow =  "\""+(String)dedAttr.get(0)+"\""+"," +
-                 "\""+(String)dedAttr.get(1)+"\""+"," +
-                 "\""+(String)dedAttr.get(2)+"\""+"," +
-                 "\""+(String)dedAttr.get(3)+"\""+"," +
-                 "\""+(String)dedAttr.get(4)+"\""+"," +
-                 "\""+(String)dedAttr.get(5)+"\""+"," ;
-      arrList.add(excelRow);
-    }
-    return arrList;
-  }
-
-  private List getDesignationStr(List l) {
-        List arrList = new ArrayList(9);
-    for(int i=0; i<l.size(); i++){
-      String excelRow = "";
-      List vvAttr = (ArrayList)l.get(i);
-      excelRow = "\""+(String)vvAttr.get(0)+"\""+"," +
-                 "\""+(String)vvAttr.get(1)+"\""+"," +
-                 "\""+(String)vvAttr.get(2)+"\""+"," +
-                 "\""+(String)vvAttr.get(3)+"\""+"," ;
-      arrList.add(excelRow);
-    }
-    return arrList;
-  }
-  private List getReferenceDocsStr(List l) {
-        List arrList = new ArrayList(9);
-    for(int i=0; i<l.size(); i++){
-      String excelRow = "";
-      List vvAttr = (ArrayList)l.get(i);
-      excelRow = "\""+(String)vvAttr.get(0)+"\""+"," +
-                 "\""+(String)vvAttr.get(1)+"\""+"," +
-                 "\""+(String)vvAttr.get(2)+"\""+",";
-    arrList.add(excelRow);
-    }
-    return arrList;
-  }
-
-
-
-    private String getEmptyStrings(int n)
-    {
-      String str = "";
-      for(int i=0;i<n;++i)
-      {
-        str=str+"\""+EMPTY_STRING+"\"" +",";
-      }
-      return str;
-    }
-
-   public void  printMultipleValus(List vvList,List clList,List desList,List refList, List ddeList, PrintWriter pw)
-    {
-      int temp1 = Math.max(vvList.size(),clList.size());
-      int temp2 = Math.max(desList.size(),refList.size());
-      int maxSize = Math.max(temp1,temp2);
-      if (ddeList != null)
-         maxSize = Math.max(maxSize, ddeList.size());
-
-      for (int i=0;i<maxSize;++i)
-      {
-        String str = getEmptyStrings(NUMBER_OF_DE_COLUMNS);
-        if(vvList.size()>i)
-          {
-            str=str+vvList.get(i);
-          }
-        else
-        {
-            str=str+getEmptyStrings(2);
-        }
-        if(clList.size()>i)
-          {
-            str=str+clList.get(i);
-          }
-        else
-        {
-           str=str+getEmptyStrings(6);
-        }
-        if(desList.size()>i)
-          {
-            str=str+desList.get(i);
-          }
-        else
-        {
-            str=str+getEmptyStrings(4);
-        }
-        if(refList.size()>i)
-          {
-            str=str+refList.get(i);
-          }
-        else
-        {
-            str=str+getEmptyStrings(3);
-        }
-        //skip 4 columns for dde info
-        str=str+getEmptyStrings(4);
-
-        if(ddeList != null && ddeList.size()>i)
-          {
-            str=str+ddeList.get(i);
-          }
-        pw.println(str);
-      }
     }
   }
 
+  private List initColumnInfo() {
+    List columnInfo = new ArrayList();
+
+    columnInfo.add(new ColumnInfo("PREFERRED_NAME", "Data Element Preferred Name", "String"));
+    columnInfo.add(new ColumnInfo("LONG_NAME", "Data Element Long Name", "String"));
+    columnInfo.add(new ColumnInfo("DOC_TEXT", "Data Element Document Text", "String"));
+    columnInfo.add(new ColumnInfo("PREFERRED_DEFINITION", "Data Element Preferred Definition", "String"));
+    columnInfo.add(new ColumnInfo("VERSION", "Data Element Version", "String"));
+    columnInfo.add(new ColumnInfo("DE_CONTE_NAME", "Data Element Context Name", "String"));
+    columnInfo.add(new ColumnInfo("DE_CONTE_VERSION", "Data Element Context Version", "Number"));
+    columnInfo.add(new ColumnInfo("CDE_ID", "Data Element Public ID", "Number"));
+    columnInfo.add(new ColumnInfo("DE_WK_FLOW_STATUS", "Workflow Status", "String"));
+    columnInfo.add(new ColumnInfo("REGISTRATION_STATUS", "Registration Status", "Number"));
+    columnInfo.add(new ColumnInfo("BEGIN_DATE", "Begin Date", "Number"));
+    columnInfo.add(new ColumnInfo("ORIGIN", "Source", "String"));
+
+    //data element concept
+    columnInfo.add(new ColumnInfo("DEC_ID", "Data Element Concept Public ID", "Number"));
+    columnInfo.add(new ColumnInfo("DEC_PREFERRED_NAME", "Data Element Concept Preferred Name", "String"));
+    columnInfo.add(new ColumnInfo("DEC_LONG_NAME", "Data Element Concept Long Name", "String"));
+    columnInfo.add(new ColumnInfo("DEC_VERSION", "Data Element Concept Version", "Number"));
+    columnInfo.add(new ColumnInfo("DEC_CONTE_NAME", "Data Element Concept Context Name", "String"));
+    columnInfo.add(new ColumnInfo("DEC_CONTE_VERSION", "Data Element Concept Context Version", "Number"));
+
+    //object class concept
+    columnInfo.add(new ColumnInfo("OC_ID", "Object Class Public ID", "String"));
+    columnInfo.add(new ColumnInfo("OC_LONG_NAME", "Object Class Long Name", "String"));
+    columnInfo.add(new ColumnInfo("OC_PREFERRED_NAME", "Object Class Preferred Name", "String"));
+    columnInfo.add(new ColumnInfo("OC_CONTE_NAME", "Object Class Context Name", "String"));
+    columnInfo.add(new ColumnInfo("OC_VERSION", "Object Class Version", "String"));
+
+    List ocConceptInfo = new ArrayList();
+    ocConceptInfo.add(new ColumnInfo(1, "Name"));
+    ocConceptInfo.add(new ColumnInfo(0, "Code"));
+    ocConceptInfo.add(new ColumnInfo(2, "Public ID", "Number"));
+    ocConceptInfo.add(new ColumnInfo(3, "Definition Source"));
+    ocConceptInfo.add(new ColumnInfo(5, "EVS Source"));
+    ocConceptInfo.add(new ColumnInfo(6, "Primary Flag"));
+    ColumnInfo ocConcepts = new ColumnInfo("oc_concepts", "Object Class Concept ", "Array");
+    ocConcepts.nestedColumns = ocConceptInfo;
+    columnInfo.add(ocConcepts);
+
+    //property concept
+    columnInfo.add(new ColumnInfo("PROP_ID", "Property Public ID", "String"));
+    columnInfo.add(new ColumnInfo("PROP_LONG_NAME", "Property Long Name", "String"));
+    columnInfo.add(new ColumnInfo("PROP_PREFERRED_NAME", "Property Preferred Name", "String"));
+    columnInfo.add(new ColumnInfo("PROP_CONTE_NAME", "Property Context Name", "String"));
+    columnInfo.add(new ColumnInfo("PROP_VERSION", "Property Version", "String"));
+
+    List propConceptInfo = new ArrayList();
+    propConceptInfo.add(new ColumnInfo(1, "Name"));
+    propConceptInfo.add(new ColumnInfo(0, "Code"));
+    propConceptInfo.add(new ColumnInfo(2, "Public ID", "Number"));
+    propConceptInfo.add(new ColumnInfo(3, "Definition Source"));
+    propConceptInfo.add(new ColumnInfo(5, "EVS Source"));
+    propConceptInfo.add(new ColumnInfo(6, "Primary Flag"));
+    ColumnInfo propConcepts = new ColumnInfo("prop_concepts", "Property Concept ", "Array");
+    propConcepts.nestedColumns = propConceptInfo;
+    columnInfo.add(propConcepts);
+
+    //value domain
+    columnInfo.add(new ColumnInfo("VD_ID", "Value Domain Public ID", "Number"));
+    columnInfo.add(new ColumnInfo("VD_PREFERRED_NAME", "Value Domain Preferred Name", "String"));
+    columnInfo.add(new ColumnInfo("VD_LONG_NAME", "Value Domain Long Name", "String"));
+    columnInfo.add(new ColumnInfo("VD_VERSION", "Value Domain Version", "Number"));
+    columnInfo.add(new ColumnInfo("VD_CONTE_NAME", "Value Domain Context Name", "String"));
+    columnInfo.add(new ColumnInfo("VD_CONTE_VERSION", "Value Domain Context Version", "Number"));
+    columnInfo.add(new ColumnInfo("VD_TYPE", "Value Domain Type", "String"));
+    columnInfo.add(new ColumnInfo("DTL_NAME", "Value Domain Datatype", "String"));
+    columnInfo.add(new ColumnInfo("MIN_LENGTH_NUM", "Value Domain Min Length", "Number"));
+    columnInfo.add(new ColumnInfo("MAX_LENGTH_NUM", "Value Domain Max Length", "Number"));
+    columnInfo.add(new ColumnInfo("LOW_VALUE_NUM", "Value Domain Min Value", "Number"));
+    columnInfo.add(new ColumnInfo("HIGH_VALUE_NUM", "Value Domain Max Value", "Number"));
+    columnInfo.add(new ColumnInfo("DECIMAL_PLACE", "Value Domain Decimal Place", "Number"));
+    columnInfo.add(new ColumnInfo("FORML_NAME", "Value Domain Format", "String"));
+
+    //Value Domain Concept
+    List vdConceptInfo = new ArrayList();
+    vdConceptInfo.add(new ColumnInfo(1, "Name"));
+    vdConceptInfo.add(new ColumnInfo(0, "Code"));
+    vdConceptInfo.add(new ColumnInfo(2, "Public ID", "Number"));
+    vdConceptInfo.add(new ColumnInfo(3, "Definition Source"));
+    vdConceptInfo.add(new ColumnInfo(5, "EVS Source"));
+    vdConceptInfo.add(new ColumnInfo(6, "Primary Flag"));
+    ColumnInfo vdConcepts = new ColumnInfo("vd_concepts", "Value Domain Concept ", "Array");
+    vdConcepts.nestedColumns = vdConceptInfo;
+    columnInfo.add(vdConcepts);
+
+    //Valid Value
+    List validValueInfo = new ArrayList();
+    validValueInfo.add(new ColumnInfo(0, "Valid Values"));
+    validValueInfo.add(new ColumnInfo(1, "Value Meaning"));
+    ColumnInfo validValue = new ColumnInfo("VALID_VALUES", "", "Array");
+    validValue.nestedColumns = validValueInfo;
+    columnInfo.add(validValue);
+
+    //Classification Scheme
+    List csInfo = new ArrayList();
+
+    csInfo.add(new ColumnInfo(0, 3, "Preferred Name", "String"));
+    csInfo.add(new ColumnInfo(0, 2, "Version", "Number"));
+    csInfo.add(new ColumnInfo(0, 1, "Context Name", "String"));
+    csInfo.add(new ColumnInfo(0, 4, "Context Version", "Number"));
+    csInfo.add(new ColumnInfo(1, "Item Name"));
+    csInfo.add(new ColumnInfo(2, "Item Type Name"));
+    ColumnInfo classification = new ColumnInfo("CLASSIFICATIONS", "Classification Scheme ", "Array");
+    classification.nestedColumns = csInfo;
+    columnInfo.add(classification);
+
+    //Alternate name
+    List altNameInfo = new ArrayList();
+    altNameInfo.add(new ColumnInfo(0, "Context Name"));
+    altNameInfo.add(new ColumnInfo(1, "Context Version", "Number"));
+    altNameInfo.add(new ColumnInfo(2, ""));
+    altNameInfo.add(new ColumnInfo(3, "Type"));
+    ColumnInfo altNames = new ColumnInfo("designations", "Alternate Name ", "Array");
+    altNames.nestedColumns = altNameInfo;
+    columnInfo.add(altNames);
+
+    //Reference Document
+    List refDocInfo = new ArrayList();
+    refDocInfo.add(new ColumnInfo(3, ""));
+    refDocInfo.add(new ColumnInfo(0, "Name"));
+    refDocInfo.add(new ColumnInfo(2, "Type"));
+    ColumnInfo refDoc = new ColumnInfo("reference_docs", "Document ", "Array");
+    refDoc.nestedColumns = refDocInfo;
+    columnInfo.add(refDoc);
+
+    //Derived data elements
+    columnInfo.add(new ColumnInfo(0, "DE_DERIVATION", "Derivation Type", "Struct"));
+    columnInfo.add(new ColumnInfo(2, "DE_DERIVATION", "Derivation Method", "Struct"));
+    columnInfo.add(new ColumnInfo(3, "DE_DERIVATION", "Derivation Rule", "Struct"));
+    columnInfo.add(new ColumnInfo(4, "DE_DERIVATION", "Concatenation Character", "Struct"));
+    List dedInfo = new ArrayList();
+    dedInfo.add(new ColumnInfo(0, "Public ID", "Number"));
+    dedInfo.add(new ColumnInfo(1, "Long Name"));
+    dedInfo.add(new ColumnInfo(4, "Version", "Number"));
+    dedInfo.add(new ColumnInfo(5, "Workflow Status"));
+    dedInfo.add(new ColumnInfo(6, "Context"));
+    dedInfo.add(new ColumnInfo(7, "Display Order", "Number"));
+    ColumnInfo deDrivation = new ColumnInfo(5, "DE_DERIVATION", "DDE ", "StructArray");
+    deDrivation.nestedColumns = dedInfo;
+    columnInfo.add(deDrivation);
+
+    return columnInfo;
+  }
+
+  private class ColumnInfo {
+    String rsColumnName;
+    int rsIndex;
+    int rsSubIndex = -1;
+    String displayName;
+    String type;
+    List nestedColumns;
+
+    /** Constructor for a regular column that maps to one result set column
+     **/
+    ColumnInfo(String rsColName, String excelColName, String colType) {
+      super();
+
+      rsColumnName = rsColName;
+      displayName = excelColName;
+      type = colType;
+    }
+
+    /** Constructor for a column that maps to one result set object column, e.g.,
+     * the Derived Data Element columns
+     **/
+    ColumnInfo(int colIdx, String rsColName, String excelColName, String colType) {
+      super();
+
+      rsIndex = colIdx;
+      rsColumnName = rsColName;
+      displayName = excelColName;
+      type = colType;
+    }
+
+    /** Constructor for a regular column that maps to one column inside an Aarry of
+     *  type String
+     **/
+    ColumnInfo(int rsIdx, String excelColName) {
+      super();
+
+      rsIndex = rsIdx;
+      displayName = excelColName;
+      type = "String";
+    }
+
+    /** Constructor for a regular column that maps to one column inside an Aarry
+     **/
+    ColumnInfo(int rsIdx, String excelColName, String colClass) {
+      super();
+
+      rsIndex = rsIdx;
+      displayName = excelColName;
+      type = colClass;
+    }
+
+    /** Constructor for a regular column that maps to one column inside an Object
+     *  of the Aarry type.  E.g., the classification scheme information
+     **/
+    ColumnInfo(int rsIdx, int rsSubIdx, String excelColName, String colType) {
+      super();
+
+      rsIndex = rsIdx;
+      rsSubIndex = rsSubIdx;
+      displayName = excelColName;
+      type = colType;
+    }
+  }
+}
