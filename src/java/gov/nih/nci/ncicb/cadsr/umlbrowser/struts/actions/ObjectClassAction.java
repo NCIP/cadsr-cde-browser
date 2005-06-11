@@ -58,8 +58,8 @@ public class ObjectClassAction extends UmlBrowserBaseDispatchAction
       ObjectClass objClass = service.getObjectClass(obIdSeq);      
       setSessionObject(request,OBJECT_CLASS,objClass,true);
       
-      //List superClasses = service.getInheritenceRelationships(objClass);
-      //setSessionObject(request,SUPER_OBJECT_CLASSES,superClasses,true);
+      List superClasses = service.getInheritenceRelationships(objClass);
+      setSessionObject(request,SUPER_OBJECT_CLASSES,superClasses,true);
       
       //Reset OCR Navigation bread crumbs if resetCrumbs is not null
       if(resetCrumbs!=null&&!resetCrumbs.equals(""))

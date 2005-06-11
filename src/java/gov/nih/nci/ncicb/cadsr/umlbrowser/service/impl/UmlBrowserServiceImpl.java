@@ -49,14 +49,19 @@ public class UmlBrowserServiceImpl implements UmlBrowserService
 
   }  
   
+  /**
+   * Return all the super classes, The list sorted from super classes to subclasses
+   */
   public List getInheritenceRelationships(ObjectClass oc)
   {
     List superClasses =  new ArrayList();
     ObjectClassRelationshipDAO dao = domainObjectsDaoFactory.getObjectClassRelationshipDAO();
     ObjectClassRelationship ocr = dao.getInheritenceRelationship(oc);
+    if(ocr!=null&&ocr.getSource()!=null)
+      superClasses.add(ocr.getSource());
     while(ocr!=null&&ocr.getTarget()!=null)
     {
-      superClasses.add(ocr.getTarget());
+      superClasses.add(0,ocr.getTarget());
       ocr = dao.getInheritenceRelationship(ocr.getTarget());
     }
     

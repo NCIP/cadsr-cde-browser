@@ -176,8 +176,8 @@
                   <td class="OraFieldText">
                     <bean:write name="comp" property="concept.definitionSource"/>
                   </td>
-                  <td class="OraFieldText">EVS Source</td>
-                  <td class="OraFieldText">Primary Indicator</td>
+                  <td class="OraFieldText"><bean:write name="comp" property="concept.evsSource"/></td>
+                  <td class="OraFieldText"><bean:write name="comp" property="primaryFlag"/></td>
                 </tr>
               </logic:iterate>
             </table>
@@ -224,13 +224,51 @@
             </td>
           </tr>
         </table>
-        <table valign="top" width="90%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
-            <TR class="OraTabledata">
-              <td colspan="3" class="OraFieldText">Does not Inherit from any Object Class</td>
-            </TR>
-        </table>
-          
-          
+        <table valign="top" width="90%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">             
+              <logic:notEmpty name="<%=UmlBrowserFormConstants.SUPER_OBJECT_CLASSES%>" > 
+               <TR class="OraTabledata">
+                <td class="OraFieldText"> 
+                 <% String space = "&nbsp;&nbsp;"; %>
+                 <bean:size id="size" name="<%=UmlBrowserFormConstants.SUPER_OBJECT_CLASSES%>"/>
+                  <table>
+                   <logic:iterate id="soc" name="<%=UmlBrowserFormConstants.SUPER_OBJECT_CLASSES%>"  type="gov.nih.nci.ncicb.cadsr.domain.ObjectClass" indexId="index" >                                                           
+                    <% 
+                     String urlPrefix = request.getContextPath();
+                     String obclassurl = urlPrefix+"/umlbrowser/ocDetailsAction.do?"+UmlBrowserNavigationConstants.METHOD_PARAM+"="
+                      +UmlBrowserNavigationConstants.OC_DETAILS
+                      +"&"+UmlBrowserFormConstants.OC_IDSEQ+"="+soc.getId()
+                      +"&"+UmlBrowserFormConstants.RESET_CRUMBS+"=true";
+                    %>
+                    <TR class="OraTabledata">
+                     <td class="OraFieldText"> 
+                      <% if(index.intValue()==0) {%>
+                         <%=space%>
+                          <a href="<%=obclassurl%>"> 
+                            <bean:write name="soc" property="longName"/>(<bean:write name="soc" property="publicId"/>)
+                           </a>                                           
+                      <% } else if(index.intValue()!=size.intValue()-1) {%>
+                        <%=space%><IMG src="<%=contextPath%>/i/inherit.gif" ALT="extended by">
+                          <a href="<%=obclassurl%>"> 
+                            <bean:write name="soc" property="longName"/>(<bean:write name="soc" property="publicId"/>)
+                           </a>
+                      <% } else { %>
+                            <%=space%><IMG src="<%=contextPath%>/i/inherit.gif" ALT="extended by">
+                            <bean:write name="soc" property="longName"/>(<bean:write name="soc" property="publicId"/>)
+                      <% } 
+                       space = space+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; %>
+                      </td>
+                    </tr>
+                  </logic:iterate> 
+                 </table>
+                </td>
+               </tr>
+            </logic:notEmpty> 
+            <logic:empty name="<%=UmlBrowserFormConstants.SUPER_OBJECT_CLASSES%>" >
+             <TR class="OraTabledata">
+              <td colspan="2" class="OraFieldText">Does not Inherit from any Object Class</td>
+             </TR>
+            </logic:empty>
+        </table>         
                   
         <!-- Classifications -->
         <A NAME="classification"/>
@@ -247,28 +285,36 @@
             </table>
             <table vAlign="top" cellSpacing="1" cellPadding="1" width="90%" align="center" border="0" class="OraBGAccentVeryDark">
               <TR class="OraTableColumnHeader">
-                <th class="OraTableColumnHeader">CS</th>
-                <th class="OraTableColumnHeader">CSI</th>
-                <th class="OraTableColumnHeader">CS Context</th>
+                <th class="OraTableColumnHeader">CS* Preferred Name</th>
+                <th class="OraTableColumnHeader">CS* Definition</th>
+                <th class="OraTableColumnHeader">CS* Public ID</th>
+                <th class="OraTableColumnHeader">CSI* Name</th>
+                <th class="OraTableColumnHeader">CSI* Type</th>
               </TR>
                 <logic:notEmpty name="oc" property="acCsCsis">
                   <logic:iterate id="accscsi" name="oc" property="acCsCsis" type="gov.nih.nci.ncicb.cadsr.domain.AdminComponentClassSchemeClassSchemeItem" >                                          
                       <TR class="OraTabledata">
                         <td class="OraFieldText">
-                          <bean:write name="accscsi" property="csCsi.cs.longName"/>
+                          <bean:write name="accscsi" property="csCsi.cs.preferredName"/>
                         </td>
+                        <td class="OraFieldText">
+                          <bean:write name="accscsi" property="csCsi.cs.preferredDefinition"/>
+                        </td>
+                        <td class="OraFieldText">
+                          <bean:write name="accscsi" property="csCsi.cs.publicId"/>
+                        </td>                        
                         <td class="OraFieldText">
                           <bean:write name="accscsi" property="csCsi.csi.name"/>
                         </td>
                         <td class="OraFieldText">
-                          <bean:write name="accscsi" property="csCsi.cs.context.name"/>
-                        </td>
+                          <bean:write name="accscsi" property="csCsi.csi.type"/>
+                        </td>                        
                       </TR> 
                     </logic:iterate>
                   </logic:notEmpty>  
                   <logic:empty name="oc" property="acCsCsis">
                     <TR class="OraTabledata">
-                      <td colspan="3" class="OraFieldText">No Classification exist for this Object Class</td>
+                      <td colspan="5" class="OraFieldText">No Classification exist for this Object Class</td>
                     </TR>
                   </logic:empty>                               
                </table>
@@ -321,28 +367,36 @@
                     <td class=OraFieldText >
                       <table vAlign="top" cellSpacing="1" cellPadding="1" width="100%" align="center" border="0" class="OraBGAccentVeryDark">
                         <TR class="OraTableColumnHeader">
-                          <th class="OraTableColumnHeader">CS</th>
-                          <th class="OraTableColumnHeader">CSI</th>
-                          <th class="OraTableColumnHeader">CS Context</th>
+                          <th class="OraTableColumnHeader">CS* Preferred Name</th>
+                          <th class="OraTableColumnHeader">CS* Definition</th>
+                          <th class="OraTableColumnHeader">CS* Public ID</th>
+                          <th class="OraTableColumnHeader">CSI* Name</th>
+                          <th class="OraTableColumnHeader">CSI* Type</th>
                         </TR>
                           <logic:notEmpty name="alternateName" property="csCsis">
-                            <logic:iterate id="cscsi" name="alternateName" property="csCsis" type="gov.nih.nci.ncicb.cadsr.domain.ClassSchemeClassSchemeItem" >                                          
+                            <logic:iterate id="acscsi" name="alternateName" property="csCsis" type="gov.nih.nci.ncicb.cadsr.domain.ClassSchemeClassSchemeItem" >                                          
                                 <TR class="OraTabledata">
                                   <td class="OraFieldText">
-                                    <bean:write name="cscsi" property="cs.longName"/>
+                                    <bean:write name="acscsi" property="cs.preferredName"/>
                                   </td>
                                   <td class="OraFieldText">
-                                    <bean:write name="cscsi" property="csi.name"/>
+                                    <bean:write name="acscsi" property="cs.preferredDefinition"/>
                                   </td>
                                   <td class="OraFieldText">
-                                    <bean:write name="cscsi" property="cs.context.name"/>
+                                    <bean:write name="acscsi" property="cs.publicId"/>
+                                  </td>                        
+                                  <td class="OraFieldText">
+                                    <bean:write name="acscsi" property="csi.name"/>
                                   </td>
+                                  <td class="OraFieldText">
+                                    <bean:write name="acscsi" property="csi.type"/>
+                                  </td>                                     
                                 </TR> 
                               </logic:iterate>
                             </logic:notEmpty>  
                             <logic:empty name="alternateName" property="csCsis">
                               <TR class="OraTabledata">
-                                <td colspan="3" class="OraFieldText">No Classification exist for this Definition</td>
+                                <td colspan="5" class="OraFieldText">No Classification exist for this Definition</td>
                               </TR>
                             </logic:empty>                               
                          </table>
@@ -411,28 +465,36 @@
                     <td class=OraFieldText >
                       <table vAlign="top" cellSpacing="1" cellPadding="1" width="100%" align="center" border="0" class="OraBGAccentVeryDark">
                         <TR class="OraTableColumnHeader">
-                          <th class="OraTableColumnHeader">CS</th>
-                          <th class="OraTableColumnHeader">CSI</th>
-                          <th class="OraTableColumnHeader">CS Context</th>
+                          <th class="OraTableColumnHeader">CS* Preferred Name</th>
+                          <th class="OraTableColumnHeader">CS* Definition</th>
+                          <th class="OraTableColumnHeader">CS* Public ID</th>
+                          <th class="OraTableColumnHeader">CSI* Name</th>
+                          <th class="OraTableColumnHeader">CSI* Type</th>
                         </TR>
                           <logic:notEmpty name="definition" property="csCsis">
-                            <logic:iterate id="cscsi" name="definition" property="csCsis" type="gov.nih.nci.ncicb.cadsr.domain.ClassSchemeClassSchemeItem" >                                          
+                            <logic:iterate id="dcscsi" name="definition" property="csCsis" type="gov.nih.nci.ncicb.cadsr.domain.ClassSchemeClassSchemeItem" >                                          
                                 <TR class="OraTabledata">
                                   <td class="OraFieldText">
-                                    <bean:write name="cscsi" property="cs.longName"/>
+                                    <bean:write name="dcscsi" property="cs.preferredName"/>
                                   </td>
                                   <td class="OraFieldText">
-                                    <bean:write name="cscsi" property="csi.name"/>
+                                    <bean:write name="dcscsi" property="cs.preferredDefinition"/>
                                   </td>
                                   <td class="OraFieldText">
-                                    <bean:write name="cscsi" property="cs.context.name"/>
+                                    <bean:write name="dcscsi" property="cs.publicId"/>
+                                  </td>                        
+                                  <td class="OraFieldText">
+                                    <bean:write name="dcscsi" property="csi.name"/>
                                   </td>
+                                  <td class="OraFieldText">
+                                    <bean:write name="dcscsi" property="csi.type"/>
+                                  </td>  
                                 </TR> 
                               </logic:iterate>
                             </logic:notEmpty>  
                             <logic:empty name="definition" property="csCsis">
                               <TR class="OraTabledata">
-                                <td colspan="3" class="OraFieldText">No Classification exist for this Definition</td>
+                                <td colspan="5" class="OraFieldText">No Classification exist for this Definition</td>
                               </TR>
                             </logic:empty>                               
                          </table>
