@@ -291,6 +291,20 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       return query.execute();
     }
 
+  /**
+   * Gets all CSCSI by type
+   *
+   * @param csType
+   * @param csiType
+   *
+   */
+  public List getCSCSIHierarchyByType(String csType, String csiType)
+    {
+      
+      CSCSIsHierQueryByType query = new CSCSIsHierQueryByType(getDataSource());
+      return query.getCSCSIs(csType,csiType);
+    }
+
 
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
@@ -802,5 +816,60 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
   }
 
 
-  
+  //Load CsCSI Hierarchy by cs and csi type
+  private class CSCSIsHierQueryByType extends MappingSqlQuery {
+
+    CSCSIsHierQueryByType(DataSource ds) {
+      super(
+        ds, "select cs_idseq, cs_preffered_name, cs_long_name, "
+        + "CS_PREFFRED_DEFINITION, "
+        + "csi_idseq, csi_name, csitl_name, csi_description, "
+        + "cs_csi_idseq, csi_level, parent_csi_idseq, cs_conte_idseq "
+        + " from SBREXT.BR_CS_CSI_HIER_VIEW_EXT "
+        + " where CSTL_NAME=? and CSITL_NAME=? "
+        + " and CS_ASL_NAME = 'RELEASED' "
+        + " and CSTL_NAME != 'Publishing' "
+        + " order by cs_conte_idseq, CSI_LEVEL, upper(cs_long_name), upper(csi_name)");
+        
+      declareParameter(new SqlParameter("CSTL_NAME", Types.VARCHAR));
+      declareParameter(new SqlParameter("CSITL_NAME", Types.VARCHAR));
+      compile();
+    }
+
+    protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
+      
+        ClassSchemeItem csiTO = new CSITransferObject();
+        csiTO.setCsIdseq(rs.getString("cs_idseq"));
+        csiTO.setClassSchemeLongName(rs.getString("cs_long_name"));
+        csiTO.setClassSchemePrefName(rs.getString("cs_preffered_name"));
+        csiTO.setClassSchemeDefinition(rs.getString("CS_PREFFRED_DEFINITION"));
+
+        csiTO.setCsiIdseq(rs.getString("csi_idseq"));
+        csiTO.setClassSchemeItemName(rs.getString("csi_name"));
+        csiTO.setClassSchemeItemType(rs.getString("csitl_name"));
+        csiTO.setCsiDescription(rs.getString("csi_description"));
+        
+        csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
+        csiTO.setParentCscsiId(rs.getString("parent_csi_idseq"));
+        csiTO.setCsConteIdseq(rs.getString("cs_conte_idseq"));
+ 
+   return csiTO;
+    }
+    
+   protected List getCSCSIs(
+      String csType,
+      String csiType) {
+
+
+      Object[] obj =
+        new Object[] {
+          csType,
+          csiType
+        };
+
+      return execute(obj);
+    }
+
+  }
+
 }

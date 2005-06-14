@@ -130,4 +130,14 @@ public interface AdminComponentDAO {
    * 
    */  
   public List getCSCSIHierarchy();
+  
+  /**
+   * Gets all CSCSI by type
+   *
+   * @param csType
+   * @param csiType
+   *
+   */
+  public List getCSCSIHierarchyByType(String csType, String csiType);
+
 }

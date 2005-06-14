@@ -223,5 +223,9 @@ public class WebNode
     return _hasChildren;
   }
   
+  public WebNode copy(String newId) 
+  {
+    return new WebNode(newId, getName(), getAction(), getInfo());
+  }
 }
 

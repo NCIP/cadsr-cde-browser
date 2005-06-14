@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.impl;
 
-import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.BaseTreeNode;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CsCsiCategorytHolder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeFunctions;
@@ -8,11 +8,7 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeIdGenerator;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.CDEBrowserTreeService;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextHolderTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.TreeProtocolNodesTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.jdbc.ProtocolValueObject;
-import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
@@ -22,19 +18,18 @@ import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
-import gov.nih.nci.ncicb.cadsr.util.TimeUtils;
 import gov.nih.nci.ncicb.webtree.WebNode;
+
 import java.net.URLEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class CDEBrowserTreeServiceImpl
@@ -75,13 +70,15 @@ public class CDEBrowserTreeServiceImpl
  * one containg the forms with no protocol and other with protocols
  */
  public List getAllContextProtocolNodes(TreeFunctions treeFunctions, TreeIdGenerator idGen) throws Exception {
+  Map protoCSMap = this.getProtoFormClassificationNodes(treeFunctions, idGen);
+  Map treeNodeMap = new HashMap();
+
   Map allFormsWithProtocol = new HashMap();
 
   Map allFormsWithNoProtocol = new HashMap();
   FormDAO dao = daoFactory.getFormDAO();
   List forms = dao.getAllFormsOrderByContextProtocol();
   Map protocolHolder = new HashMap();
-
   Iterator iter = forms.iterator();
 
   while (iter.hasNext()) {
@@ -90,21 +87,21 @@ public class CDEBrowserTreeServiceImpl
    String currContextId = null;
    // When the form and the Protocol belongs to different context, the Protocol
    // context takes priority
-   if (currForm.getProtocol() != null) 
-   {
+   if (currForm.getProtocol() != null)
      currContextId = currForm.getProtocol().getConteIdseq();
-   }
-   
-   if (currContextId == null) 
+
+   if (currContextId == null)
      currContextId = currForm.getContext().getConteIdseq();
-     
+
+   Map currCSMap = (Map) protoCSMap.get(currContextId);
+
    String currProtoIdSeq = null;
 
    currProtoIdSeq = currForm.getProtoIdseq();
-   DefaultMutableTreeNode formNode = getFormNode(idGen.getNewId(), 
+   DefaultMutableTreeNode formNode = getFormNode(idGen.getNewId(),
                                             currForm, treeFunctions, false);
 
-   //
+   // add form node to protocol node
    if (currProtoIdSeq != null && !currProtoIdSeq.equals("")) {
     List protocolList = (List)allFormsWithProtocol.get(currContextId);
 
@@ -117,23 +114,41 @@ public class CDEBrowserTreeServiceImpl
     DefaultMutableTreeNode protoNode = (DefaultMutableTreeNode)protocolHolder.get(currProtoIdSeq);
 
     if (protoNode == null) {
-     protoNode = getProtocolNode(idGen.getNewId(), currForm.getProtocol(), currContextId, treeFunctions);
+       protoNode = getProtocolNode(idGen.getNewId(), currForm.getProtocol(), currContextId, treeFunctions);
 
-     protocolHolder.put(currProtoIdSeq, protoNode);
-     protocolList.add(protoNode);
+       protocolHolder.put(currProtoIdSeq, protoNode);
+       protocolList.add(protoNode);
+       treeNodeMap.clear();
     }
-
-    protoNode.add(formNode);
+    // check and see if form need to be added to cs tree
+    if (currForm.getClassifications() == null ||
+        currForm.getClassifications().size() == 0) {
+        protoNode.add(formNode);
+      } else
+      {
+        //add formNode to csTree
+        this.copyCSTree(currForm, currCSMap, treeNodeMap, formNode, protoNode, idGen);
+      }
    } else {
-    List formWithNoProto = (List)allFormsWithNoProtocol.get(currContextId);
+   /** for release 3.0.1, forms without protocol is not displayed, uncomment this
+    * code to display them
+   //forms do not have protocol
+    DefaultMutableTreeNode noProtocolNode = (DefaultMutableTreeNode)allFormsWithNoProtocol.get(currContextId);
 
-    if (formWithNoProto == null) {
-     formWithNoProto = new ArrayList();
-
-     allFormsWithNoProtocol.put(currContextId, formWithNoProto);
+    if (noProtocolNode == null) {
+     noProtocolNode=getWebNode("No Protocol", idGen.getNewId());
+     allFormsWithNoProtocol.put(currContextId, noProtocolNode);
+     treeNodeMap.clear();
     }
+    if (currForm.getClassifications() == null ||
+        currForm.getClassifications().size() == 0) {
+      noProtocolNode.add(formNode);
+    } else
+    {
+    this.copyCSTree(currForm, currCSMap, treeNodeMap, formNode, noProtocolNode, idGen);
 
-    formWithNoProto.add(formNode);
+    }
+    */
    }
   }
 
@@ -214,7 +229,7 @@ public class CDEBrowserTreeServiceImpl
 
   Collection templates = dao.getAllTemplatesForContextId(currContext.getConteIdseq());
   String currContextId = currContext.getConteIdseq();
-  //Add all the csi nodes 
+  //Add all the csi nodes
   addAllcscsiNodes(phaseCsCsiList, cscsiMap, currContextId, phaseNode, templateTypes, phaseCscsiHolder);
   addAllcscsiNodes(diseaseCsCsiList, cscsiMap, currContextId, diseaseNode, templateTypes, disCscsiHolder);
   iter = templates.iterator();
@@ -269,14 +284,14 @@ public class CDEBrowserTreeServiceImpl
  }
 
  //Get Publishing Node info
- public DefaultMutableTreeNode getPublishingNode(TreeFunctions treeFunctions, 
+ public DefaultMutableTreeNode getPublishingNode(TreeFunctions treeFunctions,
                    TreeIdGenerator idGen, Context currContext,
                    boolean showFormsAlphebetically) throws Exception {
-                   
-  CSITransferObject publishFormCSI = null, publishTemplateCSI = null;
-  DefaultMutableTreeNode publishNode = null;  
 
-  
+  CSITransferObject publishFormCSI = null, publishTemplateCSI = null;
+  DefaultMutableTreeNode publishNode = null;
+
+
   FormDAO dao = daoFactory.getFormDAO();
   List formCSIs = dao.getPublishingCSCSIsForForm(currContext.getConteIdseq());
 
@@ -318,7 +333,7 @@ public class CDEBrowserTreeServiceImpl
 
       while (formsIt.hasNext()) {
        Form currForm = (Form)formsIt.next();
-       listedAlphabetically.add(getFormNode(idGen.getNewId(), currForm, 
+       listedAlphabetically.add(getFormNode(idGen.getNewId(), currForm,
        treeFunctions, true));
       }
 
@@ -338,18 +353,18 @@ public class CDEBrowserTreeServiceImpl
        // first create protocol node for each protocol
        DefaultMutableTreeNode currProtoNode = getProtocolNode(idGen.getNewId(),
        currProto, currContext.getConteIdseq(), treeFunctions);
-       
+
        // then add all form nodes
        List formsForProtocol = dao.getAllPublishedFormsForProtocol(currProto.getIdseq());
-       
+
        Iterator protocolFormsIt = formsForProtocol.iterator();
        while (protocolFormsIt.hasNext()) {
          Form currProtocolForm = (Form) protocolFormsIt.next();
          currProtocolForm.setProtocol(currProto);
-         currProtoNode.add(this.getFormNode(idGen.getNewId(), 
+         currProtoNode.add(this.getFormNode(idGen.getNewId(),
          currProtocolForm, treeFunctions, true));
        }
-       
+
        listedByProtocol.add(currProtoNode);
       }
 
@@ -357,7 +372,7 @@ public class CDEBrowserTreeServiceImpl
      }
 
     }
-    
+
    }
 
    if (publishTemplateCSI  != null) {
@@ -373,7 +388,7 @@ public class CDEBrowserTreeServiceImpl
 
      while (templateIt.hasNext()) {
       Form currTemplate = (Form)templateIt.next();
-      publishTemplateNode.add(this.getTemplateNode(idGen.getNewId(), 
+      publishTemplateNode.add(this.getTemplateNode(idGen.getNewId(),
       currTemplate, treeFunctions));
      }
 
@@ -395,20 +410,20 @@ public class CDEBrowserTreeServiceImpl
   List allCscsi = dao.getCSCSIHierarchy();
   Map csMap = new HashMap(); //this map stores the webnode for cs given cs_idseq
   Map csiMap = new HashMap();
-  
+
   Iterator iter = allCscsi.iterator();
-  
-  while (iter.hasNext()) 
+
+  while (iter.hasNext())
   {
-  
+
     ClassSchemeItem cscsi = (ClassSchemeItem) iter.next();
     String csContextId = cscsi.getCsConteIdseq();
 
-    
-    DefaultMutableTreeNode classifcationNode 
+
+    DefaultMutableTreeNode classifcationNode
         =(DefaultMutableTreeNode) csNodeByContextMap.get(csContextId);
-        
-    if (classifcationNode == null) 
+
+    if (classifcationNode == null)
     {
       //create a classification node for this context
       classifcationNode = getWebNode("Classifications", idGen.getNewId());
@@ -416,38 +431,38 @@ public class CDEBrowserTreeServiceImpl
       csiMap.clear();
       csMap.clear();
     }
-    
+
     String csId = cscsi.getCsIdseq();
     // create classification scheme node if necessary
     DefaultMutableTreeNode csNode = (DefaultMutableTreeNode) csMap.get(csId);
-    if (csNode == null) 
+    if (csNode == null)
     {
       csNode = getClassificationSchemeNode(idGen.getNewId(), cscsi, treeFunctions);
       classifcationNode.add(csNode);
       csMap.put(csId, csNode);
     }
-    
+
     // add csi node
-      DefaultMutableTreeNode csiNode = 
+      DefaultMutableTreeNode csiNode =
       getClassificationSchemeItemNode(idGen.getNewId(), cscsi, treeFunctions);
-      
+
       String parentId = cscsi.getParentCscsiId();
       DefaultMutableTreeNode parentNode = null;
-      if ( parentId != null) 
+      if ( parentId != null)
         parentNode =(DefaultMutableTreeNode) csiMap.get(parentId);
-      else 
+      else
         parentNode = csNode;
-      
-      if (parentNode != null) 
+
+      if (parentNode != null)
           parentNode.add(csiNode);
       csiMap.put(cscsi.getCsCsiIdseq(), csiNode);
-    
+
       // for CTEP disease, add core, none core sub node
       if (treeFunctions.getTreeType().equals(TreeConstants.DE_SEARCH_TREE))
       {
-        if (cscsi.getClassSchemeItemType().equals("DISEASE_TYPE")) 
+        if (cscsi.getClassSchemeItemType().equals("DISEASE_TYPE"))
         {
-          if (cscsi.getClassSchemePrefName().equals("DISEASE")) 
+          if (cscsi.getClassSchemePrefName().equals("DISEASE"))
           {
             csiNode.add(this.getDiseaseSubNode(idGen.getNewId(), cscsi,
             treeFunctions, "Core Data Set" ));
@@ -485,7 +500,7 @@ public class CDEBrowserTreeServiceImpl
         ,csi.getCsiDescription()));
 
  }
- 
+
  private DefaultMutableTreeNode getContextNode(String nodeId, Context context,
                                                TreeFunctions treeFunctions) throws Exception {
   String currContextId = context.getConteIdseq();
@@ -506,7 +521,7 @@ public class CDEBrowserTreeServiceImpl
 
  private DefaultMutableTreeNode getDiseaseSubNode(String nodeId, ClassSchemeItem csi,
  TreeFunctions treeFunctions, String nodeName) throws Exception {
- 
+
  int firstSpace = nodeName.indexOf(" ");
  String nodeType = nodeName.substring(0, firstSpace).toUpperCase();
  return new DefaultMutableTreeNode(
@@ -530,18 +545,18 @@ public class CDEBrowserTreeServiceImpl
   String currContextId = form.getConteIdseq();
   String contextName = "";
   String formLongName = "";
-  
+
   if (form.getLongName() != null)
     formLongName = URLEncoder.encode(form.getLongName());
-    
+
   if (form.getContext() != null)
    contextName = form.getContext().getName();
-   
+
   if (contextName != null)
     contextName = URLEncoder.encode(contextName);
 
-   
-  if (showContextName) 
+
+  if (showContextName)
     displayName = displayName + " (" + contextName + ")";
 
   String protocolId = "";
@@ -574,12 +589,12 @@ public class CDEBrowserTreeServiceImpl
                             new DefaultMutableTreeNode(
                             new WebNode(nodeId, longName,
                          "javascript:" + treeFunctions.getFormJsFunctionName()
-                            + "('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+ templateIdseq 
+                            + "('P_PARAM_TYPE=TEMPLATE&P_IDSEQ="+ templateIdseq
                             + "&P_CONTE_IDSEQ=" + currContextId  //context idseq
                             + "&templateName=" + URLEncoder.encode(longName)    //longname
                             +"&contextName=" + URLEncoder.encode(contextName) + // context name
                             treeFunctions.getExtraURLParameters() + "')",
-                         preferred_definition));                               //preffered definition      
+                         preferred_definition));                               //preffered definition
   return tmpNode;
  }
 
@@ -673,6 +688,125 @@ public class CDEBrowserTreeServiceImpl
    cscsiholderMap.put(cscsiId, cscsiCatHolder);
   }
  }
+
+  private Map getProtoFormClassificationNodes(TreeFunctions treeFunctions, TreeIdGenerator idGen) throws Exception {
+
+  Map csiByContextMap = new HashMap();
+  Map csNodeMap = new HashMap();
+  FormDAO dao = daoFactory.getFormDAO();
+  List allCscsi = dao.getCSCSIHierarchyByType(CaDSRConstants.FORM_CS_TYPE,
+  CaDSRConstants.FORM_CSI_TYPE);
+  Map csMap = new HashMap(); //this map stores the webnode for cs given cs_idseq
+  Map csiMap = new HashMap();
+
+  Iterator iter = allCscsi.iterator();
+
+  while (iter.hasNext())
+  {
+
+    ClassSchemeItem cscsi = (ClassSchemeItem) iter.next();
+    String csContextId = cscsi.getCsConteIdseq();
+    Map currentCsiMap =(Map) csiByContextMap.get(csContextId);
+
+    if (currentCsiMap == null)
+    {
+      //create a classification node for this context
+      csiMap = new HashMap();
+      csiByContextMap.put(csContextId, csiMap);
+      csMap.clear();
+    }
+
+    String csId = cscsi.getCsIdseq();
+    // create classification scheme node if necessary
+    DefaultMutableTreeNode csNode = (DefaultMutableTreeNode) csMap.get(csId);
+    if (csNode == null)
+    {
+      csNode = getClassificationSchemeNode(idGen.getNewId(), cscsi, treeFunctions);
+      csMap.put(csId, csNode);
+    }
+
+    // add csi node
+      DefaultMutableTreeNode csiNode =
+      getClassificationSchemeItemNode(idGen.getNewId(), cscsi, treeFunctions);
+
+      String parentId = cscsi.getParentCscsiId();
+      DefaultMutableTreeNode parentNode = null;
+      if ( parentId != null)
+        parentNode =(DefaultMutableTreeNode) csiMap.get(parentId);
+      else
+        parentNode = csNode;
+
+      if (parentNode != null)
+          parentNode.add(csiNode);
+      csiMap.put(cscsi.getCsCsiIdseq(), csiNode);
+
+  }
+  return csiByContextMap;
+ }
+ /**
+   * This method iterate all the classifications of a form and add
+   * the corresponding branch of the cs tree to the root node
+   *
+   * @param currForm the Form that needs to be attached to the root node
+   * @param currCSMap a Map to find a tree node given a cscsi id, this tree
+   *          node is used as a master copy for each protocol to create its own
+   *          cs tree
+   * @param treeNodeMap a Map used to avoid copy the orginal node more than one
+   *        time.  For each given Webnode id, this Map returns the corresponding
+   *        copy of that node that exist in the copy
+   * @param newNode the form node to be added to the cs tree
+   * @param rootNode the tree node for the branch to attach to
+   * @param idGen the id genator used to get unique id when copy a node from
+   * original tree
+   */
+   private void copyCSTree(Form currForm, Map currCSMap, Map treeNodeMap,
+   DefaultMutableTreeNode newNode, DefaultMutableTreeNode rootNode,
+   TreeIdGenerator idGen) {
+    Iterator csIter = currForm.getClassifications().iterator();
+
+    while (csIter.hasNext()) {
+      String cscsiId = ((ClassSchemeItem)csIter.next()).getCsCsiIdseq();
+
+      DefaultMutableTreeNode origTreeNode = (DefaultMutableTreeNode)currCSMap.get(cscsiId);
+      WebNode origWebNode = (WebNode)origTreeNode.getUserObject();
+
+      DefaultMutableTreeNode treeNodeCopy = (DefaultMutableTreeNode)treeNodeMap.get(origWebNode.getId());
+
+      if (treeNodeCopy == null) {
+        treeNodeCopy = new DefaultMutableTreeNode(origWebNode.copy(idGen.getNewId()));
+
+        treeNodeMap.put(origWebNode.getId(), treeNodeCopy);
+      }
+
+      treeNodeCopy.add(newNode);
+      DefaultMutableTreeNode pTreeNode = origTreeNode;
+      DefaultMutableTreeNode cTreeNode = treeNodeCopy;
+
+      //copy this branch of the cs tree all the way until one parent node is
+      //found in the new tree
+      while (pTreeNode.getParent() != null) {
+        DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)pTreeNode.getParent();
+
+        WebNode pWebNode = (WebNode)parentTreeNode.getUserObject();
+        DefaultMutableTreeNode pNodeCopy = (DefaultMutableTreeNode)treeNodeMap.get(pWebNode.getId());
+
+        if (pNodeCopy == null) {
+          pNodeCopy = new DefaultMutableTreeNode(pWebNode.copy(idGen.getNewId()));
+
+          treeNodeMap.put(pWebNode.getId(), pNodeCopy);
+          pNodeCopy.add(cTreeNode);
+          pTreeNode = parentTreeNode;
+          cTreeNode = pNodeCopy;
+        } else {
+          // when one parent node is found in the new tree, attach the copy
+           pNodeCopy.add(cTreeNode);
+          return ;
+        }
+      }
+
+      rootNode.add(cTreeNode);
+    }
+  }
 
 
   public void setLocator(ServiceLocator locator)
