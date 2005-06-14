@@ -154,33 +154,36 @@ public class CDEBrowserTree
 
     if ((!currContext.getName().equals(Context.CTEP) && treeType.equals(TreeConstants.DE_SEARCH_TREE))
     //Publish Change order
-           || (baseNode.isCTEPUser().equals(
-                  "Yes") && treeType.equals(TreeConstants.DE_SEARCH_TREE)) || (treeType.equals(
-                                                                                  TreeConstants.FORM_SEARCH_TREE))) {
+      || (baseNode.isCTEPUser().equals("Yes") && treeType.equals(TreeConstants.DE_SEARCH_TREE)) 
+      || (treeType.equals(TreeConstants.FORM_SEARCH_TREE))) {
      if ((currContext.getName().equals(
              Context.CTEP) && baseNode.isCTEPUser().equals("Yes")) || (!currContext.getName().equals(Context.CTEP))) {
       List protoNodes = cache.getProtocolNodes(currContext.getConteIdseq());
 
-      List formNodes = new ArrayList();
-      formNodes = cache.getFormNodesWithNoProtocol(currContext.getConteIdseq());
-
+   /** for release 3.0.1, forms without protocol is not displayed, uncomment this
+    * code to display them
+      DefaultMutableTreeNode noProtocolFormNode =
+      cache.getProtocolFormNodeWithNoProtocol(currContext.getConteIdseq());
+*/
       DefaultMutableTreeNode protocolFormsLabelNode = null;
       DefaultMutableTreeNode formsLabelNode = null;
 
-      if ((protoNodes != null && !protoNodes.isEmpty()) || (formNodes != null && !formNodes.isEmpty())) {
+   /** for release 3.0.1, forms without protocol is not displayed, uncomment this
+    * code to display them
+      if ((protoNodes != null && !protoNodes.isEmpty()) || noProtocolFormNode != null ) {
+  */
+      if ((protoNodes != null && !protoNodes.isEmpty()) ) {
        protocolFormsLabelNode = new DefaultMutableTreeNode(
                                    new WebNode(dbHelper.getUniqueId(IDSEQ_GENERATOR), "Protocol Forms"));
+   /** for release 3.0.1, forms without protocol is not displayed, uncomment this
+    * code to display them
 
        // Add form with no protocol
-       if (formNodes != null && !formNodes.isEmpty()) {
-        Iterator tmpIter = formNodes.iterator();
-
-        while (tmpIter.hasNext()) {
-         protocolFormsLabelNode.add((DefaultMutableTreeNode)tmpIter.next());
-        }
+       if (noProtocolFormNode != null ) {
+         protocolFormsLabelNode.add(noProtocolFormNode);
        }
-
-       // Add form with no protocol
+*/
+       // Add form with protocol
        if (protoNodes != null && !protoNodes.isEmpty()) {
         Iterator tmpIter = protoNodes.iterator();
 

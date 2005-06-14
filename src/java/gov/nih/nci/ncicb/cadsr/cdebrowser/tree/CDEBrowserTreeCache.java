@@ -54,9 +54,9 @@ public class CDEBrowserTreeCache
     return (DefaultMutableTreeNode)allClassificationNodes.get(contextIdSeq);
   }
   
-  public List getFormNodesWithNoProtocol(String contextIdSeq)
+  public DefaultMutableTreeNode getProtocolFormNodeWithNoProtocol(String contextIdSeq)
   {
-    return (List)allFormsWithNoProtocol.get(contextIdSeq);
+    return (DefaultMutableTreeNode)allFormsWithNoProtocol.get(contextIdSeq);
   }
   public void init(BaseTreeNode baseTree,Hashtable treeParams) throws Exception
   {
