@@ -54,7 +54,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
 
     <td align="left" nowrap>
 
-    <html:img page="/i/graphic6.gif" border="0" />
+    <html:img page="/i/objectClassBanner.gif" border="0" />
     </td>
 
     <td align=right valign=top colspan=2 nowrap>
@@ -120,6 +120,36 @@ function navigateOCR(ocId,ocrIndex,direction) {
             </td>
           </tr>
         </table>
+        <br>
+        <table vAlign=top cellSpacing=1 cellPadding=1  width="90%" align=center border=0 class="OraBGAccentVeryDark">
+          <TR class=OraTableColumnHeader>
+             <th class="OraTableColumnHeader"  >Alternate Names</th>
+             <th class="OraTableColumnHeader">Type</th>
+             <th class="OraTableColumnHeader">Context</th>
+           </TR>   
+          <logic:notEmpty  name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="alternateNames" > 
+            <logic:iterate id="alternateName" name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="alternateNames" type="gov.nih.nci.ncicb.cadsr.domain.AlternateName" indexId="nameIndex" >                                 
+              <TR class=OraTabledata>
+                 <td class="OraFieldText">
+                   <bean:write name="alternateName" property="name"/>
+                  </td>
+                 <td class="OraFieldText">
+                   <bean:write name="alternateName" property="type"/>
+                  </td>
+                 <td class="OraFieldText">
+                   <bean:write name="alternateName" property="context.name"/>
+                  </td>                     
+               </TR>  
+           </logic:iterate>
+          </logic:notEmpty>
+         <logic:empty  name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="alternateNames" > 
+              <TR class=OraTabledata>
+                 <td colspan=3 class="OraFieldText">No Alternate names for this Object Class exist</td>
+               </TR>  
+          </logic:empty>                    
+        </table>  
+        <br>
+        
       <cde:ocrNavigation
               navigationListId="<%=UmlBrowserFormConstants.OCR_NAVIGATION_BEAN%>"   
               outGoingImage="/i/outgoing.gif"
@@ -166,7 +196,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
            pageContext.setAttribute("projects",projects);                  
         %> 
  
-       <table vAlign=top cellSpacing=2 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+       <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
         <tr class=OraTabledata>
          <td class=OraFieldText>
              <table vAlign=top width="100%">
@@ -203,87 +233,77 @@ function navigateOCR(ocId,ocrIndex,direction) {
                  
        
                 <TR>
-                 <td width ="50%">     
+                 <td width ="100%">     
                   <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
                     <TR class=OraTabledata>
-                       <td class="TableRowPromptTextLeft" width="40%" >Target Object Class</td>
+                       <td class="TableRowPromptTextLeft" width="20%" >Target Object Class</td>
                        <td class="OraFieldText">
                           <bean:write name="currOutgoingOCR" property="target.longName"/>
                         </td>
                     </tr>
                     <TR class=OraTabledata>
-                       <td class="OraTableColumnHeader" width="40%" >Long Name</td>
+                       <td class="OraTableColumnHeader" width="20%">Relationship Type</td>
+                       <td class="OraFieldText">
+                         <bean:write name="currOutgoingOCR" property="type"/>
+                       </td>
+                    </tr>                     
+                    <TR class=OraTabledata>
+                       <td class="OraTableColumnHeader" width="20%" >Long Name</td>
                        <td class="OraFieldText">
                           <bean:write name="currOutgoingOCR" property="longName"/>
                        </td>
                     </tr>
                     <TR class=OraTabledata>
-                       <td class="OraTableColumnHeader" width="40%" >Prefferd Definition</td>
+                       <td class="OraTableColumnHeader" width="20%" >Preferred Definition</td>
                        <td class="OraFieldText">
                          <bean:write name="currOutgoingOCR" property="preferredDefinition"/>
                        </td>
                     </tr>
                     <TR class=OraTabledata>
-                       <td class="OraTableColumnHeader" width="40%">Workflow Status</td>
+                       <td class="OraTableColumnHeader" width="20%">Workflow Status</td>
                        <td class="OraFieldText">
                         <bean:write name="currOutgoingOCR" property="workflowStatus"/>
                        </td>
                     </tr>  
                     <TR class=OraTabledata>
-                       <td class="OraTableColumnHeader" width="40%">Version</td>
+                       <td class="OraTableColumnHeader" width="20%">Version</td>
                        <td class="OraFieldText">
                          <bean:write name="currOutgoingOCR" property="version"/>
                        </td>
                     </tr>  
                     <TR class=OraTabledata>
-                       <td class="OraTableColumnHeader" width="40%">Context</td>
+                       <td class="OraTableColumnHeader" width="20%">Context</td>
                        <td class="OraFieldText">
                          <bean:write name="currOutgoingOCR" property="context.name"/>
                        </td>
                     </tr>                
                   </table>  
                  </td>
-                 <td width="50%" vAlign=top>
-                  <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
-                    <TR class=OraTabledata>
-                       <td class="TableRowPromptTextLeft" width="40%">Source Multiplicity</td>
-                       <td class="OraFieldText">
-                          <%=OCUtils.getSourceMultiplicityDisplayString(currOutgoingOCR)%>
-                       </td>
-                    </tr>
-                    <TR class=OraTabledata>
-                       <td class="OraTableColumnHeader" width="40%">Source Role</td>
-                       <td class="OraFieldText">
-                         <bean:write name="currOutgoingOCR" property="sourceRole"/>
-                       </td>
-                    </tr>
-                    <TR class=OraTabledata>
-                       <td class="OraTableColumnHeader" width="40%">Target Multiplicity</td>
-                       <td class="OraFieldText">
-                        <%=OCUtils.getTargetMultiplicityDisplayString(currOutgoingOCR)%>
-                       </td>
-                    </tr>
-                    <TR class=OraTabledata>
-                       <td class="OraTableColumnHeader" width="40%">Target Role</td>
-                       <td class="OraFieldText">
-                         <bean:write name="currOutgoingOCR" property="targetRole"/>
-                      </td>
-                    </tr>
-                    <TR class=OraTabledata>
-                       <td class="OraTableColumnHeader" width="40%">Relationship Type</td>
-                       <td class="OraFieldText">
-                         <bean:write name="currOutgoingOCR" property="type"/>
-                       </td>
-                    </tr>                
-                  </table>             
-                 </td>
-              </TR>            
 
+              </TR> 
+              <tr>
+               <td colspan=2>
+                 <table cellpadding="0" cellspacing="0" width="100%" align="center">
+                   <tr>
+                     <td class="OraHeaderSubSubSub" width="100%">&nbsp;</td>
+                   </tr>
+                 </table>
+               </td>
+              </tr>              
+              <tr>
+               <td colspan=2>
+                 <table cellpadding="0" cellspacing="0" width="100%" align="center">
+                   <tr>
+                     <td class="OraHeaderSubSubSub" width="100%">Alternate Names for Object Class: <bean:write name="currOutgoingOCR" property="target.longName"/></td>
+                   </tr>
+                 </table>
+               </td>
+              </tr>
               <tr>
                  <td colspan=2>
                   <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                     <TR class=OraTableColumnHeader>
-                       <th class="OraTableColumnHeader"  >Target Object Class Alternate Name</th>
+                       <th class="OraTableColumnHeader"  >Alternate Names</th>
                        <th class="OraTableColumnHeader">Type</th>
                        <th class="OraTableColumnHeader">Context</th>
                      </TR>   
@@ -304,13 +324,21 @@ function navigateOCR(ocId,ocrIndex,direction) {
                     </logic:notEmpty>
                    <logic:empty  name="currOutgoingOCR" property="target.alternateNames" > 
                         <TR class=OraTabledata>
-                           <td colspan=3 class="OraFieldText">No Alternate names for this Target Object Class exist</td>
+                           <td colspan=3 class="OraFieldText">No Alternate names for this Object Class exist</td>
                          </TR>  
                     </logic:empty>                    
                   </table> 
                 </td>
                </tr>
-               
+              <tr>
+               <td colspan=2>
+                 <table cellpadding="0" cellspacing="0" width="100%" align="center">
+                   <tr>
+                     <td class="OraHeaderSubSubSub" width="100%">&nbsp;</td>
+                   </tr>
+                 </table>
+               </td>
+              </tr>                
                <tr>
                 <td class="OraHeaderSubSubSub" vAlign=bottom align=left colspan=2 width="100%"> 
                   Using Projects
@@ -391,7 +419,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
                pageContext.setAttribute("projects",projects);
             %> 
      
-           <table vAlign=top cellSpacing=2 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+           <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
             <tr class=OraTabledata>
              <td class=OraFieldText>
                  <table vAlign=top width="100%">
@@ -426,86 +454,79 @@ function navigateOCR(ocId,ocrIndex,direction) {
                      </td>
                  </tr>                        
                     <TR>
-                     <td width ="50%">     
+                     <td width ="100%">     
                       <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
                         <TR class=OraTabledata>
-                           <td class="TableRowPromptTextLeft" width="40%" >Source Object Class</td>
+                           <td class="TableRowPromptTextLeft" width="20%" >Source Object Class</td>
                            <td class="OraFieldText">
                               <bean:write name="currIncommingOCR" property="source.longName"/>
                             </td>
                         </tr>
                         <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%" >Long Name</td>
+                           <td class="OraTableColumnHeader" width="20%">Relationship Type</td>
+                           <td class="OraFieldText">
+                             <bean:write name="currIncommingOCR" property="type"/>
+                           </td>
+                        </tr>                         
+                        <TR class=OraTabledata>
+                           <td class="OraTableColumnHeader" width="20%" >Long Name</td>
                            <td class="OraFieldText">
                               <bean:write name="currIncommingOCR" property="longName"/>
                            </td>
                         </tr>
                         <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%" >Prefferd Definition</td>
+                           <td class="OraTableColumnHeader" width="20%" >Preferred Definition</td>
                            <td class="OraFieldText">
                              <bean:write name="currIncommingOCR" property="preferredDefinition"/>
                            </td>
                         </tr>
                         <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Workflow Status</td>
+                           <td class="OraTableColumnHeader" width="20%">Workflow Status</td>
                            <td class="OraFieldText">
                             <bean:write name="currIncommingOCR" property="workflowStatus"/>
                            </td>
                         </tr>  
                         <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Version</td>
+                           <td class="OraTableColumnHeader" width="20%">Version</td>
                            <td class="OraFieldText">
                              <bean:write name="currIncommingOCR" property="version"/>
                            </td>
                         </tr>  
                         <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Context</td>
+                           <td class="OraTableColumnHeader" width="20%">Context</td>
                            <td class="OraFieldText">
                              <bean:write name="currIncommingOCR" property="context.name"/>
                            </td>
                         </tr>                
                       </table>  
                      </td>
-                     <td width="50%" vAlign=top>
-                      <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
-                        <TR class=OraTabledata>
-                           <td class="TableRowPromptTextLeft" width="40%">Source Multiplicity</td>
-                           <td class="OraFieldText">
-                              <%=OCUtils.getSourceMultiplicityDisplayString(currIncommingOCR)%>
-                           </td>
-                        </tr>
-                        <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Source Role</td>
-                           <td class="OraFieldText">
-                             <bean:write name="currIncommingOCR" property="sourceRole"/>
-                           </td>
-                        </tr>
-                        <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Target Multiplicity</td>
-                           <td class="OraFieldText">
-                            <%=OCUtils.getTargetMultiplicityDisplayString(currIncommingOCR)%>
-                           </td>
-                        </tr>
-                        <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Target Role</td>
-                           <td class="OraFieldText">
-                             <bean:write name="currIncommingOCR" property="targetRole"/>
-                          </td>
-                        </tr>
-                        <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Relationship Type</td>
-                           <td class="OraFieldText">
-                             <bean:write name="currIncommingOCR" property="type"/>
-                           </td>
-                        </tr>                
-                      </table>             
-                     </td>
-                  </TR>            
+
+                  </TR>  
+                  
+              <tr>
+               <td colspan=2>
+                 <table cellpadding="0" cellspacing="0" width="100%" align="center">
+                   <tr>
+                     <td class="OraHeaderSubSubSub" width="100%">&nbsp;</td>
+                   </tr>
+                 </table>
+               </td>
+              </tr>              
+              <tr>
+               <td colspan=2>
+                 <table cellpadding="0" cellspacing="0" width="100%" align="center">
+                   <tr>
+                     <td class="OraHeaderSubSubSub" width="100%">Alternate Names for Object Class: <bean:write name="currIncommingOCR" property="source.longName"/></td>
+                   </tr>
+                 </table>
+               </td>
+              </tr>
+              
                   <tr>
                    <td colspan=2>
                     <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                       <TR class=OraTableColumnHeader>
-                         <th class="OraTableColumnHeader"  >Source Object Class Alternate Name</th>
+                         <th class="OraTableColumnHeader"  >Alternate Names</th>
                          <th class="OraTableColumnHeader">Type</th>
                          <th class="OraTableColumnHeader">Context</th>
                        </TR>   
@@ -526,13 +547,21 @@ function navigateOCR(ocId,ocrIndex,direction) {
                       </logic:notEmpty>
                      <logic:empty  name="currIncommingOCR" property="source.alternateNames" > 
                           <TR class=OraTabledata>
-                             <td colspan=3 class="OraFieldText">No Alternate names for this Source Object Class exist</td>
+                             <td colspan=3 class="OraFieldText">No Alternate names for this Object Class exist</td>
                            </TR>  
                       </logic:empty>                    
                     </table> 
                   </td>
                </tr> 
-
+              <tr>
+               <td colspan=2>
+                 <table cellpadding="0" cellspacing="0" width="100%" align="center">
+                   <tr>
+                     <td class="OraHeaderSubSubSub" width="100%">&nbsp;</td>
+                   </tr>
+                 </table>
+               </td>
+              </tr> 
                <tr>
                 <td class="OraHeaderSubSubSub" vAlign=bottom align=left colspan=2 width="100%"> 
                   Using Projects
@@ -575,6 +604,10 @@ function navigateOCR(ocId,ocrIndex,direction) {
                          </TR>  
                         </table>
                       </logic:empty> 
+                      </td>
+                  </tr>
+                  
+                 </table>  
               </td>
            </tr>
           </table>
@@ -610,7 +643,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
                Collection projects = ObjectExtractor.getProjects(currBidirectionalOCR);   
                pageContext.setAttribute("projects",projects);
             %> 
-           <table vAlign=top cellSpacing=2 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
+           <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
             <tr class=OraTabledata>
              <td class=OraFieldText>
                  <table vAlign=top width="100%">
@@ -646,91 +679,87 @@ function navigateOCR(ocId,ocrIndex,direction) {
                          </td>
                      </tr>                      
                     <TR>
-                     <td width ="50%">     
+                     <td width ="100%">     
                       <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
                         <TR class=OraTabledata>
-                           <td class="TableRowPromptTextLeft" width="40%" >Associated Object Class</td>
+                          <% ObjectClass biTargetOC = OCUtils.getBiderectionalTarget(currBidirectionalOCR,currObjClass);
+                             pageContext.setAttribute("biTargetOC",biTargetOC); %>
+                           <td class="TableRowPromptTextLeft" width="20%" >Associated Object Class
+                            </td>
                            <td class="OraFieldText">
-                              <%=(OCUtils.getBiderectionalTarget(currBidirectionalOCR,currObjClass)).getLongName()%>
+                              
+                              <%=biTargetOC.getLongName()%>                             
                             </td>
                         </tr>
                         <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%" >Long Name</td>
+                           <td class="OraTableColumnHeader" width="20%">Relationship Type</td>
+                           <td class="OraFieldText">
+                             <bean:write name="currBidirectionalOCR" property="type"/>
+                           </td>
+                        </tr>                         
+                        <TR class=OraTabledata>
+                           <td class="OraTableColumnHeader" width="20%" >Long Name</td>
                            <td class="OraFieldText">
                               <bean:write name="currBidirectionalOCR" property="longName"/>
                            </td>
                         </tr>
                         <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%" >Prefferd Definition</td>
+                           <td class="OraTableColumnHeader" width="20%" >Preferred Definition</td>
                            <td class="OraFieldText">
                              <bean:write name="currBidirectionalOCR" property="preferredDefinition"/>
                            </td>
                         </tr>
                         <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Workflow Status</td>
+                           <td class="OraTableColumnHeader" width="20%">Workflow Status</td>
                            <td class="OraFieldText">
                             <bean:write name="currBidirectionalOCR" property="workflowStatus"/>
                            </td>
                         </tr>  
                         <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Version</td>
+                           <td class="OraTableColumnHeader" width="20%">Version</td>
                            <td class="OraFieldText">
                              <bean:write name="currBidirectionalOCR" property="version"/>
                            </td>
                         </tr>  
                         <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Context</td>
+                           <td class="OraTableColumnHeader" width="20%">Context</td>
                            <td class="OraFieldText">
                              <bean:write name="currBidirectionalOCR" property="context.name"/>
                            </td>
                         </tr>                
                       </table>  
                      </td>
-                     <td width="50%" vAlign=top>
-                      <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=left border=0 class="OraBGAccentVeryDark">
-                        <TR class=OraTabledata>
-                           <td class="TableRowPromptTextLeft" width="40%">Source Multiplicity</td>
-                           <td class="OraFieldText">
-                              <%=OCUtils.getSourceMultiplicityDisplayString(currBidirectionalOCR)%>
-                           </td>
-                        </tr>
-                        <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Source Role</td>
-                           <td class="OraFieldText">
-                             <bean:write name="currBidirectionalOCR" property="sourceRole"/>
-                           </td>
-                        </tr>
-                        <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Target Multiplicity</td>
-                           <td class="OraFieldText">
-                            <%=OCUtils.getTargetMultiplicityDisplayString(currBidirectionalOCR)%>
-                           </td>
-                        </tr>
-                        <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Target Role</td>
-                           <td class="OraFieldText">
-                             <bean:write name="currBidirectionalOCR" property="targetRole"/>
-                          </td>
-                        </tr>
-                        <TR class=OraTabledata>
-                           <td class="OraTableColumnHeader" width="40%">Relationship Type</td>
-                           <td class="OraFieldText">
-                             <bean:write name="currBidirectionalOCR" property="type"/>
-                           </td>
-                        </tr>                
-                      </table>             
-                     </td>
-                  </TR>            
+
+                  </TR>  
+              <tr>
+               <td colspan=2>
+                 <table cellpadding="0" cellspacing="0" width="100%" align="center">
+                   <tr>
+                     <td class="OraHeaderSubSubSub" width="100%">&nbsp;</td>
+                   </tr>
+                 </table>
+               </td>
+              </tr>              
+              <tr>
+               <td colspan=2>
+                 <table cellpadding="0" cellspacing="0" width="100%" align="center">
+                   <tr>
+                     <td class="OraHeaderSubSubSub" width="100%">Alternate Names for Object Class: <bean:write name="biTargetOC" property="longName"/></td>
+                   </tr>
+                 </table>
+               </td>
+              </tr>
+              
                   <tr>
                    <td colspan=2>
                     <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                       <TR class=OraTableColumnHeader>
-                         <th class="OraTableColumnHeader"  >Associated Object Class Alternate Name</th>
+                         <th class="OraTableColumnHeader"  >Alternate Names</th>
                          <th class="OraTableColumnHeader">Type</th>
                          <th class="OraTableColumnHeader">Context</th>
                        </TR>   
-                      <logic:notEmpty  name="currBidirectionalOCR" property="target.alternateNames" > 
-                        <logic:iterate id="alternateName" name="currBidirectionalOCR" property="target.alternateNames" type="gov.nih.nci.ncicb.cadsr.domain.AlternateName" indexId="nameIndex" >                                 
+                      <logic:notEmpty  name="biTargetOC" property="alternateNames" > 
+                        <logic:iterate id="alternateName" name="biTargetOC" property="alternateNames" type="gov.nih.nci.ncicb.cadsr.domain.AlternateName" indexId="nameIndex" >                                 
                           <TR class=OraTabledata>
                              <td class="OraFieldText">
                                <bean:write name="alternateName" property="name"/>
@@ -744,15 +773,23 @@ function navigateOCR(ocId,ocrIndex,direction) {
                            </TR>  
                        </logic:iterate>
                       </logic:notEmpty>
-                     <logic:empty  name="currBidirectionalOCR" property="target.alternateNames" > 
+                     <logic:empty  name="biTargetOC" property="alternateNames" > 
                           <TR class=OraTabledata>
-                             <td colspan=3 class="OraFieldText">No Alternate names for this Target Object Class exist</td>
+                             <td colspan=3 class="OraFieldText">No Alternate names for this Object Class exist</td>
                            </TR>  
                       </logic:empty>                    
                     </table> 
                   </td>
                </tr> 
-               
+              <tr>
+               <td colspan=2>
+                 <table cellpadding="0" cellspacing="0" width="100%" align="center">
+                   <tr>
+                     <td class="OraHeaderSubSubSub" width="100%">&nbsp;</td>
+                   </tr>
+                 </table>
+               </td>
+              </tr>                
                <tr>
                 <td class="OraHeaderSubSubSub" vAlign=bottom align=left colspan=2 width="100%"> 
                   Using Projects
@@ -795,9 +832,9 @@ function navigateOCR(ocId,ocrIndex,direction) {
                          </TR>  
                         </table>
                       </logic:empty>
-                  </td>
-              </tr>               
-               
+                      </td>
+                  </tr>
+                  
                  </table>  
               </td>
            </tr>

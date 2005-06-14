@@ -36,7 +36,7 @@
       <TABLE width="100%" Cellpadding="0" Cellspacing="0" border="0">
         <tr>
           <td align="left" nowrap>
-            <html:img page="/i/graphic6.gif" border="0"/>
+            <html:img page="/i/objectClassBanner.gif" border="0"/>
           </td>
           <td align="right" valign="top" colspan="2" nowrap>
             <TABLE Cellpadding="0" Cellspacing="0" border="0">

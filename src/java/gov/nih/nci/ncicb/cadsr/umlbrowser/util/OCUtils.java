@@ -115,6 +115,36 @@ public class OCUtils implements UmlBrowserFormConstants
        return ocr.getTarget();
      }
   }
+  
+  /**
+   * Check if an oc is source for this bidirectional ocr
+   */
+  public static boolean isOCSourceForBidirectionalOCR(ObjectClassRelationship ocr,ObjectClass currObject)
+  {
+     if(ocr.getSource().getId().equals(currObject.getId()))
+     {
+       return true;
+     }
+     else
+     {
+       return false;
+     }
+  }  
+  
+    /**
+   * Check if an oc is source for this bidirectional ocr
+   */
+  public static String getCurrentRoleStringForBidirectionalOCRForDisplay(ObjectClassRelationship ocr,ObjectClass currObject)
+  {
+     if(isOCSourceForBidirectionalOCR(ocr,currObject))
+     {
+       return "Source";
+     }
+     else
+     {
+       return "Target";
+     }
+  }  
   /**
    * Since in bidirectional ocr target and source could be interchangable
    */

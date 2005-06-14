@@ -378,6 +378,19 @@ function gotoCDESearchPrefs() {
 
 <%@ include file="../formbuilder/showMessages.jsp" %>   
 <table>
+
+ <%
+      if (request.getAttribute(ProcessConstants.FORMS_IGNORE_FILTER) != null) {
+    %>
+    
+        <tr align="center" >
+          <td  align="left" class="MessageText" >        
+            <b><%=request.getAttribute(ProcessConstants.FORMS_IGNORE_FILTER)%></b><br>
+          </td>
+        </tr>
+    <%
+      }
+    %>
  <%
       if (request.getAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS) != null) {
     %>

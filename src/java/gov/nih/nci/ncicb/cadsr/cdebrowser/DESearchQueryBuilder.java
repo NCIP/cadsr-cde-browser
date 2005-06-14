@@ -422,7 +422,9 @@ public class DESearchQueryBuilder extends Object {
                          " and qc.de_idseq = de.de_idseq " +
                         // " and vd.vd_idseq = de.vd_idseq " +
                         // " and dec.dec_idseq = de.dec_idseq " +
-                         csiWhere + whereClause + registrationWhere+ workFlowWhere;
+                        
+                                                  //Commented for TT 1511
+                         csiWhere + whereClause ; //+registrationWhere+ workFlowWhere;
 
       }
       else if (treeParamType.equals("CSI")){

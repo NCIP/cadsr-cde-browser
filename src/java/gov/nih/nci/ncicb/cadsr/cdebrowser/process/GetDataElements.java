@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.15 2005-03-15 21:57:29 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.16 2005-06-14 18:40:09 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -155,7 +155,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
     DBUtil dbUtil = null;
 
     try {
-      myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
+       myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
       userSession = myRequest.getSession(false);
 
 
@@ -280,7 +280,11 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         queryBuilder =
           new DESearchQueryBuilder(
             myRequest, paramType, paramIdSeq, treeConteIdseq,desb);
-
+        //TT 1511
+        if((paramType!=null)&&(paramType.equals("CRF")||paramType.equals("TEMPLATE")))
+        {
+          myRequest.setAttribute(ProcessConstants.FORMS_IGNORE_FILTER,"All Search filters ignored for this search");
+        }
         log.trace("- Created DESearchQueryBuilder successfully");
 
         queryStmt = queryBuilder.getSQLWithoutOrderBy();
