@@ -74,14 +74,14 @@ public class FormBuilderLOVAction extends FormBuilderBaseDispatchAction {
       if ((contextIdSeq != null) && (contextIdSeq.length() > 0)) {
 	contexts = new String[1];
 	contexts[0] = contextIdSeq;
-      } else 
+      } else
 	contexts = new String[0];
     }
-    
+
 
     // build additional query filters
     String additionalWhere = "";
-    if(contexts.length > 0) 
+    if(contexts.length > 0)
 	additionalWhere +=
 	    " and (upper(nvl(proto_conte.conte_idseq,'%')) like upper ( '%" +
 	    contexts[0] + "%') ";
@@ -93,7 +93,7 @@ public class FormBuilderLOVAction extends FormBuilderBaseDispatchAction {
     }
     if(contexts.length > 0)
 	additionalWhere += ")";
-      
+
     DBUtil dbUtil = new DBUtil();
     ProtocolsLOVBean plb;
 
@@ -106,8 +106,8 @@ public class FormBuilderLOVAction extends FormBuilderBaseDispatchAction {
       }
       setSessionObject(request, this.PROTOCOLS_LOV_TAB_BEAN, tib);
       CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-      String dsName = params.getSbrDSN();
-      dbUtil.getConnectionFromContainer(dsName);
+      //String dsName = params.getSbrDSN();
+      dbUtil.getConnectionFromContainer();
 
       if (performQuery == null) {
         plb = new ProtocolsLOVBean(request, dbUtil, additionalWhere);
@@ -134,7 +134,7 @@ public class FormBuilderLOVAction extends FormBuilderBaseDispatchAction {
     return mapping.findForward(SUCCESS);
   }
 
-  
+
   /**
    * This Action forwards to the default formbuilder home.
    *

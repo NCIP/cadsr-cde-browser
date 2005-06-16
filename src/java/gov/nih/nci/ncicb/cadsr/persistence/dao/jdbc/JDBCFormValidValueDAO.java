@@ -437,16 +437,18 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
 
     public Map executInsertCommand(OracleFormValidvalueList fvvs) {
         
+        OracleConnection conn =null;
+        OracleCallableStatement stmt =null;
         try
         {
           HashMap querymap = new HashMap();
           OracleJBossNativeJdbcExtractor ext = (OracleJBossNativeJdbcExtractor)getJdbcTemplate().getNativeJdbcExtractor();
-          OracleConnection conn =(OracleConnection) ext.doGetOracleConnection(getJdbcTemplate().getDataSource().getConnection());
+          conn =(OracleConnection) ext.doGetOracleConnection(getJdbcTemplate().getDataSource().getConnection());
           //For testing outside jboss 
           //OracleConnection conn =(OracleConnection) getJdbcTemplate().getDataSource().getConnection();
           querymap.put("SBREXT.FB_VALIDVALUELIST", Class.forName(oracleCollectionClass));
           conn.setTypeMap(querymap);
-          OracleCallableStatement stmt = (OracleCallableStatement)conn.prepareCall(insertvalidvaluesSql); 
+          stmt = (OracleCallableStatement)conn.prepareCall(insertvalidvaluesSql); 
           stmt.setORAData(1,fvvs);
           stmt.registerOutParameter(2, Types.VARCHAR);
           stmt.registerOutParameter(3, Types.VARCHAR);
@@ -466,7 +468,6 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
         {
           throw new DMLException("ClassNotFoundException-" +oracleCollectionClass+ "on bulk valid value insert",e);
         }
-
     }
   }
   

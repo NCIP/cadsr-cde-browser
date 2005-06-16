@@ -9,8 +9,8 @@ import java.util.ResourceBundle;
 public class CDEBrowserParams
 {
     private static Log log = LogFactory.getLog(CDEBrowserParams.class.getName());
-    String sbrextDSN = "";
-    String sbrDSN = "";
+    //String sbrextDSN = "";
+    //String sbrDSN = "";
     String xmlDownloadDir = "";
     String xmlPaginationFlag = "no";
     String xmlFileMaxRecord;
@@ -44,10 +44,7 @@ public class CDEBrowserParams
         {
             log.info("*** Resource File Name ***: " + propFilename);
             ResourceBundle b = ResourceBundle.getBundle(propFilename, java.util.Locale.getDefault());
-            sbrextDSN = b.getString("SBREXT_DATA_SOURCE_NAME");
-            index++;
-            sbrDSN = b.getString("SBR_DATA_SOURCE_NAME");
-            index++;
+
             xmlDownloadDir = b.getString("XML_DOWNLOAD_DIR");
             index++;
             xmlPaginationFlag = b.getString("XML_PAGINATION_FLAG");
@@ -85,12 +82,7 @@ public class CDEBrowserParams
             System.exit(-1);
         }
     }
-    public String getSbrextDSN(){
-      return sbrextDSN;
-    }
-    public String getSbrDSN(){
-      return sbrDSN;
-    }
+
     public String getXMLDownloadDir(){
       return xmlDownloadDir;
     }

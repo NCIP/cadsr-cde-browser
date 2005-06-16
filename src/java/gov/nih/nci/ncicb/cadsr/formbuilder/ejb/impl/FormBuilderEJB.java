@@ -816,7 +816,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
              
              if (currQuestionValidValues!=null)
              {
-              /**
+              
                ListIterator currQuestionValidValuesIt = currQuestionValidValues.listIterator();
                while(currQuestionValidValuesIt!=null&&currQuestionValidValuesIt.hasNext())
                {
@@ -832,8 +832,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
                     fvvInstrDao.createInstruction(vvInstr,newFVVIdseq);
                  }
                }
-               **/
-               fvvDao.createFormValidValueComponents(currQuestionValidValues,newQusetion.getQuesIdseq());
+               
+               //fvvDao.createFormValidValueComponents(currQuestionValidValues,newQusetion.getQuesIdseq());
              }
            }
          }

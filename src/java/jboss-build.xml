@@ -126,7 +126,7 @@
    <path id="classpath">
       <!--browser libs -->
 
-      <pathelement location="${java.lib.dir}/ojdbc14.jar"/>
+      <pathelement location="${java.lib.dir}/classes12.jar"/>
       <pathelement location="${java.lib.dir}/cle20.jar"/>
       <pathelement location="${java.lib.dir}/collections.jar"/>
       <pathelement location="${java.lib.dir}/healthtoolkit.zip"/>
@@ -208,7 +208,7 @@
           </fileset>
           <manifest>
 	    <attribute name="Built-By" value="${user.name}"/>
-	    <attribute name="Class-Path" value="classes12.jar spring.jar spring-jdbc.jar"/>
+	    <attribute name="Class-Path" value="ojdbc14.jar spring.jar spring-jdbc.jar"/>
           </manifest>           
         </jar>
       </target>
@@ -537,21 +537,29 @@
       <lib dir="${java.lib.dir}">
        	<include name="classes12.jar"/>
       	<include name="cle20.jar"/>
-      	<include name="collections.jar"/>
+
       	<include name="healthtoolkit.zip"/>
-      	<include name="jdev-cm.jar"/>
-      	<include name="jdev-rt.jar"/>
       	<include name="nls_charset12.jar"/>
       	<include name="ssosdk307.jar"/>
-      	<include name="xmlcomp.jar"/>      
-      	<include name="xmlparserv2.jar"/>    
+      	<include name="xmlcomp.jar"/>         
       	<include name="xsu12.jar"/> 
       	
       	<!--BC4J libs -->
+      	<include name="xmlparserv2.jar"/>       	
+      	<include name="collections.jar"/>
+      	<include name="bc4jmt.jar"/>
+      	<include name="jdev-cm.jar"/>
+      	<include name="jdev-rt.jar"/>
       	<include name="bc4jct.jar"/>
       	<include name="bc4jdatum.jar"/>
       	<include name="bc4jdomorcl.jar"/>
-      	<include name="bc4jmt.jar"/>   
+      	     	
+      
+      	<!-- old bc4j -->
+      	<!--include name="bc4jct.jar"/-->
+      	<!--include name="bc4jdatum.jar"/-->
+      	<!--include name="bc4jdomorcl.jar"/-->
+      	<!--include name="bc4jmt.jar"/-->   
       	
       	<!-- Struts libs -->
       	<include name="struts-1.1.jar"/>

@@ -11,6 +11,7 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl;
 
+import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import java.sql.Connection;
 import java.sql.Statement;
 import org.apache.commons.logging.Log;
@@ -83,8 +84,11 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
       // The Query below is to make sure connection db is established
       // In some case it was noticed that just making the connection did
       // not make a call to the db
+      
       conn.getMetaData();
-      validUser = true;
+      UserEnabledQuery enabledQuery = new UserEnabledQuery((getDataSource()));
+      //Check if the user account is enabled
+      validUser = ((Boolean)enabledQuery.findObject(userName)).booleanValue();
     }
     catch (SQLException e) {
       validUser = false;
@@ -126,9 +130,10 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
       (JDBCDAOFactory) new JDBCDAOFactory().getDAOFactory(locator);
     UserManagerDAO dao = factory.getUserManagerDAO();
 
-    //NCIUser user = (NCIUser) dao.getNCIUser("BRAGGV");
+    //NCIUser user = (NCIUser) dao.getNCIUser("sbrext");
     //System.out.println(user);
-    Map result = dao.getContextsForAllRoles("SBREXT", "QUEST_CONTENT");
+    System.out.println(dao.validUser("jasur","jasur"));
+    /**Map result = dao.getContextsForAllRoles("SBREXT", "QUEST_CONTENT");
     Set keys = result.keySet();
     Iterator it = keys.iterator();
 
@@ -140,7 +145,7 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
       while (iter.hasNext()) {
         System.out.println("Context Name: "+((Context)iter.next()).getName());
       }
-    }
+    }**/
   }
 
   // inner class
@@ -179,6 +184,21 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
       return user;
     }
   }
+  //Check if the user is enable
+  class UserEnabledQuery extends MappingSqlQuery {
+    UserEnabledQuery(DataSource ds) {
+      super(ds, "SELECT ENABLED_IND  from USER_ACCOUNTS_VIEW where UA_NAME like UPPER(?)");
+      declareParameter(new SqlParameter("UA_NAME", Types.VARCHAR));
+      compile();
+    }
+
+    protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+
+      return new Boolean(StringUtils.toBoolean((String)rs.getString(1)));
+    }
+  }  
 
   // inner class end    
   private class ContextsQuery extends StoredProcedure {

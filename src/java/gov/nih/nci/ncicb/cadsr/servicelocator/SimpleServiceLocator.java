@@ -34,10 +34,10 @@ public class SimpleServiceLocator extends ServiceLocatorAdapter implements Persi
        envEntrys = new HashMap();
        envEntrys.put(DRIVER_MANAGER_DS,"true");
        envEntrys.put(DRIVER_CLASS_NAME,"oracle.jdbc.driver.OracleDriver");
-       envEntrys.put(CONNECTION_STRING,"jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest");
+       envEntrys.put(CONNECTION_STRING,"jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbdev");
        envEntrys.put(USERNAME,"sbrext");
-       envEntrys.put(PASSWORD,"i1sn0w");
-       envEntrys.put(DATASOURCE_LOCATION_KEY,"FormBuilderDS");
+       envEntrys.put(PASSWORD,"jjuser");
+       envEntrys.put(DATASOURCE_LOCATION_KEY,"CDEBrowserDS");
 
 
 
@@ -52,7 +52,7 @@ public class SimpleServiceLocator extends ServiceLocatorAdapter implements Persi
         DataSource source = DataSourceUtil.getDriverManagerDS(getString(DRIVER_CLASS_NAME)
                       ,getString(CONNECTION_STRING),getString(USERNAME)
                       ,getString(PASSWORD));
-        dataSources.put("FormBuilderDS",source);
+        dataSources.put("CDEBrowserDS",source);
 
       }
       catch(Exception ex)

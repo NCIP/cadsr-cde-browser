@@ -39,6 +39,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 import oracle.jdbc.OracleResultSet;
 
+
 import oracle.sql.ARRAY;
 import oracle.sql.CHAR;
 import oracle.sql.Datum;
@@ -55,7 +56,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 /**
  *
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.7 2005-06-10 14:45:07 jiangja Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.8 2005-06-16 17:58:29 kakkodis Exp $
  */
 public class GetExcelDownload
   extends BasePersistingProcess {
@@ -114,8 +115,8 @@ public class GetExcelDownload
     try {
       dbUtil = (DBUtil)getInfoObject("dbUtil");
 
-      String dsName = getStringInfo("SBREXT_DSN");
-      dbUtil.getConnectionFromContainer(dsName);
+      //String dsName = getStringInfo("SBREXT_DSN");
+      dbUtil.getConnectionFromContainer();
 
       excelFileSuffix = dbUtil.getUniqueId("SBREXT.XML_FILE_SEQ.NEXTVAL");
       excelFilename = getStringInfo("XML_DOWNLOAD_DIR") + "DataElements" + "_" + excelFileSuffix + ".csv";
@@ -164,11 +165,12 @@ public class GetExcelDownload
     source = getStringInfo("src");
 
     try {
-      String dataSource = getStringInfo("SBREXT_DSN");
+      //String dataSource = getStringInfo("SBREXT_DSN");
 
       //cn = dbUtil.getConnection(); -- Commented for JBoss deployment
-      ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
-      cn = DBUtil.createOracleConnection(ap.getDBUrl(), ap.getUser(), ap.getPassword());
+      //ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
+       dbUtil.getConnectionFromContainer();
+      cn = dbUtil.getConnection();
       st = cn.createStatement();
 
       if ("deSearch".equals(source)) {
@@ -277,7 +279,7 @@ public class GetExcelDownload
             ARRAY array = null;
 
             if (currCol.type.equalsIgnoreCase("Array"))
-              array = ((OracleResultSet)rs).getARRAY(currCol.rsColumnName); 
+              array = ((OracleResultSet)rs).getARRAY(currCol.rsColumnName);
             else if (currCol.type.equalsIgnoreCase("StructArray")) {
               STRUCT struct = ((OracleResultSet)rs).getSTRUCT(currCol.rsColumnName);
               Object [] valueStruct = struct.getAttributes();
@@ -366,7 +368,7 @@ public class GetExcelDownload
         if (fileOut != null)
           fileOut.close();
       } catch (Exception e) {
-        log.error("Unable to perform clean up due to the following error ", e);
+        log.debug("Unable to perform clean up due to the following error ", e);
       }
     }
   }

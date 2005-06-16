@@ -35,13 +35,13 @@ public class GetDataElementConceptsLOV extends BasePersistingProcess {
 
     DEBUG = false;
   }
-  
+
   public GetDataElementConceptsLOV(Service aService) {
     super(aService);
 
     DEBUG = false;
   }
-  
+
   /**
    * Registers all the parameters and results  (<code>ProcessInfo</code>) for
    * this process during construction.
@@ -66,7 +66,7 @@ public class GetDataElementConceptsLOV extends BasePersistingProcess {
     catch (Exception e) {
     }
   }
-  
+
   /**
    * persist: called by start to do all persisting work for this process.  If
    * this method throws an exception, then the condition returned by the
@@ -95,8 +95,8 @@ public class GetDataElementConceptsLOV extends BasePersistingProcess {
       if (performQuery == null) {
         dbUtil = (DBUtil) getInfoObject("dbUtil");
 
-        String dsName = getStringInfo("SBR_DSN");
-        dbUtil.getConnectionFromContainer(dsName);
+        //String dsName = getStringInfo("SBR_DSN");
+        dbUtil.getConnectionFromContainer();
 
         String conteIdseq = getStringInfo("P_CONTE_IDSEQ");
 

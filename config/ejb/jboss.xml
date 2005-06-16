@@ -5,8 +5,8 @@
     <session>
       <ejb-name>FormBuilder</ejb-name>
       <resource-ref>
-        <res-ref-name>jdbc/FormBuilderDS</res-ref-name>
-        <resource-name>FormBuilderDS</resource-name>
+        <res-ref-name>jdbc/CDEBrowserDS</res-ref-name>
+        <resource-name>CDEBrowserDS</resource-name>
       </resource-ref>
     </session>
 
@@ -15,8 +15,8 @@
   <resource-managers>
 
     <resource-manager>
-      <res-name>FormBuilderDS</res-name>
-      <res-jndi-name>java:/jdbc/FormBuilderDS</res-jndi-name>
+      <res-name>CDEBrowserDS</res-name>
+      <res-jndi-name>java:/jdbc/CDEBrowserDS</res-jndi-name>
     </resource-manager>
 
   </resource-managers>

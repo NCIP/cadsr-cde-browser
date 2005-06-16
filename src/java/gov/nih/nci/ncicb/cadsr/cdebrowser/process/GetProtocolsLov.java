@@ -94,8 +94,8 @@ public class GetProtocolsLov extends BasePersistingProcess {
       if (performQuery == null) {
         dbUtil = (DBUtil) getInfoObject("dbUtil");
 
-        String dsName = getStringInfo("SBR_DSN");
-        dbUtil.getConnectionFromContainer(dsName);
+        //String dsName = getStringInfo("SBR_DSN");
+        dbUtil.getConnectionFromContainer();
 
         String conteIdseq = getStringInfo("P_CONTE_IDSEQ");
 

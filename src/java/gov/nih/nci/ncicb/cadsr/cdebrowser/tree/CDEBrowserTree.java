@@ -61,9 +61,9 @@ public class CDEBrowserTree
    System.out.println("Tree Start " + TimeUtils.getEasternTime());
 
    CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-   String datasourceName = params.getSbrDSN();
+   //String datasourceName = params.getSbrDSN();
 
-   if (dbHelper.getConnectionFromContainer(datasourceName)) {
+   if (dbHelper.getConnectionFromContainer()) {
     conn = dbHelper.getConnection();
    } else {
     throw new Exception("Unable to connect to the database");
@@ -154,7 +154,7 @@ public class CDEBrowserTree
 
     if ((!currContext.getName().equals(Context.CTEP) && treeType.equals(TreeConstants.DE_SEARCH_TREE))
     //Publish Change order
-      || (baseNode.isCTEPUser().equals("Yes") && treeType.equals(TreeConstants.DE_SEARCH_TREE)) 
+      || (baseNode.isCTEPUser().equals("Yes") && treeType.equals(TreeConstants.DE_SEARCH_TREE))
       || (treeType.equals(TreeConstants.FORM_SEARCH_TREE))) {
      if ((currContext.getName().equals(
              Context.CTEP) && baseNode.isCTEPUser().equals("Yes")) || (!currContext.getName().equals(Context.CTEP))) {

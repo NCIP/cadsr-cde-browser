@@ -26,7 +26,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetClassificationsLOV.java,v 1.2 2004-08-17 13:56:41 jiangja Exp $
+ * @version: $Id: GetClassificationsLOV.java,v 1.3 2005-06-16 17:58:28 kakkodis Exp $
  */
 public class GetClassificationsLOV extends BasePersistingProcess {
   public GetClassificationsLOV() {
@@ -84,12 +84,12 @@ public class GetClassificationsLOV extends BasePersistingProcess {
     try {
       if (getStringInfo("INITIALIZED") == null) {
         CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-        dsName = params.getSbrDSN();
+        //dsName = params.getSbrDSN();
         dbUtil = new DBUtil();
       }
       else {
         dbUtil = (DBUtil) getInfoObject("dbUtil");
-        dsName = getStringInfo("SBR_DSN");
+        //dsName = getStringInfo("SBR_DSN");
       }
 
       tib = new TabInfoBean("cdebrowser_lov_tabs");
@@ -111,7 +111,7 @@ public class GetClassificationsLOV extends BasePersistingProcess {
       if (performQuery == null) {
         //dbUtil = (DBUtil) getInfoObject("dbUtil");
         //dsName = getStringInfo("SBR_DSN");
-        dbUtil.getConnectionFromContainer(dsName);
+        dbUtil.getConnectionFromContainer();
 
         String contextIdSeq = getStringInfo("P_CONTE_IDSEQ");
 
@@ -120,9 +120,9 @@ public class GetClassificationsLOV extends BasePersistingProcess {
 //         }
 
 	String chk = getStringInfo("chkContext");
-	
+
 	String[] contexts = null;
-	
+
 	if((chk != null) && chk.equals("always")) {
 	  Collection coll = (Collection)myRequest.getSession().getAttribute("userContexts");
 	  contexts = new String[coll.size()];
@@ -134,17 +134,17 @@ public class GetClassificationsLOV extends BasePersistingProcess {
 	  if ((contextIdSeq != null) && (contextIdSeq.length() > 0)) {
 	    contexts = new String[1];
 	    contexts[0] = contextIdSeq;
-	  } else 
+	  } else
 	    contexts = new String[0];
 	}
 
 	// build additional query filters
 	String additionalWhere = "";
-	if(contexts.length > 0) 
+	if(contexts.length > 0)
 	  additionalWhere +=
 	    " and (upper(nvl(cs_conte.conte_idseq,'%')) like upper ( '%" +
 	    contexts[0] + "%') ";
-	
+
 	for(int i=1; i<contexts.length; i++) {
 	  additionalWhere +=
 	    " or upper(nvl(cs_conte.conte_idseq,'%')) like upper ( '%" +
@@ -152,7 +152,7 @@ public class GetClassificationsLOV extends BasePersistingProcess {
 	}
 	if(contexts.length > 0)
 	  additionalWhere += ")";
-	
+
 
 //         String additionalWhere =
 //           " and upper(nvl(cs_conte.conte_idseq,'%')) like upper ( '%" +
@@ -197,9 +197,9 @@ public class GetClassificationsLOV extends BasePersistingProcess {
 
   private void initialize() {
     if (getStringInfo("INITIALIZED") == null) {
-      CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-      setResult("SBREXT_DSN", params.getSbrextDSN());
-      setResult("SBR_DSN", params.getSbrDSN());
+      //CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+      //setResult("SBREXT_DSN", params.getSbrextDSN());
+      //setResult("SBR_DSN", params.getSbrDSN());
     }
   }
 }

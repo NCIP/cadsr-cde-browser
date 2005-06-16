@@ -28,7 +28,8 @@ public class OracleJBossNativeJdbcExtractor extends JBossNativeJdbcExtractor
   }
   public OracleConnection doGetOracleConnection(Connection conn) throws SQLException
   {
-    return (OracleConnection)this.doGetNativeConnection(conn);
+    Connection obj = doGetNativeConnection(conn);
+    return (OracleConnection)obj;
   }
   
   public OracleStatement getOracleStatement(Statement stmt) throws SQLException 

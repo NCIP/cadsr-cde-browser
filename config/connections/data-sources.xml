@@ -10,10 +10,10 @@
    <data-source
      class="com.evermind.sql.DriverManagerDataSource" 
      connection-driver="oracle.jdbc.driver.OracleDriver" 
-     ejb-location="jdbc/ejb/FormBuilderDS" inactivity-timeout="30"
+     ejb-location="jdbc/ejb/CDEBrowserDS" inactivity-timeout="30"
      location="jdbc/FormBuilderCoreDS" 
      name="SBREXT_FB_CBDEVDS" password="jjuser" 
-     pooled-location="jdbc/pooled/FormBuilderDS"
+     pooled-location="jdbc/pooled/CDEBrowserDS"
      url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV" 
      username="sbrext" xa-location="jdbc/xa/SBREXT_FB_CBDEVXADS"
      max-connections="5" 

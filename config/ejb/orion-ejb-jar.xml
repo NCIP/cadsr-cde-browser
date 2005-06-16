@@ -4,7 +4,7 @@
 <orion-ejb-jar >
 	<enterprise-beans>
 		<session-deployment name="FormBuilder" location="FormBuilder" max-tx-retries="0" >
-			<resource-ref-mapping name="jdbc/FormBuilderDS"  location="jdbc/ejb/FormBuilderDS" />
+			<resource-ref-mapping name="jdbc/CDEBrowserDS"  location="jdbc/ejb/CDEBrowserDS" />
 		</session-deployment> 
 	</enterprise-beans>
 </orion-ejb-jar>

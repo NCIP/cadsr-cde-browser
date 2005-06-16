@@ -4,33 +4,17 @@
 <!--  JBoss Server Configuration                                           -->
 <!--                                                                       -->
 <!-- ===================================================================== -->
-<!-- $Id: oracle-ds.xml,v 1.1 2005-06-10 14:54:54 kakkodis Exp $ -->
+<!-- $Id: oracle-ds.xml,v 1.2 2005-06-16 17:59:30 kakkodis Exp $ -->
 <!-- ==================================================================== -->
 <!--  Datasource config for Oracle originally from Steven Coy             -->
 <!-- ==================================================================== -->
 <datasources>
 	<local-tx-datasource>
-		<jndi-name>jdbc/FormBuilderDS</jndi-name>
+		<jndi-name>jdbc/CDEBrowserDS</jndi-name>
 		<connection-url>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV</connection-url>
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<user-name>sbrext</user-name>
 		<password>jjuser</password>
-		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
-	</local-tx-datasource>
-	<local-tx-datasource>
-		<jndi-name>jdbc/SBREXT_CBDEVDS</jndi-name>
-		<connection-url>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV</connection-url>
-		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
-		<user-name>sbrext</user-name>
-		<password>jjuser</password>
-		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
-	</local-tx-datasource>
-	<local-tx-datasource>
-		<jndi-name>jdbc/SBR_CBDEVDS</jndi-name>
-		<connection-url>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV</connection-url>
-		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
-		<user-name>sbr</user-name>
-		<password>jjsbr</password>
 		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
 	</local-tx-datasource>
 </datasources>

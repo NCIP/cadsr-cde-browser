@@ -133,9 +133,9 @@ public class DataElementSearchBean extends Object {
   {
       DBUtil dbUtil = null;
       try{
-        CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+        //CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
         dbUtil = new DBUtil();
-        dbUtil.getConnectionFromContainer(params.getSbrDSN());
+        dbUtil.getConnectionFromContainer();
         initSearchPreferences(dbUtil);
       }
       catch (Exception ex) {
@@ -145,8 +145,8 @@ public class DataElementSearchBean extends Object {
      finally {
       if (dbUtil != null) {
         dbUtil.returnConnection();
-      }      
-     }        
+      }
+     }
   }
   public void initSearchPreferences(DBUtil dbUtil) throws Exception
    {
@@ -156,20 +156,20 @@ public class DataElementSearchBean extends Object {
         boolean excludeTrainingContext = new Boolean(params.getExcludeTrainingContext()).booleanValue();
         setExcludeTestContext(excludeTestContext);
         setExcludeTrainingContext(excludeTrainingContext);
-        
+
         String regVals = params.getExcludeRegistrationStatuses();
         if(regVals!=null&&regVals!="")
         {
           String [] regStatusExcludeList = StringUtils.tokenizeCSVList(regVals);
           setRegStatusExcludeList(regStatusExcludeList);
         }
-  
+
         String wfVals = params.getExcludeWorkFlowStatuses();
         if(wfVals!=null&&wfVals!="")
         {
           String []  aslNameExcludeList = StringUtils.tokenizeCSVList(wfVals);
           setAslNameExcludeList(aslNameExcludeList);
-        }      
+        }
         setLOVLists(dbUtil);
    }
 
@@ -400,7 +400,7 @@ public class DataElementSearchBean extends Object {
         searchInList.append(
           "<option value=\"Preferred Name\">Preferred Name</option> ");
       }
-      
+
       if (StringUtils.containsKey(searchIn, "Doc Text")) {
         searchInList.append(
           "<option selected value=\"Doc Text\">Document Text</option> ");
@@ -529,7 +529,7 @@ public class DataElementSearchBean extends Object {
       try {
         CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
         dbUtil = new DBUtil();
-        dbUtil.getConnectionFromContainer(params.getSbrDSN());
+        dbUtil.getConnectionFromContainer();
         buildWorkflowFullList(aslNameExcludeList, dbUtil);
         buildRegStatusFullList(regStatusExcludeList,dbUtil);
         buildWorkflowList(aslName, dbUtil);
@@ -542,7 +542,7 @@ public class DataElementSearchBean extends Object {
      finally {
       if (dbUtil != null) {
         dbUtil.returnConnection();
-      }      
+      }
      }
 
   }

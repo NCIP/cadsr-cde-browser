@@ -55,7 +55,7 @@ public class ReferenceDocumentAction
  private static String FORM_EDIT_ADDED_REFDOCS = "formEditAddedRefDocs";
 
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -101,7 +101,7 @@ public class ReferenceDocumentAction
  }
 
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -116,13 +116,13 @@ public class ReferenceDocumentAction
  public ActionForward viewReferenceDocs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                         HttpServletResponse response) throws IOException, ServletException {
   Form crf = (Form)getSessionObject(request, CRF);
-  
+
   setSessionObject(request, REFDOCS_TEMPLATE_ATT_NAME, linkedAttachmentName(crf.getRefereceDocs()));
   return mapping.findForward(SUCCESS);
  }
 
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -164,8 +164,8 @@ public class ReferenceDocumentAction
    try {
     DBUtil dbUtil = new DBUtil();
 
-    String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
-    dbUtil.getConnectionFromContainer(dsName);
+    //String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
+    dbUtil.getConnectionFromContainer();
 
     String sqlStmt = "SELECT blob_content, mime_type from reference_blobs where name = ?";
     log.info(sqlStmt);
@@ -191,7 +191,7 @@ public class ReferenceDocumentAction
      if (conn != null)
       conn.close();
 
-    //if (db != null) db.closeDB();  
+    //if (db != null) db.closeDB();
     } catch (Exception ex) {
      log.error("Exception Caught cleaning up:", ex);
     } finally { }
@@ -218,7 +218,7 @@ public class ReferenceDocumentAction
   return mapping.findForward(SUCCESS);
  }
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -238,7 +238,7 @@ public class ReferenceDocumentAction
   return mapping.findForward("gotoUpload");
  }
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -313,7 +313,7 @@ public class ReferenceDocumentAction
   name = name + "__" + (new Random()).nextInt();
   Attachment attachment = new AttachmentTransferObject();
   attachment.setName(name + extension);
-  
+
   attachment.setMimeType(file.getContentType());
   attachment.setDocSize(file.getFileSize());
 
@@ -337,7 +337,7 @@ public class ReferenceDocumentAction
  }
 
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -454,7 +454,7 @@ public class ReferenceDocumentAction
    return mapping.findForward("success"); //simply reload the form
   }
 
-  // now save attachments  
+  // now save attachments
   if (!anythingChanged) {
    saveMessage("cadsr.formbuilder.refdoc.edit.nochange", request);
 
@@ -465,13 +465,13 @@ public class ReferenceDocumentAction
   removeSessionObject(request, REFDOC_ATTACHMENT_MAP);
   removeSessionObject(request, DELETED_ATTACHMENTS);
   removeSessionObject(request, REFDOCS_TEMPLATE_ATT_NAME);
-  
+
   //reset CRF and CLONED_CRF
   try {
     crf = service.getFormDetails(crf.getIdseq());
     setSessionObject(request, CRF, crf);
     setSessionObject(request, CLONED_CRF, (Form) crf.clone(),true);
-  } catch (Exception formE) 
+  } catch (Exception formE)
   {
   //refresh cache
     return mapping.findForward("gotoEdit");
@@ -479,9 +479,9 @@ public class ReferenceDocumentAction
   saveMessage("cadsr.formbuilder.refdoc.save.success", request);
   return mapping.findForward("backtoRefDocEdit");
  }
- 
+
   /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -496,7 +496,7 @@ public class ReferenceDocumentAction
  public ActionForward confirmCancelReferenceDocs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                           HttpServletResponse response) throws IOException, ServletException {
 
-  if (this.anythingChanged(form, request)) 
+  if (this.anythingChanged(form, request))
   {
     return mapping.findForward("gotoConfirmCancel");
   } else {
@@ -508,7 +508,7 @@ public class ReferenceDocumentAction
 
 
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -529,7 +529,7 @@ public class ReferenceDocumentAction
   return mapping.findForward("gotoEdit");
  }
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -545,14 +545,14 @@ public class ReferenceDocumentAction
                                              HttpServletResponse response) throws IOException, ServletException {
   /*
   int displayOrder = Integer.parseInt(request.getParameter("selectedRefDocId"));
-  FormBuilderBaseDynaFormBean dynaForm = (FormBuilderBaseDynaFormBean)form;  
+  FormBuilderBaseDynaFormBean dynaForm = (FormBuilderBaseDynaFormBean)form;
   dynaForm.set("selectedRefDocId"
   */
   return mapping.findForward("gotoCreateReferenceDoc");
  }
 
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -605,7 +605,7 @@ public class ReferenceDocumentAction
  }
 
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -700,7 +700,7 @@ public class ReferenceDocumentAction
  }
 
  /**
-* Swap the display order of the Reference Documentation with the previous 
+* Swap the display order of the Reference Documentation with the previous
 * reference documentation
 *
 * @param mapping The ActionMapping used to select this instance.
@@ -736,7 +736,7 @@ public class ReferenceDocumentAction
   return mapping.findForward("success");
  }
  /**
-* Delete the selected Reference Documentation 
+* Delete the selected Reference Documentation
 *
 * @param mapping The ActionMapping used to select this instance.
 * @param form The optional ActionForm bean for this request.
@@ -779,7 +779,7 @@ public class ReferenceDocumentAction
  }
 
  /**
-* Added back a deleted Reference Documentation 
+* Added back a deleted Reference Documentation
 *
 * @param mapping The ActionMapping used to select this instance.
 * @param form The optional ActionForm bean for this request.
@@ -831,7 +831,7 @@ public class ReferenceDocumentAction
  }
 
  /**
- * 
+ *
  *
  * @param mapping The ActionMapping used to select this instance.
  * @param form The optional ActionForm bean for this request.
@@ -862,7 +862,7 @@ public class ReferenceDocumentAction
  }
 
  /**
-  * Cancel edit reference documentation 
+  * Cancel edit reference documentation
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -884,7 +884,7 @@ public class ReferenceDocumentAction
  }
 
  /**
-  * Cancel edit reference documentation 
+  * Cancel edit reference documentation
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -902,7 +902,7 @@ public class ReferenceDocumentAction
   return mapping.findForward("success");
  }
  /**
-  * Save changes to reference documentation 
+  * Save changes to reference documentation
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -1000,8 +1000,8 @@ public class ReferenceDocumentAction
   try {
    DBUtil dbUtil = new DBUtil();
 
-   String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
-   dbUtil.getConnectionFromContainer(dsName);
+   //String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
+   dbUtil.getConnectionFromContainer();
    conn = dbUtil.getConnection();
    conn.setAutoCommit(false);
    //make new row
@@ -1039,7 +1039,7 @@ public class ReferenceDocumentAction
    try {
     if (conn != null)
      conn.close();
-   //if (db != null) db.closeDB();  
+   //if (db != null) db.closeDB();
    } catch (Exception ex) {
     log.error("Exception Caught cleaning up:", ex);
 
@@ -1078,7 +1078,7 @@ public class ReferenceDocumentAction
 
   return null;
  }
- 
+
   private boolean anythingChanged( ActionForm form, HttpServletRequest request) {
 
   Form crf = (Form)getSessionObject(request, CRF);
@@ -1113,10 +1113,10 @@ public class ReferenceDocumentAction
      while (attIter.hasNext()) {
       Attachment newAtt = (Attachment)attIter.next();
 
-      if (isAttachmentNew(origAtts, newAtt.getName())) 
+      if (isAttachmentNew(origAtts, newAtt.getName()))
        return true;
-        
-      
+
+
      }
     }
    }
@@ -1138,30 +1138,30 @@ public class ReferenceDocumentAction
 
     return true;
    }
-  
+
   return false;
  }
 
- private String linkedAttachmentName (List refDocs) 
+ private String linkedAttachmentName (List refDocs)
  {
      // find out which attachment is first uploaded
   Iterator refIter = refDocs.iterator();
   String attachmentName = "";
   ReferenceDocument ref = null;
-  
+
   //first find the first reference document of type IMAGE_FILE
-  while (refIter.hasNext()) 
+  while (refIter.hasNext())
   {
     ref = (ReferenceDocument) refIter.next();
-    if (ref.getDocType().equalsIgnoreCase(AdminComponent.REF_DOC_TYPE_IMAGE)) 
+    if (ref.getDocType().equalsIgnoreCase(AdminComponent.REF_DOC_TYPE_IMAGE))
       break;
   }
-    
-  //then find its first uploaded attachment  
+
+  //then find its first uploaded attachment
   if (ref !=null && ref.getAttachments()!=null && ref.getAttachments().size() >0){
         Attachment attachment = (Attachment) ref.getAttachments().get(0);
         attachmentName = attachment.getName();
-  } 
+  }
   return attachmentName;
  }
 }

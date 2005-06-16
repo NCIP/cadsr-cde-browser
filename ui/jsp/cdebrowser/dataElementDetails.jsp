@@ -93,12 +93,12 @@ function goPage(pageInfo) {
 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Value Domain:</td>
-    <td class="OraFieldText"><%=de.getValueDomain().getPreferredName()%> </td>
+    <td class="OraFieldText"><%=de.getValueDomain().getLongName()%> </td>
  </tr>
 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Data Element Concept:</td>
-    <td class="OraFieldText"><%=de.getDataElementConcept().getPreferredName()%> </td>
+    <td class="OraFieldText"><%=de.getDataElementConcept().getLongName()%> </td>
  </tr>
 
  <tr class="OraTabledata">

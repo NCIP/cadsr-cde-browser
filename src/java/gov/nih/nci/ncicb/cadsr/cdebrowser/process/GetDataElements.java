@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.16 2005-06-14 18:40:09 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.17 2005-06-16 17:58:29 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -104,12 +104,12 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       registerStringResult("performQuery");
       registerParameterObject("desb");
       registerStringParameter("NOT_FIRST_DISPLAY");
-      registerStringParameter("SBREXT_DSN");
-      registerStringParameter("SBR_DSN");
+      //registerStringParameter("SBREXT_DSN");
+      //registerStringParameter("SBR_DSN");
       registerStringParameter("XML_DOWNLOAD_DIR");
       registerStringParameter("TREE_URL");
-      registerStringResult("SBREXT_DSN");
-      registerStringResult("SBR_DSN");
+      //registerStringResult("SBREXT_DSN");
+      //registerStringResult("SBR_DSN");
       registerStringResult("XML_DOWNLOAD_DIR");
       registerStringResult("TREE_URL");
       registerStringParameter("INITIALIZED");
@@ -185,7 +185,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       String csName = getStringInfo("csName");
       String templateName = getStringInfo("templateName");
       String conteName = getStringInfo("contextName");
-      
+
       log.info("- Retrieved request parameters successfully");
 
       TreeParameters treeParam = new TreeParametersTransferObject();
@@ -252,8 +252,8 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
          desb.initSearchPreferences(dbUtil);
       }
       else if (performQuery.equals("yes")) {
-        
-        
+
+
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
         // Need to the session Preference which is per session
@@ -275,8 +275,8 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         }
 
         dePageIterator.setCurrentPage(0);
-    
-      
+
+
         queryBuilder =
           new DESearchQueryBuilder(
             myRequest, paramType, paramIdSeq, treeConteIdseq,desb);
@@ -337,7 +337,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
         createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER,
         myRequest.getContextPath());
-        createPageScroller(dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, 
+        createPageScroller(dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER,
         myRequest.getContextPath());
         myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
       }
@@ -380,15 +380,15 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         queryResults = null;
         desb =
           new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
-          // Set search preference  from old Search Bean to the new one 
+          // Set search preference  from old Search Bean to the new one
          setValuesFromOldSearchBean(desb);
-         desb.setLOVLists(dbUtil);        
+         desb.setLOVLists(dbUtil);
       //myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
 
       }
       else if (performQuery.equals("sortResults")) {
         desb = (DataElementSearchBean) getInfoObject("desb");
-        
+
         dePageIterator =
           (PageIterator) getInfoObject(
             ProcessConstants.DE_SEARCH_PAGE_ITERATOR);
@@ -403,7 +403,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         }
 
         dePageIterator.setCurrentPage(0);
-      
+
         queryBuilder =
           (DESearchQueryBuilder) getInfoObject(
             ProcessConstants.DE_SEARCH_QUERY_BUILDER);
@@ -414,12 +414,12 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         int sortOrder = SortableColumnHeader.ASCENDING;
         if (getStringInfo("sortOrder") != null)
            sortOrder = Integer.valueOf(getStringInfo("sortOrder")).intValue();
-        
+
         SortableColumnHeader sortColumnHeader = queryBuilder.getSortColumnHeader();
         //release 3.0, TT#1280, once user click on column header, the default
         // sort order will be wiped out
         if ( !sortField.equalsIgnoreCase(sortColumnHeader.getPrimary())||sortColumnHeader.isDefaultOrder()) {
-           
+
         if (sortColumnHeader.isDefaultOrder()) {
            sortColumnHeader.setPrimary(sortField);
            sortColumnHeader.setSecondary(null);
@@ -444,11 +444,11 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
              sortColumnHeader.setTertiary(null);
            }
         }
-        
+
         sortColumnHeader.setDefaultOrder(false);
         }
         sortColumnHeader.setOrder(sortOrder);
-       
+
         log.trace("- Updated DESearchQueryBuilder successfully");
 
         queryStmt = queryBuilder.getSQLWithoutOrderBy();
@@ -471,7 +471,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         createPageScroller(dePageIterator, ProcessConstants.TOP_PAGE_SCROLLER, myRequest.getContextPath());
         createPageScroller(
           dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, myRequest.getContextPath());
-        
+
         myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
         log.trace("Created both page scrollers successfully");
       }
@@ -483,7 +483,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       setResult("performQuery", null);
       setResult("P_PARAM_TYPE", paramType);
       setResult("P_IDSEQ", paramIdSeq);
-      
+
       setCondition(SUCCESS);
     }
     catch (Exception ex) {
@@ -539,9 +539,9 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
   private void initialize(HttpSession mySession) {
     if (getStringInfo("INITIALIZED") == null) {
       CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-      setResult("SBREXT_DSN", params.getSbrextDSN());
-      dsName = params.getSbrDSN();
-      setResult("SBR_DSN", params.getSbrDSN());
+      //setResult("SBREXT_DSN", params.getSbrextDSN());
+      //dsName = params.getSbrDSN();
+      //setResult("SBR_DSN", params.getSbrDSN());
       setResult("XML_DOWNLOAD_DIR", params.getXMLDownloadDir());
       setResult("XML_PAGINATION_FLAG", params.getXMLPaginationFlag());
       setResult("XML_FILE_MAX_RECORDS", params.getXMLFileMaxRecords());
@@ -569,7 +569,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
     if ((DBUtil) getInfoObject("dbUtil") == null) {
       try {
         dbUtil = new DBUtil();
-        dbUtil.getConnectionFromContainer(dsName);
+        dbUtil.getConnectionFromContainer();
       }
       catch (Exception ex) {
         ex.printStackTrace();
@@ -578,7 +578,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
     }
     else {
       dbUtil = (DBUtil) getInfoObject("dbUtil");
-      dbUtil.getConnectionFromContainer(dsName);
+      dbUtil.getConnectionFromContainer();
     }
 
     setResult("dbUtil", dbUtil);
@@ -626,9 +626,9 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
     return cart;
   }
-  
 
-   
+
+
    private void setValuesFromOldSearchBean(DataElementSearchBean desb) throws Exception
    {
         DataElementSearchBean oldDesb = (DataElementSearchBean) getInfoObject("desb");

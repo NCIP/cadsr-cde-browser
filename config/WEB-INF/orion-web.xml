@@ -3,6 +3,6 @@
 
 <orion-web-app>
   <resource-ref-mapping  
-    location="jdbc/pooled/FormBuilderDS"  
-    name="jdbc/FormBuilderDS" />
+    location="jdbc/pooled/CDEBrowserDS"  
+    name="jdbc/CDEBrowserDS" />
 </orion-web-app>

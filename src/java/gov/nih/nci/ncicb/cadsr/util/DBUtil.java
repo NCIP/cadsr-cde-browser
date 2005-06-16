@@ -1,6 +1,11 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
+import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.util.DataSourceUtil;
+import gov.nih.nci.ncicb.cadsr.persistence.jdbc.spring.OracleJBossNativeJdbcExtractor;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ObjectLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.spring.SpringObjectLocatorImpl;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
@@ -34,23 +39,22 @@ public class DBUtil  {
  *  This method returns a Connection obtained from the container using the
  *  datasource name specified as a parameter
 */
-  public boolean getConnectionFromContainer(String dataSourceName)
-                    throws NamingException,Exception {
+  public boolean getConnectionFromContainer()
+                    throws Exception {
     if (!isConnected) {
       InitialContext ic =null;
       try {
-        ic = new InitialContext();
+        /**ic = new InitialContext();
         DataSource ds = (DataSource)ic.lookup(dataSourceName);
         conn = ds.getConnection();
         //conn.setAutoCommit(true);
+        **/
+        DataSource ds = getServiceLocator().getDataSource(PersistenceConstants.DATASOURCE_LOCATION_KEY);
+        //Extract Oracle Native Connection
+        conn = extractOracleConnection(ds.getConnection());
         isConnected = true;
         log.info
-        ("Connected to the database successfully using datasource "+dataSourceName);
-      }
-      catch (NamingException ne) {
-        log.error("Exception occurred in getConnectionFromContainer for DataSource name="+dataSourceName, ne);
-        throw new NamingException
-                ("Failed to lookup JDBC datasource. Check the datasource name");
+        ("Connected to the database successfully using datasource "+PersistenceConstants.DATASOURCE_LOCATION_KEY);
       }
       catch (Exception e) {
         log.error("Exception occurred in getConnectionFromContainer", e);
@@ -337,11 +341,10 @@ public class DBUtil  {
         conn.close();
         isConnected = false;
       }
-      log.error("Closing the Database connection ... ");
     } 
     catch (SQLException sqle) {
-      log.error("Error occured in returing DB connection to the container", sqle);
-      throw sqle;
+      //log.error("Error occured in returing DB connection to the container", sqle);
+      //throw sqle;
     } 
   }
 
@@ -364,6 +367,7 @@ public class DBUtil  {
     return rs;
   }
   
+  /**
   public static OracleConnection createOracleConnection(
     String dbURL,
     String username,
@@ -371,10 +375,26 @@ public class DBUtil  {
     OracleDataSource ds = DataSourceUtil.getOracleDataSource(dbURL,username,password);
     return (OracleConnection)ds.getConnection();
     }
+    **/
+  /*
+   *@return Oracle native Connection from jboss wrapper connection
+   */
+  public static OracleConnection extractOracleConnection(
+    Connection conn
+    ) throws Exception {
+    OracleJBossNativeJdbcExtractor extractor = new OracleJBossNativeJdbcExtractor();
+    return extractor.doGetOracleConnection(conn);
+    }    
+    
+   
 
   public static void main(String[] args) {
     DBUtil dBUtil = new DBUtil();
   }
   
-  
+  public ServiceLocator getServiceLocator()
+  {
+    ObjectLocator locator  = new SpringObjectLocatorImpl();
+    return (ServiceLocator)locator.findObject("serviceLocator");
+  }
 }

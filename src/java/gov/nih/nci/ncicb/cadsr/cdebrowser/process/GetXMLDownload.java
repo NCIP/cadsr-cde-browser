@@ -12,6 +12,8 @@ import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 //CDE Browser Application Imports
 import gov.nih.nci.ncicb.cadsr.util.*;
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import gov.nih.nci.ncicb.cadsr.xml.XMLGeneratorBean;
 
 //import oracle.cle.process.ProcessConstants;
@@ -45,6 +47,7 @@ import javax.servlet.http.*;
  */
 public class GetXMLDownload extends BasePersistingProcess {
   static final int BUFFER = 2048;
+  private static Log log = LogFactory.getLog(GetXMLDownload.class .getName());
 
   public GetXMLDownload() {
     this(null);
@@ -171,16 +174,21 @@ public class GetXMLDownload extends BasePersistingProcess {
                    " FROM sbrext.DE_XML_GENERATOR_VIEW ";
 
       xmlBean = new XMLGeneratorBean();
+      
+      //String sbrextJNDIName = getStringInfo("SBREXT_DSN");
 
-      String sbrextJNDIName = getStringInfo("SBREXT_DSN");
-      
       // Added for JBoss deployment
-      
+
       //xmlBean.setDataSource(sbrextJNDIName);
-      ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
-      cn = DBUtil.createOracleConnection(ap.getDBUrl(),ap.getUser(),ap.getPassword());
+      //Removed to use datasource
+      //ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
+      //cn = DBUtil.createOracleConnection(ap.getDBUrl(),ap.getUser(),ap.getPassword());
+      dbUtil = new DBUtil();
+      dbUtil.getConnectionFromContainer();
+      //Extract Oracle Native Connection
+      cn = dbUtil.extractOracleConnection(dbUtil.getConnection());
       xmlBean.setConnection(cn);
-      
+
       xmlBean.setQuery(stmt);
       xmlBean.setWhereClause(where);
 
@@ -191,8 +199,8 @@ public class GetXMLDownload extends BasePersistingProcess {
 
       dbUtil = (DBUtil) getInfoObject("dbUtil");
 
-      String dsName = getStringInfo("SBR_DSN");
-      dbUtil.getConnectionFromContainer(dsName);
+      //String dsName = getStringInfo("SBR_DSN");
+      dbUtil.getConnectionFromContainer();
 
       paginate = getStringInfo("XML_PAGINATION_FLAG");
       maxRecords = Integer.parseInt(getStringInfo("XML_FILE_MAX_RECORDS"));
@@ -284,7 +292,8 @@ public class GetXMLDownload extends BasePersistingProcess {
         //setCondition(FAILURE);
       }
       catch (Exception e) {
-        e.printStackTrace();
+        log.debug("Error while Closing connections");
+        //e.printStackTrace();
       }
     }
   }
