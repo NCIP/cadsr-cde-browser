@@ -411,7 +411,8 @@ public class DESearchQueryBuilder extends Object {
                                registrationFrom+
                                wkFlowFrom+
                     " where de.deleted_ind = 'No'  "+
-                         registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere +
+                         //Commented for TT 1511
+                        // registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere +
                          " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                          " and de.asl_name != 'RETIRED DELETED' " +
@@ -422,9 +423,8 @@ public class DESearchQueryBuilder extends Object {
                          " and qc.de_idseq = de.de_idseq " +
                         // " and vd.vd_idseq = de.vd_idseq " +
                         // " and dec.dec_idseq = de.dec_idseq " +
-                        
-                                                  //Commented for TT 1511
-                         csiWhere + whereClause ; //+registrationWhere+ workFlowWhere;
+                                                  
+                         csiWhere + whereClause +registrationWhere+ workFlowWhere;
 
       }
       else if (treeParamType.equals("CSI")){
