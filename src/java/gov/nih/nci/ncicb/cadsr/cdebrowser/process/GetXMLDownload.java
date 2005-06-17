@@ -155,22 +155,22 @@ public class GetXMLDownload extends BasePersistingProcess {
         throw new Exception("No result set to download");
       }
 
-      String stmt = " SELECT \"PublicId\" "+
-                        ", \"LongName\" "+
-                        ", \"PreferredName\" "+
-                        ", \"PreferredDefinition\" "+
-                        ", \"Version\" "+
-                        ", \"WorkflowStatus\" "+
-                        ", \"ContextName\" "+
-                        ", \"ContextVersion\" "+
-                        ", \"Origin\" "+
-                        ", \"RegistrationStatus\" "+
-                        ", \"DataElementConcept\" "+
-                        ", \"ValueDomain\" " +
-                        ", \"ReferenceDocumentsList\" " +
-                        ", \"ClassificationsList\" " +
-                        ", \"AlternateNameList\" " +
-                        ", \"DataElementDerivation\" " +
+      String stmt = " SELECT PublicId " +
+                        ", LongName "+
+                        ",  PreferredName  "+
+                        ",  PreferredDefinition  "+
+                        ",  Version  "+
+                        ",  WorkflowStatus  "+
+                        ",  ContextName  "+
+                        ",  ContextVersion  "+
+                        ",  Origin  "+
+                        ",  RegistrationStatus  "+
+                        ",  DataElementConcept  "+
+                        ",  ValueDomain  " +
+                        ",  ReferenceDocumentsList  " +
+                        ",  ClassificationsList  " +
+                        ",  AlternateNameList  " +                    
+                        ",  DataElementDerivation  " +
                    " FROM sbrext.DE_XML_GENERATOR_VIEW ";
 
       xmlBean = new XMLGeneratorBean();
