@@ -41,7 +41,7 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
   public List getAllContexts(String excludeList)
   {
      ContextQuery query = new ContextQuery();
-     if(excludeList!=null&&excludeList.equals(""))
+     if(excludeList!=null&&!excludeList.equals(""))
         query.setSqlWithExcludeList(excludeList);
     else
         query.setSql();
