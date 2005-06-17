@@ -360,7 +360,7 @@ function gotoCDESearchPrefs() {
 
 
 
-<form action="<%= infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(window.event.keyCode==13){<%=submitFunction%>};">
+<form action="<%= infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=submitFunction%>};">
 <INPUT TYPE="HIDDEN" NAME="<%=NavigationConstants.METHOD_PARAM%>" > 
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
