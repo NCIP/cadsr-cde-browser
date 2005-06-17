@@ -100,7 +100,7 @@ public class CDEBrowserTree
     DefaultMutableTreeNode disLabelNode;
     DefaultMutableTreeNode phaseLabelNode;
     DefaultMutableTreeNode [] templateNodes;
-    List otherTempNodes;
+    DefaultMutableTreeNode otherTempNodes;
 
     if (Context.CTEP.equals(currContext.getName())) {
      //          cache.setCtepIdSeq(currContext.getConteIdseq());
@@ -120,17 +120,8 @@ public class CDEBrowserTree
 
      otherTempNodes = cache.getTemplateNodes(currContext.getConteIdseq());
 
-     if (otherTempNodes != null && !otherTempNodes.isEmpty()) {
-      tmpLabelNode = new DefaultMutableTreeNode(
-                        new WebNode(dbHelper.getUniqueId(IDSEQ_GENERATOR), "Protocol Form Templates"));
-
-      Iterator tempIter = otherTempNodes.iterator();
-
-      while (tempIter.hasNext()) {
-       tmpLabelNode.add((DefaultMutableTreeNode)tempIter.next());
-      }
-
-      contextNode.add(tmpLabelNode);
+     if (otherTempNodes != null ) {
+      contextNode.add(otherTempNodes);
      }
 
      System.out.println("Other Templates End " + TimeUtils.getEasternTime());

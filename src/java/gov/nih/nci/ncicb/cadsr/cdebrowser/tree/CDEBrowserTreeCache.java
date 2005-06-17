@@ -44,12 +44,12 @@ public class CDEBrowserTreeCache
 
   }
   
-  public List getTemplateNodes(String contextIdSeq)
+  public DefaultMutableTreeNode  getTemplateNodes(String contextIdSeq)
   {
-    return (List)allTemplatesByContext.get(contextIdSeq);
+    return (DefaultMutableTreeNode)allTemplatesByContext.get(contextIdSeq);
   }
   
-  DefaultMutableTreeNode getClassificationNodes(String contextIdSeq)
+ public DefaultMutableTreeNode getClassificationNodes(String contextIdSeq)
   {
     return (DefaultMutableTreeNode)allClassificationNodes.get(contextIdSeq);
   }

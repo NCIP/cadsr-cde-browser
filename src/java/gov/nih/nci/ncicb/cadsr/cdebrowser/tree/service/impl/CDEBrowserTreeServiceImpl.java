@@ -70,7 +70,8 @@ public class CDEBrowserTreeServiceImpl
  * one containg the forms with no protocol and other with protocols
  */
  public List getAllContextProtocolNodes(TreeFunctions treeFunctions, TreeIdGenerator idGen) throws Exception {
-  Map protoCSMap = this.getProtoFormClassificationNodes(treeFunctions, idGen);
+  Map protoCSMap = this.getFormClassificationNodes(treeFunctions, idGen , 
+  CaDSRConstants.FORM_CS_TYPE,  CaDSRConstants.FORM_CSI_TYPE);
   Map treeNodeMap = new HashMap();
 
   Map allFormsWithProtocol = new HashMap();
@@ -162,6 +163,9 @@ public class CDEBrowserTreeServiceImpl
  */
  public Map getAllContextTemplateNodes(TreeFunctions treeFunctions, TreeIdGenerator idGen) throws Exception {
   Map allTemplatesByContext = new HashMap();
+  Map protoCSMap = this.getFormClassificationNodes(treeFunctions, idGen,
+  CaDSRConstants.TEMPLATE_CS_TYPE, CaDSRConstants.TEMPLATE_CSI_TYPE);
+  Map treeNodeMap = new HashMap();
 
   FormDAO dao = daoFactory.getFormDAO();
   List templates = dao.getAllTemplatesOrderByContext();
@@ -172,19 +176,27 @@ public class CDEBrowserTreeServiceImpl
    Form currTemplate = (Form)iter.next();
 
    String currContextId = currTemplate.getContext().getConteIdseq();
+   Map currCSMap = (Map) protoCSMap.get(currContextId);
    DefaultMutableTreeNode tmpNode = getTemplateNode(idGen.getNewId(), currTemplate, treeFunctions);
 
-   List nodes = (List)allTemplatesByContext.get(currContextId);
+   DefaultMutableTreeNode tmpLabelNode = (DefaultMutableTreeNode)allTemplatesByContext.get(currContextId);
 
-   if (nodes == null) {
-    nodes = new ArrayList();
-
-    allTemplatesByContext.put(currContextId, nodes);
+   if (tmpLabelNode == null) {
+      tmpLabelNode = getWebNode("Protocol Form Templates", idGen.getNewId());
+      treeNodeMap.clear();
    }
 
-   nodes.add(tmpNode);
+  allTemplatesByContext.put(currContextId, tmpLabelNode);
+   
+  if (currTemplate.getClassifications() == null ||
+    currTemplate.getClassifications().size() ==0) {
+    tmpLabelNode.add(tmpNode);
+  } else 
+  {
+    //template nodes need to be added to the cs tree
+    copyCSTree(currTemplate, currCSMap, treeNodeMap, tmpNode, tmpLabelNode, idGen);
   }
-
+  }
   return allTemplatesByContext;
  }
 
@@ -689,13 +701,13 @@ public class CDEBrowserTreeServiceImpl
   }
  }
 
-  private Map getProtoFormClassificationNodes(TreeFunctions treeFunctions, TreeIdGenerator idGen) throws Exception {
+  private Map getFormClassificationNodes(TreeFunctions treeFunctions,
+  TreeIdGenerator idGen, String csType, String csiType) throws Exception {
 
   Map csiByContextMap = new HashMap();
   Map csNodeMap = new HashMap();
   FormDAO dao = daoFactory.getFormDAO();
-  List allCscsi = dao.getCSCSIHierarchyByType(CaDSRConstants.FORM_CS_TYPE,
-  CaDSRConstants.FORM_CSI_TYPE);
+  List allCscsi = dao.getCSCSIHierarchyByType(csType, csiType);
   Map csMap = new HashMap(); //this map stores the webnode for cs given cs_idseq
   Map csiMap = new HashMap();
 
