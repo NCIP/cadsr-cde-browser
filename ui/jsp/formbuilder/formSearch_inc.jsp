@@ -122,7 +122,7 @@ function gotoClassificationsLOV() {
               <td width="20%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.name" /></td>
               <td class="OraTabledata" nowrap>
                 <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="60"
-                onkeypress="if(window.event.keyCode==13){submitForm('getAllForms');};"/>
+                onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>
               </td>
             </tr>
    </table>
