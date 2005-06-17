@@ -19,7 +19,7 @@ public interface CDEBrowserTreeService
   public List getAllContextProtocolNodes(TreeFunctions treeFunctions,TreeIdGenerator idGen) throws Exception;
   public Map getAllContextTemplateNodes(TreeFunctions treeFunctions,TreeIdGenerator idGen) throws Exception;
   public Map getAllClassificationNodes(TreeFunctions treeFunctions,TreeIdGenerator idGen) throws Exception;
-  public List getAllTemplateNodesForCTEP(TreeFunctions treeFunctions, TreeIdGenerator idGen, Context currContext, List templateTypes) throws Exception ;
+  public List getAllTemplateNodesForCTEP(TreeFunctions treeFunctions, TreeIdGenerator idGen, Context ctepContext) throws Exception ;
   public DefaultMutableTreeNode getPublishingNode(TreeFunctions treeFunctions, 
                    TreeIdGenerator idGen, Context currContext,
                    boolean showFormsAlphebetically) throws Exception ;

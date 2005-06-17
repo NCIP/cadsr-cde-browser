@@ -11,12 +11,14 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class CDEBrowserTreeCache 
 {
                                    
   private final String CTEP="CTEP";
-  
+  protected Log log =  LogFactory.getLog(CDEBrowserTreeCache.class.getName());
   
   public CDEBrowserTreeCache()
   {
@@ -32,7 +34,7 @@ public class CDEBrowserTreeCache
   private Map allClassificationNodes = null;
   private static ApplicationServiceLocator appServiceLocator = null;
   
-  public static CDEBrowserTreeCache getAnInstance(Connection conn,BaseTreeNode baseTree) throws Exception
+  public static CDEBrowserTreeCache getAnInstance() throws Exception
   {
 
       CDEBrowserTreeCache cache = new CDEBrowserTreeCache();
@@ -60,13 +62,11 @@ public class CDEBrowserTreeCache
   }
   public void init(BaseTreeNode baseTree,Hashtable treeParams) throws Exception
   {
-   System.out.println("Init start"+TimeUtils.getEasternTime());
+   log.info("Init start"+TimeUtils.getEasternTime());
     String contextExcludeListStr = (String)treeParams.get(TreeConstants.BR_CONTEXT_EXCLUDE_LIST_STR);   
     allContextHolders = appServiceLocator.findTreeService().getContextNodeHolders(baseTree,idGen,contextExcludeListStr);
     allTemplatesByContext = appServiceLocator.findTreeService().getAllContextTemplateNodes(baseTree,idGen);
-    //setDataTemplateNodes(conn,baseTree);
-    //setFormNodes(conn,baseTree);
-    //setFormByProtocolNodes(conn,baseTree);
+
     List protocolNodes = appServiceLocator.findTreeService().getAllContextProtocolNodes(baseTree,idGen);
     allFormsWithNoProtocol = (Map) protocolNodes.get(0);
     allFormsWithProtocol = (Map) protocolNodes.get(1);
@@ -75,15 +75,15 @@ public class CDEBrowserTreeCache
     allClassificationNodes = appServiceLocator.findTreeService().getAllClassificationNodes(baseTree, idGen);
     
     //setCtepTemplateCtepNodes(conn,baseTree);
-  System.out.println("Init end"+TimeUtils.getEasternTime());
+  log.info("Init end"+TimeUtils.getEasternTime());
   }
   
-  public void initCtepInfo(Connection conn,BaseTreeNode baseTree,List templateTypes, Context ctepContext) throws Exception
+  public void initCtepInfo(BaseTreeNode baseTree,Context ctepContext) throws Exception
   {
-   System.out.println("InitCtep start"+TimeUtils.getEasternTime());
+   log.info("InitCtep start"+TimeUtils.getEasternTime());
 //    setCtepTemplateCtepNodes(conn,baseTree,templateTypes, ctepContext);
-   allTemplatesForCtep = appServiceLocator.findTreeService().getAllTemplateNodesForCTEP(baseTree, idGen, ctepContext, templateTypes);
-   System.out.println("InitCtep end"+TimeUtils.getEasternTime());
+   allTemplatesForCtep = appServiceLocator.findTreeService().getAllTemplateNodesForCTEP(baseTree, idGen, ctepContext);
+   log.info("InitCtep end"+TimeUtils.getEasternTime());
   }  
   
   private void clearCache()
@@ -144,6 +144,12 @@ public class CDEBrowserTreeCache
   public ApplicationServiceLocator getAppServiceLocator()
   {
     return appServiceLocator;
+  }
+
+
+  public TreeIdGenerator getIdGen()
+  {
+    return idGen;
   }
 
 

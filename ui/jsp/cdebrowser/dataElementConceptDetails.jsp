@@ -92,14 +92,20 @@ function goPage(pageInfo) {
  </tr>
 
  <tr class="OraTabledata">
+    <td class="TableRowPromptText">Version:</td>
+    <td class="OraFieldText"><%=de.getVersion()%> </td>
+ </tr>
+ 
+  <tr class="OraTabledata">
+    <td class="TableRowPromptText" width="20%">Long Name:</td>
+    <td class="OraFieldText"><%=de.getLongName()%></td>
+ </tr>
+ 
+ <tr class="OraTabledata">
     <td class="TableRowPromptText" width="20%">Preferred Name:</td>
     <td class="OraFieldText"><%=de.getPreferredName()%></td>
  </tr>
  
- <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Long Name:</td>
-    <td class="OraFieldText"><%=de.getLongName()%></td>
- </tr>
 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Document Text:</td>
@@ -115,10 +121,7 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=de.getAslName()%> </td>
  </tr>
 
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Version:</td>
-    <td class="OraFieldText"><%=de.getVersion()%> </td>
- </tr>
+
  
 </table>
 <br>
@@ -139,15 +142,21 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=dec.getPublicId()%></td>
  </tr>
  
+  <tr class="OraTabledata">
+    <td class="TableRowPromptText">Version:</td>
+    <td class="OraFieldText"><%=dec.getVersion()%> </td>
+ </tr>
+ 
+  <tr class="OraTabledata">
+    <td class="TableRowPromptText" width="20%">Long Name:</td>
+    <td class="OraFieldText"><%=dec.getLongName()%></td>
+ </tr>
+ 
  <tr class="OraTabledata">
     <td class="TableRowPromptText" width="20%">Preferred Name:</td>
     <td class="OraFieldText"><%=dec.getPreferredName()%></td>
  </tr>
  
- <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Long Name:</td>
-    <td class="OraFieldText"><%=dec.getLongName()%></td>
- </tr>
 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Definition:</td>
@@ -163,10 +172,7 @@ function goPage(pageInfo) {
     <td class="TableRowPromptText">Workflow Status:</td>
     <td class="OraFieldText"><%=dec.getAslName()%> </td>
  </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Version:</td>
-    <td class="OraFieldText"><%=dec.getVersion()%> </td>
- </tr>
+ 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Conceptual Domain Public ID:</td>
     <td class="OraFieldText"><%=dec.getCDPublicId()%></td>
@@ -211,6 +217,11 @@ function goPage(pageInfo) {
             <td class="TableRowPromptText"  width="20%" >Public ID:</td>
             <td class="OraFieldText"><%=objClass.getPublicId()%></td>
          </tr>
+         <tr class="OraTabledata">
+            <td class="TableRowPromptText"  width="20%" >Version:</td>
+            <td class="OraFieldText"><%=socVersion%> </td>
+         </tr>
+         
          <tr class="OraTabledata"> 
             <td class="TableRowPromptText"  width="20%" >Long Name:</td>
             <td class="OraFieldText"><%=objClass.getLongName()%> </td>
@@ -223,10 +234,7 @@ function goPage(pageInfo) {
             <td class="TableRowPromptText"  width="20%" >Context:</td>
             <td class="OraFieldText"><%=objClass.getContext().getName()%> </td>
          </tr>
-         <tr class="OraTabledata">
-            <td class="TableRowPromptText"  width="20%" >Version:</td>
-            <td class="OraFieldText"><%=socVersion%> </td>
-         </tr>
+
          <tr class="OraTabledata">
             <td class="TableRowPromptText"  width="20%" >Qualifier:</td>
             <td class="OraFieldText"><%=objClass.getQualifier()%> </td>
@@ -353,6 +361,10 @@ function goPage(pageInfo) {
              <td class="TableRowPromptText"  width="20%" >Public ID:</td>
              <td class="OraFieldText"><%=prop.getPublicId()%></td>
           </tr>
+          <tr class="OraTabledata">
+             <td class="TableRowPromptText"  width="20%" >Version:</td>
+             <td class="OraFieldText"><%=sptVersion%> </td>
+          </tr>
           <tr class="OraTabledata"> 
              <td class="TableRowPromptText"  width="20%" >Long Name:</td>
              <td class="OraFieldText"><%=prop.getLongName()%> </td>
@@ -365,10 +377,7 @@ function goPage(pageInfo) {
              <td class="TableRowPromptText"  width="20%" >Context:</td>
              <td class="OraFieldText"><%=prop.getContext().getName()%> </td>
           </tr>
-          <tr class="OraTabledata">
-             <td class="TableRowPromptText"  width="20%" >Version:</td>
-             <td class="OraFieldText"><%=sptVersion%> </td>
-          </tr>
+
           <tr class="OraTabledata">
              <td class="TableRowPromptText"  width="20%" >Qualifier:</td>
              <td class="OraFieldText"><%=prop.getQualifier()%> </td>

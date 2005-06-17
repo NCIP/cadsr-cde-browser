@@ -4,27 +4,25 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.ContextHolder;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
-import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.util.TimeUtils;
 import gov.nih.nci.ncicb.webtree.WebNode;
 import gov.nih.nci.ncicb.webtree.WebTree;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class CDEBrowserTree
  extends WebTree
  implements TreeConstants {
- final static String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
+
+ protected Log log =  LogFactory.getLog(CDEBrowserTree.class.getName());
+ 
  private String treeType;
  private String functionName;
  private String extraURLParameters = "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
@@ -47,32 +45,24 @@ public class CDEBrowserTree
  }
 
  public DefaultMutableTreeNode buildTree(Hashtable treeParams) throws Exception {
-  DBUtil dbHelper = new DBUtil();
 
-  PreparedStatement pstmt = null;
-  ResultSet rs = null;
-  Connection conn = null;
   Context ctx = null;
   DefaultMutableTreeNode tree = null;
   BaseTreeNode baseNode = null;
 
   //TimeUtils.recordStartTime("Tree");
   try {
-   System.out.println("Tree Start " + TimeUtils.getEasternTime());
+   log.info("Tree Start " + TimeUtils.getEasternTime());
 
    CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-   //String datasourceName = params.getSbrDSN();
 
-   if (dbHelper.getConnectionFromContainer()) {
-    conn = dbHelper.getConnection();
-   } else {
-    throw new Exception("Unable to connect to the database");
-   }
 
-   baseNode = new BaseTreeNode(dbHelper, treeParams);
-   CDEBrowserTreeCache cache = CDEBrowserTreeCache.getAnInstance(conn, baseNode);
+
+
+   baseNode = new BaseTreeNode(treeParams);
+   CDEBrowserTreeCache cache = CDEBrowserTreeCache.getAnInstance();
    cache.init(baseNode, treeParams);
-   WebNode contexts = new WebNode(dbHelper.getUniqueId(IDSEQ_GENERATOR),
+   WebNode contexts = new WebNode(cache.getIdGen().getNewId(),
                                   "caDSR Contexts",
                                   "javascript:" + baseNode.getJsFunctionName()
                                      + "('P_PARAM_TYPE=P_PARAM_TYPE&P_IDSEQ=P_IDSEQ&" + baseNode.getExtraURLParameters()
@@ -90,9 +80,6 @@ public class CDEBrowserTree
 
     Context currContext = currContextHolder.getContext();
     DefaultMutableTreeNode contextNode = currContextHolder.getNode();
-    //Need to be removed
-    ContextNode ctxNode = new ContextNode(currContext, dbHelper, treeParams);
-    //DefaultMutableTreeNode ctxTreeNode = ctxNode.getTreeNode();
 
     //Adding data template nodes
 
@@ -103,20 +90,19 @@ public class CDEBrowserTree
     DefaultMutableTreeNode otherTempNodes;
 
     if (Context.CTEP.equals(currContext.getName())) {
-     //          cache.setCtepIdSeq(currContext.getConteIdseq());
-     //Need to add this to DAO
-     cache.initCtepInfo(conn, baseNode, ctxNode.getTemplateTypes(), currContext);
+
+     cache.initCtepInfo(baseNode,currContext);
 
      tmpLabelNode = new DefaultMutableTreeNode(
-                       new WebNode(dbHelper.getUniqueId(IDSEQ_GENERATOR), "Protocol Form Templates"));
+                       new WebNode(cache.getIdGen().getNewId(), "Protocol Form Templates"));
      List ctepNodes = cache.getAllTemplatesForCtep();
      tmpLabelNode.add((DefaultMutableTreeNode)ctepNodes.get(0));
      tmpLabelNode.add((DefaultMutableTreeNode)ctepNodes.get(1));
      contextNode.add(tmpLabelNode);
 
-     System.out.println("CTEP Templates End " + TimeUtils.getEasternTime());
+     log.info("CTEP Templates End " + TimeUtils.getEasternTime());
     } else {
-     System.out.println("Other Templates Start " + TimeUtils.getEasternTime());
+     log.info("Other Templates Start " + TimeUtils.getEasternTime());
 
      otherTempNodes = cache.getTemplateNodes(currContext.getConteIdseq());
 
@@ -124,24 +110,24 @@ public class CDEBrowserTree
       contextNode.add(otherTempNodes);
      }
 
-     System.out.println("Other Templates End " + TimeUtils.getEasternTime());
+     log.info("Other Templates End " + TimeUtils.getEasternTime());
     }
 
     //Adding classification nodes
     long startingTime = System.currentTimeMillis();
-    System.out.println("Classification Start " + TimeUtils.getEasternTime());
+    log.info("Classification Start " + TimeUtils.getEasternTime());
     DefaultMutableTreeNode csNode = cache.getClassificationNodes(currContext.getConteIdseq());
 
     if (csNode != null)
      contextNode.add(csNode);
 
     long timeElsp = System.currentTimeMillis() - startingTime;
-    System.out.println("Classification Took " + timeElsp);
+    log.info("Classification Took " + timeElsp);
     //End Adding Classification Node
 
     //Adding protocols nodes
     //Filtering CTEP context in data element search tree
-    System.out.println("Proto forms Start " + TimeUtils.getEasternTime());
+    log.info("Proto forms Start " + TimeUtils.getEasternTime());
 
     if ((!currContext.getName().equals(Context.CTEP) && treeType.equals(TreeConstants.DE_SEARCH_TREE))
     //Publish Change order
@@ -165,7 +151,7 @@ public class CDEBrowserTree
   */
       if ((protoNodes != null && !protoNodes.isEmpty()) ) {
        protocolFormsLabelNode = new DefaultMutableTreeNode(
-                                   new WebNode(dbHelper.getUniqueId(IDSEQ_GENERATOR), "Protocol Forms"));
+                                   new WebNode(cache.getIdGen().getNewId(), "Protocol Forms"));
    /** for release 3.0.1, forms without protocol is not displayed, uncomment this
     * code to display them
 
@@ -188,45 +174,29 @@ public class CDEBrowserTree
      }
     }
 
-    System.out.println("Proto forms End " + TimeUtils.getEasternTime());
+    log.info("Proto forms End " + TimeUtils.getEasternTime());
     //End Add Protocol Nodes
 
     //Display Catalog
 
     //Get Publishing Node info
-    System.out.println("Publish strat " + TimeUtils.getEasternTime());
+    log.info("Publish strat " + TimeUtils.getEasternTime());
     DefaultMutableTreeNode publishNode = cache.getPublishNode(baseNode, currContext, showFormsAlphebetically);
 
     if (publishNode != null)
      contextNode.add(publishNode);
 
-    System.out.println("Publish end " + TimeUtils.getEasternTime());
+    log.info("Publish end " + TimeUtils.getEasternTime());
     //End Catalog
 
     tree.add(contextNode);
    }
 
-   System.out.println("Tree End " + TimeUtils.getEasternTime());
+   log.info("Tree End " + TimeUtils.getEasternTime());
   } catch (Exception ex) {
    ex.printStackTrace();
 
    throw ex;
-  } finally {
-   try {
-    if (rs != null) {
-     rs.close();
-    }
-
-    if (pstmt != null) {
-     pstmt.close();
-    }
-
-    if (conn != null) {
-     dbHelper.returnConnection();
-    }
-   } catch (Exception ex) {
-    ex.printStackTrace();
-   }
   }
 
   return tree;

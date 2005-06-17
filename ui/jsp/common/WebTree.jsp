@@ -105,7 +105,7 @@
       // set updated tree in session   
       userSession.setAttribute(treeName, webTree);      
 %>   
-<table border="0">
+<table align="left" border="1">
   <tr>
     <%
       //      String treeURL = "WebTree.jsp?treeName=" + 
@@ -123,7 +123,7 @@
             "&skin=CDEBrowser1";
       %>
 
-      <td><a href="<%= treeURL %>">Refresh tree</a></td>
+      <td align="left"><a href="<%= treeURL %>">Refresh tree</a></td>
   </tr>
 <%    // render display tree
 
@@ -145,11 +145,11 @@
           // check for highligh match to show background color highlight
           if (treeAction != null && treeAction.equals("highlight") && myId.equals(targetId))
           { %>          
-          <tr class="highlightNode">
+          <tr align="left" class="highlightNode">
 <%        }
           else
           {     %>
-         <tr>
+         <tr align="left">
 <%        }     %>
     <td nowrap>
       <table border=0>
@@ -157,43 +157,43 @@
 <%        // check for highlight match to show marker chevrons
           if (treeAction != null && treeAction.equals("highlight") && myId.equals(targetId) && displayNode.getLevel() > 0)
           { %>
-            <td  nowrap width="<%=20*displayNode.getLevel()%>-3">>>><img src="images/transparent.gif" border=0 width="<%=20*displayNode.getLevel()%>-3" height="1"/></td>
+            <td  align="left" nowrap width="<%=20*displayNode.getLevel()%>-3">>>><img src="images/transparent.gif" border=0 width="<%=20*displayNode.getLevel()%>-3" height="1"/></td>
 <%        } 
           else
           { %>           
-            <td  nowrap width="<%=20*displayNode.getLevel()%>"><img src="images/transparent.gif" border=0 width="<%=20*displayNode.getLevel()%>" height="1"/></td>
+            <td  align="left" nowrap width="<%=20*displayNode.getLevel()%>"><img src="images/transparent.gif" border=0 width="<%=20*displayNode.getLevel()%>" height="1"/></td>
 <%        } %>         
 <%
           // render node icon and associated url
           if (displayWebNode.getIconAction().length() > 0)
           {
             // this web node has an override icon graphic and action, use that instead of the automated folder and leaf icons %>
-            <td  nowrap width="40" align="right"><a href="<%=displayWebNode.getIconAction()%>"><img src="skins/<%=skin%>/images/<%=displayWebNode.getIconGraphic()%>" vspace="0" hspace="0" border="0" height="20" width="30" alt="<%=webNodeInfo%>"/></a></td>            
+            <td  align="left" nowrap width="40" align="right"><a href="<%=displayWebNode.getIconAction()%>"><img src="skins/<%=skin%>/images/<%=displayWebNode.getIconGraphic()%>" vspace="0" hspace="0" border="0" height="20" width="30" alt="<%=webNodeInfo%>"/></a></td>            
 <%        }              
           else if (displayWebNode.hasChildren() && !displayNode.isLeaf())
           { %>
-  <td  nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeParams=<%=treeParams%>&treeName=<%=treeName%>&treeAction=collapse&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderOpen.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
+  <td  align="left" nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeParams=<%=treeParams%>&treeName=<%=treeName%>&treeAction=collapse&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderOpen.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
 <%        }
           else if (displayWebNode.hasChildren())           
           { 
             // no children currently displayed, but has children %>
-            <td  nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeParams=<%=treeParams%>&treeName=<%=treeName%>&amp;treeAction=expand&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderClosed.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
+            <td  align="left" nowrap width="40" align="right"><a href="WebTree.jsp?targetId=<%=java.net.URLEncoder.encode(myId)%>&treeParams=<%=treeParams%>&treeName=<%=treeName%>&amp;treeAction=expand&skin=<%=skin%>#<%=java.net.URLEncoder.encode(myId)%>"><img src="skins/<%=skin%>/images/folderClosed.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></a></div></td>      
 <%        }   
           else
           {
             // no children display, and has not children at all, this is a leaf %>
-            <td  nowrap width="40" align="right"><img src="skins/<%=skin%>/images/leaf.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></td>      
+            <td  align="left" nowrap width="40" align="right"><img src="skins/<%=skin%>/images/leaf.gif" vspace="0" hspace="0" border="0"  alt="<%=webNodeInfo%>"/></td>      
 <%        }   
  
           // render name with action (if defined)
           String linkAction = displayWebNode.getAction();
           if (linkAction.length() > 0)
           { %>
-            <td nowrap><a name="<%=myId%>" href="<%=linkAction%>"><%=myName%></a></td>                
+            <td align="left" nowrap><a name="<%=myId%>" href="<%=linkAction%>"><%=myName%></a></td>                
 <%        }  
           else
           { %>
-            <td nowrap class="treeNode"><a name="<%=myId%>" onFocus="blur();"></a><%=myName%></td>                
+            <td nowrap align="left" class="treeNode"><a name="<%=myId%>" onFocus="blur();"></a><%=myName%></td>                
 <%        } %>                                 
           </tr>
         </table>

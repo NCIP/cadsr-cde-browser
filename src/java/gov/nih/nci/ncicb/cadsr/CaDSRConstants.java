@@ -31,8 +31,8 @@ public interface CaDSRConstants {
   
 
 
-  public static final String FORM_CS_TYPE="CLASSIFICATIONS";
-  public static final String FORM_CSI_TYPE="TEST";
-  public static final String TEMPLATE_CS_TYPE="CLASSIFICATIONS";
-  public static final String TEMPLATE_CSI_TYPE="TEST";
+  public static final String FORM_CS_TYPE="FOLDER";
+  public static final String FORM_CSI_TYPE="Template Type";
+  public static final String TEMPLATE_CS_TYPE="FOLDER";
+  public static final String TEMPLATE_CSI_TYPE="Form Type";
 }

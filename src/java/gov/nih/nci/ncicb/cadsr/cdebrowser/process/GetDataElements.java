@@ -52,7 +52,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.17 2005-06-16 17:58:29 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.18 2005-06-17 20:18:48 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -283,7 +283,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         //TT 1511
         if((paramType!=null)&&(paramType.equals("CRF")||paramType.equals("TEMPLATE")))
         {
-          myRequest.setAttribute(ProcessConstants.FORMS_IGNORE_FILTER,"All Search filters ignored for this search");
+          myRequest.setAttribute(ProcessConstants.FORMS_IGNORE_FILTER,"Search results contain all the CDEs in the Form/Template and are not filtered by the Search preferences");
         }
         log.trace("- Created DESearchQueryBuilder successfully");
 

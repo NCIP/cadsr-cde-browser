@@ -6,15 +6,12 @@ import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 
 public class BaseTreeNode implements TreeConstants, CaDSRConstants,TreeFunctions  {
-  protected Connection myConn = null;
-  protected DBUtil myDbUtil = null;
+
   protected Hashtable treeParams = null;
   
   
-  public BaseTreeNode(DBUtil dbUtil
-                    ,Hashtable params) {
-    myDbUtil = dbUtil;
-    myConn = dbUtil.getConnection();
+  public BaseTreeNode(Hashtable params) {
+
     treeParams = params;
   }
 

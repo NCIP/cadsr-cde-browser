@@ -73,14 +73,21 @@ function goPage(pageInfo) {
  </tr>
 
  <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Preferred Name:</td>
-    <td class="OraFieldText"><%=de.getPreferredName()%></td>
+    <td class="TableRowPromptText">Version:</td>
+    <td class="OraFieldText"><%=de.getVersion()%> </td>
  </tr>
  
  <tr class="OraTabledata">
     <td class="TableRowPromptText" width="20%">Long Name:</td>
     <td class="OraFieldText"><%=de.getLongName()%></td>
  </tr>
+ 
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText" width="20%">Preferred Name:</td>
+    <td class="OraFieldText"><%=de.getPreferredName()%></td>
+ </tr>
+ 
+
 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Document Text:</td>
@@ -96,10 +103,7 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=de.getAslName()%> </td>
  </tr>
 
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Version:</td>
-    <td class="OraFieldText"><%=de.getVersion()%> </td>
- </tr>
+
  
 </table>
 <br>

@@ -83,14 +83,20 @@ function listChanged(urlInfo) {
  </tr>
 
  <tr class="OraTabledata">
+    <td class="TableRowPromptText">Version:</td>
+    <td class="OraFieldText"><%=de.getVersion()%> </td>
+ </tr>
+ 
+  <tr class="OraTabledata">
+    <td class="TableRowPromptText" width="20%">Long Name:</td>
+    <td class="OraFieldText"><%=de.getLongName()%></td>
+ </tr>
+ 
+ <tr class="OraTabledata">
     <td class="TableRowPromptText" width="20%">Preferred Name:</td>
     <td class="OraFieldText"><%=de.getPreferredName()%></td>
  </tr>
  
- <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Long Name:</td>
-    <td class="OraFieldText"><%=de.getLongName()%></td>
- </tr>
 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Document Text:</td>
@@ -106,10 +112,7 @@ function listChanged(urlInfo) {
     <td class="OraFieldText"><%=de.getAslName()%> </td>
  </tr>
 
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Version:</td>
-    <td class="OraFieldText"><%=de.getVersion()%> </td>
- </tr>
+
  
 </table>
 <br>
@@ -128,16 +131,22 @@ function listChanged(urlInfo) {
     <td class="TableRowPromptText">Public ID:</td>
     <td class="OraFieldText"><%=vd.getPublicId()%></td>
  </tr>
+
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Version:</td>
+    <td class="OraFieldText"><%=vd.getVersion()%> </td>
+ </tr>
+ 
+  <tr class="OraTabledata">
+    <td class="TableRowPromptText" width="20%">Long Name:</td>
+    <td class="OraFieldText"><%=vd.getLongName()%></td>
+ </tr>
  
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Preferred Name:</td>
     <td class="OraFieldText"><%=vd.getPreferredName()%></td>
  </tr>
  
- <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Long Name:</td>
-    <td class="OraFieldText"><%=vd.getLongName()%></td>
- </tr>
 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Definition:</td>
@@ -147,10 +156,7 @@ function listChanged(urlInfo) {
     <td class="TableRowPromptText">Workflow Status:</td>
     <td class="OraFieldText"><%=vd.getAslName()%> </td>
  </tr>
- <tr class="OraTabledata">
-    <td class="TableRowPromptText">Version:</td>
-    <td class="OraFieldText"><%=vd.getVersion()%> </td>
- </tr>
+
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Datatype:</td>
     <td class="OraFieldText"><%=vd.getDatatype()%></td>

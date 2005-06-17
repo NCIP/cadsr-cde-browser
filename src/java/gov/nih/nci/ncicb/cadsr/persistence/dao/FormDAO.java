@@ -216,5 +216,14 @@ public interface FormDAO extends AdminComponentDAO {
    * @return <b>Collection</b> List of Protocols
    */
   public List getAllProtocolsForPublishedForms(String contextIdSeq);
+  
+    /**
+   * Gets all Template Types
+   *
+   * @param <b>contextId</b> Idseq of the Context
+   *
+   * @return <b>Collection</b> List of TemplateType names
+   */
+  public List getAllTemplateTypes(String contextId);
 
 }

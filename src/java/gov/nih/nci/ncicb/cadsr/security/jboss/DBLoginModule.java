@@ -153,7 +153,7 @@ public class DBLoginModule extends AbstractServerLoginModule {
     info[0] = username;
     info[1] = password;
     log.debug("Username="+username);
-    log.debug("Password="+password);
+
 
     return info;
   }

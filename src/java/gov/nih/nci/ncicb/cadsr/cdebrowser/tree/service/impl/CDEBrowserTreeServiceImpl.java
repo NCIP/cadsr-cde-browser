@@ -204,10 +204,10 @@ public class CDEBrowserTreeServiceImpl
 * @returns a map with contextid as key and value a list of template nodes
 * CTEP nodes are further categorized by classification 'CRF_DISEASE' and 'Phase'
 */
- public List getAllTemplateNodesForCTEP(TreeFunctions treeFunctions, TreeIdGenerator idGen, Context currContext,
-                                        List templateTypes) throws Exception {
+ public List getAllTemplateNodesForCTEP(TreeFunctions treeFunctions, TreeIdGenerator idGen, Context currContext
+                                        ) throws Exception {
   List allTemplatesForCtep = new ArrayList();
-
+  
   Map disCscsiHolder = new HashMap();
   Map phaseCscsiHolder = new HashMap();
 
@@ -217,6 +217,7 @@ public class CDEBrowserTreeServiceImpl
   allTemplatesForCtep.add(diseaseNode);
 
   FormDAO dao = daoFactory.getFormDAO();
+  List  templateTypes = dao.getAllTemplateTypes(currContext.getConteIdseq());
   Collection csiList = dao.getCSIForContextId(currContext.getConteIdseq());
 
   Map cscsiMap = new HashMap();
@@ -242,8 +243,8 @@ public class CDEBrowserTreeServiceImpl
   Collection templates = dao.getAllTemplatesForContextId(currContext.getConteIdseq());
   String currContextId = currContext.getConteIdseq();
   //Add all the csi nodes
-  addAllcscsiNodes(phaseCsCsiList, cscsiMap, currContextId, phaseNode, templateTypes, phaseCscsiHolder);
-  addAllcscsiNodes(diseaseCsCsiList, cscsiMap, currContextId, diseaseNode, templateTypes, disCscsiHolder);
+  addAllcscsiNodes(phaseCsCsiList, cscsiMap, currContextId, phaseNode, templateTypes, phaseCscsiHolder,idGen);
+  addAllcscsiNodes(diseaseCsCsiList, cscsiMap, currContextId, diseaseNode, templateTypes, disCscsiHolder,idGen);
   iter = templates.iterator();
 
   while (iter.hasNext()) {
@@ -679,7 +680,7 @@ public class CDEBrowserTreeServiceImpl
  }
 
  private void addAllcscsiNodes(List cscsiList,     Map cscsiMap, String contextId, DefaultMutableTreeNode csNode,
-                               List templateTypes, Map cscsiholderMap) {
+                               List templateTypes, Map cscsiholderMap,TreeIdGenerator idGen) {
   if (cscsiList == null || cscsiMap == null || csNode == null || cscsiholderMap == null)
    return;
 
@@ -692,7 +693,7 @@ public class CDEBrowserTreeServiceImpl
    String aUniquesId = contextId + cscsi.getCsCsiIdseq() + System.currentTimeMillis();
    DefaultMutableTreeNode node = this.getWebNode(cscsi.getClassSchemeItemName(), aUniquesId);
    csNode.add(node);
-   aUniquesId = contextId + cscsi.getCsCsiIdseq() + System.currentTimeMillis();
+   aUniquesId = idGen.getNewId();
    Map categoryMap = addInitialCategoryNodes(node, aUniquesId, templateTypes);
    CsCsiCategorytHolder cscsiCatHolder = new CsCsiCategorytHolder();
    cscsiCatHolder.setNode(node);
