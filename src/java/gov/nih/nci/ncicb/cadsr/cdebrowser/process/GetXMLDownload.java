@@ -184,9 +184,11 @@ public class GetXMLDownload extends BasePersistingProcess {
       //ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
       //cn = DBUtil.createOracleConnection(ap.getDBUrl(),ap.getUser(),ap.getPassword());
       dbUtil = new DBUtil();
-      dbUtil.getConnectionFromContainer();
-      //Extract Oracle Native Connection
-      cn = dbUtil.extractOracleConnection(dbUtil.getConnection());
+      dbUtil.getOracleConnectionFromContainer();
+
+      //Get Oracle Native Connection
+      cn = dbUtil.getConnection();
+      
       xmlBean.setConnection(cn);
 
       xmlBean.setQuery(stmt);

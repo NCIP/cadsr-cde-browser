@@ -20,6 +20,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import javax.sql.DataSource;
+import oracle.cle.persistence.ConnectionManager;
+import oracle.cle.persistence.ConnectionProvider;
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.pool.OracleDataSource;
 
@@ -28,9 +30,10 @@ public class DBUtil  {
 
   private static final int INSERT_ERROR = -1;
   private static final int UPDATE_ERROR = -1;
+  public static final String CDEBROWSER_PROVIDER = "cdebrowser_bc4j";
   private Connection conn;
   private boolean isConnected = false;
-		
+  private boolean isOracleConnection = false;
   public DBUtil() {
     conn = null;
   }
@@ -42,16 +45,10 @@ public class DBUtil  {
   public boolean getConnectionFromContainer()
                     throws Exception {
     if (!isConnected) {
-      InitialContext ic =null;
       try {
-        /**ic = new InitialContext();
-        DataSource ds = (DataSource)ic.lookup(dataSourceName);
-        conn = ds.getConnection();
-        //conn.setAutoCommit(true);
-        **/
         DataSource ds = getServiceLocator().getDataSource(PersistenceConstants.DATASOURCE_LOCATION_KEY);
         //Extract Oracle Native Connection
-        conn = extractOracleConnection(ds.getConnection());
+        conn = ds.getConnection();
         isConnected = true;
         log.info
         ("Connected to the database successfully using datasource "+PersistenceConstants.DATASOURCE_LOCATION_KEY);
@@ -63,6 +60,42 @@ public class DBUtil  {
     }
     return isConnected;
   }
+  
+  /**
+ *  This method returns a Oracle Connection obtained by createing a Datasource using the
+ *  connection information in cle-providers.xml
+ *  This is a temporary fix till we move to 9i libs
+ *  
+  */
+  public boolean getOracleConnectionFromContainer()
+                    throws Exception {
+   if(isConnected&&!isOracleConnection)
+   {
+     this.returnConnection();
+   }
+    if (!isConnected) {
+     
+      try {
+     
+        ConnectionManager manager = ConnectionManager.getInstance();
+        ConnectionProvider provider = manager.getProvider(CDEBROWSER_PROVIDER);
+        
+        DataSource ds = DataSourceUtil.getOracleDataSource(provider.getConnectionString(),provider.getUserName(),provider.getPassword());
+        conn = ds.getConnection();
+      
+        isConnected = true;
+        isOracleConnection = true;
+        log.info
+        ("Connected to the database successfully using datasource ");
+      }
+      catch (Exception e) {
+        log.error("Exception occurred in getConnectionFromContainer", e);
+        throw new Exception("Exception in getConnectionFromContainer() ");
+      }
+    }
+    return isConnected;
+  }
+
 /**
  *  This method returns a Vector containing multiple DB records after executing
  *  the sql statement specified as the parameter
@@ -367,23 +400,24 @@ public class DBUtil  {
     return rs;
   }
   
-  /**
-  public static OracleConnection createOracleConnection(
+
+  private  OracleConnection createOracleConnection(
     String dbURL,
     String username,
     String password) throws Exception {
     OracleDataSource ds = DataSourceUtil.getOracleDataSource(dbURL,username,password);
     return (OracleConnection)ds.getConnection();
     }
-    **/
+  
   /*
+   * Need to recode after the class loading problem is fixed
    *@return Oracle native Connection from jboss wrapper connection
    */
-  public static OracleConnection extractOracleConnection(
+  private static OracleConnection extractOracleConnection(
     Connection conn
     ) throws Exception {
-    OracleJBossNativeJdbcExtractor extractor = new OracleJBossNativeJdbcExtractor();
-    return extractor.doGetOracleConnection(conn);
+      OracleJBossNativeJdbcExtractor extractor = new OracleJBossNativeJdbcExtractor();
+      return extractor.doGetOracleConnection(conn);
     }    
     
    

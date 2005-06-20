@@ -394,7 +394,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
     <logic:empty  name="<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>" scope="session">  
        <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
         <TR class=OraTabledata>
-           <td colspan=2 class="OraFieldText">No outgoing associations exits for this Object Class</td>
+           <td colspan=2 class="OraFieldText">No outgoing associations exist for this Object Class</td>
         </TR> 
        </table>
     </logic:empty>
@@ -617,7 +617,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
         <logic:empty  name="<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>" scope="session">  
            <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
             <TR class=OraTabledata>
-               <td colspan=2 class="OraFieldText">No incoming associations exits for this Object Class</td>
+               <td colspan=2 class="OraFieldText">No incoming associations exist for this Object Class</td>
             </TR> 
            </table>
         </logic:empty>        
@@ -845,7 +845,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
         <logic:empty  name="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>" scope="session">  
            <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
             <TR class=OraTabledata>
-               <td colspan=2 class="OraFieldText">No bidirectional associations exits for this Object Class</td>
+               <td colspan=2 class="OraFieldText">No bidirectional associations exist for this Object Class</td>
             </TR> 
            </table>
         </logic:empty>        

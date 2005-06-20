@@ -287,6 +287,7 @@
            <fileset dir="${config.home}/META-INF">
              <patternset>
                <include name="application.xml"/>
+               <include name="jboss-app.xml"/>
              </patternset>
            </fileset>      
         </copy> 
@@ -658,6 +659,12 @@
             <include name="properties/log4j.properties"/>
           </patternset>
         </fileset>
+        
+        <fileset dir="${classes.build.dir}">
+          <patternset>
+             <include name="META-INF/jboss-app.xml"/>            
+          </patternset>
+        </fileset> 
         
         <fileset dir="${java.lib.dir}">
           <patternset>
