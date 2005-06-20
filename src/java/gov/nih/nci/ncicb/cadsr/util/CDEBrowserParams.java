@@ -21,6 +21,13 @@ public class CDEBrowserParams
     String excludeTrainingContext="no";
     String excludeWorkFlowStatuses = "";
     String excludeRegistrationStatuses = "";
+    
+    String curationToolUrl = "";
+    String nciMetathesaurusUrl="";
+    String nciTerminologyServerUrl="";
+    String sentinelToolUrl="";
+    String adminToolUrl="";
+    
     Map evsUrlMap = new HashMap();
     
     static CDEBrowserParams instance;
@@ -65,7 +72,18 @@ public class CDEBrowserParams
             excludeWorkFlowStatuses = b.getString("EXCLUDE_WORKFLOW_BY_DEFAULT");
             index++;
             excludeRegistrationStatuses = b.getString("EXCLUDE_REGISTRATION_BY_DEFAULT");
+            index++;      
+
+            adminToolUrl = b.getString("ADMIN_TOOL_URL");
+            index++;      
+            curationToolUrl = b.getString("CURATION_TOOL_URL");
+            index++;
+            nciMetathesaurusUrl = b.getString("NCI_METATHESAURUS_URL");
             index++;            
+            nciTerminologyServerUrl = b.getString("NCI_TERMINOLOGY_SERVER_URL");
+            index++;
+            sentinelToolUrl = b.getString("SENTINEL_TOOL_URL");
+            index++;             
 
                         
         } 
@@ -191,6 +209,66 @@ public class CDEBrowserParams
   public void setExcludeRegistrationStatuses(String excludeRegistrationStatuses)
   {
     this.excludeRegistrationStatuses = excludeRegistrationStatuses;
+  }
+
+
+  public void setCurationToolUrl(String curationToolUrl)
+  {
+    this.curationToolUrl = curationToolUrl;
+  }
+
+
+  public String getCurationToolUrl()
+  {
+    return curationToolUrl;
+  }
+
+
+  public void setNciMetathesaurusUrl(String nciMetathesaurusUrl)
+  {
+    this.nciMetathesaurusUrl = nciMetathesaurusUrl;
+  }
+
+
+  public String getNciMetathesaurusUrl()
+  {
+    return nciMetathesaurusUrl;
+  }
+
+
+  public void setNciTerminologyServerUrl(String nciTerminologyServerUrl)
+  {
+    this.nciTerminologyServerUrl = nciTerminologyServerUrl;
+  }
+
+
+  public String getNciTerminologyServerUrl()
+  {
+    return nciTerminologyServerUrl;
+  }
+
+
+  public void setSentinelToolUrl(String sentinelToolUrl)
+  {
+    this.sentinelToolUrl = sentinelToolUrl;
+  }
+
+
+  public String getSentinelToolUrl()
+  {
+    return sentinelToolUrl;
+  }
+
+
+  public void setAdminToolUrl(String adminToolUrl)
+  {
+    this.adminToolUrl = adminToolUrl;
+  }
+
+
+  public String getAdminToolUrl()
+  {
+    return adminToolUrl;
   }
            
 }

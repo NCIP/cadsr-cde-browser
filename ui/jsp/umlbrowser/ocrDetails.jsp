@@ -16,13 +16,14 @@
 <%@ page contentType="text/html;charset=windows-1252"%>
 
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
-<LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
-<SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/checkbox.js"></SCRIPT>
-<title>OCR Details</title>
-</head>
+  <head>
+    <TITLE>Object Class Details</TITLE>
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
+    <LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
+    <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/checkbox.js"></SCRIPT>
+   
+  </head>
+  
 <body topmargin="0">
 <SCRIPT LANGUAGE="JavaScript">
 <!--
@@ -49,27 +50,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
 <html:hidden property="<%=UmlBrowserFormConstants.OCR_BR_CRUMBS_INDEX%>"/>
 <html:hidden value="" property="<%=UmlBrowserNavigationConstants.METHOD_PARAM%>"/>
 
-<TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
-  <tr>
-
-    <td align="left" nowrap>
-
-    <html:img page="/i/objectClassBanner.gif" border="0" />
-    </td>
-
-    <td align=right valign=top colspan=2 nowrap>
-      <TABLE Cellpadding=0 Cellspacing=0 border=0 >
-        <TR>
-          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('<%=request.getContextPath()%>/common/help/cdeBrowserHelp.html','helpWin',700,600)"><html:img page="/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
-         <logic:present name="nciUser">
-            <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%="logout?FirstTimer=0"%>" TARGET="_top"><html:img page="/i/logout.gif" alt="Logout" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Logout&nbsp;</font></TD>
-          </logic:present>
-        </TR>
-      </TABLE>
-    </td>
-  </tr>
-
-</TABLE>
+<%@ include  file="common_header_inc.jsp" %>
 
 
 <jsp:include page="mltitab_inc.jsp" flush="true">

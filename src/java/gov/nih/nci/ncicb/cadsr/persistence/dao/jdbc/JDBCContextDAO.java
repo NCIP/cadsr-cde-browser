@@ -87,7 +87,7 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
       super.setSql(contextsql);
     }
     public void setSqlWithExcludeList(String excludeList){
-     String contextQueryStmt = contextsqlNoOrderBy +" where name NOT IN ( " +excludeList + ") ORDER BY name ";
+     String contextQueryStmt = contextsqlNoOrderBy +" where upper(name) NOT IN ( " +excludeList + ") ORDER BY upper(name)";
       
       super.setSql(contextQueryStmt);
     }

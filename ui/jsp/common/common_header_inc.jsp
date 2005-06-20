@@ -1,7 +1,9 @@
 
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <%
 	String dest = pageContext.getRequest().getParameter("loginDestination");
+  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
 %>
 
 
@@ -40,22 +42,22 @@
     <TABLE align ="left" width="100%" Cellpadding=0 Cellspacing=0 border=0 >
           <tr>
            <td  valign="bottom" align="center" width="15%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-               <a href="http://cadsradmin.nci.nih.gov" target="_blank" >Admin Tool&nbsp;</a> </span></td>
+               <a href="<%=params.getAdminToolUrl()%>" target="_blank" >Admin Tool&nbsp;</a> </span></td>
 
            <td  align="left" width="15%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-                <a href="http://cdecurate.nci.nih.gov" target="_blank">
+                <a href="<%=params.getCurationToolUrl()%>" target="_blank">
                       Curation Tool&nbsp;</a></span>
             </td>
            <td  align="center"  width="22%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-                <a href="http://ncimeta.nci.nih.gov" target="_blank" >
+                <a href="<%=params.getNciMetathesaurusUrl()%>" target="_blank" >
                       NCI Metathesaurus&nbsp;</a></span>
             </td>
            <td  align="center" width="28%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-                <a href="http://nciterms.nci.nih.gov" target="_blank">
+                <a href="<%=params.getNciTerminologyServerUrl()%>" target="_blank">
                       NCI Terminology Server&nbsp;</a></span>
             </td>
            <td  align="center" width="15%" height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-                <a href="http://cadsrsentinel.nci.nih.gov" target="_blank">
+                <a href="<%=params.getSentinelToolUrl()%>" target="_blank">
                       Sentinel Tool&nbsp;</a></span>
             </td>            
         </tr>
