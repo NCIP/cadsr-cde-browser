@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.CollectionUtil;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.TreeParametersTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JDataElementTransferObject;
@@ -52,7 +53,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.18 2005-06-17 20:18:48 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.19 2005-06-21 21:07:44 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -81,7 +82,9 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       registerResultObject("tibSearchDE");
       registerStringParameter("P_PARAM_TYPE");
       registerStringParameter("P_IDSEQ");
-
+      //For treeBread crumbs
+      registerStringParameter(TreeConstants.TREE_BREADCRUMBS);
+      registerStringResult(TreeConstants.TREE_BREADCRUMBS);
       //
       registerStringResult("P_PARAM_TYPE");
       registerStringResult("P_IDSEQ");
@@ -188,6 +191,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
       log.info("- Retrieved request parameters successfully");
 
+      /**
       TreeParameters treeParam = new TreeParametersTransferObject();
 
       if ((paramType != null) && (paramIdSeq != null) && !("newSearch".equals(performQuery))) {
@@ -203,8 +207,8 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
           treeParam.setClassSchemeName(csName);
           treeParam.setConteIdseq(treeConteIdseq);
 
-          /*pc = (CDEBrowserPageContext)ph
-             .findPageContext(paramType, paramCsCsiIdSeq, sessionId);*/
+          pc = (CDEBrowserPageContext)ph
+             .findPageContext(paramType, paramCsCsiIdSeq, sessionId);
           pc = new PageContextValueObject(treeParam);
         }
         else if (paramType.equals("TEMPLATE")) {
@@ -216,8 +220,8 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
           treeParam.setCDETemplateName(templateName);
           treeParam.setConteIdseq(treeConteIdseq);
           treeParam.setContextName(conteName);
-          /*pc = (CDEBrowserPageContext)ph
-             .findPageContext(paramType, paramCsCsiIdSeq, sessionId);*/
+          pc = (CDEBrowserPageContext)ph
+             .findPageContext(paramType, paramCsCsiIdSeq, sessionId);
           pc = new PageContextValueObject(treeParam);
         }
         else {
@@ -232,7 +236,14 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
         log.info("- Created PageContext object successfully");
       }
+       **/
+       String crumbs = getStringInfo(TreeConstants.TREE_BREADCRUMBS);
 
+       if(crumbs!=null)
+          crumbs = StringUtils.strReplace(crumbs,"*??*","'");
+       setResult(TreeConstants.TREE_BREADCRUMBS, crumbs);
+
+       
       DataElementSearchBean desb = null;
       List queryResults = null;
       String pageNum;

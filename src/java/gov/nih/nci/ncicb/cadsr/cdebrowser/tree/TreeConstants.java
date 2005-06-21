@@ -12,5 +12,11 @@ public interface TreeConstants  {
   public static final String FORM_DETAILS_FUNCTION = "formDetailsAction";
   public static final String CTEP_USER_FLAG = "ctepUser";
   
+  public static final String TREE_BREADCRUMBS="treeBreadCrumbs";
+  
+  //This has to be replaced to the actual value once the tree is build
+  //Done in webTree.jsp
+  public static final String TREE_BREADCRUMBS_HOLDER="%%crumbs%%";
+  
   public static final String BR_CONTEXT_EXCLUDE_LIST_STR = "brContextExcludeListStr";
 }

@@ -287,7 +287,7 @@
            <fileset dir="${config.home}/META-INF">
              <patternset>
                <include name="application.xml"/>
-               <include name="jboss-app.xml"/>
+               <!--include name="jboss-app.xml"/-->
              </patternset>
            </fileset>      
         </copy> 
@@ -662,7 +662,7 @@
         
         <fileset dir="${classes.build.dir}">
           <patternset>
-             <include name="META-INF/jboss-app.xml"/>            
+             <!--include name="META-INF/jboss-app.xml"/ -->            
           </patternset>
         </fileset> 
         

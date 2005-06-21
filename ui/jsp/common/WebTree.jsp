@@ -133,7 +133,7 @@
       {
         DefaultMutableTreeNode displayNode = (DefaultMutableTreeNode) displayTree.nextElement();
         WebNode displayWebNode = (WebNode) displayNode.getUserObject();
-      
+        TreeUtils.setBreadCrumbsInfo(displayNode,displayWebNode);
         if (displayWebNode != null)
         {
           String myName = displayWebNode.getName();
@@ -187,6 +187,7 @@
  
           // render name with action (if defined)
           String linkAction = displayWebNode.getAction();
+
           if (linkAction.length() > 0)
           { %>
             <td  nowrap><a name="<%=myId%>" href="<%=linkAction%>"><%=myName%></a></td>                

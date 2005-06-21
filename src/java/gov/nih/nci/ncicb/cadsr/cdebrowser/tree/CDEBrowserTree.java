@@ -48,6 +48,7 @@ public class CDEBrowserTree
 
   Context ctx = null;
   DefaultMutableTreeNode tree = null;
+
   BaseTreeNode baseNode = null;
 
   //TimeUtils.recordStartTime("Tree");

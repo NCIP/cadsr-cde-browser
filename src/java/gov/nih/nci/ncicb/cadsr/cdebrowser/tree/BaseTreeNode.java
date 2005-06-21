@@ -43,6 +43,8 @@ public class BaseTreeNode implements TreeConstants, CaDSRConstants,TreeFunctions
       }
     }
     
+    // Add bread crumbs info
+    extraURLParameters = extraURLParameters + "&"+TREE_BREADCRUMBS+"="+TREE_BREADCRUMBS_HOLDER;
     return extraURLParameters;
   }
 

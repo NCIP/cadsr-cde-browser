@@ -14,6 +14,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserNavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.CDECompareList"%>
+<%@ page import= "gov.nih.nci.ncicb.cadsr.cdebrowser.tree.*"%>
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 
@@ -57,10 +58,14 @@
   String txtValueDomain = desb.getVDPrefName();
   String txtClassSchemeItem = desb.getCSIName();
   String pageContextInfo = "";
+  
   if (!paramIdseq.equals("") && !paramType.equals("")){
-    CDEBrowserPageContext pg = (CDEBrowserPageContext)infoBean.getInfo(ProcessConstants.PAGE_CONTEXT);
-    pageContextInfo = pg.getPageContextDisplayText();
+    //CDEBrowserPageContext pg = (CDEBrowserPageContext)infoBean.getInfo(ProcessConstants.PAGE_CONTEXT);
+    //pageContextInfo = pg.getPageContextDisplayText();
+    pageContextInfo = infoBean.getStringInfo(TreeConstants.TREE_BREADCRUMBS);
   }
+  
+  
   String firstDisplay = (String)infoBean.getInfo("NOT_FIRST_DISPLAY");
   if (firstDisplay ==null) firstDisplay = "";
 

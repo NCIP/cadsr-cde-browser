@@ -25,6 +25,7 @@ public interface CaDSRConstants {
   public static final String TREE_REFRESH_INDICATOR="treeRefreshIndicator";
   public static final String ANCHOR="anchor";
   
+  
   public static final String ERROR_FATAL="FB911";
   
   public static final String CLEAR_SESSION_KEYS="clearSessionKeys";
