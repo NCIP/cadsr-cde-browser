@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.9 2005-06-20 13:02:21 kakkodis Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.10 2005-06-22 15:42:12 jiangja Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -121,7 +121,7 @@ public class GetExcelDownload extends BasePersistingProcess {
       excelFileSuffix = dbUtil.getUniqueId("SBREXT.XML_FILE_SEQ.NEXTVAL");
       excelFilename =
         getStringInfo("XML_DOWNLOAD_DIR") + "DataElements" + "_" +
-        excelFileSuffix + ".csv";
+        excelFileSuffix + ".xls";
 
       //writeToExcelFile(resultsVector,excelFilename);
       generateExcelFile(excelFilename, dbUtil);
@@ -136,7 +136,7 @@ public class GetExcelDownload extends BasePersistingProcess {
       catch (TransitionConditionException tce) {
         reportException(tce, DEBUG);
       }
-
+      log.error("Error generating excel file", ex);
       reportException(ex, DEBUG);
     }
     finally {
