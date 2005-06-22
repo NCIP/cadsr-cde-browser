@@ -489,6 +489,7 @@
           <include name="WEB-INF/validat*.xml"/>
           <include name="WEB-INF/jboss-web.xml"/>
           <include name="WEB-INF/spring/*.xml"/>
+          <include name="WEB-INF/ehcache.xml"/>
         </patternset>
       </fileset>
       <fileset dir="${classes.build.dir}">
