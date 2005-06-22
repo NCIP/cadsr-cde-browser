@@ -50,6 +50,7 @@ public class DBUtil  {
         //Extract Oracle Native Connection
         conn = ds.getConnection();
         isConnected = true;
+        isOracleConnection = false;
         log.info
         ("Connected to the database successfully using datasource "+PersistenceConstants.DATASOURCE_LOCATION_KEY);
       }
