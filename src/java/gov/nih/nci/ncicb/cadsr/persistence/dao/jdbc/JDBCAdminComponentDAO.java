@@ -247,19 +247,36 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
      return false;
   }
 
-  // Publish ChangeOrder
   /**
    * Gets all CSI by funtion and admin Component type
-   *
+   * 
    * @param <b>acId</b> Idseq of an admin component
-   *
-   *
+   *    
+   *    
+   * @param csType
+   * @param csiType
+   * @param contextIdseq
+   * @return 
    */
   public List getCSIByType(String csType, String csiType, String contextIdseq)
     {
       CSCSIsByTypeQuery query = new CSCSIsByTypeQuery(getDataSource());
       return query.getCSCSIs(csType,csiType,contextIdseq);
     }
+  /**
+   * Gets all CSI by classification and classification item type
+   *
+   * @param <b>csType</b> type of classification
+   * @param <b>csiType</b> type of classification item
+   *
+   *
+   */
+  public List getAllCSIByType(String csType, String csiType)
+    {
+      AllCSCSIsByTypeQuery query = new AllCSCSIsByTypeQuery(getDataSource());
+      return query.getCSCSIs(csType,csiType);
+    }
+    
     
     /**
    * Gets all CSI for CTEP
@@ -693,7 +710,6 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     }
  }
   
-      //Publish Change Order
   class CSCSIsByTypeQuery extends MappingSqlQuery {
     CSCSIsByTypeQuery(DataSource ds) {
       super(
@@ -741,8 +757,52 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     }
   }
 
+  class AllCSCSIsByTypeQuery extends MappingSqlQuery {
+    AllCSCSIsByTypeQuery(DataSource ds) {
+      super(
+        ds,
+          "select distinct cscsi.CS_CSI_IDSEQ, i.CSITL_NAME , "  +
+          " cs.LONG_NAME, cscsi.LABEL , cs.CONTE_IDSEQ " + 
+          " from  classification_schemes cs, "
+          + " sbr.class_scheme_items i , cs_csi cscsi "
+	   			+" where cs.CSTL_NAME=? and i.CSITL_NAME=? "
+					+" and cscsi.CSI_IDSEQ=i.CSI_IDSEQ "
+					+" and cscsi.CS_IDSEQ=cs.CS_IDSEQ "
+          +" order by cs.CONTE_IDSEQ ");
 
-  //Publish Chnage Order
+      declareParameter(new SqlParameter("CSTL_NAME", Types.VARCHAR));
+      declareParameter(new SqlParameter("CSITL_NAME", Types.VARCHAR));
+      compile();
+    }
+    
+   protected Object mapRow(
+      ResultSet rs,
+      int rownum) throws SQLException {
+        ClassSchemeItem csiTO = new CSITransferObject();
+        csiTO.setClassSchemeItemName(rs.getString("LABEL"));
+        csiTO.setClassSchemeItemType(rs.getString("csitl_name"));
+        csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
+        csiTO.setClassSchemeLongName(rs.getString("LONG_NAME"));
+        csiTO.setCsConteIdseq(rs.getString("CONTE_IDSEQ"));
+ 
+   return csiTO;
+   }
+
+    protected List getCSCSIs(
+      String csType,
+      String csiType) {
+
+
+      Object[] obj =
+        new Object[] {
+          csType,
+          csiType,
+        };
+
+      return execute(obj);
+    }
+  }
+
 
   /**
    * Inner class that delete a record in the ac_csi table.

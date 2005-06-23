@@ -354,13 +354,30 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   // Publish Change Order
 
   /**
-   * Gets all the publishing Classifications for a form
+   * Gets all the publishing Classifications for a form for given context id
    */
   public List getPublishingCSCSIsForForm(String contextIdSeq) {
     return getCSIByType(PersistenceConstants.CS_TYPE_PUBLISH
                     , PersistenceConstants.CSI_TYPE_PUBLISH_FORM
                     ,  contextIdSeq);
   }
+  
+  /**
+   * Gets all the publishing Classifications for forms
+   */
+  public List getAllPublishingCSCSIsForForm() {
+    return getAllCSIByType(PersistenceConstants.CS_TYPE_PUBLISH
+                    , PersistenceConstants.CSI_TYPE_PUBLISH_FORM );
+  }
+
+  /**
+   * Gets all the publishing Classifications for templates
+   */
+  public List getAllPublishingCSCSIsForTemplate() {
+    return getAllCSIByType(PersistenceConstants.CS_TYPE_PUBLISH
+                    , PersistenceConstants.CSI_TYPE_PUBLISH_TEMPLATE );
+  }
+
 
  /**
   * Gets all the forms sort by context id, protocol name, form name
@@ -391,7 +408,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
   query.setDataSource(getDataSource());
   query.setSql();
-  return query.execute();
+  return query.getAllTemplates();
  }
 
  /**
@@ -565,7 +582,8 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   */
     // Test getAllPublishedFormsByType
     //Collection temps = formTest.getAllProtocolsForPublishedForms("D9344734-8CAF-4378-E034-0003BA12F5E7");
-    Collection temps = formTest.getAllFormsOrderByContextProtocol();
+    //Collection temps = formTest.getAllFormsOrderByContextProtocol();
+     Collection temps = formTest.getAllPublishingCSCSIsForForm();
     System.out.println(temps.size() + " protocols retrieved");
 
       formX = formTest.findFormByPrimaryKey("D4D75662-033F-6DD1-E034-0003BA0B1A09");
@@ -630,34 +648,32 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    /**
     * 3.0 Refactoring- Removed JDBCTransferObject
     */
-    protected Object mapRow(
-      ResultSet rs,
-      int rownum) throws SQLException {
-    Form form = new FormTransferObject();
-    form.setFormIdseq(rs.getString(1)); // QC_IDSEQ
-    form.setIdseq(rs.getString(1));
-    form.setLongName(rs.getString(9)); //LONG_NAME
-    form.setPreferredName(rs.getString(7)); // PREFERRED_NAME
-
-    //setContext(new ContextTransferObject(rs.getString("context_name")));
-    ContextTransferObject contextTransferObject = new ContextTransferObject();
-    contextTransferObject.setConteIdseq(rs.getString(4)); //CONTE_IDSEQ
-    contextTransferObject.setName(rs.getString(12)); // CONTEXT_NAME
-    form.setContext(contextTransferObject);
-    form.setDateModified(rs.getTimestamp(15));
-    ProtocolTransferObject protocolTransferObject =
-      new ProtocolTransferObject(rs.getString(11)); //PROTOCOL_LONG_NAME
-    protocolTransferObject.setProtoIdseq(rs.getString(10));  // PROTO_IDSEQ
-    form.setProtocol(protocolTransferObject);
-
-    form.setFormType(rs.getString(3)); // TYPE
-    form.setAslName(rs.getString(6)); // WORKFLOW
-    form.setVersion(new Float(rs.getString(2))); // VERSION
-    form.setPreferredDefinition(rs.getString(8)); // PREFERRED_DEFINITION
-    form.setCreatedBy(rs.getString(13)); // CREATED_BY
-    form.setFormCategory(rs.getString(5));
-    form.setPublicId(rs.getInt(17));
-    return form;
+    protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
+      Form form = new FormTransferObject();
+      form.setFormIdseq(rs.getString(1)); // QC_IDSEQ
+      form.setIdseq(rs.getString(1));
+      form.setLongName(rs.getString(9)); //LONG_NAME
+      form.setPreferredName(rs.getString(7)); // PREFERRED_NAME
+  
+      //setContext(new ContextTransferObject(rs.getString("context_name")));
+      ContextTransferObject contextTransferObject = new ContextTransferObject();
+      contextTransferObject.setConteIdseq(rs.getString(4)); //CONTE_IDSEQ
+      contextTransferObject.setName(rs.getString(12)); // CONTEXT_NAME
+      form.setContext(contextTransferObject);
+      form.setDateModified(rs.getTimestamp(15));
+      ProtocolTransferObject protocolTransferObject =
+        new ProtocolTransferObject(rs.getString(11)); //PROTOCOL_LONG_NAME
+      protocolTransferObject.setProtoIdseq(rs.getString(10));  // PROTO_IDSEQ
+      form.setProtocol(protocolTransferObject);
+  
+      form.setFormType(rs.getString(3)); // TYPE
+      form.setAslName(rs.getString(6)); // WORKFLOW
+      form.setVersion(new Float(rs.getString(2))); // VERSION
+      form.setPreferredDefinition(rs.getString(8)); // PREFERRED_DEFINITION
+      form.setCreatedBy(rs.getString(13)); // CREATED_BY
+      form.setFormCategory(rs.getString(5));
+      form.setPublicId(rs.getInt(17));
+      return form;
     }
   }
 
@@ -921,24 +937,36 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     }
 
     public void setQuerySql(String protocolIdSeq) {
-     String querySql = " SELECT * from FB_FORMS_VIEW formview, published_forms_view published "
+     String querySql = " SELECT *  " +
+     "from FB_FORMS_VIEW formview, published_forms_view published, "
+     + " (select ac_idseq, cs_csi_idseq from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
+                + CaDSRConstants.FORM_CS_TYPE + "') and upper(CSITL_NAME) = upper('"
+                + CaDSRConstants.FORM_CSI_TYPE + "')) accs"
         + " where PROTO_IDSEQ = '"+ protocolIdSeq +"'"
         + " and published.QC_IDSEQ = formview.QC_IDSEQ "
+        +  "and formview.QC_IDSEQ = accs.AC_IDSEQ(+) "
         + " ORDER BY upper(protocol_long_name), upper(context_name)";
       super.setSql(querySql);
     }
 
 
-    protected Object mapRow(
-      ResultSet rs,
-      int rownum) throws SQLException {
+    protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
       String formName = rs.getString("LONG_NAME");
+      Form form = new JDBCFormTransferObject(rs);
+      if ((rs.getString("CS_CSI_IDSEQ")!= null &&
+        (rs.getString("CS_CSI_IDSEQ")).length() >0)) {
+       ClassSchemeItem csi = new CSITransferObject();
+      csi.setCsCsiIdseq(rs.getString("CS_CSI_IDSEQ"));
+     if (form.getClassifications() == null)
+      form.setClassifications(new ArrayList());
 
-      return new JDBCFormTransferObject(rs);
+     form.getClassifications().add(csi);
+      
     }
+      return form;
 
   }
-
+  }
   /**
    * Inner class that accesses database to create a form in the
    * quest_contents_ext table.
@@ -1267,6 +1295,13 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    }
    return form;
   }
+  
+  protected List getAllTemplates() {
+      execute();
+      return formsList;
+
+    }
+
  }
 
    /**
@@ -1326,6 +1361,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
  }
 
   class PublishedFormsByTypeQuery extends MappingSqlQuery {
+  String lastFormId = null;
+  Form currentForm = null;
+  List formsList = new ArrayList();
 
     PublishedFormsByTypeQuery(DataSource ds)  {
       super(ds, " select  published.QC_IDSEQ "
@@ -1334,29 +1372,55 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
                                     +" ,published.QC_PREFERRED_DEFINITION "
                                     +" ,published.FORM_CONTE_IDSEQ "
                                     +" ,published.FORM_CONTEXT "
-                                    +" from published_forms_view published "
-                                    +" where "
+                                    + ", accs.cs_csi_idseq "
+                                    +" from published_forms_view published, "
+                    + " (select ac_idseq, cs_csi_idseq from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
+                    + CaDSRConstants.TEMPLATE_CS_TYPE + "') and upper(CSITL_NAME) = upper('"
+                    + CaDSRConstants.TEMPLATE_CSI_TYPE + "')) accs "
+                                    +" where  +  published.QC_IDSEQ = accs.AC_IDSEQ(+) and "
                                     +" published.QTL_NAME = ? "
                                     +" and published.PUBLISH_CONTE_IDSEQ = ? "
-                                    +" order by upper(QC_LONG_NAME) " );
+                                    +" order by upper(QC_LONG_NAME), published.QC_IDSEQ " );
       declareParameter(new SqlParameter("form_type", Types.VARCHAR));
       declareParameter(new SqlParameter("context_id", Types.VARCHAR));
       compile();
     }
 
   protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
+   String formId = rs.getString("qc_idseq");
 
-   Form form = new FormTransferObject();
-   form.setFormIdseq(rs.getString("qc_idseq"));                       // QC_IDSEQ
-   form.setIdseq(rs.getString("qc_idseq"));
-   form.setLongName(rs.getString("qc_long_name"));                       //LONG_NAME
-   form.setPreferredName(rs.getString("qc_preferred_name"));             // PREFERRED_NAME
-   form.setPreferredDefinition(rs.getString("qc_preferred_definition")); // preferred_definition
-   ContextTransferObject contextTransferObject = new ContextTransferObject();
-   contextTransferObject.setConteIdseq(rs.getString("FORM_CONTE_IDSEQ")); //CONTE_IDSEQ
-   contextTransferObject.setName(rs.getString("FORM_CONTEXT")); //context name
-   form.setContext(contextTransferObject);
+   Form form = null;
 
+   if (!formId.equals(lastFormId)) {
+  
+     form = new FormTransferObject();
+     form.setFormIdseq(rs.getString("qc_idseq"));                       // QC_IDSEQ
+     form.setIdseq(rs.getString("qc_idseq"));
+     form.setLongName(rs.getString("qc_long_name"));                       //LONG_NAME
+     form.setPreferredName(rs.getString("qc_preferred_name"));             // PREFERRED_NAME
+     form.setPreferredDefinition(rs.getString("qc_preferred_definition")); // preferred_definition
+     ContextTransferObject contextTransferObject = new ContextTransferObject();
+     contextTransferObject.setConteIdseq(rs.getString("FORM_CONTE_IDSEQ")); //CONTE_IDSEQ
+     contextTransferObject.setName(rs.getString("FORM_CONTEXT")); //context name
+     form.setContext(contextTransferObject);
+
+     lastFormId = formId;
+     currentForm = form;
+     formsList.add(form);
+   } else   {
+     form = currentForm;
+   }
+   if ((rs.getString("CS_CSI_IDSEQ")!= null &&
+      (rs.getString("CS_CSI_IDSEQ")).length() >0)) {
+     ClassSchemeItem csi = new CSITransferObject();
+     csi.setCsCsiIdseq(rs.getString("CS_CSI_IDSEQ"));
+  //   csi.setClassSchemeItemType(rs.getString("CSITL_NAME"));
+  //   csi.setCsType(rs.getString("CSTL_NAME"));
+     if (form.getClassifications() == null)
+      form.setClassifications(new ArrayList());
+
+     form.getClassifications().add(csi);
+   }
    return form;
   }
 
@@ -1365,8 +1429,8 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         new Object[] {formType,
         contextId
         };
-
-      return execute(obj);
+      execute(obj);
+      return formsList;
 
     }
  }

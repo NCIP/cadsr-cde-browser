@@ -28,12 +28,8 @@ public class CDEBrowserTree
  private String extraURLParameters = "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
  private String contextExcludeListStr = null;
 
- private boolean showFormsAlphebetically = false;
 
  public CDEBrowserTree() {
-  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
-
-  showFormsAlphebetically = new Boolean(params.getShowFormsAlphebetical()).booleanValue();
  }
 
  public DefaultMutableTreeNode getTree(Hashtable params) throws Exception {
@@ -182,7 +178,7 @@ public class CDEBrowserTree
 
     //Get Publishing Node info
     log.info("Publish strat " + TimeUtils.getEasternTime());
-    DefaultMutableTreeNode publishNode = cache.getPublishNode(baseNode, currContext, showFormsAlphebetically);
+    DefaultMutableTreeNode publishNode = cache.getPublishNode(currContext);
 
     if (publishNode != null)
      contextNode.add(publishNode);

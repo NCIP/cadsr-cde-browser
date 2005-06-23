@@ -226,4 +226,13 @@ public interface FormDAO extends AdminComponentDAO {
    */
   public List getAllTemplateTypes(String contextId);
 
+  /**
+   * Gets all the publishing Classifications for forms
+   */
+  public List getAllPublishingCSCSIsForForm() ;
+  /**
+   * Gets all the publishing Classifications for templates
+   */
+  public List getAllPublishingCSCSIsForTemplate() ;
+
 }

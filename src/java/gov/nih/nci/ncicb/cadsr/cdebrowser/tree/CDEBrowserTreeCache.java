@@ -3,6 +3,7 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.CDEBrowserTreeService;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.impl.CDEBrowserTreeServiceImpl;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
+import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.TimeUtils;
 
 import java.sql.Connection;
@@ -33,6 +34,7 @@ public class CDEBrowserTreeCache
   private DefaultMutableTreeNode publishNode = null;
   private Map allClassificationNodes = null;
   private static ApplicationServiceLocator appServiceLocator = null;
+  private Map allPublishingNode = null;
   
   public static CDEBrowserTreeCache getAnInstance() throws Exception
   {
@@ -73,9 +75,14 @@ public class CDEBrowserTreeCache
     
     //create classification nodes
     allClassificationNodes = appServiceLocator.findTreeService().getAllClassificationNodes(baseTree, idGen);
+    CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+
+    boolean showFormsAlphebetically = new Boolean(params.getShowFormsAlphebetical()).booleanValue();
     
+    //creating publishing nodes
+    allPublishingNode = appServiceLocator.findTreeService().getAllPublishingNode(baseTree, idGen, showFormsAlphebetically);
     //setCtepTemplateCtepNodes(conn,baseTree);
-  log.info("Init end"+TimeUtils.getEasternTime());
+    log.info("Init end"+TimeUtils.getEasternTime());
   }
   
   public void initCtepInfo(BaseTreeNode baseTree,Context ctepContext) throws Exception
@@ -114,14 +121,10 @@ public class CDEBrowserTreeCache
     return allContextHolders;
   }
 
-
-  public DefaultMutableTreeNode getPublishNode(BaseTreeNode baseTree, 
-  Context currContext,  boolean showFormsAlphebetically) throws Exception
+  public DefaultMutableTreeNode getPublishNode( Context currContext) throws Exception
   {
-   
-    return appServiceLocator.findTreeService().getPublishingNode(baseTree, idGen, currContext, showFormsAlphebetically);
+    return (DefaultMutableTreeNode) allPublishingNode.get(currContext.getConteIdseq());
   }
-
 
   public void set_allContextHolders(List allContextHolders)
   {
