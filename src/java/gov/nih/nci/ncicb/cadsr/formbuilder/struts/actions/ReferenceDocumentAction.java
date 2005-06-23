@@ -160,19 +160,20 @@ public class ReferenceDocumentAction
    Blob theBlob = null;
 
    Connection conn = null;
-
+   ResultSet rs = null;
+   PreparedStatement ps = null;
    try {
     DBUtil dbUtil = new DBUtil();
 
     //String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
-    dbUtil.getConnectionFromContainer();
+    dbUtil.getOracleConnectionFromContainer();
 
     String sqlStmt = "SELECT blob_content, mime_type from reference_blobs where name = ?";
     log.info(sqlStmt);
     conn = dbUtil.getConnection();
-    PreparedStatement ps = conn.prepareStatement(sqlStmt);
+    ps = conn.prepareStatement(sqlStmt);
     ps.setString(1, attachmentName);
-    ResultSet rs = ps.executeQuery();
+    rs = ps.executeQuery();
     boolean exists = false;
 
     if (rs.next()) {
@@ -188,6 +189,23 @@ public class ReferenceDocumentAction
     log.error("Exception Caught:", ex);
    } finally {
     try {
+    
+     try
+     {
+       if(ps!=null)
+        ps.close();
+     }
+     catch (Exception e)
+     {       
+     }
+     try
+     {
+       if(rs!=null)
+        rs.close();
+     }
+     catch (Exception e)
+     {       
+     }     
      if (conn != null)
       conn.close();
 
@@ -996,16 +1014,17 @@ public class ReferenceDocumentAction
      sqlSetBlob = "UPDATE reference_blobs " + "SET blob_content = ? " + "WHERE name = ?";
 
   Connection conn = null;
-
+  PreparedStatement ps = null;
+  ResultSet rs = null;
   try {
    DBUtil dbUtil = new DBUtil();
 
    //String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
-   dbUtil.getConnectionFromContainer();
+   dbUtil.getOracleConnectionFromContainer();
    conn = dbUtil.getConnection();
    conn.setAutoCommit(false);
    //make new row
-   PreparedStatement ps = conn.prepareStatement(sqlNewRow);
+   ps = conn.prepareStatement(sqlNewRow);
    ps.setString(1, rd_idseq);
    ps.setString(2, attachment.getName());
    ps.setString(3, attachment.getMimeType());
@@ -1016,7 +1035,7 @@ public class ReferenceDocumentAction
    //lock new row
    ps = conn.prepareStatement(sqlLockRow);
    ps.setString(1, attachment.getName());
-   ResultSet rs = ps.executeQuery();
+   rs = ps.executeQuery();
    rs.next();
 
    BLOB dbBlob = (BLOB)rs.getBlob(1);
@@ -1037,6 +1056,23 @@ public class ReferenceDocumentAction
    throw new DMLException("Exception occurred while saving attachment to the database", ex);
   } finally {
    try {
+   
+     try
+     {
+       if(ps!=null)
+        ps.close();
+     }
+     catch (Exception e)
+     {       
+     }
+     try
+     {
+       if(rs!=null)
+        rs.close();
+     }
+     catch (Exception e)
+     {       
+     }      
     if (conn != null)
      conn.close();
    //if (db != null) db.closeDB();
