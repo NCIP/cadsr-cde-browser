@@ -342,7 +342,6 @@ public class CDEBrowserTreeServiceImpl
 
     while (contextIter.hasNext()) {
       String currContextId = (String)contextIter.next();
-      Map currCSMap = (Map)formCSMap.get(currContextId);
       treeNodeMap.clear();
       
       publishFormCSI = (CSITransferObject)formPublishCSCSIMap.get(currContextId);
@@ -404,16 +403,23 @@ public class CDEBrowserTreeServiceImpl
               Form currProtocolForm = (Form)protocolFormsIt.next();
 
               currProtocolForm.setProtocol(currProto);
+              
+              Collection formCSes = currProtocolForm.getClassifications();
 
-              if (currProtocolForm.getClassifications() == null 
-              || currProtocolForm.getClassifications().size() == 0) {
+              if (formCSes == null || formCSes.size() == 0) {
               currProtoNode.add(this.getFormNode(idGen.getNewId(), currProtocolForm, treeFunctions, true));
               } else {
                 //add formNode to csTree
-                this.copyCSTree(currProtocolForm, currCSMap, treeNodeMap, 
-                getFormNode(idGen.getNewId(), currProtocolForm, treeFunctions, true),
-                currProtoNode, idGen);
-      
+                Iterator csIter = formCSes.iterator();
+                while (csIter.hasNext()) 
+                {
+                  ClassSchemeItem currCSI = (ClassSchemeItem) csIter.next();
+                  
+                  Map currCSMap = (Map)formCSMap.get(currCSI.getCsConteIdseq());
+                  this.copyCSTree(currProtocolForm, currCSMap, treeNodeMap, 
+                  getFormNode(idGen.getNewId(), currProtocolForm, treeFunctions, true),
+                  currProtoNode, idGen);
+                }
               }
 
               listedByProtocol.add(currProtoNode);
