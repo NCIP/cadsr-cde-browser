@@ -939,7 +939,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     public void setQuerySql(String protocolIdSeq) {
      String querySql = " SELECT *  " +
      "from FB_FORMS_VIEW formview, published_forms_view published, "
-     + " (select ac_idseq, cs_csi_idseq from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
+     + " (select ac_idseq, cs_csi_idseq, cs_conte_idseq  from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
                 + CaDSRConstants.FORM_CS_TYPE + "') and upper(CSITL_NAME) = upper('"
                 + CaDSRConstants.FORM_CSI_TYPE + "')) accs"
         + " where PROTO_IDSEQ = '"+ protocolIdSeq +"'"
@@ -957,6 +957,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         (rs.getString("CS_CSI_IDSEQ")).length() >0)) {
        ClassSchemeItem csi = new CSITransferObject();
       csi.setCsCsiIdseq(rs.getString("CS_CSI_IDSEQ"));
+      csi.setCsConteIdseq(rs.getString("cs_conte_idseq"));
      if (form.getClassifications() == null)
       form.setClassifications(new ArrayList());
 
@@ -1153,9 +1154,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
                 + " ,quest.PROTO_IDSEQ PROTO_IDSEQ " + " ,proto.LONG_NAME   proto_name "
                 + " ,proto.preferred_name proto_preferred_name "
                 + "  ,proto.preferred_definition proto_preferred_definition, proto.CONTE_IDSEQ proto_context "
-                + ", accs.cs_csi_idseq "
+                + ", accs.cs_csi_idseq, accs.cs_conte_idseq "
                 + " FROM  sbrext.quest_contents_ext quest,protocols_ext proto,  "
-                + " (select ac_idseq, cs_csi_idseq from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
+                + " (select ac_idseq, cs_csi_idseq, cs_conte_idseq  from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
                 + CaDSRConstants.FORM_CS_TYPE + "') and upper(CSITL_NAME) = upper('"
                 + CaDSRConstants.FORM_CSI_TYPE + "')) accs "
                 + " WHERE " + " quest.QC_IDSEQ = accs.AC_IDSEQ(+) and quest.qtl_name = 'CRF' "
@@ -1208,6 +1209,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       (rs.getString("CS_CSI_IDSEQ")).length() >0)) {
      ClassSchemeItem csi = new CSITransferObject();
      csi.setCsCsiIdseq(rs.getString("CS_CSI_IDSEQ"));
+     csi.setCsConteIdseq(rs.getString("cs_conte_idseq")); 
   //   csi.setClassSchemeItemType(rs.getString("CSITL_NAME"));
   //   csi.setCsType(rs.getString("CSTL_NAME"));
      if (form.getClassifications() == null)
@@ -1373,8 +1375,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
                                     +" ,published.FORM_CONTE_IDSEQ "
                                     +" ,published.FORM_CONTEXT "
                                     + ", accs.cs_csi_idseq "
+                                    + ", accs.cs_conte_idseq"
                                     +" from published_forms_view published, "
-                    + " (select ac_idseq, cs_csi_idseq from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
+                    + " (select ac_idseq, cs_csi_idseq, cs_conte_idseq from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
                     + CaDSRConstants.TEMPLATE_CS_TYPE + "') and upper(CSITL_NAME) = upper('"
                     + CaDSRConstants.TEMPLATE_CSI_TYPE + "')) accs "
                                     +" where  +  published.QC_IDSEQ = accs.AC_IDSEQ(+) and "
@@ -1414,6 +1417,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       (rs.getString("CS_CSI_IDSEQ")).length() >0)) {
      ClassSchemeItem csi = new CSITransferObject();
      csi.setCsCsiIdseq(rs.getString("CS_CSI_IDSEQ"));
+     csi.setCsConteIdseq(rs.getString("CS_CONTE_IDSEQ"));
   //   csi.setClassSchemeItemType(rs.getString("CSITL_NAME"));
   //   csi.setCsType(rs.getString("CSTL_NAME"));
      if (form.getClassifications() == null)
