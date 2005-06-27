@@ -141,7 +141,7 @@ function clearProtocol() {
   }
 -->
 <%
-  System.out.println(" In Module edit JSP");
+
   // To jum to the correct location on the screen
   String jumpto = (String)request.getAttribute(CaDSRConstants.ANCHOR);
   String jumptoStr ="";
@@ -757,7 +757,5 @@ function clearProtocol() {
     <%@ include file="/common/common_bottom_border.jsp"%>
   </BODY>
   <html:javascript formName="moduleEditForm"/>
-  <%
-    System.out.println(" In Module edit JSP- Done");
-  %>
+
 </HTML>
