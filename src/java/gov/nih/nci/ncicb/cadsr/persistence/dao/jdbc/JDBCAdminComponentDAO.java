@@ -886,7 +886,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         + "csi_idseq, csi_name, csitl_name, csi_description, "
         + "cs_csi_idseq, csi_level, parent_csi_idseq, cs_conte_idseq "
         + " from SBREXT.BR_CS_CSI_HIER_VIEW_EXT "
-        + " where CSTL_NAME=? and CSITL_NAME=? "
+        + " where upper(CSTL_NAME) =upper(?) and upper(CSITL_NAME)=upper(?) "
         + " and CS_ASL_NAME = 'RELEASED' "
         + " and CSTL_NAME != 'Publishing' "
         + " order by cs_conte_idseq, CSI_LEVEL, upper(cs_long_name), upper(csi_name)");
