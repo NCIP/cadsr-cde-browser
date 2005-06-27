@@ -17,7 +17,6 @@ import gov.nih.nci.ncicb.cadsr.resource.ContextHolder;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import gov.nih.nci.ncicb.webtree.WebNode;
 
 import java.net.URLEncoder;
@@ -439,7 +438,6 @@ public class CDEBrowserTreeServiceImpl
       treeNodeMap.clear();
 
       String currContextId = (String)contextIter.next();
-      Map currCSMap = (Map)templateCSMap.get(currContextId);
       publishTemplateCSI = (CSITransferObject)templatePublishCSCSIMap.get(currContextId);
       publishNode = (DefaultMutableTreeNode)publishNodeByContextMap.get(currContextId);
 
@@ -467,10 +465,17 @@ public class CDEBrowserTreeServiceImpl
                 publishTemplateNode.add(getTemplateNode(idGen.getNewId(), 
                 currTemplate, treeFunctions));
               } else {
-                //add formNode to csTree
-                this.copyCSTree(currTemplate, currCSMap, treeNodeMap, 
-                getTemplateNode(idGen.getNewId(), currTemplate, treeFunctions),
-                publishTemplateNode, idGen);
+                //add template node to csTree(s)
+                Iterator csIter = currTemplate.getClassifications().iterator();
+                while (csIter.hasNext()) 
+                {
+                  ClassSchemeItem currCSI = (ClassSchemeItem) csIter.next();
+                  
+                  Map currCSMap = (Map)formCSMap.get(currCSI.getCsConteIdseq());
+                  this.copyCSTree(currTemplate, currCSMap, treeNodeMap, 
+                  getTemplateNode(idGen.getNewId(), currTemplate, treeFunctions),
+                  publishTemplateNode, idGen);
+                }
       
               }
 
@@ -837,52 +842,58 @@ public class CDEBrowserTreeServiceImpl
     * @param idGen the id genator used to get unique id when copy a node from
     * original tree
     */
-  private void copyCSTree(Form currForm,                  Map currCSMap,                   Map treeNodeMap,
+  private void copyCSTree(Form currForm, Map currCSMap, Map treeNodeMap,
                           DefaultMutableTreeNode newNode, DefaultMutableTreeNode rootNode, TreeIdGenerator idGen) {
-    Iterator csIter = currForm.getClassifications().iterator();
-
-    while (csIter.hasNext()) {
-      String cscsiId = ((ClassSchemeItem)csIter.next()).getCsCsiIdseq();
-
-      DefaultMutableTreeNode origTreeNode = (DefaultMutableTreeNode)currCSMap.get(cscsiId);
-      WebNode origWebNode = (WebNode)origTreeNode.getUserObject();
-
-      DefaultMutableTreeNode treeNodeCopy = (DefaultMutableTreeNode)treeNodeMap.get(origWebNode.getId());
-
-      if (treeNodeCopy == null) {
-        treeNodeCopy = new DefaultMutableTreeNode(origWebNode.copy(idGen.getNewId()));
-
-        treeNodeMap.put(origWebNode.getId(), treeNodeCopy);
-      }
-
-      treeNodeCopy.add(newNode);
-      DefaultMutableTreeNode pTreeNode = origTreeNode;
-      DefaultMutableTreeNode cTreeNode = treeNodeCopy;
-
-      //copy this branch of the cs tree all the way until one parent node is
-      //found in the new tree
-      while (pTreeNode.getParent() != null) {
-        DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)pTreeNode.getParent();
-
-        WebNode pWebNode = (WebNode)parentTreeNode.getUserObject();
-        DefaultMutableTreeNode pNodeCopy = (DefaultMutableTreeNode)treeNodeMap.get(pWebNode.getId());
-
-        if (pNodeCopy == null) {
-          pNodeCopy = new DefaultMutableTreeNode(pWebNode.copy(idGen.getNewId()));
-
-          treeNodeMap.put(pWebNode.getId(), pNodeCopy);
-          pNodeCopy.add(cTreeNode);
-          pTreeNode = parentTreeNode;
-          cTreeNode = pNodeCopy;
-        } else {
-          // when one parent node is found in the new tree, attach the copy
-          pNodeCopy.add(cTreeNode);
-
-          return ;
+                          
+    //if the cs map does not exist for any reason, simplely add the new to the root
+    if (currCSMap == null)
+      rootNode.add(newNode);
+    else {  
+      Iterator csIter = currForm.getClassifications().iterator();
+  
+      while (csIter.hasNext()) {
+        String cscsiId = ((ClassSchemeItem)csIter.next()).getCsCsiIdseq();
+  
+        DefaultMutableTreeNode origTreeNode = (DefaultMutableTreeNode)currCSMap.get(cscsiId);
+        WebNode origWebNode = (WebNode)origTreeNode.getUserObject();
+  
+        DefaultMutableTreeNode treeNodeCopy = (DefaultMutableTreeNode)treeNodeMap.get(origWebNode.getId());
+  
+        if (treeNodeCopy == null) {
+          treeNodeCopy = new DefaultMutableTreeNode(origWebNode.copy(idGen.getNewId()));
+  
+          treeNodeMap.put(origWebNode.getId(), treeNodeCopy);
         }
+  
+        treeNodeCopy.add(newNode);
+        DefaultMutableTreeNode pTreeNode = origTreeNode;
+        DefaultMutableTreeNode cTreeNode = treeNodeCopy;
+  
+        //copy this branch of the cs tree all the way until one parent node is
+        //found in the new tree
+        while (pTreeNode.getParent() != null) {
+          DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)pTreeNode.getParent();
+  
+          WebNode pWebNode = (WebNode)parentTreeNode.getUserObject();
+          DefaultMutableTreeNode pNodeCopy = (DefaultMutableTreeNode)treeNodeMap.get(pWebNode.getId());
+  
+          if (pNodeCopy == null) {
+            pNodeCopy = new DefaultMutableTreeNode(pWebNode.copy(idGen.getNewId()));
+  
+            treeNodeMap.put(pWebNode.getId(), pNodeCopy);
+            pNodeCopy.add(cTreeNode);
+            pTreeNode = parentTreeNode;
+            cTreeNode = pNodeCopy;
+          } else {
+            // when one parent node is found in the new tree, attach the copy
+            pNodeCopy.add(cTreeNode);
+  
+            return ;
+          }
+        }
+  
+        rootNode.add(cTreeNode);
       }
-
-      rootNode.add(cTreeNode);
     }
   }
 
