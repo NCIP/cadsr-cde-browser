@@ -15,7 +15,7 @@ import gov.nih.nci.ncicb.cadsr.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.util.PageIterator;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
-
+import gov.nih.nci.ncicb.cadsr.util.NCIBC4JUtil;
 import oracle.clex.persistence.bc4j.*;
 
 import oracle.jbo.*;
@@ -88,7 +88,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
     throws Exception {
     DataElementsViewImpl view = null;
     DataElementsViewRowImpl dataElementsViewRowImpl = null;
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
 
     try {
       view = getDataElementsView();
@@ -113,7 +113,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
    * Custom Method: Valid Values
    */
   public Vector getValidValues(Object aVdIdseq) throws Exception {
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
     Vector rows = new Vector();
 
     try {
@@ -161,7 +161,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
   public ViewObject getMyValidValuesView(Object aVdIdseq)
     throws Exception {
     ViewObject view = null;
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
 
     try {
       view = getValidValuesView();
@@ -184,7 +184,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
    */
   public Vector getClassificationSchemes(Object aDeIdseq)
     throws Exception {
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
     Vector rows = new Vector();
 
     try {
@@ -214,7 +214,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
   public Vector getClassificationSchemes(
     Object aDeIdseq,
     PageIterator pgIter) throws Exception {
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
     Vector rows = new Vector();
     Row[] queryResults;
 
@@ -299,7 +299,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
     throws Exception {
     ValueDomainsViewImpl view = null;
     ValueDomainsViewRowImpl valueDomainsViewRowImpl = null;
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
 
     try {
       view = getValueDomainsView();
@@ -322,7 +322,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
     throws Exception {
     AdministeredComponentsViewImpl view = null;
     AdministeredComponentsViewRowImpl acViewRowImpl = null;
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
 
     try {
       view = getAdministeredComponentsView();
@@ -431,7 +431,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
     QuestContentsExtViewRowImpl qcRow = null;
     ProtocolsViewRowImpl protoRow = null;
     PageContextValueObject pc = null;
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
     Hashtable pageContextHT = new Hashtable(10);
 
     try {

@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.persistence.bc4j;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.util.NCIBC4JUtil;
 import java.util.List;
 import oracle.clex.persistence.bc4j.BC4JUtil;
 import oracle.jbo.server.ViewObjectImpl;
@@ -48,7 +49,7 @@ public class ReferenceDocumentsViewRowImpl extends ViewRowImpl  {
 
   public Context getContext() {
 
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
     Context context = null;
     try {
       oracle.jbo.ViewObject contextView =

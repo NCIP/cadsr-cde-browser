@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JDesignationTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.*;
 
+import gov.nih.nci.ncicb.cadsr.util.NCIBC4JUtil;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import oracle.clex.persistence.bc4j.*;
@@ -630,7 +631,7 @@ public class DataElementsViewRowImpl extends ViewRowImpl {
 
   public List getReferenceDocs() {
     List refDocs = new ArrayList(9);
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
 
     try {
       oracle.jbo.ViewObject rdView =
@@ -657,7 +658,7 @@ public class DataElementsViewRowImpl extends ViewRowImpl {
 
   public List getDesignations() {
     List designations = new ArrayList(9);
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
 
     try {
       oracle.jbo.ViewObject desView =
@@ -687,7 +688,7 @@ public class DataElementsViewRowImpl extends ViewRowImpl {
    * contexts are are comma separated.
    */
   public String getUsingContexts() throws Exception {
-    BC4JUtil bc4jUtil = new BC4JUtil();
+    NCIBC4JUtil bc4jUtil = new NCIBC4JUtil();
     String usingContext = "";
     StringBuffer sbuf = new StringBuffer("");
 

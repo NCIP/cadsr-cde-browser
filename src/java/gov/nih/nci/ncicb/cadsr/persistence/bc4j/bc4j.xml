@@ -555,11 +555,6 @@
       ObjectType="ViewObject" >
    </Containee>
    <Containee
-      Name="FormBuilderService"
-      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService"
-      ObjectType="AppModule" >
-   </Containee>
-   <Containee
       Name="ModulesView"
       FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModulesView"
       ObjectType="ViewObject" >

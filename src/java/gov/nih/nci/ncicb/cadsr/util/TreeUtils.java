@@ -53,6 +53,9 @@ public class TreeUtils {
         crumbs.append(currNode.getName()+">>");
       }
     }
+    //remove Context Description
+
+    crumbs  = removeContextDesc(crumbs);
     //remove the extra ">>"
     crumbs.delete(crumbs.length()-2,crumbs.length());
     String crumbsStr = crumbs.toString();
@@ -63,4 +66,15 @@ public class TreeUtils {
     String newActionStr = StringUtils.strReplace(actionValue,TreeConstants.TREE_BREADCRUMBS_HOLDER,crumbsStr);
     webNode.setAction(newActionStr);
   }  
+    private static StringBuffer removeContextDesc(StringBuffer crumbs)
+  {
+     if(crumbs.indexOf("(")>0)
+     {
+      int startIndex = crumbs.indexOf("(");
+      int endIndex = crumbs.indexOf(")");
+      crumbs.delete(startIndex,endIndex+1);
+     }
+      return crumbs;
+      
+  }
 }
