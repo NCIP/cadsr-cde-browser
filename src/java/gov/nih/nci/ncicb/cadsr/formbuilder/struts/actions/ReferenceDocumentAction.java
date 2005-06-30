@@ -184,6 +184,24 @@ public class ReferenceDocumentAction
      //theBlob = ((OracleResultSet)rs).getBLOB(1);
      theBlob = rs.getBlob(1);
      is = theBlob.getBinaryStream();
+
+      //Writing to the OutputStream
+      if (is != null) {
+       byte [] buf = new byte[4 * 1024]; // 4K buffer
+    
+       int bytesRead;
+    
+       while ((bytesRead = is.read(buf)) != -1) {
+        out.write(buf, 0, bytesRead);
+       }
+      }
+    
+      if (is != null)
+       is.close();
+    
+      if (out != null)
+       out.close();
+
     }
    } catch (Exception ex) {
     log.error("Exception Caught:", ex);
