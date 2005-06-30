@@ -62,7 +62,7 @@
          </tr>
          <tr vlign="top">
             <td nowrap>&nbsp;</td>
-            <td width="100%" valign="top" align="center" class="AbbreviatedText">Tip: The wildcard character is *.</td>
+            <td width="100%" valign="top" align="center" class="AbbreviatedText">Tip: This is an exact match search. To search for partial words or phrases use the * as a wildcard.</td>
           </td>
          </tr>
          <tr valign="top">  

@@ -22,7 +22,7 @@
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
 <LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/checkbox.js"></SCRIPT>
-
+<SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/newWinJS.js"/></SCRIPT> 
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 <%

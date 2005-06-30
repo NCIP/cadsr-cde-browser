@@ -80,10 +80,11 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
  
  
  <table align="center" valign="top"  width="78%" >
-    <tr valign="top"  >
-      <td width="60%" valign="top" align="left" class="AbbreviatedText">Tip: The wildcard character is *.</td>
-      <td  width="20%" nowrap>&nbsp;</td>
-     </tr>
+     <tr valign="top">    
+          <td colspan=2 width="100%" valign="top" align="left" class="AbbreviatedText">
+            Tip: This is an exact match search. To search for partial words or phrases use the * as a wildcard.
+          </td>
+      </tr>       
      <tr valign="top">    
           <td colspan=2 width="100%" valign="top" align="left" class="AbbreviatedText">
             <bean:message key="cadsr.cdebrowser.helpText.results"/>

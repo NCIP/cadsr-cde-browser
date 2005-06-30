@@ -384,18 +384,7 @@ function gotoCDESearchPrefs() {
 <%@ include file="../formbuilder/showMessages.jsp" %>   
 <table>
 
- <%
-      if (request.getAttribute(ProcessConstants.FORMS_IGNORE_FILTER) != null) {
-    %>
-    
-        <tr align="center" >
-          <td  align="left" class="MessageText" >        
-            <b><%=request.getAttribute(ProcessConstants.FORMS_IGNORE_FILTER)%></b><br>
-          </td>
-        </tr>
-    <%
-      }
-    %>
+
  <%
       if (request.getAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS) != null) {
     %>
@@ -453,7 +442,22 @@ function gotoCDESearchPrefs() {
     <td valign="top" width="100%" nowrap >
       <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
     </td>
+    
   </tr>
+  
+   <%
+        if (request.getAttribute(ProcessConstants.FORMS_IGNORE_FILTER) != null) {
+      %>
+      
+          <tr align="center" >
+            <td  align="left" class="MessageText" >        
+              <b><%=request.getAttribute(ProcessConstants.FORMS_IGNORE_FILTER)%></b>
+            </td>
+          </tr>
+      <%
+        }
+    %>
+    
         <tr valign="top">    
           <td valign="top" align="left" class="AbbreviatedTextBold">
             <bean:message key="cadsr.cdebrowser.helpText.results.searchpref"/>
