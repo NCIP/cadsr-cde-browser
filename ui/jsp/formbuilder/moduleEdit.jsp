@@ -300,7 +300,7 @@ function clearProtocol() {
               <tr align="right">
                 <logic:notEmpty name="<%=FormConstants.DELETED_QUESTIONS%>">
                   <td align="right"   class="OraFieldText" nowrap width="90%">    
-                      <html:select styleClass="FreeDropdown" property="<%=FormConstants.ADD_DELETED_QUESTION_IDSEQ%>">
+                      <html:select styleClass="FreeDropdown" property="<%=FormConstants.ADD_DELETED_QUESTION_IDSEQ_ARR%>">
                         <html:options collection="<%=FormConstants.DELETED_QUESTIONS%>" 
                             property="quesIdseq" labelProperty="longName" />
                       </html:select >
@@ -717,7 +717,7 @@ function clearProtocol() {
               <tr align="right">
                 <logic:notEmpty name="<%=FormConstants.DELETED_QUESTIONS%>">
                   <td align="right"   class="OraFieldText" nowrap width="90%">    
-                      <html:select styleClass="FreeDropdown" property="<%=FormConstants.ADD_DELETED_QUESTION_IDSEQ%>">
+                      <html:select styleClass="FreeDropdown" property="<%=FormConstants.ADD_DELETED_QUESTION_IDSEQ_ARR%>">
                         <html:options collection="<%=FormConstants.DELETED_QUESTIONS%>" 
                             property="quesIdseq" labelProperty="longName" />
                       </html:select >

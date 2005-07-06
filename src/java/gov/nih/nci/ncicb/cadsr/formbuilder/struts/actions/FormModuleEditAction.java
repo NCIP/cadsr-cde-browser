@@ -367,8 +367,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     DynaActionForm moduleEditForm = (DynaActionForm) form;
     Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
 
-    String addDeletedQuestionIdSeq =
-      (String) moduleEditForm.get(ADD_DELETED_QUESTION_IDSEQ);
+    String[] addDeletedQuestionIdSeqArr =
+      (String[]) moduleEditForm.get(ADD_DELETED_QUESTION_IDSEQ_ARR);
+      
+    String addDeletedQuestionIdSeq = addDeletedQuestionIdSeqArr[questionIndex.intValue()];
 
     Module module = (Module) getSessionObject(request, MODULE);
     List deletedQuestions = (List) getSessionObject(request, DELETED_QUESTIONS);

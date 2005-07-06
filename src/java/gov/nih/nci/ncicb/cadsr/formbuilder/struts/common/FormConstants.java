@@ -87,8 +87,8 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String QUESTION_INSTRUCTIONS = "questionInstructions";
   public static final String FORM_VALID_VALUE_INSTRUCTIONS = "formsValidValueInstructions";
   public static final String DELETED_QUESTIONS = "deletedQuestions";
-  public static final String ADD_DELETED_QUESTION_IDSEQ =
-    "addDeletedQuestionIdSeq";
+  public static final String ADD_DELETED_QUESTION_IDSEQ_ARR =
+    "addDeletedQuestionIdSeqArr";
   public static final String VALID_VALUE_INDEX = "validValueIndex";
   public static final String AVAILABLE_VALID_VALUES = "AvailableValidValue";
   public static final String ADD_AVAILABLE_VALID_VALUE_INDEX =

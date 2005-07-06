@@ -59,9 +59,12 @@ public class TreeUtils {
     //remove the extra ">>"
     crumbs.delete(crumbs.length()-2,crumbs.length());
     String crumbsStr = crumbs.toString();
+    
     //This is done to get around ' in the names
     
     crumbsStr = StringUtils.strReplace(crumbsStr,"'","*??*");
+    
+    //crumbsStr = URLEncoder.encode(crumbsStr);
     String actionValue = webNode.getAction();
     String newActionStr = StringUtils.strReplace(actionValue,TreeConstants.TREE_BREADCRUMBS_HOLDER,crumbsStr);
     webNode.setAction(newActionStr);

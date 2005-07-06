@@ -661,11 +661,6 @@
           </patternset>
         </fileset>
         
-        <fileset dir="${classes.build.dir}">
-          <patternset>
-             <!--include name="META-INF/jboss-app.xml"/ -->            
-          </patternset>
-        </fileset> 
         
         <fileset dir="${java.lib.dir}">
           <patternset>
