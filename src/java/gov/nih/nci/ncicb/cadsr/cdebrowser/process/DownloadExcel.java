@@ -45,8 +45,8 @@ public class DownloadExcel extends CreateGenericBinaryPage  {
     }
     myResponse.setHeader("Content-disposition",
                   "attachment; filename=" +
-                  "CDEBrowser_SearchResults.csv" );
-    return "application/octet-stream";
+                  "CDEBrowser_SearchResults.xls" );
+    return "application/vnd.ms-excel";
   }
   protected InputStream getBinaryInputStream(){
     return getExcelFileAsInputStream();
