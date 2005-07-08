@@ -61,7 +61,8 @@ public class ValidValueHandlerImpl extends Handler implements ValidValueHandler 
       CDEBrowserBc4jModuleImpl module =
         (CDEBrowserBc4jModuleImpl) getConnection(sessionId);
       vw = module.getMyValidValuesView(aVdIdseq);
-      //vw.setMaxFetchSize(20);
+      //vw.setMaxFetchSize(1500);
+      //vvIterator.setRangeSize(40);
       vvIterator.setScrollableObject(vw);
       vvRows = (Row[]) vvIterator.getRowsInRange();
       

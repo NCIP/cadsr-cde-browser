@@ -122,6 +122,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
         (ValidValuesViewImpl) bc4jUtil.cloneViewObject(view);
       view1.setWhereClause(" VD_IDSEQ = '" + aVdIdseq + "'");
       view1.setOrderByClause(" UPPER(VALUE) ");
+      view1.setForwardOnly(true);
       view1.executeQuery();
       rows = new Vector(view1.getRowCount());
 
@@ -165,7 +166,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
 
     try {
       view = getValidValuesView();
-
+      //view.setMaxFetchSize(1500);
       //view = (VDValidValuesViewImpl)bc4jUtil.cloneViewObject(view);
       view.setWhereClause(" VD_IDSEQ = '" + aVdIdseq + "'");
       view.executeQuery();
