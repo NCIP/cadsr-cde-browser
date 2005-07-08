@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.11 2005-02-16 15:04:33 jiangja Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.12 2005-07-08 19:59:06 kakkodis Exp $
  */
 
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
@@ -504,9 +504,10 @@ public class CompareCDEAction
    ValidValueHandler validValueHandler = (ValidValueHandler)HandlerFactory.getHandler(ValidValue.class);
    List vvList = validValueHandler.getValidValues(de.getVdIdseq(), sessionId);
 
-   if (vvList != null && !vvList.isEmpty()) {
+  /** if (vvList != null && !vvList.isEmpty()) {
     vvList = conDAO.populateConceptsForValidValues(vvList);
    }
+   **/
 
    de.getValueDomain().setValidValues(vvList);
   }
