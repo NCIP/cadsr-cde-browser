@@ -86,7 +86,26 @@
         <arg0 key="cadsr.formbuilder.form.version"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
       </field>
-
+      
+      <field   property="formFooterInstruction"
+        depends="maxlength">
+        <arg0 key="cadsr.formbuilder.form.footer.instruction"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>255</var-value>
+        </var>
+      </field>
+     <field   property="preferredDefinition"
+        depends="required, maxlength">
+        <arg0 key="cadsr.formbuilder.form.definition"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>2000</var-value>
+        </var>
+      </field>
+      
       <!-- not in struts until 1.2
       <field   property="protocolIdSeq"
         depends="required, validwhen">
