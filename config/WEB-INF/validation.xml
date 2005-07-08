@@ -136,7 +136,28 @@
         depends="required">
         <arg0 key="cadsr.formbuilder.module.name"/>
       </field>
-      <!--
+      <field   property="moduleQuestions" 
+      	indexedListProperty="moduleQuestions"
+        depends="required, maxlength">
+        <arg0 key="cadsr.formbuilder.module.question.name"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>255</var-value>
+        </var>
+      </field>
+      <field   property="questionInstructions" 
+      	indexedListProperty="questionInstructions"
+        depends="maxlength">
+        <arg0 key="cadsr.formbuilder.module.question.instruction.name"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>255</var-value>
+        </var>
+      </field>
+
+<!--
       <field   property="moduleInstructionLongName"
         depends="required">
         <arg0 key="cadsr.formbuilder.moduleinstruction.name"/>
