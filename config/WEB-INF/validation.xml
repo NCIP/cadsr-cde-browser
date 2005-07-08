@@ -31,8 +31,25 @@
           <var-value>255</var-value>
         </var>
       </field>
-
-      <field   property="preferredDefinition"
+      <field   property="formHeaderInstruction"
+        depends="maxlength">
+        <arg0 key="cadsr.formbuilder.form.header.instruction"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>255</var-value>
+        </var>
+      </field>
+      <field   property="formFooterInstruction"
+        depends="maxlength">
+        <arg0 key="cadsr.formbuilder.form.footer.instruction"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>255</var-value>
+        </var>
+      </field>
+     <field   property="preferredDefinition"
         depends="required, maxlength">
         <arg0 key="cadsr.formbuilder.form.definition"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
@@ -150,6 +167,25 @@
       	indexedListProperty="questionInstructions"
         depends="maxlength">
         <arg0 key="cadsr.formbuilder.module.question.instruction.name"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>255</var-value>
+        </var>
+      </field>
+      <field   property="moduleInstruction"
+        depends="maxlength">
+        <arg0 key="cadsr.formbuilder.module.instruction"/>
+        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>255</var-value>
+        </var>
+      </field>
+      <field   property="formsValidValueInstructions" 
+      	indexedListProperty="formsValidValueInstructions"
+        depends="maxlength">
+        <arg0 key="cadsr.formbuilder.validvalue.instruction"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
         <var>
           <var-name>maxlength</var-name>
