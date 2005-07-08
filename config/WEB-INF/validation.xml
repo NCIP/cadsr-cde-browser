@@ -71,22 +71,11 @@
         </var>
       </field>
 
-      <field   property="preferredDefinition"
-        depends="required, maxlength">
-        <arg0 key="cadsr.formbuilder.form.definition"/>
-        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
-        <var>
-          <var-name>maxlength</var-name>
-          <var-value>2000</var-value>
-        </var>
-      </field>
-
       <field   property="formVersion"
         depends="required, float">
         <arg0 key="cadsr.formbuilder.form.version"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
       </field>
-      
       <field   property="formHeaderInstruction"
         depends="maxlength">
         <arg0 key="cadsr.formbuilder.form.header.instruction"/>
@@ -105,8 +94,7 @@
           <var-value>255</var-value>
         </var>
       </field>
-      
-     <field   property="preferredDefinition"
+      <field   property="preferredDefinition"
         depends="required, maxlength">
         <arg0 key="cadsr.formbuilder.form.definition"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
@@ -156,25 +144,6 @@
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
       </field>
 
-      <field   property="formHeaderInstruction"
-        depends="maxlength">
-        <arg0 key="cadsr.formbuilder.form.header.instruction"/>
-        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
-        <var>
-          <var-name>maxlength</var-name>
-          <var-value>255</var-value>
-        </var>
-      </field>
-      <field   property="formFooterInstruction"
-        depends="maxlength">
-        <arg0 key="cadsr.formbuilder.form.footer.instruction"/>
-        <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
-        <var>
-          <var-name>maxlength</var-name>
-          <var-value>255</var-value>
-        </var>
-      </field>
-      
       <!--
       <field   property="formComments"
         depends="required, maxlength">
@@ -202,7 +171,8 @@
           <var-name>maxlength</var-name>
           <var-value>255</var-value>
         </var>
-      </field>      
+      </field>
+
     </form>
 
     <form name="moduleEditForm">
