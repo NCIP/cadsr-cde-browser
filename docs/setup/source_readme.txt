@@ -1,9 +1,9 @@
 
 ===============================================================================
-			CDBrowser 3.0
+			CDBrowser @cdebrowser.version@
 ===============================================================================
 
-Contains the complete application source for CDEBrowser 3.0
+Contains the complete application source for CDEBrowser @cdebrowser.version@
 
 The Content of the zip file by directory
 	
@@ -44,5 +44,5 @@ cdebrowser_error_tabs.properties
   Can be used to configure the number of tabs and their labels on the error page.    
 
 The source code has been compiled and tested using  JDK 1.4.2_06 , struts 1.1 and JBOSS 4.0.
-CDEBrowser 3.0 works with caDSR repository 3.0 and is not compatible with earlier versions of
+CDEBrowser @cdebrowser.version@ works with caDSR repository @cdebrowser.version@ and is not compatible with earlier versions of
 caDSR repository

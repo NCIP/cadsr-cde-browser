@@ -1,12 +1,12 @@
 =============================================================================
-CD Browser 3.0 Installation Document for JBOSS
+CD Browser @cdebrowser.version@ Installation Document for JBOSS
 =============================================================================
 
 Pre-requisites
 ---------------
 
-1. JBOSS 4.0 installed. Available from http://www.jboss.org
-2. caDSR 3.0 repository installed. Please refer to caDSR installation document
+1. JBOSS 4.0.1 installed. Available from http://www.jboss.org
+2. caDSR @cdebrowser.version@ repository installed. Please refer to caDSR installation document
 
 Installation steps
 ------------------
@@ -15,7 +15,7 @@ Installation steps
 Please replace the following references with your environment specific information.
 
 <JBOSS_HOME> refers to Jboss home directory.
-<INSTALL_HOME> refers to directory to which "CDBrowser_3.0.zip" is unzipped.
+<INSTALL_HOME> refers to directory to which "CDBrowser_@cdebrowser.version.suffix@.zip" is unzipped.
        
        
 1. Shutdown Jboss instance
@@ -26,7 +26,7 @@ Please replace the following references with your environment specific informati
 3. Copy  file <INSTALL_HOME>\oracle-ds.xml to directory <JBOSS_HOME> server\default\deploy
     If file already exists in <JBOSS_HOME> server\default\deploy, then update the file with 
     datasources defined in <INSTALL_HOME>\oracle-ds.xml.
-    Note: Please verify the sbr and sbrext user passwords.
+    Note: Please verify the cdebrowser user password.
     
 4. Edit login-config.xml in <JBOSS_HOME>\server\default\conf to add the 
    xml snipet below between <policy> tags
@@ -35,7 +35,6 @@ Please replace the following references with your environment specific informati
 		<authentication>
 			<login-module code="gov.nih.nci.ncicb.cadsr.security.jboss.DBLoginModule" flag="required">
 	                                       <module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</module-option>
-			  <module-option name="ClassName">test</module-option>
 			</login-module>
 		</authentication>
 	</application-policy>    
@@ -84,14 +83,14 @@ Please replace the following references with your environment specific informati
    <cle-providers>
      <provider name="cdebrowser_bc4j" 
      		class="oracle.clex.persistence.bc4j.ApplicationModuleProvider">
-       <property name="user" value="sbr"/>
-       <property name="password" value="mypassword"/>
+       <property name="user" value="cdebrowser"/>
+       <property name="password" value="@user.password@"/>
        <property name="modulename" 
        		value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule"/>
        <property name="connectionstring" 
-       		value="jdbc:oracle:thin:sbr/i1sn0w@cbiodb2-d.nci.nih.gov:1521:cb"/>
+       		value="jdbc:oracle:thin:cdebrowser/@user.password@@cbiodb2-d.nci.nih.gov:1521:cbdev"/>
        <property name="host" value="cbiodb2-d.nci.nih.gov"/>
-       <property name="sid" value="cb"/>
+       <property name="sid" value="cbev"/>
        <property name="persistencebase" 
        		value="gov.nih.nci.ncicb.cadsr.persistence.bc4j"/>
        <property name="failover" value=""/>

@@ -18,11 +18,26 @@
   <property file="build.properties"/>
   
    <!-- Make sure these are correct for your instance -->
-  
+   
    <property name="jboss.home" value="D:/tools/other/jboss-4.0.1" /> 
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
+   
+   <property name="cdebrowser.version" value="3.0.1" />
+   <property name="cdebrowser.build" value="12" />
+   
+   <!-- used for open source build for file suffix-->
+   <property name="cdebrowser.version.suffix" value="3_0_1" />
+   
+   <property name="dev.user.password" value="cdeuser" />
+   <property name="qa.user.password" value="cdeuser" />
+   <property name="stage.user.password" value="cdeuser" />
+   <property name="prod.user.password" value="cdeuser" />
+   <property name="opensource.user.password" value="user_passwd" />
+   
+
+   
    
    <!-- cadsr api  -->
   <property name="cadsrapi.home" value="D:/projects/NCI3/cadsrapi" /> 
@@ -64,17 +79,21 @@
   <property name="web.descriptor.home" value="${project.home}/config/WEB-INF/jboss"/>  
   
   <property name="app.docs.dir" value="${project.home}/docs" /> 
-  <property name="app.docs.setup.dir" value="${project.home}/docs/setup" />  
-  <property name="app.setup.jboss.install.name" value="Install_CDBrowser_on_JBOSS.txt" />
+  
+  <property name="cdebrowser.docs.setup.dir" value="${project.home}/docs/setup" />  
+  
+  <property name="app.docs.setup.dir" value="${build.dir}/docs" />  
+  
+  <property name="app.setup.jboss.install.name" value="Install_CDBrowser_on_JBOSS" />
   <property name="app.setup.jboss.oracle.datasource.filename" value="oracle-ds.xml" />
 
   
    <!-- Open Source file names This need to updated by release-->
-  <property name="app.setup.jboss.install.out.name" value="Install_CDBrowser_3.0_on_Jboss.txt" />  
-  <property name="download.file.name.unix" value="CDEBrowser_Unix_3.0" />
-  <property name="download.file.name.windows" value="CDEBrowser_Windows_3.0" />
-  <property name="open.source.file.name.windows" value="CDEBrowser_src_3.0(Windows)" />
-  <property name="open.source.file.name.unix" value="CDEBrowser_src_3.0(Unix)" />  
+  <property name="app.setup.jboss.install.out.name" value="Install_CDBrowser_${cdebrowser.version.suffix}_on_Jboss.txt" />  
+  <property name="download.file.name.unix" value="CDEBrowser_Unix_${cdebrowser.version.suffix}" />
+  <property name="download.file.name.windows" value="CDEBrowser_Windows_${cdebrowser.version.suffix}" />
+  <property name="open.source.file.name.windows" value="CDEBrowser_src_${cdebrowser.version.suffix}(Windows)" />
+  <property name="open.source.file.name.unix" value="CDEBrowser_src_${cdebrowser.version.suffix}(Unix)" />  
   
   
     <!-- Open source directoris -->
@@ -89,7 +108,8 @@
   <property name="open.source.readme.name" value="source_readme" /> 
   
   <!-- base dir in the zip file -->
-  <property name="open.source.dir.base.name" value="cdebrowser3_0" />    
+  <property name="open.source.dir.base.name" value="cdebrowser_${cdebrowser.version.suffix}" />    
+  
 
   <!-- =========== CLEAN BUILD AREA ======================= -->
     
@@ -266,8 +286,20 @@
                 </patternset>
               </fileset>
      </copy>
+     
+     <filter token="cdebrowser.version" value="${cdebrowser.version}"/>
+     <filter token="cdebrowser.build" value="${cdebrowser.build}" />
+     <copy todir="${classes.build.dir}/jsp/common" filtering="true">
+              <fileset dir="${jsp.dir}/common">
+                <patternset>
+                  <include name="common_variable_length_bottom_border.jsp"/>
+                  <include name="common_bottom_border.jsp"/>
+                </patternset>
+              </fileset>
+     </copy>     
    
-     <copy todir="${classes.build.dir}/WEB-INF/classes">    
+     <filter token="user.password" value="${dev.user.password}"/>
+     <copy todir="${classes.build.dir}/WEB-INF/classes" filtering="true">    
          <fileset dir="${config.home}/connections">
            <patternset>
              <include name="cle-providers.xml"/>
@@ -303,8 +335,9 @@
                <include name="application.xml"/>
              </patternset>
            </fileset>      
-        </copy>         
-     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+        </copy> 
+     <filter token="user.password" value="${qa.user.password}"/>
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
          <fileset dir="${config.qa}/connections">
            <patternset>
              <include name="cle-providers.xml"/>
@@ -330,8 +363,9 @@
                <include name="application.xml"/>
              </patternset>
            </fileset>      
-        </copy>         
-     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+        </copy> 
+     <filter token="user.password" value="${stage.user.password}"/>
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
          <fileset dir="${config.stage}/connections">
            <patternset>
              <include name="cle-providers.xml"/>
@@ -357,8 +391,9 @@
                <include name="application.xml"/>
              </patternset>
            </fileset>      
-        </copy>         
-     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+        </copy>
+     <filter token="user.password" value="${prod.user.password}"/>
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
          <fileset dir="${config.prod}/connections">
            <patternset>
              <include name="cle-providers.xml"/>
@@ -387,7 +422,8 @@
            </fileset>      
         </copy> 
         
-     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
+    <filter token="user.password" value="${opensource.user.password}"/>
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
          <fileset dir="${config.opensource}/connections">
            <patternset>
              <include name="cle-providers.xml"/>
@@ -512,8 +548,17 @@
               <patternset>
                 <include name="common/**/*.*"/>  
                 <include name="*.jsp"/>
+                <exclude name="common_variable_length_bottom_border.jsp"/>
+                <exclude name="common_bottom_border.jsp"/>                
               </patternset>
       </fileset>
+
+      <fileset dir="${classes.build.dir}/jsp/">
+              <patternset>
+                <include name="common/**/*.*"/>                 
+              </patternset>
+      </fileset>
+           
       
   <!-- release 3.0, reorganze ui directory -->
       <fileset dir="${html.dir}/">
@@ -696,6 +741,24 @@
      <mkdir dir="${open.source.dir.raw.lib}"/>
      <mkdir dir="${open.source.dir.raw.src}"/>
      <mkdir dir="${open.source.dir.raw.ui}"/>
+     <mkdir dir="${app.docs.setup.dir}"/>
+     
+     
+     <!-- Copy doc to build dir -->
+     <filter token="user.password" value="${dev.user.password}"/>
+     <filter token="cdebrowser.version" value="${cdebrowser.version}"/>
+     <filter token="cdebrowser.version.suffix" value="${cdebrowser.version.suffix}"/>
+     <copy todir="${app.docs.setup.dir}/" filtering="true">      
+         <fileset dir="${cdebrowser.docs.setup.dir}">
+           <patternset>
+             <include name="${app.setup.jboss.install.name}.txt"/>
+             <include name="${app.docs.setup.distribution.readme.name}.txt"/>
+             <include name="${app.docs.setup.distribution.src.readme.name}.txt"/>
+             <include name="${open.source.readme.name}.txt"/>
+           </patternset>
+         </fileset>               
+      </copy>
+      
      
      <!-- copy ui -->
      <copy todir="${open.source.dir.raw.ui}/">      
@@ -867,8 +930,9 @@
              <include name="${ear.name}.ear"/>
            </patternset>
          </fileset> 
-     </copy>  
-     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes">    
+     </copy>
+     <filter token="user.password" value="${dev.user.password}"/>
+     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
          <fileset dir="${config.home}/connections">
            <patternset>
              <include name="oracle-ds.xml"/>
@@ -889,7 +953,8 @@
            </patternset>
          </fileset> 
      </copy>  
-     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes">    
+     <filter token="user.password" value="${qa.user.password}"/>
+     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
          <fileset dir="${config.qa}/connections">
            <patternset>
              <include name="oracle-ds.xml"/>
@@ -908,8 +973,9 @@
              <include name="${ear.name}.ear"/>
            </patternset>
          </fileset> 
-     </copy>  
-     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes">    
+     </copy> 
+     <filter token="user.password" value="${stage.user.password}"/>
+     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
          <fileset dir="${config.stage}/connections">
            <patternset>
              <include name="oracle-ds.xml"/>
@@ -928,8 +994,9 @@
              <include name="${ear.name}.ear"/>
            </patternset>
          </fileset> 
-     </copy>  
-     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes">    
+     </copy> 
+     <filter token="user.password" value="${prod.user.password}"/>
+     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
          <fileset dir="${config.prod}/connections">
            <patternset>
              <include name="oracle-ds.xml"/>
@@ -1018,9 +1085,9 @@
               </copy> 
                               
                <native2ascii src="${app.docs.setup.dir}" dest="${build.dir}/download/"
-               includes="${app.setup.jboss.install.name}"               
+               includes="${app.setup.jboss.install.name}.txt"               
                />     
-               <move file="${build.dir}/download/${app.setup.jboss.install.name}"
+               <move file="${build.dir}/download/${app.setup.jboss.install.name}.txt"
                     tofile="${build.dir}/download/${app.setup.jboss.install.out.name}"/>
                     
                <native2ascii src="${config.opensource}/connections" dest="${build.dir}/download/"
