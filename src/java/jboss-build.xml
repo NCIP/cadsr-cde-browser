@@ -33,7 +33,7 @@
    <property name="dev.user.password" value="cdeuser" />
    <property name="qa.user.password" value="cdeuser" />
    <property name="stage.user.password" value="cdeuser" />
-   <property name="prod.user.password" value="rulive01" />
+   <property name="prod.user.password" value="cdeuser" />
    <property name="opensource.user.password" value="user_passwd" />
    
 

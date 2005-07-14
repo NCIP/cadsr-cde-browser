@@ -2,10 +2,10 @@
 <!DOCTYPE cle-providers SYSTEM "http://xmlns.oracle.com/ias/mvc/cle-providers.dtd">
 <cle-providers>
     <provider name="cdebrowser_bc4j" class="oracle.clex.persistence.bc4j.ApplicationModuleProvider">
-    <property name="user" value="sbr"/>
-    <property name="password" value="rulive01"/>
+    <property name="user" value="cdebrowser"/>
+    <property name="password" value="@user.password@"/>
     <property name="modulename" value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule"/>
-    <property name="connectionstring" value="jdbc:oracle:thin:sbr/rulive01@cbiodb10.nci.nih.gov:1521:cbprod"/>
+    <property name="connectionstring" value="jdbc:oracle:thin:cdebrowser/@user.password@@cbiodb10.nci.nih.gov:1521:cbprod"/>
     <property name="host" value="cbiodb10.nci.nih.gov"/>
     <property name="sid" value="cbprod"/>
     <property name="persistencebase" value="gov.nih.nci.ncicb.cadsr.persistence.bc4j"/>

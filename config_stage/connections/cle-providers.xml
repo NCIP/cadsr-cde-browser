@@ -3,9 +3,9 @@
 <cle-providers>
     <provider name="cdebrowser_bc4j" class="oracle.clex.persistence.bc4j.ApplicationModuleProvider">
     <property name="user" value="cdebrowser"/>
-    <property name="password" value="cdeuser"/>
+    <property name="password" value="@user.password@"/>
     <property name="modulename" value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule"/>
-    <property name="connectionstring" value="jdbc:oracle:thin:cdebrowser/cdeuser@cbiodb20.nci.nih.gov:1521:cbstg"/>
+    <property name="connectionstring" value="jdbc:oracle:thin:cdebrowser/@user.password@@cbiodb20.nci.nih.gov:1521:cbstg"/>
     <property name="host" value="cbiodb20.nci.nih.gov"/>
     <property name="sid" value="cbstg"/>
     <property name="persistencebase" value="gov.nih.nci.ncicb.cadsr.persistence.bc4j"/>
