@@ -4,7 +4,7 @@
 <!--  JBoss Server Configuration                                           -->
 <!--                                                                       -->
 <!-- ===================================================================== -->
-<!-- $Id: oracle-ds.xml,v 1.5 2005-07-12 16:53:11 kakkodis Exp $ -->
+<!-- $Id: oracle-ds.xml,v 1.6 2005-07-14 21:27:51 kakkodis Exp $ -->
 <!-- ==================================================================== -->
 <!--  Datasource config for Oracle originally from Steven Coy             -->
 <!-- ==================================================================== -->
@@ -18,7 +18,7 @@
 		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
    		<blocking-timeout-millis>10000</blocking-timeout-millis>
    		<idle-timeout-minutes>1</idle-timeout-minutes>
-   		<max-pool-size>100</max-pool-size>
+   		<max-pool-size>85</max-pool-size>
    		<min-pool-size>10</min-pool-size>
 	</local-tx-datasource>
 </datasources>
