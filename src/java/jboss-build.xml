@@ -833,9 +833,9 @@
          </fileset>               
       </copy> 
      <copy todir="${open.source.dir.raw.config}/properties/jboss">      
-         <fileset dir="${config.home}">
+         <fileset dir="${config.home}/properties/jboss">
            <patternset>
-             <include name="properties/jboss/*.*"/>
+             <include name="*.*"/>
            </patternset>
          </fileset>               
       </copy>       
