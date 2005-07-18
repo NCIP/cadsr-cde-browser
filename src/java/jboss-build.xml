@@ -842,7 +842,7 @@
      <copy todir="${open.source.dir.raw.config}">      
          <fileset dir="${config.home}">
            <patternset>
-             <include name="services/*.*"/>
+             <include name="services/cdeBrowser.xml"/>
            </patternset>
          </fileset>               
       </copy>   
