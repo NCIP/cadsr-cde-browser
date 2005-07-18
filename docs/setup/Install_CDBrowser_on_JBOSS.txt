@@ -20,15 +20,13 @@ Please replace the following references with your environment specific informati
        
 1. Shutdown Jboss instance
 
-2. Copy spring.jar and spring-jdbc.jar 
-     from <INSTALL_HOME>\lib  to  <JBOSS_HOME>\server\default\lib
 
-3. Copy  file <INSTALL_HOME>\oracle-ds.xml to directory <JBOSS_HOME> server\default\deploy
+2. Copy  file <INSTALL_HOME>\oracle-ds.xml to directory <JBOSS_HOME> server\default\deploy
     If file already exists in <JBOSS_HOME> server\default\deploy, then update the file with 
     datasources defined in <INSTALL_HOME>\oracle-ds.xml.
     Note: Please verify the cdebrowser user password.
     
-4. Edit login-config.xml in <JBOSS_HOME>\server\default\conf to add the 
+3. Edit login-config.xml in <JBOSS_HOME>\server\default\conf to add the 
    xml snipet below between <policy> tags
 
 	<application-policy name="FormbuilderDomain">
@@ -39,7 +37,7 @@ Please replace the following references with your environment specific informati
 		</authentication>
 	</application-policy>    
 
-5. Edit log4j.xml in <JBOSS_HOME>\server\default\conf to added the xml snippet below to end of the file before
+4. Edit log4j.xml in <JBOSS_HOME>\server\default\conf to added the xml snippet below to end of the file before
   </log4j:configuration> closing tag
 
 
@@ -65,7 +63,7 @@ Please replace the following references with your environment specific informati
                 <appender-ref ref="CDEBROWSER_FILE"/>
         </category>
  
-6. Make sure the following directory exist.
+5. Make sure the following directory exist.
 	<JBOSS_HOME>/output/ 
 	 <JBOSS_HOME>/server/default/log 
 	 
@@ -74,7 +72,7 @@ Please replace the following references with your environment specific informati
 	
 7. Startup the Jboss instance
 
-8. WEB-INF\classes\cle_providers.xml contains the connection information for SBR 
+8. WEB-INF\classes\cle_providers.xml contains the connection information for the 
    repository schema, update this file to reflect your connection parameters.
    
    eg.
@@ -97,8 +95,7 @@ Please replace the following references with your environment specific informati
      </provider>
     </cle-providers>
     
-    Above can be achived two ways
-    	- By updating this file in JBOSS tmp directory 
+    Above can be achived 
     	- By unjaring cdebrowser.ear, updating this file re-jaring the ear 
     	  and then deploying the application.
     

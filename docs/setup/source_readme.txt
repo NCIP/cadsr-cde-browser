@@ -43,6 +43,6 @@ cdebrowser_lov_tabs.properties
 cdebrowser_error_tabs.properties
   Can be used to configure the number of tabs and their labels on the error page.    
 
-The source code has been compiled and tested using  JDK 1.4.2_06 , struts 1.1 and JBOSS 4.0.
+The source code has been compiled and tested using  JDK 1.4.2_06 , struts 1.1 and JBOSS 4.0.1
 CDEBrowser @cdebrowser.version@ works with caDSR repository @cdebrowser.version@ and is not compatible with earlier versions of
 caDSR repository

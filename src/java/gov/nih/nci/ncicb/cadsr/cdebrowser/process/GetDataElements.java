@@ -53,7 +53,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.19 2005-06-21 21:07:44 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.20 2005-07-18 17:29:15 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -191,6 +191,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
       log.info("- Retrieved request parameters successfully");
 
+      // **Need to be taken out to Since  CDEBrowserPageContext is nolonger useed
       /**
       TreeParameters treeParam = new TreeParametersTransferObject();
 
@@ -230,13 +231,19 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
               paramType, paramIdSeq, sessionId);
         }
 
-        setResult(ProcessConstants.PAGE_CONTEXT, pc);
+        //setResult(ProcessConstants.PAGE_CONTEXT, pc);
         setResult("P_CONTEXT", pc.getContextName());
         setResult("P_CONTE_IDSEQ", pc.getConteIdseq());
 
         log.info("- Created PageContext object successfully");
       }
        **/
+       
+      if ((paramType != null) && (paramIdSeq != null) && !("newSearch".equals(performQuery))) {       
+        setResult("P_CONTEXT", conteName);
+        setResult("P_CONTE_IDSEQ", treeConteIdseq);
+      }
+        
        String crumbs = getStringInfo(TreeConstants.TREE_BREADCRUMBS);
 
        if(crumbs!=null)

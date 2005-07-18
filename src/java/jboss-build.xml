@@ -25,7 +25,7 @@
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
    <property name="cdebrowser.version" value="3.0.1" />
-   <property name="cdebrowser.build" value="13" />
+   <property name="cdebrowser.build" value="14" />
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="3_0_1" />
@@ -82,7 +82,7 @@
   
   <property name="cdebrowser.docs.setup.dir" value="${project.home}/docs/setup" />  
   
-  <property name="app.docs.setup.dir" value="${build.dir}/docs" />  
+  <property name="build.docs.setup.dir" value="${build.dir}/docs" />  
   
   <property name="app.setup.jboss.install.name" value="Install_CDBrowser_on_JBOSS" />
   <property name="app.setup.jboss.oracle.datasource.filename" value="oracle-ds.xml" />
@@ -741,14 +741,14 @@
      <mkdir dir="${open.source.dir.raw.lib}"/>
      <mkdir dir="${open.source.dir.raw.src}"/>
      <mkdir dir="${open.source.dir.raw.ui}"/>
-     <mkdir dir="${app.docs.setup.dir}"/>
-     
+     <mkdir dir="${build.docs.setup.dir}"/>
+
      
      <!-- Copy doc to build dir -->
-     <filter token="user.password" value="${dev.user.password}"/>
+     <filter token="user.password" value="${opensource.user.password}"/>
      <filter token="cdebrowser.version" value="${cdebrowser.version}"/>
      <filter token="cdebrowser.version.suffix" value="${cdebrowser.version.suffix}"/>
-     <copy todir="${app.docs.setup.dir}/" filtering="true">      
+     <copy todir="${build.docs.setup.dir}/" filtering="true">      
          <fileset dir="${cdebrowser.docs.setup.dir}">
            <patternset>
              <include name="${app.setup.jboss.install.name}.txt"/>
@@ -760,7 +760,8 @@
       </copy>
       
      
-     <!-- copy ui -->
+     <!-- copy ui -->  
+     
      <copy todir="${open.source.dir.raw.ui}/">      
          <fileset dir="${ui.dir}">
            <patternset>
@@ -782,7 +783,7 @@
          </fileset>            
       </copy>    
     <!-- copy config -->
-     <copy todir="${open.source.dir.raw.config}">      
+     <copy todir="${open.source.dir.raw.config}" filtering="true">      
          <fileset dir="${config.opensource}">
            <patternset>
              <include name="connections/${app.setup.jboss.oracle.datasource.filename}"/>
@@ -816,7 +817,7 @@
            </patternset>
          </fileset>               
       </copy>  
-     <copy todir="${open.source.dir.raw.config}/WEB-INF">      
+     <copy todir="${open.source.dir.raw.config}/WEB-INF/jboss">      
          <fileset dir="${config.home}/WEB-INF/jboss">
            <patternset>
              <include name="web.xml"/>
@@ -827,9 +828,17 @@
          <fileset dir="${config.home}">
            <patternset>
              <include name="properties/*.*"/>
+             <exclude name="properties/cdebrowser.properties"/>
            </patternset>
          </fileset>               
-      </copy>         
+      </copy> 
+     <copy todir="${open.source.dir.raw.config}/properties/jboss">      
+         <fileset dir="${config.home}">
+           <patternset>
+             <include name="properties/jboss/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy>       
      <copy todir="${open.source.dir.raw.config}">      
          <fileset dir="${config.home}">
            <patternset>
@@ -863,7 +872,7 @@
            </patternset>
          </fileset>               
       </copy>  
-      <native2ascii src="${app.docs.setup.dir}" 
+      <native2ascii src="${build.docs.setup.dir}" 
                     dest="${open.source.dir}/ascii/${open.source.dir.base.name}"
                includes="${open.source.readme.name}.txt"               
                />        
@@ -1066,7 +1075,7 @@
   <!-- =========== PROD DISTRIBUTION Complete============== -->
         <target name="dist_opensource" depends="clean_build_dir,opensource_config,opensource_windows,
                 opensource_unix">  
-               <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
+               <native2ascii src="${build.docs.setup.dir}" dest="${dist.dir}"
                includes="${app.docs.setup.distribution.src.readme.name}.txt"               
                />        
         </target>      
@@ -1076,6 +1085,8 @@
         <target name="dist_download" depends="clean_build_dir,opensource_config,ear_cdebrowser"> 
             <mkdir dir="${build.dir}/download"/>
             <mkdir dir="${build.dir}/download/lib"/>
+            <mkdir dir="${build.docs.setup.dir}"/>
+            
              <copy todir="${build.dir}/download" >      
                  <fileset dir="${build.dir}">
                    <patternset>
@@ -1083,8 +1094,22 @@
                    </patternset>
                  </fileset>    
               </copy> 
-                              
-               <native2ascii src="${app.docs.setup.dir}" dest="${build.dir}/download/"
+            <!-- Copy doc to build dir -->
+     	    <filter token="user.password" value="${dev.user.password}"/>
+            <filter token="cdebrowser.version" value="${cdebrowser.version}"/>
+            <filter token="cdebrowser.version.suffix" value="${cdebrowser.version.suffix}"/>
+            <copy todir="${build.docs.setup.dir}/" filtering="true">      
+               <fileset dir="${cdebrowser.docs.setup.dir}">
+                  <patternset>
+                    <include name="${app.setup.jboss.install.name}.txt"/>
+                    <include name="${app.docs.setup.distribution.readme.name}.txt"/>
+                    <include name="${app.docs.setup.distribution.src.readme.name}.txt"/>
+                    <include name="${open.source.readme.name}.txt"/>
+                  </patternset>
+                </fileset>               
+             </copy>
+      
+               <native2ascii src="${build.docs.setup.dir}" dest="${build.dir}/download/"
                includes="${app.setup.jboss.install.name}.txt"               
                />     
                <move file="${build.dir}/download/${app.setup.jboss.install.name}.txt"
@@ -1093,16 +1118,7 @@
                <native2ascii src="${config.opensource}/connections" dest="${build.dir}/download/"
                includes="${app.setup.jboss.oracle.datasource.filename}"               
                />     
-                    
-              <!-- copy spring libs -->
-               <copy todir="${build.dir}/download/lib">      
-                  <fileset dir="${java.lib.dir}">
-                    <patternset>
-                     <include name="spring.jar"/>
-                     <include name="spring-jdbc.jar"/>
-                    </patternset>
-                  </fileset>               
-                </copy>     
+                        
             <zip destfile="${dist.dir}/${download.file.name.windows}.zip"
                  basedir="${build.dir}/download"
                  update="true" />      
@@ -1113,7 +1129,7 @@
             <gzip zipfile="${dist.dir}/${download.file.name.unix}.tar.gz" 
                 src="${dist.dir}/${download.file.name.unix}.tar"
                 />   
-               <native2ascii src="${app.docs.setup.dir}" dest="${dist.dir}"
+               <native2ascii src="${build.docs.setup.dir}" dest="${dist.dir}"
                includes="${app.docs.setup.distribution.readme.name}.txt"               
                />                   
         </target>      
@@ -1170,6 +1186,7 @@
        deploy_stage_start     - Deploy to Stage and Start JBoSS
        deploy_prod_start      - Deploy to Prod and Start JOSS
        
+       dist_download_full     - Complete OpenSource files
        jboss_startdebug       - Start JOSS in debug mod
        help                   - This help screen.
  
