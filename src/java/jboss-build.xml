@@ -817,10 +817,12 @@
            </patternset>
          </fileset>               
       </copy>  
-     <copy todir="${open.source.dir.raw.config}/WEB-INF/jboss">      
-         <fileset dir="${config.home}/WEB-INF/jboss">
+     <copy todir="${open.source.dir.raw.config}/WEB-INF">      
+         <fileset dir="${config.home}/WEB-INF">
            <patternset>
-             <include name="web.xml"/>
+             <include name="jboss/web.xml"/>
+             <include name="spring/*.xml"/>
+             <include name="umlbrowser/*.xml"/>
            </patternset>
          </fileset>               
       </copy>       
