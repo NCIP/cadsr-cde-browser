@@ -638,8 +638,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
         Iterator it = schemeItems.iterator();
         while(it.hasNext())
         {
-          String  cscsi = (String)it.next();
-          myDAO.removeClassification(cscsi,formIdSeq);
+          CSITransferObject  cscsi = (CSITransferObject)it.next();
+          myDAO.removeClassification(cscsi.getCsCsiIdseq(),formIdSeq);
         }
     }
   private void updateQuestions(QuestionDAO questionDao,

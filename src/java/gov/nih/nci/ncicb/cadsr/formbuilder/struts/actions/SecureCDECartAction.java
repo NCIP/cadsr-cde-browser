@@ -103,13 +103,13 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
       if (displayOrder < questions.size()) {
         questions.add(displayOrder, q);
-        FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
-                                      // in case  they are  incorrect in database
-                                      //Bug #tt 1136 
       }
       else {
-        questions.add(q);
+        questions.add(q);        
       }
+      FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+                                      // in case  they are  incorrect in database
+                                            
     }
     // Jump to the update location on the screen
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+displayOrder);    

@@ -117,6 +117,7 @@ public class ModuleCreateAction extends FormBuilderSecureBaseDispatchAction {
 
 
     List modules = crf.getModules();
+                                      
     if(modules == null) {
       modules = new ArrayList();
       crf.setModules(modules);
@@ -124,10 +125,12 @@ public class ModuleCreateAction extends FormBuilderSecureBaseDispatchAction {
 
     if(displayOrder < modules.size()) {
       modules.add(displayOrder, newModule);
-      FormActionUtil.incrementDisplayOrder(modules, displayOrder + 1);
+      //FormActionUtil.incrementDisplayOrder(modules, displayOrder + 1);
     } else {
       modules.add(newModule);
     }
+    FormActionUtil.setInitDisplayOrders(modules); //This is done to set display order in a sequential order 
+                                                    
     // Jump to the update location on the screen
     request.setAttribute(CaDSRConstants.ANCHOR,"M"+displayOrder);
         
