@@ -113,9 +113,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
   
   public int updateQuestionLongName(
     String questionId,
-    String newLongName) throws DMLException {
+    String newLongName, String userName) throws DMLException {
     UpdateQuestionLongName  questionLongName  = new UpdateQuestionLongName (this.getDataSource());
-    int res = questionLongName.updateLongName(questionId,newLongName);
+    int res = questionLongName.updateLongName(questionId,newLongName, userName);
     System.out.println("result = " +res);
     if (res != 1) {
        DMLException dml = new DMLException("Did not succeed in updateing the long name");
@@ -322,7 +322,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     }
     System.out.println("After DE"+ret_val);
     try{
-      ret_val = updateQuestionLongName(questionId,newLongName);
+      ret_val = updateQuestionLongName(questionId,newLongName, username);
     }
     catch (DMLException de) {
       ret_val = 0;
@@ -598,21 +598,23 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     public UpdateQuestionLongName(DataSource ds) {
       String longNameUpdateSql = 
       " UPDATE Quest_contents_view_ext " +
-      " SET long_name = ?" +
+      " SET long_name = ?,  modified_by = ? " +
       " WHERE qc_idseq =  ?" ;
 
       this.setDataSource(ds);
       this.setSql(longNameUpdateSql);
       declareParameter(new SqlParameter("p_long_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("modified_by", Types.VARCHAR));
       declareParameter(new SqlParameter("p_qc_idseq", Types.VARCHAR));
       compile();
     }
-    protected int updateLongName (String questionId, String newLongName) 
+    protected int updateLongName (String questionId, String newLongName, String userName) 
     {
       Object [] obj = 
         new Object[]
           {
           newLongName,
+          userName,
           questionId
           };
       
@@ -631,13 +633,14 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     public UpdateQuestionLongNameDeIdseq(DataSource ds) {
       String updateSql =
         " UPDATE quest_contents_ext " + 
-        " SET DE_IDSEQ = ? , LONG_NAME = ? " +
+        " SET DE_IDSEQ = ? , LONG_NAME = ? ,  modified_by = ? " +
         " WHERE QC_IDSEQ = ? ";
 
       this.setDataSource(ds);
       this.setSql(updateSql);
       declareParameter(new SqlParameter("de_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("long_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("modified_by", Types.VARCHAR));
       declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
       compile();
     }
@@ -654,6 +657,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
         new Object[] {
           deIdseq,
           question.getLongName(),
+          question.getModifiedBy(),
           question.getQuesIdseq()
         };
 

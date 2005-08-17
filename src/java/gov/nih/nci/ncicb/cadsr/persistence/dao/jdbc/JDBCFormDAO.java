@@ -601,6 +601,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       formX.getProtocol().setProtoIdseq("9B0EAC7E-6A62-0DEB-E034-080020C9C0E0");
       formX.setLongName("Form update test long name");
       formX.setFormCategory("Lab");
+      formX.setModifiedBy("sbrext");
       formTest.updateFormComponent(formX);
     }
   }
@@ -1098,7 +1099,8 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       String updateFormSql =
         " UPDATE quest_contents_ext SET " +
         " qtl_name = ?, conte_idseq = ?, asl_name = ?, preferred_name = ?, " +
-        " preferred_definition = ?, proto_idseq = ?, long_name = ?, qcdl_name = ? " +
+        " preferred_definition = ?, proto_idseq = ?, long_name = ?, qcdl_name = ?, " +
+        " modified_by = ? " +
         " WHERE qc_idseq = ? ";
 
       this.setDataSource(ds);
@@ -1111,12 +1113,12 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       declareParameter(new SqlParameter("proto_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("long_name", Types.VARCHAR));
       declareParameter(new SqlParameter("qcdl_name", Types.VARCHAR));
-      declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
+      declareParameter(new SqlParameter("modified_by", Types.VARCHAR));
+     declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
       compile();
     }
 
-    protected int updateFormFields(
-      Form form) {
+    protected int updateFormFields(Form form) {
 
       String protocolIdSeq = null;
       if(form.getProtocol()!=null) {
@@ -1128,7 +1130,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
           form.getFormType(), form.getContext().getConteIdseq(), form.getAslName(),
           form.getPreferredName(), form.getPreferredDefinition(),
           protocolIdSeq, form.getLongName(),
-          form.getFormCategory(), form.getFormIdseq()
+          form.getFormCategory(), form.getModifiedBy(), form.getFormIdseq()
         };
       int res = update(obj);
 

@@ -1,6 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
-
 import gov.nih.nci.ncicb.cadsr.dto.DataElementTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
@@ -194,8 +193,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
    *
    * @throws <b>DMLException</b>
    */
-  public int updateModuleComponent(
-    Module module) throws DMLException {
+  public int updateModuleComponent(Module module) throws DMLException {
 
     UpdateModuleComponent updateModuleComponent =
       new UpdateModuleComponent(this.getDataSource());
@@ -615,12 +613,13 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     public UpdateModuleComponent(DataSource ds) {
       String updateSql =
         " UPDATE quest_contents_ext " + 
-        " SET LONG_NAME = ? " +
+        " SET LONG_NAME = ?,  modified_by = ? " +
         " WHERE QC_IDSEQ = ? ";
 
       this.setDataSource(ds);
       this.setSql(updateSql);
       declareParameter(new SqlParameter("long_name", Types.VARCHAR));
+      declareParameter(new SqlParameter("modified_by", Types.VARCHAR));
       declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
       compile();
     }
@@ -631,6 +630,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       Object[] obj =
         new Object[] {
           module.getLongName(),
+          module.getModifiedBy(),
           module.getModuleIdseq()
         };
 

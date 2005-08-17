@@ -98,7 +98,7 @@ public interface QuestionDAO {
    */
   public int updateQuestionLongName(
     String questionId,
-    String newLongName) throws DMLException;
+    String newLongName, String userName) throws DMLException;
 
   /**
    * Changes the data element associated with a question.
