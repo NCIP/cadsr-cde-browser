@@ -31,7 +31,7 @@
   String pageUrl = "&"+pageName+"="+pageId;
   HTMLPageScroller scroller = (HTMLPageScroller)
                 infoBean.getInfo(ProcessConstants.VALID_VALUES_PAGE_SCROLLER);
-  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
 
 %>
 

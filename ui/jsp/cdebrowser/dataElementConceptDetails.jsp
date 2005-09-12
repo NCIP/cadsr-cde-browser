@@ -27,7 +27,7 @@
   String pageId = infoBean.getPageId();
   String pageName = PageConstants.PAGEID;
   String pageUrl = "&"+pageName+"="+pageId;
-  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
 
   String socVersion="";
   if(dec.getObjectClass()!=null)

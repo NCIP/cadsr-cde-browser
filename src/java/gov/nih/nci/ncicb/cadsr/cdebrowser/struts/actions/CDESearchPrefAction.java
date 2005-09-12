@@ -218,7 +218,7 @@ public class CDESearchPrefAction
     private boolean isPreferencesDefault(DataElementSearchBean searchBean)
     {
       
-        CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+        CDEBrowserParams params = CDEBrowserParams.getInstance();
 
         boolean excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
         

@@ -20,7 +20,6 @@
       <form-property name="ocrBreadCrumbsIndex" type="java.lang.Integer"/> 
     </form-bean>
   </form-beans>  
-  
   <action-mappings>
     <action name="ocrform" path="/umlbrowser/ocrDetailsAction" parameter="method"
       scope="request"
@@ -68,9 +67,7 @@
       property="className" 
       value="gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl"/>      
   </plug-in>
-  <plug-in className="gov.nih.nci.ncicb.cadsr.struts.common.SpringWebContextPlugIn">
-    
-  </plug-in>  
+ 
   
   
 </struts-config>

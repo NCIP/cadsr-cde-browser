@@ -26,7 +26,7 @@
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 <%
-  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
 
 %>
 function removeFromCompareList() {

@@ -1,14 +1,21 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
+import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class CDEBrowserParams
 {
     private static Log log = LogFactory.getLog(CDEBrowserParams.class.getName());
+    
+    //TODO has to be moved to read from Spring Application Context
+    private static ApplicationServiceLocator appServiceLocator= new ApplicationServiceLocatorImpl();
     //String sbrextDSN = "";
     //String sbrDSN = "";
     String xmlDownloadDir = "";
@@ -31,84 +38,36 @@ public class CDEBrowserParams
     Map evsUrlMap = new HashMap();
     
     static CDEBrowserParams instance;
-    // constructor
-    private CDEBrowserParams()
-    {
-    }
 
    /**
    *  Read the resource bundle file
    *  propFilename - the specified resource file (fn.properties) without the extension
    *  (e.g., medsurv)
    */
+   private CDEBrowserParams()
+   {
+   }
 
-    private CDEBrowserParams(String propFilename)
-    {
-
-        // read the init parameters from the resource bundle
-        int index = 0;
-        try
-        {
-            log.info("*** Resource File Name ***: " + propFilename);
-            ResourceBundle b = ResourceBundle.getBundle(propFilename, java.util.Locale.getDefault());
-
-            xmlDownloadDir = b.getString("XML_DOWNLOAD_DIR");
-            index++;
-            xmlPaginationFlag = b.getString("XML_PAGINATION_FLAG");
-            index++;
-            xmlFileMaxRecord = b.getString("XML_FILE_MAX_RECORDS");
-            index++;
-            treeURL = b.getString("TREE_URL");
-            index++;
-            evsSources = b.getString("EVS_URL_SOURCES");
-            index++;
-            setEvsUrlMap(b,evsSources);
-            showFormsAlphebetical = b.getString("SHOW_FORMS_ALPHEBETICAL");
-            index++;            
-            excludeTestContext = b.getString("EXCLUDE_TEST_CONTEXT_BY_DEFAULT");
-            index++;
-            excludeTrainingContext = b.getString("EXCLUDE_TRAINING_CONTEXT_BY_DEFAULT");
-            index++;            
-            excludeWorkFlowStatuses = b.getString("EXCLUDE_WORKFLOW_BY_DEFAULT");
-            index++;
-            excludeRegistrationStatuses = b.getString("EXCLUDE_REGISTRATION_BY_DEFAULT");
-            index++;      
-
-            adminToolUrl = b.getString("ADMIN_TOOL_URL");
-            index++;      
-            curationToolUrl = b.getString("CURATION_TOOL_URL");
-            index++;
-            nciMetathesaurusUrl = b.getString("NCI_METATHESAURUS_URL");
-            index++;            
-            nciTerminologyServerUrl = b.getString("NCI_TERMINOLOGY_SERVER_URL");
-            index++;
-            sentinelToolUrl = b.getString("SENTINEL_TOOL_URL");
-            index++;             
-
-                        
-        } 
-        catch (java.util.MissingResourceException mre) 
-        {
-            log.error("Error getting init parameters, missing resource values");
-            log.error("Property missing index: " + index);
-            log.error(mre.getMessage(), mre);
-            System.exit(-1);
-        }
-        catch (Exception e)
-        {
-            log.error("Exception occurred", e);
-            System.exit(-1);
-        }
-    }
+    
+    
+    
 
     public String getXMLDownloadDir(){
       return xmlDownloadDir;
     }
-    public static CDEBrowserParams getInstance(String propFilename){
-      if (instance == null) {
-        instance = new CDEBrowserParams(propFilename);
+    public static CDEBrowserParams getInstance(){
+      if (instance == null ) {
+        Properties properties = appServiceLocator.findCDEBrowserService().getApplicationProperties(Locale.US);
+        instance = new CDEBrowserParams();
+        instance.initAttributesFromProperties(properties);
       }
-    return instance;
+      return instance;
+    }
+    
+    public static void reloadInstance(String userName){
+        Properties properties = appServiceLocator.findCDEBrowserService().reloadApplicationProperties(Locale.US,userName);
+        instance = new CDEBrowserParams();
+        instance.initAttributesFromProperties(properties);
     }
     public String getTreeURL() {
       return treeURL;
@@ -125,7 +84,7 @@ public class CDEBrowserParams
    this.evsUrlMap = evsUrlMap;
   }
 
-  public void setEvsUrlMap(ResourceBundle bundle,String evsSourcesArr)
+  public void setEvsUrlMap(Properties bundle,String evsSourcesArr)
   {
         try
         {
@@ -133,7 +92,7 @@ public class CDEBrowserParams
             for(int i=0; i<urls.length;i++)
             {
               String key  = urls[i];
-              String value = bundle.getString(key);
+              String value = bundle.getProperty(key);
               if(evsUrlMap==null)
                 evsUrlMap = new HashMap();
               evsUrlMap.put(key,value);
@@ -270,5 +229,60 @@ public class CDEBrowserParams
   {
     return adminToolUrl;
   }
-           
+  
+  private void initAttributesFromProperties(Properties properties)
+  {
+        // read the init parameters from the resource bundle
+        int index = 0;
+        try
+        {
+                     
+            xmlDownloadDir = properties.getProperty("XML_DOWNLOAD_DIR");
+            index++;
+            xmlPaginationFlag = properties.getProperty("XML_PAGINATION_FLAG");
+            index++;
+            xmlFileMaxRecord = properties.getProperty("XML_FILE_MAX_RECORDS");
+            index++;
+            treeURL = properties.getProperty("TREE_URL");
+            index++;
+            evsSources = properties.getProperty("EVS_URL_SOURCES");
+            index++;
+            setEvsUrlMap(properties,evsSources);
+            showFormsAlphebetical = properties.getProperty("SHOW_FORMS_ALPHEBETICAL");
+            index++;            
+            excludeTestContext = properties.getProperty("EXCLUDE_TEST_CONTEXT_BY_DEFAULT");
+            index++;
+            excludeTrainingContext = properties.getProperty("EXCLUDE_TRAINING_CONTEXT_BY_DEFAULT");
+            index++;            
+            excludeWorkFlowStatuses = properties.getProperty("EXCLUDE_WORKFLOW_BY_DEFAULT");
+            index++;
+            excludeRegistrationStatuses = properties.getProperty("EXCLUDE_REGISTRATION_BY_DEFAULT");
+            index++;      
+
+            adminToolUrl = properties.getProperty("ADMIN_TOOL_URL");
+            index++;      
+            curationToolUrl = properties.getProperty("CURATION_TOOL_URL");
+            index++;
+            nciMetathesaurusUrl = properties.getProperty("NCI_METATHESAURUS_URL");
+            index++;            
+            nciTerminologyServerUrl = properties.getProperty("NCI_TERMINOLOGY_SERVER_URL");
+            index++;
+            sentinelToolUrl = properties.getProperty("SENTINEL_TOOL_URL");
+            index++;             
+            log.info("Loaded Properties"+properties);
+                        
+        } 
+        catch (java.util.MissingResourceException mre) 
+        {
+            log.error("Error getting init parameters, missing resource values");
+            log.error("Property missing index: " + index);
+            log.error(mre.getMessage(), mre);
+            System.exit(-1);
+        }
+        catch (Exception e)
+        {
+            log.error("Exception occurred", e);
+            System.exit(-1);
+        }    
+  }
 }

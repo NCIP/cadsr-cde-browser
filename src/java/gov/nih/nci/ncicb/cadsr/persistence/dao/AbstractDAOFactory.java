@@ -49,6 +49,8 @@ public abstract class AbstractDAOFactory implements PersistenceConstants {
   public abstract ConceptDAO getConceptDAO ();
    
   public abstract ReferenceDocumentDAO getReferenceDocumentDAO ();
+  
+  public abstract UtilDAO getUtilDAO();
 
   public abstract ReferenceDocumentTypeDAO getReferenceDocumentTypeDAO ();
    

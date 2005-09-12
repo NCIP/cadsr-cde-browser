@@ -26,7 +26,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetClassificationsLOV.java,v 1.3 2005-06-16 17:58:28 kakkodis Exp $
+ * @version: $Id: GetClassificationsLOV.java,v 1.4 2005-09-12 13:48:32 kakkodis Exp $
  */
 public class GetClassificationsLOV extends BasePersistingProcess {
   public GetClassificationsLOV() {
@@ -83,7 +83,7 @@ public class GetClassificationsLOV extends BasePersistingProcess {
 
     try {
       if (getStringInfo("INITIALIZED") == null) {
-        CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+        CDEBrowserParams params = CDEBrowserParams.getInstance();
         //dsName = params.getSbrDSN();
         dbUtil = new DBUtil();
       }

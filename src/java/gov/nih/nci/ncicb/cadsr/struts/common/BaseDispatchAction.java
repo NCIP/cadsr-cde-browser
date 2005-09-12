@@ -218,10 +218,8 @@ abstract public class BaseDispatchAction extends DispatchAction
   }
   
   /**
-   * Gets the ServiceDelegateFactory form the application scope and
-   * instantiates a FormBuilderServiceDelegate from the factory
    *
-   * @return FormBuilderServiceDelegate
+   * @return ApplicationServiceLocator
    *
    * @throws ServiceStartupException
    */

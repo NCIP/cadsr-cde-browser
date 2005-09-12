@@ -105,7 +105,7 @@ public class FormBuilderLOVAction extends FormBuilderBaseDispatchAction {
         tib.setMainTabNum(0);
       }
       setSessionObject(request, this.PROTOCOLS_LOV_TAB_BEAN, tib);
-      CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+      CDEBrowserParams params = CDEBrowserParams.getInstance();
       //String dsName = params.getSbrDSN();
       dbUtil.getConnectionFromContainer();
 

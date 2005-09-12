@@ -13,6 +13,10 @@
      <property name="daoFactory"><ref local="daoFactory"/></property>
   </bean>
   
+  <bean id="CDEBrowserService" class="gov.nih.nci.ncicb.cadsr.cdebrowser.service.impl.CDEBrowserServiceImpl">
+     <property name="daoFactory"><ref local="daoFactory"/></property>
+  </bean>  
+  
   <bean id="appServiceLocator" class="gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl">
   </bean>
 

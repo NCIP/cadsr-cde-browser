@@ -13,6 +13,8 @@ import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 
 
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+import java.util.Locale;
+import java.util.Properties;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.SqlFunction;
@@ -170,6 +172,8 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
     return 1;  // success
   }
 
+
+   
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
 
@@ -351,4 +355,6 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
       return res;
     }
   }
+  
+
 }

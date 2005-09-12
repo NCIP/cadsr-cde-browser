@@ -17,6 +17,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ReferenceDocumentDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.UtilDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.WorkFlowStatusDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
@@ -253,6 +254,19 @@ public class JDBCDAOFactory extends AbstractDAOFactory
     return refDocTypeDAO;
   }
 
+  public UtilDAO getUtilDAO () {
+    UtilDAO utilDAO =
+      (UtilDAO) daoCache.get(JDBC_UTIL_DAO);
+
+    if (utilDAO == null) {
+      utilDAO = new JDBCUtilDAO(serviceLocator);
+      // Cut-Paste error, fixed by Ram C
+      // daoCache.put(JDBC_CONCEPT_DAO, refDocTypeDAO);
+      daoCache.put(JDBC_UTIL_DAO, utilDAO);
+    }
+
+    return utilDAO;
+  }
 
   public static void main(String[] args) {
     /**

@@ -510,6 +510,7 @@
                 <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/struts/**"/> 
                 <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/service/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/util/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/admin/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/jsp/**"/>
               </patternset>
         </fileset>       
@@ -522,6 +523,7 @@
           <include name="WEB-INF/*.tld"/>
           <include name="WEB-INF/struts-config*.xml"/>
           <include name="WEB-INF/umlbrowser/struts-config*.xml"/>
+          <include name="WEB-INF/admin/struts-config*.xml"/>
           <include name="WEB-INF/validat*.xml"/>
           <include name="WEB-INF/jboss-web.xml"/>
           <include name="WEB-INF/spring/*.xml"/>
@@ -540,6 +542,7 @@
          <!-- release 3.0, reorganze ui directory -->
           <include name="cdebrowser/**/*.*"/>  
           <include name="umlbrowser/**/*.*"/>  
+          <include name="admin/**/*.*"/>  
           <include name="*.jsp"/>
         </patternset>
       </fileset>

@@ -24,7 +24,7 @@
         <%@ include  file="common_header_inc.jsp" %>
     
     <%  String contextPath = request.getContextPath();
-        CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+        CDEBrowserParams params = CDEBrowserParams.getInstance();
     %>
     
  

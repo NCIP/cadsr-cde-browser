@@ -49,7 +49,7 @@
   
   //Preferences
   String brContextExcludeTestStr = null;
-  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
   DataElementSearchBean searchBean = null;
   try{
   

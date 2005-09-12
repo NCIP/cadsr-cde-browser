@@ -332,7 +332,10 @@
  
   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
   <plug-in className="gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory"/>
-
+  
+  <plug-in className="gov.nih.nci.ncicb.cadsr.struts.common.SpringWebContextPlugIn">  
+  </plug-in> 
+  
   <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
     <set-property 
       property="pathnames" 

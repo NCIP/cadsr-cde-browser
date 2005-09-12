@@ -150,7 +150,7 @@ public class DataElementSearchBean extends Object {
   }
   public void initSearchPreferences(DBUtil dbUtil) throws Exception
    {
-          CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+          CDEBrowserParams params = CDEBrowserParams.getInstance();
       // Initialize Search Preference Values
         boolean excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
         boolean excludeTrainingContext = new Boolean(params.getExcludeTrainingContext()).booleanValue();
@@ -527,7 +527,7 @@ public class DataElementSearchBean extends Object {
   {
       DBUtil dbUtil = null;
       try {
-        CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+        CDEBrowserParams params = CDEBrowserParams.getInstance();
         dbUtil = new DBUtil();
         dbUtil.getConnectionFromContainer();
         buildWorkflowFullList(aslNameExcludeList, dbUtil);

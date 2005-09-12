@@ -35,8 +35,8 @@ public class SimpleServiceLocator extends ServiceLocatorAdapter implements Persi
        envEntrys.put(DRIVER_MANAGER_DS,"true");
        envEntrys.put(DRIVER_CLASS_NAME,"oracle.jdbc.driver.OracleDriver");
        envEntrys.put(CONNECTION_STRING,"jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbdev");
-       envEntrys.put(USERNAME,"cdebrowser");
-       envEntrys.put(PASSWORD,"cdeuser");
+       envEntrys.put(USERNAME,"sbrext");
+       envEntrys.put(PASSWORD,"jjuser");
        envEntrys.put(DATASOURCE_LOCATION_KEY,"CDEBrowserDS");
 
 

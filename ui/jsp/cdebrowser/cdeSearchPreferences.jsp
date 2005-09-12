@@ -30,7 +30,7 @@
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 <%
-  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
   DataElementSearchBean desb = (DataElementSearchBean)infoBean.getInfo("desb");
 
 %>

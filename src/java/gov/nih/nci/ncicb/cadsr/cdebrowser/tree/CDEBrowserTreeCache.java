@@ -75,7 +75,7 @@ public class CDEBrowserTreeCache
     
     //create classification nodes
     allClassificationNodes = appServiceLocator.findTreeService().getAllClassificationNodes(baseTree, idGen);
-    CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+    CDEBrowserParams params = CDEBrowserParams.getInstance();
 
     boolean showFormsAlphebetically = new Boolean(params.getShowFormsAlphebetical()).booleanValue();
     

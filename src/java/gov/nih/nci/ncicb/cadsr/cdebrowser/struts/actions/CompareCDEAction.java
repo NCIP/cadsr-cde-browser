@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.12 2005-07-08 19:59:06 kakkodis Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.13 2005-09-12 13:48:33 kakkodis Exp $
  */
 
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
@@ -420,7 +420,7 @@ public class CompareCDEAction
   cdeColl, dedProperties, dedPropertyTitles);
 
 
-  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
   String excelFilename = params.getXMLDownloadDir() + "compareCDEs" + ".xls";
   FileOutputStream fileOut = new FileOutputStream(excelFilename);
   wb.write(fileOut);

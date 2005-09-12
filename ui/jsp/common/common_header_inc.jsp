@@ -3,7 +3,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <%
 	String dest = pageContext.getRequest().getParameter("loginDestination");
-  CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
 %>
 
 

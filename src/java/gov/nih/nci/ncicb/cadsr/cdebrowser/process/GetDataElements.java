@@ -53,7 +53,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.20 2005-07-18 17:29:15 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.21 2005-09-12 13:48:33 kakkodis Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -556,7 +556,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
   private void initialize(HttpSession mySession) {
     if (getStringInfo("INITIALIZED") == null) {
-      CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+      CDEBrowserParams params = CDEBrowserParams.getInstance();
       //setResult("SBREXT_DSN", params.getSbrextDSN());
       //dsName = params.getSbrDSN();
       //setResult("SBR_DSN", params.getSbrDSN());

@@ -1,4 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.servicelocator;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.CDEBrowserTreeService;
 import gov.nih.nci.ncicb.cadsr.umlbrowser.service.UmlBrowserService;
 
@@ -9,4 +10,6 @@ public interface ApplicationServiceLocator
   public UmlBrowserService findUmlBrowserService() throws ServiceLocatorException;
   
   public CDEBrowserTreeService findTreeService() throws ServiceLocatorException;
+  
+  public CDEBrowserService findCDEBrowserService() throws ServiceLocatorException;
 }

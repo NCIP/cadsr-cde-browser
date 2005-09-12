@@ -51,7 +51,7 @@ public class CDEBrowserTree
   try {
    log.info("Tree Start " + TimeUtils.getEasternTime());
 
-   CDEBrowserParams params = CDEBrowserParams.getInstance("cdebrowser");
+   CDEBrowserParams params = CDEBrowserParams.getInstance();
 
 
 
