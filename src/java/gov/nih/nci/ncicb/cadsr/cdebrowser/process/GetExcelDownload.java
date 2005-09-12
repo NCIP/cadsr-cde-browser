@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.10 2005-06-22 15:42:12 jiangja Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.11 2005-09-12 13:52:37 kakkodis Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -182,42 +182,13 @@ public class GetExcelDownload extends BasePersistingProcess {
       st = cn.createStatement();
 
       if ("deSearch".equals(source)) {
+      
         desb = (DataElementSearchBean) getInfoObject("desb");
 
         deSearch =
           (DESearchQueryBuilder) getInfoObject(
             ProcessConstants.DE_SEARCH_QUERY_BUILDER);
-
-        String searchQuery = deSearch.getSQLWithoutOrderBy();
-        String orderBy = deSearch.getOrderBy();
-        DataElementHandler dh =
-          (DataElementHandler) HandlerFactory.getHandler(DataElement.class);
-        List deList =
-          (List) dh.findDataElementIdsFromQueryClause(
-            searchQuery, orderBy, getSessionId());
-
-        String id = null;
-        boolean firstOne = true;
-        StringBuffer whereBuffer = new StringBuffer("");
-        ListIterator deIt = deList.listIterator();
-
-        while (deIt.hasNext()) {
-          id = (String) deIt.next();
-
-          if (firstOne) {
-            whereBuffer.append("'" + id + "'");
-
-            firstOne = false;
-          }
-          else
-          {
-            whereBuffer.append(",'" + id + "'");
-          }
-        }
-
-        where = whereBuffer.toString();
-
-        //where = deSearch.getXMLQueryStmt();
+        where = deSearch.getXMLQueryStmt();
       }
       else if ("cdeCart".equals(source)) {
         HttpServletRequest myRequest =
@@ -320,7 +291,7 @@ public class GetExcelDownload extends BasePersistingProcess {
               array = (ARRAY) valueStruct[currCol.rsIndex];
             }
 
-            if (array != null) {
+            if ((array != null) && (array.length()!=0)) {
               ResultSet nestedRs = array.getResultSet();
 
               int nestedRowNumber = 0;

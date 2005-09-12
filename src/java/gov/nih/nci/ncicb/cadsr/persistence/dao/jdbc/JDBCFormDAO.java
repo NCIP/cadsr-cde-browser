@@ -583,10 +583,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     // Test getAllPublishedFormsByType
     //Collection temps = formTest.getAllProtocolsForPublishedForms("D9344734-8CAF-4378-E034-0003BA12F5E7");
     //Collection temps = formTest.getAllFormsOrderByContextProtocol();
-     Collection temps = formTest.getAllPublishingCSCSIsForForm();
-    System.out.println(temps.size() + " protocols retrieved");
+   //  Collection temps = formTest.getAllPublishingCSCSIsForForm();
 
-      formX = formTest.findFormByPrimaryKey("D4D75662-033F-6DD1-E034-0003BA0B1A09");
+   //   formX = formTest.findFormByPrimaryKey("D4D75662-033F-6DD1-E034-0003BA0B1A09");
+ //  Collection temps = formTest.getAllTemplatesOrderByContext();
+ //  System.out.println(temps.size() + " templates retrieved");
     }
 
     catch (DMLException e) {
@@ -1282,6 +1283,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    contextTransferObject.setConteIdseq(rs.getString("CONTE_IDSEQ")); //CONTE_IDSEQ
    contextTransferObject.setName(rs.getString("NAME")); //context name
    form.setContext(contextTransferObject);
+   formsList.add(form);
    } else
    {
      form = currentForm;

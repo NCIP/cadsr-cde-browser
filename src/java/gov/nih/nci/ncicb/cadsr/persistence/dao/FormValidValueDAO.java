@@ -17,7 +17,7 @@ public interface FormValidValueDAO {
    *
    * @throws <b>DMLException</b>
    */
-  public String createFormValidValueComponent(FormValidValue newValidValue)
+  public String createFormValidValueComponent(FormValidValue newValidValue,String parentId)
     throws DMLException;
 
   /**
@@ -46,7 +46,7 @@ public interface FormValidValueDAO {
    */
   public int updateDisplayOrder(
     String validValueId,
-    int newDisplayOrder) throws DMLException;
+    int newDisplayOrder, String username) throws DMLException;
 
   /**
    * Deletes the specified form valid value and all its associated components.

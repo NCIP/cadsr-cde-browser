@@ -24,11 +24,11 @@
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
-   <property name="cdebrowser.version" value="3.0.1" />
-   <property name="cdebrowser.build" value="14" />
+   <property name="cdebrowser.version" value="3.0.1.1" />
+   <property name="cdebrowser.build" value="17" />
    
    <!-- used for open source build for file suffix-->
-   <property name="cdebrowser.version.suffix" value="3_0_1" />
+   <property name="cdebrowser.version.suffix" value="3_0_1_1" />
    
    <property name="dev.user.password" value="cdeuser" />
    <property name="qa.user.password" value="cdeuser" />
@@ -100,8 +100,8 @@
   <property name="open.source.dir" value="${build.dir}/opensource" />  
   <property name="open.source.dir.raw" value="${open.source.dir}/raw" />
   <property name="open.source.dir.raw.config" value="${open.source.dir.raw}/config" />
-  <property name="open.source.dir.raw.lib" value="${open.source.dir.raw}/lib" />
-  <property name="open.source.dir.raw.src" value="${open.source.dir.raw}/src" />
+  <property name="open.source.dir.raw.lib" value="${open.source.dir.raw}/lib/java" />
+  <property name="open.source.dir.raw.src" value="${open.source.dir.raw}/src/java" />
   <property name="open.source.dir.raw.ui" value="${open.source.dir.raw}/ui" />
   <property name="app.docs.setup.distribution.readme.name" value="CDEBrowserDistributionReadme" /> 
   <property name="app.docs.setup.distribution.src.readme.name" value="CDEBrowserSrcDistributionReadme" /> 
@@ -754,8 +754,6 @@
      <copy todir="${build.docs.setup.dir}/" filtering="true">      
          <fileset dir="${cdebrowser.docs.setup.dir}">
            <patternset>
-             <include name="${app.setup.jboss.install.name}.txt"/>
-             <include name="${app.docs.setup.distribution.readme.name}.txt"/>
              <include name="${app.docs.setup.distribution.src.readme.name}.txt"/>
              <include name="${open.source.readme.name}.txt"/>
            </patternset>
@@ -780,12 +778,25 @@
          <fileset dir="${java.src.dir}">
            <patternset>
              <include name="**/*.xml"/>
+             <exclude name="*build.xml"/>
              <include name="**/*.properties"/>
              <include name="**/*.java"/>
            </patternset>
          </fileset>            
       </copy>    
     <!-- copy config -->
+    
+     <!-- copy build file -->
+     
+     <copy todir="${open.source.dir.raw.src}">      
+         <fileset dir="${config.opensource}/scripts">
+           <patternset>
+             <include name="build.xml"/>
+           </patternset>
+         </fileset>            
+      </copy>    
+    <!-- copy config -->
+    
      <copy todir="${open.source.dir.raw.config}" filtering="true">      
          <fileset dir="${config.opensource}">
            <patternset>
@@ -862,7 +873,7 @@
 
   <target name="opensource_unit" depends="opensource_to_accii">
       <!-- copy libs -->
-     <copy todir="${open.source.dir}/ascii/${open.source.dir.base.name}/lib">      
+     <copy todir="${open.source.dir}/ascii/${open.source.dir.base.name}/lib/java">      
          <fileset dir="${java.lib.dir}">
            <patternset>
              <include name="**/*.*"/>
@@ -871,12 +882,20 @@
       </copy>       
      <!-- copy images -->
      <copy todir="${open.source.dir}/ascii/${open.source.dir.base.name}/ui">      
-         <fileset dir="${ui.dir}/i">
+         <fileset dir="${ui.dir}">
            <patternset>
-             <include name="**/i/*.*"/>
+             <include name="i/*.*"/>
            </patternset>
          </fileset>               
       </copy>  
+     <copy todir="${open.source.dir}/ascii/${open.source.dir.base.name}/ui">      
+         <fileset dir="${ui.dir}">
+           <patternset>
+             <include name="html/common/skins/CDEBrowser1/images/*.*"/>
+           </patternset>
+         </fileset>               
+      </copy> 
+      
       <native2ascii src="${build.docs.setup.dir}" 
                     dest="${open.source.dir}/ascii/${open.source.dir.base.name}"
                includes="${open.source.readme.name}.txt"               
@@ -899,8 +918,50 @@
        />
  </target> 
  
-
-
+  <!-- create download bundles -->
+  
+  <target name="download_init" depends="opensource_unit"> 
+    <delete file="${open.source.dir}/ascii/${open.source.dir.base.name}/${open.source.readme.name}.txt"/>
+    
+     <!-- Copy doc to build dir -->
+    <filter token="user.password" value="${dev.user.password}"/>
+    <filter token="cdebrowser.version" value="${cdebrowser.version}"/>
+    <filter token="cdebrowser.version.suffix" value="${cdebrowser.version.suffix}"/>
+    
+    <copy todir="${build.docs.setup.dir}/" filtering="true">      
+        <fileset dir="${cdebrowser.docs.setup.dir}">
+            <patternset>
+                    <include name="${app.setup.jboss.install.name}.txt"/>
+                    <include name="${app.docs.setup.distribution.readme.name}.txt"/>                    
+            </patternset>
+        </fileset>               
+     </copy>
+      
+     <native2ascii src="${build.docs.setup.dir}" dest="${open.source.dir}/ascii/${open.source.dir.base.name}"
+               includes="${app.setup.jboss.install.name}.txt"               
+               />     
+                    
+  </target>
+  
+  <target name="dist_download" depends="download_init">         
+     <zip destfile="${dist.dir}/${download.file.name.windows}.zip"
+         basedir="${open.source.dir}/ascii"
+         update="true" />
+   
+     <tar tarfile="${build.dir}/${download.file.name.unix}.tar"
+         basedir="${open.source.dir}/ascii"
+         longfile="gnu"/>
+    <gzip zipfile="${dist.dir}/${download.file.name.unix}.tar.gz" 
+       src="${build.dir}/${download.file.name.unix}.tar"
+        />
+    <native2ascii src="${build.docs.setup.dir}" dest="${dist.dir}"
+               includes="${app.docs.setup.distribution.readme.name}.txt"               
+               />         
+ </target> 
+ 
+  
+                  
+               
 
 <!-- ===========  End OPEN SOURCE ======================= -->
 
@@ -1071,14 +1132,13 @@
   <!-- =========== END PROD DISTRIBUTION ======================= -->
   
   <!-- =========== PROD DISTRIBUTION Complete============== -->
-        <target name="dist_download_full" depends="dist_download,
-                                                             dist_opensource ">  
+        <target name="dist_download_full" depends="dist_opensource, dist_download ">  
      
-        </target>      
+        </target>   
   <!-- =========== END PROD DISTRIBUTION ======================= -->
 
   <!-- =========== PROD DISTRIBUTION Complete============== -->
-        <target name="dist_opensource" depends="clean_build_dir,opensource_config,opensource_windows,
+        <target name="dist_opensource" depends="opensource_windows,
                 opensource_unix">  
                <native2ascii src="${build.docs.setup.dir}" dest="${dist.dir}"
                includes="${app.docs.setup.distribution.src.readme.name}.txt"               
@@ -1086,59 +1146,7 @@
         </target>      
   <!-- =========== END PROD DISTRIBUTION ======================= --> 
   
-  <!-- =========== Download distribution============== -->
-        <target name="dist_download" depends="clean_build_dir,opensource_config,ear_cdebrowser"> 
-            <mkdir dir="${build.dir}/download"/>
-            <mkdir dir="${build.dir}/download/lib"/>
-            <mkdir dir="${build.docs.setup.dir}"/>
-            
-             <copy todir="${build.dir}/download" >      
-                 <fileset dir="${build.dir}">
-                   <patternset>
-                     <include name="${ear.name}.ear"/>
-                   </patternset>
-                 </fileset>    
-              </copy> 
-            <!-- Copy doc to build dir -->
-     	    <filter token="user.password" value="${dev.user.password}"/>
-            <filter token="cdebrowser.version" value="${cdebrowser.version}"/>
-            <filter token="cdebrowser.version.suffix" value="${cdebrowser.version.suffix}"/>
-            <copy todir="${build.docs.setup.dir}/" filtering="true">      
-               <fileset dir="${cdebrowser.docs.setup.dir}">
-                  <patternset>
-                    <include name="${app.setup.jboss.install.name}.txt"/>
-                    <include name="${app.docs.setup.distribution.readme.name}.txt"/>
-                    <include name="${app.docs.setup.distribution.src.readme.name}.txt"/>
-                    <include name="${open.source.readme.name}.txt"/>
-                  </patternset>
-                </fileset>               
-             </copy>
-      
-               <native2ascii src="${build.docs.setup.dir}" dest="${build.dir}/download/"
-               includes="${app.setup.jboss.install.name}.txt"               
-               />     
-               <move file="${build.dir}/download/${app.setup.jboss.install.name}.txt"
-                    tofile="${build.dir}/download/${app.setup.jboss.install.out.name}"/>
-                    
-               <native2ascii src="${config.opensource}/connections" dest="${build.dir}/download/"
-               includes="${app.setup.jboss.oracle.datasource.filename}"               
-               />     
-                        
-            <zip destfile="${dist.dir}/${download.file.name.windows}.zip"
-                 basedir="${build.dir}/download"
-                 update="true" />      
-                 
-            <tar tarfile="${dist.dir}/${download.file.name.unix}.tar"
-                 basedir="${build.dir}/download"
-                 longfile="gnu"/>
-            <gzip zipfile="${dist.dir}/${download.file.name.unix}.tar.gz" 
-                src="${dist.dir}/${download.file.name.unix}.tar"
-                />   
-               <native2ascii src="${build.docs.setup.dir}" dest="${dist.dir}"
-               includes="${app.docs.setup.distribution.readme.name}.txt"               
-               />                   
-        </target>      
-  <!-- =========== END Download DISTRIBUTION ======================= -->  
+
   
   <!-- ===========cadsr api ========================== -->
 

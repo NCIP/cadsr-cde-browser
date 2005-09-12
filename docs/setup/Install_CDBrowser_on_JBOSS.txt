@@ -4,35 +4,89 @@ CD Browser @cdebrowser.version@ Installation Document for JBOSS
 
 Pre-requisites
 ---------------
+1.  JBOSS 4.0.1 installed. Available from http://www.jboss.org
+2.  JDK 1.4.2_06  installed
+3.  Ant 1.6.2 or above installed. Available from http://ant.apache.org/
+4.  caDSR @cdebrowser.version@ repository installed. Please refer to caDSR installation document
 
-1. JBOSS 4.0.1 installed. Available from http://www.jboss.org
-2. caDSR @cdebrowser.version@ repository installed. Please refer to caDSR installation document
-
-Installation steps
-------------------
+Installation
+------------
 
 
 Please replace the following references with your environment specific information.
 
 <JBOSS_HOME> refers to Jboss home directory.
-<INSTALL_HOME> refers to directory to which "CDBrowser_@cdebrowser.version.suffix@.zip" is unzipped.
+<HOME> refers to directory to which "CDBrowser_@cdebrowser.version.suffix@.zip" is unzipped.
+<INSTALL_HOME> refers to directory  <HOME>/cdebrowser_@cdebrowser.version.suffix@
        
-       
-1. Shutdown Jboss instance
 
+Installation steps
+==================
 
-2. Copy  file <INSTALL_HOME>\oracle-ds.xml to directory <JBOSS_HOME> server\default\deploy
+Building the Application  
+------------------------
+An ear file need to be build before the application can be installed, follow
+the steps below to build an ear file. An ear file is not provided with the
+download because the database connection information and environment properties 
+could be different for each deployment.
+
+  1. Update  cle-providers.xml  located in directory  <INSTALL_HOME>\config\connections
+            - Update the hostname,port and SID that could be used to connect to caDSR repository.
+            - Please update the values for user and password with the username/password to be used to 
+               connect to caDSR repository.
+               caDSR installation scripts creates a user called "sbrext" that can be used for this purpose	
+
+ 2. Update  cdebrowser.properties located in directory  <INSTALL_HOME>\config\properties\jboss
+            - Update value for property XML_DOWNLOAD_DIR to point to directory on the server that could be 
+              used by the application to temporarily write files. Application should have write 
+              privileges to this directory.
+              
+              For windows (need extra "\")
+              eg . XML_DOWNLOAD_DIR=c:\\temp\\
+              For unix
+              eg . XML_DOWNLOAD_DIR=/usr/local/temp     
+
+            - Pointing to new a EVS server
+               If there is a need for the application to point to EVS server other than the one hosted by 
+               NCI please update. 
+                 -  EVS_URL_SOURCES property to define type of codes available as coma separated string.
+                          eg.    EVS_URL_SOURCES  = NCI_META_CUI,LOINC_CODE,GO_CODE,NCI_CONCEPT_CODE
+
+                 - For each type in EVS_URL_SOURCES string there should be a matching name value pair 
+                   defining the url to query for that type of concept code
+                     eg.     NCI_META_CUI=http://ncimeta.nci.nih.gov/MetaServlet/ResultServlet?cui=
+			     LOINC_CODE=http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=LOINC&&code=
+			     GO_CODE=http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=GO&&code=
+			     NCI_CONCEPT_CODE=http://nciterms.nci.nih.gov/NCIBrowser/Connect.do?dictionary=NCI_Thesaurus&&code=
+                      Note: In caDSR repository different EVS Sources are captured as  part of Concept's EVS Source property
+
+  3. Run the build script (build.xml) from  directory src/java with target "dist"
+	eg. ant -f  build.xml  dist
+	
+  4. cdebrowser.ear will be created under directory <INSTALL_HOME>/dist
+
+Deploying Application
+------------------------------
+1. Shutdown Jboss instance.
+
+2. Copy  file  <INSTALL_HOME>\config\connections\oracle-ds.xml to directory <JBOSS_HOME> server\default\deploy
     If file already exists in <JBOSS_HOME> server\default\deploy, then update the file with 
-    datasources defined in <INSTALL_HOME>\oracle-ds.xml.
-    Note: Please verify the cdebrowser user password.
-    
+    datasource defined in <INSTALL_HOME>\config\connections\oracle-ds.xml.
+
+    Note: Please update the following tags in oracle-ds.xml to match your database(caDSR repository) environment.		
+                <connection-url>jdbc:oracle:thin:@hostname:port:SID</connection-url>
+		<user-name>username</user-name>
+		<password>password</password>
+		
+                caDSR installation scripts creates a user called "sbrext" that can be used for this purpose
+
 3. Edit login-config.xml in <JBOSS_HOME>\server\default\conf to add the 
    xml snipet below between <policy> tags
 
 	<application-policy name="FormbuilderDomain">
 		<authentication>
 			<login-module code="gov.nih.nci.ncicb.cadsr.security.jboss.DBLoginModule" flag="required">
-	                                       <module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</module-option>
+	                      <module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</module-option>
 			</login-module>
 		</authentication>
 	</application-policy>    
@@ -62,43 +116,14 @@ Please replace the following references with your environment specific informati
                 <priority value="DEBUG"/>
                 <appender-ref ref="CDEBROWSER_FILE"/>
         </category>
- 
-5. Make sure the following directory exist.
-	<JBOSS_HOME>/output/ 
-	 <JBOSS_HOME>/server/default/log 
-	 
-6. Copy cdebrowser.ear from <INSTALL_HOME> to 
+
+5. Copy cdebrowser.ear from <INSTALL_HOME>/dist to 
 	<JBOSS_HOME>\server\default\deploy
 	
-7. Startup the Jboss instance
-
-8. WEB-INF\classes\cle_providers.xml contains the connection information for the 
-   repository schema, update this file to reflect your connection parameters.
-   
-   eg.
-   <?xml version="1.0"?>
-   <!DOCTYPE cle-providers SYSTEM "http://xmlns.oracle.com/ias/mvc/cle-providers.dtd">
-   <cle-providers>
-     <provider name="cdebrowser_bc4j" 
-     		class="oracle.clex.persistence.bc4j.ApplicationModuleProvider">
-       <property name="user" value="cdebrowser"/>
-       <property name="password" value="@user.password@"/>
-       <property name="modulename" 
-       		value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule"/>
-       <property name="connectionstring" 
-       		value="jdbc:oracle:thin:cdebrowser/@user.password@@cbiodb2-d.nci.nih.gov:1521:cbdev"/>
-       <property name="host" value="cbiodb2-d.nci.nih.gov"/>
-       <property name="sid" value="cbev"/>
-       <property name="persistencebase" 
-       		value="gov.nih.nci.ncicb.cadsr.persistence.bc4j"/>
-       <property name="failover" value=""/>
-     </provider>
-    </cle-providers>
+6. Startup the Jboss instance
     
-    Above can be achived 
-    	- By unjaring cdebrowser.ear, updating this file re-jaring the ear 
-    	  and then deploying the application.
-    
-9. Access the application using url http://<HOST>:<POST>/CDEBrowser/
+7. Access the application using url http://<HOST>:<POST>/CDEBrowser/
     eg.
     	http://localhost:8080/CDEBrowser/
+       
+       

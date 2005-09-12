@@ -68,7 +68,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
    *
    * @throws <b>DMLException</b>
    */
-  public String createFormValidValueComponent(FormValidValue newValidValue)
+  public String createFormValidValueComponent(FormValidValue newValidValue, String parentId)
     throws DMLException {
 
     // check if the user has the privilege to create valid value
@@ -85,7 +85,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     
   
     InsertFormValidValue insertValidValue = new InsertFormValidValue(this.getDataSource());
-    Map out = insertValidValue.executInsertCommand(newValidValue);
+    Map out = insertValidValue.executInsertCommand(newValidValue,parentId);
 
     String returnCode = (String) out.get("p_return_code");
     String returnDesc = (String) out.get("p_return_desc");
@@ -146,10 +146,10 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
    */
   public int updateDisplayOrder(
     String validValueId,
-    int newDisplayOrder) throws DMLException {
+    int newDisplayOrder, String username) throws DMLException {
 
     return updateDisplayOrderDirect(validValueId, "ELEMENT_VALUE", 
-      newDisplayOrder);
+      newDisplayOrder,username);
   }
 
   /**
@@ -393,7 +393,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       compile();
     }
 
-    public Map executInsertCommand(FormValidValue fvv) {
+    public Map executInsertCommand(FormValidValue fvv, String parentId) {
       String protocolIdSeq = null;
 
       if( fvv.getQuestion().getModule().getForm().getProtocol()!=null)
@@ -402,7 +402,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       }      
       Map in = new HashMap();
       
-      in.put("p_ques_idseq", fvv.getQuestion().getQuesIdseq());
+      in.put("p_ques_idseq", parentId);
       in.put("p_version", fvv.getVersion().toString());
       in.put("p_preferred_name", fvv.getPreferredName());
       in.put("p_long_name", fvv.getLongName());

@@ -1163,6 +1163,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
      if(currQuestion.getDataElement()==null)
      {
        List vvList  = currQuestion.getValidValues();
+       
        List copyList = cloneFormValidValueList(vvList);
        if(!copyList.isEmpty())
         availableVVMap.put(currQuestion.getQuesIdseq(),copyList);
@@ -1181,6 +1182,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
          //Check if vv in question has vpIdseq
        }
        List vvList = currQuestion.getValidValues();
+       
+       /**
+      //Change in 3.0.1.1 Do not need this test here because of this questions with all vv deleted on the from 
+       // are not
+      // getting through
        ListIterator vvIterator = vvList.listIterator();
        boolean vpvdPresent = false;
        while(vvIterator.hasNext())
@@ -1192,9 +1198,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
             break;
           }
        }
-       //Get the intersection
+       **/
+       //Get the complete list of valid values for that question
        List copyList = cloneFormValidValueList(vvList);
-       if(vpvdPresent&&vdVVList!=null)
+       if(vdVVList!=null)
        {
          ListIterator vvvdIterator = vdVVList.listIterator();
          while(vvvdIterator.hasNext())

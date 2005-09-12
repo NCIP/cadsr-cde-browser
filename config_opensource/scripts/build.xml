@@ -1,0 +1,622 @@
+<!DOCTYPE project>
+<!--
+  CDEBrowser Ant build 
+  =============================================
+
+  Author: Shaji Kakkodi
+  
+
+  This build script was created using Ant version 1.6 and Java 1.4.2_06
+-->
+
+<project name="formbuilder" default="init" basedir=".">
+  
+  <!-- Project Settings -->
+  <!-- Use your own build.properties 
+       Properties in build.properties overide properties in build.xml
+       -->
+  <property file="build.properties"/>
+  
+   <!-- Make sure these are correct for your instance -->
+   
+   
+   <property name="cdebrowser.version" value="3.0.1.1" />
+   <property name="cdebrowser.build" value="17" />
+   
+   <!-- used for open source build for file suffix-->
+   <property name="cdebrowser.version.suffix" value="3_0_1_1" />
+   
+   <property name="dev.user.password" value="cdeuser" />
+
+   
+  
+  <property name="project.home" value="${basedir}/../.."/>
+  
+  <property name="app.name" value="cdebrowser" />
+  <property name="web.app.name" value="${app.name}-web" />
+  <property name="ear.name" value="${app.name}" />
+  <property name="war.name" value="${app.name}-web" />
+  <property name="ejb.name" value="formbuilder-ejb" />  
+    
+  <!-- Java Source Directories -->
+  <property name="java.src.dir" value="${project.home}/src/java"/>
+    
+  <!-- ui Directories -->
+  <property name="ui.dir" value="${project.home}/ui"/>  
+  <property name="jsp.dir" value="${ui.dir}/jsp"/>  
+  <property name="html.dir" value="${ui.dir}/html"/>   
+  <property name="formbuilder.jsp.dir" value="${jsp.dir}/formbuilder"/>  
+  <property name="build.dir" value="${project.home}/build"/>
+  <property name="dist.dir" value="${project.home}/dist"/>
+  <property name="classes.build.dir" value="${build.dir}/classes"/>
+  <property name="java.lib.dir" value="${project.home}/lib/java"/>
+ 
+  <property name="config.home" value="${project.home}/config"/>
+  <property name="config.opensource" value="${project.home}/config_opensource"/>
+  <property name="ejb.descriptor.home" value="${project.home}/config/ejb"/>
+  
+  <property name="web.descriptor.home" value="${project.home}/config/WEB-INF/jboss"/>  
+  
+  <property name="app.docs.dir" value="${project.home}/docs" /> 
+  
+  
+
+  <!-- =========== CLEAN BUILD AREA ======================= -->
+    
+    <target name="clean">
+          <delete dir="${classes.build.dir}" quiet="false"/>
+          <delete dir="${build.dir}" quiet="false"/>   
+          <delete dir="${dist.dir}" quiet="false"/>          
+    </target>
+    
+    <target name="clean_build_dir">
+          <delete dir="${classes.build.dir}" quiet="false"/>
+          <delete dir="${build.dir}" quiet="false"/>           
+    </target>
+ <!-- =========== END CLEAN BUILD AREA ======================= -->
+ 
+ 
+ <!-- =========== CONFIGURATION ======================= -->
+   <!-- Initialize the system -->
+   
+ 
+   <target name="init">
+     <!-- Create build dir -->
+     <!-- Create time stamp -->
+     <tstamp/>
+     <mkdir dir="${build.dir}"/>
+     <mkdir dir="${classes.build.dir}"/>
+     <mkdir dir="${dist.dir}"/>
+   </target>
+   <!-- end init -->
+ <!-- =========== END CONFIGURATION ======================= -->
+
+
+   <!--Set the lib classpath-->
+   <path id="classpath">
+      <!--browser libs -->
+
+      <pathelement location="${java.lib.dir}/classes12.jar"/>
+      <pathelement location="${java.lib.dir}/cle20.jar"/>
+      <pathelement location="${java.lib.dir}/collections.jar"/>
+      <pathelement location="${java.lib.dir}/healthtoolkit.zip"/>
+      <pathelement location="${java.lib.dir}/jdev-cm.jar"/>
+      <pathelement location="${java.lib.dir}/jdev-rt.jar"/>
+      <pathelement location="${java.lib.dir}/nls_charset12.jar"/>
+      <pathelement location="${java.lib.dir}/ssosdk307.jar"/>
+      <pathelement location="${java.lib.dir}/xmlcomp.jar"/>      
+      <pathelement location="${java.lib.dir}/xmlparserv2.jar"/>    
+      <pathelement location="${java.lib.dir}/xsu12.jar"/> 
+      
+      <!--BC4J libs -->
+      <pathelement location="${java.lib.dir}/bc4jct.jar"/>
+      <pathelement location="${java.lib.dir}/bc4jdatum.jar"/>
+      <pathelement location="${java.lib.dir}/bc4jdomorcl.jar"/>
+      <pathelement location="${java.lib.dir}/bc4jmt.jar"/>   
+      
+      <!-- Struts libs -->
+      <pathelement location="${java.lib.dir}/struts-1.1.jar"/>
+      <pathelement location="${java.lib.dir}/commons-beanutils.jar"/>
+      <pathelement location="${java.lib.dir}/commons-collections.jar"/>
+      <pathelement location="${java.lib.dir}/commons-fileupload.jar"/>
+      <pathelement location="${java.lib.dir}/commons-digester.jar"/>
+      <pathelement location="${java.lib.dir}/commons-lang.jar"/>
+      <pathelement location="${java.lib.dir}/commons-logging.jar"/>
+      <pathelement location="${java.lib.dir}/commons-validator.jar"/>
+      <pathelement location="${java.lib.dir}/jakarta-oro.jar"/> 
+      
+      <!-- Springframework libs -->
+      <pathelement location="${java.lib.dir}/spring115.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-context115.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-core115.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-dao115.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-orm115.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-context115.jar"/>
+      <pathelement location="${java.lib.dir}/spring-web115.jar"/>
+            
+      <!--J2EE  libs -->
+      <pathelement location="${java.lib.dir}/servlet.jar"/>
+      <pathelement location="${java.lib.dir}/jndi.jar"/>   
+      <pathelement location="${java.lib.dir}/jta.jar"/>  
+      <pathelement location="${java.lib.dir}/jdbc.jar"/>
+      <pathelement location="${java.lib.dir}/oc4j.jar"/>
+      <pathelement location="${java.lib.dir}/ejb.jar"/>
+      <pathelement location="${java.lib.dir}/jms.jar"/>
+      
+      <!--JBoss JAAS lib -->
+      <pathelement location="${java.lib.dir}/jbosssx.jar"/>
+      
+      <!-- Apache POI  libs -->
+      <pathelement location="${java.lib.dir}/poi-2.5.1-final-20040804.jar"/>
+      
+      <!-- cadsr api lib -->
+      <pathelement location="${java.lib.dir}/cadsr-api.jar"/>
+      
+   </path>
+   
+   <path id="srcpath">
+         <pathelement location="${java.src.dir}"/>
+   </path>
+   
+   <target name="compile" depends="init">
+      <javac destdir="${classes.build.dir}" debug="on" >
+         <classpath refid="classpath"/>
+         <src refid="srcpath"/>
+      </javac>  
+   </target>
+   
+
+  <!-- ============ CREATE FORM PERSISTENCE JAR FILE ================== -->
+    <target name="jar_persistence_form" depends="compile">
+        <jar jarfile="${classes.build.dir}/persistence_form.jar">
+          <fileset dir="${classes.build.dir}">
+            <patternset>
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/base/**"/> 
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/dao/**"/> 
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/jdbc/**"/> 
+            </patternset>
+          </fileset>
+          <manifest>
+	    <attribute name="Built-By" value="${user.name}"/>
+	    <attribute name="Class-Path" value="ojdbc14.jar spring.jar spring-jdbc.jar"/>
+          </manifest>           
+        </jar>
+      </target>
+  <!-- =========== END FORM PERSISTENCE JAR PROCESS ======================= -->
+  
+  <!-- ============ CREATE COMMON JAR FILE ================== -->
+    <target name="jar_common" depends="compile">
+        <jar jarfile="${classes.build.dir}/common.jar">
+          <fileset dir="${classes.build.dir}">
+            <patternset>
+              <include name="gov/nih/nci/ncicb/cadsr/resource/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/resource/impl/*"/>              
+              <include name="gov/nih/nci/ncicb/cadsr/cdecart/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/dto/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/dto/base/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/dto/jdbc/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/exception/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/servicelocator/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/StringUtils.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/logging/LogFactory.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/logging/Log.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/logging/CaDSRLogImpl.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/SessionUtils.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/DebugStringBuffer.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/TimeUtils.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/ObjectFactory.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/*"/>
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/PersistenceConstants.class"/>
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/ErrorCodeConstants.class"/>
+              <exclude name="gov/nih/nci/ncicb/cadsr/servicelocator/ApplicationServiceLocator.class"/>
+              <exclude name="gov/nih/nci/ncicb/cadsr/servicelocator/ObjectLocator.class"/>
+              <exclude name="gov/nih/nci/ncicb/cadsr/servicelocator/spring/*"/>              
+            </patternset>
+          </fileset>           
+        </jar>
+      </target>
+  <!-- =========== END COMMON JAR PROCESS ======================= -->
+  
+  
+  <!-- =========== DEV CONFIG ======================= -->
+    <target name="dev_config" depends="init">          
+     <copy todir="${classes.build.dir}/WEB-INF/classes">
+         <fileset dir="${config.home}/properties">
+           <patternset>
+             <include name="*.properties"/>
+             <exclude name="log4j.properties"/>
+             <exclude name="cdebrowser.properties"/>
+           </patternset>
+         </fileset>
+       </copy>
+     <copy todir="${classes.build.dir}/WEB-INF/classes">
+              <fileset dir="${config.home}/properties/jboss">
+                <patternset>
+                  <include name="cdebrowser.properties"/>
+                </patternset>
+              </fileset>
+     </copy>
+     
+     <filter token="cdebrowser.version" value="${cdebrowser.version}"/>
+     <filter token="cdebrowser.build" value="${cdebrowser.build}" />
+     <copy todir="${classes.build.dir}/jsp/common" filtering="true">
+              <fileset dir="${jsp.dir}/common">
+                <patternset>
+                  <include name="common_variable_length_bottom_border.jsp"/>
+                  <include name="common_bottom_border.jsp"/>
+                </patternset>
+              </fileset>
+     </copy>     
+   
+     <filter token="user.password" value="${dev.user.password}"/>
+     <copy todir="${classes.build.dir}/WEB-INF/classes" filtering="true">    
+         <fileset dir="${config.home}/connections">
+           <patternset>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>
+        
+     <copy todir="${classes.build.dir}/WEB-INF/classes">      
+         <fileset dir="${config.home}/services">
+           <patternset>
+             <include name="cdeBrowser.xml"/>
+           </patternset>
+         </fileset>      
+      </copy>  
+
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.home}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+               <!--include name="jboss-app.xml"/-->
+             </patternset>
+           </fileset>      
+        </copy> 
+        
+   </target>
+  <!-- =========== END DEV CONFIG ======================= -->
+  
+
+  <!-- =========== START WAR PROCESS ======================= -->
+  
+   <target name="war_cdebrowser" depends="compile">  
+
+     <copy todir="${classes.build.dir}/WEB-INF/classes">      
+         <fileset dir="${java.src.dir}">
+           <patternset>
+             <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/common/*.properties"/>
+           </patternset>
+         </fileset>      
+      </copy>
+     <copy todir="${classes.build.dir}/WEB-INF/classes">      
+         <fileset dir="${java.src.dir}">
+           <patternset>
+             <include name="gov/nih/nci/ncicb/cadsr/persistence/**/*.xml"/>
+           </patternset>
+         </fileset>      
+      </copy>    
+      
+      <!-- copy application classes -->
+      <copy todir="${classes.build.dir}/WEB-INF/classes">
+        <fileset dir="${classes.build.dir}">
+           <patternset>
+           
+              <!-- commons -->
+
+	
+	    <!-- persistence -->
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/base/**"/> 
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/dao/**"/> 
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/jdbc/**"/> 
+              
+             <include name="gov/nih/nci/ncicb/cadsr/base/process/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/cdebrowser/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/struts/common/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/servicelocator/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/database/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/security/jboss/**"/>
+             <include name="gov/nih/nci/ncicb/cadsr/security/LogoutServlet.class"/>
+           </patternset>
+       </fileset>
+       <fileset dir="${classes.build.dir}">
+            <patternset>
+              <include name="gov/nih/nci/ncicb/cadsr/common/bc4j/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/persistence/bc4j/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/dto/bc4j/**"/>
+            </patternset>
+        </fileset>
+ 	<fileset dir="${classes.build.dir}">
+            <patternset>
+              <include name="gov/nih/nci/ncicb/cadsr/html/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/lov/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/resource/handler/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/util/**"/>
+              <include name="gov/nih/nci/ncicb/cadsr/xml/**"/>
+              <include name="gov/nih/nci/ncicb/oracle/mvc/**"/>
+              <include name="gov/nih/nci/ncicb/webtree/**"/>
+            </patternset>
+        </fileset>                   
+        <fileset dir="${classes.build.dir}">
+              <patternset>
+                <include name="gov/nih/nci/ncicb/cadsr/formbuilder/common/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/formbuilder/service/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/common/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/struts/**"/> 
+                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/service/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/util/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/jsp/**"/>
+              </patternset>
+        </fileset>       
+     </copy>
+     
+    <war warfile="${build.dir}/${war.name}.war" webxml="${web.descriptor.home}/web.xml">
+       
+      <fileset dir="${config.home}">
+        <patternset>
+          <include name="WEB-INF/*.tld"/>
+          <include name="WEB-INF/struts-config*.xml"/>
+          <include name="WEB-INF/umlbrowser/struts-config*.xml"/>
+          <include name="WEB-INF/validat*.xml"/>
+          <include name="WEB-INF/jboss-web.xml"/>
+          <include name="WEB-INF/spring/*.xml"/>
+          <include name="WEB-INF/ehcache.xml"/>
+        </patternset>
+      </fileset>
+      <fileset dir="${classes.build.dir}">
+        <patternset>
+          <include name="WEB-INF/classes/**/*.*"/>
+        </patternset>
+      </fileset>        
+ 
+      <fileset dir="${jsp.dir}/">
+        <patternset>
+          <include name="formbuilder/**/*.*"/>  
+         <!-- release 3.0, reorganze ui directory -->
+          <include name="cdebrowser/**/*.*"/>  
+          <include name="umlbrowser/**/*.*"/>  
+          <include name="*.jsp"/>
+        </patternset>
+      </fileset>
+      
+      <fileset dir="${jsp.dir}/">
+              <patternset>
+                <include name="common/**/*.*"/>  
+                <include name="*.jsp"/>
+                <exclude name="common_variable_length_bottom_border.jsp"/>
+                <exclude name="common_bottom_border.jsp"/>                
+              </patternset>
+      </fileset>
+
+      <fileset dir="${classes.build.dir}/jsp/">
+              <patternset>
+                <include name="common/**/*.*"/>                 
+              </patternset>
+      </fileset>
+           
+      
+  <!-- release 3.0, reorganze ui directory -->
+      <fileset dir="${html.dir}/">
+        <patternset>
+          <include name="common/**/*.*"/>   
+        </patternset>         
+      </fileset>
+
+      <fileset dir="${ui.dir}/">
+        <patternset>
+          <include name="i/**/*.*"/>   
+        </patternset>
+      </fileset>
+
+      <fileset dir="${ui.dir}/">
+        <patternset>
+          <include name="jsLib/**/*.*"/>   
+          <!-- release 3.0, moved css to its own directory -->
+          <include name="css/**/*.*"/>   
+        </patternset>      
+      </fileset>
+
+      <lib dir="${java.lib.dir}">
+       	<include name="classes12.jar"/>
+      	<include name="cle20.jar"/>
+
+      	<include name="healthtoolkit.zip"/>
+      	<include name="nls_charset12.jar"/>
+      	<include name="ssosdk307.jar"/>
+      	<include name="xmlcomp.jar"/>         
+      	<include name="xsu12.jar"/> 
+      	
+      	<!--BC4J libs -->
+      	<include name="xmlparserv2.jar"/>       	
+      	<include name="collections.jar"/>
+      	<include name="bc4jmt.jar"/>
+      	<include name="jdev-cm.jar"/>
+      	<include name="jdev-rt.jar"/>
+      	<include name="bc4jct.jar"/>
+      	<include name="bc4jdatum.jar"/>
+      	<include name="bc4jdomorcl.jar"/>
+      	     	
+      
+      	<!-- old bc4j -->
+      	<!--include name="bc4jct.jar"/-->
+      	<!--include name="bc4jdatum.jar"/-->
+      	<!--include name="bc4jdomorcl.jar"/-->
+      	<!--include name="bc4jmt.jar"/-->   
+      	
+      	<!-- Struts libs -->
+      	<include name="struts-1.1.jar"/>
+      	<include name="commons-beanutils.jar"/>
+      	<include name="commons-collections.jar"/>
+      	<include name="commons-fileupload.jar"/>
+      	<include name="commons-digester.jar"/>
+      	<include name="commons-lang.jar"/>
+      	<include name="commons-validator.jar"/>
+      	<include name="jakarta-oro.jar"/>
+      	
+      	<!-- Spring Libs -->
+      	
+      	<include name="spring115.jar"/>
+      	<include name="spring-context115.jar"/>
+      	<include name="spring-core115.jar"/>
+      	<include name="spring-dao115.jar"/>
+      	<include name="spring-orm115.jar"/>
+      	<include name="spring-context115.jar"/>
+      	<include name="spring-web115.jar"/>
+      	
+      	
+      	
+      	<include name="hibernate2.jar"/>
+      	<include name="ehcache-0.7.jar"/>
+      	
+      	
+      	<include name="aopalliance.jar"/>
+      	
+ 
+      	<!-- cadsr api lib -->
+      	<include name="cadsr-api.jar"/>
+      	
+      	
+      	<!-- POI libs -->
+      	<include name="poi-2.5.1-final-20040804.jar"/>
+      	
+      </lib>
+       
+      <manifest>
+        <attribute name="Built-By" value="${user.name}"/>
+        <attribute name="Class-Path" value="persistence_form.jar common.jar"/>
+      </manifest>  
+    </war>
+  </target>
+   
+  <!-- =========== END CREATE WAR FILE ======================= -->
+   
+  
+  <!-- =========== CREATE EJB JAR ======================= -->
+      <target name="jar_ejb" depends="compile,jar_persistence_form,jar_common">
+        <copy todir="${classes.build.dir}/ejb/META-INF/">      
+         <fileset dir="${config.home}/ejb">
+           <patternset>
+            <include name="ejb-jar.xml"/> 
+            <include name="jboss.xml"/>
+           </patternset>
+         </fileset>      
+       </copy>  
+      
+       <jar jarfile="${build.dir}/${ejb.name}.jar">
+           <fileset dir="${classes.build.dir}">
+              <patternset>
+                <include name="gov/nih/nci/ncicb/cadsr/formbuilder/ejb/**/*.*"/>
+                <include name="gov/nih/nci/ncicb/cadsr/ejb/common/**/*.*"/>
+              </patternset>
+            </fileset>          
+	    <fileset dir="${classes.build.dir}/ejb" includes="META-INF/ejb-jar.xml"/>
+            <fileset dir="${classes.build.dir}/ejb" includes="META-INF/jboss.xml"/>
+            <manifest>
+               <attribute name="Built-By" value="${user.name}"/>
+               <attribute name="Class-Path" 
+                  value="persistence_form.jar common.jar 
+                  spring115.jar spring-context115.jar spring-core115.jar 
+                  spring-dao115.jar spring-orm115.jar
+                  commons-logging.jar log4j-1.2.8.jar properties/"/>
+            </manifest>  	    
+         </jar>         
+      </target>
+  <!-- =========== END JAR PROCESS ======================= -->  
+
+  <!-- =========== CREATE EAR FILE ======================= -->
+    <target name="ear_cdebrowser" depends="jar_ejb,war_cdebrowser">
+            
+      <!-- Create ear file -->      
+      <ear earfile="${build.dir}/${ear.name}.ear" appxml="${classes.build.dir}/META-INF/application.xml">
+        <fileset dir="${build.dir}">
+          <patternset>
+            <include name="*.war"/>
+            <include name="*.jar"/>
+          </patternset>
+        </fileset>
+
+        <fileset dir="${classes.build.dir}/META-INF">
+          <patternset>
+            <include name="properties/log4j.properties"/>
+          </patternset>
+        </fileset>
+        
+        
+        <fileset dir="${java.lib.dir}">
+          <patternset>
+            <include name="spring115.jar"/>
+            <include name="spring-context115.jar"/>
+            <include name="spring-core115.jar"/>
+            <include name="spring-dao115.jar"/>
+            <include name="spring-orm115.jar"/>
+          </patternset>
+        </fileset>
+
+        <fileset dir="${classes.build.dir}">
+          <patternset>
+            <include name="persistence_form.jar"/>
+            <include name="common.jar"/>
+          </patternset>
+        </fileset>        
+        
+        
+        <patternset>
+          <exclude name="*.*"/>
+        </patternset>
+      </ear>
+    </target>
+  <!-- =========== END CREATE EAR FILE ======================= -->
+
+
+
+<!-- =========== Copy DISTRIBUTION EAR============== -->
+  <target name="dist_ear_copy" depends="dev_config,ear_cdebrowser">  
+     <copy todir="${dist.dir}">      
+         <fileset dir="${build.dir}">
+           <patternset>
+             <include name="${ear.name}.ear"/>
+           </patternset>
+         </fileset>    
+      </copy>          
+   </target>   
+  <!-- =========== DEV DISTRIBUTION============== -->
+  
+  <!-- =========== DEV DISTRIBUTION============== -->
+   <target name="dist" depends="clean_build_dir,dev_config,ear_cdebrowser,dist_ear_copy">      
+   </target>      
+  <!-- =========== END DEV DISTRIBUTION ======================= -->
+  
+  
+ 
+ <!-- =========== BUILD HELPERS ======================= -->
+   <target name="help" depends="init">
+     <echo>
+ 
+       ===================================================================
+       edoc Build System - Help
+       ===================================================================
+ 
+       Targets:
+ 
+       clean                  - Cleans the buid area.
+       ear_cdebrowser	      - Create ear file for cdebrowser
+       war_cdebrowser	      - Create war file for cdebrowser
+       jar_formbuilder_ejb    - Create formbuilder ejb
+       jar_persistence_form   - Creates form builder persistence jar
+       jar_common	      - Creates common jar
+
+       
+       dist		      - Creates Clean distribution.
+   
+       help                   - This help screen.
+ 
+       Settings:
+           Project Home:    ${project.home}
+ 
+       ===================================================================
+ 
+     </echo>
+   </target>
+   <!-- end help -->  
+</project>

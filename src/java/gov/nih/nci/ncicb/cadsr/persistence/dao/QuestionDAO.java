@@ -84,7 +84,7 @@ public interface QuestionDAO {
    */
   public int updateDisplayOrder(
     String questionId,
-    int newDisplayOrder) throws DMLException;
+    int newDisplayOrder, String username) throws DMLException;
 
   /**
    * Changes the long name of a question.

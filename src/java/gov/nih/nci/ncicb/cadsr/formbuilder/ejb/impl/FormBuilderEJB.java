@@ -324,6 +324,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
    if(formHeader!=null)
    {
+     formHeader.setModifiedBy(getUserName());
      formdao.updateFormComponent(formHeader);
    }
     if ((addedModules != null) && !addedModules.isEmpty()) {
@@ -343,7 +344,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
       while (updatedIt.hasNext()) {
         Module updatedModule = (Module) updatedIt.next();
         dao.updateDisplayOrder(
-          updatedModule.getModuleIdseq(), updatedModule.getDisplayOrder());
+          updatedModule.getModuleIdseq(), updatedModule.getDisplayOrder(),getUserName());
       }
     }
 
@@ -435,10 +436,11 @@ public class FormBuilderEJB extends SessionBeanAdapter
         return null;
     }
 
-    private String getUserName() {
-        return context.getCallerPrincipal().getName();
+    private String getUserName() {      
+        return  context.getCallerPrincipal().getName();
         //return "JASUR";//jboss
     }
+    
 
     public Collection getAllContexts() {
         return daoFactory.getContextDAO().getAllContexts();
@@ -473,7 +475,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
         while (it.hasNext()) {
             item = (CDECartItem) it.next();
-            item.setCreatedBy(user);
+            item.setCreatedBy(user.toUpperCase());
             myDAO.insertCartItem(item);
             count++;
         }
@@ -695,7 +697,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
                if(currVV!=null)
                {
                   currVV.setModifiedBy(getUserName());
-                  fvvDao.updateDisplayOrder(currVV.getValueIdseq(),currVV.getDisplayOrder());
+                  fvvDao.updateDisplayOrder(currVV.getValueIdseq(),currVV.getDisplayOrder(),getUserName());
                }
                InstructionChanges vvInstrChanges = currVVChange.getInstrctionChanges();
                if(vvInstrChanges!=null&&!vvInstrChanges.isEmpty())
@@ -733,12 +735,12 @@ public class FormBuilderEJB extends SessionBeanAdapter
       
            if(newValidValues!=null&&!newValidValues.isEmpty())
            {
-            /**
+            
              Iterator newIt = newValidValues.iterator();
              while(newIt.hasNext())
              {
                FormValidValue currfvv = (FormValidValue)newIt.next();
-               String newfvvIdseq = fvvDao.createFormValidValueComponent(currfvv);
+               String newfvvIdseq = fvvDao.createFormValidValueComponent(currfvv,parentId);
                 //instructions
                 Instruction vvInstr = currfvv.getInstruction();
                  if(vvInstr!=null)
@@ -746,8 +748,9 @@ public class FormBuilderEJB extends SessionBeanAdapter
                     fvvInstrDao.createInstruction(vvInstr,newfvvIdseq);
                  }
              }
-             **/
-             fvvDao.createFormValidValueComponents(newValidValues,parentId);
+             
+             // Use the one below onces migrated to 9i driver (Instructions created by procedure)
+             //fvvDao.createFormValidValueComponents(newValidValues,parentId);
              
            }
   }
@@ -823,7 +826,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
                  FormValidValue fvv = (FormValidValue)currQuestionValidValuesIt.next();
                  fvv.setCreatedBy(getUserName());
                  fvv.setQuestion(newQusetion);
-                 String newFVVIdseq = fvvDao.createFormValidValueComponent(fvv);
+                 String newFVVIdseq = fvvDao.createFormValidValueComponent(fvv,newQusetion.getQuesIdseq());
                  //instructions
                  Instruction vvInstr = fvv.getInstruction();
                  if(vvInstr!=null)

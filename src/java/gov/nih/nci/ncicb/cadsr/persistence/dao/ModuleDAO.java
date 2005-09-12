@@ -86,7 +86,7 @@ public interface ModuleDAO {
    */
   public int updateDisplayOrder(
     String moduleId,
-    int newDisplayOrder) throws DMLException;
+    int newDisplayOrder, String username) throws DMLException;
 
   /**
    * Changes the long name of a module.

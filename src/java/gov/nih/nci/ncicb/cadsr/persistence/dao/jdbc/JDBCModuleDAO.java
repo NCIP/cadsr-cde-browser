@@ -165,9 +165,9 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
    */
   public int updateDisplayOrder(
     String moduleId,
-    int newDisplayOrder) throws DMLException {
+    int newDisplayOrder, String username) throws DMLException {
 
-    return updateDisplayOrderDirect(moduleId, "FORM_MODULE", newDisplayOrder);
+    return updateDisplayOrderDirect(moduleId, "FORM_MODULE", newDisplayOrder, username);
   }
   
   public Module addQuestion(

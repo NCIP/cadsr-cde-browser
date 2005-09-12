@@ -471,7 +471,7 @@ public class CDEBrowserTreeServiceImpl
                 {
                   ClassSchemeItem currCSI = (ClassSchemeItem) csIter.next();
                   
-                  Map currCSMap = (Map)formCSMap.get(currCSI.getCsConteIdseq());
+                  Map currCSMap = (Map)templateCSMap.get(currCSI.getCsConteIdseq());
                   this.copyCSTree(currTemplate, currCSMap, treeNodeMap, 
                   getTemplateNode(idGen.getNewId(), currTemplate, treeFunctions),
                   publishTemplateNode, idGen);

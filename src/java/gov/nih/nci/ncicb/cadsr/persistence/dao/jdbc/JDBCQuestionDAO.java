@@ -105,10 +105,10 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
    */
   public int updateDisplayOrder(
     String questionId,
-    int newDisplayOrder) throws DMLException {
+    int newDisplayOrder, String username) throws DMLException {
 
     return updateDisplayOrderDirect(questionId, "MODULE_ELEMENT", 
-      newDisplayOrder);
+      newDisplayOrder, username);
   }
   
   public int updateQuestionLongName(
@@ -357,7 +357,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
   public int updateQuestionLongNameDispOrderDeIdseq(
     Question question) throws DMLException {
 
-    int res = updateDisplayOrder(question.getQuesIdseq(), question.getDisplayOrder());
+    int res = updateDisplayOrder(question.getQuesIdseq(), question.getDisplayOrder(),question.getModifiedBy());
     if (res != 1) {
        DMLException dml = new DMLException("Did not succeed updating question's display order.");
        dml.setErrorCode(this.ERROR_UPDATING_QUESTION); 

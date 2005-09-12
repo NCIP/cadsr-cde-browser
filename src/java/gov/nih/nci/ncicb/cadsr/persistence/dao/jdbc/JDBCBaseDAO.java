@@ -103,11 +103,11 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
    */
   public int updateDisplayOrderDirect(
     String targetRecordId, String relationshipName,
-    int newDisplayOrder) throws DMLException {
+    int newDisplayOrder, String username) throws DMLException {
 
     UpdateDisplayOrder updateRec = new UpdateDisplayOrder(getDataSource());
     int updatedCount = 
-      updateRec.executeUpdate(newDisplayOrder, targetRecordId, relationshipName); 
+      updateRec.executeUpdate(newDisplayOrder, username, targetRecordId, relationshipName); 
     if (updatedCount <= 0){
       DMLException dmlExp = new DMLException("No matching target record, " + 
         ", was found whose display order is to be updated.");
@@ -210,7 +210,7 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
 
     try {
       test.updateDisplayOrderDirect (
-        "D458E178-32A5-7522-E034-0003BA0B1A09", "FORM_MODULE", 5); 
+        "D458E178-32A5-7522-E034-0003BA0B1A09", "FORM_MODULE", 5,"sbrext"); 
     }
     catch (DMLException e) {
       System.out.println("cannot update the display order");
@@ -246,21 +246,23 @@ public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCo
   private class UpdateDisplayOrder extends SqlUpdate {
     public UpdateDisplayOrder(DataSource ds) {
       String updateSql = 
-        "update qc_recs_ext set display_order = ? where " + 
+        "update qc_recs_ext set display_order = ? ,  modified_by = ? where " + 
         " C_QC_IDSEQ = ? and RL_NAME = ? ";
       this.setDataSource(ds);
       this.setSql(updateSql);
       declareParameter(new SqlParameter("DISPLAY_ORDER", Types.INTEGER));
+      declareParameter(new SqlParameter("modified_by", Types.VARCHAR));
       declareParameter(new SqlParameter("C_QC_IDSEQ", Types.VARCHAR));
       declareParameter(new SqlParameter("RL_NAME", Types.VARCHAR));
       compile();
     }
-    protected int executeUpdate (int displayOrder, String cQcIdseq, 
+    protected int executeUpdate (int displayOrder, String username, String cQcIdseq, 
       String rlName) 
     {
       Object [] obj = 
         new Object[]
           {new Integer(displayOrder), 
+           username,
            cQcIdseq,
            rlName
           };
