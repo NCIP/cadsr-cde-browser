@@ -4,10 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserFormConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserNavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.util.OCUtils"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.util.ObjectExtractor"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserFormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.util.OCUtils"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.util.ObjectExtractor"%>
 <%@ page import="java.util.List"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 
@@ -29,9 +29,9 @@
     
  
  
-    <html:form action="/umlbrowser/ocDetailsAction.do">
-       <html:hidden property="<%=UmlBrowserFormConstants.OC_IDSEQ%>"/>
-       <html:hidden value="" property="<%=UmlBrowserNavigationConstants.METHOD_PARAM%>"/>
+    <html:form action="/ocbrowser/ocDetailsAction.do">
+       <html:hidden property="<%=OCBrowserFormConstants.OC_IDSEQ%>"/>
+       <html:hidden value="" property="<%=OCBrowserNavigationConstants.METHOD_PARAM%>"/>
         
        
        
@@ -66,8 +66,8 @@
            <td>&nbsp;</td>
          </tr>
        </table>
-       <logic:present name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>">
-         <bean:define id="oc" name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" scope="session"/>
+       <logic:present name="<%=OCBrowserFormConstants.OBJECT_CLASS%>">
+         <bean:define id="oc" name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" scope="session"/>
          <br>
          <A NAME="objectClass"/>
          <table cellpadding="0" cellspacing="0" width="100%" align="center">
@@ -198,19 +198,19 @@
            </tr>
          </table>
          <table valign="top" width="90%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">             
-               <logic:notEmpty name="<%=UmlBrowserFormConstants.SUPER_OBJECT_CLASSES%>" > 
+               <logic:notEmpty name="<%=OCBrowserFormConstants.SUPER_OBJECT_CLASSES%>" > 
                 <TR class="OraTabledata">
                  <td class="OraFieldText"> 
                   <% String space = "&nbsp;&nbsp;"; %>
-                  <bean:size id="size" name="<%=UmlBrowserFormConstants.SUPER_OBJECT_CLASSES%>"/>
+                  <bean:size id="size" name="<%=OCBrowserFormConstants.SUPER_OBJECT_CLASSES%>"/>
                    <table>
-                    <logic:iterate id="soc" name="<%=UmlBrowserFormConstants.SUPER_OBJECT_CLASSES%>"  type="gov.nih.nci.ncicb.cadsr.domain.ObjectClass" indexId="index" >                                                           
+                    <logic:iterate id="soc" name="<%=OCBrowserFormConstants.SUPER_OBJECT_CLASSES%>"  type="gov.nih.nci.ncicb.cadsr.domain.ObjectClass" indexId="index" >                                                           
                      <% 
                       String urlPrefix = request.getContextPath();
-                      String obclassurl = urlPrefix+"/umlbrowser/ocDetailsAction.do?"+UmlBrowserNavigationConstants.METHOD_PARAM+"="
-                       +UmlBrowserNavigationConstants.OC_DETAILS
-                       +"&"+UmlBrowserFormConstants.OC_IDSEQ+"="+soc.getId()
-                       +"&"+UmlBrowserFormConstants.RESET_CRUMBS+"=true";
+                      String obclassurl = urlPrefix+"/ocbrowser/ocDetailsAction.do?"+OCBrowserNavigationConstants.METHOD_PARAM+"="
+                       +OCBrowserNavigationConstants.OC_DETAILS
+                       +"&"+OCBrowserFormConstants.OC_IDSEQ+"="+soc.getId()
+                       +"&"+OCBrowserFormConstants.RESET_CRUMBS+"=true";
                      %>
                      <TR class="OraTabledata">
                       <td class="OraFieldText"> 
@@ -236,7 +236,7 @@
                  </td>
                 </tr>
              </logic:notEmpty> 
-             <logic:empty name="<%=UmlBrowserFormConstants.SUPER_OBJECT_CLASSES%>" >
+             <logic:empty name="<%=OCBrowserFormConstants.SUPER_OBJECT_CLASSES%>" >
               <TR class="OraTabledata">
                <td colspan="2" class="OraFieldText">Does not Inherit from any Object Class</td>
               </TR>
@@ -491,7 +491,7 @@
            </logic:empty>
          </table>
        </logic:present>
-       <logic:notPresent name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>">
+       <logic:notPresent name="<%=OCBrowserFormConstants.OBJECT_CLASS%>">
          <br>
          <table valign="bottom" cellpadding="0" cellspacing="0" width="90%" align="center">
            <tr valign="bottom">

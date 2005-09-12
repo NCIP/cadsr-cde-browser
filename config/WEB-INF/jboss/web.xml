@@ -30,7 +30,7 @@
   </error-page>
   <context-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>/WEB-INF/spring/applicationContext-common.xml /WEB-INF/spring/applicationContext-domainDao.xml /WEB-INF/spring/applicationContext-umlbrowser.xml</param-value>
+      <param-value>/WEB-INF/spring/applicationContext-common.xml /WEB-INF/spring/applicationContext-domainDao.xml /WEB-INF/spring/applicationContext-ocbrowser.xml</param-value>
       <description> Spring application context xml files</description>
   </context-param>
   <listener>
@@ -80,7 +80,7 @@
            /WEB-INF/struts-config-formCreate.xml, /WEB-INF/struts-config-cdeSideBySide.xml,
            /WEB-INF/struts-config-manageReferenceDocs.xml,/WEB-INF/struts-config-downloadFormToExcel.xml,
            /WEB-INF/struts-config-browserSearchScreenType.xml,/WEB-INF/struts-config-publish.xml,
-           /WEB-INF/struts-config-cde-search-preferences.xml,/WEB-INF/umlbrowser/struts-config-ocDetails.xml,
+           /WEB-INF/struts-config-cde-search-preferences.xml,/WEB-INF/ocbrowser/struts-config-ocDetails.xml,
            /WEB-INF/admin/struts-config-admin.xml
        </param-value>
     </init-param>

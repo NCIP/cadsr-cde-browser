@@ -11,8 +11,8 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.StringUtils" %>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserNavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserFormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserFormConstants"%>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
@@ -202,7 +202,7 @@ function goPage(pageInfo) {
       String contextPath = request.getContextPath();
       String ocId = objClass.getIdseq();
       String ocDetailsWindow= 
-        "javascript:newBrowserWin('"+contextPath+"/umlbrowser/ocDetailsAction.do?"+UmlBrowserNavigationConstants.METHOD_PARAM+"="+UmlBrowserNavigationConstants.OC_DETAILS+"&"+UmlBrowserFormConstants.RESET_CRUMBS+"=true&"+UmlBrowserFormConstants.OC_IDSEQ+"="+ocId+"',"+"'OCDetails',800,600)";
+        "javascript:newBrowserWin('"+contextPath+"/ocbrowser/ocDetailsAction.do?"+OCBrowserNavigationConstants.METHOD_PARAM+"="+OCBrowserNavigationConstants.OC_DETAILS+"&"+OCBrowserFormConstants.RESET_CRUMBS+"=true&"+OCBrowserFormConstants.OC_IDSEQ+"="+ocId+"',"+"'OCDetails',800,600)";
     
     %>
          <br>

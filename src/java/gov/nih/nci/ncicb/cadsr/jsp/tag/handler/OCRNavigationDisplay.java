@@ -3,9 +3,9 @@ package gov.nih.nci.ncicb.cadsr.jsp.tag.handler;
 import gov.nih.nci.ncicb.cadsr.domain.ObjectClass;
 import gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.OCRNavigationBean;
-import gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserFormConstants;
-import gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserNavigationConstants;
-import gov.nih.nci.ncicb.cadsr.umlbrowser.util.OCUtils;
+import gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserFormConstants;
+import gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserNavigationConstants;
+import gov.nih.nci.ncicb.cadsr.ocbrowser.util.OCUtils;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -26,7 +26,7 @@ public class OCRNavigationDisplay extends TagSupport
   private String scope = null;
   private String activeNodes = "true";
 
-  
+
   public OCRNavigationDisplay()
   {
   }
@@ -34,12 +34,12 @@ public class OCRNavigationDisplay extends TagSupport
   public int doStartTag() throws javax.servlet.jsp.JspException {
     HttpServletRequest  req;
     JspWriter out;
-    
+
     try
     {
       out = pageContext.getOut();
       req = ( HttpServletRequest )pageContext.getRequest();
-      
+
       LinkedList navigationList = null;
       if(scope.equals("session"))
         navigationList = (LinkedList)req.getSession().getAttribute(navigationListId);
@@ -49,9 +49,9 @@ public class OCRNavigationDisplay extends TagSupport
       if(navigationList==null)
         return Tag.SKIP_BODY;
       if(navigationList.isEmpty())
-        return Tag.SKIP_BODY;   
+        return Tag.SKIP_BODY;
       if(navigationList.size()<2)
-        return Tag.SKIP_BODY;       
+        return Tag.SKIP_BODY;
       out.print(generateDisplayString(navigationList,req));
     }
     catch (IOException e)
@@ -75,7 +75,7 @@ public class OCRNavigationDisplay extends TagSupport
 
   private String generateDisplayString(LinkedList list, HttpServletRequest req)
   {
-    ObjectClass activeObject= (ObjectClass)req.getSession().getAttribute(UmlBrowserFormConstants.OBJECT_CLASS);
+    ObjectClass activeObject= (ObjectClass)req.getSession().getAttribute(OCBrowserFormConstants.OBJECT_CLASS);
     ListIterator it = list.listIterator();
     StringBuffer str = new StringBuffer("<table align=\"center\">");
     str.append("<tr align=\"center\" >");
@@ -111,27 +111,27 @@ public class OCRNavigationDisplay extends TagSupport
                  str.append("</td>");
                  str.append("<td>");
                     str.append("&nbsp;");
-                 str.append("</td>");                 
+                 str.append("</td>");
                  str.append("<td align=right>");
                     str.append(StringUtils.ifNullReplaceWithnbsp(getSecondMultiplicity(currBean.getDirection(),currBean.getOcr(),currObject)));
-                 str.append("</td>");             
+                 str.append("</td>");
               str.append("</tr>");
               str.append("<tr>");
                  str.append("<td colspan=3 align=center>");
                     str.append("<img width=\"100%\" height=\"15\" src=\""+req.getContextPath()+getImage(currBean.getDirection()) +"\"border=0>");
-                 str.append("</td>");             
-              str.append("</tr>"); 
+                 str.append("</td>");
+              str.append("</tr>");
               str.append("<tr>");
                  str.append("<td align=left>");
                     str.append(StringUtils.ifNullReplaceWithnbsp(getFirstRoleName(currBean.getDirection(),currBean.getOcr(),currObject)));
                  str.append("</td>");
                  str.append("<td>");
                     str.append("&nbsp;");
-                 str.append("</td>");                 
+                 str.append("</td>");
                  str.append("<td align=right>");
                     str.append(StringUtils.ifNullReplaceWithnbsp(getSecondRoleName(currBean.getDirection(),currBean.getOcr(),currObject)));
-                 str.append("</td>");             
-              str.append("</tr>");              
+                 str.append("</td>");
+              str.append("</tr>");
              str.append("</table>");
           str.append("</td>");
       }
@@ -142,15 +142,15 @@ public class OCRNavigationDisplay extends TagSupport
 
  private String getObjectString(OCRNavigationBean bean,HttpServletRequest  req,int crumbIndex)
  {
-  
+
   if(activeNodes.equalsIgnoreCase("false"))
   {
     return bean.getObjectClass().getLongName();
   }
-  String ocrurl = req.getContextPath()+"/umlbrowser/ocrDetailsAction.do?"
-          +UmlBrowserNavigationConstants.METHOD_PARAM+"="+UmlBrowserNavigationConstants.OCR_DETAILS
-          +"&"+UmlBrowserFormConstants.OC_IDSEQ+"="+bean.getObjectClass().getId()
-          +"&"+UmlBrowserFormConstants.OCR_BR_CRUMBS_INDEX+"="+String.valueOf(crumbIndex);
+  String ocrurl = req.getContextPath()+"/ocbrowser/ocrDetailsAction.do?"
+          +OCBrowserNavigationConstants.METHOD_PARAM+"="+OCBrowserNavigationConstants.OCR_DETAILS
+          +"&"+OCBrowserFormConstants.OC_IDSEQ+"="+bean.getObjectClass().getId()
+          +"&"+OCBrowserFormConstants.OCR_BR_CRUMBS_INDEX+"="+String.valueOf(crumbIndex);
   StringBuffer str = new StringBuffer();
   str.append("<a href=");
   str.append(ocrurl);
@@ -161,19 +161,19 @@ public class OCRNavigationDisplay extends TagSupport
  }
  private String getImage(String direction)
  {
-   if(direction.equals(UmlBrowserFormConstants.OUT_GOING_OCRS))
+   if(direction.equals(OCBrowserFormConstants.OUT_GOING_OCRS))
      return outGoingImage;
-   if(direction.equals(UmlBrowserFormConstants.IN_COMMING_OCRS))
+   if(direction.equals(OCBrowserFormConstants.IN_COMMING_OCRS))
      return this.inCommingImage;
-   if(direction.equals(UmlBrowserFormConstants.BIDIRECTIONAL_OCRS))
-     return  this.biDirectionalImage;    
+   if(direction.equals(OCBrowserFormConstants.BIDIRECTIONAL_OCRS))
+     return  this.biDirectionalImage;
    return null;
  }
  private String getFirstMultiplicity(String direction,ObjectClassRelationship ocr,ObjectClass currOC)
  {
-   if(direction.equals(UmlBrowserFormConstants.OUT_GOING_OCRS))
+   if(direction.equals(OCBrowserFormConstants.OUT_GOING_OCRS))
      return OCUtils.getSourceMultiplicityDisplayString(ocr);
-   if(direction.equals(UmlBrowserFormConstants.IN_COMMING_OCRS))
+   if(direction.equals(OCBrowserFormConstants.IN_COMMING_OCRS))
      return OCUtils.getTargetMultiplicityDisplayString(ocr);
      if(OCUtils.isOCSourceForBidirectionalOCR(ocr,currOC))
      {
@@ -183,15 +183,15 @@ public class OCRNavigationDisplay extends TagSupport
      {
         return OCUtils.getTargetMultiplicityDisplayString(ocr);
      }
-     
+
  }
  private String getSecondMultiplicity(String direction,ObjectClassRelationship ocr,ObjectClass currOC)
  {
-   if(direction.equals(UmlBrowserFormConstants.OUT_GOING_OCRS))
+   if(direction.equals(OCBrowserFormConstants.OUT_GOING_OCRS))
      return OCUtils.getTargetMultiplicityDisplayString(ocr);
-   if(direction.equals(UmlBrowserFormConstants.IN_COMMING_OCRS))
+   if(direction.equals(OCBrowserFormConstants.IN_COMMING_OCRS))
      return OCUtils.getSourceMultiplicityDisplayString(ocr);
-   
+
      if(OCUtils.isOCSourceForBidirectionalOCR(ocr,currOC))
      {
        return OCUtils.getTargetMultiplicityDisplayString(ocr);
@@ -201,12 +201,12 @@ public class OCRNavigationDisplay extends TagSupport
         return OCUtils.getSourceMultiplicityDisplayString(ocr);
      }
 
- } 
+ }
  private String getFirstRoleName(String direction,ObjectClassRelationship ocr,ObjectClass currOC)
  {
-   if(direction.equals(UmlBrowserFormConstants.OUT_GOING_OCRS))
+   if(direction.equals(OCBrowserFormConstants.OUT_GOING_OCRS))
      return StringUtils.replaceNull(ocr.getSourceRole());
-   if(direction.equals(UmlBrowserFormConstants.IN_COMMING_OCRS))
+   if(direction.equals(OCBrowserFormConstants.IN_COMMING_OCRS))
      return StringUtils.replaceNull(ocr.getTargetRole());
    if(OCUtils.isOCSourceForBidirectionalOCR(ocr,currOC))
    {
@@ -215,14 +215,14 @@ public class OCRNavigationDisplay extends TagSupport
    else
    {
       return StringUtils.replaceNull(ocr.getTargetRole());
-   }   
+   }
 
  }
  private String getSecondRoleName(String direction,ObjectClassRelationship ocr,ObjectClass currOC)
  {
-   if(direction.equals(UmlBrowserFormConstants.OUT_GOING_OCRS))
+   if(direction.equals(OCBrowserFormConstants.OUT_GOING_OCRS))
      return ocr.getTargetRole();
-   if(direction.equals(UmlBrowserFormConstants.IN_COMMING_OCRS))
+   if(direction.equals(OCBrowserFormConstants.IN_COMMING_OCRS))
      return ocr.getSourceRole();
    if(OCUtils.isOCSourceForBidirectionalOCR(ocr,currOC))
    {
@@ -231,9 +231,9 @@ public class OCRNavigationDisplay extends TagSupport
    else
    {
       return StringUtils.replaceNull(ocr.getSourceRole());
-   }   
+   }
 
- }  
+ }
   public void setOutGoingImage(String outGoingImage)
   {
     this.outGoingImage = outGoingImage;
@@ -292,5 +292,5 @@ public class OCRNavigationDisplay extends TagSupport
   {
     return activeNodes;
   }
- 
+
 }

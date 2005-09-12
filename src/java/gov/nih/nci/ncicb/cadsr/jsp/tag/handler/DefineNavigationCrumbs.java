@@ -2,7 +2,7 @@ package gov.nih.nci.ncicb.cadsr.jsp.tag.handler;
 import gov.nih.nci.ncicb.cadsr.domain.ObjectClass;
 import gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.OCRNavigationBean;
-import gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserFormConstants;
+import gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserFormConstants;
 import java.io.IOException;
 import java.util.LinkedList;
 import javax.servlet.http.HttpServletRequest;
@@ -16,20 +16,20 @@ public class DefineNavigationCrumbs extends TagSupport
   private String ocrId;
   private String direction = null;
   private String beanId = null;
-  
+
   public DefineNavigationCrumbs()
   {
   }
-  
+
   public int doStartTag() throws javax.servlet.jsp.JspException {
     HttpServletRequest  req;
     JspWriter out;
-    
+
     try
     {
       out = pageContext.getOut();
       req = ( HttpServletRequest )pageContext.getRequest();
-      
+
       LinkedList newCrumbs = new LinkedList();
       pageContext.getAttribute(ocrId);
 
@@ -38,18 +38,18 @@ public class DefineNavigationCrumbs extends TagSupport
       firstNavBean.setShowDirection(true);
       ObjectClassRelationship ocr = (ObjectClassRelationship)pageContext.getAttribute(ocrId);
       firstNavBean.setOcr(ocr);
-      ObjectClass currObject= (ObjectClass)req.getSession().getAttribute(UmlBrowserFormConstants.OBJECT_CLASS);
+      ObjectClass currObject= (ObjectClass)req.getSession().getAttribute(OCBrowserFormConstants.OBJECT_CLASS);
       firstNavBean.setObjectClass(currObject);
       newCrumbs.add(firstNavBean);
-      
+
       OCRNavigationBean secondNavBean = new OCRNavigationBean();
       secondNavBean.setShowDirection(false);
       ObjectClass otherObject= null;
-       if(direction.equals(UmlBrowserFormConstants.OUT_GOING_OCRS))
+       if(direction.equals(OCBrowserFormConstants.OUT_GOING_OCRS))
          otherObject =  ocr.getTarget();
-       if(direction.equals(UmlBrowserFormConstants.IN_COMMING_OCRS))
+       if(direction.equals(OCBrowserFormConstants.IN_COMMING_OCRS))
          otherObject =  ocr.getSource();
-       if(direction.equals(UmlBrowserFormConstants.BIDIRECTIONAL_OCRS))
+       if(direction.equals(OCBrowserFormConstants.BIDIRECTIONAL_OCRS))
        {
          if(ocr.getTarget().getId().equals(currObject.getId()))
          {
@@ -62,16 +62,16 @@ public class DefineNavigationCrumbs extends TagSupport
        }
        secondNavBean.setObjectClass(otherObject);
        newCrumbs.add(secondNavBean);
-      
+
        pageContext.setAttribute(beanId,newCrumbs);
-      
+
     }
     catch (Exception e)
     {
       throw new JspException( "I/O Error : " + e.getMessage() );
     }
     return Tag.SKIP_BODY;
-  }  
+  }
 
 
   public void setOcrId(String ocrId)

@@ -4,10 +4,10 @@
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserFormConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserNavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.util.OCUtils"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.util.ObjectExtractor"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserFormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.util.OCUtils"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.util.ObjectExtractor"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Collection"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.domain.ObjectClass"%>
@@ -28,10 +28,10 @@
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function navigateOCR(ocId,ocrIndex,direction) {
-  document.forms[0].<%=UmlBrowserNavigationConstants.METHOD_PARAM%>.value="<%=UmlBrowserNavigationConstants.NAVIGATE_OCR%>";     
-  document.forms[0].<%=UmlBrowserFormConstants.OC_IDSEQ%>.value=ocId;
-  document.forms[0].<%=UmlBrowserFormConstants.OCR_DIRECTION%>.value=direction;
-  document.forms[0].<%=UmlBrowserFormConstants.OCR_INDEX%>.value=ocrIndex;
+  document.forms[0].<%=OCBrowserNavigationConstants.METHOD_PARAM%>.value="<%=OCBrowserNavigationConstants.NAVIGATE_OCR%>";     
+  document.forms[0].<%=OCBrowserFormConstants.OC_IDSEQ%>.value=ocId;
+  document.forms[0].<%=OCBrowserFormConstants.OCR_DIRECTION%>.value=direction;
+  document.forms[0].<%=OCBrowserFormConstants.OCR_INDEX%>.value=ocrIndex;
   document.forms[0].target="_parent";
   document.forms[0].submit();
 }
@@ -39,16 +39,16 @@ function navigateOCR(ocId,ocrIndex,direction) {
 </SCRIPT>
 
 <% String contextPath = request.getContextPath();
-  String clearurl = contextPath+"/umlbrowser/clearNavigationPathAction.do?"+UmlBrowserNavigationConstants.METHOD_PARAM+"="+UmlBrowserNavigationConstants.CLEAR_NAVIGATION_PATH;
+  String clearurl = contextPath+"/ocbrowser/clearNavigationPathAction.do?"+OCBrowserNavigationConstants.METHOD_PARAM+"="+OCBrowserNavigationConstants.CLEAR_NAVIGATION_PATH;
 %>
 
-<html:form action="/umlbrowser/navigateOCRAction.do">
+<html:form action="/ocbrowser/navigateOCRAction.do">
 
-<html:hidden property="<%=UmlBrowserFormConstants.OC_IDSEQ%>"/>
-<html:hidden property="<%=UmlBrowserFormConstants.OCR_DIRECTION%>"/>
-<html:hidden property="<%=UmlBrowserFormConstants.OCR_INDEX%>"/>
-<html:hidden property="<%=UmlBrowserFormConstants.OCR_BR_CRUMBS_INDEX%>"/>
-<html:hidden value="" property="<%=UmlBrowserNavigationConstants.METHOD_PARAM%>"/>
+<html:hidden property="<%=OCBrowserFormConstants.OC_IDSEQ%>"/>
+<html:hidden property="<%=OCBrowserFormConstants.OCR_DIRECTION%>"/>
+<html:hidden property="<%=OCBrowserFormConstants.OCR_INDEX%>"/>
+<html:hidden property="<%=OCBrowserFormConstants.OCR_BR_CRUMBS_INDEX%>"/>
+<html:hidden value="" property="<%=OCBrowserNavigationConstants.METHOD_PARAM%>"/>
 
 <%@ include  file="common_header_inc.jsp" %>
 
@@ -60,11 +60,11 @@ function navigateOCR(ocId,ocrIndex,direction) {
 <table cellpadding="0" cellspacing="0" width="100%" align="center" border=0>
         <tr valign="top">    
           <td valign="top" align="left" width="100%" class="AbbreviatedText">
-            All Associations displayed below are for Object Class "<bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>".
+            All Associations displayed below are for Object Class "<bean:write name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>".
             Details of this class can be seen under "Object Class" tab.
-            Outgoing associations have "<bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as the source Object Class;
-            Incoming associations have "<bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as the target Object Class;
-            Bidirection associations have "<bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as target or source Object Class.
+            Outgoing associations have "<bean:write name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as the source Object Class;
+            Incoming associations have "<bean:write name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as the target Object Class;
+            Bidirection associations have "<bean:write name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>" as target or source Object Class.
           </td>
         </tr>  
 </table>
@@ -73,31 +73,31 @@ function navigateOCR(ocId,ocrIndex,direction) {
           <tr class="OraTabledata">
             <td class="TableRowPromptText" width="20%">Public ID:</td>
             <td class="OraFieldText">
-              <bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="publicId"/>
+              <bean:write name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="publicId"/>
             </td>
           </tr>
           <tr class="OraTabledata">
             <td class="TableRowPromptText" width="20%">Long Name:</td>
             <td class="OraFieldText">
-              <bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>
+              <bean:write name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="longName"/>
             </td>
           </tr>
           <tr class="OraTabledata">
             <td class="TableRowPromptText" width="20%">Preferred Name:</td>
             <td class="OraFieldText">
-              <bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="preferredName"/>
+              <bean:write name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="preferredName"/>
             </td>
           </tr>
           <tr class="OraTabledata">
             <td class="TableRowPromptText" width="20%">Context:</td>
             <td class="OraFieldText">
-              <bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="context.name"/>
+              <bean:write name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="context.name"/>
             </td>
           </tr>
           <tr class="OraTabledata">
             <td class="TableRowPromptText" width="20%">Version:</td>
             <td class="OraFieldText">
-              <bean:write name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="version"/>
+              <bean:write name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="version"/>
             </td>
           </tr>
         </table>
@@ -108,8 +108,8 @@ function navigateOCR(ocId,ocrIndex,direction) {
              <th class="OraTableColumnHeader">Type</th>
              <th class="OraTableColumnHeader">Context</th>
            </TR>   
-          <logic:notEmpty  name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="alternateNames" > 
-            <logic:iterate id="alternateName" name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="alternateNames" type="gov.nih.nci.ncicb.cadsr.domain.AlternateName" indexId="nameIndex" >                                 
+          <logic:notEmpty  name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="alternateNames" > 
+            <logic:iterate id="alternateName" name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="alternateNames" type="gov.nih.nci.ncicb.cadsr.domain.AlternateName" indexId="nameIndex" >                                 
               <TR class=OraTabledata>
                  <td class="OraFieldText">
                    <bean:write name="alternateName" property="name"/>
@@ -123,7 +123,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
                </TR>  
            </logic:iterate>
           </logic:notEmpty>
-         <logic:empty  name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="alternateNames" > 
+         <logic:empty  name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="alternateNames" > 
               <TR class=OraTabledata>
                  <td colspan=3 class="OraFieldText">No Alternate names for this Object Class exist</td>
                </TR>  
@@ -132,7 +132,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
         <br>
         
       <cde:ocrNavigation
-              navigationListId="<%=UmlBrowserFormConstants.OCR_NAVIGATION_BEAN%>"   
+              navigationListId="<%=OCBrowserFormConstants.OCR_NAVIGATION_BEAN%>"   
               outGoingImage="/i/outgoing.gif"
               inCommingImage="/i/incomming.gif"
               biDirectionalImage="/i/bidirectional.gif"
@@ -147,8 +147,8 @@ function navigateOCR(ocId,ocrIndex,direction) {
             <td  ><a class="link" href="#outgoing">Outgoing Associations</a></td>
             <td  ><a class="link" href="#incoming">Incoming Associations</a></td>
             <td  ><a class="link" href="#bidirectionl">Bidirection Associations</a></td>   
-            <logic:present  name="<%=UmlBrowserFormConstants.OCR_NAVIGATION_BEAN%>" >
-              <bean:size id="size" name="<%=UmlBrowserFormConstants.OCR_NAVIGATION_BEAN%>" />
+            <logic:present  name="<%=OCBrowserFormConstants.OCR_NAVIGATION_BEAN%>" >
+              <bean:size id="size" name="<%=OCBrowserFormConstants.OCR_NAVIGATION_BEAN%>" />
               <logic:greaterThan value="1" name="size">
                  <td><a href="<%=clearurl%>">Clear navigation path</a></td>
               </logic:greaterThan>              
@@ -170,8 +170,8 @@ function navigateOCR(ocId,ocrIndex,direction) {
                <td width="100%" ><img height=1 src="<%=contextPath%>/i/beigedot.gif" width="99%" align=top border=0> </td>
             </tr> 
       </table>        
-    <logic:notEmpty  name="<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>" scope="session">  
-      <logic:iterate id="currOutgoingOCR" name="<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>" type="gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship" indexId="ocrIndex" >                                 
+    <logic:notEmpty  name="<%=OCBrowserFormConstants.OUT_GOING_OCRS%>" scope="session">  
+      <logic:iterate id="currOutgoingOCR" name="<%=OCBrowserFormConstants.OUT_GOING_OCRS%>" type="gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship" indexId="ocrIndex" >                                 
          <%
            Collection projects = ObjectExtractor.getProjects(currOutgoingOCR);
            pageContext.setAttribute("projects",projects);                  
@@ -182,11 +182,11 @@ function navigateOCR(ocId,ocrIndex,direction) {
          <td class=OraFieldText>
              <table vAlign=top width="100%">
                  <tr  class=OraTabledata align="left">
-                 <% if(OCUtils.isNavigationAllowed(request,UmlBrowserFormConstants.OCR_NAVIGATION_BEAN,currOutgoingOCR))
+                 <% if(OCUtils.isNavigationAllowed(request,OCBrowserFormConstants.OCR_NAVIGATION_BEAN,currOutgoingOCR))
                  {
                  %>
                     <td class=OraFieldText colspan="2">
-                        <a href="javascript:navigateOCR('<%=currOutgoingOCR.getTarget().getId()%>','<%=ocrIndex%>','<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>')">Navigate to this association</a>
+                        <a href="javascript:navigateOCR('<%=currOutgoingOCR.getTarget().getId()%>','<%=ocrIndex%>','<%=OCBrowserFormConstants.OUT_GOING_OCRS%>')">Navigate to this association</a>
                     </td>              
                  <%}else{%>
                       <td class=OraFieldText colspan="2">
@@ -197,12 +197,12 @@ function navigateOCR(ocId,ocrIndex,direction) {
                   <tr  class=OraTabledata align="center">
                      <td class=OraFieldText colspan="2" align="center">
                        <cde:DefineNavigationCrumbs
-                            beanId="<%=UmlBrowserFormConstants.OUT_GOING_OCRS+ocrIndex%>"   
-                            direction="<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>"
+                            beanId="<%=OCBrowserFormConstants.OUT_GOING_OCRS+ocrIndex%>"   
+                            direction="<%=OCBrowserFormConstants.OUT_GOING_OCRS%>"
                             ocrId="currOutgoingOCR"
                        />                     
                        <cde:ocrNavigation
-                            navigationListId="<%=UmlBrowserFormConstants.OUT_GOING_OCRS+ocrIndex%>"   
+                            navigationListId="<%=OCBrowserFormConstants.OUT_GOING_OCRS+ocrIndex%>"   
                             outGoingImage="/i/outgoing.gif"
                             inCommingImage="/i/incomming.gif"
                             biDirectionalImage="/i/bidirectional.gif"
@@ -372,7 +372,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
       <br>
      </logic:iterate>
     </logic:notEmpty>
-    <logic:empty  name="<%=UmlBrowserFormConstants.OUT_GOING_OCRS%>" scope="session">  
+    <logic:empty  name="<%=OCBrowserFormConstants.OUT_GOING_OCRS%>" scope="session">  
        <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
         <TR class=OraTabledata>
            <td colspan=2 class="OraFieldText">No outgoing associations exist for this Object Class</td>
@@ -393,8 +393,8 @@ function navigateOCR(ocId,ocrIndex,direction) {
            <td width="100%" ><img height=1 src="<%=contextPath%>/i/beigedot.gif" width="99%" align=top border=0> </td>
         </tr>  
       </table>   
-        <logic:notEmpty  name="<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>" scope="session">  
-          <logic:iterate id="currIncommingOCR" name="<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>" type="gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship" indexId="ocrIndex" >                                 
+        <logic:notEmpty  name="<%=OCBrowserFormConstants.IN_COMMING_OCRS%>" scope="session">  
+          <logic:iterate id="currIncommingOCR" name="<%=OCBrowserFormConstants.IN_COMMING_OCRS%>" type="gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship" indexId="ocrIndex" >                                 
              <%
                Collection projects = ObjectExtractor.getProjects(currIncommingOCR);     
                pageContext.setAttribute("projects",projects);
@@ -405,11 +405,11 @@ function navigateOCR(ocId,ocrIndex,direction) {
              <td class=OraFieldText>
                  <table vAlign=top width="100%">
                      <tr  class=OraTabledata align="left">  
-                       <% if(OCUtils.isNavigationAllowed(request,UmlBrowserFormConstants.OCR_NAVIGATION_BEAN,currIncommingOCR))
+                       <% if(OCUtils.isNavigationAllowed(request,OCBrowserFormConstants.OCR_NAVIGATION_BEAN,currIncommingOCR))
                        {
                        %>
                           <td class=OraFieldText colspan="2">
-                              <a href="javascript:navigateOCR('<%=currIncommingOCR.getSource().getId()%>','<%=ocrIndex%>','<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>')">Navigate to this association</a>
+                              <a href="javascript:navigateOCR('<%=currIncommingOCR.getSource().getId()%>','<%=ocrIndex%>','<%=OCBrowserFormConstants.IN_COMMING_OCRS%>')">Navigate to this association</a>
                           </td>              
                        <%}else{%>
                             <td class=OraFieldText colspan="2">
@@ -420,12 +420,12 @@ function navigateOCR(ocId,ocrIndex,direction) {
                   <tr  class=OraTabledata align="center">
                      <td class=OraFieldText colspan="2" align="center">
                        <cde:DefineNavigationCrumbs
-                            beanId="<%=UmlBrowserFormConstants.IN_COMMING_OCRS+ocrIndex%>"   
-                            direction="<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>"
+                            beanId="<%=OCBrowserFormConstants.IN_COMMING_OCRS+ocrIndex%>"   
+                            direction="<%=OCBrowserFormConstants.IN_COMMING_OCRS%>"
                             ocrId="currIncommingOCR"
                        />                     
                        <cde:ocrNavigation
-                            navigationListId="<%=UmlBrowserFormConstants.IN_COMMING_OCRS+ocrIndex%>"   
+                            navigationListId="<%=OCBrowserFormConstants.IN_COMMING_OCRS+ocrIndex%>"   
                             outGoingImage="/i/outgoing.gif"
                             inCommingImage="/i/incomming.gif"
                             biDirectionalImage="/i/bidirectional.gif"
@@ -595,7 +595,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
           <br>
          </logic:iterate>
         </logic:notEmpty>
-        <logic:empty  name="<%=UmlBrowserFormConstants.IN_COMMING_OCRS%>" scope="session">  
+        <logic:empty  name="<%=OCBrowserFormConstants.IN_COMMING_OCRS%>" scope="session">  
            <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
             <TR class=OraTabledata>
                <td colspan=2 class="OraFieldText">No incoming associations exist for this Object Class</td>
@@ -616,10 +616,10 @@ function navigateOCR(ocId,ocrIndex,direction) {
         </tr>  
       </table>   
       <%
-        ObjectClass currObjClass = (ObjectClass)request.getSession().getAttribute(UmlBrowserFormConstants.OBJECT_CLASS);
+        ObjectClass currObjClass = (ObjectClass)request.getSession().getAttribute(OCBrowserFormConstants.OBJECT_CLASS);
       %>
-        <logic:notEmpty  name="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>" scope="session">  
-          <logic:iterate id="currBidirectionalOCR" name="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>" type="gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship" indexId="ocrIndex" >                                 
+        <logic:notEmpty  name="<%=OCBrowserFormConstants.BIDIRECTIONAL_OCRS%>" scope="session">  
+          <logic:iterate id="currBidirectionalOCR" name="<%=OCBrowserFormConstants.BIDIRECTIONAL_OCRS%>" type="gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship" indexId="ocrIndex" >                                 
              <%
                Collection projects = ObjectExtractor.getProjects(currBidirectionalOCR);   
                pageContext.setAttribute("projects",projects);
@@ -630,11 +630,11 @@ function navigateOCR(ocId,ocrIndex,direction) {
                  <table vAlign=top width="100%">
                      <tr  class=OraTabledata align="left"> 
                      
-                         <% if(OCUtils.isNavigationAllowed(request,UmlBrowserFormConstants.OCR_NAVIGATION_BEAN,currBidirectionalOCR))
+                         <% if(OCUtils.isNavigationAllowed(request,OCBrowserFormConstants.OCR_NAVIGATION_BEAN,currBidirectionalOCR))
                          {
                          %>
                             <td class=OraFieldText colspan="2">
-                                <a href="javascript:navigateOCR('<%=OCUtils.getBiderectionalTarget(currBidirectionalOCR,currObjClass).getId()%>','<%=ocrIndex%>','<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>')">Navigate to this association</a>
+                                <a href="javascript:navigateOCR('<%=OCUtils.getBiderectionalTarget(currBidirectionalOCR,currObjClass).getId()%>','<%=ocrIndex%>','<%=OCBrowserFormConstants.BIDIRECTIONAL_OCRS%>')">Navigate to this association</a>
                             </td>              
                          <%}else{%>
                               <td class=OraFieldText colspan="2">
@@ -645,12 +645,12 @@ function navigateOCR(ocId,ocrIndex,direction) {
                       <tr  class=OraTabledata align="center">
                          <td class=OraFieldText colspan="2" align="center">
                            <cde:DefineNavigationCrumbs
-                                beanId="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS+ocrIndex%>"   
-                                direction="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>"
+                                beanId="<%=OCBrowserFormConstants.BIDIRECTIONAL_OCRS+ocrIndex%>"   
+                                direction="<%=OCBrowserFormConstants.BIDIRECTIONAL_OCRS%>"
                                 ocrId="currBidirectionalOCR"
                            />                     
                            <cde:ocrNavigation
-                                navigationListId="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS+ocrIndex%>"   
+                                navigationListId="<%=OCBrowserFormConstants.BIDIRECTIONAL_OCRS+ocrIndex%>"   
                                 outGoingImage="/i/outgoing.gif"
                                 inCommingImage="/i/incomming.gif"
                                 biDirectionalImage="/i/bidirectional.gif"
@@ -823,7 +823,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
           <br>
          </logic:iterate>
         </logic:notEmpty>
-        <logic:empty  name="<%=UmlBrowserFormConstants.BIDIRECTIONAL_OCRS%>" scope="session">  
+        <logic:empty  name="<%=OCBrowserFormConstants.BIDIRECTIONAL_OCRS%>" scope="session">  
            <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
             <TR class=OraTabledata>
                <td colspan=2 class="OraFieldText">No bidirectional associations exist for this Object Class</td>

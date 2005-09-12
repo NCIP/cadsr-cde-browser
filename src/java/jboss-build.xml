@@ -506,10 +506,10 @@
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/common/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/service/**"/>
-                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/common/**"/>
-                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/struts/**"/> 
-                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/service/**"/>
-                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/util/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/common/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/struts/**"/> 
+                <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/service/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/util/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/admin/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/jsp/**"/>
               </patternset>
@@ -522,7 +522,7 @@
         <patternset>
           <include name="WEB-INF/*.tld"/>
           <include name="WEB-INF/struts-config*.xml"/>
-          <include name="WEB-INF/umlbrowser/struts-config*.xml"/>
+          <include name="WEB-INF/ocbrowser/struts-config*.xml"/>
           <include name="WEB-INF/admin/struts-config*.xml"/>
           <include name="WEB-INF/validat*.xml"/>
           <include name="WEB-INF/jboss-web.xml"/>
@@ -541,7 +541,7 @@
           <include name="formbuilder/**/*.*"/>  
          <!-- release 3.0, reorganze ui directory -->
           <include name="cdebrowser/**/*.*"/>  
-          <include name="umlbrowser/**/*.*"/>  
+          <include name="ocbrowser/**/*.*"/>  
           <include name="admin/**/*.*"/>  
           <include name="*.jsp"/>
         </patternset>
@@ -836,7 +836,7 @@
            <patternset>
              <include name="jboss/web.xml"/>
              <include name="spring/*.xml"/>
-             <include name="umlbrowser/*.xml"/>
+             <include name="ocbrowser/*.xml"/>
            </patternset>
          </fileset>               
       </copy>       

@@ -1,15 +1,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserNavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.umlbrowser.struts.common.UmlBrowserFormConstants"%>
 
-<bean:define id="ocid" name="<%=UmlBrowserFormConstants.OBJECT_CLASS%>" property="id" scope="session"/>
+
+
 <%
 	String urlPrefix = request.getContextPath();
 	String label = pageContext.getRequest().getParameter("label");
-	String[] allLabels = {"Object&nbsp;Class","Associations"};
-  String obclassurl = urlPrefix+"/umlbrowser/ocDetailsAction.do?"+UmlBrowserNavigationConstants.METHOD_PARAM+"="+UmlBrowserNavigationConstants.OC_DETAILS+"&"+UmlBrowserFormConstants.OC_IDSEQ+"="+ocid;
-  String ocrurl = urlPrefix+"/umlbrowser/ocrDetailsAction.do?"+UmlBrowserNavigationConstants.METHOD_PARAM+"="+UmlBrowserNavigationConstants.OCR_DETAILS+"&"+UmlBrowserFormConstants.OC_IDSEQ+"="+ocid+"&"+UmlBrowserFormConstants.RESET_CRUMBS+"=false";
-  String[] urls = {obclassurl,ocrurl};
+	String[] allLabels = {"CDEBrowser&nbsp;Admin"};
+        String[] urls = {" "};
 %>
 
 
