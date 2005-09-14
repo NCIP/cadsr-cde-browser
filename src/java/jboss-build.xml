@@ -279,13 +279,6 @@
            </patternset>
          </fileset>
        </copy>
-     <copy todir="${classes.build.dir}/WEB-INF/classes">
-              <fileset dir="${config.home}/properties/jboss">
-                <patternset>
-                  <include name="cdebrowser.properties"/>
-                </patternset>
-              </fileset>
-     </copy>
      
      <filter token="cdebrowser.version" value="${cdebrowser.version}"/>
      <filter token="cdebrowser.build" value="${cdebrowser.build}" />
@@ -324,8 +317,22 @@
            </fileset>      
         </copy> 
         
+       <property name="debug.config.home" value="${config.home}" /> 
+        
    </target>
   <!-- =========== END DEV CONFIG ======================= -->
+  
+  <target name="debug_setting" unless="set_debug">
+  
+   <copy todir="${classes.build.dir}/WEB-INF/classes">
+                <fileset dir="${debug.config.home}/properties">
+                  <patternset>
+                    <include name="cdebrowser.properties"/>
+                  </patternset>
+                </fileset>
+     </copy>  
+  </target>
+
   
   <!-- =========== TEST CONFIG ======================= -->
     <target name="qa_config" depends="init,dev_config">    
@@ -343,14 +350,9 @@
              <include name="cle-providers.xml"/>
            </patternset>
          </fileset>
-      </copy>   
-     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.qa}/properties/jboss">
-           <patternset>
-             <include name="cdebrowser.properties"/>
-           </patternset>
-         </fileset>
-      </copy>   
+      </copy>     
+      
+      <property name="debug.config.home" value="${config.qa}" /> 
      
     </target>
   <!-- =========== END TEST CONFIG ======================= -->
@@ -371,14 +373,9 @@
              <include name="cle-providers.xml"/>
            </patternset>
          </fileset>
-      </copy>   
-     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.stage}/properties/jboss">
-           <patternset>
-             <include name="cdebrowser.properties"/>
-           </patternset>
-         </fileset>
-      </copy>   
+      </copy>     
+      
+      <property name="debug.config.home" value="${config.stage}" /> 
           
     </target>
   <!-- =========== END TEST CONFIG ======================= -->  
@@ -400,13 +397,9 @@
            </patternset>
          </fileset>
       </copy>   
-     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.prod}/properties/jboss">
-           <patternset>
-             <include name="cdebrowser.properties"/>
-           </patternset>
-         </fileset>
-      </copy>            
+      
+      <property name="debug.config.home" value="${config.prod}" /> 
+           
     </target>
   <!-- =========== END PROD CONFIG ======================= -->  
   
@@ -430,13 +423,7 @@
            </patternset>
          </fileset>
       </copy>   
-     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes">    
-         <fileset dir="${config.opensource}/properties/jboss">
-           <patternset>
-             <include name="cdebrowser.properties"/>
-           </patternset>
-         </fileset>
-      </copy>   
+ 
        
     </target>
   <!-- =========== END OpenSource CONFIG ======================= -->  
@@ -848,13 +835,7 @@
            </patternset>
          </fileset>               
       </copy> 
-     <copy todir="${open.source.dir.raw.config}/properties/jboss">      
-         <fileset dir="${config.home}/properties/jboss">
-           <patternset>
-             <include name="*.*"/>
-           </patternset>
-         </fileset>               
-      </copy>       
+      
      <copy todir="${open.source.dir.raw.config}">      
          <fileset dir="${config.home}">
            <patternset>
@@ -998,7 +979,7 @@
 	<delete file="${jboss.home}/server/default/deploy/${ear.name}.ear" failonerror="true" verbose="true" />
    </target>    
    
-   <target  name="deploy_dev" depends="clean,clean_jboss,dev_config,ear_cdebrowser"> 
+   <target  name="deploy_dev" depends="clean,clean_jboss,dev_config,debug_setting,ear_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
@@ -1020,7 +1001,7 @@
    </target> 
    
   
-   <target  name="deploy_qa" depends="clean,clean_jboss,qa_config,ear_cdebrowser"> 
+   <target  name="deploy_qa" depends="clean,clean_jboss,qa_config,debug_setting,ear_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
@@ -1041,7 +1022,7 @@
       <target  name="deploy_qa_start" depends="deploy_qa,jboss_startdebug"> 
    </target>
 
-   <target  name="deploy_stage" depends="clean,clean_jboss,stage_config,ear_cdebrowser"> 
+   <target  name="deploy_stage" depends="clean,clean_jboss,stage_config,debug_setting,ear_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
@@ -1062,7 +1043,7 @@
       <target  name="deploy_stage_start" depends="deploy_stage,jboss_startdebug"> 
    </target>
    
-   <target  name="deploy_prod" depends="clean,clean_jboss,prod_config,ear_cdebrowser"> 
+   <target  name="deploy_prod" depends="clean,clean_jboss,prod_config,debug_setting,ear_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
@@ -1112,22 +1093,22 @@
   <!-- =========== DEV DISTRIBUTION============== -->
   
   <!-- =========== DEV DISTRIBUTION============== -->
-   <target name="dist_dev" depends="clean_build_dir,dev_config,ear_cdebrowser,dist_ear_copy">      
+   <target name="dist_dev" depends="clean_build_dir,dev_config,debug_setting,ear_cdebrowser,dist_ear_copy">      
    </target>      
   <!-- =========== END DEV DISTRIBUTION ======================= -->
   
   <!-- =========== QA DISTRIBUTION============== -->
-        <target name="dist_qa" depends="clean_build_dir,qa_config,ear_cdebrowser,dist_ear_copy">  
+        <target name="dist_qa" depends="clean_build_dir,qa_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
         </target>      
   <!-- =========== END TEST DISTRIBUTION ======================= -->
   
   <!-- =========== STAGE DISTRIBUTION============== -->
-       <target name="dist_stage" depends="clean_build_dir,stage_config,ear_cdebrowser,dist_ear_copy">  
+       <target name="dist_stage" depends="clean_build_dir,stage_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
         </target>      
   <!-- =========== END STAGE DISTRIBUTION ======================= -->
   
   <!-- =========== PROD DISTRIBUTION============== -->
-        <target name="dist_prod" depends="clean_build_dir,prod_config,ear_cdebrowser,dist_ear_copy">  
+        <target name="dist_prod" depends="clean_build_dir,prod_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
         </target>      
   <!-- =========== END PROD DISTRIBUTION ======================= -->
   
