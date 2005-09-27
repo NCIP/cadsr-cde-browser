@@ -62,12 +62,15 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
      if (result.size() != 0) {
        theContext = (Context) (query.execute().get(0));
      }
-     else
+    /**
+     * This Change was made so that if there is no context return null
+     * else
        {
          DMLException dmlExp = new DMLException("No matching record found.");
 	 dmlExp.setErrorCode(NO_MATCH_FOUND);
 	 throw dmlExp;
        }
+       **/
      return theContext;
   }
   /**
