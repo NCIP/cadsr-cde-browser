@@ -104,12 +104,17 @@ public class FormBuilderEJB extends SessionBeanAdapter
         Collection forms = null;
 
         try {
-            Context ctep = contextDao.getContextByName(Context.CTEP);
+            
             String contextRestriction =null;
-            if((user!=null&&!user.hasRoleAccess(CaDSRConstants.CDE_MANAGER,ctep))&&
-               (user!=null&&!user.hasRoleAccess(CaDSRConstants.CONTEXT_ADMIN,ctep)))
+            
+            Context ctep = contextDao.getContextByName(Context.CTEP);
+            if(ctep!=null)
             {
-               contextRestriction= ctep.getConteIdseq();
+              if((user!=null&&!user.hasRoleAccess(CaDSRConstants.CDE_MANAGER,ctep))&&
+                 (user!=null&&!user.hasRoleAccess(CaDSRConstants.CONTEXT_ADMIN,ctep)))
+              {
+                 contextRestriction= ctep.getConteIdseq();
+              }
             }
             forms = dao.getAllForms(formLongName, protocolIdSeq, contextIdSeq,
                     workflow, categoryName, type, classificationIdSeq,
