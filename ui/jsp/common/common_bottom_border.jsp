@@ -1,3 +1,4 @@
+<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
 <TABLE width=100% cellspacing=0 cellpadding=0 border=0>
 <TR>
 <TD valign=bottom width=99%><html:img page="/i/bottom_shade.gif" height="6" width="100%" /></TD>
@@ -19,7 +20,8 @@
 </FONT>
 </td>
 <td width="30%" align="right">
- <FONT color="white" size=-2 face=arial>Version @cdebrowser.version@&nbsp;&nbsp;Build @cdebrowser.build@</FONT>
+ <FONT color="white" size=-2 face=arial>Version @cdebrowser.version@&nbsp;&nbsp;Build @cdebrowser.build@
+ <%=CDEBrowserParams.mode%></FONT>
 </TD>
 
 <td td width="70%" align="right">

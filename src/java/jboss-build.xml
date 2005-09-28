@@ -322,15 +322,25 @@
    </target>
   <!-- =========== END DEV CONFIG ======================= -->
   
-  <target name="debug_setting" unless="set_debug">
+  <target name="debug_setting" unless="debug_copy,debug_remove">
+ 
+  </target>
+  <target name="debug_copy" if="set_debug">
+    
+     <copy todir="${classes.build.dir}/WEB-INF/classes">
+                  <fileset dir="${debug.config.home}/properties">
+                    <patternset>
+                      <include name="cdebrowser.properties"/>
+                    </patternset>
+                  </fileset>
+       </copy>  
+  </target>
   
-   <copy todir="${classes.build.dir}/WEB-INF/classes">
-                <fileset dir="${debug.config.home}/properties">
-                  <patternset>
-                    <include name="cdebrowser.properties"/>
-                  </patternset>
-                </fileset>
-     </copy>  
+  <target name="debug_remove" unless="set_debug">
+     <delete>
+                  <fileset dir="${classes.build.dir}/WEB-INF/classes/properties" includes = "cdebrowser.properties">
+                  </fileset>
+       </delete>  
   </target>
 
   

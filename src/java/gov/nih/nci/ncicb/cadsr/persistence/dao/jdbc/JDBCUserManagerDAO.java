@@ -119,7 +119,7 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
     String acType) {
     Map out = new HashMap();
     ContextsQuery qry = new ContextsQuery(this.getDataSource());
-    out = qry.getContexts(username, acType);
+    out = qry.getContexts(username.toUpperCase(), acType);
 
     return out;
   }

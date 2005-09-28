@@ -1,4 +1,4 @@
-
+<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
 <%
 	String width = pageContext.getRequest().getParameter("width");
 %>
@@ -25,7 +25,8 @@
 </td>
 
 <td width="30%" align="right">
- <FONT color="white" size=-2 face=arial>Version @cdebrowser.version@&nbsp;&nbsp;Build @cdebrowser.build@</FONT>
+ <FONT color="white" size=-2 face=arial>Version @cdebrowser.version@&nbsp;&nbsp;Build @cdebrowser.build@
+ <%=CDEBrowserParams.mode%></FONT>
 </TD>
 
 <td td width="70%" align="right">

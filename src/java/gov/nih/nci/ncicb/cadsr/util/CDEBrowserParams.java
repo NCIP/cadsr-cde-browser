@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -13,7 +14,8 @@ import java.util.ResourceBundle;
 public class CDEBrowserParams
 {
     private static Log log = LogFactory.getLog(CDEBrowserParams.class.getName());
-    
+      //This is used monitor application mode
+    public static String mode ="";
     //TODO has to be moved to read from Spring Application Context
     private static ApplicationServiceLocator appServiceLocator= new ApplicationServiceLocatorImpl();
     //String sbrextDSN = "";
@@ -57,9 +59,33 @@ public class CDEBrowserParams
     }
     public static CDEBrowserParams getInstance(){
       if (instance == null ) {
+        try
+        {
+          getDebugInstance();
+          log.debug("Using debug properties file");
+          mode="DEBUG MODE";
+          return instance;
+        }
+        catch (Exception e)
+        {        
+        }
         Properties properties = appServiceLocator.findCDEBrowserService().getApplicationProperties(Locale.US);
         instance = new CDEBrowserParams();
         instance.initAttributesFromProperties(properties);
+        log.debug("Using database for properties");
+      }
+      return instance;
+    }
+
+    public static CDEBrowserParams getDebugInstance(){
+      if (instance == null ) {
+          ResourceBundle b = ResourceBundle.getBundle("cdebrowser", java.util.Locale.getDefault());
+          Properties properties = new Properties();
+          for (Enumeration e = b.getKeys() ; e.hasMoreElements() ;) {
+              properties.setProperty((String)e.nextElement(),b.getString((String)e.nextElement()));        
+          }
+        instance = new CDEBrowserParams();
+        instance.initAttributesFromProperties(properties);         
       }
       return instance;
     }

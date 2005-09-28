@@ -119,23 +119,7 @@
       		<param-value>expiredSession.jsp</param-value>
     	</init-param> 
     <init-param>
-      <param-name>debugServiceLocatorClassName</param-name>
-      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</param-value>
-    </init-param>
-    <init-param>
-      <param-name>debugLoginManagerClassName</param-name>
-      <param-value>gov.nih.nci.ncicb.cadsr.security.oc4j.DBUserManager</param-value>
-    </init-param>  
-    <init-param>
-      <param-name>debugUsername</param-name>
-      <param-value>jasur</param-value>
-    </init-param>   
-    <init-param>
-      <param-name>debugPassword</param-name>
-      <param-value>jasur</param-value>
-    </init-param> 
-    <init-param>
-      <param-name>debugLogin</param-name>
+      <param-name>debug</param-name>
       <param-value>N</param-value>
     </init-param>         	
    </filter>   
