@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -66,6 +67,11 @@ public class CDEBrowserParams
           mode="DEBUG MODE";
           return instance;
         }
+        catch (NoSuchElementException nse)
+        {
+          log.error("Cannot find property"+nse);
+          throw nse;
+        }
         catch (Exception e)
         {        
         }
@@ -81,9 +87,17 @@ public class CDEBrowserParams
       if (instance == null ) {
           ResourceBundle b = ResourceBundle.getBundle("cdebrowser", java.util.Locale.getDefault());
           Properties properties = new Properties();
-          for (Enumeration e = b.getKeys() ; e.hasMoreElements() ;) {
-              properties.setProperty((String)e.nextElement(),b.getString((String)e.nextElement()));        
-          }
+
+            for (Enumeration e = b.getKeys() ; e.hasMoreElements() ;) {
+                 String key = (String)e.nextElement();
+                if(key!=null)
+                {
+                log.debug(" Get CDEBrowser.property = "+ key );
+                properties.setProperty(key,b.getString(key));   
+                }
+            }
+
+          
         instance = new CDEBrowserParams();
         instance.initAttributesFromProperties(properties);         
       }

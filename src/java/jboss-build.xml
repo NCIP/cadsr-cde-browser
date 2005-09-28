@@ -322,7 +322,7 @@
    </target>
   <!-- =========== END DEV CONFIG ======================= -->
   
-  <target name="debug_setting" unless="debug_copy,debug_remove">
+  <target name="debug_setting" depends="debug_copy,debug_remove">
  
   </target>
   <target name="debug_copy" if="set_debug">
@@ -1197,6 +1197,8 @@
        Settings:
            Project Home:    ${project.home}
  
+       Properties files has been moved to a database tabel. If you would like to use
+       a local properties file user 
        ===================================================================
  
      </echo>
