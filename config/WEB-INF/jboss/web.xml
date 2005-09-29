@@ -74,13 +74,13 @@
     <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
     <init-param>
       <param-name>config</param-name>
-      <param-value>/WEB-INF/struts-config.xml,/WEB-INF/struts-config-copy.xml,
-           /WEB-INF/struts-config-addQuestion.xml,/WEB-INF/struts-config-cancel.xml,
-           /WEB-INF/struts-config-manageClassifications.xml,/WEB-INF/struts-config-module.xml,
-           /WEB-INF/struts-config-formCreate.xml, /WEB-INF/struts-config-cdeSideBySide.xml,
-           /WEB-INF/struts-config-manageReferenceDocs.xml,/WEB-INF/struts-config-downloadFormToExcel.xml,
-           /WEB-INF/struts-config-browserSearchScreenType.xml,/WEB-INF/struts-config-publish.xml,
-           /WEB-INF/struts-config-cde-search-preferences.xml,/WEB-INF/ocbrowser/struts-config-ocDetails.xml,
+      <param-value>/WEB-INF/formbuilder/struts-config.xml,/WEB-INF/formbuilder/struts-config-copy.xml,
+           /WEB-INF/formbuilder/struts-config-addQuestion.xml,/WEB-INF/formbuilder/struts-config-cancel.xml,
+           /WEB-INF/formbuilder/struts-config-manageClassifications.xml,/WEB-INF/formbuilder/struts-config-module.xml,
+           /WEB-INF/formbuilder/struts-config-formCreate.xml, /WEB-INF/cdebrowser/struts-config-cdeSideBySide.xml,
+           /WEB-INF/formbuilder/struts-config-manageReferenceDocs.xml,/WEB-INF/formbuilder/struts-config-downloadFormToExcel.xml,
+           /WEB-INF/cdebrowser/struts-config-browserSearchScreenType.xml,/WEB-INF/formbuilder/struts-config-publish.xml,
+           /WEB-INF/cdebrowser/struts-config-cde-search-preferences.xml,/WEB-INF/ocbrowser/struts-config-ocDetails.xml,
            /WEB-INF/admin/struts-config-admin.xml
        </param-value>
     </init-param>

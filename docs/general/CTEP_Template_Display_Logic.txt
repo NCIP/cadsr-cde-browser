@@ -1,12 +1,38 @@
-- Forms displyed under protocol node are the forms from all contexts that belong to that protocol 
-- Category
-	- Not yet migrated to classification
-	- How Templates are displayed for CTEP
-		- Create a node Desease
-			- Get all csi that are linked to a cs that has long name "CRF_DISEASE"
-				For each of csi
-					Get all qcdl name for qtlName=template for CTEP
-					For each qcdl name 
-						Display all the templates which are classified by same csi and has same qcdl name and belong to CTEP context
+
+Display Logic for CTEP
+
+How Templates are displayed for CTEP
+-------------------------------------
+
+- Create a node "Disease"
+      - Get all CSIs that are linked to a Classification that has preferred name "CRF_DISEASE"
+       For each of csi
+        Get all categories (qcdl name) using by CTEP for templates
+            For each category (qcdl name)
+                Create a node for category
+                Display all the templates which are classified by same Classification Scheme Item and has same category and belong to CTEP context
+- Create a node "Phase"
+      - Get all CSIs that are linked to a Classification  that has preferred name "phase"
+       For each of csi
+        Get all categories (qcdl name) using by CTEP for templates
+            For each category (qcdl name)
+                Create a node for category
+                Display all the templates which are classified by same Classification Scheme Item and has same category and belong to CTEP context
+
+Classification display for CTEP
+--------------------------------
+
+- Classification
+      Display classification hierarchy
+            Create sub nodes (CORE, NONCORE) for each CSI if classification scheme item type is DISEASE_TYPE and cs proffered name = DISEASE
 
 
+
+Search behaviour when user click on CORE/ NONCore node under classification scheme item
+------------------------------------------------------------------------
+
+Core
+Get all cde that has been classified by that disease(CSI) and has been used on a template that has been classified by that disease(CSI)
+
+Non Core
+Get all cde that has been classified by that disease and does not appear on a template that has been classified by that disease

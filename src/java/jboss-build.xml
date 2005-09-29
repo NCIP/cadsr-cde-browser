@@ -336,8 +336,8 @@
        </copy>  
   </target>
   
-  <target name="debug_remove" unless="set_debug">
-     <delete>
+  <target name="debug_remove" unless="set_debug" >
+     <delete quiet="true" failonerror="false">
                   <fileset dir="${classes.build.dir}/WEB-INF/classes/properties" includes = "cdebrowser.properties">
                   </fileset>
        </delete>  
@@ -519,9 +519,11 @@
         <patternset>
           <include name="WEB-INF/*.tld"/>
           <include name="WEB-INF/struts-config*.xml"/>
+          <include name="WEB-INF/cdebrowser/struts-config*.xml"/>
+          <include name="WEB-INF/formbuilder/struts-config*.xml"/>
           <include name="WEB-INF/ocbrowser/struts-config*.xml"/>
           <include name="WEB-INF/admin/struts-config*.xml"/>
-          <include name="WEB-INF/validat*.xml"/>
+          <include name="WEB-INF/formbuilder/validat*.xml"/>
           <include name="WEB-INF/jboss-web.xml"/>
           <include name="WEB-INF/spring/*.xml"/>
           <include name="WEB-INF/ehcache.xml"/>
