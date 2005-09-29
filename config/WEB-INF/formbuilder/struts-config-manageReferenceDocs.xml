@@ -1,0 +1,80 @@
+<?xml version = '1.0' encoding = 'windows-1252'?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ <form-beans> 
+  <form-bean name="refDocForm"
+                    type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.ReferenceDocFormBean"/>
+ 
+  
+
+    <form-bean name="createReferenceDocForm"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      dynamic="true">
+      <form-property name="docName" type="java.lang.String"/>
+      <form-property name="contextIdSeq" type="java.lang.String"/>
+      <form-property name="docText" type="java.lang.String"/>
+      <form-property name="docType" type="java.lang.String"/>
+      <form-property name="url" type="java.lang.String"/>
+      <form-property name="selectedRefDocId" type="java.lang.String"/>
+       
+    </form-bean>
+
+  
+  </form-beans>  
+
+  <action-mappings>
+  
+    <action name="refDocForm" path="/manageReferenceDocs" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ReferenceDocumentAction"
+      validate="false" >     
+      <forward name="success" path="/formbuilder/manageReferenceDocs.jsp"/>
+      <forward name="gotoUpload" path="/formbuilder/uploadDocument.jsp"/>
+      <forward name="gotoEdit" path="/formToEditAction.do?method=getFormToEdit"/>
+      <forward name="backtoRefDocEdit" path="/manageReferenceDocs.do?method=manageReferenceDocs"/>
+      <forward name="gotoConfirmCancel" path="/formbuilder/refDocConfirmCancel.jsp"/>
+    </action>
+
+    <action name="createReferenceDocForm" path="/viewReferenceDocs" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ReferenceDocumentAction"
+      validate="false" >     
+      <forward name="success" path="/formbuilder/viewReferenceDocs.jsp"/>
+    </action>
+    
+    <action name="createReferenceDocForm" path="/editReferenceDoc" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ReferenceDocumentAction"
+      validate="false" >     
+      <forward name="gotoEditReferenceDoc" path="/formbuilder/referenceDocEdit.jsp"/>
+      <forward name="manageReferenceDoc" path="/formbuilder/manageReferenceDocs.jsp"/>
+    </action>
+    
+    <action name="refDocForm" path="/viewReferenceDocAttchment" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ReferenceDocumentAction"
+      validate="false" >     
+      <forward name="success" path="/formbuilder/viewReferenceDocs.jsp"/>
+    </action>
+    
+    <action name="refDocForm" path="/uploadDocument" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ReferenceDocumentAction"
+      validate="false" >     
+      <forward name="success" path="/formbuilder/manageReferenceDocs.jsp"/>
+    </action>    
+    
+    <action name="createReferenceDocForm" path="/createReferenceDoc" parameter="method"
+          scope="request"
+          type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ReferenceDocumentAction"
+           validate="false" >     
+          <forward name="gotoCreateReferenceDoc" path="/formbuilder/createReferenceDoc.jsp"/>
+          <forward name="manageReferenceDoc"
+               path="/manageReferenceDocs.do?method=manageReferenceDocs"
+            redirect="false"/>
+    </action>    
+
+  </action-mappings>
+  <controller maxFileSize="2M" />
+
+</struts-config>
