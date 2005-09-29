@@ -526,7 +526,13 @@ function clearProtocol() {
                 <td >
                   &nbsp;
                 </td>  
-                </logic:empty>                        
+                </logic:empty>  
+                <td align="right" width="100">
+                  <html:link action='<%="/addSkipPattern?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.ADD_SKIP_PATTERN%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >
+                       Add Skip pattern
+                  </html:link>&nbsp;
+                </td>                
                 <td align="right" width="25">
                   <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >
