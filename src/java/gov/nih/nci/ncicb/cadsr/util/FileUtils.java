@@ -38,10 +38,10 @@ public class FileUtils {
     ResourceBundle bundle = ResourceBundle.getBundle(file);
 
     // Retrieve the keys and populate the properties object
-    Enumeration enum = bundle.getKeys();
+    Enumeration enum1 = bundle.getKeys();
     String      key  = null;
-    while (enum.hasMoreElements()) {
-      key = (String) enum.nextElement();
+    while (enum1.hasMoreElements()) {
+      key = (String) enum1.nextElement();
 
       prop.put(key, bundle.getObject(key));
     }
