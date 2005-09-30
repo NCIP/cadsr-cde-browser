@@ -19,7 +19,7 @@
   
    <!-- Make sure these are correct for your instance -->
    
-   <property name="jboss.home" value="D:/tools/other/jboss-4.0.1" /> 
+   <property name="jboss.home" value="c:\jboss-4.0.2" /> 
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
@@ -176,13 +176,13 @@
       <pathelement location="${java.lib.dir}/jakarta-oro.jar"/> 
       
       <!-- Springframework libs -->
-      <pathelement location="${java.lib.dir}/spring115.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-context115.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-core115.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-dao115.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-orm115.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-context115.jar"/>
-      <pathelement location="${java.lib.dir}/spring-web115.jar"/>
+      <pathelement location="${java.lib.dir}/spring-1.2.4.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-context-1.2.4.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-core-1.2.4.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-dao-1.2.4.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-orm-1.2.4.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-context-1.2.4.jar"/>
+      <pathelement location="${java.lib.dir}/spring-web-1.2.4.jar"/>
             
       <!--J2EE  libs -->
       <pathelement location="${java.lib.dir}/servlet.jar"/>
@@ -228,7 +228,7 @@
           </fileset>
           <manifest>
 	    <attribute name="Built-By" value="${user.name}"/>
-	    <attribute name="Class-Path" value="ojdbc14.jar spring.jar spring-jdbc.jar"/>
+	    <attribute name="Class-Path" value="classes12.jar spring-1.2.4.jar spring-jdbc-1.2.4.jar"/>
           </manifest>           
         </jar>
       </target>
@@ -622,17 +622,19 @@
       	
       	<!-- Spring Libs -->
       	
-      	<include name="spring115.jar"/>
-      	<include name="spring-context115.jar"/>
-      	<include name="spring-core115.jar"/>
-      	<include name="spring-dao115.jar"/>
-      	<include name="spring-orm115.jar"/>
-      	<include name="spring-context115.jar"/>
-      	<include name="spring-web115.jar"/>
+      	<include name="spring-1.2.4.jar"/>
+      	<include name="spring-context-1.2.4.jar"/>
+      	<include name="spring-core-1.2.4.jar"/>
+      	<include name="spring-dao-1.2.4.jar"/>
+      	<include name="spring-orm-1.2.4.jar"/>
+      	<include name="spring-context-1.2.4.jar"/>
+      	<include name="spring-web-1.2.4.jar"/>
+      	<include name="spring-hibernate-1.2.4.jar"/>
+      	<include name="spring-beans-1.2.4.jar"/>
       	
       	
       	
-      	<include name="hibernate2.jar"/>
+      	<include name="hibernate3.jar"/>
       	<include name="ehcache-0.7.jar"/>
       	
       	
@@ -682,8 +684,9 @@
                <attribute name="Built-By" value="${user.name}"/>
                <attribute name="Class-Path" 
                   value="persistence_form.jar common.jar 
-                  spring115.jar spring-context115.jar spring-core115.jar 
-                  spring-dao115.jar spring-orm115.jar
+                  spring-1.2.4.jar spring-context-1.2.4.jar spring-core-1.2.4.jar 
+                  spring-dao-1.2.4.jar spring-orm-1.2.4.jar spring-hibernate-1.2.4.jar
+                  spring-beans-1.2.4.jar
                   commons-logging.jar log4j-1.2.8.jar properties/"/>
             </manifest>  	    
          </jar>         
@@ -711,11 +714,13 @@
         
         <fileset dir="${java.lib.dir}">
           <patternset>
-            <include name="spring115.jar"/>
-            <include name="spring-context115.jar"/>
-            <include name="spring-core115.jar"/>
-            <include name="spring-dao115.jar"/>
-            <include name="spring-orm115.jar"/>
+            <include name="spring-1.2.4.jar"/>
+            <include name="spring-context-1.2.4.jar"/>
+            <include name="spring-core-1.2.4.jar"/>
+            <include name="spring-dao-1.2.4.jar"/>
+            <include name="spring-orm-1.2.4.jar"/>
+            <include name="spring-hibernate-1.2.4.jar"/>
+            <include name="spring-beans-1.2.4.jar"/>
           </patternset>
         </fileset>
 
