@@ -28,15 +28,13 @@
     <property name="user"><value>sbrext</value></property>
     <property name="password"><value>jjuser</value></property>
   </bean-->
-  
   <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
       <property name="jndiName"><value>java:comp/env/jdbc/CDEBrowserDS</value></property>
    </bean>
 
- 
 
   <!-- Hibernate SessionFactory -->
-  <bean id="sessionFactory" class="org.springframework.orm.hibernate.LocalSessionFactoryBean">
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
     <property name="dataSource"><ref local="dataSource"/></property>
     
     <!-- Must references all OR mapping files. -->
@@ -75,7 +73,7 @@
 		
     <property name="hibernateProperties">
       <props>
-        <prop key="hibernate.dialect">net.sf.hibernate.dialect.OracleDialect</prop>
+        <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
 
          <prop key="hibernate.show_sql">True</prop> 
 
@@ -148,7 +146,7 @@
   </bean>
 
 
-  <bean id="transactionManager" class="org.springframework.orm.hibernate.HibernateTransactionManager">
+  <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
     <property name="sessionFactory"><ref bean="sessionFactory"/></property>
   </bean>
 
