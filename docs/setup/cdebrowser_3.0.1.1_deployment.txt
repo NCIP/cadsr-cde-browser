@@ -1,0 +1,84 @@
+CDEBrowser Deployment to Jboss
+****************************
+Pre Condition
+-------------
+
+Make sure caDSR Database scripts have been run for stage.
+Make sure following directories exist on the server
+
+	/usr/local/jboss-4.0.1sp1/output/ 
+	 /usr/local/jboss-4.0.1sp1/server/default/log
+
+
+Configuration Changes
+=====================
+
+
+Data sources
+---------------------
+
+Add  file "oracle-ds.xml" to directory <JBOSS_HOME> server\default\deploy
+If file already exists, then update the file with datasources defined 
+in attached "oracle-ds.xml"
+
+Application Domain 
+------------------
+
+Edit login-config.xml in <JBOSS_HOME> server\default\conf to add the 
+xml snipet below between <policy> tags
+
+	<application-policy name="FormbuilderDomain">
+		<authentication>
+			<login-module code="gov.nih.nci.ncicb.cadsr.security.jboss.DBLoginModule" flag="required">
+	                                       <module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</module-option>
+			</login-module>
+		</authentication>
+	</application-policy>
+
+Logging
+-----------
+Edit log4j.xml in <JBOSS_HOME> server\default\conf to added the xml snippet below to end of the file before
+  </log4j:configuration> closing tag
+
+
+        <!-- ======================= -->
+        <!-- Setup the CDE Browser Appender -->
+        <!-- ======================= -->
+        <appender name="CDEBROWSER_FILE" class="org.jboss.logging.appender.RollingFileAppender">
+                <errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
+                <param name="File" value="${jboss.server.home.dir}/log/cdebrowser.log"/>
+                <param name="Append" value="false"/>
+                <param name="MaxFileSize" value="1MB"/>
+                <param name="MaxBackupIndex" value="3"/>
+                <layout class="org.apache.log4j.PatternLayout">
+                        <param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+                </layout>
+        </appender>
+
+        <!-- ======================= -->
+        <!-- Setup the CDE Browser category -->
+        <!-- ======================= -->
+        <category name="gov.nih.nci.ncicb.cadsr" additivity="false">
+                <priority value="DEBUG"/>
+                <appender-ref ref="CDEBROWSER_FILE"/>
+        </category>
+        
+EAR Deployment
+--------------
+
+Add the new cdebrowser.ear from the ftp site to directory <JBOSS_HOME> server\default\deploy
+
+
+Success Conditions
+==================
+
+1. Browse using IE to URL http://cdebrowser-stage.nci.nih.gov/
+       - Make sure the tree structure on the left side of the screen displays.
+2. On the right side
+       - Enter "*gen* in the text field and click search button
+       - The browser should refresh itself with results.
+3. Click on the formbuilder icon on the top right corner
+	- Will be prompted to login, use username/password as guest/guest
+	- After login you will be taken formbuilder serach page.
+	
+	
