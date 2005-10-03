@@ -82,7 +82,7 @@ function goPage(pageInfo) {
  </tr>
  
  <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Preferred Name:</td>
+    <td class="TableRowPromptText" width="20%">Short Name:</td>
     <td class="OraFieldText"><%=de.getPreferredName()%></td>
  </tr>
  

@@ -93,7 +93,7 @@ function listChanged(urlInfo) {
  </tr>
  
  <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Preferred Name:</td>
+    <td class="TableRowPromptText" width="20%">Short Name:</td>
     <td class="OraFieldText"><%=de.getPreferredName()%></td>
  </tr>
  
@@ -143,7 +143,7 @@ function listChanged(urlInfo) {
  </tr>
  
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Preferred Name:</td>
+    <td class="TableRowPromptText">Short Name:</td>
     <td class="OraFieldText"><%=vd.getPreferredName()%></td>
  </tr>
  
@@ -199,7 +199,7 @@ function listChanged(urlInfo) {
     <td class="OraFieldText"><%=vd.getCDPublicId()%> </td>
  </tr>
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Conceptual Domain Preferred Name:</td>
+    <td class="TableRowPromptText">Conceptual Domain Short Name:</td>
     <td class="OraFieldText"><%=vd.getCDPrefName()%> </td>
  </tr>
  <tr class="OraTabledata">

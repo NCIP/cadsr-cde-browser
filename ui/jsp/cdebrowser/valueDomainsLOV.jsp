@@ -75,7 +75,7 @@ function goPage(pageInfo) {
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">
   Please enter a keyword. This search will display all value domains which have
-  the search criteria in their long name or preferred name. Wildcard character is *.
+  the search criteria in their long name or short name. Wildcard character is *.
 </font>
 </p>
 <center>
@@ -125,7 +125,7 @@ function goPage(pageInfo) {
 %>
   <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Preferred Name</th>
+    <th class="OraTableColumnHeader">Short Name</th>
     <th class="OraTableColumnHeader">Long Name</th>
     <th class="OraTableColumnHeader">Context</th>
     <th class="OraTableColumnHeader">Version</th>

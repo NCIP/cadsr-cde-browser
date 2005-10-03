@@ -94,7 +94,7 @@
              </td>
            </tr>
            <tr class="OraTabledata">
-             <td class="TableRowPromptText" width="20%">Preferred Name:</td>
+             <td class="TableRowPromptText" width="20%">Short Name:</td>
              <td class="OraFieldText">
                <bean:write name="oc" property="preferredName"/>
              </td>
@@ -258,7 +258,7 @@
              </table>
              <table vAlign="top" cellSpacing="1" cellPadding="1" width="90%" align="center" border="0" class="OraBGAccentVeryDark">
                <TR class="OraTableColumnHeader">
-                 <th class="OraTableColumnHeader">CS* Preferred Name</th>
+                 <th class="OraTableColumnHeader">CS* Short Name</th>
                  <th class="OraTableColumnHeader">CS* Definition</th>
                  <th class="OraTableColumnHeader">CS* Public ID</th>
                  <th class="OraTableColumnHeader">CSI* Name</th>
@@ -340,7 +340,7 @@
                      <td class=OraFieldText >
                        <table vAlign="top" cellSpacing="1" cellPadding="1" width="100%" align="center" border="0" class="OraBGAccentVeryDark">
                          <TR class="OraTableColumnHeader">
-                           <th class="OraTableColumnHeader">CS* Preferred Name</th>
+                           <th class="OraTableColumnHeader">CS* Short Name</th>
                            <th class="OraTableColumnHeader">CS* Definition</th>
                            <th class="OraTableColumnHeader">CS* Public ID</th>
                            <th class="OraTableColumnHeader">CSI* Name</th>
@@ -440,7 +440,7 @@
                      <td class=OraFieldText >
                        <table vAlign="top" cellSpacing="1" cellPadding="1" width="100%" align="center" border="0" class="OraBGAccentVeryDark">
                          <TR class="OraTableColumnHeader">
-                           <th class="OraTableColumnHeader">CS* Preferred Name</th>
+                           <th class="OraTableColumnHeader">CS* Short Name</th>
                            <th class="OraTableColumnHeader">CS* Definition</th>
                            <th class="OraTableColumnHeader">CS* Public ID</th>
                            <th class="OraTableColumnHeader">CSI* Name</th>

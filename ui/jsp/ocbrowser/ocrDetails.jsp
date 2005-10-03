@@ -83,7 +83,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
             </td>
           </tr>
           <tr class="OraTabledata">
-            <td class="TableRowPromptText" width="20%">Preferred Name:</td>
+            <td class="TableRowPromptText" width="20%">Short Name:</td>
             <td class="OraFieldText">
               <bean:write name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" property="preferredName"/>
             </td>
