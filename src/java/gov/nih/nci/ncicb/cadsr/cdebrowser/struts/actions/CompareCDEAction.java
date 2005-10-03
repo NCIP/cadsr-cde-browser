@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.13 2005-09-12 13:48:33 kakkodis Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.14 2005-10-03 21:52:30 jiangja Exp $
  */
 
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
@@ -131,7 +131,7 @@ public class CompareCDEAction
   return mapping.findForward(SUCCESS);
  }
  /**
- * 
+ *
  *
  * @param mapping The ActionMapping used to select this instance.
  * @param form The optional ActionForm bean for this request.
@@ -170,7 +170,7 @@ public class CompareCDEAction
  }
 
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -221,7 +221,7 @@ public class CompareCDEAction
  }
 
  /**
-* 
+*
 *
 * @param mapping The ActionMapping used to select this instance.
 * @param form The optional ActionForm bean for this request.
@@ -239,7 +239,7 @@ public class CompareCDEAction
  }
 
  /**
-  * 
+  *
   *
   * @param mapping The ActionMapping used to select this instance.
   * @param form The optional ActionForm bean for this request.
@@ -301,7 +301,7 @@ public class CompareCDEAction
   addNewRow(sheet, rowNumber++, "Origin", boldCellStyle, cdeColl, "origin");
   addNewRow(sheet, rowNumber++, "Workflow Status", boldCellStyle, cdeColl, "aslName");
   addNewRow(sheet, rowNumber++, "Registration Status", boldCellStyle, cdeColl, "registrationStatus");
-  addNewRow(sheet, rowNumber++, "Preferred Name", boldCellStyle, cdeColl, "preferredName");
+  addNewRow(sheet, rowNumber++, "Short Name", boldCellStyle, cdeColl, "preferredName");
   addNewRow(sheet, rowNumber++, "Version", boldCellStyle, cdeColl, "version");
 
   row = sheet.createRow(rowNumber++);
@@ -317,13 +317,13 @@ public class CompareCDEAction
 
   addNewRow(sheet, rowNumber++, "Public ID", boldCellStyle, cdeConceptList, "publicId");
   addNewRow(sheet, rowNumber++, "Long Name", boldCellStyle, cdeConceptList, "longName");
-  addNewRow(sheet, rowNumber++, "Preferred Name", boldCellStyle, cdeConceptList, "preferredName");
+  addNewRow(sheet, rowNumber++, "Short Name", boldCellStyle, cdeConceptList, "preferredName");
   addNewRow(sheet, rowNumber++, "Definition", boldCellStyle, cdeConceptList, "preferredDefinition");
   addNewRow(sheet, rowNumber++, "Context", boldCellStyle, cdeConceptList, "contextName");
-  addNewRow(sheet, rowNumber++, "Conceptual Domain Preferred Name", boldCellStyle, cdeConceptList, "CDPrefName");
-  addNewRow(sheet, rowNumber++, "Object Class Preferred Name", boldCellStyle, cdeConceptList,
+  addNewRow(sheet, rowNumber++, "Conceptual Domain Short Name", boldCellStyle, cdeConceptList, "CDPrefName");
+  addNewRow(sheet, rowNumber++, "Object Class Short Name", boldCellStyle, cdeConceptList,
             "objectClass.preferredName");
-  addNewRow(sheet, rowNumber++, "Property Preferred Name", boldCellStyle, cdeConceptList, "property.preferredName");
+  addNewRow(sheet, rowNumber++, "Property Short Name", boldCellStyle, cdeConceptList, "property.preferredName");
   addNewRow(sheet, rowNumber++, "Origin", boldCellStyle, cdeConceptList, "origin");
   addNewRow(sheet, rowNumber++, "Workflow Status", boldCellStyle, cdeConceptList, "aslName");
 
@@ -335,7 +335,7 @@ public class CompareCDEAction
 
   addNewRow(sheet, rowNumber++, "Public ID", boldCellStyle, cdeColl, "valueDomain.publicId");
   addNewRow(sheet, rowNumber++, "Long Name", boldCellStyle, cdeColl, "valueDomain.longName");
-  addNewRow(sheet, rowNumber++, "Preferred Name", boldCellStyle, cdeColl, "valueDomain.preferredName");
+  addNewRow(sheet, rowNumber++, "Short Name", boldCellStyle, cdeColl, "valueDomain.preferredName");
   addNewRow(sheet, rowNumber++, "Definition", boldCellStyle, cdeColl, "valueDomain.preferredDefinition");
   addNewRow(sheet, rowNumber++, "Data Type", boldCellStyle, cdeColl, "valueDomain.datatype");
   addNewRow(sheet, rowNumber++, "Unit of Measure", boldCellStyle, cdeColl, "valueDomain.unitOfMeasure");
@@ -346,13 +346,13 @@ public class CompareCDEAction
   addNewRow(sheet, rowNumber++, "High Value", boldCellStyle, cdeColl, "valueDomain.highValue");
   addNewRow(sheet, rowNumber++, "Low Value", boldCellStyle, cdeColl, "valueDomain.lowValue");
   addNewRow(sheet, rowNumber++, "Value Domain Type", boldCellStyle, cdeColl, "valueDomain.VDType");
-  addNewRow(sheet, rowNumber++, "Conceptual Domain Preferred Name", boldCellStyle, cdeColl, "valueDomain.CDPrefName");
+  addNewRow(sheet, rowNumber++, "Conceptual Domain Short Name", boldCellStyle, cdeColl, "valueDomain.CDPrefName");
   addNewRow(sheet, rowNumber++, "Representation", boldCellStyle, cdeColl, "valueDomain.representation.longName");
   addNewRow(sheet, rowNumber++, "Origin", boldCellStyle, cdeColl, "valueDomain.origin");
   addNewRow(sheet, rowNumber++, "Workflow Status", boldCellStyle, cdeColl, "valueDomain.aslName");
   addNewRow(sheet, rowNumber++, "Version", boldCellStyle, cdeColl, "valueDomain.version");
 
- 
+
   List pvTitles = new ArrayList();
   pvTitles.add(0, "Value");
   pvTitles.add(1, "Value Meaning");
@@ -362,7 +362,7 @@ public class CompareCDEAction
   pvProperties.add(1, "shortMeaning");
   pvProperties.add(2, "shortMeaningDescription");
 
-  rowNumber += this.exportObjects(sheet, rowNumber, "Permissible Values", 
+  rowNumber += this.exportObjects(sheet, rowNumber, "Permissible Values",
   "valueDomain.validValues", boldCellStyle,
              cdeColl, pvProperties, pvTitles);
 
@@ -380,7 +380,7 @@ public class CompareCDEAction
                                   cdeColl, refDocProperties, refDocPropertyTitles);
 
   List csPropertyTitles = new ArrayList();
-  csPropertyTitles.add(0, "CS* Preferred Name");
+  csPropertyTitles.add(0, "CS* Short Name");
   csPropertyTitles.add(1, "CS* Definition");
   csPropertyTitles.add(2, "CSI* Name");
   csPropertyTitles.add(3, "CSI* Type");
@@ -389,7 +389,7 @@ public class CompareCDEAction
   csProperties.add(1, "classSchemeDefinition");
   csProperties.add(2, "classSchemeItemName");
   csProperties.add(3, "classSchemeItemType");
-  
+
   rowNumber += this.exportObjects(sheet, rowNumber, "Classifications", "classifications", boldCellStyle,
                                   cdeColl, csProperties, csPropertyTitles);
 
@@ -414,8 +414,8 @@ public class CompareCDEAction
   dedProperties.add(1, "contextName");
   dedProperties.add(2, "CDEId");
   dedProperties.add(3, "version");
-  
-  rowNumber += this.exportObjects(sheet, rowNumber, "Component Data Elements", 
+
+  rowNumber += this.exportObjects(sheet, rowNumber, "Component Data Elements",
   "derivedDataElement.dataElementDerivation", boldCellStyle,
   cdeColl, dedProperties, dedPropertyTitles);
 
@@ -437,11 +437,11 @@ public class CompareCDEAction
   response.addHeader("Expires", "0");
 
   try {
-   // create buffer			
+   // create buffer
    byte [] buffer = new byte[1024];
 
    int r = 0;
-   // write out file			
+   // write out file
    FileInputStream fin = new FileInputStream(f);
    OutputStream out = response.getOutputStream();
 
@@ -477,7 +477,7 @@ public class CompareCDEAction
   DataElementHandler dh = (DataElementHandler)HandlerFactory.getHandler(DataElement.class);
 
   de = (DataElement)dh.findObject(de.getDeIdseq(), sessionId);
-  
+
   ServiceLocator locator = ServiceLocatorFactory.getLocator(CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
   AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
   ConceptDAO conDAO = daoFactory.getConceptDAO();

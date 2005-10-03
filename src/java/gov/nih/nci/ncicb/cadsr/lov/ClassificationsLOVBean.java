@@ -50,7 +50,7 @@ public class ClassificationsLOVBean extends Object {
             newSearchStr0 = StringReplace.strReplace(newSearchStr0,"'","''");
             csWhere = " and   (upper (cs.long_name) like upper ( '"+newSearchStr0+"') " +
                       " OR upper (cs.preferred_name) like upper ( '"+newSearchStr0+"')) "
-                      ; 
+                      ;
          }
          if (!searchStr[1].equals("")){
             String newSearchStr1 = StringReplace.strReplace(searchStr[1],"*","%");
@@ -73,14 +73,14 @@ public class ClassificationsLOVBean extends Object {
               whereClause = csWhere + csiWhere + additionalWhere;
             isContextSpecific = true;
         }
-         
+
       }
       // pass the following parameters to CommonListCntrlBean
       String[] searchParm ={"cs.long_name","Classification Scheme",
                             "csi.csi_name","Class Scheme Item"};
       String[] jspLinkParm={ "csc.cs_csi_idseq","P_ID"};
       String[] displayParm={"csi.csi_name", "Class Scheme Item Name",
-                            "cs.preferred_name","CS Preferred Name" ,
+                            "cs.preferred_name","CS Short Name" ,
                             "cs.long_name","CS Long Name",
                             "cs_conte.name","CS Context",
                             "cs.asl_name","CS Workflow Status",
@@ -94,7 +94,7 @@ public class ClassificationsLOVBean extends Object {
                        " and cs.deleted_ind = 'No' " +
                        " and cs.cs_idseq = csc.cs_idseq " +
                        " and csi.csi_idseq = csc.csi_idseq " +
-                       " and cs.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + 
+                       " and cs.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                        whereClause;
       sqlStmtParm[1] = " order by cs.preferred_name ";
       int[] lovPassbackCols = {0};
@@ -115,10 +115,10 @@ public class ClassificationsLOVBean extends Object {
       clb.setDetailReq_Type("value_domains"); //set req_type for detail page
       clb.setShowRowNum(40);
       //clb.setPerformQueryToFalse();
-    
+
       clb.setJsId(request.getParameter("idVar"));
       clb.setJsName(request.getParameter("nameVar"));
-      if (isContextSpecific) 
+      if (isContextSpecific)
         clb.setExtraURLInfo("&performQuery=false&ckhContext=yes");
       else
         clb.setExtraURLInfo("&performQuery=false");

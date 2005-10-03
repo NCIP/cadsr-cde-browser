@@ -69,11 +69,11 @@ public class DESearchQueryBuilder extends Object {
 
     // release 3.0 updated to add display order for registration status
     String registrationFrom = " , sbr.ac_registrations acr , sbr.reg_status_lov rsl";
-    
+
     //Added for preferences
     String registrationWhere = " and de.de_idseq = acr.ac_idseq (+) and acr.registration_status = rsl.registration_status (+) ";
-    
-    String registrationExcludeWhere = "";   
+
+    String registrationExcludeWhere = "";
 
     if(searchBean!=null)
     {
@@ -84,13 +84,13 @@ public class DESearchQueryBuilder extends Object {
        }
     }
 
-    
-    
-    
+
+
+
     String wkFlowFrom = " , sbr.ac_status_lov asl ";
     String workFlowWhere = " and de.asl_name = asl.asl_name (+)";
     //Added for preferences
-    String workflowExcludeWhere = ""; 
+    String workflowExcludeWhere = "";
     if(searchBean!=null)
     {
       String[] excludeArr = searchBean.getAslNameExcludeList();
@@ -121,7 +121,7 @@ public class DESearchQueryBuilder extends Object {
     {
       contextExludeWhere = " and upper(conte.name) NOT IN ("+contextExludeToExclude+" )";
     }
-    
+
     if (strArray == null) {
       searchStr = "";
       whereClause = "";
@@ -175,7 +175,7 @@ public class DESearchQueryBuilder extends Object {
         StringUtils.replaceNull(request.getParameter("jspLatestVersion"));
       searchStr8 =
         StringUtils.replaceNull(request.getParameter("jspAltName"));
-      conceptName = 
+      conceptName =
         StringUtils.replaceNull(request.getParameter("jspConceptName"));
       conceptCode =
         StringUtils.replaceNull(request.getParameter("jspConceptCode"));
@@ -215,7 +215,7 @@ public class DESearchQueryBuilder extends Object {
       String vvWhere = "";
       String regStatusWhere = "";
       String altNameWhere = "";
-      
+
       if (doStatusSearch){
         wkFlowWhere = this.buildStatusWhereClause(searchStr1);
       }
@@ -423,7 +423,7 @@ public class DESearchQueryBuilder extends Object {
                          " and qc.de_idseq = de.de_idseq " +
                         // " and vd.vd_idseq = de.vd_idseq " +
                         // " and dec.dec_idseq = de.dec_idseq " +
-                                                  
+
                          csiWhere + whereClause +registrationWhere+ workFlowWhere;
 
       }
@@ -462,7 +462,7 @@ public class DESearchQueryBuilder extends Object {
           csiWhere = "";
         else
           csiWhere = " and acs.cs_csi_idseq = '"+searchStr5+"'";
-        
+
         String csWhere = this.getCSWhere(treeParamIdSeq);
 
         fromWhere = " from  sbr.data_elements de , " +
@@ -710,7 +710,7 @@ public class DESearchQueryBuilder extends Object {
     newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
     if (StringUtils.containsKey(searchDomain,"ALL") ||
        (StringUtils.containsKey(searchDomain,"Long Name") &&
-          StringUtils.containsKey(searchDomain,"Preferred Name") &&
+          StringUtils.containsKey(searchDomain,"Short Name") &&
           StringUtils.containsKey(searchDomain,"Hist") &&
           StringUtils.containsKey(searchDomain,"Doc Text"))) {
       searchWhere = " and (upper (de.long_name) like upper ( '"+newSearchStr+"') " +
@@ -733,7 +733,7 @@ public class DESearchQueryBuilder extends Object {
     }
 
     else if(StringUtils.containsKey(searchDomain,"Long Name") &&
-            StringUtils.containsKey(searchDomain,"Preferred Name") &&
+            StringUtils.containsKey(searchDomain,"Short Name") &&
             StringUtils.containsKey(searchDomain,"Hist")) {
 
       searchWhere =
@@ -750,7 +750,7 @@ public class DESearchQueryBuilder extends Object {
       return docWhere;
     }
     else if(StringUtils.containsKey(searchDomain,"Long Name") &&
-            StringUtils.containsKey(searchDomain,"Preferred Name") &&
+            StringUtils.containsKey(searchDomain,"Short Name") &&
             StringUtils.containsKey(searchDomain,"Doc Text")) {
 
       searchWhere =
@@ -788,7 +788,7 @@ public class DESearchQueryBuilder extends Object {
                   +" and    upper (nvl(rd2.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
       return docWhere;
     }
-    else if(StringUtils.containsKey(searchDomain,"Preferred Name") &&
+    else if(StringUtils.containsKey(searchDomain,"Short Name") &&
             StringUtils.containsKey(searchDomain,"Doc Text") &&
             StringUtils.containsKey(searchDomain,"Hist")) {
       searchWhere =
@@ -811,7 +811,7 @@ public class DESearchQueryBuilder extends Object {
       return docWhere;
     }
     else if(StringUtils.containsKey(searchDomain,"Long Name") &&
-            StringUtils.containsKey(searchDomain,"Preferred Name")) {
+            StringUtils.containsKey(searchDomain,"Short Name")) {
       searchWhere =
         " (upper (de.preferred_name) like upper ( '"+newSearchStr+"') " +
           " OR upper (de.long_name) like upper ( '"+newSearchStr+"')) ";
@@ -852,7 +852,7 @@ public class DESearchQueryBuilder extends Object {
                   + searchWhere + " ) ";
       return docWhere;
     }
-    else if(StringUtils.containsKey(searchDomain,"Preferred Name") &&
+    else if(StringUtils.containsKey(searchDomain,"Short Name") &&
             StringUtils.containsKey(searchDomain,"Doc Text")) {
       searchWhere =
         " and (upper (de.preferred_name) like upper ( '"+newSearchStr+"') " +
@@ -867,7 +867,7 @@ public class DESearchQueryBuilder extends Object {
                   + searchWhere+ " ) ";
       return docWhere;
     }
-    else if(StringUtils.containsKey(searchDomain,"Preferred Name") &&
+    else if(StringUtils.containsKey(searchDomain,"Short Name") &&
             StringUtils.containsKey(searchDomain,"Hist")) {
       searchWhere =
         " and (upper (de.preferred_name) like upper ( '"+newSearchStr+"') " +
@@ -901,7 +901,7 @@ public class DESearchQueryBuilder extends Object {
                   +" and    upper (nvl(rd2.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
       return docWhere;
     }
-    else if (StringUtils.containsKey(searchDomain,"Preferred Name")) {
+    else if (StringUtils.containsKey(searchDomain,"Short Name")) {
       searchWhere =
         " upper (de.preferred_name) like upper ( '"+newSearchStr+"') ";
 
@@ -967,15 +967,15 @@ public class DESearchQueryBuilder extends Object {
 
   }
   private String buildDEConceptWhere(String objectClass, String property) {
-  
-      if (objectClass.equals("") && property.equals("")) 
+
+      if (objectClass.equals("") && property.equals(""))
         return "";
-        
+
       String objectClassWhere = "";
       String objectClassFrom = "";
       String propertyFrom = "";
       String propertyWhere = "";
-      
+
       if (!"".equals(objectClass)) {
         String newObjClass = StringReplace.strReplace(objectClass,"*","%");
         newObjClass = StringReplace.strReplace(newObjClass,"'","''");
@@ -983,18 +983,18 @@ public class DESearchQueryBuilder extends Object {
         objectClassWhere = "oc.oc_idseq = dec.oc_idseq " +
         " and upper(oc.LONG_NAME) like upper('" + newObjClass + "')";
       }
-      
+
       if (!"".equals(property)) {
         String newSearchStr = StringReplace.strReplace(property,"*","%");
         newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
         propertyFrom = " , sbrext.properties_ext pc";
-        propertyWhere = " pc.PROP_IDSEQ = dec.PROP_IDSEQ " + 
+        propertyWhere = " pc.PROP_IDSEQ = dec.PROP_IDSEQ " +
         "and upper(pc.LONG_NAME) like upper('" + newSearchStr + "')";
-        
-        if (!"".equals(objectClassWhere)) 
+
+        if (!"".equals(objectClassWhere))
           propertyWhere = " and " + propertyWhere;
       }
-        
+
     String deConceptWhere = "and  de.de_idseq IN ("
                       +"select de_idseq "
                       +"from   data_elements "
@@ -1003,7 +1003,7 @@ public class DESearchQueryBuilder extends Object {
                                            + objectClassFrom
                                            + propertyFrom
 					                                 +" where  "
-					                                 + objectClassWhere 
+					                                 + objectClassWhere
                                            + propertyWhere + "))";
     return deConceptWhere;
 
@@ -1046,7 +1046,7 @@ public class DESearchQueryBuilder extends Object {
                   + searchWhere+ " ) ";
     return altWhere;
     }
-    
+
     private String buildConceptWhere (String conceptName, String conceptCode) {
       String conceptWhere = "";
       String conceptCodeWhere = "";
@@ -1117,7 +1117,7 @@ public class DESearchQueryBuilder extends Object {
    public SortableColumnHeader getSortColumnHeader() {
       return sortColumnHeader;
    }
-   
+
    private String getCSWhere(String csId) {
     String csWhere =  " and de.de_idseq IN ( " +
                       " select de_idseq " +
@@ -1128,6 +1128,6 @@ public class DESearchQueryBuilder extends Object {
                       " and   csc.cs_csi_idseq = acs.cs_csi_idseq " +
                       " and   acs.ac_idseq = de_idseq ) ";
     return csWhere;
-                         
+
    }
 }

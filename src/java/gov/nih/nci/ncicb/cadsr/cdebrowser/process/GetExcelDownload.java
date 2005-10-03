@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.11 2005-09-12 13:52:37 kakkodis Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.12 2005-10-03 21:57:09 jiangja Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -182,7 +182,7 @@ public class GetExcelDownload extends BasePersistingProcess {
       st = cn.createStatement();
 
       if ("deSearch".equals(source)) {
-      
+
         desb = (DataElementSearchBean) getInfoObject("desb");
 
         deSearch =
@@ -407,7 +407,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     List columnInfo = new ArrayList();
 
     columnInfo.add(
-      new ColumnInfo("PREFERRED_NAME", "Data Element Preferred Name", "String"));
+      new ColumnInfo("PREFERRED_NAME", "Data Element Short Name", "String"));
     columnInfo.add(
       new ColumnInfo("LONG_NAME", "Data Element Long Name", "String"));
     columnInfo.add(
@@ -435,7 +435,7 @@ public class GetExcelDownload extends BasePersistingProcess {
       new ColumnInfo("DEC_ID", "Data Element Concept Public ID", "Number"));
     columnInfo.add(
       new ColumnInfo(
-        "DEC_PREFERRED_NAME", "Data Element Concept Preferred Name", "String"));
+        "DEC_PREFERRED_NAME", "Data Element Concept Short Name", "String"));
     columnInfo.add(
       new ColumnInfo(
         "DEC_LONG_NAME", "Data Element Concept Long Name", "String"));
@@ -454,7 +454,7 @@ public class GetExcelDownload extends BasePersistingProcess {
       new ColumnInfo("OC_LONG_NAME", "Object Class Long Name", "String"));
     columnInfo.add(
       new ColumnInfo(
-        "OC_PREFERRED_NAME", "Object Class Preferred Name", "String"));
+        "OC_PREFERRED_NAME", "Object Class Short Name", "String"));
     columnInfo.add(
       new ColumnInfo("OC_CONTE_NAME", "Object Class Context Name", "String"));
     columnInfo.add(
@@ -479,7 +479,7 @@ public class GetExcelDownload extends BasePersistingProcess {
       new ColumnInfo("PROP_LONG_NAME", "Property Long Name", "String"));
     columnInfo.add(
       new ColumnInfo(
-        "PROP_PREFERRED_NAME", "Property Preferred Name", "String"));
+        "PROP_PREFERRED_NAME", "Property Short Name", "String"));
     columnInfo.add(
       new ColumnInfo("PROP_CONTE_NAME", "Property Context Name", "String"));
     columnInfo.add(
@@ -502,7 +502,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     columnInfo.add(new ColumnInfo("VD_ID", "Value Domain Public ID", "Number"));
     columnInfo.add(
       new ColumnInfo(
-        "VD_PREFERRED_NAME", "Value Domain Preferred Name", "String"));
+        "VD_PREFERRED_NAME", "Value Domain Short Name", "String"));
     columnInfo.add(
       new ColumnInfo("VD_LONG_NAME", "Value Domain Long Name", "String"));
     columnInfo.add(
@@ -554,7 +554,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     //Classification Scheme
     List csInfo = new ArrayList();
 
-    csInfo.add(new ColumnInfo(0, 3, "Preferred Name", "String"));
+    csInfo.add(new ColumnInfo(0, 3, "Short Name", "String"));
     csInfo.add(new ColumnInfo(0, 2, "Version", "Number"));
     csInfo.add(new ColumnInfo(0, 1, "Context Name", "String"));
     csInfo.add(new ColumnInfo(0, 4, "Context Version", "Number"));

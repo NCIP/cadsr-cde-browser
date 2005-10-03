@@ -37,7 +37,7 @@ public class DataElementConceptsLOVBean extends Object {
     try {
       searchStr = request.getParameter("SEARCH");
       if (searchStr ==null) searchStr ="";
-      
+
       String searchWhere = "";
       String newSearchStr = "";
       if (!searchStr.equals("")) {
@@ -66,7 +66,7 @@ public class DataElementConceptsLOVBean extends Object {
         /*whereClause = " and   (upper (nvl(dec.long_name,'%')) like upper ( '%"+searchStr+"%') " +
                       " OR upper (nvl(dec.preferred_name,'%')) like upper ( '%"+searchStr+"%')) "+
                       additionalWhere;*/
-        whereClause = searchWhere+additionalWhere;    
+        whereClause = searchWhere+additionalWhere;
         isContextSpecific = true;
       }
       if (isEscape) {
@@ -75,7 +75,7 @@ public class DataElementConceptsLOVBean extends Object {
       // pass the following parameters to CommonListCntrlBean
       String[] searchParm ={"dec.long_name","Keyword"};
       String[] jspLinkParm={ "dec.dec_idseq","P_ID"};
-      String[] displayParm={"dec.preferred_name","Preferred Name" ,
+      String[] displayParm={"dec.preferred_name","Short Name" ,
                             "dec.long_name","Long Name",
                             "dec_conte.name","Context",
                             "dec.asl_name","Workflow Status",
@@ -106,7 +106,7 @@ public class DataElementConceptsLOVBean extends Object {
       //clb.setPerformQueryToFalse();
       clb.setJsId(request.getParameter("idVar"));
       clb.setJsName(request.getParameter("nameVar"));
-      if (isContextSpecific) 
+      if (isContextSpecific)
         clb.setExtraURLInfo("&performQuery=false&ckhContext=yes");
       else
         clb.setExtraURLInfo("&performQuery=false");

@@ -4,7 +4,7 @@ package gov.nih.nci.ncicb.cadsr.lov;
  * A Bean class.
  * <P>
  * @author Oracle Corporation
- * @version: $Id: ValueDomainsLOVBean.java,v 1.3 2005-02-08 16:32:05 jiangja Exp $
+ * @version: $Id: ValueDomainsLOVBean.java,v 1.4 2005-10-03 21:58:49 jiangja Exp $
  */
 import gov.nih.nci.ncicb.cadsr.util.*;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
@@ -67,7 +67,7 @@ public class ValueDomainsLOVBean extends Object {
       // pass the following parameters to CommonListCntrlBean
       String[] searchParm ={"vd.long_name","Keyword"};
       String[] jspLinkParm={ "vd.vd_idseq","P_ID"};
-      String[] displayParm={"vd.preferred_name","Preferred Name" ,
+      String[] displayParm={"vd.preferred_name","Short Name" ,
                             "vd.long_name","Long Name",
                             "vd_conte.name","Context",
                             "vd.asl_name","Workflow Status",
@@ -99,7 +99,7 @@ public class ValueDomainsLOVBean extends Object {
       //clb.setPerformQueryToFalse();
       clb.setJsId(request.getParameter("idVar"));
       clb.setJsName(request.getParameter("nameVar"));
-      if (isContextSpecific) 
+      if (isContextSpecific)
         clb.setExtraURLInfo("&performQuery=false&ckhContext=yes");
       else
         clb.setExtraURLInfo("&performQuery=false");
