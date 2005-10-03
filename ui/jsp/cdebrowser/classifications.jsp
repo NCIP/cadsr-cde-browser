@@ -90,7 +90,7 @@ function listChanged(urlInfo) {
  </tr>
  
  <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Preferred Name:</td>
+    <td class="TableRowPromptText" width="20%">Short Name:</td>
     <td class="OraFieldText"><%=de.getPreferredName()%></td>
  </tr>
  
@@ -134,7 +134,7 @@ function listChanged(urlInfo) {
 
 <table width="80%" align="center" cellpadding="1" cellspacing="1" bgcolor="#999966">
   <tr class="OraTableColumnHeader">
-    <th>CS* Preferred Name</th>
+    <th>CS* Short Name</th>
     <th>CS* Definition</th>
     <th>CS* Public ID</th>
     <th>CSI* Name</th>
