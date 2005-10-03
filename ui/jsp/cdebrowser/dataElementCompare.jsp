@@ -170,7 +170,7 @@ function subTabClicked(tabNum,urlParams) {
  </tr>
 
  <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Preferred Name:</td>
+    <td class="TableRowPromptText" width="20%">Short Name:</td>
     <td class="OraFieldText">ADDITIONAL_DIAGNOSES_SPFY_ABL1</td>
  </tr>
  

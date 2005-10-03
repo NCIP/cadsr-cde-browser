@@ -102,7 +102,7 @@ function goPage(pageInfo) {
  </tr>
  
  <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Preferred Name:</td>
+    <td class="TableRowPromptText" width="20%">Short Name:</td>
     <td class="OraFieldText"><%=de.getPreferredName()%></td>
  </tr>
  
@@ -153,7 +153,7 @@ function goPage(pageInfo) {
  </tr>
  
  <tr class="OraTabledata">
-    <td class="TableRowPromptText" width="20%">Preferred Name:</td>
+    <td class="TableRowPromptText" width="20%">Short Name:</td>
     <td class="OraFieldText"><%=dec.getPreferredName()%></td>
  </tr>
  
@@ -178,7 +178,7 @@ function goPage(pageInfo) {
     <td class="OraFieldText"><%=dec.getCDPublicId()%></td>
  </tr>
  <tr class="OraTabledata">   
-   <td class="TableRowPromptText">Conceptual Domain Preferred Name:</td>
+   <td class="TableRowPromptText">Conceptual Domain Short Name:</td>
     <td class="OraFieldText"><%=dec.getCDPrefName()%> </td>
  </tr>
  <tr class="OraTabledata">
@@ -227,7 +227,7 @@ function goPage(pageInfo) {
             <td class="OraFieldText"><%=objClass.getLongName()%> </td>
          </tr>         
          <tr class="OraTabledata"> 
-            <td class="TableRowPromptText"  width="20%" >Preferred Name:</td>
+            <td class="TableRowPromptText"  width="20%" >Short Name:</td>
             <td class="OraFieldText"><%=objClass.getPreferredName()%> </td>
          </tr>
          <tr class="OraTabledata">
@@ -370,7 +370,7 @@ function goPage(pageInfo) {
              <td class="OraFieldText"><%=prop.getLongName()%> </td>
           </tr>          
           <tr class="OraTabledata"> 
-             <td class="TableRowPromptText"  width="20%" >Preferred Name:</td>
+             <td class="TableRowPromptText"  width="20%" >Short Name:</td>
              <td class="OraFieldText"><%=prop.getPreferredName()%> </td>
           </tr>
           <tr class="OraTabledata">
