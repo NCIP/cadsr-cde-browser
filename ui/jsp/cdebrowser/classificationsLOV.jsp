@@ -134,7 +134,7 @@ function goPage(pageInfo) {
   <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader">Class Scheme Item</th>
-    <th class="OraTableColumnHeader">Preferred Name</th>
+    <th class="OraTableColumnHeader">Short Name</th>
     <th class="OraTableColumnHeader">Long Name</th>
     <th class="OraTableColumnHeader">Context</th>
     <th class="OraTableColumnHeader">Version</th>
