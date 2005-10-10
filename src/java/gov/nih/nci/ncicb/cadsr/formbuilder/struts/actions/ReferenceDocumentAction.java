@@ -1207,7 +1207,7 @@ public class ReferenceDocumentAction
   while (refIter.hasNext())
   {
     ref = (ReferenceDocument) refIter.next();
-    if (ref.getDocType().equalsIgnoreCase(AdminComponent.REF_DOC_TYPE_IMAGE))
+    if (ref.getDocType().equalsIgnoreCase(ReferenceDocument.REF_DOC_TYPE_IMAGE))
       break;
   }
 

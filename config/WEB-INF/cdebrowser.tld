@@ -482,5 +482,54 @@
     <required>true</required>
     <rtexprvalue>true</rtexprvalue>
     </attribute>        
-  </tag>    
+  </tag>
+  <tag>
+    <name>RefDocAltQuestionTextDisplay</name>
+    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.RefDocAltQuestionTextDisplay</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>used to display Reference Document of type Alternate Question text and
+          Preferred question text. Depending on the  ref doc type;
+          If only a single item item exist a hyper text is displayed
+          Otherwise a Select box is displayed</info>  
+    <attribute>
+    <name>questionBeanId</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>selectBoxClassName</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>selectBoxSize</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>  
+    <attribute>
+    <name>htmlObjectRef</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute> 
+    <attribute>
+    <name>questionIndex</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>    
+    <attribute>
+    <name>refDocType</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>     
+    <attribute>
+    <name>selectBoxJSFunctionName</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>   
+    <attribute>
+    <name>hyperLinkJSFunctionName</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+    </attribute>       
+  </tag>     
 </taglib>

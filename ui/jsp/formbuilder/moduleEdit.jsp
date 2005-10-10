@@ -10,6 +10,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.jsp.tag.handler.AvailableValidValue"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument"%>
 <HTML>
   <HEAD>
     <TITLE>Formbuilder: Edit Module</TITLE>
@@ -139,6 +140,27 @@ function clearProtocol() {
           return false;
         }
   }
+  
+  function refDocSelected(srcCompId,targetCompId)
+    {
+        var targetObj = document.getElementById(targetCompId);
+         
+         var srcObj = document.getElementById(srcCompId);
+         var i;
+         var count = 0;
+         for (i=0; i<srcObj.options.length; i++) {
+           if (srcObj.options[i].selected) {
+              targetObj.value = srcObj.options[i].value;
+             }
+           }
+     }
+  
+  function refDocHyperlink(targetCompId,newValue)
+    {
+        var targetObj = document.getElementById(targetCompId);
+        targetObj.value=newValue;
+       
+     }  
 -->
 <%
 
@@ -439,36 +461,38 @@ function clearProtocol() {
                               <bean:write name="question" property="dataElement.aslName"/>
                           </td>
                       </tr> 
-
-                      <logic:present name="question" property="dataElement.longName">
-                        <tr class="OraTabledata">
-                            <td width="26%" class="OraTableColumnHeader" nowrap align="left" >
-                              <bean:message key="cadsr.formbuilder.helpText.moduleEdit.altText.deLongName" />
-                            </td>                       
-                            <td class="OraFieldText">
-                                <cde:questionAltText questionBeanId= "question" 
-                                                    htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
-                                                    deProperty = "longName"
-                                                    formIndex="0"
-                                                    questionIndex="<%=questionIndex.toString()%>" /> 
-                                
-                            </td>
-                        </tr>                       
-                      </logic:present>
-                      <logic:present name="question" property="dataElement.longCDEName">
                       <tr class="OraTabledata">
                           <td width="26%" class="OraTableColumnHeader" nowrap align="left">
-                            <bean:message key="cadsr.formbuilder.helpText.moduleEdit.altText.deLongCDEName" />
+                             <bean:message key="cadsr.formbuilder.helpText.moduleEdit.altText.preferred" />
                           </td>                      
                           <td class="OraFieldText">
-                              <cde:questionAltText questionBeanId= "question" 
+                              <cde:RefDocAltQuestionTextDisplay questionBeanId= "question" 
                                                   htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
-                                                  deProperty = "longCDEName"
-                                                  formIndex="0"
-                                                  questionIndex="<%=questionIndex.toString()%>" /> 
-                          </td>
-                      </tr>                                            
-                      </logic:present>                        
+                                                  selectBoxClassName="AltQuestionField"
+                                                  selectBoxSize="20"
+                                                  refDocType="<%=ReferenceDocument.REF_DOC_TYPE_PREFERRED_QUESTION_TEXT%>"
+                                                  questionIndex="<%=questionIndex.toString()%>" 
+                                                  selectBoxJSFunctionName="refDocSelected"
+                                                  hyperLinkJSFunctionName="refDocHyperlink"
+                                                  /> 
+                          </td>                          
+                      </tr>    
+                      <tr class="OraTabledata">
+                          <td width="26%" class="OraTableColumnHeader" nowrap align="left">
+                             <bean:message key="cadsr.formbuilder.helpText.moduleEdit.altText.other" />
+                          </td>                      
+                          <td class="OraFieldText">
+                              <cde:RefDocAltQuestionTextDisplay questionBeanId= "question" 
+                                                  htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
+                                                  selectBoxClassName="AltQuestionField"
+                                                  selectBoxSize="4"
+                                                  refDocType="<%=ReferenceDocument.REF_DOC_TYPE_ALT_QUESTION_TEXT%>"
+                                                  questionIndex="<%=questionIndex.toString()%>" 
+                                                  selectBoxJSFunctionName="refDocSelected"
+                                                  hyperLinkJSFunctionName="refDocHyperlink"
+                                                  /> 
+                          </td>                          
+                      </tr>                                                
                       </logic:present>                        
                        <tr class="OraTabledata">
                           <td width="28%" class="OraTableColumnHeader" nowrap align="left">

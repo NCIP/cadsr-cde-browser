@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface AdminComponent extends Audit {
   
-  public static final String REF_DOC_TYPE_IMAGE = "IMAGE_FILE";
+  
   public String getPreferredName();
 
   public void setPreferredName(String pPreferredName);

@@ -100,4 +100,7 @@ public interface NavigationConstants extends CommonNavigationConstants
 // Publish Change Request
  public static final String PUBLISH_FORM = "publishForm";
  public static final String UNPUBLISH_FORM = "unpublishForm";
+ 
+ //Skip Patterns
+  public static final String  ADD_SKIP_PATTERN = "addSkipPattern";
 }

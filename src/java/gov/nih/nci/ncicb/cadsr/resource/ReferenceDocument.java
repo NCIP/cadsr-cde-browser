@@ -3,6 +3,10 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface ReferenceDocument extends Serializable, Orderable, Audit{
+  public static String REF_DOC_TYPE_PREFERRED_QUESTION_TEXT = "preferred";
+  public static String REF_DOC_TYPE_ALT_QUESTION_TEXT = "alt";
+  public static final String REF_DOC_TYPE_IMAGE = "IMAGE_FILE";
+  
   public String getDocName();
   public String getDocType();
   public String getDocText();
