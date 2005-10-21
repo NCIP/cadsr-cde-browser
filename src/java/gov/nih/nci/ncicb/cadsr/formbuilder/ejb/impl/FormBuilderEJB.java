@@ -544,10 +544,34 @@ public class FormBuilderEJB extends SessionBeanAdapter
      *
      * @inheritDoc
      */
-    public int assignFormClassification(String acId, String csCsiId) {
-        FormDAO myDAO = daoFactory.getFormDAO();
+    public int assignFormClassification(List acIdList, List csCsiIdList) {        
+        //sanity check
+        if (acIdList==null || acIdList.size()==0){
+            return 0;
+        }
+        
+        if (csCsiIdList==null || csCsiIdList.size()==0){
+            return 0;
+        }
 
-        return myDAO.assignClassification(acId, csCsiId);
+        FormDAO myDAO = daoFactory.getFormDAO();
+        Iterator it = acIdList.iterator();
+        int total = 0;
+        int ret = 0;
+        while (it.hasNext()){
+            String acId = (String)it.next();
+            Iterator it2 = csCsiIdList.iterator();
+            while (it2.hasNext()){
+                String csCsiId = (String)it2.next();
+                try{
+                    ret =  myDAO.assignClassification(acId, csCsiId);
+                }catch (DMLException dmle){
+                ;//log. ignore this duplicated classification error.
+                }
+                total += ret;
+            }//end of while    
+        }//end of while
+        return total;
     }
 
     /**
@@ -578,8 +602,12 @@ public class FormBuilderEJB extends SessionBeanAdapter
         FormDAO myDAO = daoFactory.getFormDAO();
 
         return myDAO.retrieveClassifications(acId);
-    }
-
+    }    
+    
+    /**
+     *
+     * @inheritDoc
+     */
     public Form createForm(Form form, Instruction formHeaderInstruction,
         Instruction formFooterInstruction) {
         FormDAO fdao = daoFactory.getFormDAO();

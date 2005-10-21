@@ -1,5 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.domain.Question;
+import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
@@ -91,30 +94,44 @@ public class ManageClassificationsAction
     DynaActionForm dynaForm = (DynaActionForm) form;
 
     String[] ids = (String[]) dynaForm.get(CS_CSI_ID);
-
+    String classifyCDEIndicator = (String)dynaForm.get(CLASSIFY_CDE_ON_FORM);
+                
     boolean success = true;
     try {
       Form crf = (Form) getSessionObject(request, CRF);
       FormBuilderServiceDelegate service = getFormBuilderService();
 
+      //get form Id and CDE Id if it is to classify CDE as well.
+
+      //get classifications
+      List csCsiIdList = new ArrayList();
       for (int i = 0; i < ids.length; i++) {
         String id = ids[i];
-
-        if ((id != null) && (id.length() > 0)) {
-          try {
-            service.assignFormClassification(crf.getFormIdseq(), id);
-          }
-          catch (FormBuilderException exp) {
+        if (id!=null && id.length() > 0){
+            csCsiIdList.add(id); 
+        }
+      }  
+      
+      //get AC including the form and the CDE if CLASSIFY_CDE_ON_FORM is selected
+       List acIdList = new ArrayList();
+       acIdList.add(crf.getFormIdseq());
+      
+      boolean csCDEIndicator = "true".equalsIgnoreCase(classifyCDEIndicator);
+      if (csCDEIndicator) {
+        List CDEList = getFormCDEIdList(crf);
+        acIdList.addAll(CDEList);
+      }
+    
+      try {
+             service.assignFormClassification(acIdList, csCsiIdList);
+      }catch (FormBuilderException exp) {
             if (log.isErrorEnabled()) {
               log.error("Exception on addClassification ", exp);
             }
 
             saveError(exp.getErrorCode(), request);
 	    success = false;
-          }
-           // end of try-catch
-        }
-      }
+       }// end of try-catch
 
       Collection classifications =
         service.retrieveFormClassifications(crf.getFormIdseq());
@@ -173,4 +190,29 @@ public class ManageClassificationsAction
 
     return mapping.findForward("success");
   }
+  
+  
+  private List getFormCDEIdList(Form crf){
+    List modules = crf.getModules();
+    if  (modules == null || modules.size()==0){
+        return null;
+    }
+    
+    List CDEList = new ArrayList();
+    Iterator itm = modules.iterator();
+    while (itm.hasNext()){
+        ModuleTransferObject module = (ModuleTransferObject)itm.next();
+        List questions = module.getQuestions();
+        if (questions == null || questions.size()==0){
+            continue;
+        }
+        Iterator itq = questions.iterator();
+        while (itq.hasNext()){
+            QuestionTransferObject q = (QuestionTransferObject)itq.next();
+            CDEList.add(q.getDataElement().getDeIdseq());
+        }
+    }    
+    return CDEList;
+  }//end of method;
+  
 }

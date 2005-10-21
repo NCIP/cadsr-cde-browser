@@ -7,6 +7,7 @@
       dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="jspClassification" type="java.lang.String[]" size="3"/> 
+      <form-property name="classifyCDEOnForm" type="java.lang.String" />       
     </form-bean>
   </form-beans>
 

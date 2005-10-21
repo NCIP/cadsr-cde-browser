@@ -75,8 +75,15 @@
         <html:hidden  property='<%=FormConstants.CS_CSI_ID + "[" + i + "]"%>'/>
       </td>
     </tr>
-
     <% } %>
+    <tr>
+      <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.classifyCDE"/>:
+      </td>
+     <td>
+        <input type=checkbox class="OraFieldText" name="<%= FormConstants.CLASSIFY_CDE_ON_FORM%>" value ="true"
+      />
+      </td>
+      </tr>
   </table>
 
   <%@ include file="/formbuilder/addClassifications_inc.jsp"%>    

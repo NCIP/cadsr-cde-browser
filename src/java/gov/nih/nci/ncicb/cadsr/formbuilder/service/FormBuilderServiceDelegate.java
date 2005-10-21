@@ -13,6 +13,7 @@ import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 
@@ -90,7 +91,7 @@ public interface FormBuilderServiceDelegate {
 
     public Map getValidValues(Collection vdIdSeqs) throws FormBuilderException;
 
-    public int assignFormClassification(String acId, String csCsiId)
+    public int assignFormClassification(List acIdList, List csCsiIdList)
         throws FormBuilderException;
 
     public int removeFormClassification(String acCsiId)
@@ -116,7 +117,7 @@ public interface FormBuilderServiceDelegate {
     public void updateReferenceDocument (ReferenceDocument refDoc) throws FormBuilderException;
 
     public void deleteAttachment (String name) throws FormBuilderException;
-    
+
     public Collection getAllDocumentTypes() ;
 
 }

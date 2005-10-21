@@ -104,10 +104,11 @@ public interface FormBuilderServiceRemote {
      *
      * @param <b>acId</b> Idseq of an admin component
      * @param <b>csCsiId</b> csCsiId
+     * @param <b>csCDEIndicator</b>if the CDES on this form should be classified as well.
      *
      * @return <b>int</b> 1 - success; 0 - failure
      */
-    public int assignFormClassification(String acId, String csCsiId)
+    public int assignFormClassification(List acIdList, List csCsiIdList)
         throws RemoteException;
 
     /**
@@ -129,7 +130,7 @@ public interface FormBuilderServiceRemote {
      */
     public Collection retrieveFormClassifications(String acId)
         throws RemoteException;
-
+       
     public Form createForm(Form form, Instruction formHeaderInstruction,
         Instruction formFooterInstruction)
 	    throws RemoteException;
