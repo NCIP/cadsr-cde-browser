@@ -103,7 +103,7 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
   {
 
   }
-  
+
   public List getInstructions()
   {
     return null;
@@ -112,7 +112,7 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
   {
 
   }
-  
+
     public Instruction getFooterInstruction()
   {
 
@@ -122,7 +122,7 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
   {
 
   }
-  
+
   public List getFooterInstructions()
   {
     return null;
@@ -133,7 +133,7 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
   }
   public void setClassifications(Collection classifications)
   {
-   
+
   }
 
 
@@ -142,5 +142,10 @@ public class BC4JFormTransferObject extends AdminComponentTransferObject
     return null;
   }
 
+  //not implemented
+  public List getCDEIdList()
+  {
+    return null;
+  }
 
 }
