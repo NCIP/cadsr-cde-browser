@@ -120,4 +120,6 @@ public interface FormBuilderServiceDelegate {
 
     public Collection getAllDocumentTypes() ;
 
+    public int saveDesignation(String contextIdSeq, List acIdList) throws FormBuilderException;
+
 }

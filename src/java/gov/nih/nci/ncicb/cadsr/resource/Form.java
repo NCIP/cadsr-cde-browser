@@ -15,23 +15,25 @@ public interface Form extends AdminComponent,Instructionable  {
 
   public String getProtoIdseq();
   public void setProtoIdseq(String idseq);
-  
+
   public List getModules();
   public void setModules(List blocks);
-  
+
   public String getFormCategory();
   public void setFormCategory (String formCategory);
-  
+
   public Instruction getFooterInstruction();
   public void setFooterInstruction(Instruction instrcution);
-  
+
   public List getFooterInstructions();
   public void setFooterInstructions(List instrcutions);
-  
+
   public Object clone() throws CloneNotSupportedException ;
 
   public void setClassifications(Collection classifications);
 
 
   public Collection getClassifications();
+
+  public List getCDEIdList();
 }

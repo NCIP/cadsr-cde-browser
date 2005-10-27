@@ -95,6 +95,7 @@ public class ManageClassificationsAction
 
     String[] ids = (String[]) dynaForm.get(CS_CSI_ID);
     String classifyCDEIndicator = (String)dynaForm.get(CLASSIFY_CDE_ON_FORM);
+    boolean csCDEIndicator = "true".equalsIgnoreCase(classifyCDEIndicator);
                 
     boolean success = true;
     try {
@@ -116,9 +117,8 @@ public class ManageClassificationsAction
        List acIdList = new ArrayList();
        acIdList.add(crf.getFormIdseq());
       
-      boolean csCDEIndicator = "true".equalsIgnoreCase(classifyCDEIndicator);
       if (csCDEIndicator) {
-        List CDEList = getFormCDEIdList(crf);
+        List CDEList = crf.getCDEIdList();
         acIdList.addAll(CDEList);
       }
     
@@ -149,8 +149,11 @@ public class ManageClassificationsAction
       return mapping.findForward("failure");
     }
 
-    if(success)
+    if(success && !csCDEIndicator)
       saveMessage("cadsr.formbuilder.classification.add.success", request);
+    if (success && csCDEIndicator){
+      saveMessage("cadsr.formbuilder.classification.add.form.and.cde.success", request);
+    }
 
     return mapping.findForward("success");
   }
@@ -190,29 +193,5 @@ public class ManageClassificationsAction
 
     return mapping.findForward("success");
   }
-  
-  
-  private List getFormCDEIdList(Form crf){
-    List modules = crf.getModules();
-    if  (modules == null || modules.size()==0){
-        return null;
-    }
     
-    List CDEList = new ArrayList();
-    Iterator itm = modules.iterator();
-    while (itm.hasNext()){
-        ModuleTransferObject module = (ModuleTransferObject)itm.next();
-        List questions = module.getQuestions();
-        if (questions == null || questions.size()==0){
-            continue;
-        }
-        Iterator itq = questions.iterator();
-        while (itq.hasNext()){
-            QuestionTransferObject q = (QuestionTransferObject)itq.next();
-            CDEList.add(q.getDataElement().getDeIdseq());
-        }
-    }    
-    return CDEList;
-  }//end of method;
-  
 }

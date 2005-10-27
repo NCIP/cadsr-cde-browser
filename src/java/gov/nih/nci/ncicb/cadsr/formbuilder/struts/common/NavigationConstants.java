@@ -87,6 +87,10 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String CANCEL_ADD_SUBSETTED_VALIDVALUES_QUESTION = "cancelAddSubsettedValidValuesQuestion";
 
   public static final String GET_CLASSIFICATIONS = "getClassifications";
+
+  public static final String GET_CONTEXTS = "getContexts";
+  public static final String SAVE_DESIGNATIONS = "saveDesignations";
+    public static final String CANCEL_DESIGNATIONS = "cancelDesignations";
   public static final String GO_TO_ADD_CLASSIFICATIONS = "gotoAddClassifications";
   public static final String ADD_CLASSIFICATIONS = "addClassifications";
 
@@ -100,7 +104,7 @@ public interface NavigationConstants extends CommonNavigationConstants
 // Publish Change Request
  public static final String PUBLISH_FORM = "publishForm";
  public static final String UNPUBLISH_FORM = "unpublishForm";
- 
+
  //Skip Patterns
   public static final String  ADD_SKIP_PATTERN = "addSkipPattern";
 }

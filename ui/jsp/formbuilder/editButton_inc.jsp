@@ -19,8 +19,17 @@ if(confirm(message)) location.href = url;
              paramProperty="formIdseq"
              >
              <html:img src='<%=urlPrefix+"i/classifications.gif"%>' border="0" alt="Manage Classifications"/>
-           </html:link>
-          </td>    
+           </html:link>           
+           </td>
+           <td>
+           <html:link action='<%="/getContexts.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_CONTEXTS%>'
+             paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+             paramName="<%=FormConstants.CRF%>"
+             paramProperty="formIdseq"
+             >
+             <html:img src='<%=urlPrefix+"i/designation.gif"%>' border="0" alt="Designate Data Elements in the Form"/>
+           </html:link>          
+           </td>    
          <td>
            <html:link action='<%="/manageReferenceDocs.do?"+NavigationConstants.METHOD_PARAM+"="+"manageReferenceDocs"%>'
              >

@@ -66,7 +66,7 @@ public interface AdminComponentDAO {
    */
   public int removeClassification(String acCsiId);
 
-  
+
   /**
    * Removes the specified classification assignment for an admin component
    *
@@ -84,7 +84,7 @@ public interface AdminComponentDAO {
    * @return <b>Collection</b> Collection of CSITransferObject
    */
   public Collection retrieveClassifications(String acId);
-  
+
 
   /**
    * Gets all ReferenceDocuments for a AdminComp
@@ -99,27 +99,27 @@ public interface AdminComponentDAO {
    *
    * @param <b>acId</b> Idseq of an admin component
    *
-   * 
-   */  
+   *
+   */
     public boolean isClassifiedForPublish(String acId, String conteIdSeq);
-    
+
   // Publish Change order
   /**
-   * Gets all CSCSI by cs type and csi type 
+   * Gets all CSCSI by cs type and csi type
    *
    * @param <b>acId</b> Idseq of an admin component
    *
-   * 
-   */  
+   *
+   */
     List getCSIByType(String csType, String csiType, String contextIdseq);
-   
+
   /**
    * Gets all CSCSI for CS named 'CRF_DISEASE' and 'Phase', for given context id
    *
    * @param contextId
    *
-   * 
-   */  
+   *
+   */
   public List getCSIForContextId(String contextId);
 
   /**
@@ -127,10 +127,10 @@ public interface AdminComponentDAO {
    *
    * @param contextId
    *
-   * 
-   */  
+   *
+   */
   public List getCSCSIHierarchy();
-  
+
   /**
    * Gets all CSCSI by type
    *
@@ -139,5 +139,7 @@ public interface AdminComponentDAO {
    *
    */
   public List getCSCSIHierarchyByType(String csType, String csiType);
+
+  public int designate(String contextIdSeq, List acIdList);
 
 }

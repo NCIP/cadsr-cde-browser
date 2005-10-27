@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.process.GetDataElements;
 import gov.nih.nci.ncicb.cadsr.dto.AttachmentTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
@@ -12,6 +13,9 @@ import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
+
+import gov.nih.nci.ncicb.cadsr.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -322,6 +326,13 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       return query.getCSCSIs(csType,csiType);
     }
 
+  public int designate(String contextIdSeq, List acIdList){
+      int res = 0;
+       DesignateCDE designateCDE =
+          new DesignateCDE(this.getDataSource());
+       res = designateCDE.designate(contextIdSeq, acIdList);
+      return res;
+  }
 
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
@@ -496,6 +507,65 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     }
   }
 
+    /**
+     * Inner class that insert a record in the DESIGNATIONS table.
+     *
+     */
+    private class DesignateCDE extends SqlUpdate {
+      //constants.
+      private static final String DESIGNATIONS_COL_NAME = "'UNKNOWN_NAME'";
+      private static final String DESIGNATIONS_COL_LAE_NAME = "'ENGLISH'";
+    
+      public DesignateCDE(DataSource ds) {
+        String insertSql =
+          " INSERT INTO designations (desig_idseq, ac_idseq, conte_idseq, name, detl_name, lae_name) " +
+          " (select ?, ?, ?, PREFERRED_NAME, 'USED_BY', 'ENGLISH' from administered_components where " + 
+          " ac_idseq = ?)";
+
+        this.setDataSource(ds);
+        this.setSql(insertSql);
+        declareParameter(new SqlParameter("desig_idseq", Types.VARCHAR));
+        declareParameter(new SqlParameter("ac_idseq", Types.VARCHAR));
+        declareParameter(new SqlParameter("conte_idseq", Types.VARCHAR));
+        declareParameter(new SqlParameter("ac_idseq", Types.VARCHAR));
+        compile();
+      }
+
+      protected int designate(
+        String contextIdSeq, 
+        List acIdList){
+        
+        //sanity check
+        if (acIdList == null ||  acIdList.size() == 0){
+            log.info("ac ID list is null or empty list. Nothing is designated.");
+            return 0;
+        }
+
+        Object[] obj =
+               new Object[] {
+                  "",
+                  "",
+                  contextIdSeq,
+                  ""
+               }; 
+        int total = 0; 
+        int res = 0;
+        Iterator it = acIdList.iterator();
+        while (it.hasNext()){
+            obj[0] = generateGUID();
+            obj[1] = (String)it.next();
+            obj[3] = obj[1];
+            try{
+                res = update(obj);
+            } catch (DataIntegrityViolationException e) {
+              //log info but will not throw exception
+              log.info("ac ID " + obj[1] + " is already designated to context ID " + contextIdSeq);
+            }    
+            total += res;
+        }
+        return total;
+      }
+  }
   /**
    * Inner class that delete a record in the ac_csi table.
    *

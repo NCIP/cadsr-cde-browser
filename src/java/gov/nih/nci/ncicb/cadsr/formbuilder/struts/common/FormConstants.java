@@ -102,6 +102,8 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String SELECTED_ITEMS = "selectedItems";
   public static final String SELECTED_ITEM = "selectedItem";
   public static final String CLASSIFICATIONS = "classifications";
+  public static final String DESIGNATIONS = "designations";
+  public static final String CDE_CONTEXT_ID_SEQ = "cdeContextIdSeq";
   public static final String DE_SEARCH_SRC = "src";
   
   

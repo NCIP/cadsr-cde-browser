@@ -32,7 +32,7 @@ public class FormTransferObject extends AdminComponentTransferObject
    private Collection classifications = null;
 
   public FormTransferObject() {
-    
+
   }
 
   public String getFormIdseq() {
@@ -66,17 +66,17 @@ public class FormTransferObject extends AdminComponentTransferObject
   }
 
   public String getProtoIdseq() {
-  
-    if (protocol == null) 
+
+    if (protocol == null)
       return null;
-    else 
+    else
       return this.getProtocol().getIdseq();
   }
 
   public void setProtoIdseq(String p0) {
-    if (protocol == null) 
+    if (protocol == null)
       protocol = new ProtocolTransferObject();
-    
+
     protocol.setIdseq(p0);
   }
 
@@ -87,7 +87,7 @@ public class FormTransferObject extends AdminComponentTransferObject
   public void setModules(List p0) {
     modules = p0;
   }
-  
+
   public String getFormCategory() {
     return formCategory;
   }
@@ -95,7 +95,7 @@ public class FormTransferObject extends AdminComponentTransferObject
   public void setFormCategory(String newFormCategory) {
     formCategory = newFormCategory;
   }
- 
+
   public Instruction getInstruction()
   {
     if(instructions!=null&&!instructions.isEmpty())
@@ -108,7 +108,7 @@ public class FormTransferObject extends AdminComponentTransferObject
     if(newInstruction!=null)
     {
     instructions= new ArrayList();
-    instructions.add(newInstruction);      
+    instructions.add(newInstruction);
     }
     else
     {
@@ -116,7 +116,7 @@ public class FormTransferObject extends AdminComponentTransferObject
     }
 
   }
-  
+
   public List getInstructions()
   {
     return instructions;
@@ -125,7 +125,7 @@ public class FormTransferObject extends AdminComponentTransferObject
   {
     instructions=newInstructions;
   }
-  
+
   public Instruction getFooterInstruction()
   {
     if(footerInstructions!=null&&!footerInstructions.isEmpty())
@@ -138,7 +138,7 @@ public class FormTransferObject extends AdminComponentTransferObject
     footerInstructions= new ArrayList();
     footerInstructions.add(newFooterInstruction);
   }
-  
+
   public List getFooterInstructions()
   {
     return footerInstructions;
@@ -151,7 +151,7 @@ public class FormTransferObject extends AdminComponentTransferObject
    * Make a clone of the form.
    * Protocol,Context,ModuleList reference are only
    * cloned for deep copy, rest of the refrence are set to null in the copy
-   * @return 
+   * @return
    */
 
   public Object clone() throws CloneNotSupportedException {
@@ -167,10 +167,10 @@ public class FormTransferObject extends AdminComponentTransferObject
          Module module = (Module)it.next();
          Module moduleClone = (Module)module.clone();
          moduleClone.setForm(copy);
-         modulesCopy.add(moduleClone);        
+         modulesCopy.add(moduleClone);
        }
        copy.setModules(modulesCopy);
-     } 
+     }
      if(this.getProtocol()!=null)
       copy.setProtocol((Protocol)getProtocol().clone());
 
@@ -181,11 +181,11 @@ public class FormTransferObject extends AdminComponentTransferObject
        while(it.hasNext())
        {
          Instruction instr = (Instruction)it.next();
-         Instruction instrClone = (Instruction)instr.clone();   
+         Instruction instrClone = (Instruction)instr.clone();
          instructionsCopy.add(instrClone);
        }
        copy.setInstructions(instructionsCopy);
-     } 
+     }
 
      if(getFooterInstructions()!=null)
      {
@@ -194,11 +194,11 @@ public class FormTransferObject extends AdminComponentTransferObject
        while(it.hasNext())
        {
          Instruction instr = (Instruction)it.next();
-         Instruction instrClone = (Instruction)instr.clone(); 
+         Instruction instrClone = (Instruction)instr.clone();
          instructionsCopy.add(instrClone);
        }
        copy.setFooterInstructions(instructionsCopy);
-     } 
+     }
 
      if(getRefereceDocs()!=null)
      {
@@ -207,28 +207,28 @@ public class FormTransferObject extends AdminComponentTransferObject
        while(it.hasNext())
        {
          ReferenceDocument refDoc = (ReferenceDocument) it.next();
-         ReferenceDocument refDocClone = (ReferenceDocument)refDoc.clone();   
-         if (refDoc.getAttachments() !=null) 
+         ReferenceDocument refDocClone = (ReferenceDocument)refDoc.clone();
+         if (refDoc.getAttachments() !=null)
          {
            List attachmentCopy = new ArrayList();
            ListIterator itAtt = refDoc.getAttachments().listIterator();
-           while (itAtt.hasNext()) 
+           while (itAtt.hasNext())
            {
              Attachment attchment = (Attachment) itAtt.next();
              Attachment attClone = (Attachment) attchment.clone();
              attachmentCopy.add(attClone);
            }
-          refDocClone.setAttachments(attachmentCopy); 
+          refDocClone.setAttachments(attachmentCopy);
          }
          refDocCopy.add(refDocClone);
        }
-       
-       
+
+
        copy.setReferenceDocs(refDocCopy);
-     } 
-     
-     
-                
+     }
+
+
+
       return copy;
   }
 
@@ -244,22 +244,22 @@ public class FormTransferObject extends AdminComponentTransferObject
       sb.append(ATTR_SEPARATOR+"Protocol="+protocol.toString());
     else
       sb.append(ATTR_SEPARATOR+"Protocol=null");
-      
+
     if(instructions!=null)
       sb.append(ATTR_SEPARATOR+"Instructions="+instructions);
     else
       sb.append(ATTR_SEPARATOR+"instructions=null");
-      
+
     if(footerInstructions!=null)
       sb.append(ATTR_SEPARATOR+"footerInstructions="+footerInstructions);
     else
-      sb.append(ATTR_SEPARATOR+"footerInstructions=null");      
-      
+      sb.append(ATTR_SEPARATOR+"footerInstructions=null");
+
     List modules = getModules();
-    if(modules!=null) 
-    {      
+    if(modules!=null)
+    {
       sb.append(ATTR_SEPARATOR+"Modules="+modules);
-    } 
+    }
     else
     {
       sb.append(ATTR_SEPARATOR+"Modules="+null);
@@ -267,25 +267,25 @@ public class FormTransferObject extends AdminComponentTransferObject
     sb.append(OBJ_SEPARATOR_END);
     return sb.toString();
   }
-  
+
   public static void main(String args[]) throws Exception
   {
-    Form form = new FormTransferObject();    
+    Form form = new FormTransferObject();
     form.setLongName("Form1");
     Module module = new ModuleTransferObject();
     module.setLongName("Module");
     ArrayList list = new ArrayList();
     list.add(module);
     form.setModules(list);
-    
+
     Form clone = (Form)form.clone();
-    module.setLongName("ChangedModule");  
+    module.setLongName("ChangedModule");
     form.setLongName("ChangedFormName");
-  
-    
+
+
     System.out.println(form);
     System.out.println(clone);
-    
+
   }
 
 
@@ -297,7 +297,7 @@ public class FormTransferObject extends AdminComponentTransferObject
 
   public String getContextName()
   {
-    if (contextName == null)  
+    if (contextName == null)
        this.setContextName(getContext().getName());
     return contextName;
   }
@@ -311,10 +311,10 @@ public class FormTransferObject extends AdminComponentTransferObject
 
   public String getProtocolLongName()
   {
-    if (protocolLongName == null)  
+    if (protocolLongName == null)
        if (getProtocol() == null)
           setProtocolLongName(this.getProtocol().getLongName());
-       else 
+       else
           setProtocolLongName("");
     return protocolLongName;
   }
@@ -330,4 +330,29 @@ public class FormTransferObject extends AdminComponentTransferObject
   {
     return classifications;
   }
-}
+
+  public List getCDEIdList(){
+
+    List modules = this.getModules();
+    if  (modules == null || modules.size()==0){
+         return null;
+    }
+
+    List CDEList = new ArrayList();
+    Iterator itm = modules.iterator();
+    while (itm.hasNext()){
+        ModuleTransferObject module = (ModuleTransferObject)itm.next();
+        List questions = module.getQuestions();
+        if (questions == null || questions.size()==0){
+            continue;
+        }
+        Iterator itq = questions.iterator();
+        while (itq.hasNext()){
+            QuestionTransferObject q = (QuestionTransferObject)itq.next();
+            CDEList.add(q.getDataElement().getDeIdseq());
+        }
+    }
+    return CDEList;
+    }//end of method
+
+  }

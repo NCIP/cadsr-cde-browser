@@ -130,7 +130,7 @@ public interface FormBuilderServiceRemote {
      */
     public Collection retrieveFormClassifications(String acId)
         throws RemoteException;
-       
+
     public Form createForm(Form form, Instruction formHeaderInstruction,
         Instruction formFooterInstruction)
 	    throws RemoteException;
@@ -162,5 +162,7 @@ public interface FormBuilderServiceRemote {
       public void deleteAttachment (String name) throws RemoteException;
 
       public Collection getAllDocumentTypes() throws RemoteException;
+
+      public int saveDesignation(String contextIdSeq, List acIdList) throws RemoteException;
 
 }

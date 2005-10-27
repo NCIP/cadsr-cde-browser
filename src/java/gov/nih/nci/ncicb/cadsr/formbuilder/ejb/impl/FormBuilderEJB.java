@@ -49,6 +49,8 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.ErrorCodeConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 
+import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
+
 import java.rmi.RemoteException;
 
 import java.sql.Connection;
@@ -105,9 +107,9 @@ public class FormBuilderEJB extends SessionBeanAdapter
         Collection forms = null;
 
         try {
-            
+
             String contextRestriction =null;
-            
+
             Context ctep = contextDao.getContextByName(Context.CTEP);
             if(ctep!=null)
             {
@@ -227,7 +229,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
                 List<ReferenceDocument> deRefDocs = getReferenceDocuments("acIdSeq","type");
                 if(term.getDataElement()!=null)
                     term.getDataElement().setReferenceDocs(deRefDocs);
-                    
+
                 List qInstructions = qInstrdao.getInstructions(termId);
                 term.setInstructions(qInstructions);
 
@@ -276,7 +278,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
         List<ReferenceDocument> refDocs = getReferenceDocuments("acIdSeq","type");
         if(term.getDataElement()!=null)
             term.getDataElement().setReferenceDocs(refDocs);
-        
+
         term.setInstructions(questionInstrDao.getInstructions(termId));
         List values = (List) qdao.getValidValues(termId);
         term.setValidValues(values);
@@ -451,11 +453,11 @@ public class FormBuilderEJB extends SessionBeanAdapter
         return null;
     }
 
-    private String getUserName() {      
+    private String getUserName() {
         return  context.getCallerPrincipal().getName();
         //return "JASUR";//jboss
     }
-    
+
 
     public Collection getAllContexts() {
         return daoFactory.getContextDAO().getAllContexts();
@@ -544,12 +546,12 @@ public class FormBuilderEJB extends SessionBeanAdapter
      *
      * @inheritDoc
      */
-    public int assignFormClassification(List acIdList, List csCsiIdList) {        
+    public int assignFormClassification(List acIdList, List csCsiIdList) {
         //sanity check
         if (acIdList==null || acIdList.size()==0){
             return 0;
         }
-        
+
         if (csCsiIdList==null || csCsiIdList.size()==0){
             return 0;
         }
@@ -569,7 +571,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
                 ;//log. ignore this duplicated classification error.
                 }
                 total += ret;
-            }//end of while    
+            }//end of while
         }//end of while
         return total;
     }
@@ -602,8 +604,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
         FormDAO myDAO = daoFactory.getFormDAO();
 
         return myDAO.retrieveClassifications(acId);
-    }    
-    
+    }
+
     /**
      *
      * @inheritDoc
@@ -775,10 +777,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
                                     FormValidValueInstructionDAO fvvInstrDao,
                                     List newValidValues,String parentId)
   {
-      
+
            if(newValidValues!=null&&!newValidValues.isEmpty())
            {
-            
+
              Iterator newIt = newValidValues.iterator();
              while(newIt.hasNext())
              {
@@ -791,10 +793,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
                     fvvInstrDao.createInstruction(vvInstr,newfvvIdseq);
                  }
              }
-             
+
              // Use the one below onces migrated to 9i driver (Instructions created by procedure)
              //fvvDao.createFormValidValueComponents(newValidValues,parentId);
-             
+
            }
   }
   private void deleteQuestions(QuestionDAO questionDao,
@@ -859,10 +861,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
                   questionInstrDao.createInstruction(qInstr,newQusetion.getQuesIdseq());
                }
              List currQuestionValidValues = currQuestion.getValidValues();
-             
+
              if (currQuestionValidValues!=null)
              {
-              
+
                ListIterator currQuestionValidValuesIt = currQuestionValidValues.listIterator();
                while(currQuestionValidValuesIt!=null&&currQuestionValidValuesIt.hasNext())
                {
@@ -878,7 +880,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
                     fvvInstrDao.createInstruction(vvInstr,newFVVIdseq);
                  }
                }
-               
+
                //fvvDao.createFormValidValueComponents(currQuestionValidValues,newQusetion.getQuesIdseq());
              }
            }
@@ -1007,25 +1009,25 @@ public class FormBuilderEJB extends SessionBeanAdapter
         refDoc1.setDocText("Question Option 1");
         refDoc1.setDocType(ReferenceDocument.REF_DOC_TYPE_ALT_QUESTION_TEXT);
         refDocs.add(refDoc1);
-        
+
         ReferenceDocument refDoc2 = new ReferenceDocumentTransferObject();
         refDoc2.setDocText("Question Option 2");
         refDoc2.setDocType(ReferenceDocument.REF_DOC_TYPE_ALT_QUESTION_TEXT);
         refDocs.add(refDoc2);
-          
+
         ReferenceDocument refDoc3 = new ReferenceDocumentTransferObject();
         refDoc3.setDocText("Question Option 3");
-        refDoc3.setDocType(ReferenceDocument.REF_DOC_TYPE_ALT_QUESTION_TEXT);          
+        refDoc3.setDocType(ReferenceDocument.REF_DOC_TYPE_ALT_QUESTION_TEXT);
         refDocs.add(refDoc3);
-          
+
           ReferenceDocument refDoc4 = new ReferenceDocumentTransferObject();
           refDoc4.setDocText("Question preferred");
-          refDoc4.setDocType(ReferenceDocument.REF_DOC_TYPE_PREFERRED_QUESTION_TEXT);          
+          refDoc4.setDocType(ReferenceDocument.REF_DOC_TYPE_PREFERRED_QUESTION_TEXT);
           refDocs.add(refDoc4);
-          
+
         return refDocs;
     }
-    
+
   public void deleteReferenceDocument (String rdIdseq)
   {
         ReferenceDocumentDAO myDAO = daoFactory.getReferenceDocumentDAO();
@@ -1051,6 +1053,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
     return daoFactory.getReferenceDocumentTypeDAO().getAllDocumentTypes();
   }
 
-
-
+  public int saveDesignation(String contextIdSeq, List acIdList){
+	return daoFactory.getFormDAO().designate(contextIdSeq, acIdList);
+  }
 }
