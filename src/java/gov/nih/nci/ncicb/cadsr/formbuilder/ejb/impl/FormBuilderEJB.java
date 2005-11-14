@@ -108,18 +108,16 @@ public class FormBuilderEJB extends SessionBeanAdapter
         Collection forms = null;
 
         try {
-
             String contextRestriction =null;
-
+            /** TT 1892
             Context ctep = contextDao.getContextByName(Context.CTEP);
-            if(ctep!=null)
+
+            if((user!=null&&!user.hasRoleAccess(CaDSRConstants.CDE_MANAGER,ctep))&&
+               (user!=null&&!user.hasRoleAccess(CaDSRConstants.CONTEXT_ADMIN,ctep)))
             {
-              if((user!=null&&!user.hasRoleAccess(CaDSRConstants.CDE_MANAGER,ctep))&&
-                 (user!=null&&!user.hasRoleAccess(CaDSRConstants.CONTEXT_ADMIN,ctep)))
-              {
-                 contextRestriction= ctep.getConteIdseq();
-              }
+               contextRestriction= ctep.getConteIdseq();
             }
+            **/
             forms = dao.getAllForms(formLongName, protocolIdSeq, contextIdSeq,
                     workflow, categoryName, type, classificationIdSeq,
                     contextRestriction);
@@ -129,6 +127,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
         return forms;
     }
+
 
 
     /**
@@ -256,7 +255,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
         //Collection formCSIs = fdao.retrieveClassifications(formPK);
         //myForm.setClassifications(formCSIs);
-        
+
 
         return myForm;
     }
