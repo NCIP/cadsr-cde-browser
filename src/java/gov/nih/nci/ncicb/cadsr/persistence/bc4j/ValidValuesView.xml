@@ -18,7 +18,8 @@ SELECT ValueMeaningsLov.SHORT_MEANING,
        PermissibleValues.PV_IDSEQ, 
        ValueDomains.VD_IDSEQ ,
    nvl(PermissibleValues.MEANING_DESCRIPTION,'&nbsp;'),
-   VdPvs.VP_IDSEQ , ValueMeaningsLov.CONDR_IDSEQ
+   VdPvs.VP_IDSEQ , ValueMeaningsLov.CONDR_IDSEQ,
+  sbrext_common_routines.RETURN_NUMBER( PermissibleValues.VALUE ) display_order
 FROM VD_PVS VdPvs, VALUE_MEANINGS_LOV ValueMeaningsLov, VALUE_DOMAINS ValueDomains, PERMISSIBLE_VALUES PermissibleValues
 WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = PermissibleValues.PV_IDSEQ) AND (ValueMeaningsLov.SHORT_MEANING = PermissibleValues.SHORT_MEANING)
    ]]></SQLQuery>

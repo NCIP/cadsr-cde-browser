@@ -543,7 +543,8 @@ public class DESearchQueryBuilder extends Object {
       StringBuffer finalSqlStmt = new StringBuffer ();
 
 //release 3.0, added display_order of registration status
-      String selectClause = "SELECT de.de_idseq "
+// Added distinct due to duplicates
+      String selectClause = "SELECT distinct de.de_idseq "
                            +"      ,de.preferred_name de_preferred_name"
                            +"      ,de.long_name "
                            +"      ,rd.doc_text "

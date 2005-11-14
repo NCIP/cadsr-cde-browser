@@ -44,6 +44,33 @@ public class ReferenceBlobHandlerImpl extends Handler
 
     return rb;
   }
+  /**
+   * Get the forst reference document and the forst attachment of that 
+   * reference Document
+   */  
+  public Object findFirstObjectForAdminComponent(
+    Object adminComponentIdseq,
+    Object sessionId) throws DocumentNotFoundException, Exception {
+    ReferenceBlob rb = null;
+
+    try {
+      CDEBrowserBc4jModuleImpl module =
+        (CDEBrowserBc4jModuleImpl) getConnection(sessionId);
+      rb = module.getFirstRefBlobsForAdminComponent(adminComponentIdseq);
+      releaseConnection(sessionId);
+    }
+    catch (DocumentNotFoundException e) {
+      throw e;
+    }
+    catch (Exception e) {
+      throw e;
+    }
+    finally {
+      releaseConnection(sessionId);
+    }
+
+    return rb;
+  }  
   public Object refDocForAdminComponent(
     Object refDocIdseq,
     Object sessionId) throws DocumentNotFoundException, Exception {

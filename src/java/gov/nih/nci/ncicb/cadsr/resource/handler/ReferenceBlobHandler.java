@@ -9,6 +9,9 @@ public interface ReferenceBlobHandler extends HandlerDefinition{
                                             ,String docType
                                             ,Object sessionId) throws Exception;
                                             
+   public Object findFirstObjectForAdminComponent(Object adminComponentIdseq
+                                            ,Object sessionId) throws Exception;
+                                            
   public Object refDocForAdminComponent(Object refDocIdseq
                                             ,Object sessionId) throws Exception;
                                             

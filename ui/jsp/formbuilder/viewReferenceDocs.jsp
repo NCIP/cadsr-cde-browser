@@ -161,6 +161,18 @@
                </tr>
                <tr class="OraTabledata">
                   <td class="OraTableColumnHeader" width="20%" nowrap>
+                    <bean:message key="cadsr.formbuilder.form.type"/> 
+                  </td>
+                  <td class="OraFieldText" nowrap>
+                        <bean:write
+                           name="refDoc"
+                           property="docType"
+                         />   
+                  </td>
+               </tr>  
+
+               <tr class="OraTabledata">
+                  <td class="OraTableColumnHeader" width="20%" nowrap>
                     <bean:message key="cadsr.formbuilder.form.context"/> 
                   </td>
                   <td class="OraFieldText" nowrap>

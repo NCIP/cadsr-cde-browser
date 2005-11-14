@@ -121,7 +121,10 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
       ViewObjectImpl view1 =
         (ValidValuesViewImpl) bc4jUtil.cloneViewObject(view);
       view1.setWhereClause(" VD_IDSEQ = '" + aVdIdseq + "'");
-      view1.setOrderByClause(" UPPER(VALUE) ");
+      
+      view1.setOrderByClause(" display_order, UPPER(VALUE) ");
+      
+      //view1.setOrderByClause(" UPPER(VALUE) ");
       //view1.setForwardOnly(true);
       view1.executeQuery();
       rows = new Vector(view1.getRowCount());
@@ -166,6 +169,8 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
 
     try {
       view = getValidValuesView();
+      //order by display_order, UPPER(PermissibleValues.VALUE)
+      view.setOrderByClause(" display_order, UPPER(VALUE) ");
       //view.setMaxFetchSize(1500);
       //view = (VDValidValuesViewImpl)bc4jUtil.cloneViewObject(view);
       view.setWhereClause(" VD_IDSEQ = '" + aVdIdseq + "'");
@@ -401,6 +406,55 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
     finally {
     }
   }
+  /**
+   * Get the forst reference document and the forst attachment of that 
+   * reference Document
+   */
+  public BC4JReferenceBlobTransferObject getFirstRefBlobsForAdminComponent(
+    Object acIdseq ) throws DocumentNotFoundException, Exception {
+    try {
+      ReferenceDocumentsViewImpl rdVO = getReferenceDocumentsView();
+      String where =
+         " AC_IDSEQ = '" + acIdseq + "'";
+      rdVO.setWhereClause(where);
+      rdVO.setOrderByClause("DISPLAY_ORDER");
+      rdVO.executeQuery();
+      
+      ReferenceDocumentsViewRowImpl rdViewRowImpl;
+      rdViewRowImpl = (ReferenceDocumentsViewRowImpl) rdVO.first();
+
+      if (rdViewRowImpl == null) {
+        throw new DocumentNotFoundException("Document not found");
+      }
+
+      String rdIdseq = rdViewRowImpl.getRdIdseq();
+
+      ReferenceBlobsViewImpl rbVO = getReferenceBlobsView();
+      rbVO.setWhereClause("RD_IDSEQ = '" + rdIdseq + "'");
+      rbVO.setOrderByClause("DATE_CREATED desc ");
+      rbVO.executeQuery();
+
+      ReferenceBlobsViewRowImpl rbViewRowImpl;
+      rbViewRowImpl = (ReferenceBlobsViewRowImpl) rbVO.first();
+
+      if (rbViewRowImpl == null) {
+        throw new DocumentNotFoundException("Document not found");
+      }
+
+      return new BC4JReferenceBlobTransferObject(rbViewRowImpl);
+    }
+    catch (DocumentNotFoundException ex) {
+      log.error("Exception caught", ex);
+      throw ex;
+    }
+    catch (Exception ex) {
+      log.error("Exception caught", ex);
+      throw ex;
+    }
+    finally {
+    }
+  }
+  
 
   public BC4JReferenceBlobTransferObject getRefBlobsForAdminComponent(
     Object refDocIdseq) throws Exception {

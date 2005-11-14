@@ -4,7 +4,11 @@
 <!--  JBoss Server Configuration                                           -->
 <!--                                                                       -->
 <!-- ===================================================================== -->
-<!-- $Id: oracle-ds.xml,v 1.8 2005-09-28 11:55:20 kakkodis Exp $ -->
+<<<<<<< oracle-ds.xml
+<!-- $Id: oracle-ds.xml,v 1.9 2005-11-14 17:35:36 kakkodis Exp $ -->
+=======
+<!-- $Id: oracle-ds.xml,v 1.9 2005-11-14 17:35:36 kakkodis Exp $ -->
+>>>>>>> 1.7.2.2
 <!-- ==================================================================== -->
 <!--  Datasource config for Oracle originally from Steven Coy             -->
 <!-- ==================================================================== -->
@@ -16,6 +20,8 @@
 		<user-name>cdebrowser</user-name>
 		<password>@user.password@</password>
 		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
+   		<new-connection-sql>select 1 from dual</new-connection-sql>
+   		<check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
    		<blocking-timeout-millis>10000</blocking-timeout-millis>
    		<idle-timeout-minutes>1</idle-timeout-minutes>
    		<max-pool-size>85</max-pool-size>

@@ -104,9 +104,7 @@ public class ViewTemplate extends BasePersistingProcess
      else
      {
         rh = (ReferenceBlobHandler)HandlerFactory.getHandler(ReferenceBlob.class);
-        rb = (ReferenceBlob)rh.findObjectForAdminComponent(crfIdseq
-                                                                      ,"IMAGE_FILE"
-                                                                      ,sessionId);               
+        rb = (ReferenceBlob)rh.findFirstObjectForAdminComponent(crfIdseq ,sessionId);               
      }
 
       setResult(ProcessConstants.REFERENCE_BLOB_VO,rb);

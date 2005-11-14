@@ -126,12 +126,16 @@ public class CDEBrowserTree
     //Filtering CTEP context in data element search tree
     log.info("Proto forms Start " + TimeUtils.getEasternTime());
 
+   /** Remove to TT 1892
     if ((!currContext.getName().equals(Context.CTEP) && treeType.equals(TreeConstants.DE_SEARCH_TREE))
     //Publish Change order
       || (baseNode.isCTEPUser().equals("Yes") && treeType.equals(TreeConstants.DE_SEARCH_TREE))
       || (treeType.equals(TreeConstants.FORM_SEARCH_TREE))) {
      if ((currContext.getName().equals(
-             Context.CTEP) && baseNode.isCTEPUser().equals("Yes")) || (!currContext.getName().equals(Context.CTEP))) {
+             Context.CTEP) && baseNode.isCTEPUser().equals("Yes")) || (!currContext.getName().equals(Context.CTEP)))
+             {
+             
+    **/             
       List protoNodes = cache.getProtocolNodes(currContext.getConteIdseq());
 
    /** for release 3.0.1, forms without protocol is not displayed, uncomment this
@@ -168,8 +172,8 @@ public class CDEBrowserTree
 
        contextNode.add(protocolFormsLabelNode);
       }
-     }
-    }
+    /** } TT 1892 
+    }**/
 
     log.info("Proto forms End " + TimeUtils.getEasternTime());
     //End Add Protocol Nodes

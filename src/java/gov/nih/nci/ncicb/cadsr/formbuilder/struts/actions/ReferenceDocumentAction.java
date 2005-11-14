@@ -14,7 +14,6 @@ import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
-import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 
 import java.io.IOException;
@@ -27,7 +26,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,8 +36,6 @@ import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import oracle.jdbc.OracleResultSet;
 
 import oracle.sql.BLOB;
 
@@ -143,7 +139,7 @@ public class ReferenceDocumentAction
   String attachmentName = request.getParameter(FormConstants.REFERENCE_DOC_ATTACHMENT_NAME);
   response.addHeader("Content-Disposition", "attachment; filename=" + attachmentName);
   response.addHeader("Pragma", "No-cache");
-  response.addHeader("Cache-Control", "no-cache");
+  response.addHeader("Cache-Control", "private");
   response.addHeader("Expires", "0");
 
   // first find out if the attachment is new and saved in the session
@@ -168,7 +164,7 @@ public class ReferenceDocumentAction
     //String dsName = CDEBrowserParams.getInstance("cdebrowser").getSbrDSN();
     dbUtil.getOracleConnectionFromContainer();
 
-    String sqlStmt = "SELECT blob_content, mime_type from reference_blobs where name = ?";
+    String sqlStmt = "SELECT blob_content, mime_type, doc_size from reference_blobs where name = ?";
     log.info(sqlStmt);
     conn = dbUtil.getConnection();
     ps = conn.prepareStatement(sqlStmt);
@@ -180,10 +176,14 @@ public class ReferenceDocumentAction
      exists = true;
 
      String mimeType = rs.getString(2);
+ //    (mimeType);
+     
      response.setContentType(mimeType);
      //theBlob = ((OracleResultSet)rs).getBLOB(1);
      theBlob = rs.getBlob(1);
      is = theBlob.getBinaryStream();
+     response.setContentLength(rs.getInt(3));
+     response.setBufferSize(4*1024);
 
       //Writing to the OutputStream
       if (is != null) {
@@ -195,18 +195,19 @@ public class ReferenceDocumentAction
         out.write(buf, 0, bytesRead);
        }
       }
+     response.setStatus(HttpServletResponse.SC_OK);
     
-      if (is != null)
-       is.close();
-    
-      if (out != null)
-       out.close();
 
     }
    } catch (Exception ex) {
     log.error("Exception Caught:", ex);
    } finally {
     try {
+      if (is != null)
+       is.close();
+       
+      if (out != null) 
+       out.close();
     
      try
      {
@@ -234,24 +235,7 @@ public class ReferenceDocumentAction
    }
   }
 
-  //Writing to the OutputStream
-  if (is != null) {
-   byte [] buf = new byte[4 * 1024]; // 4K buffer
-
-   int bytesRead;
-
-   while ((bytesRead = is.read(buf)) != -1) {
-    out.write(buf, 0, bytesRead);
-   }
-  }
-
-  if (is != null)
-   is.close();
-
-  if (out != null)
-   out.close();
-
-  return mapping.findForward(SUCCESS);
+  return null;
  }
  /**
   *
@@ -1201,19 +1185,24 @@ public class ReferenceDocumentAction
      // find out which attachment is first uploaded
   Iterator refIter = refDocs.iterator();
   String attachmentName = "";
-  ReferenceDocument ref = null;
+  
+  if(refDocs==null) return "";
+  if(refDocs.isEmpty()) return "";
+  
+  ReferenceDocument ref = (ReferenceDocument)refDocs.get(0);
 
   //first find the first reference document of type IMAGE_FILE
-  while (refIter.hasNext())
+ /** while (refIter.hasNext())
   {
     ref = (ReferenceDocument) refIter.next();
     if (ref.getDocType().equalsIgnoreCase(ReferenceDocument.REF_DOC_TYPE_IMAGE))
       break;
   }
-
+  **/
   //then find its first uploaded attachment
   if (ref !=null && ref.getAttachments()!=null && ref.getAttachments().size() >0){
-        Attachment attachment = (Attachment) ref.getAttachments().get(0);
+         // fix to get last atttachemnt by created by
+        Attachment attachment = (Attachment) ref.getAttachments().get(ref.getAttachments().size()-1);
         attachmentName = attachment.getName();
   }
   return attachmentName;
