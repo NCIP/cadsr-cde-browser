@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 
-public class QuestionTransferObject extends AdminComponentTransferObject
+public class QuestionTransferObject extends FormElementTransferObject
   implements Question {
   protected Form crf;
   protected Module module;

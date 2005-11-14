@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 
-public class FormTransferObject extends AdminComponentTransferObject
+public class FormTransferObject extends FormElementTransferObject
   implements Form {
   private Protocol protocol = null;
   private String formType = null;

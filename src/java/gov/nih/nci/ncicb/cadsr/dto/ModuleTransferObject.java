@@ -17,7 +17,7 @@ import java.util.ListIterator;
 
 
 
-public class ModuleTransferObject extends AdminComponentTransferObject
+public class ModuleTransferObject extends FormElementTransferObject
   implements Module {
   private Form crf;
   private List terms;

@@ -23,12 +23,22 @@
 </HEAD>
 <BODY topmargin=0 bgcolor="#ffffff">
 
-<%@ include  file="../common/common_header_inc.jsp" %>
-
-<jsp:include page="../common/tab_inc.jsp" flush="true">
-	<jsp:param name="label" value="Form&nbsp;Search" />
-	<jsp:param name="urlPrefix" value="../" />
-</jsp:include>
+<logic:notPresent name="<%=FormConstants.SKIP_PATTERN%>"> 
+        <%@ include  file="../common/common_header_inc.jsp" %>
+        
+        <jsp:include page="../common/tab_inc.jsp" flush="true">
+                <jsp:param name="label" value="Form&nbsp;Search" />
+                <jsp:param name="urlPrefix" value="../" />
+        </jsp:include>
+</logic:notPresent>        
+<logic:present name="<%=FormConstants.SKIP_PATTERN%>"> 
+        <%@ include  file="../common/in_process_common_header_inc.jsp" %>
+        
+        <jsp:include page="../common/tab_inc.jsp" flush="true">
+                <jsp:param name="label" value="Skip&nbsp;to&nbsp;Form&nbsp;Search" />
+                <jsp:param name="urlPrefix" value="../" />
+        </jsp:include>
+</logic:present>  
 
 <html:form action="/formSearchAction.do">
  <%@ include  file="/formbuilder/formSearch_inc.jsp" %>

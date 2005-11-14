@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
-public class FormValidValueTransferObject extends AdminComponentTransferObject
+public class FormValidValueTransferObject extends FormElementTransferObject
   implements FormValidValue {
   
   private String valueIdseq;

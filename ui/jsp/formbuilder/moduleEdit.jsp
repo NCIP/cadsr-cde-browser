@@ -4,7 +4,10 @@
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@ page import="oracle.clex.process.jsp.GetInfoBean "%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
+<%@ page import="java.util.* "%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%> 
+<%@ page import="gov.nih.nci.ncicb.cadsr.resource.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
@@ -174,7 +177,9 @@ function clearProtocol() {
 </SCRIPT>
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff" <%=jumptoStr%> >
-    <% String urlPrefix = "";
+    <% 
+      String contextPath = request.getContextPath();
+      String urlPrefix = contextPath+"/";
 
       // Prepare parameter map for add and edit linx
       java.util.Map params = new java.util.HashMap();
@@ -666,14 +671,53 @@ function clearProtocol() {
                                                               property='<%=FormConstants.FORM_VALID_VALUE_INSTRUCTIONS+"["+vvInstrIndex+"]"%>'>
                                                           </html:textarea>                                                              
                                                      </td>                                          
-                                                    </tr>
+                                                    </tr>                
+  
                                                   </table>
                                                </td>
                                            </tr>
-
+                                                  <tr class="OraTabledata" >
+                                                    <!-- skiip Pattern -->
+                                                             <logic:present name="<%=FormConstants.SKIP_PATTERN%>" >
+                                                             
+                                                              <%                               
+                                                                TriggerAction triggerAction = (TriggerAction)request.getSession().getAttribute(FormConstants.SKIP_PATTERN);
+                                                                System.out.println("triggerAction="+triggerAction);
+                                                                String skipTargetType = FormJspUtil.getFormElementType(triggerAction.getActionTarget());
+                                                                pageContext.setAttribute("skipTargetType",skipTargetType);
+                                                                pageContext.setAttribute("skipTarget",triggerAction.getActionTarget());    
+                                                                
+                                                                %>
+                                                            <td colspan="4" align="right">
+                                                            <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                                                             <%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
+                                                            </table>
+                                                           </td>
+                                                           
+                                                           </logic:present>  
+                                                    <!-- skip pattern end -->         
+                                                  
+                                                    </tr>
+                                                  <tr class="OraTabledata" >                                                         
+                                                   <td colspan="4" align=right>
+                                                        <%
+                                                            HashMap vvparams = new java.util.HashMap();
+                                                            vvparams.put(FormConstants.QUESTION_INDEX,questionIndex);
+                                                            vvparams.put(FormConstants.VALID_VALUE_INDEX,validValueIndex);
+                                                            vvparams.put(NavigationConstants.METHOD_PARAM,NavigationConstants.CREATE_VALIDVALUE_SKIP_PATTERN);
+                                                            pageContext.setAttribute("linkParams", vvparams);
+                                                       %>
+                                                      <html:link  name="linkParams" scope="page"  action="/formbuilder/skipAction">
+                                                           Add Skip pattern
+                                                      </html:link>&nbsp;
+                                                      </td>
+                                                    </tr>                                                    
+                                                    
                                         </table>                                                                                                            
                                     </td>
                                   </tr> 
+                                       
+                                                                            
                                   
                                 <logic:equal value="<%= String.valueOf(validValueSize.intValue()-1) %>" name="validValueIndex">
                                   <tr class="OraTabledata">
@@ -726,6 +770,8 @@ function clearProtocol() {
                                  %>
                                 </logic:iterate> 
 
+
+
                               </table>
                             </td>
                           </tr>
@@ -740,24 +786,24 @@ function clearProtocol() {
              <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
               <tr align="right">
                 <logic:notEmpty name="<%=FormConstants.DELETED_QUESTIONS%>">
-                  <td align="right"   class="OraFieldText" nowrap width="90%">    
+                  <td align="right"   class="OraFieldText" nowrap width="23%">    
                       <html:select styleClass="FreeDropdown" property="<%=FormConstants.ADD_DELETED_QUESTION_IDSEQ_ARR%>">
                         <html:options collection="<%=FormConstants.DELETED_QUESTIONS%>" 
                             property="quesIdseq" labelProperty="longName" />
                       </html:select >
                   </td>
-                  <td align="left" width="3%">
+                  <td align="left" width="1%">
                       <a href="javascript:submitModuleEdit('<%=NavigationConstants.ADD_FROM_DELETED_QUESTION_LIST%>','<%=questionSize%>')">
                          <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
                       </a>                          
                   </td>   
                   </logic:notEmpty>
                   <logic:empty name="<%=FormConstants.DELETED_QUESTIONS%>">
-                   <td width="93%">
+                   <td width="20%">
                     &nbsp;
                    </td>  
                   </logic:empty>               
-                 <td align="right" width="3%">
+                 <td align="right" width="1%">
                   <%
                     params.put(FormConstants.QUESTION_INDEX, questionSize);
                     %>
@@ -768,13 +814,46 @@ function clearProtocol() {
                       
                       <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add Question"/>
                   </html:link>&nbsp;
-                </td>
+                </td>           
               </tr>
               </table> 
+              
             <!-- Add for delete and new Question end -->  
             </logic:equal>             
             </logic:iterate>          
         </logic:notEmpty>
+
+    <!-- Module skip Pattern -->
+             <logic:present name="<%=FormConstants.SKIP_PATTERN%>" >
+             
+              <%
+
+                TriggerAction triggerAction = (TriggerAction)request.getSession().getAttribute(FormConstants.SKIP_PATTERN);
+                System.out.println("triggerAction="+triggerAction);
+                String skipTargetType = FormJspUtil.getFormElementType(triggerAction.getActionTarget());
+                pageContext.setAttribute("skipTargetType",skipTargetType);
+                pageContext.setAttribute("skipTarget",triggerAction.getActionTarget());    
+                
+                %>
+
+                <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+                 <%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
+                </table>
+
+     <!-- Module Skip pattern end -->
+           </logic:present> 
+           
+               <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">     
+                <tr>
+                <td align="right">
+                  <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_MODULE_SKIP_PATTERN%>'
+                       >
+                       Add Skip pattern
+                  </html:link>&nbsp;
+                </td>
+               </tr>
+              </table>
+           <br>        
       </logic:present>
       <%@ include file="/formbuilder/moduleEditButton_inc.jsp"%>
     </html:form>

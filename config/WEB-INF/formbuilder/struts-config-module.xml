@@ -11,6 +11,12 @@
       <form-property name="comments" type="java.lang.String"/>
       <form-property name="displayOrder" type="java.lang.Integer"/>
     </form-bean>
+    
+    <form-bean name="addModuleForm"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      dynamic="true">
+      <form-property name="displayOrder" type="java.lang.Integer"/>
+    </form-bean>    
   </form-beans>
 
   <action-mappings>
@@ -30,6 +36,15 @@
       >
       <forward name="toFormEdit" path="/formbuilder/formEdit.jsp"/>
     </action>    
+    <action name="addModuleForm" path="/addModule" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.AddModuleAction"
+      validate="true"
+      input="/formbuilder/addModule.jsp"
+      >
+      <forward name="toModuleSearch" path="/formbuilder/moduleSearch.jsp"/>
+ 
+    </action>        
   </action-mappings>
 
 </struts-config>

@@ -1,8 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.persistence.bc4j;
 
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JContextTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JFormTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JQuestionTransferObject;
+
+
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 
@@ -433,10 +433,11 @@ public class ModulesViewRowImpl extends ViewRowImpl {
     return (oracle.jbo.RowIterator) getAttributeInternal(MODULEQUESTIONRECS);
   }
 
-  public Form getFormTransferObject() {
-    return new BC4JFormTransferObject((FormsViewRowImpl) getForm());
+ /** public Form getFormTransferObject() {
+    return null //new BC4JFormTransferObject((FormsViewRowImpl) getForm());
   }
-
+**/
+/**
   public List getQuestionTranferObjects() {
     List terms = new ArrayList(25);
     oracle.jbo.RowIterator quesRows = getQuestions();
@@ -448,6 +449,8 @@ public class ModulesViewRowImpl extends ViewRowImpl {
 
     return terms;
   }
+  
+  **/
 
   /**
    * 
@@ -457,10 +460,12 @@ public class ModulesViewRowImpl extends ViewRowImpl {
     return (oracle.jbo.Row)getAttributeInternal(CONTEXT);
   }
 
+/**
   public Context getContextTransferObject() {
     Context conte =
       new BC4JContextTransferObject((ContextsViewRowImpl) getContext());
 
     return conte;
   }
+  **/
 }

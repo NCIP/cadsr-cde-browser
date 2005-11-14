@@ -11,7 +11,7 @@ if(confirm(message)) location.href = url;
    
    <logic:notEmpty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
    
-         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
+         <table width="95%" align="center" cellpadding="1" cellspacing="1" border="0">
                <tr>
                  <td align="left" class="OraTableColumnHeaderNoBG" width="10%" nowrap>Sort order :</td>
                  <td align="left" class="CDEBrowserPageContext">
@@ -43,22 +43,29 @@ if(confirm(message)) location.href = url;
                 
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTableColumnHeader">
-            <logic:notPresent name="<%=FormConstants.SKIP_PATTERN%>"> 
-               <th class="OraTableColumnHeader" nowrap>Action</th>
-            </logic:notPresent>        
-               
-          	
+          	<th class="OraTableColumnHeader" nowrap>&nbsp;</th>
           	<th class="OraTableColumnHeader" nowrap>
 		        <cde:sortableColumnHeader
             sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
 		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
-		   	   	columnHeader="Long Name" 
+		   	   	columnHeader="Module name" 
             orderParamId="sortOrder" 
 		   	   	sortFieldId="sortField"
 		   	   	sortFieldValue = "longName"
 		   	   	target="_parent"
             />   
-            </th>             
+            </th>           
+          	<th class="OraTableColumnHeader" nowrap>
+		        <cde:sortableColumnHeader
+            sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
+		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
+		   	   	columnHeader="Form Long Name" 
+            orderParamId="sortOrder" 
+		   	   	sortFieldId="sortField"
+		   	   	sortFieldValue = "longName"
+		   	   	target="_parent"
+            />   
+            </th>                         
             <th class="OraTableColumnHeader" nowrap>
 		        <cde:sortableColumnHeader
             sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
@@ -119,89 +126,21 @@ if(confirm(message)) location.href = url;
                 offset="<%=Integer.toString(pageBean.getOffset())%>"
                 length="<%=Integer.toString(pageBean.getPageSize())%>">
             <tr class="OraTabledata">  
-            <logic:notPresent name="<%=FormConstants.SKIP_PATTERN%>"> 
-                    <td width="100">
-                    <table  >
-                    <tr>               
-                    <td width="25" class="OraTabledata" align=center>
-                    
-                    <html:link action='<%="/excelDownload.do?"+NavigationConstants.METHOD_PARAM+"=downloadFormInExcel"%>' 
-                    paramId = "<%=FormConstants.FORM_ID_SEQ%>"
-                    paramName="form" paramProperty="formIdseq"
-                    target="_parent" >
-                    <html:img src='<%=urlPrefix+"i/excel-icon.jpg"%>' border="0" alt="Excel Download"/>
-                    </html:link>                 
-                    
-                    </td>
-                      <td width="25" class="OraTabledata" align=center>
-                           <cde:secureIcon  formId="form" 
-                    formScope="<%=CaDSRConstants.PAGE_SCOPE%>"
-                    activeImageSource="i/copy.gif" 
-                            activeUrl='<%="/formToCopyAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_COPY%>' 
-                                    formType="TEMPLATE" 
-                    role="<%=CaDSRConstants.CDE_MANAGER%>" 
-                                    urlPrefix="<%=urlPrefix%>"
-                                    paramId = "<%=FormConstants.FORM_ID_SEQ%>"
-                                    paramProperty="formIdseq"
-                    inactiveImageSource="i/copy_inactive.gif"
-                                    altMessage="Select for Copy"
-                                    target="_parent"
-                    />            
-                     </td>                  
-                      <td width="25" class="OraTabledata" align=center>
-                           <cde:secureIcon  formId="form" 
-                    formScope="<%=CaDSRConstants.PAGE_SCOPE%>" 
-                    activeImageSource="i/edit.gif" 
-                                    activeUrl='<%="/formToEditAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_EDIT%>' 
-                                    role="<%=CaDSRConstants.CDE_MANAGER%>" 
-                                    urlPrefix="<%=urlPrefix%>"
-                                    paramId = "<%=FormConstants.FORM_ID_SEQ%>"
-                                    paramProperty="formIdseq"
-                    inactiveImageSource="i/edit_inactive.gif"
-                                    altMessage="Edit"
-                                    target="_parent"
-                    />		            
-                      </td>
-                     <td width="25"  class="OraTabledata" align=center>
-                           <cde:secureIcon  formId="form" 
-                    formScope="<%=CaDSRConstants.PAGE_SCOPE%>" 
-                    activeImageSource="i/delete.gif" 
-                                    activeUrl='<%="/formHrefDeleteAction.do?"
-                             +NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>'
-                                    role="<%=CaDSRConstants.CDE_MANAGER%>" 
-                                    urlPrefix="<%=urlPrefix%>"
-                                    paramId = "<%=FormConstants.FORM_ID_SEQ%>"
-                                    paramProperty="formIdseq"
-                    inactiveImageSource="i/delete_inactive.gif"
-                                    altMessage="Delete"
-                    confirmMessageKey="cadsr.formbuilder.form.delete.confirm"
-                                    />		           	
-                    </td> 
-                    </tr>
-                    </table>
-                    </td>
-                    <td class="OraFieldText">
-                            <html:link action='<%="/formDetailsAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_DETAILS%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
-                                    paramName="form" paramProperty="formIdseq"
-                                    target="_parent" >
-                            <bean:write name="form" property="longName"/>
-                            </html:link>          		    
-                    </td>
-            </logic:notPresent>    
-            
-    
-
-            <logic:present name="<%=FormConstants.SKIP_PATTERN%>"> 
+             <td width="10">
+                     <input type="checkbox" name="selectedSaveItems" value=" "/>		           	
+	      </td>
           	<td class="OraFieldText">
- 			<html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_SELECTED_FORM_AS_TARGET_FORM%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
- 				paramName="form" paramProperty="formIdseq"
- 				target="_parent" >
-			<bean:write name="form" property="longName"/>
-			</html:link>          		    
+                  <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SKIP_TO_FORM_LOCATION%>'
+                       >
+                       <bean:write name="form" property="longName"/>
+                  </html:link>&nbsp;           	        		    
           	</td>
-            </logic:present>     
-            
-
+          	<td class="OraFieldText">
+                  <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SKIP_TO_FORM_LOCATION%>'
+                       >
+                       <bean:write name="form" property="longName"/>
+                  </html:link>&nbsp;           	        		    
+          	</td>          	
           	<td class="OraFieldText">
           		<bean:write name="form" property="context.name"/><br>
           	</td>            
@@ -240,9 +179,9 @@ if(confirm(message)) location.href = url;
        
         </logic:notEmpty>
         <logic:empty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
-	       <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+	       <table width="95%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   	      <tr class="OraTableColumnHeader">
-          	<th class="OraTableColumnHeader" nowrap>Action</th>
+          	<th class="OraTableColumnHeader" nowrap> </th>
           	<th class="OraTableColumnHeader" nowrap>Long Name</th>
             <th class="OraTableColumnHeader" nowrap>Context</th>
           	<th class="OraTableColumnHeader" nowrap>Type</th>

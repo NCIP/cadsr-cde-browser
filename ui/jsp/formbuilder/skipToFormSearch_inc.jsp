@@ -60,18 +60,18 @@ function gotoClassificationsLOV() {
  <tr align="left">
     <td class="OraHeaderSubSub" width="60%" align="left" nowrap>Search for Forms</td>
      <td align="right" class="MessageText"  width="20%" nowrap><b>          
-    <logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>"> 
-     <bean:size id="listSize" name="<%=FormConstants.FORM_SEARCH_RESULTS%>" />
-     <logic:notEmpty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
+    <logic:present name="<%=FormConstants.SKIP_FORM_SEARCH_RESULTS%>"> 
+     <bean:size id="listSize" name="<%=FormConstants.SKIP_FORM_SEARCH_RESULTS%>" />
+     <logic:notEmpty name="<%=FormConstants.SKIP_FORM_SEARCH_RESULTS%>">
          <a class="link" href="#results"><%=listSize%>  Matches</a>
      </logic:notEmpty>
      
-     <logic:empty name="<%=FormConstants.FORM_SEARCH_RESULTS%>">
+     <logic:empty name="<%=FormConstants.SKIP_FORM_SEARCH_RESULTS%>">
       No Matches 
      </logic:empty>
     </logic:present>
     
-    <logic:notPresent name="<%=FormConstants.FORM_SEARCH_RESULTS%>"> 
+    <logic:notPresent name="<%=FormConstants.SKIP_FORM_SEARCH_RESULTS%>"> 
       &nbsp;
     </logic:notPresent>
    </b></td>
@@ -100,13 +100,6 @@ function gotoClassificationsLOV() {
       <td width="50%"  valign="top" >
           <table width="100%" cellpadding="0" cellspacing="1" class="OraBGAccentVeryDark" border="0" %>
             <tr>            
-              <td width="21%" class="OraTableColumnHeaderNoBG" nowrap>Public ID</td>
-              <td width="70%" class="OraTabledata" nowrap>
-                <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="21"
-                onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>       
-              </td>  
-             </tr>                
-            <tr>            
                 <td width="30%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/></td>
                 <td class="OraTabledata" nowrap>
                   <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
@@ -134,25 +127,6 @@ function gotoClassificationsLOV() {
                 </td>
              </tr>  
             <tr>            
-              <td width="21%" class="OraTableColumnHeaderNoBG" nowrap>Module</td>
-              <td width="70%" class="OraTabledata" nowrap>
-                <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="38"
-                onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>       
-              </td>  
-             </tr>       
-            <tr>            
-              <td width="21%" class="OraTableColumnHeaderNoBG" nowrap>CDE Public ID</td>
-              <td width="70%" class="OraTabledata" nowrap>
-                <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="21"
-                onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>       
-              </td>  
-             </tr>               
-           </table>      
-        </td>            
-        
-      <td width="50%" valign="top" >
-          <table width="100%" cellpadding="0" cellspacing="1" class="OraBGAccentVeryDark" border="0" %>
-            <tr>            
               <td width="21%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.workflow" /></td>
               <td width="70%" class="OraTabledata" nowrap>
               <html:select styleClass = "FreeDropdown" property="<%=FormConstants.WORKFLOW%>"
@@ -161,7 +135,24 @@ function gotoClassificationsLOV() {
                  <html:options name="<%=FormConstants.ALL_WORKFLOWS%>"/>
                  </html:select>        
               </td>  
-             </tr>              
+             </tr>      
+            <tr>            
+                <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>CDE Public Id</td>
+                <td class="OraTabledata" nowrap>
+                  <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
+                         readonly="true" 
+                         size="19"
+                         styleClass="LOVField"
+                         onkeypress="if(window.event.keyCode==13){submitForm('getAllForms');};"/>
+                  &nbsp;
+                  <html:hidden  property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
+                </td>
+             </tr>             
+           </table>      
+        </td>            
+        
+      <td width="50%" valign="top" >
+          <table width="100%" cellpadding="0" cellspacing="1" class="OraBGAccentVeryDark" border="0" %>
             <tr>    
               <td width="30%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.context" /></td>
               <td width="70%" class="OraTabledata" nowrap>
@@ -192,7 +183,19 @@ function gotoClassificationsLOV() {
                   <html:options name="<%=FormConstants.ALL_FORM_TYPES%>" /> 
                    </html:select> 
                 </td>  
-             </tr>             
+             </tr>   
+            <tr>            
+                <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Module name</td>
+                <td class="OraTabledata" nowrap>
+                  <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
+                         readonly="true" 
+                         size="19"
+                         styleClass="LOVField"
+                         onkeypress="if(window.event.keyCode==13){submitForm('getAllForms');};"/>
+                  &nbsp;
+                  <html:hidden  property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
+                </td>
+             </tr>               
            </table>
         </td>                      
     </tr>    
@@ -220,20 +223,4 @@ function gotoClassificationsLOV() {
     </td>
  </TR>
  <table>
- 
- 
- <logic:notPresent name="<%=FormConstants.SKIP_PATTERN%>"> 
-    <table align="center">
-     <TR>
-        <td  align="center" nowrap>
-          <html:link action='<%="/gotoFormCreate?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_FORM%>' target="_parent" >
-            <html:img src='<%=urlPrefix+"i/create_new_form_template.gif"%>' border="0" alt="Create New Form"/>
-          </html:link>&nbsp;
-        </td>  
-     </TR>    
-    </table>
-</logic:notPresent>        
-
-
-
 

@@ -82,7 +82,7 @@
            /WEB-INF/formbuilder/struts-config-manageReferenceDocs.xml,/WEB-INF/formbuilder/struts-config-downloadFormToExcel.xml,
            /WEB-INF/cdebrowser/struts-config-browserSearchScreenType.xml,/WEB-INF/formbuilder/struts-config-publish.xml,
            /WEB-INF/cdebrowser/struts-config-cde-search-preferences.xml,/WEB-INF/ocbrowser/struts-config-ocDetails.xml,
-           /WEB-INF/admin/struts-config-admin.xml
+           /WEB-INF/admin/struts-config-admin.xml,/WEB-INF/formbuilder/struts-config-skippattern.xml
        </param-value>
     </init-param>
     <init-param>
@@ -178,6 +178,10 @@
     <description>The Only Secure Role</description>
     <role-name>CDE MANAGER</role-name>
   </security-role>
+  <security-role>
+    <description>The Secure Role</description>
+    <role-name>CONTEXT ADMIN</role-name>
+  </security-role>   
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Secure Services</web-resource-name>
@@ -214,6 +218,7 @@
     <auth-constraint>
       <description>Authorized Users Group</description>
       <role-name>CDE MANAGER</role-name>
+      <role-name>CONTEXT ADMIN</role-name>
     </auth-constraint>
   </security-constraint>
 </web-app>

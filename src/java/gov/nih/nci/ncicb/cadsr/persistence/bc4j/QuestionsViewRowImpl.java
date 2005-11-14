@@ -1,7 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.persistence.bc4j;
 
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JContextTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JFormValueTransferObject;
+
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 
 import java.util.ArrayList;
@@ -383,7 +383,7 @@ public class QuestionsViewRowImpl extends ViewRowImpl {
   public oracle.jbo.RowIterator getQuestionFormVVRecs() {
     return (oracle.jbo.RowIterator) getAttributeInternal(QUESTIONFORMVVRECS);
   }
-
+/**
   public List getFormVVTranferObjects() {
     List formVVs = new ArrayList(25);
     oracle.jbo.RowIterator vvRows = getFormValidValues();
@@ -396,7 +396,7 @@ public class QuestionsViewRowImpl extends ViewRowImpl {
 
     return formVVs;
   }
-
+**/
   /**
    * 
    * Gets the associated <code>Row</code> using master-detail link Context

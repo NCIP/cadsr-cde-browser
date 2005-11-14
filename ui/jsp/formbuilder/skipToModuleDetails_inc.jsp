@@ -1,6 +1,18 @@
-            <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
-              <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules" indexId="modIndex" >                            
-                <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
+            <logic:notEmpty name="<%=FormConstants.SKIP_TARGET_FORM%>" property = "modules">
+              <logic:iterate id="module" name="<%=FormConstants.SKIP_TARGET_FORM%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules" indexId="modIndex" >                            
+               <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
+                 <tr >
+           	    <td align="left" width="100%">
+                   <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_MODULE_AS_TARGET%>'
+                      paramId= "<%=FormConstants.MODULE_INDEX%>"
+		      paramName="modIndex"
+                      scope="page">
+                       Skip to this Module
+                  </html:link>&nbsp;
+           	    </td>                
+         	 </tr>
+      		</table>
+ 		<table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
                  <tr>                 
                     <td class="OraHeaderBlack">
                       <bean:write name="module" property="longName"/>
@@ -33,9 +45,28 @@
                               <td class="OraFieldText" width="50">&nbsp;</td>
                               <td height="1"  class="OraFieldText">                               
                               </td>                              
-                            </tr>                             
+                            </tr>    
                             <tr class="OraTabledata">
-                              <td class="OraFieldText" width="7%">&nbsp;</td>
+                              <td class="OraFieldText" colspan=2>                            
+                                <%
+                                        HashMap params = new java.util.HashMap();
+                                        params.put(FormConstants.QUESTION_INDEX,questionIndex);
+                                        params.put(FormConstants.MODULE_INDEX,modIndex);
+                                        params.put(NavigationConstants.METHOD_PARAM,NavigationConstants.SET_QUESTION_AS_TARGET);
+                                        pageContext.setAttribute("linkParams", params);
+                                %>
+                                
+                                <html:link  name="linkParams" scope="page"  action="/formbuilder/skipAction">
+                                     Skip to this Question
+                                </html:link>&nbsp;
+                                
+                              </td>
+                          
+                            </tr>                               
+                            <tr class="OraTabledata">
+                              <td class="OraFieldText" width="7%"> 
+                                &nbsp;
+                              </td>
                               <td class="UnderlineOraFieldText" >
                                 <bean:write name="question" property="longName"/>
                               </td>
@@ -123,81 +154,14 @@
                                                  <td class="OraFieldTextInstruction">
                                                    <bean:write  name="validValue" property="instruction.longName"/>
                                                  </td>
-                                                </tr>   
+                                                </tr>  
+                                                
                                               </logic:present>  
                                            </table>   
                                           <%}%>
-                                        </td>
-                                      </tr>    
-                                      
-
-<!-- Skip Pattern  -->                                    
-                                      <tr   class="OraTabledata">
-                                        <td class="OraFieldText" width="50">&nbsp;</td>
-                                        <td colspan="2">
-                                        
-                                        
-      <table width="100%" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-          <tr class="OraTabledata">
-            <td class="OraTableColumnHeader" width="100%" nowrap>
-                Skip to
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-             	  <tr class="OraTabledata">
-                    <td class="OraTableColumnHeader" width="20%" nowrap>
-                        Question
-                    </td>                            
-		    <td class="OraTabledata" width="70%" align="right" >
-                        <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraTabledata">
-                          <tr>     
-                             <td align="left" width="60%" class="OraFieldText">
-                                    Coordinating Group Code 
-                             </td>                           
-                            <td align="right" width="20%" class="OraFieldText" >                        
-                                            <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
-                                                target="_blank">
-                                            59
-                                            </html:link>
-                             </td>
-                             <td align="right" width="20%" class="OraFieldText">
-                                    4.0
-                             </td>                                                                 
-                           </tr>                
-                          </table>
-                       </td>          
-                      </tr>  
-                 <tr class="OraTabledata">
-                   <td class="OraTableColumnHeader" width="20%" nowrap>
-                       Module name
-                   </td>
-                   <td  class="OraFieldText" width="70%" nowrap>
-			CRF Header
-                   </td>               
-                  </tr> 
-                  
-                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="20%" nowrap>
-                     Form <bean:message key="cadsr.formbuilder.form.longName"/>
-                  </td>
-                  <td  class="OraFieldText" width="70%" nowrap>
-			DCLungOnStudy 
-                  </td>             
-                 </tr> 
-
-
-             
-           
-                </table>
-             </td>
-            </tr>
-         </table></td></tr>
-                                                                         
-   <!-- Skip end --->     
-
-                                      
+                                        </td>                                        
+                                      </tr>   
+                                                                                                                                                
                                     </logic:iterate><!-- valid Value-->
                                   </table>
                                 </td>

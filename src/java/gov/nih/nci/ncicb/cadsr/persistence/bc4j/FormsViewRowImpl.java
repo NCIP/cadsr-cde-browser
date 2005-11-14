@@ -1,7 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.persistence.bc4j;
 
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JContextTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JModuleTransferObject;
+
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 
@@ -399,6 +399,7 @@ public class FormsViewRowImpl extends ViewRowImpl {
     return (oracle.jbo.RowIterator) getAttributeInternal(FORMMODULERECS);
   }
 
+/**
   public List getModuleTranferObjects() {
     List modules = new ArrayList(25);
     oracle.jbo.RowIterator modRows = getModules();
@@ -410,6 +411,7 @@ public class FormsViewRowImpl extends ViewRowImpl {
 
     return modules;
   }
+  **/
 
   /**
    * Gets the associated <code>Row</code> using master-detail link Context
@@ -417,14 +419,14 @@ public class FormsViewRowImpl extends ViewRowImpl {
   public oracle.jbo.Row getContext() {
     return (oracle.jbo.Row) getAttributeInternal(CONTEXT);
   }
-
+/**
   public Context getContextTransferObject() {
     Context conte =
       new BC4JContextTransferObject((ContextsViewRowImpl) getContext());
 
     return conte;
   }
-
+**/
   /**
    * 
    * Gets the associated <code>Row</code> using master-detail link Protocol

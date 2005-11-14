@@ -106,5 +106,25 @@ public interface NavigationConstants extends CommonNavigationConstants
  public static final String UNPUBLISH_FORM = "unpublishForm";
 
  //Skip Patterns
-  public static final String  ADD_SKIP_PATTERN = "addSkipPattern";
+  public static final String  EDIT_SKIP_PATTERN = "editSkipPattern";
+  
+  public static final String  CREATE_FORM_SKIP_PATTERN = "createFormSkipPattern";
+  public static final String  CREATE_MODULE_SKIP_PATTERN = "createModuleSkipPattern";
+  public static final String  CREATE_VALIDVALUE_SKIP_PATTERN = "createValidValueSkipPattern";
+  
+  public static final String  SKIP_TO_FORM_LOCATION = "skipToFormLocation";
+  
+  public static final String  SET_CURRENT_FORM_AS_TARGET_FORM="setCurrentFormAsTargetForm";
+    public static final String  SET_SELECTED_FORM_AS_TARGET_FORM="setSelectedFormAsTargetForm";
+    
+    
+   public static final String  SET_FORM_AS_TARGET = "setFormAsTarget";
+   public static final String   SET_MODULE_AS_TARGET="setModuleAsTarget";
+    public static final String   SET_QUESTION_AS_TARGET="setQuestionAsTarget";
+    
+  public static final String  SKIP_TO_FORM_SEARCH = "skipToFormSearch";
+  
+   public static final String  GO_TO_MODULE_SEARCH = "goToModuleSearch";
+    public static final String  SAVE_SKIP_PATTERN = "saveSkipPattern";
+    
 }

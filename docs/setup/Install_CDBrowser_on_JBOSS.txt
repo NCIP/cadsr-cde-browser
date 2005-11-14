@@ -125,5 +125,18 @@ Deploying Application
 7. Access the application using url http://<HOST>:<POST>/CDEBrowser/
     eg.
     	http://localhost:8080/CDEBrowser/
+    	
+8. Only users who have 'CDE MANAGER' role for 'QUEST CONTENT' can login to formbuilder module
+	Defult instalation does not create 'guest' account but sbrext user has the required 
+	preveliges to login to form builder.
+	If you need to create an account please use the admin tool.
+	Below is an example on how to create a guest account using formbuilder
+	
+         1. log on to the admin tool
+         2. Create a group called TEST_FORM_BUILDER
+         3. Assign TEST_SC as the security context for the group
+         4. Assign the business role 'CDE_MANAGER'  for 'QUEST CONTENT' to the group
+         5. Create a user called 'GUEST'
+         6. Assing the group to the user	
        
        

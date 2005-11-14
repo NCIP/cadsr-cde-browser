@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.resource;
 
-public interface FormValidValue extends AdminComponent,Orderable,Instructionable {
+public interface FormValidValue extends FormElement,Orderable,Instructionable {
   public String getValueIdseq();
   public void setValueIdseq(String idseq);
 

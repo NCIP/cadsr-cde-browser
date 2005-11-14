@@ -11,6 +11,7 @@ import gov.nih.nci.ncicb.cadsr.dto.ReferenceDocumentTransferObject;
 import gov.nih.nci.ncicb.cadsr.ejb.common.SessionBeanAdapter;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service.FormBuilderServiceRemote;
+import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
@@ -252,6 +253,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
         myForm.setModules(modules);
         Context caBIG = cdao.getContextByName(CaDSRConstants.CONTEXT_CABIG);
         myForm.setPublished(fdao.isFormPublished(myForm.getIdseq(),caBIG.getConteIdseq()));
+
+        //Collection formCSIs = fdao.retrieveClassifications(formPK);
+        //myForm.setClassifications(formCSIs);
+        
 
         return myForm;
     }

@@ -115,4 +115,16 @@ public interface FormConstants extends FormBuilderConstants {
   
   public static final String LOGIN_USER = "j_username";
   public static final String LOGIN_PASSWORD = "j_password";
+  
+  public static final String SKIP_SOURCE = "skipSource";
+  public static final String SKIP_TARGET = "skipTarget";  
+  public static final String SKIP_TARGET_FORM = "skipTargetForm";    
+  public static final String SKIP_SOURCE_TYPE = "skipSourceType";
+  public static final String SKIP_TARGET_TYPE = "skipTargetType";
+  public static final String SKIP_PATTERN ="skipPattern";
+  public static final String SKIP_FORM_SEARCH_RESULTS = "skipFormSearchResults";
+  public static final String SKIP_FORM_SEARCH_RESULT_COMPARATOR="SkipFormSearchResultComparator";
+  public static final String SKIP_FORM_SEARCH_RESULTS_PAGINATION =
+      "skipFormSearchResultsPagination";
+  
 }

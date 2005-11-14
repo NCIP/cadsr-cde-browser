@@ -68,4 +68,7 @@ public interface AdminComponent extends Audit {
   public boolean getIsPublished();
   
   public void setPublished(boolean published);  
+  
+
+
 }

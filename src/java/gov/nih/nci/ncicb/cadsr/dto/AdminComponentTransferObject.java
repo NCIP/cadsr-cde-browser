@@ -4,6 +4,8 @@ import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
+
+import java.util.Collections;
 import java.util.Date;
 
 import java.util.List;
@@ -27,6 +29,7 @@ public class AdminComponentTransferObject extends BaseTransferObject
   protected String registrationStatus;
   //Publish Change Order
   protected boolean published;  
+
 
   public AdminComponentTransferObject() {
   }
@@ -213,4 +216,6 @@ public class AdminComponentTransferObject extends BaseTransferObject
   public void setIdseq(String idseq) {
     this.idseq = idseq;
   }
+
+
 }

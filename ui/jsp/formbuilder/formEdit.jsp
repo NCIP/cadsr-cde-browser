@@ -9,6 +9,9 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.resource.*"%>
+<%@ page import="java.util.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <HTML>
   <HEAD>
     <TITLE>Formbuilder: Edit Form </TITLE>
@@ -49,6 +52,8 @@ function clearProtocol() {
     String startIndex="0";
     pageContext.setAttribute("startIndex", startIndex); 
   String contextPath = request.getContextPath();
+  urlPrefix = contextPath+"/";
+  
   String pageUrl = "&PageId=DataElementsGroup";
   // HSK
   // To jum to the correct location on the screen
@@ -259,7 +264,14 @@ function clearProtocol() {
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
                   </html:link>
-                </td>
+                </td>                
+                <!-- Used for copy module td align="right" width="25">
+                  <html:link action='<%="/addModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_MODULE_SEARCH%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >
+                    Add an existing module
+                  </html:link>
+                </td -->      
+               
               </tr>               
               </table> 
               </logic:empty>
@@ -527,18 +539,13 @@ function clearProtocol() {
                   &nbsp;
                 </td>  
                 </logic:empty>  
-                <td align="right" width="100">
-                  <html:link action='<%="/addSkipPattern?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.ADD_SKIP_PATTERN%>'
-                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >
-                       Add Skip pattern
-                  </html:link>&nbsp;
-                </td>                
+               
                 <td align="right" width="25">
                   <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >
                     <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
                   </html:link>&nbsp;
-                </td>
+                </td>               
               </tr>
               </table> 
             <!-- Add for delete and new Module end -->  
@@ -546,7 +553,37 @@ function clearProtocol() {
           </logic:iterate>
 
         </logic:notEmpty>   
+    <!-- skiip Pattern -->
+             <logic:present name="<%=FormConstants.SKIP_PATTERN%>" >
+             
+              <%
 
+                TriggerAction triggerAction = (TriggerAction)request.getSession().getAttribute(FormConstants.SKIP_PATTERN);
+                System.out.println("triggerAction="+triggerAction);
+                String skipTargetType = FormJspUtil.getFormElementType(triggerAction.getActionTarget());
+                pageContext.setAttribute("skipTargetType",skipTargetType);
+                pageContext.setAttribute("skipTarget",triggerAction.getActionTarget());    
+                
+                %>
+
+                <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+                 <%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
+                </table>
+
+         
+           </logic:present> 
+               <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">     
+                <tr>
+                <td align="right">
+                  <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_FORM_SKIP_PATTERN%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >
+                       Add Skip pattern
+                  </html:link>&nbsp;
+                </td>
+               </tr>
+              </table>
+           <br>
+    <!-- skip pattern end -->        
       </logic:present>
      <%@ include file="/formbuilder/editButton_inc.jsp"%>
     </html:form>

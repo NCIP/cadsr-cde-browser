@@ -27,24 +27,13 @@
 </HEAD>
 <BODY topmargin=0 bgcolor="#ffffff" <%=jumptoStr%> ">
 
-<logic:notPresent name="<%=FormConstants.SKIP_PATTERN%>"> 
-        <%@ include  file="../common/common_header_inc.jsp" %>
-        
-        <jsp:include page="../common/tab_inc.jsp" flush="true">
-                <jsp:param name="label" value="Form&nbsp;Search" />
-                <jsp:param name="urlPrefix" value="" />
-        </jsp:include>
-</logic:notPresent>        
 
-<logic:present name="<%=FormConstants.SKIP_PATTERN%>"> 
-        <%@ include  file="../common/in_process_common_header_inc.jsp" %>
-        
-        <jsp:include page="../common/tab_inc.jsp" flush="true">
-                <jsp:param name="label" value="Skip&nbsp;to&nbsp;Form&nbsp;Search" />
-                <jsp:param name="urlPrefix" value="../" />
-        </jsp:include>
-</logic:present>  
+<%@ include file="../common/in_process_common_header_inc.jsp"%>
 
+<jsp:include page="../common/tab_inc.jsp" flush="true">
+	<jsp:param name="label" value="Module&nbsp;search" />
+	<jsp:param name="urlPrefix" value="" />
+</jsp:include>
 <table>
     <tr>    
       <td align="left" class="AbbreviatedText">
@@ -53,21 +42,22 @@
     </tr>  
 </table> 
 <html:form action="/formSearchAction.do">
- <%@ include  file="/formbuilder/formSearch_inc.jsp" %> 
+ <%@ include  file="/formbuilder/moduleSearch_inc.jsp" %> 
 <logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
     <A NAME="results"></A>
-       <table cellpadding="0" cellspacing="0" width="100%" align="center">  
+       <table cellpadding="0" cellspacing="0" width="90%" align="center">  
       <tr>
            <td  nowrap>&nbsp;</td>
       </tr>
       <tr>
-         <td  valign="bottom" class="OraHeaderSubSub" width="100%" align="left" nowrap>Search Results</td>
+         <td  valign="bottom" class="OraHeaderSubSub" width="50%" align="left" nowrap>Search Results</td>
+         <td  valign="bottom" class="OraHeaderSubSub" width="50%" align="left" nowrap><img  src="i/copy_module_to_form.gif"  align=top border=0></td>
      </tr>       
         <tr>
-          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+          <td colspan=2><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
         </tr>
       </table>   
-  <%@ include  file="/formbuilder/formResults_inc.jsp" %>
+  <%@ include  file="/formbuilder/moduleSearchResults_inc.jsp" %>
 </logic:present> 
    
 </html:form>
