@@ -93,19 +93,36 @@ function gotoClassificationsLOV() {
                 onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>
               </td>
             </tr>
+            <tr>
+              <td colspan=2 width="100%" class="OraTableColumnHeaderNoBG" nowrap>
+                <table width="100%" border=0>
+                    <tr>
+                        <td width="20%" class="OraTableColumnHeaderNoBG" nowrap>Public ID</td>
+                        <td class="OraTabledata" nowrap>
+                        <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="20"
+                            onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>
+                         </td>
+                         <td width="50%" class="OraTableColumnHeaderNoBG" nowrap>
+                            <table  width="100%" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark" >
+                              <tr>
+                                 <td valign="top"  class="OraTableColumnHeaderNoBG" nowrap>Version</td>
+                                    <td class="OraTableColumnHeaderNoBG" nowrap>
+                                      <input type="radio" name="jspLatestVersion" value="Yes" checked> Latest Version
+                                      <input type="radio" name="jspLatestVersion" value="No"> All Versions
+                                  </td>
+                               </tr>          
+                             </table>
+                         </td>                         
+                    </tr> 
+                </table>
+              </td>          
+            </tr>
    </table>
    
   <table valign="top" width="100%" >
     <tr>
       <td width="50%"  valign="top" >
-          <table width="100%" cellpadding="0" cellspacing="1" class="OraBGAccentVeryDark" border="0" %>
-            <tr>            
-              <td width="21%" class="OraTableColumnHeaderNoBG" nowrap>Public ID</td>
-              <td width="70%" class="OraTabledata" nowrap>
-                <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="21"
-                onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>       
-              </td>  
-             </tr>                
+          <table width="100%" cellpadding="0" cellspacing="1" class="OraBGAccentVeryDark" border="0" %>           
             <tr>            
                 <td width="30%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/></td>
                 <td class="OraTabledata" nowrap>
