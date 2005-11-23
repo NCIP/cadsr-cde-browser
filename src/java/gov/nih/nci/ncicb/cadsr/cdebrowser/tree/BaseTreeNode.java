@@ -1,9 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.tree;
 
-import java.sql.Connection;
-import java.util.Hashtable;
-import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+
+import java.util.Hashtable;
+
 
 public class BaseTreeNode implements TreeConstants, CaDSRConstants,TreeFunctions  {
 
