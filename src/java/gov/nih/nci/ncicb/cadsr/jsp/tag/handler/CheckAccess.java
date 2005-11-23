@@ -1,28 +1,19 @@
 package gov.nih.nci.ncicb.cadsr.jsp.tag.handler;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.ValidValueTransferObject;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
-import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
-import gov.nih.nci.ncicb.cadsr.resource.Question;
-import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.util.ContextUtils;
-import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.Collection;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
-import org.apache.commons.beanutils.PropertyUtils;
+
 
 /**
  * This tag put a attribute(key) in the page context with value YES or NO 
