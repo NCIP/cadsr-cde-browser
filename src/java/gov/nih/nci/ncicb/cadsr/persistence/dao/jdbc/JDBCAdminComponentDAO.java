@@ -1,6 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.GetDataElements;
 import gov.nih.nci.ncicb.cadsr.dto.AttachmentTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
@@ -13,9 +12,6 @@ import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
-
-import gov.nih.nci.ncicb.cadsr.util.logging.Log;
-import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,15 +26,13 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import oracle.sql.BLOB;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
-import org.springframework.jdbc.object.SqlFunction;
 import org.springframework.jdbc.object.SqlUpdate;
 import org.springframework.jdbc.object.StoredProcedure;
+
 
 public class JDBCAdminComponentDAO extends JDBCBaseDAO
   implements AdminComponentDAO {
