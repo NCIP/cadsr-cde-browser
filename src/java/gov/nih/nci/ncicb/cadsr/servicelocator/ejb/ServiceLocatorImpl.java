@@ -1,32 +1,18 @@
 package gov.nih.nci.ncicb.cadsr.servicelocator.ejb;
 
-
-import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.util.DataSourceUtil;
-import gov.nih.nci.ncicb.cadsr.security.oc4j.BaseUserManager;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorAdapter;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 
 import java.net.URL;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
 import javax.ejb.EJBHome;
 import javax.ejb.EJBLocalHome;
-
-import javax.jms.Queue;
-import javax.jms.QueueConnectionFactory;
-import javax.jms.Topic;
-import javax.jms.TopicConnectionFactory;
 
 import javax.naming.InitialContext;
 
 import javax.rmi.PortableRemoteObject;
 
 import javax.sql.DataSource;
-
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorAdapter;
-import org.apache.commons.logging.LogFactory;
 
 
 /**
