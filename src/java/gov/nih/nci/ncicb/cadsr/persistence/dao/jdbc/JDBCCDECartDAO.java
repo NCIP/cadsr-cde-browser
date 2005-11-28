@@ -1,7 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
 import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
-//import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.DataElementTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
@@ -11,7 +10,7 @@ import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
-import gov.nih.nci.ncicb.cadsr.resource.impl.*;
+import gov.nih.nci.ncicb.cadsr.resource.impl.CDECartImpl;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 
@@ -26,10 +25,12 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.object.SqlUpdate;
-import org.springframework.dao.DataIntegrityViolationException;
+
+//import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
 
 
 public class JDBCCDECartDAO extends JDBCBaseDAO implements CDECartDAO {
