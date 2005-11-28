@@ -1,19 +1,19 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.tree;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.CDEBrowserTreeService;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.impl.CDEBrowserTreeServiceImpl;
+
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.TimeUtils;
 
-import java.sql.Connection;
-
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.tree.DefaultMutableTreeNode;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 
 public class CDEBrowserTreeCache 
 {
