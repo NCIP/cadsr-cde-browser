@@ -1,9 +1,10 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.service.impl;
+
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UtilDAO;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+
 import java.util.Locale;
 import java.util.Properties;
 
