@@ -1,37 +1,28 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.ErrorCodeConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.BaseDAO;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.ConnectionException;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.DAOCreateException;
-import gov.nih.nci.ncicb.cadsr.security.oc4j.BaseUserManager;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
-import gov.nih.nci.ncicb.cadsr.util.StringUtils;
-import gov.nih.nci.ncicb.cadsr.exception.DMLException;
-
-
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
-import java.util.Locale;
-import java.util.Properties;
-import org.springframework.jdbc.core.SqlOutParameter;
-import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.object.SqlFunction;
-import org.springframework.jdbc.object.StoredProcedure;
-import org.springframework.jdbc.object.MappingSqlQuery;
-import org.springframework.jdbc.object.SqlUpdate;
 
-import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.sql.ResultSet;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.object.MappingSqlQuery;
+import org.springframework.jdbc.object.SqlUpdate;
+import org.springframework.jdbc.object.StoredProcedure;
 
 
 public class JDBCBaseDAO extends BaseDAO implements PersistenceConstants,ErrorCodeConstants {
