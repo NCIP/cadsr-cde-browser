@@ -1,40 +1,35 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
-import gov.nih.nci.ncicb.cadsr.dto.NCIUserTransferObject;
-import gov.nih.nci.ncicb.cadsr.exception.DMLException;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
-import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
-import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
-import gov.nih.nci.ncicb.cadsr.security.oc4j.OC4JUserObject;
+import gov.nih.nci.ncicb.cadsr.dto.NCIUserTransferObject;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl;
-
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
-import java.sql.Connection;
-import java.sql.Statement;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.jdbc.core.RowCallbackHandler;
-import org.springframework.jdbc.core.SqlOutParameter;
-import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.object.MappingSqlQuery;
-import org.springframework.jdbc.object.StoredProcedure;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.object.MappingSqlQuery;
+import org.springframework.jdbc.object.StoredProcedure;
 
 
 public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
