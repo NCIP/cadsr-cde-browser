@@ -23,5 +23,6 @@ public static final String ERROR_DELETING_CART_ITEM="DML0018";
 public static final String ERROR_COPYING_FORM="DML0019";
  public static final String ERROR_CREATEING_FORM = "DML0020";
   public static final String ERROR_UPDATING_FORM = "DML0021";
+  public static final String ERROR_CREATE_NEW_VERSION_FORM = "DML0022";
 
 }

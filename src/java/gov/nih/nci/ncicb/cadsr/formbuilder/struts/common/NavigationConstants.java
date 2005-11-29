@@ -50,6 +50,7 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String ADD_FROM_DELETED_LIST="addFromDeletedList";
   public static final String CHECK_FOR_UPDATE="checkForUpdate";
   public static final String SAVE_FORM="saveForm";
+  public static final String CREATE_NEW_VERSION="gotoCreateNewVersion";
   public static final String SAVE_FORM_MODULE_EDIT="saveFormModuleEdit";
   public static final String SAVE_FORM_CHANGES="saveFormChanges";
   public static final String CHECK_CHANGES_MODULE_EDIT="checkChangesModuleEdit";
@@ -90,7 +91,13 @@ public interface NavigationConstants extends CommonNavigationConstants
 
   public static final String GET_CONTEXTS = "getContexts";
   public static final String SAVE_DESIGNATIONS = "saveDesignations";
-    public static final String CANCEL_DESIGNATIONS = "cancelDesignations";
+  public static final String CANCEL_DESIGNATIONS = "cancelDesignations";
+
+  public static final String GOTO_CREATE_NEW_VERSION_FORM = "gotoCreateNewVersion";
+  public static final String GET_FORM_VERSIONS = "getFormVersions";
+  public static final String SAVE_NEW_VERSION = "saveNewVersion";
+  public static final String CANCEL_NEW_VERSION = "cancelNewVersion";
+
   public static final String GO_TO_ADD_CLASSIFICATIONS = "gotoAddClassifications";
   public static final String ADD_CLASSIFICATIONS = "addClassifications";
 
@@ -106,25 +113,29 @@ public interface NavigationConstants extends CommonNavigationConstants
  public static final String UNPUBLISH_FORM = "unpublishForm";
 
  //Skip Patterns
+  public static final String  ADD_SKIP_PATTERN = "addSkipPattern";
+
+  public static final String SAVE_LATEST_VERSION = "saveLatestVersion";
+  public static final String CANCEL_LATEST_VERSION = "cancelLatestVersion";
+
   public static final String  EDIT_SKIP_PATTERN = "editSkipPattern";
-  
+
   public static final String  CREATE_FORM_SKIP_PATTERN = "createFormSkipPattern";
   public static final String  CREATE_MODULE_SKIP_PATTERN = "createModuleSkipPattern";
   public static final String  CREATE_VALIDVALUE_SKIP_PATTERN = "createValidValueSkipPattern";
-  
+
   public static final String  SKIP_TO_FORM_LOCATION = "skipToFormLocation";
-  
+
   public static final String  SET_CURRENT_FORM_AS_TARGET_FORM="setCurrentFormAsTargetForm";
     public static final String  SET_SELECTED_FORM_AS_TARGET_FORM="setSelectedFormAsTargetForm";
-    
-    
+
+
    public static final String  SET_FORM_AS_TARGET = "setFormAsTarget";
    public static final String   SET_MODULE_AS_TARGET="setModuleAsTarget";
     public static final String   SET_QUESTION_AS_TARGET="setQuestionAsTarget";
-    
+
   public static final String  SKIP_TO_FORM_SEARCH = "skipToFormSearch";
-  
+
    public static final String  GO_TO_MODULE_SEARCH = "goToModuleSearch";
     public static final String  SAVE_SKIP_PATTERN = "saveSkipPattern";
-    
 }
