@@ -8,10 +8,9 @@ if(confirm(message)) location.href = url;
 // --->
 </SCRIPT>
       <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" >
-        <tr >
-           <td width="40%" >
-	            &nbsp;
-          </td> 
+        <tr align="center">
+        <td width="40%">
+        </td>
           <td >
             <html:link action='<%="/formSearchAction"%>' >				
             <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Done"/>
@@ -105,28 +104,50 @@ if(confirm(message)) location.href = url;
             confirmMessageKey="cadsr.formbuilder.form.delete.confirm"
 		   	   	/>		                
           </td>  
-          <td width="40%" align="right">
-           <table>
-            <tr>
-             <td>
+           <td>
+            <cde:secureIcon  formId="<%=FormConstants.CRF%>"
+                formScope="<%=CaDSRConstants.SESSION_SCOPE%>"
+                activeImageSource="i/designations.gif" 
+                activeUrl='<%="/getContexts.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_CONTEXTS%>' 
+                formType="TEMPLATE"  
+                role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		urlPrefix="<%=urlPrefix%>"
+		paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+		paramProperty="formIdseq"
+		altMessage="Select to designate Data Elements in the Form" 
+            />   
+           </td> 
+         <td>
+            <cde:secureIcon  formId="<%=FormConstants.CRF%>"
+                formScope="<%=CaDSRConstants.SESSION_SCOPE%>"
+                activeImageSource="i/version.gif" 
+                activeUrl='<%="/getFormVersions.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_VERSIONS%>' 
+                formType="TEMPLATE"  
+                role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		urlPrefix="<%=urlPrefix%>"
+		paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+		paramProperty="formIdseq"
+		altMessage="Form Versioning" 
+            />   
+           </td>            
+          </tr>
+          <tr width="100%" align="right">
+          <td colspan="9">
  	       <html:link action='<%="/formPrinterAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_PRINT%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
  				paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq"
  				target="_blank">
 		Printer Friendly Version
 	      </html:link>
-	    </td>
-	    </tr>
-            <tr>
-             <td>
               <html:link action='<%="/excelDownload.do?"+NavigationConstants.METHOD_PARAM+"=downloadFormInExcel"%>' 
                 paramId = "<%=FormConstants.FORM_ID_SEQ%>"
                 paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq"
                 target="_parent" >
                 Excel Download
               </html:link> 
-	    </td>
-	    </tr>	    
-	   </table>
-          </td>           
-        </tr>                 
+        </td>
+        </tr> 
+        <tr></tr>
+        <tr></tr>
       </table>
+      </table>
+      
