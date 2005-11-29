@@ -17,6 +17,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
+import gov.nih.nci.ncicb.cadsr.resource.Version;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -192,6 +193,51 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     }
   }
 
+    /**
+     * Creates a new form version 
+     *
+     * @param <b>formIdSeq</b> existing form IdSeq.
+     * @param <b>newVersionNumber</b> new version number
+     *
+     * @return <b>String</b> the new Form Idseq.
+     * @throws <b>DMLException</b>
+     */
+  public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote) throws DMLException {
+      VersionForm vForm = new VersionForm(this.getDataSource());
+
+      Map out = vForm.execute(formIdSeq, newVersionNumber, changeNote);
+
+      if ((out.get("p_return_code")) == null) {
+        /*newForm.setFormIdseq((String) out.get("p_new_idseq"));
+        return newForm;*/
+        return (String) out.get("p_new_idseq");
+      }
+      else {
+          DMLException dmlExp = new DMLException((String) out.get("p_return_desc"));
+          dmlExp.setErrorCode(ERROR_CREATE_NEW_VERSION_FORM);
+           throw dmlExp;
+      }
+  }
+  
+  
+  public List getFormVersions(int publicId){
+    FormVersionsQuery query = new FormVersionsQuery();
+    query.setDataSource(getDataSource());
+    List result = query.getFormVersions(publicId);
+    return result;      
+  }
+  
+    public void setLatestVersion(Version oldVersion, Version newVersion){
+        if (oldVersion!=null){
+            RemoveLatestVersion removeSqlUpdate = new RemoveLatestVersion(getDataSource());
+            removeSqlUpdate.remove(oldVersion.getId(), oldVersion.getChangeNote());
+        }    
+        
+        if (newVersion!=null){    
+            SetLatestVersion setLatestSqlUpdate = new SetLatestVersion(getDataSource());
+            setLatestSqlUpdate.setLatestVersion(newVersion.getId(), newVersion.getChangeNote());        
+        }    
+    }
   /**
    * Creates a new form component (just the header info).
    *
@@ -740,7 +786,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         makeWhereClause(
           formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
           type, classificationIdseq,contextRestriction);
-      super.setSql("SELECT * FROM FB_FORMS_VIEW " + whereClause + "ORDER BY upper(LONG_NAME)");
+      super.setSql("SELECT f.* FROM FB_FORMS_VIEW f, administered_components a where ( f.QC_IDSEQ = a.AC_IDSEQ " + whereClause + "ORDER BY upper(f.LONG_NAME)");
     }
 
    /**
@@ -790,7 +836,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       String contextRestriction) {
       String where = "";
       StringBuffer whereBuffer = new StringBuffer("");
-      boolean hasWhere = false;
+      boolean hasWhere = true;
 
       if (StringUtils.doesValueExist(formName)) {
         String temp = StringUtils.strReplace(formName, "*", "%");
@@ -798,61 +844,61 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
         if (hasWhere) {
           whereBuffer.append(
-            " AND UPPER(LONG_NAME) LIKE " + "UPPER('" + temp + "')");
+            " AND UPPER(f.LONG_NAME) LIKE " + "UPPER('" + temp + "')");
         }
         else {
           whereBuffer.append(
-            " WHERE UPPER(LONG_NAME) LIKE " + "UPPER('" + temp + "')");
+            " WHERE UPPER(f.LONG_NAME) LIKE " + "UPPER('" + temp + "')");
           hasWhere = true;
         }
       }
 
       if (StringUtils.doesValueExist(protocol)) {
         if (hasWhere) {
-          whereBuffer.append(" AND PROTO_IDSEQ ='" + protocol + "'");
+          whereBuffer.append(" AND f.PROTO_IDSEQ ='" + protocol + "'");
         }
         else {
-          whereBuffer.append(" WHERE PROTO_IDSEQ ='" + protocol + "'");
+          whereBuffer.append(" WHERE f.PROTO_IDSEQ ='" + protocol + "'");
           hasWhere = true;
         }
       }
 
       if (StringUtils.doesValueExist(context)) {
         if (hasWhere) {
-          whereBuffer.append(" AND CONTE_IDSEQ ='" + context + "'");
+          whereBuffer.append(" AND f.CONTE_IDSEQ ='" + context + "'");
         }
         else {
-          whereBuffer.append(" WHERE CONTE_IDSEQ ='" + context + "'");
+          whereBuffer.append(" WHERE f.CONTE_IDSEQ ='" + context + "'");
           hasWhere = true;
         }
       }
 
       if (StringUtils.doesValueExist(workflow)) {
         if (hasWhere) {
-          whereBuffer.append(" AND WORKFLOW ='" + workflow + "'");
+          whereBuffer.append(" AND f.WORKFLOW ='" + workflow + "'");
         }
         else {
-          whereBuffer.append(" WHERE WORKFLOW ='" + workflow + "'");
+          whereBuffer.append(" WHERE f.WORKFLOW ='" + workflow + "'");
           hasWhere = true;
         }
       }
 
       if (StringUtils.doesValueExist(category)) {
         if (hasWhere) {
-          whereBuffer.append(" AND CATEGORY_NAME ='" + category + "'");
+          whereBuffer.append(" AND f.CATEGORY_NAME ='" + category + "'");
         }
         else {
-          whereBuffer.append(" WHERE CATEGORY_NAME ='" + category + "'");
+          whereBuffer.append(" WHERE f.CATEGORY_NAME ='" + category + "'");
           hasWhere = true;
         }
       }
 
       if (StringUtils.doesValueExist(type)) {
         if (hasWhere) {
-          whereBuffer.append(" AND TYPE ='" + type + "'");
+          whereBuffer.append(" AND f.TYPE ='" + type + "'");
         }
         else {
-          whereBuffer.append(" WHERE TYPE ='" + type + "'");
+          whereBuffer.append(" WHERE f.TYPE ='" + type + "'");
           hasWhere = true;
         }
       }
@@ -860,12 +906,12 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       if (StringUtils.doesValueExist(classificationIdseq)) {
         if (hasWhere) {
           whereBuffer.append(
-            " AND QC_IDSEQ in (select ac_idseq from ac_csi where CS_CSI_IDSEQ ='" +
+            " AND f.QC_IDSEQ in (select ac_idseq from ac_csi where CS_CSI_IDSEQ ='" +
             classificationIdseq + "')");
         }
         else {
           whereBuffer.append(
-            " WHERE QC_IDSEQ in (select ac_idseq from ac_csi where CS_CSI_IDSEQ ='" +
+            " WHERE f.QC_IDSEQ in (select ac_idseq from ac_csi where CS_CSI_IDSEQ ='" +
             classificationIdseq + "')");
           hasWhere = true;
         }
@@ -873,14 +919,21 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
       if (StringUtils.doesValueExist(contextRestriction)) {
         if (hasWhere) {
-          whereBuffer.append(" AND (CONTE_IDSEQ !='" + contextRestriction + "' or type in ('TEMPLATE'))");
+          whereBuffer.append(" AND (f.CONTE_IDSEQ !='" + contextRestriction + "' or f.type in ('TEMPLATE'))");
         }
         else {
-          whereBuffer.append(" WHERE (CONTE_IDSEQ !='" + contextRestriction + "' or type in ('TEMPLATE'))");
+          whereBuffer.append(" WHERE (f.CONTE_IDSEQ !='" + contextRestriction + "' or f.type in ('TEMPLATE'))");
           hasWhere = true;
         }
       }
 
+        if (hasWhere) {
+          whereBuffer.append(" AND (a.LATEST_VERSION_IND='Yes'))");
+        }
+        else {
+          whereBuffer.append(" WHERE (a.LATEST_VERSION_IND='Yes'))");
+          hasWhere = true;
+        }
       where = whereBuffer.toString();
 
       return where;
@@ -1083,6 +1136,39 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       return out;
     }
   }
+
+
+    /**
+     * Inner class that make a new version of the source form
+     */
+    private class VersionForm extends StoredProcedure {
+      public VersionForm(DataSource ds) {
+        super(ds, "meta_config_mgmt.CRF_VERSION"); 
+        declareParameter(new SqlParameter("p_Idseq", Types.VARCHAR));
+        declareParameter(new SqlParameter("p_new_version", Types.FLOAT));
+        declareParameter(new SqlParameter("p_change_note", Types.VARCHAR));          
+        declareParameter(new SqlOutParameter("p_new_idseq", Types.VARCHAR));
+        declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
+        declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
+        compile();
+      }
+
+      public Map execute(
+        String sourceFormId,
+        Float newVersionNumber,
+        String changeNote) {
+        Map in = new HashMap();
+
+        in.put("p_src_idseq", sourceFormId);
+        in.put("p_new_version", newVersionNumber);
+        in.put("p_change_note", newVersionNumber);
+        Map out = execute(in);
+        return out;
+      }
+    }//end of private class
+
+
+
 
   /**
    * Inner class to update the Form component.
@@ -1509,4 +1595,84 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
     }
  }
+
+ /**
+  * Inner class that accesses database to get all the forms
+  * versions by the public id.
+  */
+ class  FormVersionsQuery  extends MappingSqlQuery {
+    List versionList = null;
+    
+    public FormVersionsQuery() {
+    super();
+   }
+
+   public void setSql(int publicId) {
+   //TODO after change_note is added to FB_FORM_VIEW
+   String allFormVersionsByPublicId =
+             " SELECT qc_idseq, f.version, f.change_note, latest_version_ind from FB_FORMS_VIEW f, ADMINISTERED_COMPONENTS a  where f.qc_idseq = a.ac_idseq and public_id=" + publicId;
+   super.setSql(allFormVersionsByPublicId);
+   compile();
+  }
+
+  protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
+    Float versionNumber = rs.getFloat("version");
+    String formId = rs.getString("qc_idseq");
+    String changeNote = rs.getString("change_note");
+    String latestVersionInd = rs.getString("latest_version_ind");
+    
+    Version version = new Version();
+    version.setId(formId);
+    version.setVersionNumber(versionNumber);
+    version.setChangeNote(changeNote);
+    version.setLatestVersionIndicator("YES".equalsIgnoreCase(latestVersionInd));
+    
+    if (versionList == null){
+        versionList = new ArrayList();
+    }
+    versionList.add(version);
+    
+    return version;
+  }
+
+  protected List getFormVersions(int publicId) {
+    setSql(publicId);
+    execute();
+    return versionList;
+  }
+
+ }
+
+    private class RemoveLatestVersion extends SqlUpdate {
+      public RemoveLatestVersion(DataSource ds) {
+        this.setDataSource(ds);
+      }
+
+    protected int remove( String oldVersionFormId, String changeNoteForOld) {
+        String removeLatestVersionSql = 
+              "update quest_contents_ext set latest_version_ind = 'No', change_note='" 
+              + changeNoteForOld + "' where qc_idseq= '" + oldVersionFormId + "'";
+          this.setSql(removeLatestVersionSql);
+          compile();
+          int res = update();
+          return res;          
+      }
+    }
+
+    
+    private class SetLatestVersion extends SqlUpdate {
+        public SetLatestVersion(DataSource ds){
+            this.setDataSource(ds);
+        }
+    
+        protected int setLatestVersion(String formIdSeq, String changeNote){
+          String setLatestVersionSql = 
+            "update quest_contents_ext set latest_version_ind = 'Yes', change_note='" 
+            + changeNote + "' where qc_idseq='" + formIdSeq + "'";
+          setSql(setLatestVersionSql);
+          compile();
+          int res = update();
+          return res;
+        }
+    } 
 }

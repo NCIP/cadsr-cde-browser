@@ -4,6 +4,8 @@ import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 
+import gov.nih.nci.ncicb.cadsr.resource.Version;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -61,6 +63,21 @@ public interface FormDAO extends AdminComponentDAO {
   public String copyForm(
     String sourceFormId,
     Form newForm) throws DMLException;
+    
+    /**
+     * Creates a new version form .
+     * Note: Use stored procedure: sbrext_form_builder_pkg.copy_crf 
+     * @param <b>sourceFormId</b> Idseq of the form.
+     * @param <b>newVersionNumber</b> the new version number.
+     *
+     * @return <b>String</b> Idseq of the new form.
+     *
+     * @throws <b>DMLException</b>
+     */
+    public String createNewFormVersion(
+      String sourceFormId,
+      Float newVersionNumber,
+      String changeNote) throws DMLException;
 
   /**
    * Creates a new form component (just the header info).
@@ -234,5 +251,9 @@ public interface FormDAO extends AdminComponentDAO {
    * Gets all the publishing Classifications for templates
    */
   public List getAllPublishingCSCSIsForTemplate() ;
+  
+  public List getFormVersions(int publicId);
+  
+  public void setLatestVersion(Version oldVersion, Version newVersion);
 
 }
