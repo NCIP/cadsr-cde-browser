@@ -17,7 +17,7 @@
         path="/formbuilder/selectCDEContext.jsp"
         redirect="false"/>
       <forward name="failure"
-        path="/formbuilder/formEdit.jsp"
+        path="/formbuilder/formDetails.jsp"
         redirect="false"/>  
     </action>     
     <action name="selectContextForm" path="/saveDesignations" parameter="method"
@@ -25,10 +25,10 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormDesignationsAction"
       validate="false">
       <forward name="success"
-        path="/formbuilder/formEdit.jsp"
+        path="/formbuilder/formDetails.jsp"
         redirect="false"/>  
       <forward name="failure"
-        path="/formbuilder/formEdit.jsp"
+        path="/formbuilder/formDetails.jsp"
         redirect="false"/>
     </action>     
     <action name="selectContextForm" path="/cancelDesignations" parameter="method"
@@ -36,7 +36,7 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormDesignationsAction"
       validate="false">
       <forward name="cancel"
-        path="/formbuilder/formEdit.jsp"
+        path="/formbuilder/formDetails.jsp"
         redirect="false"/>  
     </action>     
   </action-mappings>
