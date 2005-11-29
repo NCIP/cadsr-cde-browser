@@ -12,6 +12,8 @@ import gov.nih.nci.ncicb.cadsr.resource.ModuleChanges;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
+import gov.nih.nci.ncicb.cadsr.resource.Version;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -122,4 +124,11 @@ public interface FormBuilderServiceDelegate {
 
     public int saveDesignation(String contextIdSeq, List acIdList) throws FormBuilderException;
 
+    public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote) 
+        throws FormBuilderException;
+    public List getFormVersions(int publicId) 
+        throws FormBuilderException;
+        
+    public void setLatestVersion(Version oldVersion, Version newVersion)
+        throws FormBuilderException;
 }

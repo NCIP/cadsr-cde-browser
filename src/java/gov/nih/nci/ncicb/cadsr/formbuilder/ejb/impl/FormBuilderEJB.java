@@ -52,6 +52,8 @@ import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 
+import gov.nih.nci.ncicb.cadsr.resource.Version;
+
 import java.rmi.RemoteException;
 
 import java.sql.Connection;
@@ -1060,4 +1062,30 @@ public class FormBuilderEJB extends SessionBeanAdapter
   public int saveDesignation(String contextIdSeq, List acIdList){
 	return daoFactory.getFormDAO().designate(contextIdSeq, acIdList);
   }
-}
+
+  public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote){
+      FormDAO myDAO = daoFactory.getFormDAO();
+      /*TODO
+       * String resultFormPK = myDAO.createNewFormVersion(formIdSeq, newVersionNumber, changeNote);
+
+      //resultForm = this.getFormDetails(resultFormPK);
+       //end of TODO
+       */
+       String resultFormPK = "E061BF96-E9A6-3425-E034-0003BA12F5E7";       
+       return resultFormPK;
+      //TODO
+  }    
+  
+  public List getFormVersions(int publicId){
+      FormDAO myDAO = daoFactory.getFormDAO();
+      List  versions = myDAO.getFormVersions(publicId);
+      return versions;
+  }
+  
+ public void setLatestVersion(Version oldVersion, Version newVersion){
+     FormDAO myDAO = daoFactory.getFormDAO();
+     myDAO.setLatestVersion(oldVersion, newVersion);
+     return;
+ }
+
+  }

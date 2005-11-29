@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service;
 
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
@@ -12,6 +13,8 @@ import gov.nih.nci.ncicb.cadsr.resource.ModuleChanges;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
+import gov.nih.nci.ncicb.cadsr.resource.Version;
+
 import java.rmi.RemoteException;
 
 import java.util.Collection;
@@ -164,5 +167,12 @@ public interface FormBuilderServiceRemote {
       public Collection getAllDocumentTypes() throws RemoteException;
 
       public int saveDesignation(String contextIdSeq, List acIdList) throws RemoteException;
-
-}
+      
+      public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote)
+        throws RemoteException;
+        
+      public List getFormVersions(int publicId)    throws RemoteException;
+      
+      public void setLatestVersion(Version oldVersion, Version newVersion)
+        throws RemoteException;
+    }
