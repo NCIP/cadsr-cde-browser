@@ -10,6 +10,13 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String CRF_CONTEXT_ID_SEQ = "conteIdseq";
   public static final String CRF_CONTEXT = "context";
   public static final String CONTEXT_ID_SEQ = "contextIdSeq";
+  public static final String NEW_VERSION_NUMBER = "newVersionNumber";
+  public static final String CHANGE_NOTE = "changeNote";
+  //public static final String NEW_CHANGE_NOTE = "newChangeNote";
+  public static final String FORM_PUBLIC_ID = "formPublicId";
+  public static final String OLD_LATEST_VERSION = "oldLatestVersion";
+  public static final String LATEST_VERSION_ID = "latestVersionId";
+  public static final String EDIT_FORM_INDICATOR = "editNewFormIndicator";    
   public static final String CONTEXT_NAME = "contextName";
   public static final String WORKFLOW = "workflow";
   public static final String FORM_HEADER_INSTRUCTION = "formHeaderInstruction";
@@ -111,7 +118,8 @@ public interface FormConstants extends FormBuilderConstants {
 
   public static final int LONG_NAME_MAX_LENGTH = 255;
   public static final int DEFINITION_MAX_LENGTH = 2000;
-  public static final int VERSION_MAX_LENGTH = 4;
+  public static final int VERSION_MAX_LENGTH = 4;  
+  public static final String FORM_VERSION_LIST = "formVersionList";
 
   public static final String LOGIN_USER = "j_username";
   public static final String LOGIN_PASSWORD = "j_password";
