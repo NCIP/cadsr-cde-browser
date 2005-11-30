@@ -4,7 +4,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
 
 
 public interface FormConstants extends FormBuilderConstants {
-  public static final String FORM_PREFERRED_NAME = "formPreferredName";	
+  public static final String FORM_PREFERRED_NAME = "formPreferredName";
   public static final String FORM_LONG_NAME = "formLongName";
   public static final String FORM_PREFERRED_DEFITION = "preferredDefinition";
   public static final String CRF_CONTEXT_ID_SEQ = "conteIdseq";
@@ -76,15 +76,15 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String REFDOC_INDEX = "selectedRefDocId";
   public static final String REFDOC_ATTACHMENT_MAP = "refDocAttachmentMap";
 
-  
+
     //Publish Change Order
   public static final String CS_ID = "csIdseq";
-  
+
   public static final String QUESTION_LONG_NAME = "questionLongName";
   public static final String QUESTION_ID_SEQ = "questionIdSeq";
   public static final String QUESTION_INDEX = "questionIndex";
   public static final String MODULE_QUESTIONS = "moduleQuestions";
-  public static final String MODULE_INSTRUCTION = "moduleInstruction";  
+  public static final String MODULE_INSTRUCTION = "moduleInstruction";
   public static final String QUESTION_INSTRUCTIONS = "questionInstructions";
   public static final String FORM_VALID_VALUE_INSTRUCTIONS = "formsValidValueInstructions";
   public static final String DELETED_QUESTIONS = "deletedQuestions";
@@ -93,8 +93,8 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String VALID_VALUE_INDEX = "validValueIndex";
   public static final String AVAILABLE_VALID_VALUES = "AvailableValidValue";
   public static final String ADD_AVAILABLE_VALID_VALUE_INDEX =
-      "addAvailableValidValueIndex";     
-  public static final String SELECTED_SUBSET_INDEX = "selectedSubsetIndex";     
+      "addAvailableValidValueIndex";
+  public static final String SELECTED_SUBSET_INDEX = "selectedSubsetIndex";
   public static final String VALUE_DOMAIN_VALID_VALUES_MAP =
     "valueDomainValidValueMap";
   public static final String AVAILABLE_VALID_VALUES_MAP =
@@ -105,20 +105,20 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String DESIGNATIONS = "designations";
   public static final String CDE_CONTEXT_ID_SEQ = "cdeContextIdSeq";
   public static final String DE_SEARCH_SRC = "src";
-  
-  
+
+
   public static final String SELECTED_DATAELEMENTS = "selectedDataElements";
-  
+
   public static final int LONG_NAME_MAX_LENGTH = 255;
   public static final int DEFINITION_MAX_LENGTH = 2000;
   public static final int VERSION_MAX_LENGTH = 4;
-  
+
   public static final String LOGIN_USER = "j_username";
   public static final String LOGIN_PASSWORD = "j_password";
-  
+
   public static final String SKIP_SOURCE = "skipSource";
-  public static final String SKIP_TARGET = "skipTarget";  
-  public static final String SKIP_TARGET_FORM = "skipTargetForm";    
+  public static final String SKIP_TARGET = "skipTarget";
+  public static final String SKIP_TARGET_FORM = "skipTargetForm";
   public static final String SKIP_SOURCE_TYPE = "skipSourceType";
   public static final String SKIP_TARGET_TYPE = "skipTargetType";
   public static final String SKIP_PATTERN ="skipPattern";
@@ -130,6 +130,6 @@ public interface FormConstants extends FormBuilderConstants {
   // Useed to specify that the mode is inprocess eg. skip pattern or searching for modules to copy
   public static final String IN_PROCESS = "inProcess";
   public static final String MODULE_DISPLAY_ORDER_TO_COPY = "moduleDisplayOrderToCopy";
-   public static final String MODULE_COPY_FORM ="moduleCopyForm";// form from which to copy module from
-    public static final String MODULE_LIST ="moduleList"; // module cart
+  public static final String MODULE_COPY_FORM ="moduleCopyForm";// form from which to copy module from
+  public static final String MODULE_LIST ="moduleList"; // module cart
 }
