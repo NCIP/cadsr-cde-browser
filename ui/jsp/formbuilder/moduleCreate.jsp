@@ -23,7 +23,8 @@
       function submitCancelForm() {
           document.forms[0].action= '<%=request.getContextPath()+"/cancelAction.do?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_FORM_TO_EDIT%>'
           document.forms[0].submit();
-      }      
+      }   
+         
       
     </SCRIPT>
   </HEAD>
@@ -47,11 +48,15 @@
 </table> 
 
     <logic:present name="<%=FormConstants.CRF%>">
+    
+
       <html:form action='<%="/createModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_MODULE%>'
         >  
       <%@ include file="showMessages.jsp" %>
+      
       <html:hidden property="<%= FormConstants.DISPLAY_ORDER %>"/>
 
+      
         <table width="70%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="20%" nowrap>

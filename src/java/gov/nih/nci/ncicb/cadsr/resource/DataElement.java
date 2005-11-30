@@ -36,4 +36,6 @@ public interface DataElement extends AdminComponent{
 
    public List getClassifications();
    public void setClassifications(List classifications);
+   
+   public Object clone() throws CloneNotSupportedException ;
 }

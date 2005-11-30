@@ -1,18 +1,29 @@
-            <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
-              <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules" indexId="modIndex" >                            
-               <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
-                 <tr >
-           	    <td align="left" width="18%" >
-                   <html:link action='<%="/formViewAddToList?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.COPY_SELECTED_MODULE_TO_LIST%>'
-                      paramId= "<%=FormConstants.MODULE_INDEX%>"
-		      paramName="modIndex"
-                      scope="page">
-                       Add to module list
-                  </html:link>&nbsp;
-           	    </td>                       
-         	 </tr>
-      		</table>               
-                <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
+            <logic:notEmpty name="<%=FormConstants.MODULE_LIST%>" >
+               <table width="20%" align="left" cellpadding="0" cellspacing="0" border="0" >
+                 </tr >
+                    <td width="50%" align="left" >
+                     <a href="javascript:CheckAll('<%= FormConstants.SELECTED_ITEMS%>')">Check All
+                     </a>
+                   </td>
+                   <td width="50%" align="left">
+                     <a href="javascript:ClearAll('<%= FormConstants.SELECTED_ITEMS%>')">Clear All
+                     </a>     
+                   </td>
+                </tr>
+              </table> 
+              <br>
+              <br>
+              <logic:iterate id="module" name="<%=FormConstants.MODULE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.Module"  indexId="modIndex" >
+ 		<table width="90%" align="center" cellpadding="0" cellspacing="0" border="0" >               
+                 <tr>                 
+                    <td >
+                      <INPUT TYPE=CHECKBOX NAME="<%= FormConstants.SELECTED_ITEMS%>" value="<%= modIndex %>">
+                    </td>
+                  </tr> 
+                 </table>
+ 		
+ 		
+ 		<table width="90%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
                  <tr>                 
                     <td class="OraHeaderBlack">
                       <bean:write name="module" property="longName"/>
@@ -45,9 +56,12 @@
                               <td class="OraFieldText" width="50">&nbsp;</td>
                               <td height="1"  class="OraFieldText">                               
                               </td>                              
-                            </tr>                             
+                            </tr>    
+                              
                             <tr class="OraTabledata">
-                              <td class="OraFieldText" width="7%">&nbsp;</td>
+                              <td class="OraFieldText" width="7%"> 
+                                &nbsp;
+                              </td>
                               <td class="UnderlineOraFieldText" >
                                 <bean:write name="question" property="longName"/>
                               </td>
@@ -114,11 +128,11 @@
                                           <bean:write name="validValue" property="longName"/>
                                         </td>
                                       </tr>
-                                      <% if(question.getDataElement()!=null|| validValue.getInstruction()!=null){%>
                                       <tr   class="OraTabledata">
                                         <td class="OraFieldText" width="50">&nbsp;</td>
-                                        <td >                                        
-                                          <table align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >                          
+                                        <td >
+                                        <% if(question.getDataElement()!=null|| validValue.getInstruction()!=null){%>
+                                          <table align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >                          
                                             <logic:present name="question" property="dataElement">
                                                <tr class="OraTabledata">
                                                  <td  class="OraTableColumnHeader" width="10%" nowrap >
@@ -135,36 +149,14 @@
                                                  <td class="OraFieldTextInstruction">
                                                    <bean:write  name="validValue" property="instruction.longName"/>
                                                  </td>
-                                                </tr>   
+                                                </tr>  
+                                                
                                               </logic:present>  
                                            </table>   
-                                          
-                                        </td>
-                                      </tr>    
-                                      <%}%>
-                                      <tr   class="OraTabledata">
-                                        <td class="OraFieldText" width="50">&nbsp;</td>
-                                        <td class="OraFieldText">
-                                             <logic:present name="<%=FormConstants.SKIP_PATTERN%>" >
-                                              <%
-                                
-                                                TriggerAction triggerAction = (TriggerAction)request.getSession().getAttribute(FormConstants.SKIP_PATTERN);
-                                                System.out.println("triggerAction="+triggerAction);
-                                                String skipTargetType = FormJspUtil.getFormElementType(triggerAction.getActionTarget());
-                                                pageContext.setAttribute("skipTargetType",skipTargetType);
-                                                pageContext.setAttribute("skipTarget",triggerAction.getActionTarget());    
-                                                
-                                                %>
-                                
-                                                <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                                                 <%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
-                                                </table>
-                                               </logic:present>                                          
-                                        </td>
-                                      </tr>
-  
-
-                                      
+                                          <%}%>
+                                        </td>                                        
+                                      </tr>   
+                                                                                                                                                
                                     </logic:iterate><!-- valid Value-->
                                   </table>
                                 </td>
@@ -201,33 +193,27 @@
                   </logic:notEmpty>
                   </logic:present>
                 </table>
-                
-                <!-- Module skip Pattern -->
-                         <logic:present name="<%=FormConstants.SKIP_PATTERN%>" >
-                          <%
-                            TriggerAction triggerAction = (TriggerAction)request.getSession().getAttribute(FormConstants.SKIP_PATTERN);
-                            System.out.println("triggerAction="+triggerAction);
-                            String skipTargetType = FormJspUtil.getFormElementType(triggerAction.getActionTarget());
-                            pageContext.setAttribute("skipTargetType",skipTargetType);
-                            pageContext.setAttribute("skipTarget",triggerAction.getActionTarget());    
-                            
-                            %>
-                            <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                             <%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
-                            </table>
-                          </logic:present>
-                 <!-- Module Skip pattern end -->  
-                 
-      		<table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
+
+      		<table width="90%" align="center" cellpadding="0" cellspacing="0" border="0" >
         	   <tr class>
           	      <td >
-			             &nbsp;
+			              &nbsp;
           	      </td>
         	   </tr> 
         	</table>
                 
               </logic:iterate><!-- Module-->
-              
-            
-     
             </logic:notEmpty>
+            <logic:empty name="<%=FormConstants.MODULE_LIST%>" >
+               <br>
+               <table width="100%" align="center"  border="0"  >
+                 <tr >
+                  
+                  <td class="MessageText" width="10%" nowrap>
+                  <b>
+                    The module list is empty
+                   </b>
+                 </td>
+                </tr>
+               </table>             
+            </logic:empty>

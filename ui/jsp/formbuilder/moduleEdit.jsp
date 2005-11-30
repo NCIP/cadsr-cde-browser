@@ -9,8 +9,6 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.resource.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.jsp.tag.handler.AvailableValidValue"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument"%>
@@ -562,28 +560,28 @@ function clearProtocol() {
                                   <tr class="OraTabledata">
                                     <td class="OraTabledata" >&nbsp;</td>
                                     <td class="OraTabledata" align="left" width="90%"> 
-                                       <table width="30%" align="left" cellpadding="0" cellspacing="0" border="0" >
+                                       <table width="60%" align="left" cellpadding="0" cellspacing="0" border="0" >
                                          </tr >
-                                            <td width="32%" align="left" >
+                                            <td width="16%" align="left" >
                                              <a href="javascript:CheckAll('<%= FormConstants.SELECTED_ITEMS+questionIndex %>')">Check All
                                              </a>
                                            </td>
-                                           <td width="32%" align="left">
+                                           <td width="16%" align="left">
                                              <a href="javascript:ClearAll('<%= FormConstants.SELECTED_ITEMS+questionIndex %>')">Clear All
                                              </a>     
                                            </td>
-                                           <td align="left">
+                                           <td align="left" width="5%">
                                               <a href="javascript:submitValidValuesEdit('<%=NavigationConstants.DELETE_VALID_VALUES%>','<%=questionIndex%>')">                                              
                                                <img src="<%=urlPrefix%>i/delete.gif" border="0" alt="Delete"/>
                                               </a>
                                             </td>
-                                            <!-- Used for subset Prototype
+                                            <!-- Subset -->
                                             <td align="left">
                                              <a href="javascript:submitToSubsets('<%=NavigationConstants.VIEW_SUBSETTEDVDS_LIST%>','<%=questionIndex %>')">
-                                                 <img src=<%=urlPrefix%>i/subset.gif border=0 alt="Select from existing subsets">
+                                                 Select from existing subsets
                                              </a>
                                             </td>
-                                            -->
+                                            <!-- Subset end -->
                                         </tr>
                                       </table>
                                     </td>                               

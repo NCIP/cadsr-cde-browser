@@ -43,6 +43,8 @@ function clearProtocol() {
   document.forms[0].protocolLongName.value = "";
 }
 
+
+      
 -->
 <% 
 
@@ -240,7 +242,7 @@ function clearProtocol() {
             <logic:empty name="<%=FormConstants.CRF%>" property="modules">
 
              <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
-              <tr align="right">
+              <tr align="right">                
                 <logic:notEmpty name="<%=FormConstants.DELETED_MODULES%>">
                   <td align="right"   class="OraFieldText" nowrap>    
                       <html:select styleClass="Dropdown" property="<%=FormConstants.ADD_DELETED_MODULE_IDSEQ%>">
@@ -255,23 +257,29 @@ function clearProtocol() {
                   </td>   
                   </logic:notEmpty>
                   <logic:empty name="<%=FormConstants.DELETED_MODULES%>">
-                  <td >
+                  <td width="0">
                     &nbsp;
                   </td>  
                 </logic:empty>                        
-                <td align="right" width="25">
+                <td align="right" width="205"> 
+                  <html:link action='<%="/formbuilder/copyFromModuleList.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GOTO_COPY_FROM_MODULE_LIST%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >      
+                     Copy Module from module list
+                  </html:link>		  
+                </td>   
+                <td align="right" width="160">
+                  <html:link action='<%="/formbuilder/moduleSearch.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_MODULE_SEARCH%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" > 
+                     Copy module from a form
+                  </html:link>		   
+                </td>  
+                <td align="right" width="80">
                   <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >
-                    <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
+                    <!-- html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/ -->         
+                     Create new
                   </html:link>
-                </td>                
-                <!-- Used for copy module td align="right" width="25">
-                  <html:link action='<%="/addModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_MODULE_SEARCH%>'
-                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >
-                    Add an existing module
-                  </html:link>
-                </td -->      
-               
+                </td>                                        
               </tr>               
               </table> 
               </logic:empty>
@@ -291,6 +299,7 @@ function clearProtocol() {
             <!-- Add for delete and new Module -->
              <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
               <tr align="right">
+              
                 <logic:notEmpty name="<%=FormConstants.DELETED_MODULES%>">
                   <td align="right"   class="OraFieldText" nowrap>    
                       <html:select styleClass="Dropdown" property="<%=FormConstants.ADD_DELETED_MODULE_IDSEQ%>">
@@ -308,13 +317,28 @@ function clearProtocol() {
                   <td >
                     &nbsp;
                   </td>  
-                </logic:empty>                        
-                <td align="right" width="25">
+                </logic:empty> 
+                
+                <td align="right" width="205"> 
+                  <html:link action='<%="/formbuilder/copyFromModuleList.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GOTO_COPY_FROM_MODULE_LIST%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleIndex" >      
+                     Copy Module from module list
+                  </html:link>		  
+                </td>   
+                <td align="right" width="160">
+                  <html:link action='<%="/formbuilder/moduleSearch.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_MODULE_SEARCH%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleIndex" > 
+                     Copy module from a form
+                  </html:link>		   
+                </td>  
+                <td align="right" width="80">
                   <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleIndex" >
-                    <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
-                  </html:link>&nbsp;
-                </td>
+                    <!-- html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/ -->         
+                     Create new
+                  </html:link>
+                </td>                 
+                       
               </tr>
              
               </table> 
@@ -517,7 +541,6 @@ function clearProtocol() {
             <!-- Add for delete and new Module -->
              <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
               <tr align="right">
-
                 <logic:notEmpty name="<%=FormConstants.DELETED_MODULES%>">
 
                   <td align="right"   class="OraFieldText" nowrap>    
@@ -539,13 +562,26 @@ function clearProtocol() {
                   &nbsp;
                 </td>  
                 </logic:empty>  
-               
-                <td align="right" width="25">
+                
+                <td align="right" width="205"> 
+                  <html:link action='<%="/formbuilder/copyFromModuleList.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GOTO_COPY_FROM_MODULE_LIST%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >     
+                     Copy Module from module list
+                  </html:link>		  
+                </td>   
+                <td align="right" width="160">
+                  <html:link action='<%="/formbuilder/moduleSearch.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_MODULE_SEARCH%>'
+                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" > 
+                     Copy module from a form
+                  </html:link>		   
+                </td>  
+                <td align="right" width="80">
                   <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >
-                    <html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/>
-                  </html:link>&nbsp;
-                </td>               
+                    <!-- html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/ -->         
+                     Create new
+                  </html:link>
+                </td>                               
               </tr>
               </table> 
             <!-- Add for delete and new Module end -->  

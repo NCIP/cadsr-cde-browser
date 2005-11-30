@@ -27,7 +27,7 @@
 </HEAD>
 <BODY topmargin=0 bgcolor="#ffffff" <%=jumptoStr%> ">
 
-<logic:notPresent name="<%=FormConstants.SKIP_PATTERN%>"> 
+<logic:notPresent name="<%=FormConstants.IN_PROCESS%>"> 
         <%@ include  file="../common/common_header_inc.jsp" %>
         
         <jsp:include page="../common/tab_inc.jsp" flush="true">
@@ -36,14 +36,29 @@
         </jsp:include>
 </logic:notPresent>        
 
-<logic:present name="<%=FormConstants.SKIP_PATTERN%>"> 
-        <%@ include  file="../common/in_process_common_header_inc.jsp" %>
-        
-        <jsp:include page="../common/tab_inc.jsp" flush="true">
-                <jsp:param name="label" value="Skip&nbsp;to&nbsp;Form&nbsp;Search" />
-                <jsp:param name="urlPrefix" value="../" />
-        </jsp:include>
+<logic:present name="<%=FormConstants.IN_PROCESS%>"> 
+    <logic:present name="<%=FormConstants.SKIP_PATTERN%>"> 
+            <%@ include  file="../common/in_process_common_header_inc.jsp" %>
+            
+            <jsp:include page="../common/tab_inc.jsp" flush="true">
+                    <jsp:param name="label" value="Skip&nbsp;to&nbsp;Form&nbsp;Search" />
+                    <jsp:param name="urlPrefix" value="../" />
+            </jsp:include>
+    </logic:present>  
+    
+    <logic:present name="<%=FormConstants.MODULE_DISPLAY_ORDER_TO_COPY%>"> 
+            <%@ include  file="../common/in_process_common_header_inc.jsp" %>
+            
+            <jsp:include page="../common/tab_inc.jsp" flush="true">
+                    <jsp:param name="label" value="Copy&nbsp;module&nbsp;Form&nbsp;Search" />
+                    <jsp:param name="urlPrefix" value="../" />
+            </jsp:include>
+    </logic:present>  
+    <logic:notPresent name="<%=FormConstants.MODULE_DISPLAY_ORDER_TO_COPY%>"> 
+    test
+    </logic:notPresent>  
 </logic:present>  
+
 
 <table>
     <tr>    
@@ -57,14 +72,19 @@
 <logic:present name="<%=FormConstants.FORM_SEARCH_RESULTS%>">  
     <A NAME="results"></A>
        <table cellpadding="0" cellspacing="0" width="100%" align="center">  
-      <tr>
+      <tr colspan="2" >
            <td  nowrap>&nbsp;</td>
       </tr>
       <tr>
-         <td  valign="bottom" class="OraHeaderSubSub" width="100%" align="left" nowrap>Search Results</td>
+         <td  valign="bottom" class="OraHeaderSubSub" width="50%" align="left" nowrap>Search Results</td>
+          <td  valign="bottom" class="OraFieldText" width="50%" align="right" nowrap>
+            <html:link action='<%="/formbuilder/viewModuleList?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.VIEW_MODULE_LIST%>' >          
+                    Module list         
+            </html:link>          
+          </td>
      </tr>       
         <tr>
-          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+          <td colspan="2" ><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
         </tr>
       </table>   
   <%@ include  file="/formbuilder/formResults_inc.jsp" %>

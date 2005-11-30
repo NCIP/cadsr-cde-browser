@@ -12,10 +12,12 @@
       <form-property name="displayOrder" type="java.lang.Integer"/>
     </form-bean>
     
-    <form-bean name="addModuleForm"
+    <form-bean name="copyModuleForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
       <form-property name="displayOrder" type="java.lang.Integer"/>
+      <form-property name="formIdSeq" type="java.lang.String"/>
+      <form-property name="moduleIndex" type="java.lang.Integer"/>
     </form-bean>    
   </form-beans>
 
@@ -36,15 +38,48 @@
       >
       <forward name="toFormEdit" path="/formbuilder/formEdit.jsp"/>
     </action>    
-    <action name="addModuleForm" path="/addModule" parameter="method"
+    
+    <action name="copyModuleForm" path="/formbuilder/moduleSearch" parameter="method"
       scope="request"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.AddModuleAction"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.CopyModuleAction"
+      validate="true">
+        <forward name="toFormEdit" path="/formbuilder/formEdit.jsp"/>
+        <forward name="gotoSelectModule" path="/formbuilder/moduleCopyFormDetails.jsp"/>
+        <forward name="doneCopyToList" path="/formbuilder/moduleCopyFormDetails.jsp"/>
+        <forward name="cancelModuleSearch" path="/formbuilder/moduleCreate.jsp"/>
+    </action>    
+    
+    <action name="copyModuleForm" path="/formbuilder/copyFromModuleList" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.CopyModuleAction"
       validate="true"
-      input="/formbuilder/addModule.jsp"
       >
-      <forward name="toModuleSearch" path="/formbuilder/moduleSearch.jsp"/>
- 
-    </action>        
+
+      <forward name="viewModuleList" path="/formbuilder/copyFromModuleList.jsp"/>
+      <forward name="doneDelete" path="/formbuilder/copyFromModuleList.jsp"/>
+      <forward name="done" path="/formbuilder/formEdit.jsp"/>  
+      <forward name="copyDone" path="/formbuilder/formEdit.jsp"/>  
+    </action>  
+    
+     <action name="copyModuleForm" path="/formViewAddToList" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.CopyModuleAction"
+      validate="true"
+      >
+      <forward name="doneCopyToList" path="/formbuilder/formDetails.jsp"/>
+    </action>    
+    
+    <action name="copyModuleForm" path="/formbuilder/viewModuleList" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.CopyModuleAction"
+      validate="true"
+      >
+      <forward name="viewModuleList" path="/formbuilder/moduleList.jsp"/>
+      <forward name="doneCopyToList" path="/formbuilder/formbuilder.jsp"/>
+      <forward name="doneDelete" path="/formbuilder/moduleList.jsp"/>
+      <forward name="done" path="/formbuilder/formbuilder.jsp"/>
+    </action>     
+    
   </action-mappings>
 
 </struts-config>

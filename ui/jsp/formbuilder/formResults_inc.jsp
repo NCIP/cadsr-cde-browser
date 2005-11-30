@@ -43,7 +43,7 @@ if(confirm(message)) location.href = url;
                 
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTableColumnHeader">
-            <logic:notPresent name="<%=FormConstants.SKIP_PATTERN%>"> 
+            <logic:notPresent name="<%=FormConstants.IN_PROCESS%>"> 
                <th class="OraTableColumnHeader" nowrap>Action</th>
             </logic:notPresent>        
                
@@ -119,7 +119,7 @@ if(confirm(message)) location.href = url;
                 offset="<%=Integer.toString(pageBean.getOffset())%>"
                 length="<%=Integer.toString(pageBean.getPageSize())%>">
             <tr class="OraTabledata">  
-            <logic:notPresent name="<%=FormConstants.SKIP_PATTERN%>"> 
+            <logic:notPresent name="<%=FormConstants.IN_PROCESS%>"> 
                     <td width="100">
                     <table  >
                     <tr>               
@@ -190,7 +190,7 @@ if(confirm(message)) location.href = url;
             </logic:notPresent>    
             
     
-
+        <logic:present name="<%=FormConstants.IN_PROCESS%>"> 
             <logic:present name="<%=FormConstants.SKIP_PATTERN%>"> 
           	<td class="OraFieldText">
  			<html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_SELECTED_FORM_AS_TARGET_FORM%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
@@ -199,8 +199,18 @@ if(confirm(message)) location.href = url;
 			<bean:write name="form" property="longName"/>
 			</html:link>          		    
           	</td>
-            </logic:present>     
+            </logic:present>  
             
+            <logic:present name="<%=FormConstants.MODULE_DISPLAY_ORDER_TO_COPY%>"> 
+          	<td class="OraFieldText">
+ 			<html:link action='<%="/formbuilder/moduleSearch?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_SELECTED_FORM_AS_MODULE_COPY_FORM%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+ 				paramName="form" paramProperty="formIdseq"
+ 				target="_parent" >
+			<bean:write name="form" property="longName"/>
+			</html:link>          		    
+          	</td>
+            </logic:present>              
+        </logic:present>
 
           	<td class="OraFieldText">
           		<bean:write name="form" property="context.name"/><br>

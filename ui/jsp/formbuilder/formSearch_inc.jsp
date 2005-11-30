@@ -238,8 +238,20 @@ function gotoClassificationsLOV() {
  </TR>
  <table>
  
- 
- <logic:notPresent name="<%=FormConstants.SKIP_PATTERN%>"> 
+
+ <logic:present name="<%=FormConstants.MODULE_DISPLAY_ORDER_TO_COPY%>"> 
+    <table align="center">
+     <TR>
+        <td  align="center" nowrap>
+      <html:link action='<%="/formbuilder/moduleSearch?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CANCEL_MODULE_FORM_SEARCH%>' 
+       target="_parent" >                     
+                    <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Go back"/>         
+      </html:link>&nbsp;
+        </td>  
+     </TR>    
+    </table>
+</logic:present>        
+ <logic:notPresent name="<%=FormConstants.IN_PROCESS%>"> 
     <table align="center">
      <TR>
         <td  align="center" nowrap>
