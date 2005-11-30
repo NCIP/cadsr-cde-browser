@@ -136,6 +136,18 @@ public interface NavigationConstants extends CommonNavigationConstants
 
   public static final String  SKIP_TO_FORM_SEARCH = "skipToFormSearch";
 
-   public static final String  GO_TO_MODULE_SEARCH = "goToModuleSearch";
-    public static final String  SAVE_SKIP_PATTERN = "saveSkipPattern";
+  public static final String  SAVE_SKIP_PATTERN = "saveSkipPattern";
+
+  public static final String  GO_TO_MODULE_SEARCH = "goToModuleSearch";
+  public static final String  GO_TO_SELECTED_MODULE_LIST = "goToSelectedModuleList";
+  public static final String  SET_SELECTED_FORM_AS_MODULE_COPY_FORM="setSelectedFormAsModuleCopyForm";
+  public static final String  COPY_SELECTED_MODULE_TO_FORM="copySelectedModuleToForm";
+  public static final String  COPY_SELECTED_MODULE_TO_LIST= "copySelectedModuleToList";
+  public static final String   CANCEL_MODULE_FORM_SEARCH= "cancelModuleFormSearch";
+  public static final String    CANCEL_MODULE_SELECTION= "cancelModuleSelection";
+  public static final String     VIEW_MODULE_LIST="viewModuleList";
+  public static final String     DONE_VIEW_MODULE_LIST="doneViewModuleList";
+  public static final String     DELETE_ELEMENTS_FROM_MODULE_LIST="deleteElementsFromModuleList";
+  public static final String     GOTO_COPY_FROM_MODULE_LIST="gotoCopyFromModuleList";
+
 }
