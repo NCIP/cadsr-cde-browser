@@ -7,7 +7,7 @@
                       paramId= "<%=FormConstants.MODULE_INDEX%>"
 		      paramName="modIndex"
                       scope="page">
-                       Add to module list
+                       Copy to module cart
                   </html:link>&nbsp;
            	    </td>                       
          	 </tr>

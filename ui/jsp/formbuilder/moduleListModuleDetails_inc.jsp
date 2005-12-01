@@ -211,7 +211,7 @@
                   
                   <td class="MessageText" width="10%" nowrap>
                   <b>
-                    The module list is empty
+                    The module cart is empty
                    </b>
                  </td>
                 </tr>

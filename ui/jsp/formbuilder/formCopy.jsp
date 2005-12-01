@@ -9,6 +9,9 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.resource.*"%>
+<%@ page import="java.util.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <HTML>
   <HEAD>
     <TITLE>Formbuilder: Copy Form</TITLE>

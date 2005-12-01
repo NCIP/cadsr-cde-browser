@@ -264,7 +264,7 @@ function clearProtocol() {
                 <td align="right" width="205"> 
                   <html:link action='<%="/formbuilder/copyFromModuleList.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GOTO_COPY_FROM_MODULE_LIST%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >      
-                     Copy Module from module list
+                     Copy Module from module cart
                   </html:link>		  
                 </td>   
                 <td align="right" width="160">
@@ -322,7 +322,7 @@ function clearProtocol() {
                 <td align="right" width="205"> 
                   <html:link action='<%="/formbuilder/copyFromModuleList.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GOTO_COPY_FROM_MODULE_LIST%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleIndex" >      
-                     Copy Module from module list
+                     Copy Module from module cart
                   </html:link>		  
                 </td>   
                 <td align="right" width="160">
@@ -566,7 +566,7 @@ function clearProtocol() {
                 <td align="right" width="205"> 
                   <html:link action='<%="/formbuilder/copyFromModuleList.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GOTO_COPY_FROM_MODULE_LIST%>'
                        paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >     
-                     Copy Module from module list
+                     Copy Module from module cart
                   </html:link>		  
                 </td>   
                 <td align="right" width="160">

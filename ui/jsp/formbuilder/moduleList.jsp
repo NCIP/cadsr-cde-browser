@@ -15,7 +15,7 @@
  
  <HTML>
   <HEAD>
-    <TITLE>Formbuilder: Module list</TITLE>
+    <TITLE>Formbuilder: Module Cart</TITLE>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
     <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/checkbox.js"></SCRIPT>
@@ -117,7 +117,7 @@ function submitModuleListEdit(methodName) {
       
     <%@ include file="../common/in_process_common_header_inc.jsp"%>
     <jsp:include page="../common/tab_inc.jsp" flush="true">
-      <jsp:param name="label" value="Selected&nbsp;Module&nbsp;list"/>
+      <jsp:param name="label" value="Selected&nbsp;Module&nbsp;cart"/>
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
 
