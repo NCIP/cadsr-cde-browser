@@ -86,6 +86,13 @@ public interface FormConstants extends FormBuilderConstants {
 
     //Publish Change Order
   public static final String CS_ID = "csIdseq";
+  public static final String PUBLIC_ID = "publicId";
+  public static final String LATEST_VERSION_INDICATOR = "latestVersionIndicator";
+  public static final String CDE_PUBLIC_ID = "cdePublicId";
+  
+  public static final String LATEST_VERSION = "latestVersion";
+  public static final String ALL_VERSION = "allVersion";
+    
 
   public static final String QUESTION_LONG_NAME = "questionLongName";
   public static final String QUESTION_ID_SEQ = "questionIdSeq";
