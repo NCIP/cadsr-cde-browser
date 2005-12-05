@@ -64,12 +64,16 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     String categoryName,
     String type,
     String classificationIdseq,
-    String contextRestriction) {
+    String contextRestriction,
+    String publicId,
+    String version,
+    String moduleLongName,
+    String cdePublicId) {
     FormQuery query = new FormQuery();
     query.setDataSource(getDataSource());
     query.setSql(
       formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type,
-      classificationIdseq,contextRestriction);
+      classificationIdseq,contextRestriction, publicId, version, moduleLongName, cdePublicId);
 
     return query.execute();
   }
@@ -781,11 +785,16 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       String categoryName,
       String type,
       String classificationIdseq,
-      String contextRestriction) {
+      String contextRestriction,
+      String publicId, 
+      String version, 
+      String moduleLongName, 
+      String cdePublicId) {
       String whereClause =
         makeWhereClause(
           formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
-          type, classificationIdseq,contextRestriction);
+          type, classificationIdseq,contextRestriction, 
+          publicId, version, moduleLongName, cdePublicId);
       super.setSql("SELECT f.* FROM FB_FORMS_VIEW f, administered_components a where ( f.QC_IDSEQ = a.AC_IDSEQ " + whereClause + "ORDER BY upper(f.LONG_NAME)");
     }
 
@@ -833,7 +842,12 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       String category,
       String type,
       String classificationIdseq,
-      String contextRestriction) {
+      String contextRestriction,
+      String publicId, 
+      String version, 
+      String moduleLongName, 
+      String cdePublicId) 
+    {
       String where = "";
       StringBuffer whereBuffer = new StringBuffer("");
       boolean hasWhere = true;
@@ -926,14 +940,53 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
           hasWhere = true;
         }
       }
+      
+        if (StringUtils.doesValueExist(publicId)) {
+          if (hasWhere) {
+            whereBuffer.append(" AND (f.PUBLIC_ID =" + publicId + ")");
+          }
+          else {
+            whereBuffer.append(" WHERE (f.PUBLIC_ID =" + publicId + ")");
+            hasWhere = true;
+          }
+        }
+      
+        if (StringUtils.doesValueExist(publicId)) {
+          if (hasWhere) {
+            whereBuffer.append(" AND (f.PUBLIC_ID =" + publicId + ")");
+          }
+          else {
+            whereBuffer.append(" WHERE (f.PUBLIC_ID =" + publicId + ")");
+            hasWhere = true;
+          }
+        }
 
-        if (hasWhere) {
-          whereBuffer.append(" AND (a.LATEST_VERSION_IND='Yes'))");
-        }
-        else {
-          whereBuffer.append(" WHERE (a.LATEST_VERSION_IND='Yes'))");
-          hasWhere = true;
-        }
+        if (StringUtils.doesValueExist(version) && "latestVersion".equals(version)) {
+            if (hasWhere) {
+              whereBuffer.append(" AND (f.LATEST_VERSION_IND='Yes')");
+            }
+            else {
+              whereBuffer.append(" WHERE (f.LATEST_VERSION_IND='Yes')");
+              hasWhere = true;
+            }
+        }//eles indicate all versions.
+        
+         if (StringUtils.doesValueExist(moduleLongName)) {
+             if (hasWhere) {
+               whereBuffer.append(" AND (f.LONG_NAME='" + moduleLongName + "')");
+             }
+             else {
+               whereBuffer.append(" WHERE (f.LONG_NAME='" + moduleLongName + "')");
+               hasWhere = true;
+             }
+         }
+      
+      //the last one
+       if (hasWhere) {
+         whereBuffer.append( ")");
+       }
+         
+
       where = whereBuffer.toString();
 
       return where;
