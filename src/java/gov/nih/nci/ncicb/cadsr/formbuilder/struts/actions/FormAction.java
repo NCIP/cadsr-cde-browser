@@ -79,6 +79,10 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     String type = (String) searchForm.get(this.FORM_TYPE);
     String csCsiIdSeq = (String) searchForm.get(this.CS_CSI_ID);
     String csIdseq = (String) searchForm.get(this.CS_ID);
+    String publicId = (String)searchForm.get(this.PUBLIC_ID);
+    String version = (String)searchForm.get(this.LATEST_VERSION_INDICATOR);
+    String moduleLongName = (String)searchForm.get(this.MODULE_LONG_NAME);
+    String cdePublicId = (String)searchForm.get(this.CDE_PUBLIC_ID); 
 
    //Set the Context Name
    
@@ -102,7 +106,9 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     forms =
       service.getAllForms(
         formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type,
-        csCsiIdSeq,(NCIUser)getSessionObject(request,this.USER_KEY));
+        csCsiIdSeq,
+        publicId, version, moduleLongName,cdePublicId,
+        (NCIUser)getSessionObject(request,this.USER_KEY));
 
     }
     setSessionObject(request, this.FORM_SEARCH_RESULTS, forms,true);    
