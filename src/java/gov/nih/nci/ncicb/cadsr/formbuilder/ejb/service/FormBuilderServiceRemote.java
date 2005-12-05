@@ -25,7 +25,9 @@ import java.util.Map;
 public interface FormBuilderServiceRemote {
     public Collection getAllForms(String formLongName, String protocolIdSeq,
         String contextIdSeq, String workflow, String categoryName, String type,
-        String classificationIdSeq,NCIUser user) throws RemoteException;
+        String classificationIdSeq, 
+        String publicId, String version, String moduleLongName, String cdePublicId, 
+        NCIUser user) throws RemoteException;
 
     public Form getFormDetails(String formPK) throws RemoteException;
 

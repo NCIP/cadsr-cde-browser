@@ -19,7 +19,11 @@ public interface FormDAO extends AdminComponentDAO {
     String categoryName,
     String type,
     String classificationIdseq,
-    String contextRestriction);
+    String contextRestriction,
+    String publicId,
+    String version,
+    String moduleLongName,
+    String cdePublicId);
 
 //Publish Change Order
   /**

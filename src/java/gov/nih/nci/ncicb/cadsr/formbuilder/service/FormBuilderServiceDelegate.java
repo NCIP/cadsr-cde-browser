@@ -22,7 +22,9 @@ import java.util.Map;
 public interface FormBuilderServiceDelegate {
     public Collection getAllForms(String formName, String protocol,
         String context, String workflow, String category, String type,
-        String classificationIdSeq,NCIUser user);
+        String classificationIdSeq, 
+        String publicId, String version, String moduleLongName, String cdePublicId,
+        NCIUser user);
 
     //Publish Change Order
     public Collection getAllFormsForClassification(String classificationIdSeq);

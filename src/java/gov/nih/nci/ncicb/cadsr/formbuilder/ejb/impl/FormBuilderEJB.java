@@ -96,6 +96,11 @@ public class FormBuilderEJB extends SessionBeanAdapter
      * @param workflow
      * @param category
      * @param type
+     * @param classificationIdSeq
+     * @param version
+     * @param moduleLongName
+     * @param cdePublicId
+     * @param user
      *
      * @return forms that match the criteria.
      *
@@ -103,7 +108,12 @@ public class FormBuilderEJB extends SessionBeanAdapter
      */
     public Collection getAllForms(String formLongName, String protocolIdSeq,
         String contextIdSeq, String workflow, String categoryName, String type,
-        String classificationIdSeq,NCIUser user) {
+        String classificationIdSeq,
+        String publicId,
+        String version,
+        String moduleLongName,
+        String cdePublicId, 
+        NCIUser user) {
         FormDAO dao = daoFactory.getFormDAO();
         ContextDAO contextDao = daoFactory.getContextDAO();
 
@@ -122,7 +132,8 @@ public class FormBuilderEJB extends SessionBeanAdapter
             **/
             forms = dao.getAllForms(formLongName, protocolIdSeq, contextIdSeq,
                     workflow, categoryName, type, classificationIdSeq,
-                    contextRestriction);
+                    contextRestriction, publicId,version,moduleLongName,cdePublicId);
+
         } catch (Exception ex) {
             throw new DMLException("Cannot get Forms", ex);
         }
