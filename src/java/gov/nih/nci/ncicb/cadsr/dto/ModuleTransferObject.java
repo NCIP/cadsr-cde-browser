@@ -24,6 +24,7 @@ public class ModuleTransferObject extends FormElementTransferObject
   private String moduleIdseq;
   private int dispOrder;
   private List instructions;
+  private int numberOfRepeats;
 
   public ModuleTransferObject() {
     idseq = moduleIdseq;
@@ -172,5 +173,15 @@ public class ModuleTransferObject extends FormElementTransferObject
     System.out.println(module);
     System.out.println(clone);
     
-  }  
+  }
+
+    public void setNumberOfRepeats(int repeats)
+    {
+        this.numberOfRepeats = repeats;
+    }
+
+    public int getNumberOfRepeats()
+    {
+        return numberOfRepeats;
+    }
 }

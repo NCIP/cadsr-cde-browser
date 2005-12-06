@@ -12,5 +12,9 @@ public interface Module extends FormElement,Orderable,Instructionable  {
   public List getQuestions();
   public void setQuestions(List terms);
 
-  public Object clone() throws CloneNotSupportedException ; 
+  public Object clone() throws CloneNotSupportedException ;
+
+    public void setNumberOfRepeats(int repeats);
+
+    public int getNumberOfRepeats();
 }

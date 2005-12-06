@@ -508,11 +508,11 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     boolean hasUpdate  = setValuesForUpdate(mapping,form,request);
       if(hasUpdate)
       {
-        return mapping.findForward(SAVE_CONFIRM_MODULE_EDIT);
+        return mapping.findForward(SAVE_CONFIRM);
       }
       else
       {
-        return mapping.findForward(MODULE_EDIT);
+        return mapping.findForward(NO_CHANGES);
       }
     }
     

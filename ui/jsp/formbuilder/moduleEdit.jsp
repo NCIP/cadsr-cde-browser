@@ -511,6 +511,14 @@ function clearProtocol() {
                                                   questionIndex="<%=questionIndex.toString()%>" /> 
                           </td>
                       </tr>  
+                        <tr class="OraTabledata">
+                            <td width="26%" class="OraTableColumnHeader" nowrap align="left">
+                              Default value 
+                            </td>                      
+                            <td class="OraFieldText">
+                                my default value                              
+                            </td>
+                        </tr>                       
                       </table>
                       </td></tr>
                       
@@ -624,7 +632,13 @@ function clearProtocol() {
                                     <td class="OraFieldText" align="right" width="90%">                                                                        
                                         <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                           <tr class="OraHeaderBlack" >
-                                           <td class="OraFieldText" width="86%"><bean:write name="validValue" property="longName"/></td>
+                                           <td class="OraFieldText" width="86%">
+                                          <!-- TODO to populate default value -->
+                                            <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
+                                                >                                                       
+                                             <bean:write name="validValue" property="longName"/>
+                                          </html:link>                                         
+                                           </td>
                                             <td align="center">
                                               <logic:notEqual value="<%= String.valueOf(validValueSize.intValue()-1) %>" name="validValueIndex">
                                                 <a href="javascript:submitValidValueEdit('<%=NavigationConstants.MOVE_VALID_VALUE_DOWN%>','<%=questionIndex%>','<%=validValueIndex%>')">

@@ -147,4 +147,8 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String MODULE_DISPLAY_ORDER_TO_COPY = "moduleDisplayOrderToCopy";
   public static final String MODULE_COPY_FORM ="moduleCopyForm";// form from which to copy module from
   public static final String MODULE_LIST ="moduleList"; // module cart
+  
+   public static final String MODULE_REPETITIONS ="moduleRepititions"; // module Repititions
+   public static final String NUMBER_OF_MODULE_REPETITIONS="numberOfModuleRepetitions";
+   public static final String  QUESTION_DEFAULTS="questionDefaults";
 }

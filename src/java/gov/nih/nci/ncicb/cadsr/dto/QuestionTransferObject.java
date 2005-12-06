@@ -27,7 +27,8 @@ public class QuestionTransferObject extends FormElementTransferObject
   protected String deIdseq;
   protected DataElement dataElement;
   protected List instructions = null;
-
+  protected String defaultValue =null;
+  
   public QuestionTransferObject() {
     idseq = quesIdseq;
   }
@@ -168,6 +169,17 @@ public class QuestionTransferObject extends FormElementTransferObject
      
       return copy;
   }
+  
+    public String getDefaultValue()
+    {
+        return defaultValue;
+    }
+    public void setDefaultValue(String defaultValue)
+    {
+        this.defaultValue=defaultValue;
+    }
+    
+    
   public String toString() {
     DebugStringBuffer sb = new DebugStringBuffer();
     sb.append(OBJ_SEPARATOR_START);

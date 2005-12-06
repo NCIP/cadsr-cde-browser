@@ -179,8 +179,8 @@
       <forward name="success" path="/formToEditAction.do?method=getFormToEdit"
         redirect="false"/>
       <forward name="failure" path="/formbuilder/formEdit.jsp" redirect="false"/>
-      <forward name="moduleEdit" path="/moduleToEditAction.do?method=getModuleToEdit" redirect="false"/>
-      <forward name="saveConfirmModuleEdit" path="/formbuilder/formSaveConfirmModuleEdit.jsp" redirect="false"/>
+      <forward name="noChanges" path="/moduleToEditAction.do?method=getModuleToEdit" redirect="false"/>
+      <forward name="saveConfirm" path="/formbuilder/formSaveConfirmModuleEdit.jsp" redirect="false"/>
       <forward name="saveConfirmDone" path="/formbuilder/formSaveConfirm.jsp" redirect="false"/>
       <forward name="searchResults" path="/cancelFormEditAction.do?method=cancelFormEdit"
         redirect="false"/>     

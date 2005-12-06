@@ -1,5 +1,10 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.common;
+
+import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Orderable;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -62,4 +67,40 @@ public class FormActionUtil
         displayOrder++;
     }
   }  
+    public static void removeAllIdSeqs(Module module)
+    {
+        module.setIdseq(null);
+        module.setModuleIdseq(null);
+        if(module.getInstruction()!=null)
+        {
+            module.getInstruction().setIdseq(null);
+        }
+            
+        List qs = module.getQuestions();
+        if(qs==null)
+            return;
+        for (Iterator it = qs.iterator(); it.hasNext();) {
+            Question element = (Question)it.next();
+            removeAllIdSeqs(element);
+        }         
+        return;        
+    }  
+    public static void  removeAllIdSeqs(Question question)
+    {
+        question.setIdseq(null);
+        question.setQuesIdseq(null);
+        if(question.getInstruction()!=null)
+            question.getInstruction().setIdseq(null);
+        List vvs = question.getValidValues();
+        if(vvs==null)
+            return;
+        for (Iterator it = vvs.iterator(); it.hasNext();) {
+            FormValidValue element = (FormValidValue)it.next();
+            element.setIdseq(null);
+            element.setValueIdseq(null);
+            if(element.getInstruction()!=null)
+                element.getInstruction().setIdseq(null);
+        }         
+        return;
+    }      
 }

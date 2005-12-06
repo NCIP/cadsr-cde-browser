@@ -43,7 +43,14 @@ function clearProtocol() {
   document.forms[0].protocolLongName.value = "";
 }
 
-
+function submitModuleRepition(methodName,moduleIndexValue) {
+  if(validateFormEditForm(formEditForm)) {
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].<%=FormConstants.MODULE_INDEX%>.value=moduleIndexValue;
+  document.forms[0].action='<%=request.getContextPath()%>/saveFormModuleRepeatAction.do'; 
+  document.forms[0].submit();
+  }
+}
       
 -->
 <% 
@@ -349,12 +356,17 @@ function clearProtocol() {
                 <td class="OraTableColumnHeader">
                   <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                     <tr class="OraHeaderBlack">
-                      <td width="86%">
+                      <td width="65%">
                         <bean:write name="module" property="longName"/>
                       </td>
                       <td align="right">
                         <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                             <tr class="OraTableColumnHeader">
+                              <td align="center">
+                                  <a href="javascript:submitModuleRepition('<%=NavigationConstants.CHECK_CHANGES_MODULE_EDIT%>','<%=moduleIndex%>')">
+                                     Manage repetition
+                                  </a>                                    
+                                </td>                              
                              <td align="center">
                                 <logic:notEqual value="<%= String.valueOf(moduleSize.intValue()-1) %>" name="moduleIndex">
                                   <a href="javascript:submitFormEdit('<%=NavigationConstants.MOVE_MODULE_DOWN%>','<%=moduleIndex%>')">

@@ -1198,12 +1198,13 @@
        deploy_prod_start      - Deploy to Prod and Start JOSS
        
        dist_download_full     - Complete OpenSource files
-       jboss_startdebug       - Start JOSS in debug mod
+       jboss_startdebug       - Start JBOSS in debug mod
+       
        help                   - This help screen.
  
        Settings:
            Project Home:    ${project.home}
- 
+           User -Dset_debug=true to use local properties file instead DB table
        Properties files has been moved to a database tabel. If you would like to use
        a local properties file user 
        ===================================================================

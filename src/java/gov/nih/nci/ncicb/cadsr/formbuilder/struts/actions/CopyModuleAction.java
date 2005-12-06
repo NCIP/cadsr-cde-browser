@@ -235,6 +235,7 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
       try
       {
          copiedModuleClone = (Module)copiedModule.clone();
+          FormActionUtil.removeAllIdSeqs(copiedModuleClone);
       }
       catch (CloneNotSupportedException clexp) {
           if (log.isErrorEnabled()) {
@@ -457,7 +458,7 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
           Form crf = (Form)getSessionObject(request,CRF);
             
           List desModules = crf.getModules();
-          
+
                                               
           if(desModules == null) {
           
@@ -465,10 +466,10 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
             }
 
           if(displayOrderToCopy < desModules.size()) {
-              desModules.add(displayOrderToCopy, copiedModules);
+              desModules.addAll(displayOrderToCopy, copiedModules);
 
             } else {
-                desModules.add(copiedModules);
+                desModules.addAll(copiedModules);
             }
             FormActionUtil.setInitDisplayOrders(crf.getModules()); //This is done to set display order in a sequential order 
                                                             
@@ -481,7 +482,7 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
             removeSessionObject(request,IN_PROCESS);
 
             saveMessage("cadsr.formbuilder.module.copy.success", request);
-            return mapping.findForward("toFormEdit");              
+            return mapping.findForward("copyDone");              
          
       }
       catch (CloneNotSupportedException clexp) {
@@ -489,7 +490,7 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
             log.error("Exception while colneing Module " ,clexp);
           }
          saveError("cadsr.formbuilder.module.copy.failure", request);
-         return mapping.findForward("toFormEdit");
+         return mapping.findForward("viewModuleList");
       } 
 
       }       

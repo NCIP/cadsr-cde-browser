@@ -78,7 +78,8 @@
       <tr>
          <td  valign="bottom" class="OraHeaderSubSub" width="50%" align="left" nowrap>Search Results</td>
           <td  valign="bottom" class="OraFieldText" width="50%" align="right" nowrap>
-            <html:link action='<%="/formbuilder/viewModuleList?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.VIEW_MODULE_LIST%>' >          
+            <html:link action='<%="/formbuilder/viewModuleList?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.VIEW_MODULE_LIST%>' 
+              target="_parent">          
                     Module cart         
             </html:link>          
           </td>

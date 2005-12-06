@@ -8,6 +8,7 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String FORM_DETAILS ="formDetails";
   public static final String FORM_EDIT ="formEdit";
   public static final String MODULE_EDIT ="moduleEdit";
+  public static final String NO_CHANGES ="noChanges";
   public static final String SEARCH_RESULTS ="searchResults";
 
 
@@ -56,7 +57,7 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String CHECK_CHANGES_MODULE_EDIT="checkChangesModuleEdit";
   public static final String CHECK_CHANGES_DONE="checkChangesDone";
   public static final String CANCEL_FORM_CHANGES_MODULE_EDIT="cancelFormChangesModuleEdit";
-  public static final String SAVE_CONFIRM_MODULE_EDIT="saveConfirmModuleEdit";
+  public static final String SAVE_CONFIRM="saveConfirm";
   public static final String SAVE_CONFIRM_DONE="saveConfirmDone";
 
   public static final String MOVE_REFDOC_UP="moveRefDocUp";
@@ -149,5 +150,12 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String     DONE_VIEW_MODULE_LIST="doneViewModuleList";
   public static final String     DELETE_ELEMENTS_FROM_MODULE_LIST="deleteElementsFromModuleList";
   public static final String     GOTO_COPY_FROM_MODULE_LIST="gotoCopyFromModuleList";
+  public static final String     COPY_FROM_MODULE_LIST="copyFromModuleList";
+  
+  public static final String     ADD_REPETITIONS = "addRepetitions";
+  public static final String     DELETE_REPETITIONS = "deleteRepetitions";
+    public static final String     DONE_MANAGE_REPETITIONS="doneManageRepetitions";
+    public static final String     SAVE_REPETITIONS="saveRepetitions";
+    
 
 }
