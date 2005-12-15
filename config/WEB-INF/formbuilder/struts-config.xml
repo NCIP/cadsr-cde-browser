@@ -185,6 +185,16 @@
       <forward name="searchResults" path="/cancelFormEditAction.do?method=cancelFormEdit"
         redirect="false"/>     
     </action>
+
+    <action name="formEditForm" path="/gotoManageProtocols" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
+      validate="false">
+      <forward name="success" path="/manageProtocols.do?method=manageProtocols" redirect="false"/>
+      <forward name="failure" path="/formbuilder/formEdit.jsp"
+        redirect="false"/>       
+    </action>
+
     <action name="formEditForm" path="/saveFormModuleEditAction" parameter="method"
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
@@ -274,15 +284,6 @@
       <forward name="failure" path="/formbuilder/formEdit.jsp"
         redirect="false"/>
     </action>    
-    <action name="hrefCRFForm" path="/formEditDeleteAction" parameter="method"
-      scope="request"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
-      validate="false">
-      <forward name="success"
-        path="/formSearchFramedAction.do?method=getAllForms"
-        redirect="false"/>
-      <forward name="failure" path="/formbuilder/formEdit.jsp" redirect="false"/>
-    </action>
     <action name="hrefCRFForm" path="/formPrinterAction" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction"
