@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.util.GenericPopListBean;
@@ -11,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 public class DataElementSearchBean extends Object {
-  private String searchStr = "";
   private String simpleSearchStr = "";
-  private String whereClause = "";
   private String[] strArray = null;
 
   //Hold only the non exluded Items
@@ -24,11 +23,9 @@ public class DataElementSearchBean extends Object {
 
   //Preferences
   //Holds the complete list of lov
-  private StringBuffer contextNameFullList = null;
   private StringBuffer regStatusFullList = null;
   private StringBuffer workflowFullList = null;
 
-  private String xmlQueryStmt = "";
   private String vdPrefName = "";
   private String csiName = "";
   private String decPrefName = "";
@@ -38,8 +35,6 @@ public class DataElementSearchBean extends Object {
   private String[] aslName;
   private String[] regStatus;
   private String[] altNames;
-  private String[] contextNames;
-
 
   //Prefrences
   private String[] aslNameExcludeList=null;
@@ -47,7 +42,8 @@ public class DataElementSearchBean extends Object {
   private boolean excludeTestContext=false;
   private boolean excludeTrainingContext=false;
 
-
+  private String nameSearchMode;
+  private String pvSearchMode;
   private String vdIdseq;
   private String decIdseq;
   private String cdeId;
@@ -61,13 +57,8 @@ public class DataElementSearchBean extends Object {
   private String conceptCode = "";
   private String objectClass;
   private String property;
-  private DBUtil dbUtil =null;
 
-  public DataElementSearchBean(
-    HttpServletRequest request,
-    String treeParamType,
-    String treeParamIdSeq,
-    DBUtil dbUtil) throws SQLException {
+  public DataElementSearchBean( HttpServletRequest request) throws SQLException {
     strArray = request.getParameterValues("SEARCH");
     vdPrefName = request.getParameter("txtValueDomain");
     decPrefName = request.getParameter("txtDataElementConcept");
@@ -90,12 +81,13 @@ public class DataElementSearchBean extends Object {
     conceptCode = request.getParameter("jspConceptCode");
     objectClass = request.getParameter("jspObjectClass");
     property = request.getParameter("jspProperty");
+    nameSearchMode = request.getParameter("jspNameSearchMode");
+    pvSearchMode = request.getParameter("jspPVSearchMode");
 
     if (contextUse == null) {
       contextUse = "";
     }
 
-    String selIndex = null;
 
     //Prefrences
     //buildContextNameFullList(contextsExcludeList, dbUtil);
@@ -523,6 +515,21 @@ public class DataElementSearchBean extends Object {
     this.aslNameExcludeList = aslNameExcludeList;
   }
 
+  public void resetSearchCriteria() throws Exception {
+      this.setSimpleSearchStr("");
+      searchText = "";
+      conceptName = "";
+      conceptCode = "";
+      cdeId = "";
+      decIdseq ="";
+      vdIdseq ="";
+      validValue = "";
+      csCsiIdseq = "";
+      altName = "";
+      objectClass = "";
+      property = "";
+      
+  }
   public void resetLOVList() throws Exception
   {
       DBUtil dbUtil = null;
@@ -591,5 +598,24 @@ public class DataElementSearchBean extends Object {
     this.excludeTrainingContext = excludeTrainingContext;
   }
 
+    public void setNameSearchMode(String nameSearchMode) {
+        this.nameSearchMode = nameSearchMode;
+    }
+
+    public String getNameSearchMode() {
+        if (nameSearchMode== null)
+            nameSearchMode = ProcessConstants.DE_SEARCH_MODE_EXACT;
+        return nameSearchMode;
+    }
+
+    public void setPvSearchMode(String pvSearchMode) {
+        this.pvSearchMode = pvSearchMode;
+    }
+
+    public String getPvSearchMode() {
+        if (pvSearchMode== null)
+            pvSearchMode = ProcessConstants.DE_SEARCH_MODE_EXACT;
+        return pvSearchMode;
+    }
 }
 
