@@ -7,13 +7,14 @@ import java.sql.Date;
 
 public class ProtocolTransferObject extends AdminComponentTransferObject
   implements Protocol {
-  String protocolIdseq = null;
-  String longName = null;
+  String protoIdseq = null;
+  //String longName = null;
   String leadOrg = null;
-  String protocolType = null;
-  String protocolPhase = null;
+  String type = null;
+  String phase = null;
   Date endDate = null;
   Date beginDate = null;
+  String protocolId = null;
 
   public ProtocolTransferObject() {
   }
@@ -22,11 +23,11 @@ public class ProtocolTransferObject extends AdminComponentTransferObject
   }
 
   public String getProtoIdseq() {
-    return protocolIdseq;
+    return protoIdseq;
   }
 
   public void setProtoIdseq(String protocolIdseq) {
-    this.protocolIdseq = protocolIdseq;
+    this.protoIdseq = protocolIdseq;
   }
 
   public String getLeadOrg() {
@@ -38,19 +39,19 @@ public class ProtocolTransferObject extends AdminComponentTransferObject
   }
 
   public String getType() {
-    return protocolType;
+    return type;
   }
 
   public void setType(String protocolType) {
-    this.protocolType = protocolType;
+    this.type = protocolType;
   }
 
   public String getPhase() {
-    return protocolPhase;
+    return phase;
   }
 
   public void setPhase(String protocolPhase) {
-    this.protocolPhase = protocolPhase;
+    this.phase = protocolPhase;
   }
 
   public Date getBeginDate() {
@@ -99,4 +100,12 @@ public class ProtocolTransferObject extends AdminComponentTransferObject
 
     return sb.toString();
   }
+
+    public void setProtocolId(String protocolId) {
+        this.protocolId = protocolId;
+    }
+
+    public String getProtocolId() {
+        return protocolId;
+    }
 }

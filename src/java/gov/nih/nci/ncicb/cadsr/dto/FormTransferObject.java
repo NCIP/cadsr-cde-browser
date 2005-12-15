@@ -20,6 +20,7 @@ import java.util.ListIterator;
 
 public class FormTransferObject extends FormElementTransferObject
   implements Form {
+  private List protocols = null;
   private Protocol protocol = null;
   private String formType = null;
   private List modules;
@@ -30,6 +31,8 @@ public class FormTransferObject extends FormElementTransferObject
    private String contextName = null;
    private String protocolLongName = null;
    private Collection classifications = null;
+   
+   private static final String DELIMITER = ", ";
 
   public FormTransferObject() {
 
@@ -57,15 +60,26 @@ public class FormTransferObject extends FormElementTransferObject
     formType = newFormType;
   }
 
-  public Protocol getProtocol() {
-    return protocol;
+
+/*      public Protocol getProtocol() {
+        return protocol;
+      }
+
+      public void setProtocol(Protocol newProtocol) {
+        this.protocol = newProtocol;
+      }
+*/
+
+  public List getProtocols() {
+    return protocols;
   }
 
-  public void setProtocol(Protocol newProtocol) {
-    this.protocol = newProtocol;
+  public void setProtocols(List newProtocols) {
+    this.protocols = newProtocols;
   }
 
-  public String getProtoIdseq() {
+//starts
+/*  public String getProtoIdseq() {
 
     if (protocol == null)
       return null;
@@ -79,6 +93,8 @@ public class FormTransferObject extends FormElementTransferObject
 
     protocol.setIdseq(p0);
   }
+ */
+//end
 
   public List getModules() {
     return modules;
@@ -171,8 +187,22 @@ public class FormTransferObject extends FormElementTransferObject
        }
        copy.setModules(modulesCopy);
      }
-     if(this.getProtocol()!=null)
-      copy.setProtocol((Protocol)getProtocol().clone());
+     
+     //need to clone each protocol object in the protocols list
+      List clonedProtocols = new ArrayList();
+     if(this.getProtocols()!=null && !(this.getProtocols().isEmpty())){
+         List oldList = this.getProtocols();
+         Iterator it = oldList.iterator();
+         while (it.hasNext()){
+             Protocol current = (Protocol)it.next();
+             Protocol p = (Protocol)(current.clone());
+             clonedProtocols.add(p);
+         }
+     }
+     //System.out.println("old this" + this.getProtocols());
+      //System.out.println("old copy" + copy.getProtocols());
+     copy.setProtocols(clonedProtocols);
+     System.out.println("new" + copy.getProtocols());
 
      if(getInstructions()!=null)
      {
@@ -239,9 +269,9 @@ public class FormTransferObject extends FormElementTransferObject
     sb.append(super.toString());
     sb.append(ATTR_SEPARATOR+"formIdseq="+getFormIdseq(),getFormIdseq());
     sb.append(ATTR_SEPARATOR+"formType="+getFormType(),getFormType());
-    Protocol protocol = getProtocol();
-    if(protocol!=null)
-      sb.append(ATTR_SEPARATOR+"Protocol="+protocol.toString());
+    List protocols = getProtocols();
+    if(protocols!=null && !protocols.isEmpty())//TODO - verify
+      sb.append(ATTR_SEPARATOR+"Protocol="+protocols.toArray().toString());
     else
       sb.append(ATTR_SEPARATOR+"Protocol=null");
 
@@ -309,15 +339,24 @@ public class FormTransferObject extends FormElementTransferObject
   }
 
 
-  public String getProtocolLongName()
-  {
-    if (protocolLongName == null)
-       if (getProtocol() == null)
-          setProtocolLongName(this.getProtocol().getLongName());
-       else
-          setProtocolLongName("");
-    return protocolLongName;
-  }
+  public String  getDelimitedProtocolLongNames(){
+        List protocols = this.getProtocols();
+        if (protocols==null || protocols.isEmpty()){
+            return "";
+        }
+        
+        StringBuffer sbuf = new StringBuffer();            
+        String delimtedProtocolLongName = null;
+        Iterator it = protocols.iterator();
+        while (it.hasNext()){
+            Protocol  p = (Protocol)it.next();
+             sbuf.append(DELIMITER).append(p.getLongName());
+        }
+        //System.out.println("subString = "  + sbuf.substring(1) );
+        return sbuf.substring(DELIMITER.length());
+      }
+
+
 
 
   public void setClassifications(Collection classifications)
