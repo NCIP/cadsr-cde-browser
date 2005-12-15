@@ -15,6 +15,9 @@ import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,8 +98,13 @@ public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
     Protocol protocol =
       new ProtocolTransferObject((String)dynaForm.get(PROTOCOLS_LOV_NAME_FIELD));
     protocol.setProtoIdseq((String)dynaForm.get(PROTOCOLS_LOV_ID_FIELD));
-    newForm.setProtocol(protocol);
-
+    
+    List protocols = new ArrayList();
+    protocols.add(protocol);    
+    newForm.setProtocols(protocols);
+    
+    //newForm.setProtocol(protocol);
+    
     newForm.setFormType((String)dynaForm.get(FORM_TYPE));
     newForm.setFormCategory((String)dynaForm.get(FORM_CATEGORY));
     newForm.setAslName("DRAFT NEW");

@@ -20,5 +20,8 @@ public interface Protocol extends AdminComponent {
   public Date getEndDate();
   public void setEndDate(Date dEndDate);
   
+  public String getProtocolId();
+  public void setProtocolId(String  id);
+  
   public Object clone() throws CloneNotSupportedException ;
 }

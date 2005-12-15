@@ -31,6 +31,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -65,8 +66,10 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
       Form crf = (Form) getSessionObject(request, CRF);
       dynaForm.set(FORM_LONG_NAME, crf.getLongName());
       dynaForm.set(FORM_VERSION, new Float(1.0));
-      dynaForm.set(PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
-      dynaForm.set(PROTOCOLS_LOV_ID_FIELD, crf.getProtocol().getProtoIdseq());
+      
+      String delimetedProtocolLongNames = crf.getDelimitedProtocolLongNames();
+      dynaForm.set(PROTOCOLS_LOV_NAME_FIELD, delimetedProtocolLongNames);
+      //dynaForm.set(PROTOCOLS_LOV_ID_FIELD, crf.getProtocol().getProtoIdseq());
       dynaForm.set(WORKFLOW, "DRAFT NEW");
 
       NCIUser nciUser =
@@ -119,10 +122,12 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
       newContext.setConteIdseq((String) dynaForm.get(CRF_CONTEXT_ID_SEQ));
       newForm.setContext(newContext);
 
-      Protocol newProtocol = new ProtocolTransferObject(null);
+      /*Protocol newProtocol = new ProtocolTransferObject(null);
       newProtocol.setProtoIdseq((String) dynaForm.get(PROTOCOLS_LOV_ID_FIELD));
       newForm.setProtocol(newProtocol);
-
+      */
+      //TODO - Firm Copy - should copy the protocols Id over....?
+      
       newForm.setFormCategory((String) dynaForm.get(FORM_CATEGORY));
       newForm.setFormType((String) dynaForm.get(FORM_TYPE));
 
@@ -165,4 +170,6 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
     }
      // end of else
   }
+  
+  
 }

@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.util.ApplicationParameters;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -89,13 +91,21 @@ public class DownloadAction
   cell.setCellValue("Context");
   cell.setCellStyle(boldCellStyle);
   row.createCell((short)1).setCellValue(crf.getContext().getName());
-
-  row = sheet.createRow(rowNumber++);
-  cell = row.createCell((short)0);
-  cell.setCellValue("Protocol");
-  cell.setCellStyle(boldCellStyle);
-  row.createCell((short)1).setCellValue(crf.getProtocol().getLongName());
-
+  
+  //for multiple protocols.
+  List protocols = crf.getProtocols();
+  if (protocols!=null && !protocols.isEmpty()){
+    Iterator it = protocols.iterator();
+    while (it.hasNext()){
+        Protocol  p = (Protocol)it.next();
+        row = sheet.createRow(rowNumber++);
+        cell = row.createCell((short)0);
+        cell.setCellValue("Protocol");
+        cell.setCellStyle(boldCellStyle);
+        row.createCell((short)1).setCellValue(p.getLongName());
+    }
+  }
+  
   row = sheet.createRow(rowNumber++);
   cell = row.createCell((short)0);
   cell.setCellValue("Workflow");

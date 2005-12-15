@@ -11,6 +11,7 @@ import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -48,6 +50,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
   private static String FORM_EDIT_DELETED_MODULES = "formEditDeletedModules";
   private static String FORM_EDIT_ADDED_MODULES = "formEditAddedModules";
   private static String FORM_EDIT_INSTRUCTION_CHANGES = "formEditInstructionChanges";  
+  private static String FORM_EDIT_ADDED_PROTOCOLS = "formEditAddedProtocols";
+  private static String FORM_EDIT_REMOVED_PROTOCOLS = "formEditRemovedProtocols";
 
   /**
    * Returns Complete form given an Id for Edit.
@@ -103,6 +107,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         this.PREFERRED_DEFINITION, crf.getPreferredDefinition());
       dynaFormEditForm.set(CONTEXT_ID_SEQ, crf.getContext().getConteIdseq());
       
+      /*
       if(crf.getProtocol()!=null)
       {
         dynaFormEditForm.set(
@@ -110,6 +115,11 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         dynaFormEditForm.set(
           this.PROTOCOLS_LOV_NAME_FIELD, crf.getProtocol().getLongName());
       }
+      */
+      
+      dynaFormEditForm.set(
+           this.PROTOCOLS_LOV_NAME_FIELD, crf.getDelimitedProtocolLongNames());
+      
       dynaFormEditForm.set(CATEGORY_NAME, crf.getFormCategory());
       dynaFormEditForm.set(
         this.FORM_TYPE, crf.getFormType());
@@ -129,6 +139,10 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     }
 
     removeSessionObject(request, DELETED_MODULES);
+
+    //clear up
+    removeSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
+    removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
 
     return mapping.findForward(SUCCESS);
   }
@@ -394,6 +408,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     removeSessionObject(request, DELETED_MODULES);
     removeSessionObject(request, CLONED_CRF);
     removeSessionObject(request, CRF);
+    removeSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
+    removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
     saveMessage("cadsr.formbuilder.form.delete.success", request);
     ActionForward forward = mapping.findForward(SUCCESS);
     return forward;
@@ -441,9 +457,9 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
                 }
                 **/
             }
-            else
-            {
-              if(header.getProtocol()!=null)
+            else 
+            { 
+              if(crf.getProtocols()!=null && !crf.getProtocols().isEmpty())
                 {
                    saveError("cadsr.formbuilder.form.edit.form.template.protocol", request);
                    return mapping.findForward(FAILURE);
@@ -455,7 +471,12 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
           Collection addedModules = (Collection)getSessionObject(request,FORM_EDIT_ADDED_MODULES);
           FormInstructionChanges instrChanges = (FormInstructionChanges)getSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES);
-          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules,instrChanges);
+          Collection addedProtocols = getSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS)==null?
+                                        null:(Collection)getSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
+          Collection removedProtocols = getSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS)==null?
+                                        null:(Collection)getSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);
+            
+          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules,addedProtocols, removedProtocols,instrChanges);
           setSessionObject(request,CRF, updatedCrf,true);
           Form clonedCrf = (Form) updatedCrf.clone();
           setSessionObject(request, CLONED_CRF, clonedCrf,true);
@@ -476,6 +497,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           return mapping.findForward(FAILURE);
         }
         removeSessionObject(request, DELETED_MODULES);
+        removeSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
+        removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
         saveMessage("cadsr.formbuilder.form.edit.save.success", request);
         return mapping.findForward(SUCCESS);
        }
@@ -582,7 +605,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
             }
             else
             {
-              if(header.getProtocol()!=null)
+              if(crf.getProtocols()!=null && !crf.getProtocols().isEmpty())
                 {
                    saveError("cadsr.formbuilder.form.edit.form.template.protocol", request);
                    return mapping.findForward(FAILURE);
@@ -592,9 +615,15 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           Collection updatedModules = (Collection)getSessionObject(request,FORM_EDIT_UPDATED_MODULES);
           Collection deletedModules = (Collection)getSessionObject(request,FORM_EDIT_DELETED_MODULES);
           Collection addedModules = (Collection)getSessionObject(request,FORM_EDIT_ADDED_MODULES);
+
+          Collection addedProtocols = getSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS)==null?
+                                          null:(Collection)getSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
+          Collection removedProtocols = getSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS)==null?
+                                          null:(Collection)getSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);
           FormInstructionChanges instrChanges = (FormInstructionChanges)getSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES);          
           Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules
-                                                  , deletedModules,addedModules,instrChanges);
+                                                  , deletedModules,addedModules,
+                                                  addedProtocols, removedProtocols, instrChanges);
           setSessionObject(request,CRF, updatedCrf);
           Form clonedCrf = (Form) updatedCrf.clone();
           setSessionObject(request, CLONED_CRF, clonedCrf);
@@ -640,6 +669,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     FormBuilderBaseDynaFormBean editForm = (FormBuilderBaseDynaFormBean) form;
     removeSessionObject(request, DELETED_MODULES);
     removeSessionObject(request, CLONED_CRF);
+    removeSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
+    removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
     editForm.clear();
     return mapping.findForward(SUCCESS);
 
@@ -674,6 +705,14 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     return mapping.findForward(FORM_EDIT);
 
     }
+
+    public ActionForward gotoManageProtocols(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+      return mapping.findForward(SUCCESS);
+      }
 
   /**
    * Check if there are updated to form and set the value in the request
@@ -734,7 +773,41 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         headerUpdate = true;
       }        
     }
-
+    
+    //to get added protocols and removed protocols;
+    List oldProtocols = clonedCrf.getProtocols();    
+    List newProtocols = crf.getProtocols();
+    List addedProtocols = null;
+    List removedProtocols = null;
+    
+    if (oldProtocols == null || oldProtocols.size()==0){
+        addedProtocols = newProtocols;
+    }else if (newProtocols!= null && newProtocols.size()!=0){        
+        HashMap toAddMap = new HashMap();
+        HashMap toDeleteMap = new HashMap();
+        for (int i=0; i<oldProtocols.size(); i++){
+            Protocol p = (Protocol)oldProtocols.get(i);
+            toDeleteMap.put(p.getProtoIdseq(), p);
+        }
+        
+        Iterator itNew = newProtocols.iterator();
+        while (itNew.hasNext()){
+            Protocol pNew=(Protocol)itNew.next();
+            if (!protocolAlreadyExist(oldProtocols, pNew)){ 
+                toAddMap.put(pNew.getProtoIdseq(), pNew);
+            }else{
+                toDeleteMap.remove(pNew.getProtoIdseq());
+            }
+        }
+        addedProtocols = toAddMap==null? null: new ArrayList(toAddMap.keySet());
+        removedProtocols = toDeleteMap==null? null: new ArrayList(toDeleteMap.keySet());
+    }else{
+        removedProtocols = oldProtocols;
+    }//end of elseif  
+      
+        
+//DOING - when save form - should save protocols? or save protocol change should be handled in another action?    
+/*
     String protocolIdSeq = (String) editForm.get(PROTOCOL_ID_SEQ);
     String orgProtocolIdSeq = null;
 
@@ -760,7 +833,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
       if(hasValue(orgProtocolIdSeq))
           headerUpdate = true;
     }
-
+*/
+//end of TODO
     String workflow = (String) editForm.get(WORKFLOW);
     String orgWorkflow = clonedCrf.getAslName();
    if (hasValue(workflow) ) {
@@ -859,12 +933,20 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
        header=null;
     if (
         header!=null || ((deletedModules != null) && !deletedModules.isEmpty()) ||
-          !updatedModules.isEmpty()||!addedModules.isEmpty()||!instrChanges.isEmpty()) {
+          !updatedModules.isEmpty()||!addedModules.isEmpty()||!instrChanges.isEmpty() ||
+          (addedProtocols!=null && !addedProtocols.isEmpty()) || 
+          (removedProtocols!=null || !removedProtocols.isEmpty())) {
         setSessionObject(request,FORM_EDIT_HEADER,header,true);
         setSessionObject(request,FORM_EDIT_UPDATED_MODULES,updatedModules,true);
         setSessionObject(request,FORM_EDIT_DELETED_MODULES,deletedModules,true);
         setSessionObject(request,FORM_EDIT_ADDED_MODULES,addedModules,true);
         setSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES,instrChanges,true);
+        if (addedProtocols !=null){
+            setSessionObject(request, FORM_EDIT_ADDED_PROTOCOLS, addedProtocols);
+        }    
+        if (removedProtocols !=null){
+            setSessionObject(request, FORM_EDIT_REMOVED_PROTOCOLS, removedProtocols);
+        }    
         return true;
       }
     else
@@ -888,7 +970,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         removeSessionObject(request,FORM_EDIT_DELETED_MODULES);
         removeSessionObject(request,FORM_EDIT_ADDED_MODULES);
         removeSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES);
-        
+        removeSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
+        removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
   }
   /**
    * Removes the module given by "moduleIdSeq" from the module list
@@ -1091,4 +1174,33 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
        }   
        return mainMap;
       }
+      
+      
+    private String  getDelimitedProtocolLongNames(List protocols){
+      StringBuffer sbuf = new StringBuffer();
+        String delimtedProtocolLongName = null;
+        if (protocols!=null && !protocols.isEmpty()){
+            Iterator it = protocols.iterator();
+            while (it.hasNext()){
+                Protocol  p = (Protocol)it.next();
+                sbuf.append(".").append(p.getLongName());
+            }
+        }
+        
+        return sbuf.substring(1);
+    }      
+    
+    private boolean protocolAlreadyExist(List protocols, Protocol p){
+        if (protocols == null || protocols.size()==0){
+            return false;
+        }
+        Iterator it = protocols.iterator();
+        while (it.hasNext()){
+            Protocol current = (Protocol)it.next();
+            if (current.getProtoIdseq().equals(p.getProtoIdseq())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -232,6 +232,9 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
       //Added to support tree
       if ("".equals(formIdSeq)) {
         formIdSeq = request.getParameter("P_IDSEQ");
+        if (formIdSeq==null || formIdSeq.length() == 0){        
+            formIdSeq = (String)request.getAttribute("P_IDSEQ");
+        }    
         hrefCRFForm.set(FORM_ID_SEQ,formIdSeq);
       }
       if ((formIdSeq != null) && (formIdSeq.length() > 0)) {

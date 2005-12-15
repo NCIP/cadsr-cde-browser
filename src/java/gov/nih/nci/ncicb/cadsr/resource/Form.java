@@ -10,13 +10,18 @@ public interface Form extends FormElement,Instructionable  {
   public String getFormType();
   public void setFormType (String formType);
 
-  public Protocol getProtocol();
-  public void setProtocol(Protocol protocol);
+  public List getProtocols();
+  public void setProtocols(List protocols);
+  
+  public String getDelimitedProtocolLongNames();
 
-  public String getProtoIdseq();
-  public void setProtoIdseq(String idseq);
+  //public Protocol getProtocol();
+  //public void setProtocol(Protocol protocol);
 
-  public List getModules();
+  //public String getProtoIdseq();
+  //public void setProtoIdseq(String idseq);
+
+  public List getModules(); 
   public void setModules(List blocks);
 
   public String getFormCategory();
@@ -36,4 +41,6 @@ public interface Form extends FormElement,Instructionable  {
   public Collection getClassifications();
 
   public List getCDEIdList();
+  
+  
 }

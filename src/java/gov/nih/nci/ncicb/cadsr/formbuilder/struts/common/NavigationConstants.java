@@ -77,6 +77,9 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String CANCEL_FORM_CREATE="cancelFormCreate";
 
   public static final String GET_PROTOCOL_LOV_METHOD="getProtocolsLOV";
+  public static final String MANAGE_PROTOCOLS="manageProtocols";
+  public static final String GOTO_MANAGE_PROTOCOLS="gotoManageProtocols";
+
 
   public static final String CHANGE_DE_ASSOCIATION = "changeAssociation";
   public static final String GO_TO_CHANGE_DE_ASSOCIATION = "gotoChangeDEAssociation";
@@ -102,11 +105,11 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String GO_TO_ADD_CLASSIFICATIONS = "gotoAddClassifications";
   public static final String ADD_CLASSIFICATIONS = "addClassifications";
 
- public static final String REMOVE_CLASSIFICATION = "removeClassification";
+  public static final String REMOVE_CLASSIFICATION = "removeClassification";
 
- public static final String GO_TO_SEARCH = "gotoSearch";
+  public static final String GO_TO_SEARCH = "gotoSearch";
 
- public static final String GO_TO_MANAGE_CLASSIFICATIONS = "gotoManageClassifications";
+  public static final String GO_TO_MANAGE_CLASSIFICATIONS = "gotoManageClassifications";
 
 
 // Publish Change Request
@@ -157,5 +160,9 @@ public interface NavigationConstants extends CommonNavigationConstants
     public static final String     DONE_MANAGE_REPETITIONS="doneManageRepetitions";
     public static final String     SAVE_REPETITIONS="saveRepetitions";
     
+
+  public static final String ADD_PROTOCOL = "addProtocol";
+  public static final String REMOVE_PROTOCOL = "removeProtocol";
+  public static final String DONE_PROTOCOL = "doneProtocol";
 
 }
