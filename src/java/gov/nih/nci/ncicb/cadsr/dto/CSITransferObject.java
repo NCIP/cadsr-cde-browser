@@ -15,6 +15,7 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
   private String csPrefName = null;
   private String csConteIdseq = null;
   private String acCsiIdseq = null;
+  private String csType = null;
   
   public CSITransferObject() {
   }
@@ -125,4 +126,12 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
   {
     return csConteIdseq;
   }
+   public String getClassSchemeType() {
+      return csType;
+   }
+   public void setClassSchemeType(String aClassSchemeType){
+      csType = aClassSchemeType;
+   }
+
+  
 }

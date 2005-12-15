@@ -475,7 +475,7 @@ public class DESearchQueryBuilder extends Object {
         else
           csiWhere = " and acs.cs_csi_idseq = '"+searchStr5+"'";
 
-        String csWhere = this.getCSWhere(treeParamIdSeq);
+        String csWhere = this.getCSWhere(this.treeParamIdSeq);
 
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +

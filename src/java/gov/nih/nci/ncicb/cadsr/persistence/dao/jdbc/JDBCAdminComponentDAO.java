@@ -906,7 +906,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
     public void setSql() {
       super.setSql(
-        "select cs_idseq, cs_preffered_name, cs_long_name, "
+        "select cs_idseq, cs_preffered_name, cs_long_name, cstl_name, "
         + "CS_PREFFRED_DEFINITION, "
         + "csi_idseq, csi_name, csitl_name, csi_description, "
         + "cs_csi_idseq, csi_level, parent_csi_idseq, cs_conte_idseq "
@@ -922,6 +922,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       
         ClassSchemeItem csiTO = new CSITransferObject();
         csiTO.setCsIdseq(rs.getString("cs_idseq"));
+        csiTO.setClassSchemeType(rs.getString("cstl_name"));
         csiTO.setClassSchemeLongName(rs.getString("cs_long_name"));
         csiTO.setClassSchemePrefName(rs.getString("cs_preffered_name"));
         csiTO.setClassSchemeDefinition(rs.getString("CS_PREFFRED_DEFINITION"));
@@ -995,5 +996,45 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     }
 
   }
+   /**
+       * 
+       * @param cscsiIdseq cscsi idseq
+       * @param regStatus the registration status
+       * @return true if there are admin component registered under this cscsi
+       *  with the given registration status
+       */
+   public boolean hasRegisteredAC(String cscsiIdseq, String regStatus){
+      HasACRegistered hasAC = new HasACRegistered(this.getDataSource());
+      return hasAC.executeHasACRegistered(cscsiIdseq, regStatus);
+      
+   }
+   /**
+    * Inner class that accesses database to delete a question.
+    */
+   private class HasACRegistered extends StoredProcedure {
+     public HasACRegistered(DataSource ds) {
+       super(ds, "sbrext_cs_details.has_registered_ac");
+       declareParameter(new SqlParameter("p_par_cs_csi_idseq", Types.VARCHAR));
+       declareParameter(new SqlParameter("p_reg_status", Types.VARCHAR));
+       declareParameter(new SqlOutParameter("p_is_registered", Types.VARCHAR));
+       declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
+       declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
+
+       compile();
+     }
+
+     public boolean executeHasACRegistered(String cscsiIdseq, String regStatus) {
+       Map in = new HashMap();
+       in.put("p_par_cs_csi_idseq", cscsiIdseq);
+       in.put("p_reg_status", regStatus);
+
+       Map out = execute(in);
+       String returnCode = (String) out.get("p_is_registered");
+
+       
+
+       return returnCode.equals("1");
+     }
+   }
 
 }

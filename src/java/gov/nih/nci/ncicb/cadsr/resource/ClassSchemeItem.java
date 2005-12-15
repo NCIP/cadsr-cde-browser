@@ -4,6 +4,9 @@ public interface ClassSchemeItem  {
   public String getClassSchemeLongName();
   public void setClassSchemeLongName(String aClassSchemeName);
   
+  public String getClassSchemeType();
+  public void setClassSchemeType(String aClassSchemeType);
+  
   public String getClassSchemePrefName() ;
   public void setClassSchemePrefName(String aName);
    
