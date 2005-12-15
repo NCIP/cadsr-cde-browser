@@ -80,4 +80,8 @@ public interface ProcessConstants extends oracle.cle.process.ProcessConstants {
   public static final String CDE_SEARCH_RESULT_COMPARATOR="cdeSearchResultComparator";
   
   public static final String  FORMS_IGNORE_FILTER = "forms.ignore.filter";
+  
+  public static final String DE_SEARCH_MODE_EXACT = "Exact phrase";
+  public static final String DE_SEARCH_MODE_ALL = "All of the words";
+  public static final String DE_SEARCH_MODE_ANY = "At least one of the words";
 }
