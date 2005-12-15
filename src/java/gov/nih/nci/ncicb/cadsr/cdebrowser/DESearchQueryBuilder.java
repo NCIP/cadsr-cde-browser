@@ -5,6 +5,7 @@ import gov.nih.nci.ncicb.cadsr.util.SimpleSortableColumnHeader;
 import gov.nih.nci.ncicb.cadsr.util.SortableColumnHeader;
 import gov.nih.nci.ncicb.cadsr.util.StringReplace;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,6 +28,7 @@ public class DESearchQueryBuilder extends Object {
   private String treeParamIdSeq = "";
   private String treeParamType = "";
   private String treeConteIdSeq = "";
+  private String treeParamRegStatus = null;
   private Object[] queryParams = new Object[]{"%","%","%","%","%"};
   private String contextUse = "";
   private String orderBy = " long_name, de_version ";
@@ -38,7 +40,14 @@ public class DESearchQueryBuilder extends Object {
                               String treeParamIdSeq,
                               String treeConteIdSeq,DataElementSearchBean searchBean)  {
 
-    this.treeParamIdSeq = treeParamIdSeq;
+     if (treeParamType.equalsIgnoreCase("REGCSI") ||
+     treeParamType.equalsIgnoreCase("REGCS"))  {
+        String[] subStr = treeParamIdSeq.split(",");
+        this.treeParamIdSeq =subStr[0]; 
+        this.treeParamRegStatus = subStr[1];
+     }
+     else 
+       this.treeParamIdSeq = treeParamIdSeq;
     this.treeParamType =  treeParamType;
     this.treeConteIdSeq = treeConteIdSeq;
     strArray = request.getParameterValues("SEARCH");
@@ -135,6 +144,8 @@ public class DESearchQueryBuilder extends Object {
         latestWhere = " and de.latest_version_ind = 'Yes' ";
       }
       whereBuffer.append(latestWhere);
+      if (this.treeParamRegStatus !=null)
+         whereBuffer.append(" and acr.registration_status = '"+ this.treeParamRegStatus + "'");
     }
     else {
       searchStr0 = StringUtils.replaceNull(request.getParameter("jspKeyword"));
