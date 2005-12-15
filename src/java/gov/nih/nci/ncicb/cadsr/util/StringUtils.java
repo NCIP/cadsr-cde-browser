@@ -89,7 +89,7 @@ public class StringUtils {
       return "";
     }
     else {
-      return obj.toString();
+      return obj.toString().trim();
     }
   }
   /**

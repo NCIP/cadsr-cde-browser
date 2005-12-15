@@ -48,21 +48,51 @@
   </tr>
 </table>
 
-<table width="100%" >
  
 
   <table width="100%" cellpadding="0" cellspacing="1" class="OraBGAccentVeryDark" border="0" >
   <tr>
-     <td width="65%" class="OraTabledata"  align="center" nowrap >
+     <td width="75%" class="OraTabledata"  align="center" nowrap >
        <table border="0" width="100%" cellpadding="0" cellspacing="0" class="OraTabledata" >
          <tr>
-          <td colspan=2" align="center">
-           <input type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="60"> 
+          <td colspan="2" align="center">
+          <table border="0" width="100%" cellpadding="0" cellspacing="0" class="OraTabledata" >
+          <tr>
+          <td>
+           <table valign="top">
+	    <tr>
+	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
+	        <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
+	        <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
+	        { %> checked <%}%> >Exact phrase
+	     </td >
+	    </tr>
+	    <tr>
+	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
+	        <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
+	        <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ALL)) 
+	        { %> checked <%}%>>All of the words
+	     </td >
+	    </tr>
+	    <tr>
+	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
+	        <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
+	        <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> >At least one of the words
+	     </td >
+	    </tr>
+	  </table>    
+
+          </td>
+          <td>
+           <input type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="45"> 
+           </td>
+           </tr>
+           </table>
           </td>
          </tr>
          <tr vlign="top">
             <td nowrap>&nbsp;</td>
-            <td width="100%" valign="top" align="center" class="AbbreviatedText">Tip: This is an exact match search. To search for partial words or phrases use the * as a wildcard.</td>
+            <td width="100%" valign="top" align="center" class="AbbreviatedText">Tip: To search for partial words or phrases use the * as a wildcard.</td>
           </td>
          </tr>
          <tr valign="top">  
@@ -74,8 +104,8 @@
      	</table>     
        
      </td>
-     <td width="35%">
-     	<table border="0" width="100%" cellpadding="0" cellspacing="0" class="OraTabledata" >
+     <td width="25%" class="OraTabledata" valign="top" >
+     	<table border="0" width="100%" cellpadding="1" cellspacing="1" class="OraTabledata" >
      	 <tr >
      	    <td  width="100%" class="OraTableColumnHeaderNoBG"  nowrap>Search in the following field(s)</td>
      	 </tr>
@@ -88,10 +118,7 @@
        
      	</table>
      </td>
- </tr>
-   
- </table>
- 
+  
  <table width="100%">
    <tr>
          <td nowrap>&nbsp;</td>
@@ -168,6 +195,20 @@
                 </td>
             </tr>
             <tr >
+               <td class="OraTableColumnHeaderNoBG" nowrap>Classification</td>
+               <td class="OraTabledata" nowrap>
+                  <input type="text" name="txtClassSchemeItem" 
+                    value="<%=txtClassSchemeItem%>" 
+                    readonly onFocus="this.blur();"
+                    class="LOVField"
+                    size ="18"
+                  >
+                &nbsp;<a href="<%=csLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Classification Scheme Items" /></a>&nbsp;
+                <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
+                <input type="hidden" name="jspClassification" value="<%=desb.getCsCsiIdseq()%>" >
+              </td>
+            </tr>            
+            <tr >
               <td class="OraTableColumnHeaderNoBG" nowrap>Value Domain</td>
               <td class="OraTabledata" nowrap>
                 <input type="text" name="txtValueDomain" 
@@ -186,20 +227,27 @@
                 <input type="text" name="jspValidValue" value="<%=desb.getValidValue()%>" size ="20"> 
                </td>
             </tr>
-            <tr >
-               <td class="OraTableColumnHeaderNoBG" nowrap>Classification</td>
-               <td class="OraTabledata" nowrap>
-                  <input type="text" name="txtClassSchemeItem" 
-                    value="<%=txtClassSchemeItem%>" 
-                    readonly onFocus="this.blur();"
-                    class="LOVField"
-                    size ="18"
-                  >
-                &nbsp;<a href="<%=csLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Classification Scheme Items" /></a>&nbsp;
-                <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
-                <input type="hidden" name="jspClassification" value="<%=desb.getCsCsiIdseq()%>" >
-              </td>
-            </tr>            
+            <tr>
+            <td colspan="2" class="OraTableColumnHeaderNoBG" >
+                      <table valign="top">
+	    	    <tr>
+	    	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
+	    	        <input type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
+	    	        <%if (desb.getPvSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
+	    	        { %> checked <%}%> >Exact phrase
+	    	        <input type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
+	    	        <%if (desb.getPvSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ALL)) 
+	    	        { %> checked <%}%>>All words
+	    	        <input type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
+	    	        <%if (desb.getPvSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> >At least one word
+	    	     </td >
+	    	    </tr>
+	    	  </table>    
+
+            
+            
+            </td>
+            </tr>
           </table>
          </td>
          <td valign="top" width="50%" align="center" >
@@ -325,7 +373,14 @@
 %>
  <table with ="80%" align="center" border="0">
  <TR>
-    <td align="center" nowrap><a href="javascript:submitForm()"><html:img page="/i/search.gif" border="0" /></a></td>
+    <td align="center" nowrap><a href="javascript:submitForm()">
+<% if (searchMode!=null && searchMode.equals(BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS)) {
+%>
+   <html:img page="/i/search_within_result.gif" border="0" />
+ <% }else { %>       
+     <html:img page="/i/search.gif" border="0" />
+ <% } %>
+    </a></td>
     <td  align="center" nowrap><a href="javascript:clearForm()"><html:img page="/i/clear.gif" border="0" /></a></td>
      <%
      if(deList!=null){

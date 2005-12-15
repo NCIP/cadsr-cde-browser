@@ -9,22 +9,19 @@
  */
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserNavigationConstants;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormBuilderBaseDispatchAction;
 
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-
 
 public class ScreenTypeAction extends BrowserBaseDispatchAction { 
   
@@ -62,5 +59,25 @@ public class ScreenTypeAction extends BrowserBaseDispatchAction {
     return mapping.findForward(SUCCESS);
   }   
   
+  public ActionForward changeSearchScopeToSearchResults(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+
+      this.setSessionObject(request, BrowserFormConstants.BROWSER_SEARCH_SCOPE, BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS,true);
+      DynaActionForm searchForm = (DynaActionForm) form;
+      String baseQuery = (String) searchForm.get("baseQuery");    
+      String searchMode = request.getParameter("jspNameSearchMode");
+      String searchType = request.getParameter("jspBasicSearchType");
+      String searchStr = request.getParameter("jspSimpleKeyword");
+      
+      String searchCrumb = "Search Criteria>>"+ searchMode + " (" + searchType + "=" + searchStr + ")";
+      this.setSessionObject(request, "searchCrumb", searchCrumb, true);
+
+      this.setSessionObject(request,"baseQuery", baseQuery,true);
+      return mapping.findForward(SUCCESS);
+    
+      }
 
 }
