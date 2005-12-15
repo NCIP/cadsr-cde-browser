@@ -356,7 +356,9 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       in.put("p_long_name", sm.getLongName());
       in.put("p_preferred_definition", sm.getPreferredDefinition());
       in.put("p_conte_idseq", sm.getContext().getConteIdseq());
-      in.put("p_proto_idseq", sm.getForm().getProtocol().getProtoIdseq());
+      //module is no more associate with protocol.
+      //in.put("p_proto_idseq", sm.getForm().getProtocol().getProtoIdseq());
+      in.put("p_proto_idseq", null);
       in.put("p_asl_name", sm.getAslName());
       in.put("p_created_by", sm.getCreatedBy());
       in.put("p_display_order", new Integer(sm.getDisplayOrder()));
@@ -406,7 +408,9 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
            sm.getLongName(),
            sm.getPreferredDefinition(),
            sm.getForm().getContext().getConteIdseq(),
-           sm.getForm().getProtocol().getProtoIdseq(),
+           //module is not associate with protocol any more.
+           //sm.getForm().getProtocol().getProtoIdseq(),
+           null,
            sm.getAslName(),
            sm.getCreatedBy(),
            "MODULE"

@@ -260,4 +260,9 @@ public interface FormDAO extends AdminComponentDAO {
   
   public void setLatestVersion(Version oldVersion, Version newVersion);
 
+  public void removeFormProtocol(String formIdseq, String protocoldIdseq);
+
+  public void removeFormProtocols(String formIdseq, Collection protocoldIds);
+  
+  public void addFormProtocol(String formIdseq, String protocoldIdseq);
 }

@@ -28,6 +28,8 @@ public interface PersistenceConstants {
   public static final String JDBC_REFERENCE_DOCUMENT_DAO = "jdbcReferenceDocumentDAO";  
   public static final String JDBC_REFERENCE_DOCUMENT_TYPE_DAO = "jdbcReferenceDocumentTypeDAO"; 
   public static final String JDBC_UTIL_DAO = "jdbcUtilDAO"; 
+  public static final String JDBC_PROTOCOL_DAO= "jdbcProtocolDAO"; 
+
 
 
   public static final String FORM_ADMIN_COMPONENT_TYPE="QUEST_CONTENT";

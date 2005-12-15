@@ -196,7 +196,10 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       form.setFormIdseq("99CD59C5-A8B7-3FA4-E034-080020C9C0E0");
       Protocol prot = new ProtocolTransferObject();
       prot.setProtoIdseq("B1EACF79-3F60-3053-E034-0003BA12F5E7");
-      form.setProtocol(prot);  
+      //multiple protocols
+      List protocols = new ArrayList(1);
+      protocols.add(prot);
+      form.setProtocols(protocols);  
       Module module = new ModuleTransferObject();
       module.setModuleIdseq("D45A49A8-167D-0422-E034-0003BA0B1A09");
       module.setForm(form);
@@ -282,10 +285,15 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     protected int createContent (FormValidValue sm, String qcIdseq) 
     {
       String protocolIdSeq = null;
+      
+      //protocol is no more associated with questions
+        /*
       if( sm.getQuestion().getModule().getForm().getProtocol()!=null)
       {
          protocolIdSeq=sm.getQuestion().getModule().getForm().getProtocol().getProtoIdseq();
       }
+      */
+      
       Object [] obj = 
         new Object[]
           {qcIdseq,
@@ -396,10 +404,14 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     public Map executInsertCommand(FormValidValue fvv, String parentId) {
       String protocolIdSeq = null;
 
+    //question is no more associated with protocols.
+    /*
       if( fvv.getQuestion().getModule().getForm().getProtocol()!=null)
       {
          protocolIdSeq=fvv.getQuestion().getModule().getForm().getProtocol().getProtoIdseq();
       }      
+     */
+     
       Map in = new HashMap();
       
       in.put("p_ques_idseq", parentId);

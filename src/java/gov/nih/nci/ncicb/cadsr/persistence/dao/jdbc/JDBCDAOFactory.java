@@ -13,6 +13,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.FormValidValueDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormValidValueInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleInstructionDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ProtocolDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ReferenceDocumentDAO;
@@ -262,6 +263,17 @@ public class JDBCDAOFactory extends AbstractDAOFactory
 
     return utilDAO;
   }
+
+    public ProtocolDAO getProtocolDAO() {
+      ProtocolDAO protocolDAO = (JDBCProtocolDAO) daoCache.get(JDBC_PROTOCOL_DAO);
+
+      if (protocolDAO == null) {
+        protocolDAO = new JDBCProtocolDAO(serviceLocator);
+        daoCache.put(JDBC_PROTOCOL_DAO, protocolDAO);
+      }
+
+      return protocolDAO;
+    }
 
   public static void main(String[] args) {
     /**
