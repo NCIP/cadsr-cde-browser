@@ -118,7 +118,7 @@
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
-              property="protocol.longName"
+              property="delimtedProtocolLongNames"
               />
           </td>
         </tr>

@@ -38,9 +38,9 @@ function submitFormToSave(methodName) {
   }
 }
 
-function clearProtocol() {
-  document.forms[0].protocolIdSeq.value = "";
-  document.forms[0].protocolLongName.value = "";
+function manageProtocols() {
+  document.forms[0].action= '<%=request.getContextPath()+"/gotoManageProtocols.do?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GOTO_MANAGE_PROTOCOLS%>'
+  document.forms[0].submit();
 }
 
 function submitModuleRepition(methodName,moduleIndexValue) {
@@ -154,14 +154,14 @@ function submitModuleRepition(methodName,moduleIndexValue) {
             <td class="OraTableColumnHeader" width="20%" nowrap>
               <bean:message key="cadsr.formbuilder.form.protocol"/>
             </td>
-            <td class="OraFieldText" nowrap>
+            <td class="OraFieldText">
+                <bean:write  name="<%=FormConstants.CRF%>" property="delimitedProtocolLongNames"/> 
+            <%--
               <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
                 readonly="true"
                 size="19"
-                styleClass="LOVField"/>
-                  <a href="<%=protoLOVUrl%>">
-                <img src="<%=urlPrefix%>i/blankSearchLight.gif" border="0" alt="Search for Protocol Items"/>
-              </a> <a href="javascript:clearProtocol()"><i>Clear</i></a> 
+                styleClass="LOVField"/>--%>
+              <a href="javascript:manageProtocols()"><i>Manage Protocols</i></a> 
               <html:hidden property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
             </td>
           </tr>
