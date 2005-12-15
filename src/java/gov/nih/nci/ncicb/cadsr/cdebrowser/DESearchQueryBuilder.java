@@ -438,7 +438,7 @@ public class DESearchQueryBuilder extends Object {
                          csiWhere + whereClause +registrationWhere+ workFlowWhere;
 
       }
-      else if (treeParamType.equals("CSI")){
+      else if (treeParamType.equals("CSI") || treeParamType.equals("REGCSI") ){
         if (searchStr5.equals(""))
           csiWhere = " and acs.cs_csi_idseq = '"+treeParamIdSeq+"'";
         else
@@ -468,7 +468,8 @@ public class DESearchQueryBuilder extends Object {
                          whereClause+ registrationWhere+ workFlowWhere;
 
       }
-      else if (treeParamType.equals("CLASSIFICATION")){
+     else if (treeParamType.equals("CLASSIFICATION")
+            || treeParamType.equals("REGCS") ){
         if (searchStr5.equals(""))
           csiWhere = "";
         else
