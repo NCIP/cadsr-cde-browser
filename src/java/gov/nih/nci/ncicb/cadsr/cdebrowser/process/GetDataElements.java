@@ -6,27 +6,21 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.CollectionUtil;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants;
 import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.TreeParametersTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JDataElementTransferObject;
 import gov.nih.nci.ncicb.cadsr.html.HTMLPageScroller;
-import gov.nih.nci.ncicb.cadsr.persistence.bc4j.PageContextValueObject;
-import gov.nih.nci.ncicb.cadsr.resource.CDEBrowserPageContext;
 import gov.nih.nci.ncicb.cadsr.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.TreeParameters;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
-import gov.nih.nci.ncicb.cadsr.resource.handler.CDEBrowserPageContextHandler;
 import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.resource.handler.ValidValueHandler;
 import gov.nih.nci.ncicb.cadsr.resource.impl.CDECartImpl;
 import gov.nih.nci.ncicb.cadsr.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.DBUtil;
-import gov.nih.nci.ncicb.cadsr.util.DTOTransformer;
 import gov.nih.nci.ncicb.cadsr.util.PageIterator;
 import gov.nih.nci.ncicb.cadsr.util.SortableColumnHeader;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
@@ -38,7 +32,6 @@ import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 import java.text.DateFormat;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +46,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.21 2005-09-12 13:48:33 kakkodis Exp $
+ * @version: $Id: GetDataElements.java,v 1.22 2005-12-15 22:17:48 jiangj Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -82,12 +75,14 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       registerResultObject("tibSearchDE");
       registerStringParameter("P_PARAM_TYPE");
       registerStringParameter("P_IDSEQ");
+      registerStringParameter("P_REGSTATUS");
       //For treeBread crumbs
       registerStringParameter(TreeConstants.TREE_BREADCRUMBS);
       registerStringResult(TreeConstants.TREE_BREADCRUMBS);
       //
       registerStringResult("P_PARAM_TYPE");
       registerStringResult("P_IDSEQ");
+       registerStringResult("P_REGSTATUS");
 
       //
       registerStringParameter("P_CS_CSI_IDSEQ");
@@ -152,9 +147,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
     HttpServletRequest myRequest = null;
     HttpSession userSession = null;
     TabInfoBean tib = null;
-    String treeWhereClause = null;
     String[] searchParam = null;
-    Object sessionId = getSessionId();
     DBUtil dbUtil = null;
 
     try {
@@ -178,67 +171,20 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
       String paramType = getStringInfo("P_PARAM_TYPE");
       String paramIdSeq = getStringInfo("P_IDSEQ");
-      String paramCsCsiIdSeq = getStringInfo("P_CS_CSI_IDSEQ");
+      String paramRegStatus = getStringInfo("P_REGSTATUS");
       String treeConteIdseq = getStringInfo("P_CONTE_IDSEQ");
       searchParam = getInfoStringArray("SEARCH");
 
       String performQuery = getStringInfo("performQuery");
-      String diseaseName = getStringInfo("diseaseName");
-      String templateType = getStringInfo("templateType");
-      String csName = getStringInfo("csName");
-      String templateName = getStringInfo("templateName");
       String conteName = getStringInfo("contextName");
+      String searchScope = getStringInfo("browserSearchScope");
+      String previousQuery = getStringInfo("baseQuery");
+      
+      if (searchScope == null)
+        searchScope = BrowserFormConstants.BROWSER_SEARCH_SCOPE_NEW;
 
       log.info("- Retrieved request parameters successfully");
 
-      // **Need to be taken out to Since  CDEBrowserPageContext is nolonger useed
-      /**
-      TreeParameters treeParam = new TreeParametersTransferObject();
-
-      if ((paramType != null) && (paramIdSeq != null) && !("newSearch".equals(performQuery))) {
-        CDEBrowserPageContextHandler ph =
-          (CDEBrowserPageContextHandler) HandlerFactory.getHandler(
-            CDEBrowserPageContext.class);
-        CDEBrowserPageContext pc = null;
-
-        if (paramType.equals("CORE") || paramType.equals("NON-CORE")) {
-          treeParam.setNodeType(paramType);
-          treeParam.setNodeIdseq(paramIdSeq);
-          treeParam.setClassSchemeItemName(diseaseName);
-          treeParam.setClassSchemeName(csName);
-          treeParam.setConteIdseq(treeConteIdseq);
-
-          pc = (CDEBrowserPageContext)ph
-             .findPageContext(paramType, paramCsCsiIdSeq, sessionId);
-          pc = new PageContextValueObject(treeParam);
-        }
-        else if (paramType.equals("TEMPLATE")) {
-          treeParam.setNodeType(paramType);
-          treeParam.setNodeIdseq(paramIdSeq);
-          treeParam.setClassSchemeName(csName);
-          treeParam.setClassSchemeItemName(diseaseName);
-          treeParam.setTemplateGrpName(templateType);
-          treeParam.setCDETemplateName(templateName);
-          treeParam.setConteIdseq(treeConteIdseq);
-          treeParam.setContextName(conteName);
-          pc = (CDEBrowserPageContext)ph
-             .findPageContext(paramType, paramCsCsiIdSeq, sessionId);
-          pc = new PageContextValueObject(treeParam);
-        }
-        else {
-          pc =
-            (CDEBrowserPageContext) ph.findPageContext(
-              paramType, paramIdSeq, sessionId);
-        }
-
-        //setResult(ProcessConstants.PAGE_CONTEXT, pc);
-        setResult("P_CONTEXT", pc.getContextName());
-        setResult("P_CONTE_IDSEQ", pc.getConteIdseq());
-
-        log.info("- Created PageContext object successfully");
-      }
-       **/
-       
       if ((paramType != null) && (paramIdSeq != null) && !("newSearch".equals(performQuery))) {       
         setResult("P_CONTEXT", conteName);
         setResult("P_CONTE_IDSEQ", treeConteIdseq);
@@ -253,7 +199,6 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
        
       DataElementSearchBean desb = null;
       List queryResults = null;
-      String pageNum;
       PageIterator dePageIterator = null;
       DESearchQueryBuilder queryBuilder = null;
       String queryStmt;
@@ -264,16 +209,12 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       dbUtil = getDBUtil();
 
       if (performQuery == null) {
-        desb =
-          new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
+          desb = new DataElementSearchBean(myRequest);
         dePageIterator = new BC4JPageIterator(40);
          desb.initSearchPreferences(dbUtil);
       }
       else if (performQuery.equals("yes")) {
-
-
-        desb =
-          new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
+        desb = new DataElementSearchBean(myRequest);
         // Need to the session Preference which is per session
         setValuesFromOldSearchBean(desb);
         desb.setLOVLists(dbUtil);
@@ -294,6 +235,11 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
         dePageIterator.setCurrentPage(0);
 
+         if (paramType.equalsIgnoreCase("REGCSI") ||
+         paramType.equalsIgnoreCase("REGCS"))
+          queryBuilder =  new DESearchQueryBuilder(
+              myRequest, paramType, paramIdSeq + "," + paramRegStatus, treeConteIdseq,desb);
+         else 
 
         queryBuilder =
           new DESearchQueryBuilder(
@@ -307,7 +253,17 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
         queryStmt = queryBuilder.getSQLWithoutOrderBy();
         orderBy = queryBuilder.getOrderBy();
-
+        
+        if (searchScope.equalsIgnoreCase(BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS)) {
+            if (desb.getSimpleSearchStr()!=null) {
+                queryStmt = queryStmt + " and de.de_idseq in ( " + previousQuery + " )";
+                String searchCrumb = (String)userSession.getAttribute("searchCrumb") + ">>" 
+                + desb.getNameSearchMode() + " (" + desb.getBasicSearchType() + "=" +
+                desb.getSimpleSearchStr() + ")";
+                userSession.setAttribute("searchCrumb", searchCrumb);
+            }
+        }
+        
         queryParams = queryBuilder.getQueryParams();
 
         log.trace("- Query stmt is " + queryStmt);
@@ -326,7 +282,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         createPageScroller(
           dePageIterator, ProcessConstants.BOTTOM_PAGE_SCROLLER, myRequest.getContextPath());
         myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
-
+        userSession.setAttribute("baseQuery", queryBuilder.getXMLQueryStmt());
         log.trace("Created both page scrollers successfully");
       }
       else if (performQuery.equals("no")) {
@@ -396,11 +352,15 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         paramType = null;
         paramIdSeq = null;
         queryResults = null;
+        paramRegStatus = null;
         desb =
-          new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);
+          new DataElementSearchBean(myRequest);
           // Set search preference  from old Search Bean to the new one
          setValuesFromOldSearchBean(desb);
          desb.setLOVLists(dbUtil);
+         userSession.removeAttribute(BrowserFormConstants.BROWSER_SEARCH_SCOPE);
+         userSession.removeAttribute("baseQuery");
+         userSession.removeAttribute("searchCrumb");
       //myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
 
       }
@@ -501,6 +461,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
       setResult("performQuery", null);
       setResult("P_PARAM_TYPE", paramType);
       setResult("P_IDSEQ", paramIdSeq);
+      setResult("P_REGSTATUS", paramRegStatus);
 
       setCondition(SUCCESS);
     }
