@@ -99,7 +99,7 @@ function gotoClassificationsLOV() {
                     <tr>
                         <td width="20%" class="OraTableColumnHeaderNoBG" nowrap>Public ID</td>
                         <td class="OraTabledata" nowrap>
-                        <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="20"
+                        <html:text property="<%=FormConstants.PUBLIC_ID%>" size="20"
                             onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>
                          </td>
                          <td width="50%" class="OraTableColumnHeaderNoBG" nowrap>
@@ -107,8 +107,8 @@ function gotoClassificationsLOV() {
                               <tr>
                                  <td valign="top"  class="OraTableColumnHeaderNoBG" nowrap>Version</td>
                                     <td class="OraTableColumnHeaderNoBG" nowrap>
-                                      <input type="radio" name="jspLatestVersion" value="Yes" checked> Latest Version
-                                      <input type="radio" name="jspLatestVersion" value="No"> All Versions
+                                      <input type="radio" name="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.LATEST_VERSION%>" checked> Latest Version
+                                      <input type="radio" name="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.ALL_VERSION%>"> All Versions
                                   </td>
                                </tr>          
                              </table>
@@ -153,14 +153,14 @@ function gotoClassificationsLOV() {
             <tr>            
               <td width="21%" class="OraTableColumnHeaderNoBG" nowrap>Module</td>
               <td width="70%" class="OraTabledata" nowrap>
-                <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="38"
+                <html:text property="<%=FormConstants.MODULE_LONG_NAME%>" size="38"
                 onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>       
               </td>  
              </tr>       
             <tr>            
               <td width="21%" class="OraTableColumnHeaderNoBG" nowrap>CDE Public ID</td>
               <td width="70%" class="OraTabledata" nowrap>
-                <html:text property="<%=FormConstants.FORM_LONG_NAME%>" size="21"
+                <html:text property="<%=FormConstants.CDE_PUBLIC_ID%>" size="21"
                 onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>       
               </td>  
              </tr>               
