@@ -18,7 +18,6 @@ import org.apache.commons.logging.LogFactory;
 public class CDEBrowserTreeCache 
 {
                                    
-  private final String CTEP="CTEP";
   protected Log log =  LogFactory.getLog(CDEBrowserTreeCache.class.getName());
   
   public CDEBrowserTreeCache()
@@ -31,7 +30,6 @@ public class CDEBrowserTreeCache
   private List allTemplatesForCtep = null;  
   private List allContextHolders = null;
   private TreeIdGenerator idGen = new TreeIdGenerator();
-  private DefaultMutableTreeNode publishNode = null;
   private Map allClassificationNodes = null;
   private static ApplicationServiceLocator appServiceLocator = null;
   private Map allPublishingNode = null;

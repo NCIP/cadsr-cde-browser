@@ -42,7 +42,6 @@ public class CDEBrowserTree
 
  public DefaultMutableTreeNode buildTree(Hashtable treeParams) throws Exception {
 
-  Context ctx = null;
   DefaultMutableTreeNode tree = null;
 
   BaseTreeNode baseNode = null;
@@ -50,11 +49,6 @@ public class CDEBrowserTree
   //TimeUtils.recordStartTime("Tree");
   try {
    log.info("Tree Start " + TimeUtils.getEasternTime());
-
-   CDEBrowserParams params = CDEBrowserParams.getInstance();
-
-
-
 
    baseNode = new BaseTreeNode(treeParams);
    CDEBrowserTreeCache cache = CDEBrowserTreeCache.getAnInstance();
@@ -81,9 +75,6 @@ public class CDEBrowserTree
     //Adding data template nodes
 
     DefaultMutableTreeNode tmpLabelNode;
-    DefaultMutableTreeNode disLabelNode;
-    DefaultMutableTreeNode phaseLabelNode;
-    DefaultMutableTreeNode [] templateNodes;
     DefaultMutableTreeNode otherTempNodes;
 
     if (Context.CTEP.equals(currContext.getName())) {

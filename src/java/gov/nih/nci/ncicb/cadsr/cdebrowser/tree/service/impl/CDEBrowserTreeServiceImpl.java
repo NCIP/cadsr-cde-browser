@@ -17,6 +17,7 @@ import gov.nih.nci.ncicb.cadsr.resource.ContextHolder;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.webtree.WebNode;
 
 import java.net.URLEncoder;
@@ -31,12 +32,11 @@ import java.util.Map;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+
 public class CDEBrowserTreeServiceImpl
   implements CDEBrowserTreeService {
   private ServiceLocator locator;
   private AbstractDAOFactory daoFactory;
-  private Map formCSIMap = null;
-  private Map templateCSIMap = null;
 
   /**
    * Currently the locator classname is hard code need to be refactored
@@ -261,8 +261,6 @@ public class CDEBrowserTreeServiceImpl
         currCsCsiIdseq = currCsi.getCsCsiIdseq();
       }
 
-      String currContextName = currContext.getName();
-      String currTemplateId = currTemplate.getIdseq();
       String currCategory = currTemplate.getFormCategory();
 
       //
@@ -275,7 +273,6 @@ public class CDEBrowserTreeServiceImpl
         if (phaseCsCsiList.contains(currCsCsiIdseq)) {
           CsCsiCategorytHolder cscsiCategoryHolder = (CsCsiCategorytHolder)phaseCscsiHolder.get(currCsCsiIdseq);
 
-          DefaultMutableTreeNode cscsiNode = cscsiCategoryHolder.getNode();
           Map categoryHolder = cscsiCategoryHolder.getCategoryHolder();
           DefaultMutableTreeNode categoryNode = (DefaultMutableTreeNode)categoryHolder.get(currCategory);
           DefaultMutableTreeNode
@@ -497,8 +494,12 @@ public class CDEBrowserTreeServiceImpl
 
     FormDAO dao = daoFactory.getFormDAO();
     List allCscsi = dao.getCSCSIHierarchy();
+    CDEBrowserParams params = CDEBrowserParams.getInstance();
+    String[] regStatusArr = params.getCsTypeRegStatus().split(",");
+    
     Map csMap = new HashMap(); //this map stores the webnode for cs given cs_idseq
     Map csiMap = new HashMap();
+    Map <String, Map> regStatusMapByCsId = new HashMap();
 
     Iterator iter = allCscsi.iterator();
 
@@ -527,21 +528,48 @@ public class CDEBrowserTreeServiceImpl
 
         classifcationNode.add(csNode);
         csMap.put(csId, csNode);
+        
+        if (cscsi.getClassSchemeType().equalsIgnoreCase(params.getRegStatusCsTree())){
+            Map<String, DefaultMutableTreeNode>  regStatusMap = new HashMap();
+            for (int i=0; i<regStatusArr.length; i++){
+              DefaultMutableTreeNode regNode = getRegStatusNode(idGen.getNewId(), regStatusArr[i], 
+              csContextId, csId, treeFunctions);
+              csNode.add(regNode);
+              regStatusMap.put(regStatusArr[i], regNode);
+            }
+            regStatusMapByCsId.put(csId, regStatusMap);
+        }
       }
 
       // add csi node
-      DefaultMutableTreeNode csiNode = getClassificationSchemeItemNode(idGen.getNewId(), cscsi, treeFunctions);
 
       String parentId = cscsi.getParentCscsiId();
       DefaultMutableTreeNode parentNode = null;
-
-      if (parentId != null)
+       DefaultMutableTreeNode csiNode =null;
+      if (parentId != null) {
+        csiNode = getClassificationSchemeItemNode(idGen.getNewId(), cscsi, treeFunctions);
         parentNode = (DefaultMutableTreeNode)csiMap.get(parentId);
-      else
-        parentNode = csNode;
-
-      if (parentNode != null)
         parentNode.add(csiNode);
+      }
+      else { //this is the first level csi link to cs or reg status
+        // first check and see if CS is of reg status type
+        Map<String, DefaultMutableTreeNode> regStatusNodesMap = regStatusMapByCsId.get(csId);
+        if (regStatusNodesMap == null) {
+           //not reg status, linked to cs directly
+           csiNode = getClassificationSchemeItemNode(idGen.getNewId(), cscsi, treeFunctions);
+           csNode.add(csiNode);
+        } else {
+           //add csiNode to the proper reg status node
+           
+           for (int i=0; i<regStatusArr.length; i++) {
+              if (dao.hasRegisteredAC(cscsi.getCsCsiIdseq(), regStatusArr[i])) {
+               csiNode = this.getRegStatusCSINode(idGen.getNewId(), 
+               cscsi, regStatusArr[i], treeFunctions);
+               regStatusNodesMap.get(regStatusArr[i]).add(csiNode);
+              }
+           }
+        }
+      }
 
       csiMap.put(cscsi.getCsCsiIdseq(), csiNode);
 
@@ -563,12 +591,12 @@ public class CDEBrowserTreeServiceImpl
   private DefaultMutableTreeNode getClassificationSchemeNode(String nodeId, ClassSchemeItem csi,
                                                              TreeFunctions treeFunctions) throws Exception {
     return new DefaultMutableTreeNode(
-              new WebNode(nodeId,
-                          csi.getClassSchemeLongName(),
-                          "javascript:" + treeFunctions.getJsFunctionName() + "('P_PARAM_TYPE=CLASSIFICATION&P_IDSEQ="
-                             + csi.getCsIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq()
-                             + treeFunctions.getExtraURLParameters() + "')",
-                          csi.getClassSchemeDefinition()));
+              new WebNode(nodeId,  csi.getClassSchemeLongName(),
+              "javascript:" + treeFunctions.getJsFunctionName() 
+              + "('P_PARAM_TYPE=CLASSIFICATION&P_IDSEQ="
+                 + csi.getCsIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq()
+                 + treeFunctions.getExtraURLParameters() + "')",
+              csi.getClassSchemeDefinition()));
   }
 
   private DefaultMutableTreeNode getClassificationSchemeItemNode(String nodeId, ClassSchemeItem csi,
@@ -581,6 +609,17 @@ public class CDEBrowserTreeServiceImpl
                              + treeFunctions.getExtraURLParameters() + "')",
                           csi.getCsiDescription()));
   }
+   private DefaultMutableTreeNode getRegStatusCSINode(String nodeId, ClassSchemeItem csi,
+                           String regStatus,  TreeFunctions treeFunctions) throws Exception {
+     return new DefaultMutableTreeNode(
+               new WebNode(nodeId,
+                           csi.getClassSchemeItemName(),
+                           "javascript:" + treeFunctions.getJsFunctionName() + "('P_PARAM_TYPE=REGCSI&P_IDSEQ="
+                              + csi.getCsCsiIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq()
+                              + "&P_REGSTATUS=" + regStatus
+                              + treeFunctions.getExtraURLParameters() + "')",
+                           csi.getCsiDescription()));
+   }
 
   private DefaultMutableTreeNode getContextNode(String nodeId, Context context,
                                                 TreeFunctions treeFunctions) throws Exception {
@@ -678,6 +717,22 @@ public class CDEBrowserTreeServiceImpl
                                 preferred_definition));                                 //preffered definition
     return tmpNode;
   }
+
+   private DefaultMutableTreeNode getRegStatusNode(String nodeId, String regStatus,
+         String contextIdseq, String csIdseq, TreeFunctions treeFunctions) throws Exception {
+
+     DefaultMutableTreeNode
+        regStatusNode = new DefaultMutableTreeNode(
+                     new WebNode(nodeId,
+                                 regStatus,
+                                 "javascript:" + treeFunctions.getFormJsFunctionName()
+                                    + "('P_PARAM_TYPE=REGCS&P_IDSEQ=" + csIdseq + "&P_CONTE_IDSEQ="
+                                    + contextIdseq                                      //context idseq
+                                    + "&P_REGSTATUS=" + regStatus     //classification idseq
+                                    + treeFunctions.getExtraURLParameters() + "')",
+                                 regStatus));                                 //registration status
+     return regStatusNode;
+   }
 
   private DefaultMutableTreeNode getTemplateNode(String nodeId, Form template, ClassSchemeItem csi, Context currContext,
                                                  TreeFunctions treeFunctions) throws Exception {
