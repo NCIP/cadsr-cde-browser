@@ -11,6 +11,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleChanges;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
 
@@ -34,8 +35,9 @@ public interface FormBuilderServiceDelegate {
     public Form getFormDetails(String formPK) throws FormBuilderException;
 
     public Form updateForm(String formIdSeq, Form formHeader, Collection updatedModules,
-        Collection deletedModules,Collection addedModules
-         ,FormInstructionChanges instructionChanges) throws FormBuilderException;
+        Collection deletedModules,Collection addedModules,
+        Collection addedProtocols, Collection removedProtocols,
+        FormInstructionChanges instructionChanges) throws FormBuilderException;
 
     public Module updateModule(String moduleIdSeq, ModuleChanges moduleChanges) throws FormBuilderException;
 
@@ -133,4 +135,18 @@ public interface FormBuilderServiceDelegate {
         
     public void setLatestVersion(Version oldVersion, Version newVersion)
         throws FormBuilderException;
+    public void removeFormProtocol(String formIdseq, String protocoldIdseq)
+        throws FormBuilderException;
+    public void addFormProtocol(String formIdseq, String protocoldIdseq)
+        throws FormBuilderException;
+    public void addFormProtocols(String formIdseq, Collection protocoldIds)
+        throws FormBuilderException;
+    public void removeFormProtocols(String formIdseq, Collection protocoldIds)
+        throws FormBuilderException;
+        
+    public Protocol getProtocolByPK(String protocoldIdseq)
+        throws FormBuilderException;
+
+
+            
 }

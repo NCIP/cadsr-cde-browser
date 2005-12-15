@@ -11,6 +11,7 @@ import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleChanges;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
@@ -32,8 +33,9 @@ public interface FormBuilderServiceRemote {
     public Form getFormDetails(String formPK) throws RemoteException;
 
     public Form updateForm(String formIdSeq, Form formHeader, Collection updatedModules,
-        Collection deletedModules,Collection addedModules
-        ,FormInstructionChanges instructionChanges) throws RemoteException;
+        Collection deletedModules,Collection addedModules,
+        Collection addedProtocols, Collection removedProtocols,
+        FormInstructionChanges instructionChanges) throws RemoteException;
 
     public Module updateModule(String moduleIdSeq,ModuleChanges moduleChanges) throws RemoteException;
 
@@ -177,4 +179,16 @@ public interface FormBuilderServiceRemote {
       
       public void setLatestVersion(Version oldVersion, Version newVersion)
         throws RemoteException;
+        
+      public void removeFormProtocol(String formIdseq, String protocoldIdseq)
+            throws RemoteException;
+      public void removeFormProtocols(String formIdseq, Collection protocolds)
+            throws RemoteException;
+      public void addFormProtocol(String formIdseq, String protocoldIdseq)
+            throws RemoteException;
+      public void addFormProtocols(String formIdseq, Collection protocolds)
+              throws RemoteException;
+            
+      public Protocol getProtocolByPK(String protocoldIdseq)
+            throws RemoteException;
     }

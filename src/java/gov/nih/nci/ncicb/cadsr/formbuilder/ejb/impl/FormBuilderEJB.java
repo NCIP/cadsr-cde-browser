@@ -10,6 +10,7 @@ import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ReferenceDocumentTransferObject;
 import gov.nih.nci.ncicb.cadsr.ejb.common.SessionBeanAdapter;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.ejb.service.FormBuilderServiceRemote;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
@@ -52,6 +53,8 @@ import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ProtocolDAO;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
 
 import java.rmi.RemoteException;
@@ -350,7 +353,9 @@ public class FormBuilderEJB extends SessionBeanAdapter
     Form formHeader,
     Collection updatedModules,
     Collection deletedModules,
-    Collection addedModules,FormInstructionChanges instructionChanges) {
+    Collection addedModules,
+    Collection addedProtocols, Collection removedProtocols,
+    FormInstructionChanges instructionChanges) {
     ModuleDAO dao = daoFactory.getModuleDAO();
     FormDAO formdao = daoFactory.getFormDAO();
     FormInstructionDAO formInstrdao = daoFactory.getFormInstructionDAO();
@@ -395,6 +400,10 @@ public class FormBuilderEJB extends SessionBeanAdapter
 
     makeInstructionChanges(formInstrdao,instructionChanges.getFormHeaderInstructionChanges());
     makeFooterInstructionChanges(formInstrdao,instructionChanges.getFormFooterInstructionChanges());
+    
+    //update form/protocol association
+    addFormProtocols(formIdSeq, addedProtocols);
+    removeFormProtocols(formIdSeq, removedProtocols);
 
     return getFormDetails(formIdSeq);
   }
@@ -1084,7 +1093,7 @@ public class FormBuilderEJB extends SessionBeanAdapter
        */
        String resultFormPK = "E061BF96-E9A6-3425-E034-0003BA12F5E7";       
        return resultFormPK;
-      //TODO
+      //TODO call storedProc
   }    
   
   public List getFormVersions(int publicId){
@@ -1098,5 +1107,40 @@ public class FormBuilderEJB extends SessionBeanAdapter
      myDAO.setLatestVersion(oldVersion, newVersion);
      return;
  }
-
+ public void removeFormProtocol(String formIdseq, String protocoldIdseq){
+        FormDAO myDAO = daoFactory.getFormDAO();
+        myDAO.removeFormProtocol(formIdseq, protocoldIdseq);
+    }
+ 
+ public void removeFormProtocols(String formIdseq, Collection protocols){
+         if (protocols == null || protocols.isEmpty()){
+             return;
+         }
+        FormDAO myDAO = daoFactory.getFormDAO();
+        myDAO.removeFormProtocols(formIdseq, protocols);
+        return;
+}   
+    
+ public void addFormProtocol(String formIdseq, String protocoldIdseq){
+        FormDAO myDAO = daoFactory.getFormDAO();
+        myDAO.addFormProtocol(formIdseq, protocoldIdseq);
+        return;
+    }
+ public void addFormProtocols(String formIdseq, Collection protocols){
+        if (protocols == null || protocols.isEmpty()){
+            return;
+        }
+        Iterator it = protocols.iterator();
+        while (it.hasNext()){
+           String pid = (String) it.next();
+           addFormProtocol(formIdseq, pid);
+        }   
+        return;
+    }
+    
+ public Protocol getProtocolByPK(String protocoldIdseq){
+    ProtocolDAO dao = daoFactory.getProtocolDAO();
+    return dao.getProtocolByPK(protocoldIdseq);
+    
+    }
   }
