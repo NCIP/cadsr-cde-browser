@@ -37,6 +37,8 @@ public class CDEBrowserParams
     String nciTerminologyServerUrl="";
     String sentinelToolUrl="";
     String adminToolUrl="";
+    String regStatusCsTree="";
+    String csTypeRegStatus="";
     
     Map evsUrlMap = new HashMap();
     
@@ -309,6 +311,10 @@ public class CDEBrowserParams
             index++;
             sentinelToolUrl = properties.getProperty("SENTINEL_TOOL_URL");
             index++;             
+            regStatusCsTree = properties.getProperty("CS_TYPE_REGISTRATION_STATUS");
+            index++;             
+            csTypeRegStatus = properties.getProperty("REG_STATUS_CS_TREE");
+            index++;             
             log.info("Loaded Properties"+properties);
                         
         } 
@@ -325,4 +331,12 @@ public class CDEBrowserParams
             System.exit(-1);
         }    
   }
+
+   public String getRegStatusCsTree() {
+      return regStatusCsTree;
+   }
+
+   public String getCsTypeRegStatus() {
+      return csTypeRegStatus;
+   }
 }

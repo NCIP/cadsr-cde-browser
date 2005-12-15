@@ -141,5 +141,13 @@ public interface AdminComponentDAO {
   public List getCSCSIHierarchyByType(String csType, String csiType);
 
   public int designate(String contextIdSeq, List acIdList);
+  /**
+      * 
+      * @param cscsiIdseq cscsi idseq
+      * @param regStatus the registration status
+      * @return true if there are admin component registered under this cscsi
+      *  with the given registration status
+      */
+  public boolean hasRegisteredAC(String cscsiIdseq, String regStatus);
 
 }
