@@ -20,8 +20,13 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
 <table width="100%" >
  
  <tr align="left">
-    <td class="OraHeaderSubSub" width="50%" align="left" nowrap>Search for Data Elements</td>
-     <td align="right" class="MessageText"  width="10%" nowrap><b>
+    <td class="OraHeaderSubSub" width="50%" align="left" nowrap>
+<% if (searchMode!=null && searchMode.equals(BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS)) {
+%>
+    Search Within Search Results</td>
+<% }else { %>Search for Data Elements</td>
+<% } %>
+   <td align="right" class="MessageText"  width="10%" nowrap><b>
    <%
    if (deList!=null&&deList.size()==0)
    {
@@ -62,14 +67,45 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
      <%=pageContextInfo%>
    </td >
   </tr>
+  <% if (searchCrumb != null) { %>
+  <tr>
+   <td valign="top" class="CDEBrowserPageContext">
+     <%=searchCrumb%>
+   </td >
+  </tr>
+  <%} %>
 </table>
 
- <table align="center" width="80%" border="0" cellpadding="0" cellspacing="1"  border="0" >
+ <table align="center" width="100%" border="0" cellpadding="0" cellspacing="1"  border="0" >
  <tr>
-    <td   width="60%" align="center" nowrap >
-      <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" size ="65"> 
+    <td   width="40%" align="left" nowrap >
+ <table valign="top">
+  <tr>
+   <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
+      <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
+      <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
+      { %> checked <%}%> >Exact phrase
+   </td >
+  </tr>
+  <tr>
+   <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
+      <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
+      <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ALL)) 
+      { %> checked <%}%>>All of the words
+   </td >
+  </tr>
+  <tr>
+   <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
+      <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
+      <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> >At least one of the words
+   </td >
+  </tr>
+</table>    
     </td>
-    <td   width="20%" align="left" nowrap >
+    <td width="40%" align="left" nowrap >
+      <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" size ="60"> 
+    </td>
+    <td width="20%" align="left" nowrap >
       <select  name="jspBasicSearchType" class="Dropdown" name="contextIdSeq" >
         <option value="name" <%=basicSearchTypeName%> >Name</option> 
         <option value="publicId" <%=basicSearchTypePublicId%> >Public ID</option> 
@@ -90,15 +126,6 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
             <bean:message key="cadsr.cdebrowser.helpText.results"/>
           </td>
       </tr>      
-    <tr>
-      <td  align="left" nowrap >
-        <table  border="0" >
-         <tr>
-           <td  colspan=2 nowrap>&nbsp;</td>
-         </tr>
-        </table>
-      </td>
-    </tr> 
  </table>
  
 <br>
@@ -110,7 +137,14 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
 %>
  <table with ="80%" align="center" border="0">
  <TR>
-    <td align="center" nowrap><a href="javascript:submitSimpleForm()"><html:img page="/i/search.gif" border="0" /></a></td>
+    <td align="center" nowrap><a href="javascript:submitSimpleForm()">
+<% if (searchMode!=null && searchMode.equals(BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS)) {
+%>
+    <html:img page="/i/search_within_result.gif" border="0" />
+<% }else { %>       
+    <html:img page="/i/search.gif" border="0" />
+<% } %>
+    </a></td>
     <td  align="center" nowrap><a href="javascript:clearSimpleForm()"><html:img page="/i/clear.gif" border="0" /></a></td>
     <%
        if(deList!=null){

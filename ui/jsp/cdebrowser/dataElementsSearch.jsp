@@ -19,6 +19,7 @@
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 
 <%
+  String searchMode =(String) pageContext.getSession().getAttribute(BrowserFormConstants.BROWSER_SEARCH_SCOPE);
   DESearchQueryBuilder queryBuilder = (DESearchQueryBuilder) infoBean.getInfo(ProcessConstants.DE_SEARCH_QUERY_BUILDER);
   pageContext.getSession().setAttribute("showCached",new Boolean("true"));
   if (queryBuilder != null)
@@ -32,6 +33,12 @@
                            ProcessConstants.DE_SEARCH_TOP_PAGE_SCROLLER);
   
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tibSearchDE");
+  if (searchMode !=null && searchMode.equals(BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS)) {
+    desb.resetSearchCriteria();  
+    tib.setMainTabLabel("Search&nbsp;within&nbsp;results");
+    } else {
+    tib.setMainTabLabel("Data&nbsp;Element&nbsp;Search");
+    }
   String pageId = infoBean.getPageId();
   String pageName = PageConstants.PAGEID;
   String pageUrl = "&"+pageName+"="+pageId;
@@ -74,6 +81,12 @@
 
   String loadAnchor = (String)request.getAttribute(CaDSRConstants.ANCHOR);
   if (loadAnchor == null) loadAnchor = "";
+
+  //String baseQuery = (String)request.getAttribute("baseQuery");
+  String baseQuery = (String) pageContext.getSession().getAttribute("baseQuery");
+  String searchCrumb = (String) pageContext.getSession().getAttribute("searchCrumb");
+  if (baseQuery == null) baseQuery = "";
+  System.out.println("baseQuery is:" + baseQuery);
 
   String doneURL = "";
 
@@ -340,7 +353,12 @@ function compareCDEs(size) {
 function changeScreenType(type) {
   document.forms[0].<%=BrowserFormConstants.BROWSER_SEARCH_SCREEN_TYPE%>.value = type;
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.CHANGE_SCREEN_TYPE%>";
-  document.forms[0].action='<%=request.getContextPath()%>/cdebrowser/screenTypeAction.do';        
+  document.forms[0].action='<%=request.getContextPath()%>/cdebrowser/screenTypeAction.do?method=changeScreenType';        
+  document.forms[0].submit();
+}
+
+function searchWithinResults() {
+  document.forms[0].action='<%=request.getContextPath()%>/cdebrowser/screenTypeAction.do?method=changeSearchScopeToSearchResults';        
   document.forms[0].submit();
 }
 
@@ -359,11 +377,9 @@ function gotoCDESearchPrefs() {
   document.forms[0].target="_parent";
   document.forms[0].submit();
 }
+
 //-->
 </SCRIPT>
-
-
-
 
 <form action="<%= infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=submitFunction%>};">
 <INPUT TYPE="HIDDEN" NAME="<%=NavigationConstants.METHOD_PARAM%>" > 
@@ -377,6 +393,8 @@ function gotoCDESearchPrefs() {
 <input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
 <!--screenType-->
 <INPUT TYPE="HIDDEN" NAME="<%=BrowserFormConstants.BROWSER_SEARCH_SCREEN_TYPE%>" >
+<INPUT TYPE="HIDDEN" NAME="browserSearchScope" value="<%=searchMode%>">
+<INPUT TYPE="HIDDEN" NAME="baseQuery" value="<%=baseQuery%>">
  
 <%@ include  file="cdebrowserCommon_html/tab_include_search.html" %>
 
@@ -432,11 +450,11 @@ function gotoCDESearchPrefs() {
 %>
 <A NAME="results"></A>
 <table width="100%"   border="0">
-   <tr>
-           <td  nowrap>&nbsp;</td>
-   </tr>
   <tr valign="bottom">
-     <td  valign="bottom" class="OraHeaderSubSub" width="100%" align="left" nowrap>Search Results</td>
+     <td  valign="bottom" class="OraHeaderSubSub" width="50%" align="left" nowrap>Search Results
+<%  if (searchMode ==null || !searchMode.equals(BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS)) { %>
+      &nbsp; <a href="javascript:searchWithinResults()">Search within results</a>
+<%}%>   </td>  
   </tr>
   <tr valign="top">
     <td valign="top" width="100%" nowrap >
