@@ -90,9 +90,10 @@ public class CDEBrowserTreeServiceImpl
 
       // When the form and the Protocol belongs to different context, the Protocol
       // context takes priority
-      if (currForm.getProtocol() != null)
+       //TODO - tree for multiple form/protocols
+      /*if (currForm.getProtocol() != null)
         currContextId = currForm.getProtocol().getConteIdseq();
-
+        */
       if (currContextId == null)
         currContextId = currForm.getContext().getConteIdseq();
 
@@ -100,7 +101,8 @@ public class CDEBrowserTreeServiceImpl
 
       String currProtoIdSeq = null;
 
-      currProtoIdSeq = currForm.getProtoIdseq();
+        //TODO - tree for multiple form/protocols
+        //currProtoIdSeq = currForm.getProtoIdseq();
       DefaultMutableTreeNode formNode = getFormNode(idGen.getNewId(), currForm, treeFunctions, false);
 
       // add form node to protocol node
@@ -116,10 +118,11 @@ public class CDEBrowserTreeServiceImpl
         DefaultMutableTreeNode protoNode = (DefaultMutableTreeNode)protocolHolder.get(currProtoIdSeq);
 
         if (protoNode == null) {
-          protoNode = getProtocolNode(idGen.getNewId(), currForm.getProtocol(), currContextId, treeFunctions);
+          //TODO - how will mulitple protocols change the tree?
+          //protoNode = getProtocolNode(idGen.getNewId(), currForm.getProtocol(), currContextId, treeFunctions);
 
-          protocolHolder.put(currProtoIdSeq, protoNode);
-          protocolList.add(protoNode);
+          //protocolHolder.put(currProtoIdSeq, protoNode);
+          //protocolList.add(protoNode);
           treeNodeMap.clear();
         }
 
@@ -398,7 +401,8 @@ public class CDEBrowserTreeServiceImpl
             while (protocolFormsIt.hasNext()) {
               Form currProtocolForm = (Form)protocolFormsIt.next();
 
-              currProtocolForm.setProtocol(currProto);
+              //TODO - tree for multiple form/protocols
+              //currProtocolForm.setProtocol(currProto);
               
               Collection formCSes = currProtocolForm.getClassifications();
 
@@ -681,8 +685,9 @@ public class CDEBrowserTreeServiceImpl
 
     String protocolId = "";
 
-    if (form.getProtoIdseq() != null)
-      protocolId = form.getProtoIdseq();
+    //TODO - tree for multiple form/protocols
+    //if (form.getProtoIdseq() != null)
+     // protocolId = form.getProtoIdseq();
 
     DefaultMutableTreeNode
        formNode = new DefaultMutableTreeNode(
