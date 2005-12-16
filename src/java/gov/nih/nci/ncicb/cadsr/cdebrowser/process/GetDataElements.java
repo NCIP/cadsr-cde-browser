@@ -46,7 +46,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.22 2005-12-15 22:17:48 jiangj Exp $
+ * @version: $Id: GetDataElements.java,v 1.23 2005-12-16 14:38:40 jiangj Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -235,8 +235,8 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
         dePageIterator.setCurrentPage(0);
 
-         if (paramType.equalsIgnoreCase("REGCSI") ||
-         paramType.equalsIgnoreCase("REGCS"))
+         if (paramType != null && (paramType.equalsIgnoreCase("REGCSI") ||
+         paramType.equalsIgnoreCase("REGCS")))
           queryBuilder =  new DESearchQueryBuilder(
               myRequest, paramType, paramIdSeq + "," + paramRegStatus, treeConteIdseq,desb);
          else 

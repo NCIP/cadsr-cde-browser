@@ -45,8 +45,8 @@ public class DESearchQueryBuilder extends Object {
                               String treeParamIdSeq,
                               String treeConteIdSeq,DataElementSearchBean searchBean)  {
 
-    if (treeParamType.equalsIgnoreCase("REGCSI") ||
-    treeParamType.equalsIgnoreCase("REGCS"))  {
+    if (treeParamType != null && (treeParamType.equalsIgnoreCase("REGCSI") ||
+    treeParamType.equalsIgnoreCase("REGCS")))  {
        String[] subStr = treeParamIdSeq.split(",");
        this.treeParamIdSeq =subStr[0]; 
        this.treeParamRegStatus = subStr[1];
