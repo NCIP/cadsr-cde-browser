@@ -11,6 +11,8 @@ public class ProtocolValueObject extends AdminComponentTransferObject
   protected String _type;
   protected Date _beginDate;
   protected Date _endDate;
+  
+  protected String protocolId = null;
 
   public ProtocolValueObject() {
     idseq = _protoIdseq;
@@ -63,4 +65,11 @@ public class ProtocolValueObject extends AdminComponentTransferObject
   public void setEndDate(Date dEndDate) {
     this._endDate = dEndDate;
   }
+    public void setProtocolId(String protocolId) {
+        this.protocolId = protocolId;
+    }
+
+    public String getProtocolId() {
+        return protocolId;
+    }
 }
