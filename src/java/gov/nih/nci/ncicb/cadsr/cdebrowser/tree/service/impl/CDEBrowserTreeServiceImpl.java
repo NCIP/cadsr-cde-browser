@@ -504,6 +504,9 @@ public class CDEBrowserTreeServiceImpl
     Map csMap = new HashMap(); //this map stores the webnode for cs given cs_idseq
     Map csiMap = new HashMap();
     Map <String, Map> regStatusMapByCsId = new HashMap();
+    Map <String, Map> csiMapByRegStatus = new HashMap();
+    for (int i=0; i<regStatusArr.length; i++)
+       csiMapByRegStatus.put(regStatusArr[i], new HashMap());
 
     Iterator iter = allCscsi.iterator();
 
@@ -549,33 +552,43 @@ public class CDEBrowserTreeServiceImpl
 
       String parentId = cscsi.getParentCscsiId();
       DefaultMutableTreeNode parentNode = null;
-       DefaultMutableTreeNode csiNode =null;
-      if (parentId != null) {
-        csiNode = getClassificationSchemeItemNode(idGen.getNewId(), cscsi, treeFunctions);
-        parentNode = (DefaultMutableTreeNode)csiMap.get(parentId);
-        parentNode.add(csiNode);
-      }
-      else { //this is the first level csi link to cs or reg status
-        // first check and see if CS is of reg status type
-        Map<String, DefaultMutableTreeNode> regStatusNodesMap = regStatusMapByCsId.get(csId);
-        if (regStatusNodesMap == null) {
-           //not reg status, linked to cs directly
-           csiNode = getClassificationSchemeItemNode(idGen.getNewId(), cscsi, treeFunctions);
-           csNode.add(csiNode);
-        } else {
-           //add csiNode to the proper reg status node
-           
-           for (int i=0; i<regStatusArr.length; i++) {
-              if (dao.hasRegisteredAC(cscsi.getCsCsiIdseq(), regStatusArr[i])) {
-               csiNode = this.getRegStatusCSINode(idGen.getNewId(), 
-               cscsi, regStatusArr[i], treeFunctions);
-               regStatusNodesMap.get(regStatusArr[i]).add(csiNode);
-              }
-           }
-        }
-      }
+      DefaultMutableTreeNode csiNode =null;
+      
+      if (!cscsi.getClassSchemeType().equalsIgnoreCase(params.getRegStatusCsTree())) {
+         //this is a regular cs tree stucture
+          csiNode = getClassificationSchemeItemNode(idGen.getNewId(), cscsi, treeFunctions);
+         if (parentId != null) 
+            parentNode = (DefaultMutableTreeNode)csiMap.get(parentId);
+         else
+            parentNode = csNode;
+         
+         parentNode.add(csiNode);
+         csiMap.put(cscsi.getCsCsiIdseq(), csiNode);
 
-      csiMap.put(cscsi.getCsCsiIdseq(), csiNode);
+      } else {//this is the CS tree with registration status
+         if (parentId == null) {
+           //this is the first level csi link to reg status         
+            Map<String, DefaultMutableTreeNode> regStatusNodesMap = regStatusMapByCsId.get(csId);
+            for (int i=0; i<regStatusArr.length; i++) {
+               if (dao.hasRegisteredAC(cscsi.getCsCsiIdseq(), regStatusArr[i])) {
+                csiNode = this.getRegStatusCSINode(idGen.getNewId(), 
+                cscsi, regStatusArr[i], treeFunctions);
+                regStatusNodesMap.get(regStatusArr[i]).add(csiNode);
+                csiMapByRegStatus.get(regStatusArr[i]).put(cscsi.getCsCsiIdseq(), csiNode);
+               }
+            }
+         } else {
+            for (int i=0; i<regStatusArr.length; i++) {
+               if (dao.hasRegisteredAC(cscsi.getCsCsiIdseq(), regStatusArr[i])) {
+                  csiNode = this.getRegStatusCSINode(idGen.getNewId(), 
+                  cscsi, regStatusArr[i], treeFunctions);
+                  ((DefaultMutableTreeNode) csiMapByRegStatus.get(regStatusArr[i]).get(parentId)).add(csiNode);
+                  csiMapByRegStatus.get(regStatusArr[i]).put(cscsi.getCsCsiIdseq(), csiNode);
+               }
+            }
+         }
+      }
+      
 
       // for CTEP disease, add core, none core sub node
       if (treeFunctions.getTreeType().equals(TreeConstants.DE_SEARCH_TREE)) {
