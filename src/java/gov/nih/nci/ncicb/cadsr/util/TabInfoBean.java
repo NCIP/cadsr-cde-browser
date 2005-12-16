@@ -191,5 +191,8 @@ public class TabInfoBean
   public void setMainTabNum(int tabNumber) {
     mainTabNum = tabNumber;
   }
+  public void setMainTabLabel(String tabLabel){
+      mainTabLabels[mainTabNum] = tabLabel;     
+  }
 
 }
