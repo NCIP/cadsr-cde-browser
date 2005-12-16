@@ -935,7 +935,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         header!=null || ((deletedModules != null) && !deletedModules.isEmpty()) ||
           !updatedModules.isEmpty()||!addedModules.isEmpty()||!instrChanges.isEmpty() ||
           (addedProtocols!=null && !addedProtocols.isEmpty()) || 
-          (removedProtocols!=null || !removedProtocols.isEmpty())) {
+          (removedProtocols!=null && !removedProtocols.isEmpty())) {
         setSessionObject(request,FORM_EDIT_HEADER,header,true);
         setSessionObject(request,FORM_EDIT_UPDATED_MODULES,updatedModules,true);
         setSessionObject(request,FORM_EDIT_DELETED_MODULES,deletedModules,true);
