@@ -18,6 +18,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ReferenceDocumentDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ReferenceDocumentTypeDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.TriggerActionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UtilDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
@@ -263,6 +264,19 @@ public class JDBCDAOFactory extends AbstractDAOFactory
 
     return utilDAO;
   }
+  
+    public TriggerActionDAO getTriggerActionDAO () {
+      TriggerActionDAO triggerActionDAO =
+        (TriggerActionDAO) daoCache.get(JDBC_TRIGGER_ACTION_DAO);
+
+      if (triggerActionDAO == null) {
+        triggerActionDAO = new JDBCTriggerActionDAO(serviceLocator);
+
+        daoCache.put(JDBC_TRIGGER_ACTION_DAO, triggerActionDAO);
+      }
+
+      return triggerActionDAO;
+    }
 
     public ProtocolDAO getProtocolDAO() {
       ProtocolDAO protocolDAO = (JDBCProtocolDAO) daoCache.get(JDBC_PROTOCOL_DAO);

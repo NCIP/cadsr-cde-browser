@@ -24,25 +24,30 @@ public interface PersistenceConstants {
   public static final String JDBC_CDE_CART_DAO = "jdbcCDECartDAO";
   public static final String JDBC_VALUE_DOMAIN_DAO = "jdbcValueDomainDAO";
   public static final String JDBC_DERIVED_DATA_ELEMENT_DAO = "jdbcDerivedDataElementDAO";
-  public static final String JDBC_CONCEPT_DAO = "jdbcConceptDAO";  
-  public static final String JDBC_REFERENCE_DOCUMENT_DAO = "jdbcReferenceDocumentDAO";  
-  public static final String JDBC_REFERENCE_DOCUMENT_TYPE_DAO = "jdbcReferenceDocumentTypeDAO"; 
-  public static final String JDBC_UTIL_DAO = "jdbcUtilDAO"; 
-  public static final String JDBC_PROTOCOL_DAO= "jdbcProtocolDAO"; 
+  public static final String JDBC_CONCEPT_DAO = "jdbcConceptDAO";
+  public static final String JDBC_REFERENCE_DOCUMENT_DAO = "jdbcReferenceDocumentDAO";
+  public static final String JDBC_REFERENCE_DOCUMENT_TYPE_DAO = "jdbcReferenceDocumentTypeDAO";
+  public static final String JDBC_UTIL_DAO = "jdbcUtilDAO";
+  public static final String JDBC_PROTOCOL_DAO= "jdbcProtocolDAO";
+  public static final String JDBC_TRIGGER_ACTION_DAO="jdbcTriggerActionDAO";
 
 
 
   public static final String FORM_ADMIN_COMPONENT_TYPE="QUEST_CONTENT";
-  
+
   public static final String FORM_TYPE_CRF="CRF";
   public static final String FORM_TYPE_TEMPLATE="TEMPLATE";
   public static final String[] FORM_TYPE_VALUES={"CRF","TEMPLATE"};
-  
+
   public static final String IDSEQ_GENERATOR = "admincomponent_crud.cmr_guid";
-  
-// Change Order Publish  
+
+// Change Order Publish
   public static final String CS_TYPE_PUBLISH ="Publishing";
   public static final String CSI_TYPE_PUBLISH_FORM="Form Type";
   public static final String CSI_TYPE_PUBLISH_TEMPLATE="Template Type";
   
+  public static final String QTL_NAME_MODULE="MODULE";
+  
+    public static final String QTL_NAME_QUESTION="QUESTION";
+
 }

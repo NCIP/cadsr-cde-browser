@@ -12,12 +12,13 @@ import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleChanges;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
-
+import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
 
 import java.rmi.RemoteException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,8 @@ import java.util.Map;
 public interface FormBuilderServiceRemote {
     public Collection getAllForms(String formLongName, String protocolIdSeq,
         String contextIdSeq, String workflow, String categoryName, String type,
-        String classificationIdSeq, 
-        String publicId, String version, String moduleLongName, String cdePublicId, 
+        String classificationIdSeq,
+        String publicId, String version, String moduleLongName, String cdePublicId,
         NCIUser user) throws RemoteException;
 
     public Form getFormDetails(String formPK) throws RemoteException;
@@ -171,15 +172,15 @@ public interface FormBuilderServiceRemote {
       public Collection getAllDocumentTypes() throws RemoteException;
 
       public int saveDesignation(String contextIdSeq, List acIdList) throws RemoteException;
-      
+
       public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote)
         throws RemoteException;
-        
+
       public List getFormVersions(int publicId)    throws RemoteException;
-      
+
       public void setLatestVersion(Version oldVersion, Version newVersion)
         throws RemoteException;
-        
+
       public void removeFormProtocol(String formIdseq, String protocoldIdseq)
             throws RemoteException;
       public void removeFormProtocols(String formIdseq, Collection protocolds)
@@ -188,7 +189,19 @@ public interface FormBuilderServiceRemote {
             throws RemoteException;
       public void addFormProtocols(String formIdseq, Collection protocolds)
               throws RemoteException;
-            
+
       public Protocol getProtocolByPK(String protocoldIdseq)
             throws RemoteException;
+
+     public List getAllTriggerActionsForSource(String sourceId)
+        throws RemoteException;
+        
+     public void createTriggerAction(TriggerAction action)
+            throws RemoteException;
+
+     public void updateTriggerAction(TriggerAction action)
+              throws RemoteException;
+
+     public void deleteTriggerAction(String triggerActionId)
+                 throws RemoteException;
     }

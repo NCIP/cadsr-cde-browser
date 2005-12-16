@@ -13,8 +13,12 @@ import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
+import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
 
+import java.rmi.RemoteException;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +27,7 @@ import java.util.Map;
 public interface FormBuilderServiceDelegate {
     public Collection getAllForms(String formName, String protocol,
         String context, String workflow, String category, String type,
-        String classificationIdSeq, 
+        String classificationIdSeq,
         String publicId, String version, String moduleLongName, String cdePublicId,
         NCIUser user);
 
@@ -128,11 +132,11 @@ public interface FormBuilderServiceDelegate {
 
     public int saveDesignation(String contextIdSeq, List acIdList) throws FormBuilderException;
 
-    public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote) 
+    public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote)
         throws FormBuilderException;
-    public List getFormVersions(int publicId) 
+    public List getFormVersions(int publicId)
         throws FormBuilderException;
-        
+
     public void setLatestVersion(Version oldVersion, Version newVersion)
         throws FormBuilderException;
     public void removeFormProtocol(String formIdseq, String protocoldIdseq)
@@ -143,10 +147,20 @@ public interface FormBuilderServiceDelegate {
         throws FormBuilderException;
     public void removeFormProtocols(String formIdseq, Collection protocoldIds)
         throws FormBuilderException;
-        
+
     public Protocol getProtocolByPK(String protocoldIdseq)
         throws FormBuilderException;
 
+    public List getAllTriggerActionsForSource(String sourceId)
+        throws FormBuilderException;
+        
+    public void createTriggerAction(TriggerAction action)
+           throws FormBuilderException;
 
-            
+    public void updateTriggerAction(TriggerAction action)
+             throws FormBuilderException;
+
+    public void deleteTriggerAction(String triggerActionId)
+                throws FormBuilderException;
+
 }

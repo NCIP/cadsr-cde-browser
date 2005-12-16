@@ -22,7 +22,7 @@
       validate="false">
       
       <forward name="editSkipPattern" path="/formbuilder/skipPatternInfoEdit.jsp"/>    
-      <forward name="createSkipPattern" path="/formbuilder/skipPatternInfoCreate.jsp"/>  
+      <forward name="createSkipPattern" path="/formbuilder/skipAction.do?method=setCurrentFormAsTargetForm"/>  
       <forward name="skipToFormLocation" path="/formbuilder/skipToFormDetails.jsp"/>
       <forward name="skipToFormSearch" path="/formSearchAction.do?method=getAllForms"
         redirect="false"/>

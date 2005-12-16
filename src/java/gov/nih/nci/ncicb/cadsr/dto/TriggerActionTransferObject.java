@@ -13,6 +13,8 @@ public class TriggerActionTransferObject implements TriggerAction
   private FormElement actionTarget;
   private List<Protocol> protocols;
   private List<ClassSchemeItem> ClassSchemeItems;
+  private String instruction;
+  private String idSeq;
   
     public TriggerActionTransferObject()
     {
@@ -56,5 +58,25 @@ public class TriggerActionTransferObject implements TriggerAction
     public List<ClassSchemeItem> getClassSchemeItems()
     {
         return ClassSchemeItems;
+    }
+
+    public void setInstruction(String instruction)
+    {
+        this.instruction = instruction;
+    }
+
+    public String getInstruction()
+    {
+        return instruction;
+    }
+
+    public void setIdSeq(String idSeq)
+    {
+        this.idSeq = idSeq;
+    }
+
+    public String getIdSeq()
+    {
+        return idSeq;
     }
 }

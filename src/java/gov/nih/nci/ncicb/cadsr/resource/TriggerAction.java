@@ -8,6 +8,11 @@ import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 
 public interface TriggerAction
 {
+
+    public void setIdSeq(String idSeq);
+
+    public String getIdSeq();
+    
     public void setActionSource(FormElement actionSource);
 
     public FormElement getActionSource();
@@ -23,4 +28,8 @@ public interface TriggerAction
     public void setClassSchemeItems(List<ClassSchemeItem> classSchemeItems);
 
     public List<ClassSchemeItem> getClassSchemeItems();
+ 
+    public void setInstruction(String instruction);
+
+    public String getInstruction();   
 }
