@@ -69,7 +69,7 @@
             <bean:message key="cadsr.formbuilder.form.protocol"/>
           </td>                
           <td  class="OraFieldText">
-            <bean:write name="<%=FormConstants.MODULE_COPY_FORM%>" property="protocol.longName"/>
+            <bean:write name="<%=FormConstants.MODULE_COPY_FORM%>" property="delimitedProtocolLongNames"/>
           </td>
         </tr>   
         <tr class="OraTabledata">

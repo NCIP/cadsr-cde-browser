@@ -196,10 +196,10 @@ public interface FormBuilderServiceRemote {
      public List getAllTriggerActionsForSource(String sourceId)
         throws RemoteException;
         
-     public void createTriggerAction(TriggerAction action)
+     public TriggerAction createTriggerAction(TriggerAction action)
             throws RemoteException;
 
-     public void updateTriggerAction(TriggerAction action)
+     public TriggerAction updateTriggerAction(TriggerAction action)
               throws RemoteException;
 
      public void deleteTriggerAction(String triggerActionId)

@@ -1,15 +1,18 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.InstructionTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.TriggerActionTransferObject;
+import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.TriggerActionDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 
 import gov.nih.nci.ncicb.cadsr.resource.FormElement;
+import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
@@ -49,11 +52,31 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
      *
      */
     public List getTriggerActionsForSource(String sourceId) {
-      TriggerActionQuery query = new TriggerActionQuery();
+      TriggerActionBySourceQuery query = new TriggerActionBySourceQuery();
       query.setDataSource(getDataSource());
       query.setSql(sourceId);
       return query.execute();
     }    
+    
+    /**
+     * Gets The TriggerActions by id
+     *
+     */
+    public TriggerAction getTriggerActionsForId(String triggerId) {
+      TriggerActionByIdQuery query = new TriggerActionByIdQuery();
+      query.setDataSource(getDataSource());
+      query.setSql(triggerId);
+      List result = (List) query.execute();
+        
+      if (result == null || result.isEmpty()){
+            DMLException dmlExp = new DMLException("No matching record found.");
+                  dmlExp.setErrorCode(NO_MATCH_FOUND);
+              throw dmlExp;
+        }
+
+       return (TriggerAction) (result.get(0));      
+        
+    }   
     
     /**
      * Gets all the Protocols associated with a trigger action
@@ -82,9 +105,21 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
      * Create new trigger action
      *
      */
-    public int createTriggerAction(TriggerAction action, String createdBy) {
+    public String createTriggerAction(TriggerAction action, String createdBy) {
+    
+      String idseq = generateGUID();
+      action.setIdSeq(idseq);
       CreateTriggerAction createAction = new CreateTriggerAction(getDataSource());
-        return createAction.create( action, createdBy);
+      int res = createAction.create( action, createdBy);
+      
+        if (res == 1) {
+          return idseq;
+        }
+        else {
+             DMLException dmlExp = new DMLException("Did not succeed creating trigger action ");
+                   dmlExp.setErrorCode(ERROR_CREATEING_SKIP_PATTERN);
+               throw dmlExp;
+        }      
 
     }      
     
@@ -126,15 +161,15 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
      } 
          
     
-   private  class TriggerActionQuery extends MappingSqlQuery {
-      TriggerActionQuery() {
+   private  class TriggerActionBySourceQuery extends MappingSqlQuery {
+      TriggerActionBySourceQuery() {
         super();
       }
 
       public void setSql(String sourceIdSeq) {
         super.setSql(
-         " select TA_IDSEQ, S_QC_IDSEQ, T_QC_IDSEQ, TA_INSTRUCTION, QC_IDSEQ, T_QTL_NAME "
-        + " from QUEST_CONTENTS_EXT qc, TRIGGERED_ACTIONS_EXT ta where "
+         " select TA_IDSEQ, S_QC_IDSEQ, T_QC_IDSEQ, TA_INSTRUCTION, T_QTL_NAME "
+        + " from  TRIGGERED_ACTIONS_EXT ta where "
         + "  S_QC_IDSEQ = '"+sourceIdSeq + "'" );      
 
       }
@@ -147,7 +182,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
       
        action.setIdSeq(rs.getString(1));//TA_IDSEQ
       
-       String type = rs.getString(6); //T_QTL_NAME
+       String type = rs.getString(5); //T_QTL_NAME
 
        if(type.equalsIgnoreCase(QTL_NAME_MODULE))
        {
@@ -166,6 +201,64 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
      }
      
     } 
+    
+    private  class TriggerActionByIdQuery extends MappingSqlQuery {
+       TriggerActionByIdQuery() {
+         super();
+       }
+
+       public void setSql(String targetIdSeq) {
+         super.setSql(
+          " select TA_IDSEQ, S_QC_IDSEQ, T_QC_IDSEQ, TA_INSTRUCTION, S_QTL_NAME, T_QTL_NAME "
+         + " from TRIGGERED_ACTIONS_EXT ta where "
+         + "  TA_IDSEQ = '"+targetIdSeq + "'" );      
+
+       }
+
+       protected Object mapRow(
+         ResultSet rs,
+         int rownum) throws SQLException {
+         
+       TriggerAction action =  new TriggerActionTransferObject();
+       
+        action.setIdSeq(rs.getString(1));//TA_IDSEQ
+       
+         String sourceType = rs.getString(5); //S_QTL_NAME
+           if(sourceType.equalsIgnoreCase(QTL_NAME_MODULE))
+           {
+               Module source = new ModuleTransferObject();
+               source.setModuleIdseq(rs.getString(2));//S_QC_IDSEQ
+               action.setActionTarget(source);
+           }
+            else if(sourceType.equalsIgnoreCase(QTL_NAME_VALID_VALUE))
+             {
+                 FormValidValue source = new FormValidValueTransferObject();
+                 source.setIdseq(rs.getString(2));//S_QC_IDSEQ
+                 action.setActionTarget(source);
+             }
+             
+        String targetType = rs.getString(6); //T_QTL_NAME
+        if(targetType.equalsIgnoreCase(QTL_NAME_MODULE))
+        {
+            Module target = new ModuleTransferObject();
+            target.setModuleIdseq(rs.getString(3));//T_QC_IDSEQ
+            action.setActionTarget(target);
+        }
+        else if(targetType.equalsIgnoreCase(QTL_NAME_QUESTION))
+          {
+              Question target = new QuestionTransferObject();
+              target.setQuesIdseq(rs.getString(3));  //T_QC_IDSEQ
+              action.setActionTarget(target);
+          }
+          
+
+            action.setInstruction(rs.getString(4));//TA_INSTRUCTION
+            return action;
+          }           
+
+                  
+      }
+      
     
     private class UpdateTriggerAction extends SqlUpdate {
       public UpdateTriggerAction(DataSource ds) {
@@ -203,14 +296,16 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
       public CreateTriggerAction(DataSource ds) {
         String sql =
           " INSERT INTO TRIGGERED_ACTIONS_EXT " +
-          " (S_QC_IDSEQ, T_QC_IDSEQ,TA_INSTRUCTION,T_QTL_NAME,created_by) " +
-          " VALUES " + " (?, ? , ?,?) ";
+          " (TA_IDSEQ, S_QC_IDSEQ, T_QC_IDSEQ,TA_INSTRUCTION,S_QTL_NAME,T_QTL_NAME,created_by) " +
+          " VALUES " + " (?,?, ? ,?, ?,?,?) ";
 
         this.setDataSource(ds);
         this.setSql(sql);
+        declareParameter(new SqlParameter("TA_IDSEQ", Types.VARCHAR));
         declareParameter(new SqlParameter("S_QC_IDSEQ", Types.VARCHAR));
         declareParameter(new SqlParameter("T_QC_IDSEQ", Types.VARCHAR));
         declareParameter(new SqlParameter("TA_INSTRUCTION", Types.VARCHAR));
+          declareParameter(new SqlParameter("S_QTL_NAME", Types.VARCHAR));
         declareParameter(new SqlParameter("T_QTL_NAME", Types.VARCHAR));
         declareParameter(new SqlParameter("created_by", Types.VARCHAR));
         compile();
@@ -219,17 +314,35 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
       protected int create(
         TriggerAction action,String createdBy) {
         String targetQtlName = null;
+        String sourceQtlName = null;
+        
           if(action.getActionTarget() instanceof Module)
+          {
               targetQtlName = QTL_NAME_MODULE;
-          else
+          }  
+          else 
+          {
               targetQtlName = QTL_NAME_QUESTION;
+          }
+
+          if(action.getActionSource() instanceof Module)
+          {
+              sourceQtlName = QTL_NAME_MODULE;            
+          }
+
+          else 
+          {
+              sourceQtlName = QTL_NAME_VALID_VALUE;              
+          }
+              
 
         Object[] obj =
           new Object[] {
+            action.getIdSeq(),
             action.getActionSource().getIdseq(),
             action.getActionTarget().getIdseq(),
             action.getInstruction(),
-            targetQtlName,
+            sourceQtlName,targetQtlName,
             createdBy
           };
 

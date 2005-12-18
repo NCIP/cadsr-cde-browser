@@ -81,7 +81,7 @@
             <bean:message key="cadsr.formbuilder.form.protocol"/>
           </td>                
           <td  class="OraFieldText">
-            <bean:write name="<%=FormConstants.SKIP_TARGET_FORM%>" property="protocol.longName"/>
+            <bean:write name="<%=FormConstants.SKIP_TARGET_FORM%>" property="delimitedProtocolLongNames"/>
           </td>
         </tr>   
         <tr class="OraTabledata">

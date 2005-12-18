@@ -24,5 +24,8 @@ public static final String ERROR_COPYING_FORM="DML0019";
  public static final String ERROR_CREATEING_FORM = "DML0020";
   public static final String ERROR_UPDATING_FORM = "DML0021";
   public static final String ERROR_CREATE_NEW_VERSION_FORM = "DML0022";
+  
+    public static final String ERROR_CREATEING_SKIP_PATTERN = "DML0023";
+    public static final String ERROR_SAVING_SKIP_PATTERN = "DML0024";
 
 }

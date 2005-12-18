@@ -36,8 +36,13 @@ public class ModuleTransferObject extends FormElementTransferObject
 
   public void setModuleIdseq(String idseq) {
     this.moduleIdseq = idseq;
+    this.idseq=idseq;
   }
-
+  public void setIdseq(String idseq) {
+      this.moduleIdseq = idseq;
+        this.idseq=idseq;
+    }
+    
   public Form getForm() {
     return crf;
   }

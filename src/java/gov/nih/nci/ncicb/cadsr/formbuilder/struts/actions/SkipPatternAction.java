@@ -459,6 +459,26 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
     return mapping.findForward("framedSearchResultsPage");
   }
 
+    /**
+     *
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     *
+     * @return
+     *
+     * @throws IOException
+     * @throws ServletException
+     */
+    public ActionForward cancelModuleSave(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+
+      return mapping.findForward("backToModuleEdit");
+    }
 
         /**
          *
@@ -478,7 +498,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
           HttpServletRequest request,
           HttpServletResponse response) throws IOException, ServletException {
           
-            TriggerAction triggerAction = (TriggerAction)getSessionObject(request,SKIP_PATTERN);
+          TriggerAction triggerAction = (TriggerAction)getSessionObject(request,SKIP_PATTERN);
             
           List csis = new ArrayList();
             CSITransferObject csito1 = new CSITransferObject();
@@ -514,10 +534,38 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
             p2.setLongName("NETTRIALS");
             protocols.add(p2);
             
+            if(triggerAction.getIdSeq()==null)
+            {
+                //Create new Skip Pattern
+                 try {
+                   FormBuilderServiceDelegate service = getFormBuilderService();
+                   TriggerAction newAction = service.createTriggerAction(triggerAction);
+                 } catch (FormBuilderException exp) {
+                     if (log.isErrorEnabled()) {
+                       log.error("Exception on creating new Skip pattern  " , exp);
+                     }
+                 saveError(ERROR_SKIP_PATTERN_CREATE, request);
+                     saveError(exp.getErrorCode(), request);
+                     return mapping.findForward("failure");
+                       
+                 }                
+            }
+            else
+            {
+                //Editing Skip pattern
+            }
             FormElement source = triggerAction.getActionTarget();
-            List<TriggerAction> actions = new ArrayList<TriggerAction>();    
+            List<TriggerAction> actions = source.getTriggerActions();
+            if(actions==null)
+            {
+                actions = new ArrayList<TriggerAction>(); 
+                source.setTriggerActions(actions);
+            }
+
+                
             actions.add(triggerAction);
             source.setTriggerActions(actions);
+            
             if(FormJspUtil.getFormElementType
                          (triggerAction.getActionSource()).equals(FormJspUtil.FORM))
             {

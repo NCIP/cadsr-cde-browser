@@ -203,7 +203,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()-1));
       else
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
-        
+
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -269,7 +269,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()+1));
       else
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
-        
+
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -342,7 +342,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
       else
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
-        
+
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -369,7 +369,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     String[] addDeletedQuestionIdSeqArr =
       (String[]) moduleEditForm.get(ADD_DELETED_QUESTION_IDSEQ_ARR);
-      
+
     String addDeletedQuestionIdSeq = addDeletedQuestionIdSeqArr[questionIndex.intValue()];
 
     Module module = (Module) getSessionObject(request, MODULE);
@@ -437,7 +437,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
       else
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
-        
+
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -508,7 +508,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
       else
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
-        
+
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -580,7 +580,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
       else
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
-        
+
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -649,7 +649,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
       else
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
-        
+
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -722,7 +722,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
       else
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
-        
+
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -816,15 +816,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
     moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
-    
+
     // Jump to the update location on the screen
       if(questionIndex!=null)
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
       else
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
-        
+
     return mapping.findForward(MODULE_EDIT);
   }
+
 
   /**
    * Add ValidValue from deleted list.
@@ -847,66 +848,17 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     DynaActionForm moduleEditForm = (DynaActionForm) form;
     Module module = (Module) getSessionObject(request, MODULE);
     Integer index = (Integer) moduleEditForm.get(MODULE_INDEX);
+    Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
     Form crf = (Form) getSessionObject(request, CRF);
     Form orgCrf = (Form) getSessionObject(request, this.CLONED_CRF);
-    module.setForm(crf);
-    module.setContext(crf.getContext());//This is done so that all new Element created will have this Context
-    Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
-    String longName = (String) moduleEditForm.get(MODULE_LONG_NAME);
-    module.setLongName(longName);
 
-    String moduleInstruction = (String) moduleEditForm.get(MODULE_INSTRUCTION);
-    if(moduleInstruction!=null&&!moduleInstruction.trim().equalsIgnoreCase(""))
-    {
-      Instruction instr = module.getInstruction();
-      if(instr==null)
-      {
-        instr = new InstructionTransferObject();
-        instr.setDisplayOrder(0);
-        instr.setVersion(new Float(1));
-        instr.setAslName("DRAFT NEW");
-        instr.setContext(module.getContext());
-        instr.setPreferredDefinition(moduleInstruction);
-      }
-      instr.setLongName(moduleInstruction);
-      module.setInstruction(instr);
-    }
-    else
-    {
-      module.setInstruction(null);
-    }
-    String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
-    setQuestionsFromArray(module, questionArr);
-
-    String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
-    setQuestionInstructionsFromArray(module,questionInstructionsArr);
-
-    String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
-    setValidValueInstructionsFromArray(module,vvInstructionsArr);
-
-    //Check if the module longName has changed
-    Module moduleHeader = null;
-    ModuleChanges moduleChanges = new ModuleChangesTransferObject();
-    if(!longName.equals(orgModule.getLongName()))
-    {
-      moduleHeader = new ModuleTransferObject();
-      moduleHeader.setLongName(longName);
-      moduleHeader.setModuleIdseq(module.getModuleIdseq());
-      moduleChanges.setUpdatedModule(moduleHeader);
-    }
-    InstructionChanges modInstrChanges = getInstructionChanges(orgModule.getInstruction(),module.getInstruction(),module.getModuleIdseq());
-    modInstrChanges.setParentId(module.getModuleIdseq());
-
-    if(!modInstrChanges.isEmpty())
-      moduleChanges.setInstructionChanges(modInstrChanges);
-    //Get all the changes for the modules questions
-    ModuleChanges changes = getUpdatedNewDeletedQuestions(moduleChanges,module,orgModule.getQuestions(),module.getQuestions());
+    ModuleChanges moduleChanges = getModuleChanges(module, orgModule, crf, orgCrf,form,request);
 
 
-    if(changes.isEmpty())
+    if(moduleChanges.isEmpty())
     {
       saveMessage("cadsr.formbuilder.form.edit.nochange", request);
-      return mapping.findForward(MODULE_EDIT);
+      return mapping.findForward(NO_CHANGES);
     }
 
     FormBuilderServiceDelegate service = getFormBuilderService();
@@ -953,6 +905,54 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     log.debug("Action Save Module Done");
     return mapping.findForward(SUCCESS);
   }
+
+
+    /**
+     * Check for changes.
+     *
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     *
+     * @return
+     *
+     * @throws IOException
+     * @throws ServletException
+     */
+    public ActionForward checkModuleChanges(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+      DynaActionForm moduleEditForm = (DynaActionForm) form;
+      Module sessionModule = (Module) getSessionObject(request, MODULE);
+      Module orgModule = (Module) getSessionObject(request, CLONED_MODULE);
+      Module module = null;
+      try
+      {
+          module  = (Module)sessionModule.clone();
+      }
+      catch (CloneNotSupportedException clexp) {
+          if (log.isErrorEnabled()) {
+            log.error("Exception while cloning module  Check module changes");
+          }
+          return mapping.findForward(FAILURE);
+        }
+
+        Form crf = (Form) getSessionObject(request, CRF);
+        Form orgCrf = (Form) getSessionObject(request, this.CLONED_CRF);
+
+        ModuleChanges moduleChanges = getModuleChanges(module,orgModule, crf, orgCrf,form,request);
+
+      if(moduleChanges.isEmpty())
+      {
+        return mapping.findForward(NO_CHANGES);
+      }
+
+      return mapping.findForward(CHANGES);
+    }
+
 
   /**
    * Cancel Edit and back to Search results
@@ -1016,7 +1016,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
      if(currQuestion.getDataElement()==null)
      {
        List vvList  = currQuestion.getValidValues();
-       
+
        List copyList = cloneFormValidValueList(vvList);
        if(!copyList.isEmpty())
         availableVVMap.put(currQuestion.getQuesIdseq(),copyList);
@@ -1035,9 +1035,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
          //Check if vv in question has vpIdseq
        }
        List vvList = currQuestion.getValidValues();
-       
+
        /**
-      //Change in 3.0.1.1 Do not need this test here because of this questions with all vv deleted on the from 
+      //Change in 3.0.1.1 Do not need this test here because of this questions with all vv deleted on the from
        // are not
       // getting through
        ListIterator vvIterator = vvList.listIterator();
@@ -1554,7 +1554,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
                 currVV.getInstruction().setLongName(instrStr);
                  initNullValues(currVV.getInstruction(),module);
                                              // this is done to take care
-                                             // incase the attributes are null                
+                                             // incase the attributes are null
               }
               else
               {
@@ -1662,7 +1662,81 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
      return true;
    }
  }
- 
+
+ /**
+     *
+     * @param module Module with the current changes that need to be compared with original modules
+     * @param form
+     * @param request
+     * @return
+     * @throws IOException
+     * @throws ServletException
+     */
+    private ModuleChanges getModuleChanges(
+      Module module, Module orgModule, Form crf, Form orgCrf,
+      ActionForm form,
+      HttpServletRequest request)  {
+      DynaActionForm moduleEditForm = (DynaActionForm) form;
+      Module sessionModule = (Module) getSessionObject(request, MODULE);
+
+
+      module.setForm(crf);
+      module.setContext(crf.getContext());//This is done so that all new Element created will have this Context
+
+      String longName = (String) moduleEditForm.get(MODULE_LONG_NAME);
+      module.setLongName(longName);
+
+      String moduleInstruction = (String) moduleEditForm.get(MODULE_INSTRUCTION);
+      if(moduleInstruction!=null&&!moduleInstruction.trim().equalsIgnoreCase(""))
+      {
+        Instruction instr = module.getInstruction();
+        if(instr==null)
+        {
+          instr = new InstructionTransferObject();
+          instr.setDisplayOrder(0);
+          instr.setVersion(new Float(1));
+          instr.setAslName("DRAFT NEW");
+          instr.setContext(module.getContext());
+          instr.setPreferredDefinition(moduleInstruction);
+        }
+        instr.setLongName(moduleInstruction);
+        module.setInstruction(instr);
+      }
+      else
+      {
+        module.setInstruction(null);
+      }
+      String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
+      setQuestionsFromArray(module, questionArr);
+
+      String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+      setQuestionInstructionsFromArray(module,questionInstructionsArr);
+
+      String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+      setValidValueInstructionsFromArray(module,vvInstructionsArr);
+
+      //Check if the module longName has changed
+      Module moduleHeader = null;
+      ModuleChanges moduleChanges = new ModuleChangesTransferObject();
+      if(!longName.equals(orgModule.getLongName()))
+      {
+        moduleHeader = new ModuleTransferObject();
+        moduleHeader.setLongName(longName);
+        moduleHeader.setModuleIdseq(module.getModuleIdseq());
+        moduleChanges.setUpdatedModule(moduleHeader);
+      }
+      InstructionChanges modInstrChanges = getInstructionChanges(orgModule.getInstruction(),module.getInstruction(),module.getModuleIdseq());
+      modInstrChanges.setParentId(module.getModuleIdseq());
+
+      if(!modInstrChanges.isEmpty())
+        moduleChanges.setInstructionChanges(modInstrChanges);
+      //Get all the changes for the modules questions
+      ModuleChanges changes = getUpdatedNewDeletedQuestions(moduleChanges,module,orgModule.getQuestions(),module.getQuestions());
+
+      return changes;
+    }
+
+
     /**
      * Get all related VDs and prepare for display
      *
@@ -1682,7 +1756,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException {
       FormBuilderBaseDynaFormBean moduleEditForm = (FormBuilderBaseDynaFormBean) form;
-       
+
        /**
       Integer questionIndex = (Integer) moduleEditForm.get(QUESTION_INDEX);
       int currQuestionIndex = questionIndex.intValue();
@@ -1742,7 +1816,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         }
 
         vd1.setValidValues(vvList1);
-        
+
 
         vd2.setValidValues(vvList2);
 
@@ -1794,7 +1868,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       currQuestion.setValidValues(newValidValues);
       **/
        return mapping.findForward(MODULE_EDIT);
-       
+
        //return mapping.findForward("useSubsets");
       }
 
@@ -1818,5 +1892,5 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       HttpServletResponse response) throws IOException, ServletException {
 
        return mapping.findForward("useSubsets");
-      }    
+      }
 }

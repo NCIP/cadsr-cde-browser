@@ -49,5 +49,6 @@ public interface PersistenceConstants {
   public static final String QTL_NAME_MODULE="MODULE";
   
     public static final String QTL_NAME_QUESTION="QUESTION";
+    public static final String QTL_NAME_VALID_VALUE="VALID_VALUE";
 
 }

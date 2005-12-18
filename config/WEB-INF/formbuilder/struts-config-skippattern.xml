@@ -30,9 +30,35 @@
        redirect="false"/>
     
      <forward name="backToModuleEdit" path="/moduleToEditAction.do?method=getModuleToEdit"
-      redirect="false"/>    
-    
+      redirect="false"/> 
+      
+
     </action>
+    
+    <action name="moduleEditForm" path="/gotoModuleSkipAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction"
+      validate="true">
+      
+      <forward name="noChanges" path="/formbuilder/skipAction.do?method=createModuleSkipPattern" redirect="false"/>    
+      <forward name="failure" path="/formbuilder/moduleEdit.jsp" redirect="false"/>   
+      <forward name="changes" path="/formbuilder/moduleSaveConfirmModuleSkipPattern.jsp" redirect="false"/>
+      <forward name="success" path="/formbuilder/skipAction.do?method=createModuleSkipPattern" redirect="false"/>  
+      <forward name="createSkipPattern" path="/formbuilder/skipAction.do?method=setCurrentFormAsTargetForm"/> 
+    </action>
+
+    <action name="moduleEditForm" path="/gotoValidValueSkipAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction"
+      validate="true">
+      
+      <forward name="noChanges" path="/formbuilder/skipAction.do?method=createValidValueSkipPattern" redirect="false"/>    
+      <forward name="failure" path="/formbuilder/moduleEdit.jsp" redirect="false"/>   
+      <forward name="changes" path="/formbuilder/moduleSaveConfirmValidValueSkipPattern.jsp" redirect="false"/>
+      <forward name="success" path="/formbuilder/skipAction.do?method=createValidValueSkipPattern" redirect="false"/>  
+     <forward name="createSkipPattern" path="/formbuilder/skipAction.do?method=setCurrentFormAsTargetForm"/> 
+    </action>    
+    
     
   </action-mappings>
 

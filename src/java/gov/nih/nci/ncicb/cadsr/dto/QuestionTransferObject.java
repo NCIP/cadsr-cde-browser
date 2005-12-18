@@ -39,8 +39,12 @@ public class QuestionTransferObject extends FormElementTransferObject
 
   public void setQuesIdseq(String idseq) {
     this.quesIdseq = idseq;
+      this.idseq=idseq;
   }
-
+  public void setIdseq(String idseq) {
+        this.quesIdseq = idseq;
+          this.idseq=idseq;
+      }
   public Module getModule() {
     return module;
   }

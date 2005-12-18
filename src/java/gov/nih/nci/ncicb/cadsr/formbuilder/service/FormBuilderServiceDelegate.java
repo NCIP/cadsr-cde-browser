@@ -154,10 +154,10 @@ public interface FormBuilderServiceDelegate {
     public List getAllTriggerActionsForSource(String sourceId)
         throws FormBuilderException;
         
-    public void createTriggerAction(TriggerAction action)
+    public TriggerAction createTriggerAction(TriggerAction action)
            throws FormBuilderException;
 
-    public void updateTriggerAction(TriggerAction action)
+    public TriggerAction updateTriggerAction(TriggerAction action)
              throws FormBuilderException;
 
     public void deleteTriggerAction(String triggerActionId)

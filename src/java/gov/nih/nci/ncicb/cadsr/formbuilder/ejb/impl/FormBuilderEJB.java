@@ -54,6 +54,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ProtocolDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.TriggerActionDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
@@ -1306,14 +1307,21 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         return new ArrayList();
     }
 
-    public void createTriggerAction(TriggerAction action)
+    public TriggerAction createTriggerAction(TriggerAction action)
     {
-
+        TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
+        String newId = dao.createTriggerAction(action,getUserName().toUpperCase());
+        
+        TriggerAction newAction = dao.getTriggerActionsForId(newId);
+        //get Protocols and Classifications
+        
+        return newAction;
+        
     }
 
-    public void updateTriggerAction(TriggerAction action)
+    public TriggerAction updateTriggerAction(TriggerAction action)
     {
-
+       return null;
     }
 
     public void deleteTriggerAction(String triggerActionId)

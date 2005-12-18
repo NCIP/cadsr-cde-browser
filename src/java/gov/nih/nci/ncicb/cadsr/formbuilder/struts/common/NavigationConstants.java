@@ -9,6 +9,7 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String FORM_EDIT ="formEdit";
   public static final String MODULE_EDIT ="moduleEdit";
   public static final String NO_CHANGES ="noChanges";
+  public static final String CHANGES ="changes";
   public static final String SEARCH_RESULTS ="searchResults";
 
 
@@ -139,8 +140,9 @@ public interface NavigationConstants extends CommonNavigationConstants
     public static final String   SET_QUESTION_AS_TARGET="setQuestionAsTarget";
 
   public static final String  SKIP_TO_FORM_SEARCH = "skipToFormSearch";
-
+  public static final String  CHECK_MODULE_CHANGES="checkModuleChanges";
   public static final String  SAVE_SKIP_PATTERN = "saveSkipPattern";
+  public static final String  CANCEL_MODULE_SAVE="cancelModuleSave";
 
   public static final String  GO_TO_MODULE_SEARCH = "goToModuleSearch";
   public static final String  GO_TO_SELECTED_MODULE_LIST = "goToSelectedModuleList";

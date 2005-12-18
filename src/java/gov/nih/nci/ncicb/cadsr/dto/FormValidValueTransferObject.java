@@ -29,8 +29,13 @@ public class FormValidValueTransferObject extends FormElementTransferObject
   public void setValueIdseq(String idseq) 
   {
     this.valueIdseq = idseq;
+      this.idseq=idseq;
   }
 
+  public void setIdseq(String idseq) {
+          this.valueIdseq = idseq;
+            this.idseq=idseq;
+        }
   public Question getQuestion() 
   {
     return term;

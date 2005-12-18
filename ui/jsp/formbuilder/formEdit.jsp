@@ -601,35 +601,7 @@ function submitModuleRepition(methodName,moduleIndexValue) {
           </logic:iterate>
 
         </logic:notEmpty>   
-    <!-- skiip Pattern -->
-             <logic:present name="<%=FormConstants.SKIP_PATTERN%>" >
-             
-              <%
-
-                TriggerAction triggerAction = (TriggerAction)request.getSession().getAttribute(FormConstants.SKIP_PATTERN);
-                System.out.println("triggerAction="+triggerAction);
-                String skipTargetType = FormJspUtil.getFormElementType(triggerAction.getActionTarget());
-                pageContext.setAttribute("skipTargetType",skipTargetType);
-                pageContext.setAttribute("skipTarget",triggerAction.getActionTarget());    
-                
-                %>
-
-                <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                 <%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
-                </table>
-
-         
-           </logic:present> 
-               <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">     
-                <tr>
-                <td align="right">
-                  <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_FORM_SKIP_PATTERN%>'
-                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="startIndex" >
-                       Add Skip pattern
-                  </html:link>&nbsp;
-                </td>
-               </tr>
-              </table>
+ 
            <br>
     <!-- skip pattern end -->        
       </logic:present>

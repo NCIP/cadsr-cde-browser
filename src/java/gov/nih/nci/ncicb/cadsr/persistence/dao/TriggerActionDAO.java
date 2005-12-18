@@ -29,9 +29,15 @@ public interface TriggerActionDAO extends AdminComponentDAO
     
     /**
      * Create new trigger action
+     * @return idSeq of the TriggerAction
+     */
+    public String createTriggerAction(TriggerAction action, String createdBy);
+    
+    /**
+     * Gets all the TriggerActions by id
      *
      */
-    public int createTriggerAction(TriggerAction action, String createdBy);     
+    public TriggerAction getTriggerActionsForId(String triggerId);    
     
     /**
      * delete Trigger action

@@ -241,6 +241,7 @@
       input="/formbuilder/moduleEdit.jsp"
       >
       <forward name="moduleEdit" path="/formbuilder/moduleEdit.jsp" redirect="false"/>
+      <forward name="noChanges" path="/formbuilder/moduleEdit.jsp" redirect="false"/>
       <forward name="viewSubsets" path="/formbuilder/subsettedVDs.jsp" redirect="false"/>
       <forward name="useSubsets" path="/formbuilder/useSubsettedVDs.jsp" redirect="false"/>
       <forward name="saveSubsets" path="/formbuilder/formEdit.jsp" redirect="false"/>

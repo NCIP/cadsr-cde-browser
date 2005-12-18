@@ -71,6 +71,21 @@ function submitModuleToSave(methodName) {
   }
 }
 
+function submitModuleForModuleSkip(methodName) {
+  if(validateModuleEditForm(moduleEditForm)) {
+  document.forms[0].action='<%=request.getContextPath()%>/gotoModuleSkipAction.do'; 
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].submit();
+  }  
+}
+
+function submitModuleForValidValueSkip(methodName) {
+  if(validateModuleEditForm(moduleEditForm)) {
+  document.forms[0].action='<%=request.getContextPath()%>/gotoValidValueSkipAction.do'; 
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].submit();
+  }  
+}
 function clearProtocol() {
   document.forms[0].protocolIdSeq.value = "";
   document.forms[0].protocolLongName.value = "";
@@ -719,9 +734,9 @@ function clearProtocol() {
                                                             vvparams.put(NavigationConstants.METHOD_PARAM,NavigationConstants.CREATE_VALIDVALUE_SKIP_PATTERN);
                                                             pageContext.setAttribute("linkParams", vvparams);
                                                        %>
-                                                      <html:link  name="linkParams" scope="page"  action="/formbuilder/skipAction">
-                                                           Add Skip pattern
-                                                      </html:link>&nbsp;
+                                                         <a href="javascript:submitModuleForValidValueSkip('<%=NavigationConstants.CHECK_MODULE_CHANGES%>')"> 
+                                                            Add Skip pattern                                                            
+                                                         </a>                                                        
                                                       </td>
                                                     </tr>                                                    
                                                     
@@ -858,10 +873,9 @@ function clearProtocol() {
                <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">     
                 <tr>
                 <td align="right">
-                  <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CREATE_MODULE_SKIP_PATTERN%>'
-                       >
-                       Add Skip pattern
-                  </html:link>&nbsp;
+                 <a href="javascript:submitModuleForModuleSkip('<%=NavigationConstants.CHECK_MODULE_CHANGES%>')"> 
+                    Add Skip pattern                                                            
+                 </a>    &nbsp;
                 </td>
                </tr>
               </table>
