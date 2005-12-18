@@ -15,19 +15,15 @@
                  <%@ include file="/formbuilder/commonModuleDetails_inc.jsp"%> 
                 
                 <!-- Module skip Pattern -->
-                         <logic:present name="<%=FormConstants.SKIP_PATTERN%>" >
-                          <%
-                            TriggerAction triggerAction = (TriggerAction)request.getSession().getAttribute(FormConstants.SKIP_PATTERN);
-                            System.out.println("triggerAction="+triggerAction);
-                            String skipTargetType = FormJspUtil.getFormElementType(triggerAction.getActionTarget());
-                            pageContext.setAttribute("skipTargetType",skipTargetType);
-                            pageContext.setAttribute("skipTarget",triggerAction.getActionTarget());    
-                            
-                            %>
+                 <logic:present name="module" property = "triggerActions" >
+                   <logic:notEmpty name="module" property = "triggerActions">
                             <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                             <%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
+                              <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+                             	<%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
+                              </logic:iterate>
                             </table>
-                          </logic:present>
+                    </logic:notEmpty>
+                 </logic:present>
                  <!-- Module Skip pattern end -->  
                  
       		<table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >

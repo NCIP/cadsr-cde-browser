@@ -546,6 +546,13 @@ function submitModuleRepition(methodName,moduleIndexValue) {
                     </td>
                   </tr>
                 </logic:notEmpty>
+                <!-- tr class="OraTabledata"> 
+                <td>
+                  <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
+                       <%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
+                  </table>                
+                </td>
+                </tr -->
               </logic:present>
             </table>   
 

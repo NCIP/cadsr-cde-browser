@@ -160,27 +160,7 @@
       </table> 
       
      <%@ include file="/formbuilder/moduleDetails_inc.jsp"%>
-    <!-- skiip Pattern -->
-             <logic:present name="<%=FormConstants.SKIP_PATTERN%>" >
-             
-              <%
-
-                TriggerAction triggerAction = (TriggerAction)request.getSession().getAttribute(FormConstants.SKIP_PATTERN);
-                System.out.println("triggerAction="+triggerAction);
-                String skipTargetType = FormJspUtil.getFormElementType(triggerAction.getActionTarget());
-                pageContext.setAttribute("skipTargetType",skipTargetType);
-                pageContext.setAttribute("skipTarget",triggerAction.getActionTarget());    
-                
-                %>
-
-                <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                 <%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
-                </table>
-
-         
-           </logic:present> 
-           <br>
-    <!-- skip pattern end -->      
+    
     </logic:present>
     <logic:notPresent name="<%=FormConstants.CRF%>">Selected form has been deleted by a diffrent user </logic:notPresent>
     <%@ include file="/formbuilder/viewButton_inc.jsp"%>
