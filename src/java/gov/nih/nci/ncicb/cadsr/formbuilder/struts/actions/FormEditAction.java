@@ -12,6 +12,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
@@ -706,11 +707,13 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
 
     }
 
-    public ActionForward gotoManageProtocols(
+    public ActionForward gotoManageProtocolsFormEdit(
       ActionMapping mapping,
       ActionForm form,
       HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException {
+
+      setSessionObject(request, "backTo", NavigationConstants.FORM_EDIT); 
       return mapping.findForward(SUCCESS);
       }
 

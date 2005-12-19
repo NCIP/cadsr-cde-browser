@@ -59,6 +59,10 @@ function clearProtocol() {
   document.forms[0].protocolLongName.value = "";
 }
 
+function manageProtocols() {
+  document.forms[0].action= '<%=request.getContextPath()+"/gotoManageProtocolsFormCopy.do?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GOTO_MANAGE_PROTOCOLS_FORM_COPY%>'
+  document.forms[0].submit();
+}
 -->
 </SCRIPT>
 
@@ -126,7 +130,12 @@ function clearProtocol() {
 
         <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocol" /></td>
-          <td class="OraFieldText" nowrap>
+          <td class="OraFieldText">
+                <bean:write  name="<%=FormConstants.CRF%>" property="delimitedProtocolLongNames"/> 
+              <a href="javascript:manageProtocols()"><i>Manage Protocols</i></a> 
+              <%--???--%>
+              <html:hidden property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
+          <%--
             <html:text 
               property="<%= FormConstants.PROTOCOLS_LOV_NAME_FIELD %>"
               readonly="true" 
@@ -136,6 +145,7 @@ function clearProtocol() {
               &nbsp;<a href="<%=protoLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Protocols"></a>&nbsp;
             <a href="javascript:clearProtocol()"><i>Clear</i></a>
             <html:hidden  property="<%=FormConstants.PROTOCOLS_LOV_ID_FIELD%>"/>
+            --%>
           </td>
         </tr>
         <tr class="OraTabledata">

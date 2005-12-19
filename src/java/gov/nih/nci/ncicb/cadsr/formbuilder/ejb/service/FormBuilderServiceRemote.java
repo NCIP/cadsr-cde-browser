@@ -192,10 +192,9 @@ public interface FormBuilderServiceRemote {
 
       public Protocol getProtocolByPK(String protocoldIdseq)
             throws RemoteException;
-
-     public List getAllTriggerActionsForSource(String sourceId)
+      public List getAllTriggerActionsForSource(String sourceId)
         throws RemoteException;
-        
+
      public TriggerAction createTriggerAction(TriggerAction action)
             throws RemoteException;
 
@@ -204,4 +203,4 @@ public interface FormBuilderServiceRemote {
 
      public void deleteTriggerAction(String triggerActionId)
                  throws RemoteException;
-    }
+ }

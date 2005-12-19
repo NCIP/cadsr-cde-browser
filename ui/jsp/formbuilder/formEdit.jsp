@@ -39,7 +39,7 @@ function submitFormToSave(methodName) {
 }
 
 function manageProtocols() {
-  document.forms[0].action= '<%=request.getContextPath()+"/gotoManageProtocols.do?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GOTO_MANAGE_PROTOCOLS%>'
+  document.forms[0].action= '<%=request.getContextPath()+"/gotoManageProtocolsFormEdit.do?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GOTO_MANAGE_PROTOCOLS_FORM_EDIT%>'
   document.forms[0].submit();
 }
 

@@ -10,6 +10,7 @@ import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
@@ -44,58 +45,12 @@ public class ManageProtocolsAction
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
+    
         return mapping.findForward("success");
     }
     
     
-  /**
-   * Returns Complete form given an Id for Copy.
-   *
-   * @param mapping The ActionMapping used to select this instance.
-   * @param form The optional ActionForm bean for this request.
-   * @param request The HTTP Request we are processing.
-   * @param response The HTTP Response we are processing.
-   *
-   * @return
-   *
-   * @throws IOException
-   * @throws ServletException
-   */
-   /*
-  public ActionForward getClassifications(
-    ActionMapping mapping,
-    ActionForm form,
-    HttpServletRequest request,
-    HttpServletResponse response) throws IOException, ServletException {
-    try {
-      DynaActionForm dynaForm = (DynaActionForm) form;
-
-      String formId = (String) dynaForm.get(FORM_ID_SEQ);
-
-      Form crf = (Form) getSessionObject(request, CRF);
-
-      if ((crf == null) || !crf.getFormIdseq().equals(formId)) {
-        setFormForAction(form, request);
-      }
-
-      FormBuilderServiceDelegate service = getFormBuilderService();
-
-      Collection classifications = service.retrieveFormClassifications(formId);
-
-      setSessionObject(request, CLASSIFICATIONS, classifications);
-    }
-    catch (FormBuilderException exp) {
-      if (log.isErrorEnabled()) {
-        log.error("Exception on getClassifications ", exp);
-      }
-
-      saveError(exp.getErrorCode(), request);
-    }
-
-    return mapping.findForward("success");
-  }
-*/
-
+  
 
   public ActionForward gotoAddProtocols(
     ActionMapping mapping,
@@ -115,8 +70,16 @@ public class ManageProtocolsAction
       Form crf = (Form)getSessionObject(request, FormConstants.CRF); crf.getDelimitedProtocolLongNames();
       bean.set(FormConstants.PROTOCOLS_LOV_NAME_FIELD, crf.getDelimitedProtocolLongNames());
       
-      //request.setAttribute("showCached", CaDSRConstants.YES);
-      return mapping.findForward("success");
+      String backTo = (String)getSessionObject(request, "backTo");
+      removeSessionObject(request, "backTo");
+      if (backTo.equals(NavigationConstants.FORM_COPY)){
+          return mapping.findForward("successGotoFormCopy");
+      }
+      if (backTo.equals(NavigationConstants.FORM_COPY)){
+          return mapping.findForward("successGotoFormEdit");
+      }
+      //request.setAttribute("showCached", CaDSRConstants.YES); //TODO
+      return mapping.findForward(SUCCESS);
     }
 
   public ActionForward addProtocol(

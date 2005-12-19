@@ -78,7 +78,8 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String CANCEL_FORM_CREATE="cancelFormCreate";
 
   public static final String GET_PROTOCOL_LOV_METHOD="getProtocolsLOV";
-  public static final String MANAGE_PROTOCOLS="manageProtocols";
+  public static final String GOTO_MANAGE_PROTOCOLS_FORM_COPY="gotoManageProtocolsFormCopy";
+  public static final String GOTO_MANAGE_PROTOCOLS_FORM_EDIT="gotoManageProtocolsFormEdit";
   public static final String GOTO_MANAGE_PROTOCOLS="gotoManageProtocols";
 
 

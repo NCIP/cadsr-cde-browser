@@ -1342,7 +1342,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       in.put("p_conte_idseq", newForm.getContext().getConteIdseq());
       //TODO - CopyForm - should copy the protocols in another table?
       //in.put("p_proto_idseq", newForm.getProtocol().getProtoIdseq());
+      //TESTING      
        in.put("p_proto_idseq", null);
+       //end of testing
       in.put("p_asl_name", newForm.getAslName());
       in.put("p_created_by", newForm.getCreatedBy());
 

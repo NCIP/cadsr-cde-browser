@@ -6,6 +6,7 @@ import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
@@ -89,6 +90,17 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
     return mapping.findForward("showSuccess");
   }
 
+    public ActionForward gotoManageProtocolsFormCopy(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+
+      setSessionObject(request, "backTo", NavigationConstants.FORM_COPY); 
+      return mapping.findForward(SUCCESS);
+      }
+
+
   /**
    * Copies form
    *
@@ -137,6 +149,7 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
       newForm.setVersion((Float) dynaForm.get(FORM_VERSION));
 
       newForm.setCreatedBy(request.getRemoteUser());
+      newForm.setProtocols(crf.getProtocols());
 
       FormBuilderServiceDelegate service = getFormBuilderService();
       newForm = service.copyForm(crf.getFormIdseq(), newForm);
