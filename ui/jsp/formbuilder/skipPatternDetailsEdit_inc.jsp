@@ -1,3 +1,8 @@
+                             <%
+                               String currModuleSkipTargetType = FormJspUtil.getFormElementType(currTriggerAction.getActionTarget());
+                               //pageContext.setAttribute("skipTargetType",skipTargetType);
+                               //pageContext.setAttribute("currSkipTarget",currTriggerAction.getActionTarget());              
+                            %> 
                                                           <tr class="OraTabledata">
                                                            <td>
                                                              <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" >
@@ -18,24 +23,8 @@
                                                             <td>
                                                               <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" >
                                                 
-                                                             <logic:equal value="<%=FormJspUtil.FORM%>" name="skipTargetType">
-                                                             <tr class="OraTabledata">
-                                                              <td class="OraTableColumnHeader" width="20%" nowrap>
-                                                                Form <bean:message key="cadsr.formbuilder.form.longName"/>
-                                                              </td>
-                                                              <td  class="OraFieldText" width="70%" nowrap>
-                                                                    <bean:write  name="skipTarget" property="longName"/> 
-                                                               </td>
-                                                              <td  class="OraFieldText" width="10%" nowrap>
-                                                                  <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SKIP_TO_FORM_SEARCH%>'
-                                                                       >                 
-                                                                    [Edit] 
-                                                                  </html:link>&nbsp;  
-                                                               </td>               
-                                                             </tr>               
-                                                             </logic:equal>
                                                              
-                                                             <logic:equal value="<%=FormJspUtil.MODULE%>" name="skipTargetType">
+                                                             <logic:equal value="<%=FormJspUtil.MODULE%>" name="<%=currModuleSkipTargetType%>">
                                                               <tr class="OraTabledata">
                                                               <td class="OraTableColumnHeader" width="20%" nowrap>
                                                                 Module Name
@@ -49,18 +38,10 @@
                                                                     [Edit] 
                                                                   </html:link>
                                                                </td>                                                                
-                                                             </tr>   
-                                                             <tr class="OraTabledata">
-                                                              <td class="OraTableColumnHeader" width="20%" nowrap>
-                                                                Form <bean:message key="cadsr.formbuilder.form.longName"/>
-                                                              </td>
-                                                              <td  class="OraFieldText" width="80%" nowrap>
-                                                                    <bean:write  name="skipTarget" property="form.longName"/> 
-                                                               </td>
-                                                             </tr>               
+                                                             </tr>                 
                                                              </logic:equal>   
                                                              
-                                                             <logic:equal value="<%=FormJspUtil.QUESTION%>" name="skipTargetType">
+                                                             <logic:equal value="<%=FormJspUtil.QUESTION%>" name="<%=currModuleSkipTargetType%>">
                                                               <tr class="OraTabledata">
                                                               <td class="OraTableColumnHeader" width="20%" nowrap>
                                                                 Question Name
@@ -116,20 +97,7 @@
                                                                   </html:link>
                                                                </td>                   
                                                              </tr>   
-                                                             <tr class="OraTabledata">
-                                                              <td class="OraTableColumnHeader" width="20%" nowrap>
-                                                                Form <bean:message key="cadsr.formbuilder.form.longName"/>
-                                                              </td>
-                                                              <td  class="OraFieldText" width="70%" nowrap>
-                                                                    <bean:write  name="skipTarget" property="module.form.longName"/> 
-                                                               </td>
-                                                               <td   align="center" class="OraFieldText" width="10%" nowrap>
-                                                                  <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SKIP_TO_FORM_SEARCH%>'
-                                                                       >                 
-                                                                    [Edit] 
-                                                                  </html:link>&nbsp;                          
-                                                               </td>                   
-                                                             </tr>       
+      
                                                              <tr class="OraTabledata">
                                                               <td class="OraTableColumnHeader" width="20%" nowrap>
                                                                 Protocols

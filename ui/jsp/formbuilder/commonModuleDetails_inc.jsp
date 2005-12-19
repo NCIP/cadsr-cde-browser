@@ -125,9 +125,28 @@
                                                  <td class="OraFieldTextInstruction">
                                                    <bean:write  name="validValue" property="instruction.longName"/>
                                                  </td>
-                                                </tr>  
-                                                
-                                              </logic:present>  
+                                                </tr>                           
+                                              </logic:present> 
+                                              
+                                      <!-- vv skip Pattern -->
+                                      <logic:present name="validValue" property = "triggerActions" >
+			              <logic:notEmpty name="validValue" property = "triggerActions">
+                                      
+                                      <tr   class="OraTabledata">
+                                        <td class="OraFieldText" width="50">&nbsp;</td>
+                                        <td >	
+				          <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+					    <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+						<%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
+					    </logic:iterate>
+					  </table>
+
+                                         </td>
+                                        </tr>
+				       </logic:notEmpty>
+				       </logic:present>                                         
+                                       <!-- vv Skip pattern end -->   
+                                       
                                            </table>   
                                           <%}%>
                                         </td>                                        

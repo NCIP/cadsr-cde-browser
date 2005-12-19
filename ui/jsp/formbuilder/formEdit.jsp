@@ -518,7 +518,25 @@ function submitModuleRepition(methodName,moduleIndexValue) {
                                               </logic:present>                                                    
                                           </table>                                       
                                         </td>
-                                      </tr>  
+                                      </tr>
+                                      <!-- vv skip Pattern -->
+                                      <logic:present name="validValue" property = "triggerActions" >
+			              <logic:notEmpty name="validValue" property = "triggerActions">
+                                      
+                                      <tr   class="OraTabledata">
+                                        <td class="OraFieldText" width="50">&nbsp;</td>
+                                        <td >	
+				          <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+					    <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+						<%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
+					    </logic:iterate>
+					  </table>
+
+                                         </td>
+                                        </tr>
+				       </logic:notEmpty>
+				       </logic:present>                                         
+                                       <!-- vv Skip pattern end -->                                        
                                     </logic:iterate><!-- valid Value-->
                                   </table>
                                 </td>
@@ -546,13 +564,17 @@ function submitModuleRepition(methodName,moduleIndexValue) {
                     </td>
                   </tr>
                 </logic:notEmpty>
-                <!-- tr class="OraTabledata"> 
-                <td>
-                  <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                       <%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
-                  </table>                
-                </td>
-                </tr -->
+                <!-- Module skip Pattern -->
+                 <logic:present name="module" property = "triggerActions" >
+                   <logic:notEmpty name="module" property = "triggerActions">
+                            <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+                              <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+                             	<%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
+                              </logic:iterate>
+                            </table>
+                    </logic:notEmpty>
+                 </logic:present>
+                 <!-- Module Skip pattern end --> 
               </logic:present>
             </table>   
 

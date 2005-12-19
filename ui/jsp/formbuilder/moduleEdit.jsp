@@ -703,28 +703,26 @@ function clearProtocol() {
                                                   </table>
                                                </td>
                                            </tr>
-                                                  <tr class="OraTabledata" >
-                                                    <!-- skiip Pattern -->
-                                                             <logic:present name="<%=FormConstants.SKIP_PATTERN%>" >
-                                                             
-                                                              <%                               
-                                                                TriggerAction triggerAction = (TriggerAction)request.getSession().getAttribute(FormConstants.SKIP_PATTERN);
-                                                                System.out.println("triggerAction="+triggerAction);
-                                                                String skipTargetType = FormJspUtil.getFormElementType(triggerAction.getActionTarget());
-                                                                pageContext.setAttribute("skipTargetType",skipTargetType);
-                                                                pageContext.setAttribute("skipTarget",triggerAction.getActionTarget());    
-                                                                
-                                                                %>
+                                                <!-- vv skip Pattern -->
+                                                <tr class="OraTabledata" >
+                                                    
                                                             <td colspan="4" align="right">
                                                             <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                                                             <%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
+								
+								 <logic:present name="validValue" property = "triggerActions" >
+								   <logic:notEmpty name="validValue" property = "triggerActions">
+									    <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+									      <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+											<%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
+									      </logic:iterate>
+									    </table>
+								    </logic:notEmpty>
+								 </logic:present>
+								                                                             
                                                             </table>
                                                            </td>
-                                                           
-                                                           </logic:present>  
-                                                    <!-- skip pattern end -->         
-                                                  
                                                     </tr>
+                                                  <!-- vv Skip pattern end -->    
                                                   <tr class="OraTabledata" >                                                         
                                                    <td colspan="4" align=right>
                                                         <%
@@ -849,26 +847,19 @@ function clearProtocol() {
             </logic:equal>             
             </logic:iterate>          
         </logic:notEmpty>
-
-    <!-- Module skip Pattern -->
-             <logic:present name="<%=FormConstants.SKIP_PATTERN%>" >
-             
-              <%
-
-                TriggerAction triggerAction = (TriggerAction)request.getSession().getAttribute(FormConstants.SKIP_PATTERN);
-                System.out.println("triggerAction="+triggerAction);
-                String skipTargetType = FormJspUtil.getFormElementType(triggerAction.getActionTarget());
-                pageContext.setAttribute("skipTargetType",skipTargetType);
-                pageContext.setAttribute("skipTarget",triggerAction.getActionTarget());    
-                
-                %>
-
-                <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                 <%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
-                </table>
-
-     <!-- Module Skip pattern end -->
-           </logic:present> 
+        
+                <!-- Module skip Pattern -->
+                 <logic:present name="module" property = "triggerActions" >
+                   <logic:notEmpty name="module" property = "triggerActions">
+                            <table width="84%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+                              <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+					<%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
+                              </logic:iterate>
+                            </table>
+                    </logic:notEmpty>
+                 </logic:present>
+                 <!-- Module Skip pattern end --> 
+                 
            
                <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">     
                 <tr>
