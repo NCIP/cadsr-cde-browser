@@ -10,7 +10,7 @@ public interface Form extends FormElement,Instructionable  {
   public String getFormType();
   public void setFormType (String formType);
 
-  public List getProtocols();
+  public List<Protocol> getProtocols();
   public void setProtocols(List protocols);
   
   public String getDelimitedProtocolLongNames();

@@ -19,7 +19,6 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
-import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,7 +40,6 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import org.springframework.jdbc.object.SqlUpdate;
 import org.springframework.jdbc.object.StoredProcedure;
-
 
 public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   public JDBCFormDAO(ServiceLocator locator) {
@@ -129,7 +127,6 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    *
    * @return <b>Collection</b> List of Protocols
    */
-  //TODO - needs to be modified for multiple protocols.
   public List getAllProtocolsForPublishedForms(String contextIdSeq)
   {
     PublishedProtocolsQuery query = new PublishedProtocolsQuery(getDataSource());
@@ -449,7 +446,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
   query.setDataSource(getDataSource());
   query.setSql();
-  Collection test= query.execute();
+  query.execute();
 
   return query.getFormCollection();
  }
@@ -1442,7 +1439,6 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   * Inner class that accesses database to get all the forms
   * sort by context and protocol
   */
-  //TODO - multiple protocols - sql needs to be modified
  class FormContextProtoQuery  extends MappingSqlQuery {
  String lastFormId = null;
  Form currentForm = null;
@@ -1453,18 +1449,19 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
   public void setSql() {
    String allFormsbyProtocolQueryStmt =
-             " SELECT qc_idseq " + " ,quest.long_name long_name " + " ,quest.preferred_name preffered_name "
+             " SELECT quest.qc_idseq " + " ,quest.long_name long_name " + " ,quest.preferred_name preffered_name "
                 + " ,quest.preferred_definition preferred_definition " + " ,quest.CONTE_IDSEQ "
-                + " ,quest.PROTO_IDSEQ PROTO_IDSEQ " + " ,proto.LONG_NAME   proto_name "
+                + " ,proto_qc.PROTO_IDSEQ PROTO_IDSEQ " + " ,proto.LONG_NAME   proto_name "
                 + " ,proto.preferred_name proto_preferred_name "
                 + "  ,proto.preferred_definition proto_preferred_definition, proto.CONTE_IDSEQ proto_context "
                 + ", accs.cs_csi_idseq, accs.cs_conte_idseq "
-                + " FROM  sbrext.quest_contents_ext quest,protocols_ext proto,  "
+                + " FROM  sbrext.quest_contents_ext quest,protocols_ext proto, protocol_qc_ext proto_qc,  "
                 + " (select ac_idseq, cs_csi_idseq, cs_conte_idseq  from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
                 + CaDSRConstants.FORM_CS_TYPE + "') and upper(CSITL_NAME) = upper('"
                 + CaDSRConstants.FORM_CSI_TYPE + "')) accs "
-                + " WHERE " + " quest.QC_IDSEQ = accs.AC_IDSEQ(+) and quest.qtl_name = 'CRF' "
-                + " AND   proto.PROTO_IDSEQ(+) =quest.PROTO_IDSEQ " + " AND   quest.deleted_ind = 'No' "
+                + " WHERE quest.QC_IDSEQ = proto_qc.QC_IDSEQ(+) and proto_qc.PROTO_IDSEQ = proto.PROTO_IDSEQ " 
+                + " and quest.QC_IDSEQ = accs.AC_IDSEQ(+) and quest.qtl_name = 'CRF' "
+                + " AND   quest.deleted_ind = 'No' "
                 + " AND   quest.latest_version_ind = 'Yes' "
                 + " ORDER BY proto.conte_idseq,upper(proto.LONG_NAME),upper(quest.long_name), quest.QC_IDSEQ";
 
@@ -1490,8 +1487,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
      ContextTransferObject contextTransferObject = new ContextTransferObject();
      contextTransferObject.setConteIdseq(rs.getString("CONTE_IDSEQ")); //CONTE_IDSEQ
      form.setContext(contextTransferObject);
-     /*protocols will be set later
-      * if (rs.getString("PROTO_IDSEQ") != null &&
+      if (rs.getString("PROTO_IDSEQ") != null &&
       (rs.getString("PROTO_IDSEQ")).length() >0) {
        Protocol protocol = new ProtocolTransferObject();
        protocol.setLongName(rs.getString("proto_name"));
@@ -1501,9 +1497,13 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
        protocol.setIdseq(rs.getString("PROTO_IDSEQ"));
        protocol.setProtoIdseq(rs.getString("PROTO_IDSEQ"));
        protocol.setConteIdseq(rs.getString("proto_context"));
-       form.setProtocol(protocol);
+       if (form.getProtocols()== null)
+         form.setProtocols(new ArrayList());
+       form.getProtocols().add(protocol);
+       
+         
      }
-     */
+     
      lastFormId = formId;
      currentForm = form;
      formsList.add(form);
@@ -1746,7 +1746,6 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     }
  }
 
-  //TODO - sql needs to be modified for multiple protocols    
   class PublishedProtocolsQuery extends MappingSqlQuery {
 
     PublishedProtocolsQuery(DataSource ds)  {

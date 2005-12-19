@@ -90,19 +90,18 @@ public class CDEBrowserTreeServiceImpl
 
       // When the form and the Protocol belongs to different context, the Protocol
       // context takes priority
-       //TODO - tree for multiple form/protocols
-      /*if (currForm.getProtocol() != null)
-        currContextId = currForm.getProtocol().getConteIdseq();
-        */
+      if (currForm.getProtocols() != null && currForm.getProtocols().size()>0)
+        currContextId = currForm.getProtocols().get(0).getConteIdseq();
+        
       if (currContextId == null)
         currContextId = currForm.getContext().getConteIdseq();
 
       Map currCSMap = (Map)protoCSMap.get(currContextId);
 
       String currProtoIdSeq = null;
-
-        //TODO - tree for multiple form/protocols
-        //currProtoIdSeq = currForm.getProtoIdseq();
+      
+      if (currForm.getProtocols() != null && currForm.getProtocols().size()>0)
+         currProtoIdSeq = currForm.getProtocols().get(0).getProtoIdseq();
       DefaultMutableTreeNode formNode = getFormNode(idGen.getNewId(), currForm, treeFunctions, false);
 
       // add form node to protocol node
@@ -118,11 +117,10 @@ public class CDEBrowserTreeServiceImpl
         DefaultMutableTreeNode protoNode = (DefaultMutableTreeNode)protocolHolder.get(currProtoIdSeq);
 
         if (protoNode == null) {
-          //TODO - how will mulitple protocols change the tree?
-          //protoNode = getProtocolNode(idGen.getNewId(), currForm.getProtocol(), currContextId, treeFunctions);
+          protoNode = getProtocolNode(idGen.getNewId(), currForm.getProtocols().get(0), currContextId, treeFunctions);
 
-          //protocolHolder.put(currProtoIdSeq, protoNode);
-          //protocolList.add(protoNode);
+          protocolHolder.put(currProtoIdSeq, protoNode);
+          protocolList.add(protoNode);
           treeNodeMap.clear();
         }
 
