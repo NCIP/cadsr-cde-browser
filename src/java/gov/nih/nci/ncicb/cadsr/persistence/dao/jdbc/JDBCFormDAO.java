@@ -883,22 +883,55 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       String moduleName, 
       String cdePublicId) {
 
-      String whereClause = null;
+      String selectWhat = "SELECT distinct f.qc_idseq, f.version, f.type, f.conte_idseq, f.CATEGORY_NAME, f.workflow, f.preferred_name, f.definition, " +
+                          " f.long_name, f.context_name, f.public_id, latest_version_ind,  f.DATE_MODIFIED, f.DATE_CREATED ";
+      StringBuffer fromWhat = new StringBuffer(" FROM FB_FORMS_VIEW f ");
+      StringBuffer initialWhere = new StringBuffer();
+      boolean hasWhere = false;
+      if (StringUtils.doesValueExist(moduleName) || StringUtils.doesValueExist(cdePublicId)){     
+        fromWhat.append(", FB_QUEST_MODULE_VIEW q ");
+        initialWhere.append(" where ( f.QC_IDSEQ = q.FORM_IDSEQ )");
+        hasWhere = true;
+      }  
+      if (StringUtils.doesValueExist(protocolIdSeq) || StringUtils.doesValueExist(protocolIdSeq)){     
+        fromWhat.append(", protocol_qc_ext p ");
+        if (hasWhere){
+            initialWhere.append(" AND ( f.QC_IDSEQ = p.qc_idseq) and (p.proto_idseq ='" + publicId + "') ");
+        }else{    
+            initialWhere.append(" where ( f.QC_IDSEQ = p.qc_idseq) and (p.proto_idseq ='" + protocolIdSeq + "') ");
+            hasWhere = true;
+        }
+      }  
+      String whereClause = makeWhereClause(
+                          formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
+                          type, classificationIdseq,contextRestriction, 
+                          publicId, version, moduleName, cdePublicId, hasWhere);
+      String sql = selectWhat.toString() + " " + fromWhat.toString() + " " 
+                    + initialWhere.toString() + whereClause;
+      System.out.println(sql);
+      super.setSql(sql);
+/*          
       if (StringUtils.doesValueExist(moduleName) || StringUtils.doesValueExist(cdePublicId)){     
         whereClause = makeWhereClause(
           formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
           type, classificationIdseq,contextRestriction, 
           publicId, version, moduleName, cdePublicId, true);
-        super.setSql("SELECT distinct f.* FROM FB_FORMS_VIEW f, FB_QUEST_MODULE_VIEW q where ( f.QC_IDSEQ = q.FORM_IDSEQ ) " + whereClause + "ORDER BY upper(f.LONG_NAME)");
-        System.out.println("search form sql=" + " SELECT distinct f.* FROM FB_FORMS_VIEW f, FB_QUEST_MODULE_VIEW q where ( f.QC_IDSEQ = q.FORM_IDSEQ ) " + whereClause + "ORDER BY upper(f.LONG_NAME)");
+          String sql = "SELECT " + selectWhat + 
+                        " FROM FB_FORMS_VIEW f, FB_QUEST_MODULE_VIEW q where ( f.QC_IDSEQ = q.FORM_IDSEQ ) " + 
+                        whereClause + "ORDER BY upper(f.LONG_NAME)";
+           super.setSql(sql);
+           System.out.println(sql);
      }else{     
       whereClause = makeWhereClause(
            formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
            type, classificationIdseq,contextRestriction, 
            publicId, version, moduleName, cdePublicId, false);
-      super.setSql("SELECT * FROM FB_FORMS_VIEW  f " + whereClause + " ORDER BY upper(f.LONG_NAME)");
+           String sql = "SELECT " + selectWhat + " FROM FB_FORMS_VIEW  f " + whereClause + " ORDER BY upper(f.LONG_NAME)";
+           super.setSql(sql);
+           System.out.println("sql=" + sql);
      }
-    }
+    */
+}
 
    /**
     * 3.0 Refactoring- Removed JDBCTransferObject
@@ -909,7 +942,31 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       String formName = rs.getString("LONG_NAME");
 
       Form form = new FormTransferObject();
-    form.setFormIdseq(rs.getString(1)); // QC_IDSEQ
+/*      String selectWhat = "distinct f.qc_idseq, f.version, f.type, f.conte_idseq, f.CATEGORY_NAME, f.workflow, f.preferred_name, f.definition, " +
+                          " f.long_name, f.context_name, f.public_id, latest_version_ind, f. ";
+*/
+     form.setFormIdseq(rs.getString(1)); // QC_IDSEQ
+     form.setIdseq(rs.getString(1));
+     form.setLongName(rs.getString(9)); //LONG_NAME
+     form.setPreferredName(rs.getString(7)); // PREFERRED_NAME
+
+     //setContext(new ContextTransferObject(rs.getString("context_name")));
+     ContextTransferObject contextTransferObject = new ContextTransferObject();
+     contextTransferObject.setConteIdseq(rs.getString(4)); //CONTE_IDSEQ
+     contextTransferObject.setName(rs.getString(5)); // CONTEXT_NAME
+     form.setContext(contextTransferObject);
+     form.setDateModified(rs.getTimestamp(13));
+     
+     //multiple protcols will be set later
+     form.setFormType(rs.getString(3)); // TYPE
+     form.setAslName(rs.getString(6)); // WORKFLOW
+     form.setVersion(new Float(rs.getString(2))); // VERSION
+     form.setPublicId(rs.getInt(11)); //Public ID
+     form.setPreferredDefinition(rs.getString(8)); // PREFERRED_DEFINITION
+     form.setCreatedBy(rs.getString(14)); // CREATED_BY
+     form.setFormCategory(rs.getString(5));
+
+/*    form.setFormIdseq(rs.getString(1)); // QC_IDSEQ
     form.setIdseq(rs.getString(1));
     form.setLongName(rs.getString(9)); //LONG_NAME
     form.setPreferredName(rs.getString(7)); // PREFERRED_NAME
@@ -922,13 +979,6 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     form.setDateModified(rs.getTimestamp(15));
     
     //multiple protcols will be set later
-    /*
-    ProtocolTransferObject protocolTransferObject =
-      new ProtocolTransferObject(rs.getString(11)); //PROTOCOL_LONG_NAME
-    protocolTransferObject.setProtoIdseq(rs.getString(10));  // PROTO_IDSEQ
-    form.setProtocol(protocolTransferObject);
-    */
-    
     form.setFormType(rs.getString(3)); // TYPE
     form.setAslName(rs.getString(6)); // WORKFLOW
     form.setVersion(new Float(rs.getString(2))); // VERSION
@@ -936,7 +986,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     form.setPreferredDefinition(rs.getString(8)); // PREFERRED_DEFINITION
     form.setCreatedBy(rs.getString(13)); // CREATED_BY
     form.setFormCategory(rs.getString(5));
-
+*/
     return form;
     }
 
@@ -975,10 +1025,10 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
       if (StringUtils.doesValueExist(protocol)) {
         if (hasWhere) {
-          whereBuffer.append(" AND f.PROTO_IDSEQ ='" + protocol + "'");
+          whereBuffer.append(" AND p.PROTO_IDSEQ ='" + protocol + "'");
         }
         else {
-          whereBuffer.append(" WHERE f.PROTO_IDSEQ ='" + protocol + "'");
+          whereBuffer.append(" WHERE p.PROTO_IDSEQ ='" + protocol + "'");
           hasWhere = true;
         }
       }
@@ -1047,7 +1097,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         }
       }
       
-        if (StringUtils.doesValueExist(publicId)) {
+/*        if (StringUtils.doesValueExist(publicId)) {
           if (hasWhere) {
             whereBuffer.append(" AND (f.PUBLIC_ID =" + publicId + ")");
           }
@@ -1056,7 +1106,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
             hasWhere = true;
           }
         }
-      
+      */
         if (StringUtils.doesValueExist(publicId)) {
           if (hasWhere) {
             whereBuffer.append(" AND (f.PUBLIC_ID =" + publicId + ")");
