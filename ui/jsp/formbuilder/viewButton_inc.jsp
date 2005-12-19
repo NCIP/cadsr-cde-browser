@@ -130,6 +130,19 @@ if(confirm(message)) location.href = url;
 		altMessage="Form Versioning" 
             />   
            </td>            
+         <td>
+            <cde:secureIcon  formId="<%=FormConstants.CRF%>"
+                formScope="<%=CaDSRConstants.SESSION_SCOPE%>"
+                activeImageSource="i/createNewVersion.gif" 
+                activeUrl='<%="/gotoCreateNewVersion.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GOTO_CREATE_NEW_VERSION_FORM%>' 
+                formType="TEMPLATE"  
+                role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		urlPrefix="<%=urlPrefix%>"
+		paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+		paramProperty="formIdseq"
+		altMessage="Form Versioning" 
+            />   
+           </td>            
           </tr>
           <tr width="100%" align="right">
           <td colspan="9">

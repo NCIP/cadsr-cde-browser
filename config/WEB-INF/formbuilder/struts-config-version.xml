@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'windows-1252'?>
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
-  <form-beans>
+  <form-beans> 
     <form-bean name="versionForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
@@ -54,7 +54,6 @@
         path="/formbuilder/selectLatestVersion.jsp"
         redirect="false"/>  
     </action>     
-    <!--
     <action name="versionForm" path="/gotoCreateNewVersion" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormVersionAction"
@@ -66,7 +65,6 @@
         path="/formbuilder/formDetails.jsp"
         redirect="false"/>  
     </action>     
-    -->
     <action name="versionForm" path="/saveNewVersion" parameter="method"
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormVersionAction"
