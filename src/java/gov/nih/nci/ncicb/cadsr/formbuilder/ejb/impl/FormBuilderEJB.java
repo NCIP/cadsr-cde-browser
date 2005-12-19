@@ -245,7 +245,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             block = (Module)mIter.next();
 
             String moduleId = block.getModuleIdseq();
-
+   
             List mInstructions = mInstrdao.getInstructions(moduleId);
             block.setInstructions(mInstructions);
 
@@ -276,10 +276,14 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                     String vvId = vv.getValueIdseq();
                     List vvInstructions = vvInstrdao.getInstructions(vvId);
                     vv.setInstructions(vvInstructions);
+                    //Set Skip Patterns
+                    vv.setTriggerActions(getAllTriggerActionsForSource(vvId));
                 }
             }
 
             block.setQuestions(questions);
+            //Set Skip Patterns
+            block.setTriggerActions(getAllTriggerActionsForSource(moduleId));
         }
 
         myForm.setModules(modules);
@@ -330,13 +334,15 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             while (vvIter.hasNext())
             {
                 FormValidValue vv = (FormValidValue)vvIter.next();
-                vv
-                .setInstructions(valueValueInstrDao.getInstructions(vv.getValueIdseq()));
-            }
+                vv.setInstructions(valueValueInstrDao.getInstructions(vv.getValueIdseq()));
+               //Set Skip Patterns
+               vv.setTriggerActions(getAllTriggerActionsForSource(vv.getValueIdseq()));
+           }
         }
-
+        
         module.setQuestions(questions);
-
+        //Set Skip patterns
+        module.setTriggerActions(getAllTriggerActionsForSource(modulePK));
         return module;
     }
 
@@ -1302,9 +1308,11 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
 
     }
 
-    public List getAllTriggerActionsForSource(String sourceId)
+    public List<TriggerAction> getAllTriggerActionsForSource(String sourceId)
     {
-        return new ArrayList();
+        TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
+        List<TriggerAction> triggerActions = dao.getTriggerActionsForSource(sourceId);
+        return triggerActions;
     }
 
     public TriggerAction createTriggerAction(TriggerAction action)
@@ -1312,7 +1320,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
         String newId = dao.createTriggerAction(action,getUserName().toUpperCase());
         
-        TriggerAction newAction = dao.getTriggerActionsForId(newId);
+        TriggerAction newAction = dao.getTriggerActionForId(newId);
         //get Protocols and Classifications
         
         return newAction;

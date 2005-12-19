@@ -51,7 +51,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
      * Gets all the TriggerActions for a source
      *
      */
-    public List getTriggerActionsForSource(String sourceId) {
+    public List<TriggerAction> getTriggerActionsForSource(String sourceId) {
       TriggerActionBySourceQuery query = new TriggerActionBySourceQuery();
       query.setDataSource(getDataSource());
       query.setSql(sourceId);
@@ -62,7 +62,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
      * Gets The TriggerActions by id
      *
      */
-    public TriggerAction getTriggerActionsForId(String triggerId) {
+    public TriggerAction getTriggerActionForId(String triggerId) {
       TriggerActionByIdQuery query = new TriggerActionByIdQuery();
       query.setDataSource(getDataSource());
       query.setSql(triggerId);
@@ -82,7 +82,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
      * Gets all the Protocols associated with a trigger action
      *
      */
-    public List getAllProtocolsForTriggerAction(String triggerActionId) {
+    public List<Protocol> getAllProtocolsForTriggerAction(String triggerActionId) {
       TriggerActionProtocolsQuery query = new TriggerActionProtocolsQuery();
       query.setDataSource(getDataSource());
       query.setSql(triggerActionId);
