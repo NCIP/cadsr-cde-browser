@@ -186,7 +186,7 @@
         redirect="false"/>     
     </action>
 
-    <action name="formEditForm" path="/gotoManageProtocols" parameter="method"
+    <action name="formEditForm" path="/gotoManageProtocolsFormEdit" parameter="method"
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
       validate="false">

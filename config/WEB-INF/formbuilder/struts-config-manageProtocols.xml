@@ -49,10 +49,9 @@
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ManageProtocolsAction"
       validate="false">
-      <!--
-      <forward name="success" path="/formToEditAction.do?method=getFormToEdit"/>
-      -->
       <forward name="success" path="/formbuilder/formEdit.jsp"/>
+      <forward name="successGotoFormEdit" path="/formbuilder/formEdit.jsp"/>
+      <forward name="successGotoFormCopy" path="/formbuilder/formCopy.jsp"/>
     </action>
   </action-mappings>
 </struts-config>

@@ -41,6 +41,16 @@
       <forward name="failure" path="/formToCopyAction.do?method=getFormToCopy"/>
       
     </action>
-  </action-mappings>
+    
+    <action name="copyForm" path="/gotoManageProtocolsFormCopy" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCopyAction"
+      validate="false"
+      >
+      <forward name="success" path="/manageProtocols.do?method=manageProtocols" redirect="false"/>
+      <forward name="failure" path="/formbuilder/formCopy.jsp"/>
+    </action>  
+    
+    </action-mappings>
 
 </struts-config>
