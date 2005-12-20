@@ -9,27 +9,22 @@
                                          <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" >
                                            <tr>
                                              <td class="OraTableColumnHeader" width="95%" nowrap>
-                                               Skip to
+                                               Skip to 
                                              </td>
                                              <td class="OraTableColumnHeader" align="right" width="5%">
                                                <a href=" ">
                                                   <img src=<%=urlPrefix%>i/delete.gif border=0 alt="Delete">
                                                </a>
                                              </td> 
-                                             <td class="OraTableColumnHeader" align="right" width="5%">
-                                             <logic:equal value="<%=FormJspUtil.MODULE%>" name="currSkipSourceType">
-                                               <a href="javascript:submitModuleForModuleSkipEdit('<%=NavigationConstants.CHECK_MODULE_CHANGES%>','<%=questionIndex%>','<%=validValueIndex%>','<%=triggerIndex%>')"> 
+                                             <td class="OraTableColumnHeader" align="right" width="5%">                                          
+                                               <a href="javascript:submitModuleForModuleSkipEdit('<%=NavigationConstants.CHECK_MODULE_CHANGES%>','<%=triggerIndex%>')"> 
                                                      <img src=<%=urlPrefix%>i/edit.gif border=0 alt="Edit">                                            
                                                </a> 
-                                             <logic:equal>
-                                             <logic:equal value="<%=FormJspUtil.VALIDVALUE%>" name="currSkipSourceType">
-                                               <a href="javascript:submitModuleForValidValueSkipEdit('<%=NavigationConstants.CHECK_MODULE_CHANGES%>','<%=questionIndex%>','<%=validValueIndex%>','<%=triggerIndex%>')"> 
-                                                     <img src=<%=urlPrefix%>i/edit.gif border=0 alt="Edit">                                            
-                                               </a> 
-                                             <logic:equal>                                             
+                                            
                                              </td>                                             
                                             </tr>
                                           </table>
                                          </td>
                                       </tr>
-                                        <%@ include file="/formbuilder/skipPatternDetailsViewInclude_inc.jsp"%>                                               
+                                        <%@ include file="/formbuilder/skipPatternDetailsViewInclude_inc.jsp"%>  
+

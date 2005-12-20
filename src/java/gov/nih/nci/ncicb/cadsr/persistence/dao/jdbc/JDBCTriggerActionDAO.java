@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.InstructionTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
@@ -90,6 +91,22 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
     }
     
     /**
+     * Retrieves all the classifications for trigger action
+     *
+     * @param <b>acId</b> Idseq of an admin component
+     *
+     * @return <b>Collection</b> Collection of CSITransferObject
+     */
+    public List<CSITransferObject> getAllClassificationsForTriggerAction(String actionId) {
+
+      TriggerActionClassificationsQuery classificationQuery = new TriggerActionClassificationsQuery();
+      classificationQuery.setDataSource(getDataSource());
+      classificationQuery.setSql();
+
+      return classificationQuery.execute(actionId);
+    }    
+    
+    /**
      * Update trigger action by its target and instruction
      *
      */
@@ -159,6 +176,49 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
       }
       
      } 
+       
+    /**
+     * Inner class to get all classifications that belong to
+     * the specified Trigger action
+     */
+    class TriggerActionClassificationsQuery extends MappingSqlQuery {
+      TriggerActionClassificationsQuery() {
+        super();
+      }
+
+      public void setSql() {
+        super.setSql(
+          "SELECT csi.csi_name, csi.csitl_name, csi.csi_idseq, " +
+          "       cscsi.cs_csi_idseq, cs.preferred_definition, cs.long_name, " +
+          "        accsi.ac_csi_idseq, cs.cs_idseq " +
+          " FROM ac_csi accsi, cs_csi cscsi, " +
+          "      class_scheme_items csi, classification_schemes cs  " +
+          "      ,TA_PROTO_CSI_EXT ta_proto_csi  " +
+          " WHERE ta_proto_csi.ta_idseq = ? "+
+          " AND   accsi.cs_csi_idseq = cscsi.cs_csi_idseq " +
+          " AND   cscsi.csi_idseq = csi.csi_idseq " +
+          " AND   cscsi.cs_idseq = cs.cs_idseq " +
+          " AND ta_proto_csi.ac_csi_idseq = accsi.ac_csi_idseq");
+
+        declareParameter(new SqlParameter("ta_idseq", Types.VARCHAR));
+      }
+
+      protected Object mapRow(
+        ResultSet rs,
+        int rownum) throws SQLException {
+        CSITransferObject csito = new CSITransferObject();
+
+        csito.setClassSchemeItemName(rs.getString(1));
+        csito.setClassSchemeItemType(rs.getString(2));
+        csito.setCsiIdseq(rs.getString(3));
+        csito.setCsCsiIdseq(rs.getString(4));
+        csito.setClassSchemeDefinition(rs.getString(5));
+        csito.setClassSchemeLongName(rs.getString(6));
+        csito.setAcCsiIdseq(rs.getString(7));
+        csito.setCsIdseq(rs.getString(8));
+        return csito;
+      }
+    }
          
     
    private  class TriggerActionBySourceQuery extends MappingSqlQuery {

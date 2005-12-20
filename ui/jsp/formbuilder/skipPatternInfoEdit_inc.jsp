@@ -9,7 +9,7 @@
           
           <td align="center">
             <a href="javascript:submitForm()">
-		<html:img src='../i/cancel.gif' border="0" alt="Save skip pattern"/>            
+		<html:img src='../i/cancel.gif' border="0" alt="Back to module edit"/>            
             </a>
           
           </td>            

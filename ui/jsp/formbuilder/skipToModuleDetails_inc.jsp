@@ -50,7 +50,7 @@
                               <td class="OraFieldText" colspan=2>                            
                                 <%
                                         HashMap params = new java.util.HashMap();
-                                        params.put(FormConstants.QUESTION_INDEX,questionIndex);
+                                        params.put(FormConstants.SK_QUESTION_INDEX,questionIndex);
                                         params.put(FormConstants.MODULE_INDEX,modIndex);
                                         params.put(NavigationConstants.METHOD_PARAM,NavigationConstants.SET_QUESTION_AS_TARGET);
                                         pageContext.setAttribute("linkParams", params);

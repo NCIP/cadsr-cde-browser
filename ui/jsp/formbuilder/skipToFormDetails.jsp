@@ -39,18 +39,6 @@
 
     <%@ include file="showMessages.jsp" %>
 
-
-
-      <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
-        <tr >
-          <td align="left" width="100%">
-                  <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_FORM_AS_TARGET%>'
-                        >
-                       Skip to this form
-                  </html:link>&nbsp;
-          </td>                
-        </tr>
-      </table>
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
         <tr class="OraTabledata">
           <td class="TableRowPromptTextLeft" width="20%">

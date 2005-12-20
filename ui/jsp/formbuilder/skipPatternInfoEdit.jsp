@@ -64,16 +64,7 @@ function submitForm(methodName) {
             <td>
             <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
 
-             <logic:equal value="<%=FormJspUtil.FORM%>" name="skipSourceType">
-             <tr class="OraTabledata">
-              <td class="OraTableColumnHeader" width="20%" nowrap>
-                Form <bean:message key="cadsr.formbuilder.form.longName"/>
-              </td>
-              <td  class="OraFieldText" width="80%" nowrap>
-                    <bean:write  name="skipSource" property="longName"/> 
-               </td>
-             </tr>               
-             </logic:equal>
+
              
              <logic:equal value="<%=FormJspUtil.MODULE%>" name="skipSourceType">
               <tr class="OraTabledata">
@@ -84,14 +75,7 @@ function submitForm(methodName) {
                     <bean:write  name="skipSource" property="longName"/> 
                </td>
              </tr>   
-             <tr class="OraTabledata">
-              <td class="OraTableColumnHeader" width="20%" nowrap>
-                Form <bean:message key="cadsr.formbuilder.form.longName"/>
-              </td>
-              <td  class="OraFieldText" width="80%" nowrap>
-                    <bean:write  name="skipSource" property="form.longName"/> 
-               </td>
-             </tr>               
+            
              </logic:equal>    
              
              <logic:equal value="<%=FormJspUtil.VALIDVALUE%>" name="skipSourceType">
@@ -144,15 +128,7 @@ function submitForm(methodName) {
               <td  class="OraFieldText" width="80%" nowrap>
                     <bean:write  name="skipSource" property="question.module.longName"/> 
                </td>
-             </tr>   
-             <tr class="OraTabledata">
-              <td class="OraTableColumnHeader" width="20%" nowrap>
-                Form <bean:message key="cadsr.formbuilder.form.longName"/>
-              </td>
-              <td  class="OraFieldText" width="80%" nowrap>
-                    <bean:write  name="skipSource" property="question.module.form.longName"/> 
-               </td>
-             </tr>               
+             </tr>                
              </logic:equal>               
 
                     

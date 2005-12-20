@@ -155,24 +155,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
        Form sourceForm = (Form) getSessionObject(request,CRF);
        Form formClone = null;      
        Module moduleClone = null;
-       /**
-          try
-          {
-               formClone = (Form)sourceForm.clone();
-               moduleClone = (Module)sourceModule.clone();
-               formClone.setModules(null);
-               moduleClone.setQuestions(null);
-              moduleClone.setForm(formClone);
-          }
-            catch (CloneNotSupportedException exp) {
-              saveError(ERROR_FORM_SAVE_FAILED, request);
-              if (log.isErrorEnabled()) {
-                log.error("On save, Exception on cloneing Form/Module " + exp);
-              }
-              return mapping.findForward(FAILURE);
-            }
-            
-            **/
+
         sourceModule.setForm(sourceForm);
         TriggerAction triggerAction = new TriggerActionTransferObject();
         triggerAction.setActionSource(sourceModule);
@@ -180,7 +163,39 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         
       return mapping.findForward("createSkipPattern");
     }
+    /**
+     * Edit Skip From a Module
+     *
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     *
+     * @return
+     *
+     * @throws IOException
+     * @throws ServletException
+     */
+    public ActionForward editModuleSkipPattern(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
 
+      
+      DynaActionForm searchForm = (DynaActionForm) form;
+      String triggerIndexStr = (String)searchForm.get(TRIGGER_ACTION_INDEX);
+      int triggerIndex= Integer.parseInt(triggerIndexStr);
+      FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
+
+
+      Module sourceModule = (Module) getSessionObject(request,MODULE);
+      TriggerAction triggerAction = sourceModule.getTriggerActions().get(triggerIndex);
+
+      setSessionObject(request,SKIP_PATTERN,triggerAction);    
+        
+      return mapping.findForward("editSkipPattern");
+    }
     /**
      * Skip From a Module
      *
@@ -203,8 +218,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       
       DynaActionForm searchForm = (DynaActionForm) form;
       FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
-      String questionIndexStr = (String)formBean.get(QUESTION_INDEX);
-      String validvalueIndexStr = (String)formBean.get(VALID_VALUE_INDEX);
+      String questionIndexStr = (String)formBean.get(SK_QUESTION_INDEX);
+      String validvalueIndexStr = (String)formBean.get(SK_VALID_VALUE_INDEX);
       int qIndex= Integer.parseInt(questionIndexStr);
       int vvIndex= Integer.parseInt(validvalueIndexStr);
 
@@ -249,6 +264,48 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
          setSessionObject(request,SKIP_PATTERN,triggerAction);     
         
       return mapping.findForward("createSkipPattern");
+    }
+    
+    /**
+     * Skip From a Module
+     *
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     *
+     * @return
+     *
+     * @throws IOException
+     * @throws ServletException
+     */
+    public ActionForward editValidValueSkipPattern(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+
+      
+      DynaActionForm searchForm = (DynaActionForm) form;
+      FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
+      String triggerIndexStr = (String)searchForm.get(TRIGGER_ACTION_INDEX);
+      int triggerIndex= Integer.parseInt(triggerIndexStr);
+      
+      String questionIndexStr = (String)formBean.get(SK_QUESTION_INDEX);
+      String validvalueIndexStr = (String)formBean.get(SK_VALID_VALUE_INDEX);
+      int qIndex= Integer.parseInt(questionIndexStr);
+      int vvIndex= Integer.parseInt(validvalueIndexStr);
+
+
+       Module sourceModule = (Module) getSessionObject(request,MODULE);
+        Form sourceForm = (Form) getSessionObject(request,CRF);
+        Question question = (Question)sourceModule.getQuestions().get(qIndex);
+        FormValidValue vv = (FormValidValue)question.getValidValues().get(vvIndex);
+        TriggerAction triggerAction = vv.getTriggerActions().get(triggerIndex);
+
+         setSessionObject(request,SKIP_PATTERN,triggerAction);     
+        
+      return mapping.findForward("editSkipPattern");
     }
     
   /**
@@ -369,20 +426,9 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       Form targetForm = (Form)getSessionObject(request,SKIP_TARGET_FORM);
       List moules = targetForm.getModules();
       Module targetModule = (Module)moules.get(index);
-        Module targetModuleClone = null;
-      try
-      {
-           targetModuleClone = (Module)targetModule.clone();
-      }
-        catch (CloneNotSupportedException exp) {
-          saveError(ERROR_FORM_SAVE_FAILED, request);
-          if (log.isErrorEnabled()) {
-            log.error("On save, Exception on cloneing Nodule " + exp);
-          }
-          return mapping.findForward(FAILURE);
-        }
-      targetModuleClone.setForm(targetForm);
-      triggerAction.setActionTarget(targetModuleClone);
+
+      targetModule.setForm(targetForm);
+      triggerAction.setActionTarget(targetModule);
       
       return mapping.findForward("editSkipPattern");      
     }    
@@ -407,7 +453,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       DynaActionForm searchForm = (DynaActionForm) form;
       FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
       String modIndexStr = (String)formBean.get(MODULE_INDEX);
-      String questionIndexStr = (String)formBean.get(QUESTION_INDEX);
+      String questionIndexStr = (String)formBean.get(SK_QUESTION_INDEX);
       int modIndex= Integer.parseInt(modIndexStr);
       int questionIndex= Integer.parseInt(questionIndexStr);
         
@@ -416,24 +462,9 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       List moules = targetForm.getModules();
       Module targetModule = (Module)moules.get(modIndex);
       Question targetQuestion = (Question)targetModule.getQuestions().get(questionIndex);
-        Module targetModuleClone = null;
-        Question targetQuestionClone = null;
-      try
-      {
-           targetModuleClone = (Module)targetModule.clone();
-           targetQuestionClone = (Question)targetQuestion.clone();
-           
-      }
-        catch (CloneNotSupportedException exp) {
-          saveError(ERROR_FORM_SAVE_FAILED, request);
-          if (log.isErrorEnabled()) {
-            log.error("On save, Exception on cloneing Nodule " + exp);
-          }
-          return mapping.findForward(FAILURE);
-        }
-      targetQuestionClone.setModule(targetModuleClone);
-      targetModuleClone.setForm(targetForm);
-      triggerAction.setActionTarget(targetQuestionClone);
+
+      targetQuestion.setModule(targetModule);
+      triggerAction.setActionTarget(targetQuestion);
       
       return mapping.findForward("editSkipPattern");      
     }        
@@ -533,13 +564,13 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
             Protocol p2 = new ProtocolTransferObject();
             p2.setLongName("NETTRIALS");
             protocols.add(p2);
-            
+            TriggerAction savedAction = null;
             if(triggerAction.getIdSeq()==null)
             {
                 //Create new Skip Pattern
                  try {
                    FormBuilderServiceDelegate service = getFormBuilderService();
-                   TriggerAction newAction = service.createTriggerAction(triggerAction);
+                   savedAction = service.createTriggerAction(triggerAction);
                  } catch (FormBuilderException exp) {
                      if (log.isErrorEnabled()) {
                        log.error("Exception on creating new Skip pattern  " , exp);
@@ -554,8 +585,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
             {
                 //Editing Skip pattern
             }
-            FormElement source = triggerAction.getActionTarget();
+            triggerAction.setIdSeq(savedAction.getIdSeq());
+            FormElement source = triggerAction.getActionSource();         
             List<TriggerAction> actions = source.getTriggerActions();
+            
             if(actions==null)
             {
                 actions = new ArrayList<TriggerAction>(); 

@@ -97,6 +97,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String QUESTION_LONG_NAME = "questionLongName";
   public static final String QUESTION_ID_SEQ = "questionIdSeq";
   public static final String QUESTION_INDEX = "questionIndex";
+  public static final String SK_QUESTION_INDEX = "skQuestionIndex";  //Used for skip patterns
   public static final String MODULE_QUESTIONS = "moduleQuestions";
   public static final String MODULE_INSTRUCTION = "moduleInstruction";
   public static final String QUESTION_INSTRUCTIONS = "questionInstructions";
@@ -105,6 +106,8 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String ADD_DELETED_QUESTION_IDSEQ_ARR =
     "addDeletedQuestionIdSeqArr";
   public static final String VALID_VALUE_INDEX = "validValueIndex";
+  public static final String SK_VALID_VALUE_INDEX = "skValidValueIndex"; //Used for skip patterns
+    
   public static final String AVAILABLE_VALID_VALUES = "AvailableValidValue";
   public static final String ADD_AVAILABLE_VALID_VALUE_INDEX =
       "addAvailableValidValueIndex";
@@ -142,6 +145,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String SKIP_FORM_SEARCH_RESULT_COMPARATOR="SkipFormSearchResultComparator";
   public static final String SKIP_FORM_SEARCH_RESULTS_PAGINATION =
       "skipFormSearchResultsPagination";
+    public static final String TRIGGER_ACTION_INDEX = "triggerActionIndex";      
 
   // Useed to specify that the mode is inprocess eg. skip pattern or searching for modules to copy
   public static final String IN_PROCESS = "inProcess";

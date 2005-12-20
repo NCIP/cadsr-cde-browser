@@ -50,7 +50,8 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.ErrorCodeConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
-
+import gov.nih.nci.ncicb.cadsr.resource.FormElement;
+import java.util.HashMap;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ProtocolDAO;
@@ -240,9 +241,13 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         Question term;
         FormValidValue value;
 
+        Map<String,FormElement> possibleTargets = new HashMap<String,FormElement>();
+        List<TriggerAction>  allActions = new ArrayList<TriggerAction>();
+
         while (mIter.hasNext())
         {
             block = (Module)mIter.next();
+            block.setForm(myForm);
 
             String moduleId = block.getModuleIdseq();
 
@@ -257,6 +262,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                 term = (Question)qIter.next();
 
                 String termId = term.getQuesIdseq();
+                 possibleTargets.put(termId,term); //one of the possible targets
 
                 List<ReferenceDocument> deRefDocs =
                     getReferenceDocuments("acIdSeq", "type");
@@ -273,17 +279,25 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                 while (vIter.hasNext())
                 {
                     FormValidValue vv = (FormValidValue)vIter.next();
+                    vv.setQuestion(term);
                     String vvId = vv.getValueIdseq();
                     List vvInstructions = vvInstrdao.getInstructions(vvId);
                     vv.setInstructions(vvInstructions);
                     //Set Skip Patterns
-                    vv.setTriggerActions(getAllTriggerActionsForSource(vvId));
+                    List<TriggerAction> actions= getAllTriggerActionsForSource(vvId);
+                    allActions.addAll(actions);
+                    setSourceForTriggerActions(vv,actions);
+                    vv.setTriggerActions(actions);
                 }
             }
 
             block.setQuestions(questions);
             //Set Skip Patterns
-            block.setTriggerActions(getAllTriggerActionsForSource(moduleId));
+             possibleTargets.put(moduleId,block); //one of the possible targets
+            List<TriggerAction> actions= getAllTriggerActionsForSource(moduleId);
+            allActions.addAll(actions);
+            setSourceForTriggerActions(block,actions);
+            block.setTriggerActions(actions);
         }
 
         myForm.setModules(modules);
@@ -293,7 +307,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
 
         //Collection formCSIs = fdao.retrieveClassifications(formPK);
         //myForm.setClassifications(formCSIs);
-
+        setTargetsForTriggerActions(possibleTargets,allActions);
 
         return myForm;
     }
@@ -317,6 +331,10 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         Iterator qIter = questions.iterator();
         Question term = null;
 
+        Map<String,FormElement> possibleTargets = new HashMap<String,FormElement>();
+        List<TriggerAction>  allActions = new ArrayList<TriggerAction>();
+
+
         while (qIter.hasNext())
         {
             term = (Question)qIter.next();
@@ -331,18 +349,31 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             List values = (List)qdao.getValidValues(termId);
             term.setValidValues(values);
             Iterator vvIter = values.iterator();
+
+            possibleTargets.put(termId,term); //one of the possible targets
+
             while (vvIter.hasNext())
             {
                 FormValidValue vv = (FormValidValue)vvIter.next();
                 vv.setInstructions(valueValueInstrDao.getInstructions(vv.getValueIdseq()));
                //Set Skip Patterns
-               vv.setTriggerActions(getAllTriggerActionsForSource(vv.getValueIdseq()));
+               List<TriggerAction> actions= getAllTriggerActionsForSource(vv.getValueIdseq());
+               allActions.addAll(actions);
+               setSourceForTriggerActions(vv,actions);
+               vv.setTriggerActions(actions);
            }
         }
 
         module.setQuestions(questions);
-        //Set Skip patterns
-        module.setTriggerActions(getAllTriggerActionsForSource(modulePK));
+        //Set Skip Patterns
+         possibleTargets.put(modulePK,module); //one of the possible targets
+        List<TriggerAction> actions= getAllTriggerActionsForSource(modulePK);
+        allActions.addAll(actions);
+        setSourceForTriggerActions(module,actions);
+        module.setTriggerActions(actions);
+
+        setTargetsForTriggerActions(possibleTargets,allActions);
+
         return module;
     }
 
@@ -1345,4 +1376,24 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
     {
 
     }
+
+    private void setSourceForTriggerActions(FormElement source, List<TriggerAction> actions)
+    {
+        for(TriggerAction action : actions)
+        {
+            action.setActionSource(source);
+
+        }
+    }
+
+    private void setTargetsForTriggerActions(Map<String,FormElement> possibleTargetMap, List<TriggerAction> actions)
+    {
+        for(TriggerAction action : actions)
+        {
+            FormElement element = possibleTargetMap.get(action.getActionTarget().getIdseq());
+            action.setActionTarget(element);
+
+        }
+    }
+
 }

@@ -71,18 +71,39 @@ function submitModuleToSave(methodName) {
   }
 }
 
-function submitModuleForModuleSkip(methodName) {
+function submitModuleForModuleSkipCreate(methodName) {
   if(validateModuleEditForm(moduleEditForm)) {
-  document.forms[0].action='<%=request.getContextPath()%>/gotoModuleSkipAction.do'; 
+  document.forms[0].action='<%=request.getContextPath()%>/createModuleSkipAction.do'; 
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
   document.forms[0].submit();
   }  
 }
 
-function submitModuleForValidValueSkip(methodName) {
+function submitModuleForValidValueSkipCreate(methodName,questionIndex,validValueIndex) {
   if(validateModuleEditForm(moduleEditForm)) {
-  document.forms[0].action='<%=request.getContextPath()%>/gotoValidValueSkipAction.do'; 
+  document.forms[0].action='<%=request.getContextPath()%>/createValidValueSkipAction.do'; 
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].<%=FormConstants.SK_QUESTION_INDEX%>.value=questionIndex;
+  document.forms[0].<%=FormConstants.SK_VALID_VALUE_INDEX%>.value=validValueIndex;
+  document.forms[0].submit();
+  }  
+}
+function submitModuleForModuleSkipEdit(methodName,triggerIndex) {
+  if(validateModuleEditForm(moduleEditForm)) {
+  document.forms[0].action='<%=request.getContextPath()%>/editModuleSkipAction.do'; 
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].<%=FormConstants.TRIGGER_ACTION_INDEX%>.value=triggerIndex;
+  document.forms[0].submit();
+  }  
+}
+
+function submitModuleForValidValueSkipEdit(methodName,questionIndex,validValueIndex,triggerIndex) {
+  if(validateModuleEditForm(moduleEditForm)) {
+  document.forms[0].action='<%=request.getContextPath()%>/editValidValueSkipAction.do'; 
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].<%=FormConstants.SK_QUESTION_INDEX%>.value=questionIndex;
+  document.forms[0].<%=FormConstants.SK_VALID_VALUE_INDEX%>.value=validValueIndex;
+  document.forms[0].<%=FormConstants.TRIGGER_ACTION_INDEX%>.value=triggerIndex;
   document.forms[0].submit();
   }  
 }
@@ -208,6 +229,11 @@ function clearProtocol() {
       <html:hidden property="<%=FormConstants.QUESTION_ID_SEQ%>"/>
       <html:hidden property="<%=FormConstants.QUESTION_INDEX%>"/> 
       <html:hidden property="<%=FormConstants.VALID_VALUE_INDEX%>"/>
+      <html:hidden property="<%=FormConstants.SK_QUESTION_INDEX%>"/>
+      <html:hidden property="<%=FormConstants.SK_VALID_VALUE_INDEX%>"/>
+      <html:hidden property="<%=FormConstants.TRIGGER_ACTION_INDEX%>"/>
+      
+      
       <%@ include file="../common/in_process_common_header_inc.jsp"%>
       <jsp:include page="../common/tab_inc.jsp" flush="true">
         <jsp:param name="label" value="Edit&nbsp;Module"/>
@@ -712,8 +738,8 @@ function clearProtocol() {
 								 <logic:present name="validValue" property = "triggerActions" >
 								   <logic:notEmpty name="validValue" property = "triggerActions">
 									    <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-									      <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
-											<%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
+									      <logic:iterate id="currTriggerAction" name="validValue" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+											<%@ include file="/formbuilder/skipPatternDetailsEditVV_inc.jsp"%>
 									      </logic:iterate>
 									    </table>
 								    </logic:notEmpty>
@@ -725,14 +751,8 @@ function clearProtocol() {
                                                   <!-- vv Skip pattern end -->    
                                                   <tr class="OraTabledata" >                                                         
                                                    <td colspan="4" align=right>
-                                                        <%
-                                                            HashMap vvparams = new java.util.HashMap();
-                                                            vvparams.put(FormConstants.QUESTION_INDEX,questionIndex);
-                                                            vvparams.put(FormConstants.VALID_VALUE_INDEX,validValueIndex);
-                                                            vvparams.put(NavigationConstants.METHOD_PARAM,NavigationConstants.CREATE_VALIDVALUE_SKIP_PATTERN);
-                                                            pageContext.setAttribute("linkParams", vvparams);
-                                                       %>
-                                                         <a href="javascript:submitModuleForValidValueSkip('<%=NavigationConstants.CHECK_MODULE_CHANGES%>')"> 
+
+                                                         <a href="javascript:submitModuleForValidValueSkipCreate('<%=NavigationConstants.CHECK_MODULE_CHANGES%>','<%=questionIndex%>','<%=validValueIndex%>')"> 
                                                             Add Skip pattern                                                            
                                                          </a>                                                        
                                                       </td>
@@ -853,7 +873,8 @@ function clearProtocol() {
                    <logic:notEmpty name="module" property = "triggerActions">
                             <table width="84%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
                               <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
-					<%@ include file="/formbuilder/skipPatternDetailsEdit_inc.jsp"%>
+					<%@ include file="/formbuilder/skipPatternDetailsEditModule_inc.jsp"%>
+                                             
                               </logic:iterate>
                             </table>
                     </logic:notEmpty>
@@ -864,7 +885,7 @@ function clearProtocol() {
                <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">     
                 <tr>
                 <td align="right">
-                 <a href="javascript:submitModuleForModuleSkip('<%=NavigationConstants.CHECK_MODULE_CHANGES%>')"> 
+                 <a href="javascript:submitModuleForModuleSkipCreate('<%=NavigationConstants.CHECK_MODULE_CHANGES%>')"> 
                     Add Skip pattern                                                            
                  </a>    &nbsp;
                 </td>
