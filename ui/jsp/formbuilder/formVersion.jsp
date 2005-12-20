@@ -49,6 +49,13 @@
  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
     <tr class="OraTabledata">
       <td class="OraTableColumnHeader" nowrap width="48%">
+        <bean:message key="cadsr.formbuilder.form.max.version" />&nbsp;</td>
+      <td class="OraFieldText" nowrap width="52%"> 
+        <bean:write name="<%=FormConstants.FORM_MAX_VERSION%>"/>
+      </td>
+    </tr>
+    <tr class="OraTabledata">
+      <td class="OraTableColumnHeader" nowrap width="48%">
         <bean:message key="cadsr.formbuilder.form.current.version" />&nbsp;</td>
       <td class="OraFieldText" nowrap width="52%"> 
         <bean:write name="<%=FormConstants.CRF%>" property="version"/>
