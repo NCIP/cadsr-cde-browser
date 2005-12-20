@@ -267,4 +267,8 @@ public interface FormDAO extends AdminComponentDAO {
   public void removeFormProtocols(String formIdseq, Collection protocoldIds);
   
   public void addFormProtocol(String formIdseq, String protocoldIdseq);
-}
+  
+  public void addFormProtocols(String formIdseq, Collection protocols);
+
+  public void addFormProtocols(String formIdseq, Collection ids, boolean passIdOnly);
+  }
