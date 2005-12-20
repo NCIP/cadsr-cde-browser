@@ -102,9 +102,7 @@ public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
     List protocols = new ArrayList();
     protocols.add(protocol);    
     newForm.setProtocols(protocols);
-    
-    //newForm.setProtocol(protocol);
-    
+        
     newForm.setFormType((String)dynaForm.get(FORM_TYPE));
     newForm.setFormCategory((String)dynaForm.get(FORM_CATEGORY));
     newForm.setAslName("DRAFT NEW");
