@@ -21,7 +21,7 @@
        String pageUrl = "&PageId=DataElementsGroup";
        String contextPath = request.getContextPath();
         String protoLOVUrl = contextPath +
-       "/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName"+pageUrl;
+       "/formLOVAction.do?method=getProtocolsLOV&idVar=protocolIdSeq&nameVar=protocolLongName&chkContext=true"+pageUrl;
     %>
 
     <SCRIPT LANGUAGE="JavaScript">
@@ -30,7 +30,8 @@
           document.forms[0].protocolIdSeq.value = "";
         }
         function gotoProtocolsLOV(contextId) {
-             var dest = "<%= protoLOVUrl %>" + '&contextIdSeq=' + contextId;
+             //var dest = "<%= protoLOVUrl %>" + '&contextIdSeq=' + contextId;
+             var dest = "<%= protoLOVUrl %>";
              newWin(dest, 'ProtocolsLOV', 700, 600);
         }
     </SCRIPT>
@@ -252,11 +253,6 @@
 
 <%--done button--%>
 <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
-  <tr >
-    <td >
-      &nbsp;
-    </td>                          
-  </tr>         
   <tr >
     <td>
       <a href="javascript:document.forms[0].submit();">
