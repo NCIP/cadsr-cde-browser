@@ -294,16 +294,16 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     String qcIdseq = generateGUID();
     int res = insertQuestContent.createContent(sourceForm, qcIdseq);
 
-    if (res == 1) {
-      sourceForm.setFormIdseq(qcIdseq);
-      return qcIdseq;
-    }
-    else {
+    if (res != 1) {
          DMLException dmlExp = new DMLException("Did not succeed creating form record in the " +
         " quest_contents_ext table.");
 	       dmlExp.setErrorCode(ERROR_CREATEING_FORM);
            throw dmlExp;
     }
+    sourceForm.setFormIdseq(qcIdseq);
+    //insert protocols
+    addFormProtocols(qcIdseq, sourceForm.getProtocols());
+    return qcIdseq;
   }
 
   /**
@@ -532,6 +532,32 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     public void addFormProtocol(String formIdseq, String protocoldIdseq){
         AddFormProtocolQuery query = new AddFormProtocolQuery(getDataSource());
         query.addFormProtocol(formIdseq, protocoldIdseq);
+        return;
+    }
+
+    public void addFormProtocols(String formIdseq, Collection protocols){
+        if (protocols==null || protocols.isEmpty()){
+            return;
+        }
+        AddFormProtocolQuery query = new AddFormProtocolQuery(getDataSource());
+        Iterator it = protocols.iterator();
+        while (it.hasNext()){
+            Protocol p = (Protocol)it.next();
+            query.addFormProtocol(formIdseq, p.getProtoIdseq());
+        }
+        return;
+    }
+
+    public void addFormProtocols(String formIdseq, Collection ids, boolean passIdOnly){
+        if (ids==null || ids.isEmpty()){
+            return;
+        }
+        AddFormProtocolQuery query = new AddFormProtocolQuery(getDataSource());
+        Iterator it = ids.iterator();
+        while (it.hasNext()){
+            String pid = (String)it.next();
+            query.addFormProtocol(formIdseq, pid);
+        }
         return;
     }
 
