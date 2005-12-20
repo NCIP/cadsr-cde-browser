@@ -527,7 +527,7 @@ function submitModuleRepition(methodName,moduleIndexValue) {
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td >	
 				          <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-					    <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+					    <logic:iterate id="currTriggerAction" name="validValue" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
 						<%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
 					    </logic:iterate>
 					  </table>

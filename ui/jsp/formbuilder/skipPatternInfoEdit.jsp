@@ -264,7 +264,8 @@ function submitForm(methodName) {
 
        <br>
 
-
+    <logic:present name="<%=FormConstants.CRF%>" property="protocols">
+      <logic:notEmpty name="<%=FormConstants.CRF%>" property="protocols">
         <table width="70%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="100%" nowrap>
@@ -274,30 +275,27 @@ function submitForm(methodName) {
           <tr>
             <td>
               <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" >
-
-                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="5%" nowrap>
-                    <input type="checkbox" name="" value=""> 
-                  </td>
-                  <td  class="OraFieldText" width="90%" nowrap>
-                      CTMS Version 3.0 
-                  </td>            
-                </tr>       
-                <tr class="OraTabledata">
-                  <td class="OraTableColumnHeader" width="5%" nowrap>
-                     <input type="checkbox" name="" value=""> 
-                  </td>
-                  <td  class="OraFieldText" width="90%" nowrap>
-                      NETTRIALS
-                  </td>            
-                </tr>                    
+                <logic:iterate id="protocol" name="<%=FormConstants.CRF%>" property="protocols" type="gov.nih.nci.ncicb.cadsr.resource.Protocol" >
+                    <tr class="OraTabledata">
+                       <td class="OraTableColumnHeader" width="5%" nowrap>
+                            <html:multibox property="<%=FormConstants.SELECTED_SKIP_PROTOCOL_IDS%>">
+                                <bean:write name="protocol" property="protoIdseq"/> 
+                            </html:multibox> 
+                       </td>     
+                      <td  class="OraFieldText" width="90%" nowrap>
+                          <bean:write name="protocol" property="longName"/> 
+                      </td>            
+                    </tr>       
+                </logic:iterate>     
                 </table>
              </td>
             </tr>
        </table>        
-
+     </logic:notEmpty>
+    </logic:present>
        <br>
-       
+    <logic:present name="<%=FormConstants.CRF%>" property="classifications">
+      <logic:notEmpty name="<%=FormConstants.CRF%>" property="classifications">
         <table width="70%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="100%" nowrap>
@@ -307,56 +305,44 @@ function submitForm(methodName) {
           <tr>
             <td>
             
-     <table width="100%" align="center" cellpadding="1" cellspacing="1" bgcolor="#999966">
-        <tr class="OraTableColumnHeader">
-          <th scope="col"> </th>
-          <th scope="col">CS* Short Name</th>
-          <th scope="col">CS* Definition</th>
-          <th scope="col">CSI* Name</th>
-          <th scope="col">CSI* Type</th>
-        </tr>
+             <table width="100%" align="center" cellpadding="1" cellspacing="1" bgcolor="#999966">
+                <tr class="OraTableColumnHeader">
+                  <th scope="col"> </th>
+                  <th scope="col">CS* Short Name</th>
+                  <th scope="col">CS* Definition</th>
+                  <th scope="col">CSI* Name</th>
+                  <th scope="col">CSI* Type</th>
+                </tr>
+                
+                   <logic:iterate id="csi" name="<%=FormConstants.CRF%>" property="classifications" type="gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem" >
 
-            <tr class="OraTabledata">
-               <td class="OraTableColumnHeader" width="5%" nowrap>
-                     <input type="checkbox" name="" value=""> 
-               </td>            
-              <td class="OraFieldText">
-                Type of Disease     
-              </td>
-              <td class="OraFieldText">
-                Type of Disease 
-              </td>
-              <td class="OraFieldText">
-                Multiple Myeloma
-              </td>
-              <td class="OraFieldText">
-                DISEASE_TYPE  
-              </td>
-            </tr>
-            
-            <tr class="OraTabledata">
-               <td class="OraTableColumnHeader" width="5%" nowrap>
-                     <input type="checkbox" name="" value=""> 
-               </td>            
-              <td class="OraFieldText">
-                C3D Domain    
-              </td>
-              <td class="OraFieldText">
-                Cancer Centralized Clinical Database
-              </td>
-              <td class="OraFieldText">
-                caBIG
-              </td>
-              <td class="OraFieldText">
-                USAGE_TYPE
-              </td>
-            </tr>
-                    
-     </table>
-     
-             </td>
-            </tr>
-       </table>        
+                        <tr class="OraTabledata">
+                           <td class="OraTableColumnHeader" width="5%" nowrap>
+                                <html:multibox property="<%=FormConstants.SELECTED_SKIP_AC_CSIS%>">
+                                    <bean:write name="csi" property="acCsiIdseq"/> 
+                                </html:multibox> 
+                           </td>            
+                          <td class="OraFieldText">
+                                <bean:write name="csi" property="classSchemeLongName"/>     
+                          </td>
+                          <td class="OraFieldText">
+                                <bean:write name="csi" property="classSchemeDefinition"/>  
+                          </td>
+                          <td class="OraFieldText">
+                                <bean:write name="csi" property="classSchemeItemName"/>  
+                          </td>
+                          <td class="OraFieldText">
+                                <bean:write name="csi" property="classSchemeItemType"/>    
+                          </td>
+                        </tr>
+                    </logic:iterate>               
+             </table>
+           </td>
+           </tr>
+          </table>
+        </logic:notEmpty>
+     </logic:present>
+      
 
        <br>       
         <table width="70%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -365,7 +351,9 @@ function submitForm(methodName) {
                 Skip insrtruction
               </td>
               <td  class="OraFieldText" width="80%" nowrap>
-		<input size="80%" type="text" />
+            	<html:textarea  styleClass="OraFieldTextInstruction" rows="2" cols="102" 
+               		property="<%=FormConstants.SKIP_INSTRUCTION%>">
+            	</html:textarea>
                </td>
           </tr>
        </table>        

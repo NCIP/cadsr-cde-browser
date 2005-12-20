@@ -260,7 +260,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             while (qIter.hasNext())
             {
                 term = (Question)qIter.next();
-
+                term.setModule(block);
                 String termId = term.getQuesIdseq();
                  possibleTargets.put(termId,term); //one of the possible targets
 
@@ -339,7 +339,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         {
             term = (Question)qIter.next();
             String termId = term.getQuesIdseq();
-
+            term.setModule(module);
             List<ReferenceDocument> refDocs =
                 getReferenceDocuments("acIdSeq", "type");
             if (term.getDataElement() != null)
@@ -355,6 +355,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             while (vvIter.hasNext())
             {
                 FormValidValue vv = (FormValidValue)vvIter.next();
+                vv.setQuestion(term);
                 vv.setInstructions(valueValueInstrDao.getInstructions(vv.getValueIdseq()));
                //Set Skip Patterns
                List<TriggerAction> actions= getAllTriggerActionsForSource(vv.getValueIdseq());

@@ -160,7 +160,17 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         TriggerAction triggerAction = new TriggerActionTransferObject();
         triggerAction.setActionSource(sourceModule);
         setSessionObject(request,SKIP_PATTERN,triggerAction);    
-        
+         try {
+           FormBuilderServiceDelegate service = getFormBuilderService();
+           Collection  csis = service.retrieveFormClassifications(sourceForm.getFormIdseq());
+           sourceForm.setClassifications(csis);
+         } catch (FormBuilderException exp) {
+             if (log.isErrorEnabled()) {
+               log.error("Exception while retriveing Classifications for Skip pattern  " , exp);
+             }
+               
+         }    
+         
       return mapping.findForward("createSkipPattern");
     }
     /**
@@ -190,9 +200,22 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
 
 
       Module sourceModule = (Module) getSessionObject(request,MODULE);
+      
       TriggerAction triggerAction = sourceModule.getTriggerActions().get(triggerIndex);
 
       setSessionObject(request,SKIP_PATTERN,triggerAction);    
+      
+        Form sourceForm = (Form) getSessionObject(request,CRF);
+        try {
+          FormBuilderServiceDelegate service = getFormBuilderService();
+          Collection  csis = service.retrieveFormClassifications(sourceForm.getFormIdseq());
+          sourceForm.setClassifications(csis);
+        } catch (FormBuilderException exp) {
+            if (log.isErrorEnabled()) {
+              log.error("Exception while retriveing Classifications for Skip pattern  " , exp);
+            }
+              
+        }  
         
       return mapping.findForward("editSkipPattern");
     }
@@ -263,6 +286,17 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
          triggerAction.setActionSource(vv);
          setSessionObject(request,SKIP_PATTERN,triggerAction);     
         
+        try {
+          FormBuilderServiceDelegate service = getFormBuilderService();
+          Collection  csis = service.retrieveFormClassifications(sourceForm.getFormIdseq());
+          sourceForm.setClassifications(csis);
+        } catch (FormBuilderException exp) {
+            if (log.isErrorEnabled()) {
+              log.error("Exception while retriveing Classifications for Skip pattern  " , exp);
+            }
+              
+        }  
+        
       return mapping.findForward("createSkipPattern");
     }
     
@@ -303,7 +337,19 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         FormValidValue vv = (FormValidValue)question.getValidValues().get(vvIndex);
         TriggerAction triggerAction = vv.getTriggerActions().get(triggerIndex);
 
-         setSessionObject(request,SKIP_PATTERN,triggerAction);     
+        setSessionObject(request,SKIP_PATTERN,triggerAction);     
+
+        
+        try {
+          FormBuilderServiceDelegate service = getFormBuilderService();
+          Collection  csis = service.retrieveFormClassifications(sourceForm.getFormIdseq());
+          sourceForm.setClassifications(csis);
+        } catch (FormBuilderException exp) {
+            if (log.isErrorEnabled()) {
+              log.error("Exception while retriveing Classifications for Skip pattern  " , exp);
+            }
+              
+        }  
         
       return mapping.findForward("editSkipPattern");
     }
@@ -528,46 +574,20 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
           ActionForm form,
           HttpServletRequest request,
           HttpServletResponse response) throws IOException, ServletException {
-          
+          DynaActionForm skipForm = (DynaActionForm) form;
+            
           TriggerAction triggerAction = (TriggerAction)getSessionObject(request,SKIP_PATTERN);
             
-          List csis = new ArrayList();
-            CSITransferObject csito1 = new CSITransferObject();
-            csito1.setClassSchemeItemName("Multiple Myeloma");
-            csito1.setClassSchemeItemType("DISEASE_TYPE");
-            csito1.setCsiIdseq("");
-            csito1.setCsCsiIdseq("");
-            csito1.setClassSchemeDefinition("Type of Disease");
-            csito1.setClassSchemeLongName( "Type of Disease");
-            csito1.setAcCsiIdseq("");
-            csito1.setCsIdseq("");
-             
-            csis.add(csito1);
-             
-            CSITransferObject csito2 = new CSITransferObject();
-            csito2.setClassSchemeItemName("caBIG");
-            csito2.setClassSchemeItemType("DISEASE_TYPE");
-            csito2.setCsiIdseq("");
-            csito2.setCsCsiIdseq("");
-            csito2.setClassSchemeDefinition(" Cancer Centralized Clinical Database");
-            csito2.setClassSchemeLongName( "C3D Domain");
-            csito2.setAcCsiIdseq("");
-            csito2.setCsIdseq("");            
-            csis.add(csito2);
+          String instruction = (String)skipForm.get(SKIP_INSTRUCTION);
+          String[] selectedProtocolIds = (String[]) skipForm.get(SELECTED_SKIP_PROTOCOL_IDS); 
+          String[] selectedAccsis = (String[]) skipForm.get(SELECTED_SKIP_AC_CSIS); 
             
-            triggerAction.setClassSchemeItems(csis);
-            
-            List protocols = new ArrayList();            
-            Protocol p1 = new ProtocolTransferObject();
-            p1.setLongName("CTMS Version 3.0");
-            protocols.add(p1);
-            Protocol p2 = new ProtocolTransferObject();
-            p2.setLongName("NETTRIALS");
-            protocols.add(p2);
             TriggerAction savedAction = null;
             if(triggerAction.getIdSeq()==null)
             {
                 //Create new Skip Pattern
+                 triggerAction.setInstruction(instruction);
+                 
                  try {
                    FormBuilderServiceDelegate service = getFormBuilderService();
                    savedAction = service.createTriggerAction(triggerAction);

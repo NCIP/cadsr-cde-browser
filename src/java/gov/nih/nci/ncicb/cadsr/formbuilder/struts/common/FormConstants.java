@@ -146,7 +146,12 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String SKIP_FORM_SEARCH_RESULT_COMPARATOR="SkipFormSearchResultComparator";
   public static final String SKIP_FORM_SEARCH_RESULTS_PAGINATION =
       "skipFormSearchResultsPagination";
-    public static final String TRIGGER_ACTION_INDEX = "triggerActionIndex";      
+    public static final String TRIGGER_ACTION_INDEX = "triggerActionIndex"; 
+    public static final String SKIP_INSTRUCTION = "skipInstruction"; 
+    public static final String SELECTED_SKIP_PROTOCOL_IDS = "selectedSkipProtoIdSeqs"; 
+    public static final String SELECTED_SKIP_AC_CSIS = "selectedSkipAcCsis"; 
+    
+    
 
   // Useed to specify that the mode is inprocess eg. skip pattern or searching for modules to copy
   public static final String IN_PROCESS = "inProcess";

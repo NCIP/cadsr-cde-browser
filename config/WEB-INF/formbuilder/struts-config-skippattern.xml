@@ -9,8 +9,12 @@
 
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="moduleIndex" type="java.lang.String"/>
-      <form-property name="questionIndex" type="java.lang.String"/>
-      <form-property name="validValueIndex" type="java.lang.String"/>
+      <form-property name="skQuestionIndex" type="java.lang.String"/>
+      <form-property name="skValidValueIndex" type="java.lang.String"/>
+      <form-property name="triggerActionIndex" type="java.lang.String"/>
+      <form-property name="selectedSkipAcCsis" type="java.lang.String[]"/>
+      <form-property name="selectedSkipProtoIdSeqs" type="java.lang.String[]"/>
+      
     </form-bean>
 
   </form-beans>
@@ -35,7 +39,7 @@
 
     </action>
     
-    <action name="moduleEditForm" path="/gotoModuleSkipAction" parameter="method"
+    <action name="moduleEditForm" path="/createModuleSkipAction" parameter="method"
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction"
       validate="true">
@@ -47,7 +51,7 @@
       <forward name="createSkipPattern" path="/formbuilder/skipAction.do?method=setCurrentFormAsTargetForm"/> 
     </action>
 
-    <action name="moduleEditForm" path="/gotoValidValueSkipAction" parameter="method"
+    <action name="moduleEditForm" path="/createValidValueSkipAction" parameter="method"
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction"
       validate="true">
@@ -59,6 +63,29 @@
      <forward name="createSkipPattern" path="/formbuilder/skipAction.do?method=setCurrentFormAsTargetForm"/> 
     </action>    
     
+    <action name="moduleEditForm" path="/editModuleSkipAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction"
+      validate="true">
+      
+      <forward name="noChanges" path="/formbuilder/skipAction.do?method=editModuleSkipPattern" redirect="false"/>    
+      <forward name="failure" path="/formbuilder/moduleEdit.jsp" redirect="false"/>   
+      <forward name="changes" path="/formbuilder/moduleSaveConfirmModuleSkipPattern.jsp" redirect="false"/>
+      <forward name="success" path="/formbuilder/skipAction.do?method=editModuleSkipPattern" redirect="false"/>  
+ 
+    </action>
+
+    <action name="moduleEditForm" path="/editValidValueSkipAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction"
+      validate="true">
+      
+      <forward name="noChanges" path="/formbuilder/skipAction.do?method=editValidValueSkipPattern" redirect="false"/>    
+      <forward name="failure" path="/formbuilder/moduleEdit.jsp" redirect="false"/>   
+      <forward name="changes" path="/formbuilder/moduleSaveConfirmValidValueSkipPattern.jsp" redirect="false"/>
+      <forward name="success" path="/formbuilder/skipAction.do?method=editValidValueSkipPattern" redirect="false"/>  
+     
+    </action> 
     
   </action-mappings>
 

@@ -74,6 +74,10 @@
       <form-property name="validValueIndex" type="java.lang.Integer"/>
       <form-property name="addAvailableValidValueIndex" type="java.lang.Integer"/> 
       <form-property name="selectedSubsetIndex" type="java.lang.Integer"/> 
+      <form-property name="skQuestionIndex" type="java.lang.Integer"/>
+      <form-property name="skValidValueIndex" type="java.lang.Integer"/>
+      <form-property name="triggerActionIndex" type="java.lang.Integer"/>
+      
     </form-bean>       
     <form-bean name="displayCartForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.CDECartFormBean"/>
