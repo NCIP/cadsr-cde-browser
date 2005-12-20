@@ -11,6 +11,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String CRF_CONTEXT = "context";
   public static final String CONTEXT_ID_SEQ = "contextIdSeq";
   public static final String NEW_VERSION_NUMBER = "newVersionNumber";
+  public static final String FORM_MAX_VERSION = "formMaxVersion";
   public static final String CHANGE_NOTE = "changeNote";
   //public static final String NEW_CHANGE_NOTE = "newChangeNote";
   public static final String FORM_PUBLIC_ID = "formPublicId";
