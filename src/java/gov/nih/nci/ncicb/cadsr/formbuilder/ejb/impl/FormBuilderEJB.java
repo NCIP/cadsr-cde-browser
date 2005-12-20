@@ -1277,15 +1277,12 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                                        String changeNote)
     {
         FormDAO myDAO = daoFactory.getFormDAO();
-        /*TODO
-       * String resultFormPK = myDAO.createNewFormVersion(formIdSeq, newVersionNumber, changeNote);
+        String resultFormPK = myDAO.createNewFormVersion(formIdSeq, newVersionNumber, changeNote, getUserName().toUpperCase());
 
-      //resultForm = this.getFormDetails(resultFormPK);
-       //end of TODO
-       */
-        String resultFormPK = "E061BF96-E9A6-3425-E034-0003BA12F5E7";
-        return resultFormPK;
-        //TODO call storedProc
+        Form resultForm = this.getFormDetails(resultFormPK);
+        return resultForm.getFormIdseq();
+        //String resultFormPK = "E061BF96-E9A6-3425-E034-0003BA12F5E7";
+        //return resultFormPK;
     }
 
     public List getFormVersions(int publicId)
@@ -1302,6 +1299,11 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         return;
     }
 
+    public Float getMaxFormVersion(int publicId){
+        FormDAO myDAO = daoFactory.getFormDAO();
+        Float maxVersion = myDAO.getMaxFormVersion(publicId);
+        return maxVersion;
+    }
     public void removeFormProtocol(String formIdseq, String protocoldIdseq)
     {
         FormDAO myDAO = daoFactory.getFormDAO();
