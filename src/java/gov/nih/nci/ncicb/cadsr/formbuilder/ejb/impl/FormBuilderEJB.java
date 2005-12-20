@@ -576,7 +576,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
 
     private String getUserName()
     {
-        return context.getCallerPrincipal().getName();
+        return context.getCallerPrincipal().getName().toUpperCase();
         //return "JASUR";//jboss
     }
 
@@ -1296,7 +1296,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
     public void setLatestVersion(Version oldVersion, Version newVersion)
     {
         FormDAO myDAO = daoFactory.getFormDAO();
-        myDAO.setLatestVersion(oldVersion, newVersion);
+        myDAO.setLatestVersion(oldVersion, newVersion, getUserName());
         return;
     }
 
@@ -1317,15 +1317,20 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         {
             return;
         }
+        List pids = new ArrayList();
+        Iterator it = protocols.iterator();
+        while (it.hasNext()){
+            pids.add(it.next());
+        }
         FormDAO myDAO = daoFactory.getFormDAO();
-        myDAO.removeFormProtocols(formIdseq, protocols);
+        myDAO.removeFormProtocols(formIdseq, pids);
         return;
     }
 
     public void addFormProtocol(String formIdseq, String protocoldIdseq)
     {
         FormDAO myDAO = daoFactory.getFormDAO();
-        myDAO.addFormProtocol(formIdseq, protocoldIdseq);
+        myDAO.addFormProtocol(formIdseq, protocoldIdseq, getUserName());
         return;
     }
 
@@ -1335,6 +1340,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         {
             return;
         }
+        
         Iterator it = protocols.iterator();
         while (it.hasNext())
         {
