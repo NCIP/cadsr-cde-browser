@@ -81,8 +81,10 @@ public interface FormDAO extends AdminComponentDAO {
     public String createNewFormVersion(
       String sourceFormId,
       Float newVersionNumber,
-      String changeNote) throws DMLException;
+      String changeNote,
+      String createdBy) throws DMLException;
 
+    public Float getMaxFormVersion(int pulidId) throws DMLException;
   /**
    * Creates a new form component (just the header info).
    *
