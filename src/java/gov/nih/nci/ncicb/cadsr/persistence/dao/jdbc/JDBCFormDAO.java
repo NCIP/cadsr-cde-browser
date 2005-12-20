@@ -216,10 +216,10 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
      * @return <b>String</b> the new Form Idseq.
      * @throws <b>DMLException</b>
      */
-  public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote) throws DMLException {
+  public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote, String createdBy) throws DMLException {
       VersionForm vForm = new VersionForm(this.getDataSource());
 
-      Map out = vForm.execute(formIdSeq, newVersionNumber, changeNote);
+      Map out = vForm.execute(formIdSeq, newVersionNumber, changeNote, createdBy);
 
       if ((out.get("p_return_code")) == null) {
         /*newForm.setFormIdseq((String) out.get("p_new_idseq"));
@@ -241,6 +241,21 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     return result;      
   }
   
+  public Float getMaxFormVersion(int publicId){
+      MaxFormVersionsQuery query = new MaxFormVersionsQuery();
+      query.setDataSource(getDataSource());
+      query.setSql(publicId);
+      List result = (List) query.execute();
+      
+      if (result == null || result.isEmpty()){
+          DMLException dmlExp = new DMLException("No matching record found.");
+                dmlExp.setErrorCode(NO_MATCH_FOUND);
+            throw dmlExp;
+      }
+
+      Float maxVersion = (Float) (result.get(0));
+      return maxVersion;
+  }
     public void setLatestVersion(Version oldVersion, Version newVersion){
         if (oldVersion!=null){
             RemoveLatestVersion removeSqlUpdate = new RemoveLatestVersion(getDataSource());
@@ -252,6 +267,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
             setLatestSqlUpdate.setLatestVersion(newVersion.getId(), newVersion.getChangeNote());        
         }    
     }
+    
   /**
    * Creates a new form component (just the header info).
    *
@@ -1361,9 +1377,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     private class VersionForm extends StoredProcedure {
       public VersionForm(DataSource ds) {
         super(ds, "meta_config_mgmt.CRF_VERSION"); 
-        declareParameter(new SqlParameter("p_Idseq", Types.VARCHAR));
-        declareParameter(new SqlParameter("p_new_version", Types.FLOAT));
-        declareParameter(new SqlParameter("p_change_note", Types.VARCHAR));          
+        declareParameter(new SqlParameter("P_Idseq", Types.VARCHAR));
+        declareParameter(new SqlParameter("p_version", Types.FLOAT));
+        declareParameter(new SqlParameter("p_change_note", Types.VARCHAR)); 
+        declareParameter(new SqlParameter("p_Created_by", Types.VARCHAR)); 
+          
         declareParameter(new SqlOutParameter("p_new_idseq", Types.VARCHAR));
         declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
         declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
@@ -1373,12 +1391,14 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       public Map execute(
         String sourceFormId,
         Float newVersionNumber,
-        String changeNote) {
+        String changeNote,
+        String createdBy) {
         Map in = new HashMap();
 
-        in.put("p_src_idseq", sourceFormId);
-        in.put("p_new_version", newVersionNumber);
+        in.put("P_Idseq", sourceFormId);
+        in.put("p_version", newVersionNumber);
         in.put("p_change_note", newVersionNumber);
+        in.put("p_Created_by", createdBy);
         Map out = execute(in);
         return out;
       }
@@ -1835,7 +1855,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
    public void setSql(int publicId) {
    String allFormVersionsByPublicId =
-             " SELECT qc_idseq, version, change_note, latest_version_ind from FB_FORMS_VIEW where public_id=" + publicId;
+            " SELECT qc_idseq, version, change_note, latest_version_ind from QUEST_CONTENTS_EXT crf where (crf.QTL_NAME = 'CRF' or crf.QTL_NAME = 'TEMPLATE') AND QC_ID=" + publicId;
    super.setSql(allFormVersionsByPublicId);
    compile();
   }
@@ -1867,6 +1887,30 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   }
 
  }
+
+    /**
+     * Inner class that accesses database to get the maximum form version 
+     * by the form public id.
+     */
+    class  MaxFormVersionsQuery  extends MappingSqlQuery {
+       public MaxFormVersionsQuery() {
+       super();
+      }
+
+      public void setSql(int publicId) {
+      String maxFormVersionsByPublicId =
+               " SELECT MAX(version) from QUEST_CONTENTS_EXT crf where (crf.QTL_NAME = 'CRF' or crf.QTL_NAME = 'TEMPLATE') AND QC_ID = " + publicId;
+      super.setSql(maxFormVersionsByPublicId);
+      compile();
+     }
+
+     protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
+       Float maxVersion = rs.getFloat(1);
+       return maxVersion;
+     }
+
+    }
+
 
     private class RemoveLatestVersion extends SqlUpdate {
       public RemoveLatestVersion(DataSource ds) {
