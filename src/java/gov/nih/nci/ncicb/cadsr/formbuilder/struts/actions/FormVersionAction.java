@@ -65,7 +65,7 @@ public class FormVersionAction
         int publicId = crf.getPublicId();
         FormBuilderServiceDelegate service = getFormBuilderService();
         List formVersions = service.getFormVersions(publicId);
-        if (formVersions.size() <2 ){
+        if (formVersions.size() <1 ){
             return mapping.findForward("gotoCreateNewVersion");
         }
         
@@ -158,15 +158,26 @@ public class FormVersionAction
        * @throws IOException
        * @throws ServletException
        */
-/*      public ActionForward gotoCreateNewVersion(
+      public ActionForward gotoCreateNewVersion(
         ActionMapping mapping,
         ActionForm form,
         HttpServletRequest request,
         HttpServletResponse response) throws IOException, ServletException {
-
-        return mapping.findForward("success");
+        Form crf = (Form)getSessionObject(request, CRF);
+        try{
+            FormBuilderServiceDelegate service = getFormBuilderService();            
+            Float maxVersion = service.getMaxFormVersion(crf.getPublicId());
+            request.setAttribute(FormConstants.FORM_MAX_VERSION, maxVersion);
+            return mapping.findForward(SUCCESS);
+        }catch (FormBuilderException fbe){
+            if (log.isErrorEnabled()) {
+              log.error("Could not get the maximum version by form public Id= " + crf.getPublicId(), fbe);
+            }
+            saveError("cadsr.formbuilder.create.version.fail", request);
+            return mapping.findForward(FAILURE);
+        }
       }
-*/      
+      
       
   public ActionForward saveNewVersion(
     ActionMapping mapping,
@@ -178,7 +189,9 @@ public class FormVersionAction
         DynaActionForm dynaForm = (DynaActionForm) form;
         Form crf = (Form)getSessionObject(request, CRF);
         
-        if (crf == null || !validateVersion(dynaForm, crf, request)){
+        FormBuilderServiceDelegate service = getFormBuilderService();
+        Float maxVersion = service.getMaxFormVersion(crf.getPublicId());
+        if (crf == null || !validateVersion(dynaForm, maxVersion, request)){
             return mapping.findForward("failure");
         }
         
@@ -187,7 +200,6 @@ public class FormVersionAction
         String changeNote = (String)dynaForm.get(CHANGE_NOTE);
         boolean editNewFormIndicator = "true".equalsIgnoreCase(editNewFormStr);
 
-        FormBuilderServiceDelegate service = getFormBuilderService();
         String newFormIdSeq = service.createNewFormVersion(crf.getFormIdseq(), newVersionNumber, changeNote);
         saveMessage("cadsr.formbuilder.create.version.success", request);
         
@@ -203,7 +215,7 @@ public class FormVersionAction
           log.error("Exception on saveNewVersion ", exp);
         }
 
-        saveError(exp.getErrorCode(), request);
+        saveError("cadsr.formbuilder.create.version.fail", request);
         ActionForward forward =  mapping.findForward("failure");
         return forward;
       }
@@ -233,13 +245,11 @@ public class FormVersionAction
     }
 
     //validate the new version number
-    private boolean validateVersion(DynaActionForm dynaForm, Form crf, HttpServletRequest request){
+    private boolean validateVersion(DynaActionForm dynaForm, Float maxVersion, HttpServletRequest request){
         
         Float newVersionNumber = (Float) dynaForm.get(NEW_VERSION_NUMBER);
-        if (crf == null){
-            return false;
-        }
-        if (newVersionNumber.floatValue()>crf.getVersion()){
+
+        if (newVersionNumber.floatValue()>maxVersion){
             return true;
         }else{
             saveError("cadsr.formbuilder.create.version.validation_fail", request);
