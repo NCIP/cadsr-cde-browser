@@ -180,7 +180,8 @@ public interface FormBuilderServiceRemote {
 
       public void setLatestVersion(Version oldVersion, Version newVersion)
         throws RemoteException;
-
+      public Float getMaxFormVersion(int publicId)
+        throws RemoteException;
       public void removeFormProtocol(String formIdseq, String protocoldIdseq)
             throws RemoteException;
       public void removeFormProtocols(String formIdseq, Collection protocolds)

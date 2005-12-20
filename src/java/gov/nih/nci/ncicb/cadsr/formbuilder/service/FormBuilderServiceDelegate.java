@@ -139,6 +139,9 @@ public interface FormBuilderServiceDelegate {
 
     public void setLatestVersion(Version oldVersion, Version newVersion)
         throws FormBuilderException;
+    public Float getMaxFormVersion(int publicId)
+        throws FormBuilderException;
+        
     public void removeFormProtocol(String formIdseq, String protocoldIdseq)
         throws FormBuilderException;
     public void addFormProtocol(String formIdseq, String protocoldIdseq)
