@@ -15,6 +15,7 @@
   
   <bean id="CDEBrowserService" class="gov.nih.nci.ncicb.cadsr.cdebrowser.service.impl.CDEBrowserServiceImpl">
      <property name="daoFactory"><ref local="daoFactory"/></property>
+     <property name="domainObjectsDaoFactory"><ref local="domainObjectsDaoFactory"/></property>
   </bean>  
   
   <bean id="appServiceLocator" class="gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl">
@@ -28,4 +29,7 @@
   <bean id="serviceLocator" class="gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl">
   </bean>  
   
+  <bean id="domainObjectsDaoFactory" class="gov.nih.nci.ncicb.cadsr.persistence.dao.domain.hibernate.DomainObjectsDAOFactory">
+    <property name="dataElementDAO"><ref bean="dataElementDAO"/></property>
+  </bean>	
 </beans>
