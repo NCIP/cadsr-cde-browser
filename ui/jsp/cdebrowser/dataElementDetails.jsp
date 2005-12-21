@@ -9,7 +9,7 @@
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="oracle.clex.process.PageConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
-<%@page import="java.util.List" %>
+<%@page import="java.util.*" %>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
@@ -173,17 +173,99 @@ function goPage(pageInfo) {
   }
 %>
 </table>
+<%
+    List altNames = de.getDesignations();
+    List altDefs = de.getDefinitions();
+    
+    HashMap idToCscsi = new HashMap();
+    HashMap csToAltName = new HashMap();
+    HashMap csToAltDef = new HashMap();
+    List altNamesNoCS = new ArrayList();
+    List altDefsNoCS = new ArrayList();
+    if (altNames !=null)
+    for (int i=0; i<altNames.size(); i++) {
+    	Designation des = (Designation) altNames.get(i);
+    	if (des.getCsCsis() == null || des.getCsCsis().size() == 0) 
+    	   altNamesNoCS.add(des);
+    	else {
+		Iterator iter = des.getCsCsis().iterator();
+
+		while (iter.hasNext()) {
+		   ClassSchemeItem cscsi= (ClassSchemeItem) iter.next();
+		   idToCscsi.put(cscsi.getCsCsiIdseq(), cscsi);
+		   if (csToAltName.get(cscsi.getCsCsiIdseq()) == null)
+			csToAltName.put(cscsi.getCsCsiIdseq(), new ArrayList());
+		   ((ArrayList) csToAltName.get(cscsi.getCsCsiIdseq())).add(des);
+		}
+    	}
+    }
+  
+  if (altDefs != null)
+    for (int i=0; i<altDefs.size(); i++) {
+      Definition definition = (Definition) altDefs.get(i);
+	if (definition.getCsCsis() == null || definition.getCsCsis().size() == 0) 
+	   altDefsNoCS.add(definition);
+	else {
+	  Iterator iter = definition.getCsCsis().iterator();
+	  while (iter.hasNext()) {
+	    ClassSchemeItem cscsi= (ClassSchemeItem) iter.next();
+	    idToCscsi.put(cscsi.getCsCsiIdseq(), cscsi);
+	    if (csToAltDef.get(cscsi.getCsCsiIdseq()) == null)
+		csToAltDef.put(cscsi.getCsCsiIdseq(), new ArrayList());
+	    ((ArrayList) csToAltDef.get(cscsi.getCsCsiIdseq())).add(definition);
+	}
+    	}
+    }
+    
+    if (altNamesNoCS.size() >0) {
+    	idToCscsi.put("null", null);
+    	csToAltName.put("null", altNamesNoCS);
+    }
+    	
+    if (altDefsNoCS.size() >0) {
+    	idToCscsi.put("null", null);
+    	csToAltDef.put("null", altDefsNoCS);
+    }
+  %>
 
 <br>
 <table cellpadding="0" cellspacing="0" width="80%" align="center" >
   <tr>
-    <td class="OraHeaderSubSub" width="100%">Alternate Names</td>
+    <td class="OraHeaderSubSub" width="100%">Alternate Names and Definitions</td>
   </tr>
   <tr>
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
   </tr>
 </table>
+<p>
+<% Iterator csiIter = idToCscsi.keySet().iterator();
+while (csiIter.hasNext()) {
+    String csiId = (String) csiIter.next();
+    ClassSchemeItem currCSI = (ClassSchemeItem) idToCscsi.get(csiId);
+    List currAltNames = (List) csToAltName.get(csiId);
+    List currAltDefs = (List) csToAltDef.get(csiId);
+ %>   
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+<% if (currCSI != null) { %>
+<TR class="OraTableColumnHeader">
+ <th class="OraTableColumnHeader">CS* Short Name</th>
+ <th class="OraTableColumnHeader">CS* Definition</th>
+ <th class="OraTableColumnHeader">CSI* Name</th>
+ <th class="OraTableColumnHeader">CSI* Type</th>
+</TR>
+      <tr class="OraTabledata">
+        <td class="OraFieldText"><%=currCSI.getClassSchemePrefName()%> </td>
+        <td class="OraFieldText"><%=currCSI.getClassSchemeDefinition()%> </td>
+        <td class="OraFieldText"><%=currCSI.getClassSchemeItemName()%> </td>
+        <td class="OraFieldText"><%=currCSI.getClassSchemeItemType()%> </td>
+      </tr>
+<%} %>
+
+<tr class="OraTabledata">
+<td class="OraHeaderSubSubSub" width="100%" colspan=4>Alternate Names </td>
+</tr>
+<tr class="OraTabledata"><td width="100%" colspan=4>
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader">Name</th>
     <th class="OraTableColumnHeader">Type</th>
@@ -191,12 +273,10 @@ function goPage(pageInfo) {
     <th class="OraTableColumnHeader">Language</th>
   </tr>
 <%
-  Designation des;
-  List desigs = de.getDesignations();
-  int numberOfDes = desigs.size();
-  if (numberOfDes > 0) {
-    for (int i=0;i<numberOfDes; i++) {
-      des = (Designation)desigs.get(i);
+  Designation des = null;
+  if (currAltNames!=null && currAltNames.size() > 0) {
+    for (int i=0;i<currAltNames.size(); i++) {
+      des = (Designation)currAltNames.get(i);
 %>
       <tr class="OraTabledata">
         <td class="OraFieldText"><%=des.getName()%> </td>
@@ -215,9 +295,46 @@ function goPage(pageInfo) {
 <%
   }
 %>
+
+</table> 
+</td></tr>
+<tr class="OraTabledata">
+<td class="OraHeaderSubSubSub" width="100%" colspan=4>Alternate Definitions </td>
+</tr>
+<tr class="OraTabledata"><td width="100%" colspan=4>
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Name</th>
+    <th class="OraTableColumnHeader">Type</th>
+    <th class="OraTableColumnHeader">Context</th>
+  </tr>
+<%
+  if (currAltDefs != null && currAltDefs.size() > 0) {
+    for (int i=0;i<currAltDefs.size(); i++) {
+      Definition def = (Definition)currAltDefs.get(i);
+%>
+      <tr class="OraTabledata">
+        <td class="OraFieldText"><%=def.getDefinition()%> </td>
+        <td class="OraFieldText"><%=def.getType()%> </td>
+        <td class="OraFieldText"><%=def.getContext().getName()%> </td>
+      </tr>
+<%
+    }
+  }
+  else {
+%>
+       <tr class="OraTabledata">
+         <td colspan=4">There are no alternate definitions for the selected CDE.</td>
+       </tr>
+<%
+  }
+%>
+
+</table> 
+</td></tr>
 </table>
-
-
+<p>
+<%} %>
 </form>
 
 <%@ include file="../common/common_bottom_border.jsp"%>
