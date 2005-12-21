@@ -6,6 +6,7 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
       <form-property name="browserSearchScreenType" type="java.lang.String"/>
+      <form-property name="baseQuery" type="java.lang.String"/>
     </form-bean>
 </form-beans>
   <action-mappings>
