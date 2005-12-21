@@ -28,6 +28,7 @@ public class AdminComponentTransferObject extends BaseValueObject
   protected String origin;
   protected String idseq;
   protected String registrationStatus;
+  protected List<Definition> definitions;
 
   //Publish Change Order
   protected boolean published;  
@@ -224,4 +225,13 @@ public class AdminComponentTransferObject extends BaseValueObject
   {
     this.published = published;
   }  
+  
+   public List<Definition> getDefinitions() {
+    return definitions;
+   }
+    public void setDefinitions(List<Definition> newDefinitions){
+      this.definitions = newDefinitions;
+   }
+
+  
 }

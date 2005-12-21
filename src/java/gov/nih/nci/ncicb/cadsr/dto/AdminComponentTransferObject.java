@@ -2,7 +2,9 @@ package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.Definition;
 
+import gov.nih.nci.ncicb.cadsr.resource.Definition;
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 
 import java.util.Collections;
@@ -29,6 +31,7 @@ public class AdminComponentTransferObject extends BaseTransferObject
   protected String registrationStatus;
   //Publish Change Order
   protected boolean published;  
+  protected List<Definition> definitions;
 
 
   public AdminComponentTransferObject() {
@@ -217,5 +220,11 @@ public class AdminComponentTransferObject extends BaseTransferObject
     this.idseq = idseq;
   }
 
+  public List<Definition> getDefinitions() {
+   return definitions;
+  }
+   public void setDefinitions(List<Definition> newDefinitions){
+     this.definitions = newDefinitions;
+  }
 
 }

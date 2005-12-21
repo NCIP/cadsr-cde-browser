@@ -47,6 +47,7 @@ public interface AdminComponent extends Audit {
   public void setReferenceDocs(List refDocs);
 
   public List getDesignations();
+  public void setDesignations(List Designations);
 
   public int getPublicId();
 
@@ -69,6 +70,8 @@ public interface AdminComponent extends Audit {
   
   public void setPublished(boolean published);  
   
-
+  //release 3.1 added definitions
+  public List<Definition> getDefinitions();
+  public void setDefinitions(List<Definition> definitions);
 
 }
