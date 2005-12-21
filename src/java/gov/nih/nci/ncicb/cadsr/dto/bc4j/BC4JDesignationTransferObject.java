@@ -1,11 +1,15 @@
 package gov.nih.nci.ncicb.cadsr.dto.bc4j;
 import gov.nih.nci.ncicb.cadsr.persistence.base.BaseValueObject;
 import gov.nih.nci.ncicb.cadsr.resource.Designation;
+import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import java.sql.SQLException;
 import gov.nih.nci.ncicb.cadsr.dto.bc4j.BC4JContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesignationsViewRowImpl;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsViewRowImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BC4JDesignationTransferObject extends BaseValueObject
                         implements Designation, java.io.Serializable {
@@ -14,6 +18,7 @@ public class BC4JDesignationTransferObject extends BaseValueObject
 	String desigIDSeq = null;
 	Context conte = null;
 	String lang = null;
+    List<ClassSchemeItem> csCsis;
 	public BC4JDesignationTransferObject() {
 	}
 	public BC4JDesignationTransferObject(DesignationsViewRowImpl des)
@@ -39,4 +44,16 @@ public class BC4JDesignationTransferObject extends BaseValueObject
 	public String getLanguage() {
 		return lang;
 	}
+    
+    public List<ClassSchemeItem> getCsCsis(){
+       return csCsis;
+    }
+    
+    public void addCscsi(gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem cscsi) {
+        if (csCsis == null) {
+            csCsis = new ArrayList();
+        }
+        csCsis.add(cscsi);    
+    
+    }
 }
