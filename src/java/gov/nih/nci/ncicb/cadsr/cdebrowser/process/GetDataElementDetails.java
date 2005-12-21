@@ -3,12 +3,18 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
 // java imports
 import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.userexception.DataElementNotFoundException;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.userexception.IllegalURLParametersException;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
 import gov.nih.nci.ncicb.cadsr.util.UserErrorMessage;
+
+import java.util.Locale;
+import java.util.Properties;
 
 import oracle.cle.persistence.HandlerFactory;
 
@@ -111,6 +117,12 @@ public class GetDataElementDetails extends BasePersistingProcess {
 
       tib = new TabInfoBean("cdebrowser_details_tabs");
       myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
+       ApplicationServiceLocator  appServiceLocator =(ApplicationServiceLocator)
+       myRequest.getSession().getServletContext().getAttribute(ApplicationServiceLocator.APPLICATION_SERVICE_LOCATOR_CLASS_KEY);
+       
+      CDEBrowserService cdeBrowserService = appServiceLocator.findCDEBrowserService();
+// add service to cdeBrowserService to retrieve the cs of alt names and alt def
+      cdeBrowserService.populateDataElementAltNameDef(de);
       tib.processRequest(myRequest);
 
       if (tib.getMainTabNum() != 0) {
@@ -132,7 +144,6 @@ public class GetDataElementDetails extends BasePersistingProcess {
         tib = new TabInfoBean("cdebrowser_error_tabs");
         myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
         tib.processRequest(myRequest);
-
         if (tib.getMainTabNum() != 0) {
           tib.setMainTabNum(0);
         }
@@ -221,4 +232,6 @@ public class GetDataElementDetails extends BasePersistingProcess {
   protected TransitionCondition getPersistFailureCondition() {
     return getCondition(FAILURE);
   }
+  
+  
 }
