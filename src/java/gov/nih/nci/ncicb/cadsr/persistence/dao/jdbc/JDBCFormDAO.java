@@ -561,6 +561,10 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
+      //public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote, String createdBy) throws DMLException {
+      
+    formTest.createNewFormVersion("DA2BF104-B72B-1DC3-E034-0003BA12F5E7", new Float(16), "version 14","SBREXT");
+    System.out.println("jereera ");
     /*
     FormTransferObject newForm = new FormTransferObject();
 
@@ -1399,12 +1403,12 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     private class VersionForm extends StoredProcedure {
       public VersionForm(DataSource ds) {
         super(ds, "meta_config_mgmt.CRF_VERSION"); 
-        declareParameter(new SqlParameter("P_Idseq", Types.VARCHAR));
+        declareParameter(new SqlParameter("P_Idseq", Types.LONGVARCHAR));
         declareParameter(new SqlParameter("p_version", Types.FLOAT));
         declareParameter(new SqlParameter("p_change_note", Types.VARCHAR)); 
         declareParameter(new SqlParameter("p_Created_by", Types.VARCHAR)); 
           
-        declareParameter(new SqlOutParameter("p_new_idseq", Types.VARCHAR));
+        declareParameter(new SqlOutParameter("p_new_idseq", Types.LONGVARCHAR));
         declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
         declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
         compile();
@@ -1421,6 +1425,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         in.put("p_version", newVersionNumber);
         in.put("p_change_note", changeNote);
         in.put("p_Created_by", createdBy);
+        System.out.println(this.getSql());
+          System.out.println(this.getCallString());
+          System.out.println(this.getGeneratedKeysColumnNames());
         Map out = execute(in);
         return out;
       }
