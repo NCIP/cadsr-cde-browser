@@ -655,16 +655,6 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         FormDAO myDAO = daoFactory.getFormDAO();
         String resultFormPK = myDAO.copyForm(sourceFormPK, newForm);
         resultForm = this.getFormDetails(resultFormPK);
-        ///insert protocols here..
-
-        List protocols = newForm.getProtocols();
-        Collection pids = new ArrayList();
-        Iterator it = protocols.iterator();
-        while (it.hasNext()){
-            Protocol protocol = (Protocol)it.next();
-            pids.add(protocol.getProtoIdseq());
-        }
-        addFormProtocols(resultFormPK, pids);
         return resultForm;
     }
 
@@ -1280,7 +1270,10 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         FormDAO myDAO = daoFactory.getFormDAO();
         String resultFormPK = myDAO.createNewFormVersion(formIdSeq, newVersionNumber, changeNote, getUserName().toUpperCase());
 
+        System.out.println("resultFormPK='" + resultFormPK + "'");
+        resultFormPK = resultFormPK.substring(0,35);
         Form resultForm = this.getFormDetails(resultFormPK);
+        
         return resultForm.getFormIdseq();
         //String resultFormPK = "E061BF96-E9A6-3425-E034-0003BA12F5E7";
         //return resultFormPK;

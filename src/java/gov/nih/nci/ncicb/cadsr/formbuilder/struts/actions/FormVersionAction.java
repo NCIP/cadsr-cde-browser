@@ -168,6 +168,8 @@ public class FormVersionAction
             FormBuilderServiceDelegate service = getFormBuilderService();            
             Float maxVersion = service.getMaxFormVersion(crf.getPublicId());
             request.setAttribute(FormConstants.FORM_MAX_VERSION, maxVersion);
+            //DynaActionForm dFrom = (DynaActionForm)form;
+            //dFrom.set(FormConstants.FORM_MAX_VERSION, maxVersion.toString());
             return mapping.findForward(SUCCESS);
         }catch (FormBuilderException fbe){
             if (log.isErrorEnabled()) {
