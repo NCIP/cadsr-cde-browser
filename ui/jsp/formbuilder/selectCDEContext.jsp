@@ -34,6 +34,113 @@
 <%@ include file="showMessages.jsp"%>
 
 <html:form action='<%="/saveDesignations?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SAVE_DESIGNATIONS%>'>
+<table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
+ 
+  <tr >
+    <td >
+      <html:image src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
+    </td> 
+    <td>
+      <html:link action='<%= "/formToEditAction?" + NavigationConstants.METHOD_PARAM + "=getFormToEdit"%>'>
+        <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+      </html:link>             
+    </td>                
+  </tr> 
+</table>
+
+      <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="longName"
+              />
+          </td>
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="context.name"
+              />
+          </td>
+        </tr>
+
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.version" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="version"
+              />
+          </td>
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="aslName"
+              />
+          </td>      
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="formType"
+              />
+          </td>        
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocols.longName" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="delimitedProtocolLongNames"
+              />
+          </td>
+        </tr>
+
+
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="formCategory"
+              />
+          </td>
+        </tr>     
+
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="preferredDefinition"
+              />
+           </td>
+        </tr>
+      </table>
+
+      <table cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr >
+          <td >
+            &nbsp;
+          </td>
+        </tr>         
+        <tr>
+          <td class="OraHeaderSubSub" width="100%">Select Context</td>
+        </tr>
+        <tr>
+          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+        </tr>
+      </table>
+
     <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
     <tr class="OraTabledata">
       <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.context" />:&nbsp;</td>

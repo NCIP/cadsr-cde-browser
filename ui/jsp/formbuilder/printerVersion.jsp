@@ -50,7 +50,7 @@
         </tr>
         <tr class="PrinterOraTableColumnHeader">
           <td  width="20%">
-            <bean:message key="cadsr.formbuilder.form.protocol" />
+            <bean:message key="cadsr.formbuilder.form.protocols.longName" />
           </td>                
           <td  class="PrinterOraTableColumnHeader">
             <bean:write name="<%=FormConstants.CRF%>"

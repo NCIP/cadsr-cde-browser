@@ -152,7 +152,7 @@ function submitModuleRepition(methodName,moduleIndexValue) {
           
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="20%" nowrap>
-              <bean:message key="cadsr.formbuilder.form.protocol"/>
+              <bean:message key="cadsr.formbuilder.form.protocols.longName"/>
             </td>
             <td class="OraFieldText">
                 <bean:write  name="<%=FormConstants.CRF%>" property="delimitedProtocolLongNames"/> 

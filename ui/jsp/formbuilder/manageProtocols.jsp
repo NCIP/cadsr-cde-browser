@@ -91,18 +91,6 @@
               />
           </td>        
         </tr>
-        <%--
-        <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocol" />:</td>
-          <td class="OraFieldText" nowrap>
-            <bean:write
-              name="<%= FormConstants.CRF %>"
-              property="delimitedProtocolLongNames"
-              />
-          </td>
-        </tr>
-        --%>
-
         <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
           <td class="OraFieldText" nowrap>

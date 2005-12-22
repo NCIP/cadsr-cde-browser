@@ -46,39 +46,136 @@
     </td>                
   </tr> 
 </table>
+
+      <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="longName"
+              />
+          </td>
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="context.name"
+              />
+          </td>
+        </tr>
+
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.version" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="version"
+              />
+          </td>
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="aslName"
+              />
+          </td>      
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="formType"
+              />
+          </td>        
+        </tr>
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocols.longName" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="delimitedProtocolLongNames"
+              />
+          </td>
+        </tr>
+
+
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="formCategory"
+              />
+          </td>
+        </tr>     
+
+        <tr class="OraTabledata">
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
+          <td class="OraFieldText" nowrap>
+            <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="preferredDefinition"
+              />
+           </td>
+        </tr>
+      </table>
+
+      <table cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr >
+          <td >
+            &nbsp;
+          </td>
+        </tr>         
+        <tr>
+          <td class="OraHeaderSubSub" width="100%">Create New Version</td>
+        </tr>
+        <tr>
+          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+        </tr>
+      </table>
+
+
  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap width="48%">
+      <td class="OraTableColumnHeader" nowrap>
         <bean:message key="cadsr.formbuilder.form.max.version" />&nbsp;</td>
-      <td class="OraFieldText" nowrap width="52%"> 
+      <td class="OraFieldText" nowrap> 
         <bean:write name="<%=FormConstants.FORM_MAX_VERSION%>"/>
+        <input type="hidden" name="<%=FormConstants.FORM_MAX_VERSION%>" value="123"/>
+       <%-- <html:hidden property="<%=FormConstants.FORM_MAX_VERSION%>" /> --%>
       </td>
     </tr>
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap width="48%">
+      <td class="OraTableColumnHeader" nowrap>
         <bean:message key="cadsr.formbuilder.form.current.version" />&nbsp;</td>
-      <td class="OraFieldText" nowrap width="52%"> 
+      <td class="OraFieldText" nowrap> 
         <bean:write name="<%=FormConstants.CRF%>" property="version"/>
       </td>
     </tr>
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap width="48%">
+      <td class="OraTableColumnHeader" nowrap>
         <bean:message key="cadsr.formbuilder.form.new.version" />&nbsp;</td>
-      <td class="OraFieldText" nowrap width="52%">
+      <td class="OraFieldText" nowrap>
         <html:text property="<%=FormConstants.NEW_VERSION_NUMBER%>" size="20"/>
       </td>
     </tr>
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap width="48%">
+      <td class="OraTableColumnHeader" nowrap>
         <bean:message key="cadsr.formbuilder.form.new.version.changenote" />&nbsp;</td>
-      <td class="OraFieldText" nowrap width="52%">
+      <td class="OraFieldText" nowrap>
         <html:textarea property="<%=FormConstants.CHANGE_NOTE%>" rows="5" cols="40"/>
       </td>
     </tr>
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap width="48%">
+      <td class="OraTableColumnHeader" nowrap>
         <bean:message key="cadsr.formbuilder.form.new.version.edit" />&nbsp;</td>
-      <td class="OraFieldText" nowrap width="52%">
+      <td class="OraFieldText" nowrap>
         <input type=checkbox class="OraFieldText" name="<%= FormConstants.EDIT_FORM_INDICATOR%>" value ="true"/>
       </td>
     </tr>

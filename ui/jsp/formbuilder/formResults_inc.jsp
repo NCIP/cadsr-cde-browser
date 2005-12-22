@@ -19,7 +19,7 @@ if(confirm(message)) location.href = url;
                           sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
                           separator=">>" 
                           showDefault="Y"
-                          labelMapping="longName,Long Name,contextName,Context,formType,Type,protocolLongName,Protocol,aslName,Workflow Status"
+                          labelMapping="longName,Long Name,contextName,Context,formType,Type,protocolLongName,Protocol Long Name(s),aslName,Workflow Status"
                           defaultText=" (Default) "
                           ascendingText=" [Ascending]"
                           descendingText=" [Descending]"                          
@@ -86,7 +86,7 @@ if(confirm(message)) location.href = url;
 	    <cde:sortableColumnHeader
             sortableColumnHeaderBeanId="<%=FormConstants.FORM_SEARCH_RESULT_COMPARATOR%>" 
 		       	actionUrl='<%="/sortFormSearchAction.do?"+NavigationConstants.METHOD_PARAM+"=sortResult"%>' 
-		   	   	columnHeader="Protocol" 
+		   	   	columnHeader="Protocol Long Name(s)" 
             orderParamId="sortOrder" 
 		   	   	sortFieldId="sortField"
 		   	   	sortFieldValue = "protocolLongName"
@@ -219,8 +219,8 @@ if(confirm(message)) location.href = url;
           		<bean:write name="form" property="formType"/><br>
           	</td>
           	<td class="OraFieldText">
-             <logic:present name="form" property="protocol">
-          		<bean:write name="form" property="protocol.longName"/><br>
+             <logic:present name="form" property="delimitedProtocolLongNames">
+          		<bean:write name="form" property="delimitedProtocolLongNames"/><br>
              </logic:present>
              <logic:notPresent name="form" property="protocol">
                &nbsp;

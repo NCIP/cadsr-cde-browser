@@ -92,7 +92,7 @@
           </td>        
         </tr>
         <tr class="OraTabledata">
-          <td width="20%" class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocol" /></td>
+          <td width="20%" class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocols.longName" /></td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"

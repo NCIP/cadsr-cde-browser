@@ -129,11 +129,10 @@ function manageProtocols() {
         </tr>
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocol" /></td>
+          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocols.longName" /></td>
           <td class="OraFieldText">
                 <bean:write  name="<%=FormConstants.CRF%>" property="delimitedProtocolLongNames"/> 
               <a href="javascript:manageProtocols()"><i>Manage Protocols</i></a> 
-              <%--???--%>
               <html:hidden property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
           <%--
             <html:text 

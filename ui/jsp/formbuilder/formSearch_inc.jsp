@@ -103,7 +103,7 @@ function gotoClassificationsLOV() {
                             onkeypress="if(event.keyCode==13){submitForm('getAllForms');};"/>
                          </td>
                          <td width="50%" class="OraTableColumnHeaderNoBG" nowrap>
-                            <table  width="100%" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark" >
+                            <table  width="100%" cellpadding="1" cellspacing="1">
                               <tr>
                                  <td valign="top"  class="OraTableColumnHeaderNoBG" nowrap>Version</td>
                                     <td class="OraTableColumnHeaderNoBG" nowrap>
@@ -124,7 +124,7 @@ function gotoClassificationsLOV() {
       <td width="50%"  valign="top" >
           <table width="100%" cellpadding="0" cellspacing="1" class="OraBGAccentVeryDark" border="0" %>           
             <tr>            
-                <td width="30%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.protocol"/></td>
+                <td width="30%" class="OraTableColumnHeaderNoBG" nowrap><bean:message key="cadsr.formbuilder.form.protocol.longName"/></td>
                 <td class="OraTabledata" nowrap>
                   <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
                          readonly="true" 
