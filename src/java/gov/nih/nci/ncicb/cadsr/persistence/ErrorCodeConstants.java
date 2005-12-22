@@ -27,5 +27,9 @@ public static final String ERROR_COPYING_FORM="DML0019";
   
     public static final String ERROR_CREATEING_SKIP_PATTERN = "DML0023";
     public static final String ERROR_SAVING_SKIP_PATTERN = "DML0024";
+    public static final String ERROR_DELETEING_SKIP_PATTERN = "DML0025";
+    public static final String ERROR_RETRIEVEING_SKIP_PATTERN = "DML0026";
+    
+   
 
 }

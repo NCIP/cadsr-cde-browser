@@ -133,5 +133,8 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
       csType = aClassSchemeType;
    }
 
-  
+    public Object clone() throws CloneNotSupportedException
+    {
+        return this.clone();
+    }
 }

@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.resource;
 
-public interface ClassSchemeItem  {
+public interface ClassSchemeItem   extends Cloneable{
   public String getClassSchemeLongName();
   public void setClassSchemeLongName(String aClassSchemeName);
   
@@ -38,5 +38,7 @@ public interface ClassSchemeItem  {
   
   public void setCsConteIdseq(String csConteIdseq);
   public String getCsConteIdseq();
+  
+    public Object clone() throws CloneNotSupportedException;
 
 }

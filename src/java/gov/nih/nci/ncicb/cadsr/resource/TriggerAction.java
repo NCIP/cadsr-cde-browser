@@ -6,7 +6,7 @@ import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.resource.FormElement;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 
-public interface TriggerAction
+public interface TriggerAction extends Cloneable
 {
 
     public void setIdSeq(String idSeq);
@@ -32,4 +32,6 @@ public interface TriggerAction
     public void setInstruction(String instruction);
 
     public String getInstruction();   
+    
+    public Object clone() throws CloneNotSupportedException ;   
 }

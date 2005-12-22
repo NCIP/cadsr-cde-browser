@@ -14,6 +14,7 @@ import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
+import gov.nih.nci.ncicb.cadsr.resource.TriggerActionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
 
 import java.rmi.RemoteException;
@@ -199,7 +200,7 @@ public interface FormBuilderServiceRemote {
      public TriggerAction createTriggerAction(TriggerAction action)
             throws RemoteException;
 
-     public TriggerAction updateTriggerAction(TriggerAction action)
+     public TriggerAction updateTriggerAction(TriggerActionChanges changes)
               throws RemoteException;
 
      public void deleteTriggerAction(String triggerActionId)

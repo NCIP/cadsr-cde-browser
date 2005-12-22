@@ -142,6 +142,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String SKIP_SOURCE_TYPE = "skipSourceType";
   public static final String SKIP_TARGET_TYPE = "skipTargetType";
   public static final String SKIP_PATTERN ="skipPattern";
+    public static final String SKIP_PATTERN_CLONE ="skipPatternClone";
   public static final String SKIP_FORM_SEARCH_RESULTS = "skipFormSearchResults";
   public static final String SKIP_FORM_SEARCH_RESULT_COMPARATOR="SkipFormSearchResultComparator";
   public static final String SKIP_FORM_SEARCH_RESULTS_PAGINATION =

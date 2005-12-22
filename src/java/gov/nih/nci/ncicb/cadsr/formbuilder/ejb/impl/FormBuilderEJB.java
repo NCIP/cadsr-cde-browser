@@ -58,6 +58,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.ProtocolDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.TriggerActionDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
+import gov.nih.nci.ncicb.cadsr.resource.TriggerActionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
 
 import java.rmi.RemoteException;
@@ -1369,9 +1370,55 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
 
     }
 
-    public TriggerAction updateTriggerAction(TriggerAction action)
+    public TriggerAction updateTriggerAction(TriggerActionChanges changes)
     {
-       return null;
+        TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
+        String userId = getUserName().toUpperCase();
+        String triggetId = changes.getTriggerActionId();
+       if(changes.getNewInstruction()!=null)
+       {
+
+           dao.updateTriggerActionInstruction(triggetId,
+                        changes.getNewInstruction(),userId);          
+       }
+        if(changes.getNewTargetId()!=null)
+        {
+
+            dao.updateTriggerActionInstruction(triggetId,
+                         changes.getNewTargetId(),userId);          
+        }      
+        
+        if(changes.getAddProtocols()!=null&&!changes.getAddProtocols().isEmpty())
+        {
+            for(String protocolId: changes.getAddProtocols())
+            {
+                dao.addTriggerActionProtocol(triggetId,protocolId,userId);
+            }                  
+        }     
+        if(changes.getAddCsis()!=null&&!changes.getAddCsis().isEmpty())
+        {
+            for(String accsiId: changes.getAddCsis())
+            {
+                dao.addTriggerActionCSI(triggetId,accsiId,userId);
+            }                  
+        }    
+        
+        if(changes.getDeleteCsis()!=null&&!changes.getDeleteCsis().isEmpty())
+        {
+            for(String accsiId: changes.getDeleteCsis())
+            {
+                dao.deleteTriggerActionCSI(triggetId,accsiId);
+            }                  
+        }    
+        if(changes.getDeleteCsis()!=null&&!changes.getDeleteCsis().isEmpty())
+        {
+            for(String protoId: changes.getAddCsis())
+            {
+                dao.deleteTriggerActionProtocol(triggetId,protoId);
+            }                  
+        }            
+        return dao.getTriggerActionForId(triggetId);
+        
     }
 
     public void deleteTriggerAction(String triggerActionId)
