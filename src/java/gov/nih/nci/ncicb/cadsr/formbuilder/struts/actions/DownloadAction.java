@@ -100,7 +100,7 @@ public class DownloadAction
         Protocol  p = (Protocol)it.next();
         row = sheet.createRow(rowNumber++);
         cell = row.createCell((short)0);
-        cell.setCellValue("Protocol");
+        cell.setCellValue("Protocol Long Name");
         cell.setCellStyle(boldCellStyle);
         row.createCell((short)1).setCellValue(p.getLongName());
     }
