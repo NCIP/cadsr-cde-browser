@@ -164,7 +164,12 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         sourceModule.setForm(sourceForm);
         TriggerAction triggerAction = new TriggerActionTransferObject();
         triggerAction.setActionSource(sourceModule);
-        setSessionObject(request,SKIP_PATTERN,triggerAction);    
+        setSessionObject(request,SKIP_PATTERN,triggerAction); 
+        
+        formBean.set(SELECTED_SKIP_PROTOCOL_IDS,null);
+        formBean.set(SELECTED_SKIP_AC_CSIS,null);
+        formBean.set(SKIP_INSTRUCTION,"");
+        
          try {
            FormBuilderServiceDelegate service = getFormBuilderService();
            Collection  csis = service.retrieveFormClassifications(sourceForm.getFormIdseq());
@@ -222,7 +227,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
           
       }
       setSessionObject(request,SKIP_PATTERN_CLONE,clone);    
-      
+      formBean.set(SELECTED_SKIP_PROTOCOL_IDS,getProtocolIds(triggerAction.getProtocols()));
+      formBean.set(SELECTED_SKIP_AC_CSIS,getAcCsiIds(triggerAction.getClassSchemeItems()));
+      formBean.set(SKIP_INSTRUCTION,triggerAction.getInstruction());
+        
        Form sourceForm = (Form) getSessionObject(request,CRF);
         try {
           FormBuilderServiceDelegate service = getFormBuilderService();
@@ -274,36 +282,14 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         vv.setQuestion(question);
         question.setModule(sourceModule);
         sourceModule.setForm(sourceForm);
-        
-        Form formClone = null;      
-        Module moduleClone = null;
-        Question qClone = null;
-        FormValidValue vvClone = null;
-        /**
-           try
-           {
-                formClone = (Form)sourceForm.clone();
-                moduleClone = (Module)sourceModule.clone();
-                qClone = (Question)question.clone();
-                vvClone = (FormValidValue)vv.clone();
-                formClone.setModules(null);
-                moduleClone.setQuestions(null);
-                qClone.setValidValues(null);
-                moduleClone.setForm(formClone);
-                qClone.setModule(moduleClone);
-                vvClone.setQuestion(qClone);
-           }
-             catch (CloneNotSupportedException exp) {
-               saveError(ERROR_FORM_SAVE_FAILED, request);
-               if (log.isErrorEnabled()) {
-                 log.error("On save, Exception on cloneing Form/Module/ValidValue " + exp);
-               }
-               return mapping.findForward(FAILURE);
-             }
-             **/
+
+
          TriggerAction triggerAction = new TriggerActionTransferObject();
          triggerAction.setActionSource(vv);
          setSessionObject(request,SKIP_PATTERN,triggerAction);     
+        formBean.set(SELECTED_SKIP_PROTOCOL_IDS,null);
+        formBean.set(SELECTED_SKIP_AC_CSIS,null);
+        formBean.set(SKIP_INSTRUCTION,"");
         
         try {
           FormBuilderServiceDelegate service = getFormBuilderService();
@@ -357,7 +343,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         TriggerAction triggerAction = vv.getTriggerActions().get(triggerIndex);
 
         setSessionObject(request,SKIP_PATTERN,triggerAction);     
-
+        formBean.set(SELECTED_SKIP_PROTOCOL_IDS,getProtocolIds(triggerAction.getProtocols()));
+        formBean.set(SELECTED_SKIP_AC_CSIS,getAcCsiIds(triggerAction.getClassSchemeItems()));
+        formBean.set(SKIP_INSTRUCTION,triggerAction.getInstruction());
+        
         TriggerAction clone = null;
         try
         {
@@ -617,15 +606,18 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
           String[] selectedProtocolIds = (String[]) skipForm.get(SELECTED_SKIP_PROTOCOL_IDS); 
           String[] selectedAccsis = (String[]) skipForm.get(SELECTED_SKIP_AC_CSIS); 
             
-            TriggerAction savedAction = null;
+          TriggerAction savedAction = null;
+          boolean isCreate = false;
             if(triggerAction.getIdSeq()==null)
             {
                 //Create new Skip Pattern
+                 isCreate=true;
                  triggerAction.setInstruction(instruction);
                  
                  try {
                    FormBuilderServiceDelegate service = getFormBuilderService();
                    savedAction = service.createTriggerAction(triggerAction);
+                     saveMessage("cadsr.formbuilder.create.skippattern.success",request);
                  } catch (FormBuilderException exp) {
                      if (log.isErrorEnabled()) {
                        log.error("Exception on creating new Skip pattern  " , exp);
@@ -694,6 +686,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                     try {
                       FormBuilderServiceDelegate service = getFormBuilderService();
                       savedAction = service.updateTriggerAction(changes);
+                      saveMessage("cadsr.formbuilder.save.skippattern.success",request);
                       //Add Message
                     } catch (FormBuilderException exp) {
                         if (log.isErrorEnabled()) {
@@ -707,11 +700,15 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                 }
                 else
                 {
-                    //saveError(this.SAVE_FORM)
+                     saveMessage("cadsr.formbuilder.save.skippattern.nochanges",request);
                 }
                 
             }
             triggerAction.setIdSeq(savedAction.getIdSeq());
+            triggerAction.setClassSchemeItems(savedAction.getClassSchemeItems());
+            triggerAction.setProtocols(savedAction.getProtocols());
+            triggerAction.setInstruction(savedAction.getInstruction());
+            
             FormElement source = triggerAction.getActionSource();         
             List<TriggerAction> actions = source.getTriggerActions();
             
@@ -720,20 +717,13 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                 actions = new ArrayList<TriggerAction>(); 
                 source.setTriggerActions(actions);
             }
-
+            if(isCreate)
+            {
+                actions.add(triggerAction);
+            }
                 
-            actions.add(triggerAction);
-            source.setTriggerActions(actions);
-            
-            if(FormJspUtil.getFormElementType
-                         (triggerAction.getActionSource()).equals(FormJspUtil.FORM))
-            {
-                    return mapping.findForward("backToFormEdit");
-            }
-            else
-            {
-                return mapping.findForward("backToModuleEdit");
-            }
+        
+            return mapping.findForward("backToModuleEdit");
           
         }
 
@@ -775,8 +765,18 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
     private List<String> getNewIds(String[] orgIds, String[] newIds)
     {
         List<String> orgList = Arrays.asList(orgIds);  // new ArrayList<String>(orgIds);
-         List<String> newList = Arrays.asList(newIds);
-        newList.removeAll(orgList);
+        List<String> newList = Arrays.asList(newIds);
+         if(orgIds==null)
+            return newList;
+         if(orgIds.length==0)
+            return newList;
+        for(String id:orgIds)
+        {
+            if(newList.contains(id))
+            {
+                newList.remove(id);
+            }
+        }
         return newList;
     }
     
@@ -784,8 +784,19 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
     {
         List<String> orgList = Arrays.asList(orgIds);  // new ArrayList<String>(orgIds);
          List<String> newList = Arrays.asList(newIds);
-        orgList.removeAll(newList);
-        return orgList;
+         List<String> deletedList = new ArrayList();
+        if(newIds==null)
+           return orgList;
+        if(newIds.length==0)
+           return orgList;
+        for(String id:newIds)
+        {
+           if(!newList.contains(id))
+           {
+               deletedList.add(id);
+           }
+        }
+        return deletedList;
     }    
     
 

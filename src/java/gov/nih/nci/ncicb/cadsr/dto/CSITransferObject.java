@@ -1,5 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+
 import java.io.Serializable;
 
 public class CSITransferObject implements ClassSchemeItem, Serializable  {
@@ -132,9 +134,14 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
    public void setClassSchemeType(String aClassSchemeType){
       csType = aClassSchemeType;
    }
-
-    public Object clone() throws CloneNotSupportedException
-    {
-        return this.clone();
+    /**
+     * Clones the ClassSchemeItem Object
+     * @return 
+     * @throws CloneNotSupportedException
+     */
+    public Object clone() throws CloneNotSupportedException {
+      ClassSchemeItem copy = null;
+      copy = (ClassSchemeItem)super.clone();
+      return copy;
     }
 }

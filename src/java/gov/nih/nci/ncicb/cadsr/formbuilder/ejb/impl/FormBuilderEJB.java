@@ -1355,6 +1355,11 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
     {
         TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
         List<TriggerAction> triggerActions = dao.getTriggerActionsForSource(sourceId);
+        for(TriggerAction action:triggerActions)
+        {
+            action.setProtocols(dao.getAllProtocolsForTriggerAction(action.getIdSeq()));
+            action.setClassSchemeItems(dao.getAllClassificationsForTriggerAction(action.getIdSeq()));
+        }
         return triggerActions;
     }
 
@@ -1363,10 +1368,8 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
         String newId = dao.createTriggerAction(action,getUserName().toUpperCase());
 
-        TriggerAction newAction = dao.getTriggerActionForId(newId);
-        //get Protocols and Classifications
 
-        return newAction;
+        return getTriggerActionForPK(newId);
 
     }
 
@@ -1417,7 +1420,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                 dao.deleteTriggerActionProtocol(triggetId,protoId);
             }                  
         }            
-        return dao.getTriggerActionForId(triggetId);
+        return getTriggerActionForPK(triggetId);
         
     }
 
@@ -1443,6 +1446,14 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             action.setActionTarget(element);
 
         }
+    }
+    private TriggerAction getTriggerActionForPK(String triggerId)
+    {
+        TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
+        TriggerAction newAction = dao.getTriggerActionForId(triggerId);
+        newAction.setClassSchemeItems(dao.getAllClassificationsForTriggerAction(triggerId));
+        newAction.setProtocols(dao.getAllProtocolsForTriggerAction(triggerId));        
+        return newAction;
     }
 
 }

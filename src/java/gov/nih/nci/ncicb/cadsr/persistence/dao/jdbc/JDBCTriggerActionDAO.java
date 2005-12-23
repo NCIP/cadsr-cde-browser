@@ -10,6 +10,7 @@ import gov.nih.nci.ncicb.cadsr.dto.TriggerActionTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.TriggerActionDAO;
+import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 
 import gov.nih.nci.ncicb.cadsr.resource.FormElement;
@@ -105,7 +106,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
      *
      * @return <b>Collection</b> Collection of CSITransferObject
      */
-    public List<CSITransferObject> getAllClassificationsForTriggerAction(String actionId)
+    public List<ClassSchemeItem> getAllClassificationsForTriggerAction(String actionId)
     {
 
         TriggerActionClassificationsQuery classificationQuery =
@@ -621,7 +622,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
         public DeleteTriggerAction(DataSource ds)
         {
             String sql =
-                " delete from TRIGGERED_ACTION_EXT " + " where TA_IDSEQ =? ";
+                " delete from TRIGGERED_ACTIONS_EXT " + " where TA_IDSEQ =? ";
 
             this.setDataSource(ds);
             this.setSql(sql);

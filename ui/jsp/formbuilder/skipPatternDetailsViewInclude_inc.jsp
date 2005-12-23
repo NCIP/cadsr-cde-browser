@@ -68,7 +68,7 @@
                                                 Protocols
                                               </td>
                                               <td  class="OraFieldText" width="80%" nowrap>
-                                                    CTMS Version 3.0, NETTRIALS 
+                                                    <%=FormJspUtil.getDelimitedProtocolLongNames(currTriggerAction.getProtocols(),"<br>")%>
                                                </td>
             
                                              </tr>    
@@ -77,7 +77,7 @@
                                                 Classifications
                                               </td>
                                               <td  class="OraFieldText" width="80%" nowrap>
-                                                   caBIG, Multiple Myeloma
+                                                   <%=FormJspUtil.getDelimitedCSILongNames(currTriggerAction.getClassSchemeItems(),"<br>")%>
                                                </td>                  
                                              </tr>                                                                
                                              
@@ -87,7 +87,7 @@
                                                 Instruction
                                               </td>
                                               <td  class="OraFieldText" width="80%" nowrap>
-                                                    skip to target 
+                                                    <bean:write  name="currTriggerAction" property="instruction"/> 
                                                </td>             
                                              </tr>                                                  
                                                                                                
