@@ -24,10 +24,16 @@ public class ProtocolTransferObject extends AdminComponentTransferObject
 
   public String getProtoIdseq() {
     return protoIdseq;
+    
   }
 
+  public void setIdseq(String idseq) {
+        this.protoIdseq = idseq;
+        this.idseq=idseq;
+      }
   public void setProtoIdseq(String protocolIdseq) {
     this.protoIdseq = protocolIdseq;
+      this.idseq=protocolIdseq;    
   }
 
   public String getLeadOrg() {

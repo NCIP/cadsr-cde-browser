@@ -54,7 +54,7 @@ function submitForm(methodName) {
       <%@ include file="showMessages.jsp" %>
 
 
-        <table width="70%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+        <table width="70%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="100%" nowrap>
                 Skip from
@@ -62,7 +62,7 @@ function submitForm(methodName) {
           </tr>
           <tr>
             <td>
-            <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+            <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
 
 
              
@@ -140,7 +140,7 @@ function submitForm(methodName) {
        <br>
 
 
-        <table width="70%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+        <table width="70%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="100%" nowrap>
                 Skip to
@@ -148,39 +148,24 @@ function submitForm(methodName) {
           </tr>
           <tr>
             <td>
-              <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" >
+              <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" >
 
-             <logic:equal value="<%=FormJspUtil.FORM%>" name="skipTargetType">
-             <tr class="OraTabledata">
-              <td class="OraTableColumnHeader" width="20%" nowrap>
-                Form <bean:message key="cadsr.formbuilder.form.longName"/>
-              </td>
-              <td  class="OraFieldText" width="70%" nowrap>
-                    <bean:write  name="skipTarget" property="longName"/> 
-               </td>
-              <td  class="OraFieldText" width="10%" nowrap>
-                    [Edit] 
-               </td>               
-             </tr>               
-             </logic:equal>
+
              
-             <logic:equal value="<%=FormJspUtil.MODULE%>" name="skipTargetType">
+             <logic:equal value="<%=FormJspUtil.MODULE%>" name="skipTargetType">    
               <tr class="OraTabledata">
               <td class="OraTableColumnHeader" width="20%" nowrap>
                 Module Name
               </td>
-              <td  class="OraFieldText" width="80%" nowrap>
-                    <bean:write  name="skipTarget" property="longName"/> 
+              <td  class="OraFieldText" width="70%" nowrap>
+                     <bean:write  name="skipTarget" property="longName"/> 
                </td>
-             </tr>   
-             <tr class="OraTabledata">
-              <td class="OraTableColumnHeader" width="20%" nowrap>
-                Form <bean:message key="cadsr.formbuilder.form.longName"/>
-              </td>
-              <td  class="OraFieldText" width="80%" nowrap>
-                    <bean:write  name="skipTarget" property="form.longName"/> 
-               </td>
-             </tr>               
+               <td   align="center" class="OraFieldText" width="10%" nowrap>
+                  <a href="javascript:submitForm('<%=NavigationConstants.SET_CURRENT_FORM_AS_TARGET_FORM%>')">
+		    Edit           
+                 </a>                  
+               </td>                   
+             </tr>              
              </logic:equal>   
              
              <logic:equal value="<%=FormJspUtil.QUESTION%>" name="skipTargetType">
@@ -219,10 +204,9 @@ function submitForm(methodName) {
               </logic:notPresent>
                
                <td  align="center" class="OraFieldText" width="10%" nowrap>
-                  <html:link action='<%="/formbuilder/skipAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_CURRENT_FORM_AS_TARGET_FORM%>'
-                     >                   
-                    [Edit] 
-                  </html:link>
+                  <a href="javascript:submitForm('<%=NavigationConstants.SET_CURRENT_FORM_AS_TARGET_FORM%>')">
+		    Edit           
+                 </a>   
                </td>                   
              </tr>   
               <tr class="OraTabledata">
@@ -233,26 +217,12 @@ function submitForm(methodName) {
                     <bean:write  name="skipTarget" property="module.longName"/> 
                </td>
                <td   align="center" class="OraFieldText" width="10%" nowrap>
-                  <html:link action='<%="/formbuilder/skipAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_CURRENT_FORM_AS_TARGET_FORM%>'
-                     >                   
-                    [Edit] 
-                  </html:link>
+                  <a href="javascript:submitForm('<%=NavigationConstants.SET_CURRENT_FORM_AS_TARGET_FORM%>')">
+		    Edit           
+                 </a>   
                </td>                   
              </tr>   
-             <tr class="OraTabledata">
-              <td class="OraTableColumnHeader" width="20%" nowrap>
-                Form <bean:message key="cadsr.formbuilder.form.longName"/>
-              </td>
-              <td  class="OraFieldText" width="70%" nowrap>
-                    <bean:write  name="skipTarget" property="module.form.longName"/> 
-               </td>
-               <td   align="center" class="OraFieldText" width="10%" nowrap>
-                  <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SKIP_TO_FORM_SEARCH%>'
-                       >                 
-                    [Edit] 
-                  </html:link>&nbsp;                          
-               </td>                   
-             </tr>               
+          
              </logic:equal>                       
 
            
@@ -266,7 +236,7 @@ function submitForm(methodName) {
 
     <logic:present name="<%=FormConstants.CRF%>" property="protocols">
       <logic:notEmpty name="<%=FormConstants.CRF%>" property="protocols">
-        <table width="70%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+        <table width="70%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="100%" nowrap>
                 Using Protocols 
@@ -274,7 +244,7 @@ function submitForm(methodName) {
           </tr>
           <tr>
             <td>
-              <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" >
+              <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" >
                 <logic:iterate id="protocol" name="<%=FormConstants.CRF%>" property="protocols" type="gov.nih.nci.ncicb.cadsr.resource.Protocol" >
                     <tr class="OraTabledata">
                        <td class="OraTableColumnHeader" width="5%" nowrap>
@@ -296,7 +266,7 @@ function submitForm(methodName) {
        <br>
     <logic:present name="<%=FormConstants.CRF%>" property="classifications">
       <logic:notEmpty name="<%=FormConstants.CRF%>" property="classifications">
-        <table width="70%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+        <table width="70%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
           <tr class="OraTabledata">
             <td class="OraTableColumnHeader" width="100%" nowrap>
                 Using Classifications 
@@ -305,7 +275,7 @@ function submitForm(methodName) {
           <tr>
             <td>
             
-             <table width="100%" align="center" cellpadding="1" cellspacing="1" bgcolor="#999966">
+             <table width="100%" align="center" cellpadding="0" cellspacing="1" bgcolor="#999966">
                 <tr class="OraTableColumnHeader">
                   <th scope="col"> </th>
                   <th scope="col">CS* Short Name</th>
@@ -345,13 +315,13 @@ function submitForm(methodName) {
       
 
        <br>       
-        <table width="70%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+        <table width="70%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
            <tr class="OraTabledata">
               <td class="OraTableColumnHeader" width="20%" nowrap>
                 Skip insrtruction
               </td>
               <td  class="OraFieldText" width="80%" nowrap>
-            	<html:textarea  styleClass="OraFieldTextInstruction" rows="2" cols="102" 
+            	<html:textarea  styleClass="OraFieldTextInstruction" rows="2" cols="80" 
                		property="<%=FormConstants.SKIP_INSTRUCTION%>">
             	</html:textarea>
                </td>

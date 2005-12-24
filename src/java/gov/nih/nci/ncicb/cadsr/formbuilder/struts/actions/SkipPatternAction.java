@@ -226,6 +226,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
           return mapping.findForward("editSkipPattern");
           
       }
+      setSessionObject(request,SKIP_PATTERN,triggerAction);    
       setSessionObject(request,SKIP_PATTERN_CLONE,clone);    
       formBean.set(SELECTED_SKIP_PROTOCOL_IDS,getProtocolIds(triggerAction.getProtocols()));
       formBean.set(SELECTED_SKIP_AC_CSIS,getAcCsiIds(triggerAction.getClassSchemeItems()));
@@ -764,8 +765,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
     }
     private List<String> getNewIds(String[] orgIds, String[] newIds)
     {
-        List<String> orgList = Arrays.asList(orgIds);  // new ArrayList<String>(orgIds);
-        List<String> newList = Arrays.asList(newIds);
+        List<String> orgList = new ArrayList(Arrays.asList(orgIds));  // new ArrayList<String>(orgIds);
+        List<String> newList = new ArrayList(Arrays.asList(newIds));
          if(orgIds==null)
             return newList;
          if(orgIds.length==0)
@@ -782,8 +783,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
     
     private List<String> getDeletedIds(String[] orgIds, String[] newIds)
     {
-        List<String> orgList = Arrays.asList(orgIds);  // new ArrayList<String>(orgIds);
-         List<String> newList = Arrays.asList(newIds);
+        List<String> orgList = new ArrayList(Arrays.asList(orgIds));  // new ArrayList<String>(orgIds);
+         List<String> newList = new ArrayList(Arrays.asList(newIds));
          List<String> deletedList = new ArrayList();
         if(newIds==null)
            return orgList;
