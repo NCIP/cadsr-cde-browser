@@ -1413,9 +1413,9 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                 dao.deleteTriggerActionCSI(triggetId,accsiId);
             }                  
         }    
-        if(changes.getDeleteCsis()!=null&&!changes.getDeleteCsis().isEmpty())
+        if(changes.getDeleteProtocols()!=null&&!changes.getDeleteProtocols().isEmpty())
         {
-            for(String protoId: changes.getAddCsis())
+            for(String protoId: changes.getAddProtocols())
             {
                 dao.deleteTriggerActionProtocol(triggetId,protoId);
             }                  

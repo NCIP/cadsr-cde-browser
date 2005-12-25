@@ -2,6 +2,8 @@ package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+
 import java.io.Serializable;
 
 public class CSITransferObject implements ClassSchemeItem, Serializable  {
@@ -134,6 +136,25 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
    public void setClassSchemeType(String aClassSchemeType){
       csType = aClassSchemeType;
    }
+   
+    /**
+     * This equals method only compares the Idseq to define equals
+     * @param obj
+     * @return 
+     */  
+    public boolean equals(Object obj)
+    {
+     if(obj == null)
+      return false;
+     if(!(obj instanceof ClassSchemeItem))
+      return false;
+     ClassSchemeItem csi = (ClassSchemeItem)obj;
+
+    if(this.getAcCsiIdseq().equals(csi.getAcCsiIdseq()))
+        return true;
+      else
+        return false;
+    }   
     /**
      * Clones the ClassSchemeItem Object
      * @return 

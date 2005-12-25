@@ -144,7 +144,8 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String  CHECK_MODULE_CHANGES="checkModuleChanges";
   public static final String  SAVE_SKIP_PATTERN = "saveSkipPattern";
   public static final String  CANCEL_MODULE_SAVE="cancelModuleSave";
-
+    public static final String  CANCEL_SKIP_EDIT="cancelSkipEdit";
+    
   public static final String  GO_TO_MODULE_SEARCH = "goToModuleSearch";
   public static final String  GO_TO_SELECTED_MODULE_LIST = "goToSelectedModuleList";
   public static final String  SET_SELECTED_FORM_AS_MODULE_COPY_FORM="setSelectedFormAsModuleCopyForm";

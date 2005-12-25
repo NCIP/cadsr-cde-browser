@@ -581,6 +581,30 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       return mapping.findForward("backToModuleEdit");
     }
 
+
+    /**
+     *
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     *
+     * @return
+     *
+     * @throws IOException
+     * @throws ServletException
+     */
+    public ActionForward cancelSkipEdit(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+      
+        removeSessionObject(request,SKIP_PATTERN); 
+        removeSessionObject(request,SKIP_PATTERN_CLONE); 
+        removeSessionObject(request,SKIP_TARGET_FORM);   
+      return mapping.findForward("backToModuleEdit");
+    }
         /**
          *
          * @param mapping The ActionMapping used to select this instance.
@@ -606,11 +630,19 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
           String instruction = (String)skipForm.get(SKIP_INSTRUCTION);
           String[] selectedProtocolIds = (String[]) skipForm.get(SELECTED_SKIP_PROTOCOL_IDS); 
           String[] selectedAccsis = (String[]) skipForm.get(SELECTED_SKIP_AC_CSIS); 
-            
+
+        //Validate
+         if(!validateSkipPattern(triggerAction.getActionSource().getTriggerActions(),
+                    triggerAction.getIdSeq(),triggerAction.getActionTarget().getIdseq(),
+                    selectedProtocolIds,selectedAccsis,request))
+                    {
+                        return mapping.findForward("editSkipPattern");                        
+                    }
           TriggerAction savedAction = null;
           boolean isCreate = false;
             if(triggerAction.getIdSeq()==null)
             {
+                
                 //Create new Skip Pattern
                  isCreate=true;
                  triggerAction.setInstruction(instruction);
@@ -668,7 +700,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                     String[] orgIds = getProtocolIds(triggerAction.getProtocols());
                     changes.setAddProtocols(getNewIds(orgIds,selectedProtocolIds));
                     changes.setDeleteProtocols(getDeletedIds(orgIds,selectedProtocolIds));
-                    update=true;
+                    if(!changes.getAddProtocols().isEmpty()||!changes.getDeleteProtocols().isEmpty())
+                        update=true;
                 }
                 if(selectedAccsis.length==0)
                 {   
@@ -680,7 +713,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                     String[] orgIds = getAcCsiIds(triggerAction.getClassSchemeItems());
                     changes.setAddCsis(getNewIds(orgIds,selectedAccsis));
                     changes.setDeleteCsis(getDeletedIds(orgIds,selectedAccsis));  
-                    update=true;
+                    if(!changes.getAddCsis().isEmpty()||!changes.getDeleteCsis().isEmpty())
+                        update=true;
                 }
                 if(update)
                 {
@@ -702,6 +736,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                 else
                 {
                      saveMessage("cadsr.formbuilder.save.skippattern.nochanges",request);
+                     removeSessionObject(request,SKIP_PATTERN); 
+                     removeSessionObject(request,SKIP_PATTERN_CLONE); 
+                     removeSessionObject(request,SKIP_TARGET_FORM);                     
+                     return mapping.findForward("backToModuleEdit");
                 }
                 
             }
@@ -723,7 +761,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                 actions.add(triggerAction);
             }
                 
-        
+            removeSessionObject(request,SKIP_PATTERN); 
+            removeSessionObject(request,SKIP_PATTERN_CLONE); 
+            removeSessionObject(request,SKIP_TARGET_FORM);
+            
             return mapping.findForward("backToModuleEdit");
           
         }
@@ -799,6 +840,62 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         }
         return deletedList;
     }    
-    
+  private boolean validateSkipPattern(List<TriggerAction> actions, 
+                String newTriggerId,String newTargetId, String[] newProtIdSeqs,
+                String[] newAcCsis,HttpServletRequest request)
+  {
+      if(actions==null)
+        return true;
+      if(actions.isEmpty())
+        return true;   
+      List<TriggerAction> actionListToCheck = actions;
+      if(newTriggerId!=null) //Edit
+      {
+          actionListToCheck = new ArrayList<TriggerAction>();
+          for(TriggerAction action:actions)
+          {
+              if(!action.getIdSeq().equals(newTriggerId))
+                actionListToCheck.add(action);
+         }
+      }
+      
+      //Check to see if there there is matching target
+       for(TriggerAction action:actionListToCheck)
+       {
+           if(newTriggerId!=null&&newTriggerId.equals(action.getActionTarget().getIdseq()))
+           {
+               saveError("cadsr.formbuilder.save.skippattern.validate.error.duplicatesourcetarget",request);
+                return false;
+           }
+           //Check to see is anyother trigger action to diffrent target use 
+           //the same protocol or classification
+           if(action.getProtocols()==null)
+               action.setProtocols(new ArrayList<Protocol>());
+           
+            for(int i=0;i<newProtIdSeqs.length;++i)
+            {
+                if(action.getProtocols().contains(newProtIdSeqs[i]))
+                {
+                    saveError("cadsr.formbuilder.save.skippattern.validate.error.protocol",request);
+                    return false;
+                }
+            }
+            
+           if(action.getClassSchemeItems()==null)
+               action.setClassSchemeItems(new ArrayList<ClassSchemeItem>());
+               
+           for(int j=0;j<newAcCsis.length;++j)
+           {
+               if(action.getClassSchemeItems().contains(newAcCsis[j]))
+               {
+                   saveError("cadsr.formbuilder.save.skippattern.validate.error.classification",request);
+                  return false;
+              }
+           }            
+           
+       }
+      return true;
+
+  }
 
 }  
