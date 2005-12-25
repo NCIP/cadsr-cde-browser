@@ -844,6 +844,11 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                 String newTriggerId,String newTargetId, String[] newProtIdSeqs,
                 String[] newAcCsis,HttpServletRequest request)
   {
+      if(newAcCsis==null)
+          newAcCsis = new String[0];
+      if(newProtIdSeqs==null)
+          newProtIdSeqs = new String[0];
+          
       if(actions==null)
         return true;
       if(actions.isEmpty())
