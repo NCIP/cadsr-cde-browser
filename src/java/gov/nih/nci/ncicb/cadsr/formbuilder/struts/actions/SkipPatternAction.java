@@ -879,7 +879,9 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
            
             for(int i=0;i<newProtIdSeqs.length;++i)
             {
-                if(action.getProtocols().contains(newProtIdSeqs[i]))
+               Protocol tempProtocol = new ProtocolTransferObject();
+                tempProtocol.setProtoIdseq(newProtIdSeqs[i]);
+                if(action.getProtocols().contains(tempProtocol))
                 {
                     saveError("cadsr.formbuilder.save.skippattern.validate.error.protocol",request);
                     return false;
@@ -891,7 +893,9 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                
            for(int j=0;j<newAcCsis.length;++j)
            {
-               if(action.getClassSchemeItems().contains(newAcCsis[j]))
+               ClassSchemeItem tempCSI = new CSITransferObject();
+               tempCSI.setAcCsiIdseq(newAcCsis[j]);           
+               if(action.getClassSchemeItems().contains(tempCSI))
                {
                    saveError("cadsr.formbuilder.save.skippattern.validate.error.classification",request);
                   return false;
@@ -903,4 +907,15 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
 
   }
 
+private boolean contains(List list,Object element)    
+
+          {
+             ListIterator it= list.listIterator();
+             while(it.hasNext())
+             {
+              if(it.next().equals(element))
+                return true;
+            }
+            return false;
+          }
 }  
