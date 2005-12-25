@@ -2,14 +2,15 @@
         <tr >
           <td align="center">
             <a href="javascript:submitForm('<%=NavigationConstants.SAVE_SKIP_PATTERN%>')">
-		<html:img src='../i/save.gif' border="0" alt="Save skip pattern"/>            
+		<html:img page='/i/save.gif' border="0" alt="Save skip pattern"/>            
             </a>
           
           </td>   
           
           <td align="center">
-            <a href="javascript:submitForm()">
-		<html:img src='../i/cancel.gif' border="0" alt="Back to module edit"/>            
+            <a href="javascript:submitForm('<%=NavigationConstants.CANCEL_SKIP_EDIT%>')">
+		<html:img page='/i/cancel.gif' border="0" alt="Back to module edit"/>  
+                
             </a>
           
           </td>            

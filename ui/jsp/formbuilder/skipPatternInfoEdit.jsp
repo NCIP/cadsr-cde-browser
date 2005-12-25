@@ -217,9 +217,7 @@ function submitForm(methodName) {
                     <bean:write  name="skipTarget" property="module.longName"/> 
                </td>
                <td   align="center" class="OraFieldText" width="10%" nowrap>
-                  <a href="javascript:submitForm('<%=NavigationConstants.SET_CURRENT_FORM_AS_TARGET_FORM%>')">
-		    Edit           
-                 </a>   
+                &nbsp;
                </td>                   
              </tr>   
           

@@ -1426,7 +1426,9 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
 
     public void deleteTriggerAction(String triggerActionId)
     {
-
+        TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
+        String userId = getUserName().toUpperCase();
+        dao.deleteTriggerAction(triggerActionId,userId)
     }
 
     private void setSourceForTriggerActions(FormElement source, List<TriggerAction> actions)

@@ -107,6 +107,14 @@ function submitModuleForValidValueSkipEdit(methodName,questionIndex,validValueIn
   document.forms[0].submit();
   }  
 }
+
+function submitForDeleteSkip(methodName,triggerIndex) {
+
+  document.forms[0].action='<%=request.getContextPath()%>/formbuilder/skipAction.do'; 
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].<%=FormConstants.TRIGGER_ACTION_INDEX%>.value=triggerIndex;
+  document.forms[0].submit();
+}
 function clearProtocol() {
   document.forms[0].protocolIdSeq.value = "";
   document.forms[0].protocolLongName.value = "";
