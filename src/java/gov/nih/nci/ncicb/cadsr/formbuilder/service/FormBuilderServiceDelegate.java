@@ -161,6 +161,13 @@ public interface FormBuilderServiceDelegate {
     public List<TriggerAction> getAllTriggerActionsForTarget(String targetId)
         throws FormBuilderException;
         
+    public List<TriggerAction> getAllTriggerActionsForTargets(List<String> targetIds)
+    throws FormBuilderException;
+    
+    public boolean isTargetForTriggerAction(List<String> targetIds)
+    throws FormBuilderException;    
+
+    
     public TriggerAction createTriggerAction(TriggerAction action)
            throws FormBuilderException;
 

@@ -23,6 +23,8 @@ public interface TriggerActionDAO extends AdminComponentDAO
      */
     public List<TriggerAction> getTriggerActionsForTarget(String targetId); 
     
+    public boolean isTargetForTriggerAction(String idSeq);
+    
     public int deleteTriggerActionCSIProtocols(String triggerId);
 
     /**

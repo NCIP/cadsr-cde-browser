@@ -200,6 +200,12 @@ public interface FormBuilderServiceRemote {
      public List getAllTriggerActionsForTarget(String targetId)
        throws RemoteException;
        
+     public List<TriggerAction> getAllTriggerActionsForTargets(List<String> targetIds)
+        throws RemoteException;
+     
+     public boolean isTargetForTriggerAction(List<String> targetIds)
+     throws RemoteException;
+     
      public TriggerAction createTriggerAction(TriggerAction action)
             throws RemoteException;
 

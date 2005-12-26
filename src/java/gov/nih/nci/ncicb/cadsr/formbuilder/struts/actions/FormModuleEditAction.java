@@ -314,35 +314,52 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
     List questions = module.getQuestions();
 
-
-    if ((questions != null) && (questions.size() > 0)) {
-      Question deletedQuestion =
-        (Question) questions.remove(questionIndex.intValue());
-      //FormActionUtil.decrementDisplayOrder(questions, questionIndex.intValue());
-      // instead of incrementing /decrementing reset all display orders in sequencial order
-        FormActionUtil.setInitDisplayOrders(questions);
-
-      deletedQuestions.add(deletedQuestion);
+    Question questionToDelete = (Question) questions.get(questionIndex.intValue());
+      //Check if the module or its questions is target to any Skip Pattern
+      boolean hasSkipTarget = false;
+       try{
+           hasSkipTarget = isTargetToSkipPattern(questionToDelete);
+       }
+       catch (FormBuilderException exp) {
+         if (log.isErrorEnabled()) {
+           log.error("Exception While checking skip patterns " ,exp);
+         }
+         saveError(ERROR_SKIP_PATTERN_TARGET_CHECK, request);
+         return mapping.findForward(MODULE_EDIT);
+       }
+       
+    if (!hasSkipTarget)
+    {
+        if ((questions != null) && (questions.size() > 0)) {
+          Question deletedQuestion =
+            (Question) questions.remove(questionIndex.intValue());
+            FormActionUtil.setInitDisplayOrders(questions);
+    
+          deletedQuestions.add(deletedQuestion);
+        }
+    
+        setSessionObject(request, DELETED_QUESTIONS, deletedQuestions,true);
+    
+        //Bug TT 1196
+        questionArr = getQuestionsAsArray(module.getQuestions());
+        questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
+        vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
+    
+    
+        moduleEditForm.set(MODULE_QUESTIONS, questionArr);
+        moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
+        moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
+    
+        // Jump to the update location on the screen
+          if(questionIndex!=null)
+            request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
+          else
+            request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
     }
-
-    setSessionObject(request, DELETED_QUESTIONS, deletedQuestions,true);
-
-    //Bug TT 1196
-    questionArr = getQuestionsAsArray(module.getQuestions());
-    questionInstructionsArr = this.getQuestionInstructionsAsArray(module.getQuestions());
-    vvInstructionsArr = this.getValidValueInstructionsAsArray(module.getQuestions());
-
-
-    moduleEditForm.set(MODULE_QUESTIONS, questionArr);
-    moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
-    moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
-
-    // Jump to the update location on the screen
-      if(questionIndex!=null)
-        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
-      else
-        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+0);
-
+    else
+          {
+              saveError("cadsr.formbuilder.delete.question.skippattern.target",request);
+          }
     return mapping.findForward(MODULE_EDIT);
   }
 
@@ -1893,4 +1910,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
        return mapping.findForward("useSubsets");
       }
+    private boolean isTargetToSkipPattern(Question question) throws FormBuilderException
+    {
+        List<String> targetIdList = new ArrayList<String>();
+        targetIdList.add(question.getQuesIdseq());
+        FormBuilderServiceDelegate service = getFormBuilderService();
+
+        return service.isTargetForTriggerAction(targetIdList);
+    }      
 }

@@ -74,6 +74,21 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
         query.setSql(targetId);
         return query.execute();
     }
+    
+    /**
+     * Gets all the TriggerActions for a source
+     *
+     */
+     public boolean isTargetForTriggerAction(String idSeq)
+    {
+        TriggerActionTargetCheckQuery query = new TriggerActionTargetCheckQuery();
+        query.setDataSource(getDataSource());
+        Integer count =  (Integer)query.isTarget(idSeq);
+        if(count.intValue()>0)
+          return true;
+        else
+         return false;        
+    }    
     /**
      * Gets The TriggerActions by id
      *
@@ -301,6 +316,36 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
             .setPreferredDefinition(rs.getString("PREFERRED_DEFINITION"));
             protocol.setProtoIdseq(rs.getString("proto_idseq"));
             return protocol;
+        }
+
+    }
+
+    private class TriggerActionTargetCheckQuery extends MappingSqlQuery
+    {
+        TriggerActionTargetCheckQuery()
+        {
+            super();
+            super
+            .setSql("select count(*) from TRIGGERED_ACTIONS_EXT ta where ta.T_QC_IDSEQ= ?");
+            declareParameter(new SqlParameter("T_QC_IDSEQ", Types.VARCHAR));            
+        }
+
+
+        protected Object isTarget(
+          String idSeq) {
+
+          Object[] obj =
+            new Object[] {
+              idSeq
+            };
+
+          return findObject(obj);
+        }
+
+        protected Object mapRow(
+          ResultSet rs,
+          int rownum) throws SQLException {
+          return new Integer(rs.getInt(1));
         }
 
     }

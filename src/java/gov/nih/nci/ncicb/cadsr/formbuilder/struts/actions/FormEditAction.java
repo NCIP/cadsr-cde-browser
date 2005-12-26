@@ -24,6 +24,8 @@ import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Orderable;
 
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
+
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -277,29 +279,46 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     }
 
     List modules = crf.getModules();
-    //FormActionUtil.setInitDisplayOrders(modules); //This is done to set display order in a sequential order 
-                                      // in case  they are  incorrect in database
-                                      //Bug #tt 1136
-                                      
-    if ((modules != null) && (modules.size() > 0)) {
-      if (log.isDebugEnabled()) {
-        printDisplayOrder(modules);
-      }
 
-      Module deletedModule = (Module) modules.remove(moduleIndex.intValue());
-      //FormActionUtil.decrementDisplayOrder(modules, moduleIndex.intValue());
-      deletedModules.add(deletedModule);
-      
-      // instead of incrementing /decrementing reset all display orders in sequencial order
-      FormActionUtil.setInitDisplayOrders(modules);        
+    Module moduleToDelete = (Module) modules.get(moduleIndex.intValue());
+    //Check if the module or its questions is target to any Skip Pattern
+    boolean hasSkipTarget = false;
+     try{
+         hasSkipTarget = isTargetToSkipPattern(moduleToDelete);
+     }
+     catch (FormBuilderException exp) {
+       if (log.isErrorEnabled()) {
+         log.error("Exception While checking skip patterns " + crf,exp);
+       }
+       saveError(ERROR_SKIP_PATTERN_TARGET_CHECK, request);
+       return mapping.findForward(FORM_EDIT);
+     }
+    if(!hasSkipTarget)
+    {
+        if ((modules != null) && (modules.size() > 0)) {
+          if (log.isDebugEnabled()) {
+            printDisplayOrder(modules);
+          }
+    
+          Module deletedModule = (Module) modules.remove(moduleIndex.intValue());
+          //FormActionUtil.decrementDisplayOrder(modules, moduleIndex.intValue());
+          deletedModules.add(deletedModule);
+          
+          // instead of incrementing /decrementing reset all display orders in sequencial order
+          FormActionUtil.setInitDisplayOrders(modules);        
+        }
+    
+        setSessionObject(request, DELETED_MODULES, deletedModules,true);
+        // Jump to the update location on the screen
+          if(moduleIndex!=null)
+            request.setAttribute(CaDSRConstants.ANCHOR,"M"+moduleIndex.intValue());
+          else
+            request.setAttribute(CaDSRConstants.ANCHOR,"M"+0);        
     }
-
-    setSessionObject(request, DELETED_MODULES, deletedModules,true);
-    // Jump to the update location on the screen
-      if(moduleIndex!=null)
-        request.setAttribute(CaDSRConstants.ANCHOR,"M"+moduleIndex.intValue());
-      else
-        request.setAttribute(CaDSRConstants.ANCHOR,"M"+0);
+    else
+        {
+            saveError("cadsr.formbuilder.delete.module.skippattern.target",request);
+        }
 
     return mapping.findForward(FORM_EDIT);
   }
@@ -1205,5 +1224,22 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
             }
         }
         return false;
+    }
+    
+    private boolean isTargetToSkipPattern(Module module) throws FormBuilderException
+    {
+        List<String> targetIdList = new ArrayList<String>();
+        targetIdList.add(module.getModuleIdseq());
+        FormBuilderServiceDelegate service = getFormBuilderService();
+        if(module.getQuestions()!=null)
+            if(!module.getQuestions().isEmpty())
+            {
+                Iterator it = module.getQuestions().iterator();
+                while(it.hasNext())
+                {
+                    targetIdList.add(((Question)it.next()).getQuesIdseq());
+                }
+            }
+        return service.isTargetForTriggerAction(targetIdList);
     }
 }

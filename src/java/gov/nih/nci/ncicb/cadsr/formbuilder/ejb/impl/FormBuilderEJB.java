@@ -1371,6 +1371,31 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         return triggerActions;
     }
     
+    public List<TriggerAction> getAllTriggerActionsForTargets(List<String> targetIds)
+    {
+        TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
+        List<TriggerAction> triggerActions = new ArrayList<TriggerAction>();
+        for(String id:targetIds)
+        {
+            List<TriggerAction> currTriggerActions = dao.getTriggerActionsForTarget(id);
+            triggerActions.addAll(currTriggerActions);
+        }
+
+        return triggerActions;
+    }
+    
+    public boolean isTargetForTriggerAction(List<String> targetIds)
+    {
+        TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
+        for(String id:targetIds)
+        {
+            if(dao.isTargetForTriggerAction(id))
+                return true;
+        }
+
+        return false;
+    }
+    
     public TriggerAction createTriggerAction(TriggerAction action)
     {
         TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
