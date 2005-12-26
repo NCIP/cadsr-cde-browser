@@ -63,7 +63,17 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
         query.setSql(sourceId);
         return query.execute();
     }
-
+    /**
+     * Gets all the TriggerActions for a source
+     *
+     */
+     public List<TriggerAction> getTriggerActionsForTarget(String targetId)
+    {
+        TriggerActionByTargetQuery query = new TriggerActionByTargetQuery();
+        query.setDataSource(getDataSource());
+        query.setSql(targetId);
+        return query.execute();
+    }
     /**
      * Gets The TriggerActions by id
      *
@@ -175,7 +185,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
      * delete Trigger action
      *
      */
-    public int deleteTriggerAction(String triggerId, String createdBy)
+    public int deleteTriggerAction(String triggerId)
     {
         DeleteTriggerAction deleteAction =
             new DeleteTriggerAction(getDataSource());
@@ -193,6 +203,16 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
         return deleteAction.delete(triggerId, protocolId);
     }
 
+        /**
+             * delete Trigger action Protocol/CSI
+             *
+             */
+        public int deleteTriggerActionCSIProtocols(String triggerId)
+        {
+            DeleteTriggerActionCSIProtocols deleteAction =
+                new DeleteTriggerActionCSIProtocols(getDataSource());
+            return deleteAction.delete(triggerId);
+        }
     /**
          * delete Trigger action CSI
          *
@@ -254,6 +274,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
 
     }
 
+
     private class TriggerActionProtocolsQuery extends MappingSqlQuery
     {
         TriggerActionProtocolsQuery()
@@ -288,7 +309,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
      * Inner class to get all classifications that belong to
      * the specified Trigger action
      */
-    class TriggerActionClassificationsQuery extends MappingSqlQuery
+    private class TriggerActionClassificationsQuery extends MappingSqlQuery
     {
         TriggerActionClassificationsQuery()
         {
@@ -376,6 +397,53 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
         }
 
     }
+    
+    private class TriggerActionByTargetQuery extends MappingSqlQuery
+    {
+        TriggerActionByTargetQuery()
+        {
+            super();
+        }
+
+        public void setSql(String targetIdSeq)
+        {
+            super
+            .setSql(" select TA_IDSEQ, S_QC_IDSEQ, T_QC_IDSEQ, TA_INSTRUCTION, S_QTL_NAME " +
+                         " from  TRIGGERED_ACTIONS_EXT ta where " +
+                         "  T_QC_IDSEQ = '" + targetIdSeq + "'");
+
+        }
+
+        protected Object mapRow(ResultSet rs, int rownum) throws SQLException
+        {
+
+            TriggerAction action = new TriggerActionTransferObject();
+
+            action.setIdSeq(rs.getString(1));
+            //TA_IDSEQ
+
+            String type = rs.getString(5);
+            //T_QTL_NAME
+
+            if (type.equalsIgnoreCase(QTL_NAME_MODULE))
+            {
+                Module source = new ModuleTransferObject();
+                source.setModuleIdseq(rs.getString(3));
+                //T_QC_IDSEQ
+                action.setActionTarget(source);
+            } else if (type.equalsIgnoreCase(QTL_NAME_VALID_VALUE))
+            {
+                FormValidValue source = new FormValidValueTransferObject();
+                source.setValueIdseq(rs.getString(3)); 
+                //S_QC_IDSEQ
+                action.setActionSource(source);
+            }
+            action.setInstruction(rs.getString(4));
+            //TA_INSTRUCTION
+            return action;
+        }
+
+    }    
 
     private class TriggerActionByIdQuery extends MappingSqlQuery
     {
@@ -698,5 +766,30 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
         }
     }
 
+    private class DeleteTriggerActionCSIProtocols extends SqlUpdate
+    {
+        public DeleteTriggerActionCSIProtocols(DataSource ds)
+        {
+            String sql =
+                " delete from TA_PROTO_CSI_EXT " + " where " +
+                " TA_IDSEQ = ? ";
+
+            this.setDataSource(ds);
+            this.setSql(sql);
+            declareParameter(new SqlParameter("TA_IDSEQ", Types.VARCHAR));
+
+            compile();
+        }
+
+        protected int delete(String triggerId)
+        {
+            Object[] obj = new Object[]
+                { triggerId};
+
+            int res = update(obj);
+
+            return res;
+        }
+    }
 }
 

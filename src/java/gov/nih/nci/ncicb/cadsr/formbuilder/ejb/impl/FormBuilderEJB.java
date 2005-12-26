@@ -1363,6 +1363,14 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         return triggerActions;
     }
 
+    public List<TriggerAction> getAllTriggerActionsForTarget(String targetId)
+    {
+        TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
+        List<TriggerAction> triggerActions = dao.getTriggerActionsForTarget(targetId);
+
+        return triggerActions;
+    }
+    
     public TriggerAction createTriggerAction(TriggerAction action)
     {
         TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
@@ -1427,8 +1435,8 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
     public void deleteTriggerAction(String triggerActionId)
     {
         TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
-        String userId = getUserName().toUpperCase();
-        dao.deleteTriggerAction(triggerActionId,userId)
+        dao.deleteTriggerActionCSIProtocols(triggerActionId);
+        dao.deleteTriggerAction(triggerActionId);
     }
 
     private void setSourceForTriggerActions(FormElement source, List<TriggerAction> actions)

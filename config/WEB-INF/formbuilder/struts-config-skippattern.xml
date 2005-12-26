@@ -21,7 +21,7 @@
   
   <action-mappings>
     <action name="skipForm" path="/formbuilder/skipAction" parameter="method"
-      scope="request"
+      scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SkipPatternAction"
       validate="false">
       
@@ -35,7 +35,8 @@
     
      <forward name="backToModuleEdit" path="/moduleToEditAction.do?method=getModuleToEdit"
       redirect="false"/> 
-      
+      <forward name="confirmDelete" path="/formbuilder/confirmSkipPatternDelete.jsp" 
+      redirect="false"/>      
 
     </action>
     

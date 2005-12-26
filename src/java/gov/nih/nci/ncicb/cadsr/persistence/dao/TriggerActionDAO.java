@@ -16,6 +16,14 @@ public interface TriggerActionDAO extends AdminComponentDAO
      * 
      */
     public List<TriggerAction> getTriggerActionsForSource(String sourceId);
+    
+    /**
+     * Gets Sources for this target
+     * 
+     */
+    public List<TriggerAction> getTriggerActionsForTarget(String targetId); 
+    
+    public int deleteTriggerActionCSIProtocols(String triggerId);
 
     /**
      * Gets The TriggerActions by id
@@ -49,7 +57,7 @@ public interface TriggerActionDAO extends AdminComponentDAO
      * delete Trigger action
      * 
      */
-    public int deleteTriggerAction(String triggerId, String createdBy);
+    public int deleteTriggerAction(String triggerId);
 
     /**
      * delete Trigger action Protocol
@@ -80,5 +88,7 @@ public interface TriggerActionDAO extends AdminComponentDAO
                                    
     public List<ClassSchemeItem> getAllClassificationsForTriggerAction(String actionId);                                   
     
-    public List<Protocol> getAllProtocolsForTriggerAction(String triggerActionId);    
+    public List<Protocol> getAllProtocolsForTriggerAction(String triggerActionId);  
+    
+
 }

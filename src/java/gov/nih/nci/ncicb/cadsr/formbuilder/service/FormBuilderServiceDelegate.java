@@ -157,6 +157,9 @@ public interface FormBuilderServiceDelegate {
 
     public List getAllTriggerActionsForSource(String sourceId)
         throws FormBuilderException;
+
+    public List<TriggerAction> getAllTriggerActionsForTarget(String targetId)
+        throws FormBuilderException;
         
     public TriggerAction createTriggerAction(TriggerAction action)
            throws FormBuilderException;
