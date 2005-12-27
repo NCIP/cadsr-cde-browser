@@ -131,20 +131,11 @@ function manageProtocols() {
         <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocols.longName" /></td>
           <td class="OraFieldText">
-                <bean:write  name="<%=FormConstants.CRF%>" property="delimitedProtocolLongNames"/> 
+          <bean:define id="protocols" name = "<%=FormConstants.CRF%>" property="protocols"/>
+               <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/>")%>                
+               <br/>
               <a href="javascript:manageProtocols()"><i>Manage Protocols</i></a> 
               <html:hidden property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
-          <%--
-            <html:text 
-              property="<%= FormConstants.PROTOCOLS_LOV_NAME_FIELD %>"
-              readonly="true" 
-              size="19"
-              styleClass="LOVField"
-              />
-              &nbsp;<a href="<%=protoLOVUrl%>"><img src="<%=urlPrefix%>i/search_light.gif" border="0" alt="Search for Protocols"></a>&nbsp;
-            <a href="javascript:clearProtocol()"><i>Clear</i></a>
-            <html:hidden  property="<%=FormConstants.PROTOCOLS_LOV_ID_FIELD%>"/>
-            --%>
           </td>
         </tr>
         <tr class="OraTabledata">

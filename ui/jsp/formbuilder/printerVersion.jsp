@@ -9,6 +9,8 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
+<%@ page import="java.util.*"%>
 <HTML>
   <HEAD>
     <TITLE>Formbuilder: Printer friendly form</TITLE>
@@ -53,8 +55,8 @@
             <bean:message key="cadsr.formbuilder.form.protocols.longName" />
           </td>                
           <td  class="PrinterOraTableColumnHeader">
-            <bean:write name="<%=FormConstants.CRF%>"
-                        property="delimitedProtocolLongNames"/>
+           <bean:define name="<%=FormConstants.CRF%>" property="protocols" id="protocols"/>
+            <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/>")%>                
           </td>
         </tr>  
         <tr class="PrinterOraTableColumnHeader">

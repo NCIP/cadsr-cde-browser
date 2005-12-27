@@ -9,6 +9,9 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
+<%@ page import="java.util.*"%>
+
 <HTML>
   <HEAD>
     <TITLE>Welcome to Form Builder..</TITLE>
@@ -116,10 +119,8 @@
         <tr class="OraTabledata">
           <td width="20%" class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocols.longName" /></td>
           <td class="OraFieldText" nowrap>
-            <bean:write
-              name="<%= FormConstants.CRF %>"
-              property="delimitedProtocolLongNames"
-              />
+           <bean:define name="<%=FormConstants.CRF%>" property="protocols" id="protocols"/>
+            <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/>")%>                
           </td>
         </tr>
 

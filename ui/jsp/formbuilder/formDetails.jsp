@@ -87,7 +87,8 @@
             <bean:message key="cadsr.formbuilder.form.protocols.longName"/>
           </td>                
           <td  class="OraFieldText">
-            <bean:write name="<%=FormConstants.CRF%>" property="delimitedProtocolLongNames"/>
+           <bean:define name="<%=FormConstants.CRF%>" property="protocols" id="protocols"/>
+            <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/>")%>                
           </td>
         </tr>   
         <tr class="OraTabledata">

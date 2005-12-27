@@ -155,14 +155,11 @@ function submitModuleRepition(methodName,moduleIndexValue) {
               <bean:message key="cadsr.formbuilder.form.protocols.longName"/>
             </td>
             <td class="OraFieldText">
-                <bean:write  name="<%=FormConstants.CRF%>" property="delimitedProtocolLongNames"/> 
-            <%--
-              <html:text property="<%=FormConstants.PROTOCOLS_LOV_NAME_FIELD%>" 
-                readonly="true"
-                size="19"
-                styleClass="LOVField"/>--%>
-              <a href="javascript:manageProtocols()"><i>Manage Protocols</i></a> 
-              <html:hidden property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
+           <bean:define name="<%=FormConstants.CRF%>" property="protocols" id="protocols"/>
+            <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/>")%>                
+            <br/>
+            <a href="javascript:manageProtocols()"><i>Manage Protocols</i></a> 
+            <html:hidden property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
             </td>
           </tr>
 

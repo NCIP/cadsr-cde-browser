@@ -220,7 +220,7 @@ if(confirm(message)) location.href = url;
           	</td>
           	<td class="OraFieldText">
              <logic:present name="form" property="delimitedProtocolLongNames">
-          		<bean:write name="form" property="delimitedProtocolLongNames"/><br>
+               <%=FormJspUtil.getDelimitedProtocolLongNames(form.getProtocols(), "<br/>")%>
              </logic:present>
              <logic:notPresent name="form" property="protocol">
                &nbsp;

@@ -138,8 +138,9 @@
           <th scope="col">DELETE</th>          
         </tr>
         <logic:present name="<%=FormConstants.CRF%>" >
+        
           <logic:iterate id="protocol" indexId="protocolIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Protocol" property="protocols">
-          
+          <logic:present name="protocol">          
             <tr class="OraTabledata">
               <td class="OraFieldText">
                 <bean:write name="protocol" property="longName"/>
@@ -162,15 +163,21 @@
               <td class="OraFieldText">
                 <bean:write name="protocol" property="protocolId"/>
               </td>
-              <td class="OraFieldText" align="center">
-                <html:link action='<%= "/removeProtocol?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.REMOVE_PROTOCOL %>' paramId="<%= FormConstants.PROTOCOL_ID_SEQ%>" paramName="protocol" paramProperty="protoIdseq">
-                  <html:img src='<%=urlPrefix+"i/delete.gif"%>' border="0" alt="Remove"/>
-                </html:link>
-              </td>
-        </tr>
-          </logic:iterate>
-        </logic:present>
-      </table>
+                <td class="OraFieldText" align="center">
+                    <html:link action='<%= "/removeProtocol?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.REMOVE_PROTOCOL %>' paramId="<%= FormConstants.PROTOCOL_ID_SEQ%>" paramName="protocol" paramProperty="protoIdseq">
+                      <html:img src='<%=urlPrefix+"i/delete.gif"%>' border="0" alt="Remove"/>
+                    </html:link>
+                 </td>
+              </tr>
+          </logic:present>
+          <logic:notPresent name="protocol">
+          <tr>
+            No protocols.
+          </tr>
+        </logic:notPresent>
+        </logic:iterate>
+    </logic:present>
+    </table>
     </logic:present>
   
   <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >

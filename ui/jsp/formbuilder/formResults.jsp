@@ -10,7 +10,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
-
+<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormJspUtil" %>
 <HTML>
 <HEAD>
 <TITLE>Welcome to Form Builder..</TITLE>
