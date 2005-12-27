@@ -1404,13 +1404,13 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
      */
     private class VersionForm extends StoredProcedure {
       public VersionForm(DataSource ds) {
-        super(ds, "meta_config_mgmt.CRF_VERSION"); 
-        declareParameter(new SqlParameter("P_Idseq", Types.LONGVARCHAR));
+        super(ds, "Sbrext_Form_Builder_Pkg.CRF_VERSION"); 
+        declareParameter(new SqlParameter("P_Idseq", Types.VARCHAR));
         declareParameter(new SqlParameter("p_version", Types.FLOAT));
         declareParameter(new SqlParameter("p_change_note", Types.VARCHAR)); 
         declareParameter(new SqlParameter("p_Created_by", Types.VARCHAR)); 
           
-        declareParameter(new SqlOutParameter("p_new_idseq", Types.LONGVARCHAR));
+        declareParameter(new SqlOutParameter("p_new_idseq", Types.VARCHAR));
         declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
         declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
         compile();
