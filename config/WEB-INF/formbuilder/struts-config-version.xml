@@ -5,6 +5,7 @@
     <form-bean name="versionForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
+      <form-property name="formMaxVersion" type="java.lang.String"/>
       <form-property name="newVersionNumber" type="java.lang.Float"/>
       <form-property name="editNewFormIndicator" type="java.lang.String"/>
       <form-property name="changeNote" type="java.lang.String"/>
@@ -12,6 +13,7 @@
     <form-bean name="latestVersionForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
+      <form-property name="formMaxVersion" type="java.lang.String"/>
       <form-property name="id" type="java.lang.String[]"/>
       <form-property name="changeNote" type="java.lang.String[]"/>
       <form-property name="latestVersionId" type="java.lang.String"/>
