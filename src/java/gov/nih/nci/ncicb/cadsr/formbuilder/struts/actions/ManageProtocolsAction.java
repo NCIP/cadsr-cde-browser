@@ -67,7 +67,8 @@ public class ManageProtocolsAction
       HttpServletResponse response) throws IOException, ServletException {
       
       FormBuilderBaseDynaFormBean bean = (FormBuilderBaseDynaFormBean)form;
-      Form crf = (Form)getSessionObject(request, FormConstants.CRF); crf.getDelimitedProtocolLongNames();
+      Form crf = (Form)getSessionObject(request, FormConstants.CRF); 
+      crf.getDelimitedProtocolLongNames();
       bean.set(FormConstants.PROTOCOLS_LOV_NAME_FIELD, crf.getDelimitedProtocolLongNames());
       
       String backTo = (String)getSessionObject(request, "backTo");
@@ -146,9 +147,6 @@ public class ManageProtocolsAction
       protocols.removeAll(removed);
       //removed from crf.
       crf.setProtocols(protocols);
-      /*FormBuilderServiceDelegate service = getFormBuilderService();
-      service.removeFormProtocol(crf.getFormIdseq(), id);
-      */
       setSessionObject(request, CRF, crf);
       
     return mapping.findForward("success");
