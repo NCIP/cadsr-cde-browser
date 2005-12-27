@@ -167,9 +167,10 @@ public class FormVersionAction
         try{
             FormBuilderServiceDelegate service = getFormBuilderService();            
             Float maxVersion = service.getMaxFormVersion(crf.getPublicId());
+
+            DynaActionForm dynaForm = (DynaActionForm) form;
+            dynaForm.set(FormConstants.FORM_MAX_VERSION, maxVersion.toString());
             request.setAttribute(FormConstants.FORM_MAX_VERSION, maxVersion);
-            //DynaActionForm dFrom = (DynaActionForm)form;
-            //dFrom.set(FormConstants.FORM_MAX_VERSION, maxVersion.toString());
             return mapping.findForward(SUCCESS);
         }catch (FormBuilderException fbe){
             if (log.isErrorEnabled()) {
@@ -191,9 +192,11 @@ public class FormVersionAction
         DynaActionForm dynaForm = (DynaActionForm) form;
         Form crf = (Form)getSessionObject(request, CRF);
         
-        FormBuilderServiceDelegate service = getFormBuilderService();
-        Float maxVersion = service.getMaxFormVersion(crf.getPublicId());
-        if (crf == null || !validateVersion(dynaForm, maxVersion, request)){
+         DynaActionForm dFrom = (DynaActionForm)form;
+         String maxVersionStr = (String)dFrom.get(FormConstants.FORM_MAX_VERSION);
+         
+        if (crf == null || !validateVersion(dynaForm, request)){
+            request.setAttribute(FormConstants.FORM_MAX_VERSION, maxVersionStr);             
             return mapping.findForward("failure");
         }
         
@@ -202,6 +205,7 @@ public class FormVersionAction
         String changeNote = (String)dynaForm.get(CHANGE_NOTE);
         boolean editNewFormIndicator = "true".equalsIgnoreCase(editNewFormStr);
 
+        FormBuilderServiceDelegate service = getFormBuilderService();
         String newFormIdSeq = service.createNewFormVersion(crf.getFormIdseq(), newVersionNumber, changeNote);
         saveMessage("cadsr.formbuilder.create.version.success", request);
         
@@ -247,11 +251,19 @@ public class FormVersionAction
     }
 
     //validate the new version number
-    private boolean validateVersion(DynaActionForm dynaForm, Float maxVersion, HttpServletRequest request){
+    private boolean validateVersion(DynaActionForm dynaForm, HttpServletRequest request){
         
         Float newVersionNumber = (Float) dynaForm.get(NEW_VERSION_NUMBER);
+        String maxVersionStr = (String)dynaForm.get(FormConstants.FORM_MAX_VERSION);
+        Float maxVersion = 0f;
+        try{
+            maxVersion = new Float(maxVersionStr);
+        }catch (Exception e){ //should never happen.
+            log.warn("maxVersion is not a valid float");
+            return false;
+        }
 
-        if (newVersionNumber.floatValue()>maxVersion){
+        if (newVersionNumber.compareTo(maxVersion)>0){
             return true;
         }else{
             saveError("cadsr.formbuilder.create.version.validation_fail", request);
