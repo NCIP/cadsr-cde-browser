@@ -11,6 +11,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCreateAction" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
 <%@page import="java.util.*" %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <HTML>
 <%
   String urlPrefix = "";
@@ -97,10 +98,8 @@
         <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocols.longName" />:</td>
           <td class="OraFieldText" nowrap>
-            <bean:write
-              name="<%= FormConstants.CRF %>"
-              property="delimitedProtocolLongNames"
-              />
+           <bean:define name="<%=FormConstants.CRF%>" property="protocols" id="protocols"/>
+            <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/>")%>                
           </td>
         </tr>
 
@@ -147,8 +146,7 @@
         <bean:message key="cadsr.formbuilder.form.max.version" />&nbsp;</td>
       <td class="OraFieldText" nowrap> 
         <bean:write name="<%=FormConstants.FORM_MAX_VERSION%>"/>
-        <input type="hidden" name="<%=FormConstants.FORM_MAX_VERSION%>" value="123"/>
-       <%-- <html:hidden property="<%=FormConstants.FORM_MAX_VERSION%>" /> --%>
+        <html:hidden property="<%=FormConstants.FORM_MAX_VERSION%>" />
       </td>
     </tr>
     <tr class="OraTabledata">

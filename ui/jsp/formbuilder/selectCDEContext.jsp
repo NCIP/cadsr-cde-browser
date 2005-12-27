@@ -11,6 +11,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCreateAction" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
 <%@page import="java.util.*" %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <HTML>
 <%
   String urlPrefix = "";
@@ -41,7 +42,7 @@
       <html:image src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
     </td> 
     <td>
-      <html:link action='<%= "/formToEditAction?" + NavigationConstants.METHOD_PARAM + "=getFormToEdit"%>'>
+      <html:link action='<%= "/cancelDesignations?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.CANCEL_DESIGNATIONS%>'>
         <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
       </html:link>             
     </td>                
@@ -98,10 +99,8 @@
         <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocols.longName" />:</td>
           <td class="OraFieldText" nowrap>
-            <bean:write
-              name="<%= FormConstants.CRF %>"
-              property="delimitedProtocolLongNames"
-              />
+           <bean:define name="<%=FormConstants.CRF%>" property="protocols" id="protocols"/>
+            <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/>")%>                
           </td>
         </tr>
 
@@ -160,7 +159,7 @@
       <html:image src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
     </td> 
     <td>
-      <html:link action='<%= "/formToEditAction?" + NavigationConstants.METHOD_PARAM + "=getFormToEdit"%>'>
+      <html:link action='<%= "/cancelDesignations?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.CANCEL_DESIGNATIONS%>'>
         <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
       </html:link>             
     </td>                

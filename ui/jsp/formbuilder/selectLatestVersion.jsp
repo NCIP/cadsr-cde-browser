@@ -6,11 +6,10 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.html.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
-<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants" %>
-<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCreateAction" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
 <%@page import="java.util.*" %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <HTML>
 <%
   String urlPrefix = "";
@@ -96,10 +95,8 @@
         <tr class="OraTabledata">
           <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocols.longName" />:</td>
           <td class="OraFieldText" nowrap>
-            <bean:write
-              name="<%= FormConstants.CRF %>"
-              property="delimitedProtocolLongNames"
-              />
+           <bean:define name="<%=FormConstants.CRF%>" property="protocols" id="protocols"/>
+            <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/>")%>                
           </td>
         </tr>
 
