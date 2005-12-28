@@ -462,11 +462,17 @@ function clearProtocol() {
                             <td align="right">
                               <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                 <tr class="OraHeaderBlack">                                
+                                <logic:notPresent name="question" property="dataElement">
                                  <td >
                                   <html:textarea  styleClass="OraFieldText" rows="2" cols="102" property='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'>
                                  </html:textarea>
                                  </td>        
+                                </logic:notPresent>
                                 <logic:present name="question" property="dataElement">
+                                 <td >
+                                  <html:textarea  styleClass="OraFieldText" rows="2" cols="102" property='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>' readonly="true">
+                                 </html:textarea>
+                                 </td>        
                                   <td class="OraHeaderBlack" align="center" width="70" >
                                    <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>' 
                                       paramId="p_de_idseq" paramName="question" paramProperty="dataElement.deIdseq" target="_blank">
