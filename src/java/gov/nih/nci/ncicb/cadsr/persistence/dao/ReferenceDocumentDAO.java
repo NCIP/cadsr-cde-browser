@@ -7,7 +7,7 @@ import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import java.util.Collection;
 
 
-public interface ReferenceDocumentDAO {
+public interface ReferenceDocumentDAO extends AdminComponentDAO{
 
   /**
    * Creates a new reference document (just the header info).
