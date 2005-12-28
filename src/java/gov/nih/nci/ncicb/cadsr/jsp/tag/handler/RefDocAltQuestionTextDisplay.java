@@ -22,18 +22,18 @@ import gov.nih.nci.ncicb.cadsr.util.*;
 /**
  * This Handler is used to display Reference Document of type Alternate Question text and
  * Preferred question text. Depending on the  ref doc type;
- *  If only a single item item exist a hyper text is displayes
+ *  If only a single item item exist a hyper text is displayed
  *  Otherwise a Select box is displayed
  *  
  * Example Usage
- * <cde:RefDocAltQuestionTextDisplay questionBeanId= "question" 
- *                    htmlObjectRef="targetObectId"
- *                    selectBoxClassName="AltQuestionField"
- *                    selectBoxSize="4"
- *                    refDocType="ReferenceDocumentType"
- *                    questionIndex="1" 
- *                    selectBoxJSFunctionName="refDocSelected"
- *                    hyperLinkJSFunctionName="refDocHyperlink"
+ * <cde:RefDocAltQuestionTextDisplay questionBeanId= "question" //Current Question bean Id
+ *                    htmlObjectRef="targetObjectId"// Target location to copy value
+ *                    selectBoxClassName="AltQuestionField" //select Style sheet class
+ *                    selectBoxSize="4" //number of rows to display
+ *                    refDocType="ReferenceDocumentType" // ref doc type
+ *                    questionIndex="1"  // index of the question in the module
+ *                    selectBoxJSFunctionName="refDocSelected" //JS function when selected
+ *                    hyperLinkJSFunctionName="refDocHyperlink" //hper for single vaue
  *                    /> 
  *                 
  * Uses the the javascripts below to populate selection to question text
