@@ -89,7 +89,7 @@ if(confirm(message)) location.href = url;
 		   	   	columnHeader="Protocol Long Name(s)" 
             orderParamId="sortOrder" 
 		   	   	sortFieldId="sortField"
-		   	   	sortFieldValue = "protocolLongName"
+		   	   	sortFieldValue = "delimitedProtocolLongNames"
 		   	   	target="_parent"
             />   
           	
@@ -220,7 +220,7 @@ if(confirm(message)) location.href = url;
           	</td>
           	<td class="OraFieldText">
              <logic:present name="form" property="delimitedProtocolLongNames">
-               <%=FormJspUtil.getDelimitedProtocolLongNames(form.getProtocols(), "<br/>")%>
+               <%=FormJspUtil.getDelimitedProtocolLongNames(form.getProtocols(), "<br/><br/>")%>
              </logic:present>
              <logic:notPresent name="form" property="protocol">
                &nbsp;
