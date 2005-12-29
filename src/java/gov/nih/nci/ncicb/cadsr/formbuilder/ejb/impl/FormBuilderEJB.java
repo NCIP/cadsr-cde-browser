@@ -427,8 +427,8 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
     public Form updateForm(String formIdSeq, Form formHeader,
                            Collection updatedModules,
                            Collection deletedModules, Collection addedModules,
-                           Collection addedProtocols,
-                           Collection removedProtocols,
+                           Collection addedProtocolIds,
+                           Collection removedProtocolIds,
                            FormInstructionChanges instructionChanges)
     {
         ModuleDAO dao = daoFactory.getModuleDAO();
@@ -487,8 +487,8 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                                      instructionChanges.getFormFooterInstructionChanges());
 
         //update form/protocol association
-        addFormProtocols(formIdSeq, addedProtocols);
-        removeFormProtocols(formIdSeq, removedProtocols);
+        addFormProtocols(formIdSeq, addedProtocolIds);
+        removeFormProtocols(formIdSeq, removedProtocolIds);
 
         return getFormDetails(formIdSeq);
     }
@@ -1281,20 +1281,14 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         myDAO.removeFormProtocol(formIdseq, protocoldIdseq);
     }
 
-    public void removeFormProtocols(String formIdseq, Collection protocols)
+    public void removeFormProtocols(String formIdseq, Collection protocolIds)
     {
-        if (protocols == null || protocols.isEmpty())
+        if (protocolIds == null || protocolIds.isEmpty())
         {
             return;
         }
-        List pids = new ArrayList();
-        Iterator it = protocols.iterator();
-        while (it.hasNext()){
-            Protocol p = (Protocol)it.next();
-            pids.add(p.getProtoIdseq());
-        }
         FormDAO myDAO = daoFactory.getFormDAO();
-        myDAO.removeFormProtocols(formIdseq, pids);
+        myDAO.removeFormProtocols(formIdseq, protocolIds);
         return;
     }
 

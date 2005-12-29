@@ -799,11 +799,11 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     //to get added protocols and removed protocols;
     List oldProtocols = clonedCrf.getProtocols();    
     List newProtocols = crf.getProtocols();
-    List addedProtocols = null;
-    List removedProtocols = null;
+    List addedProtocolIds = null;
+    List removedProtocolIds = null;
     
     if (oldProtocols == null || oldProtocols.size()==0){
-        addedProtocols = newProtocols;
+        addedProtocolIds = getProtocolIds(newProtocols);
     }else if (newProtocols!= null && newProtocols.size()!=0){        
         HashMap toAddMap = new HashMap();
         HashMap toDeleteMap = new HashMap();
@@ -821,42 +821,13 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
                 toDeleteMap.remove(pNew.getProtoIdseq());
             }
         }
-        addedProtocols = toAddMap==null? null: new ArrayList(toAddMap.keySet());
-        removedProtocols = toDeleteMap==null? null: new ArrayList(toDeleteMap.keySet());
+        addedProtocolIds = toAddMap==null? null: new ArrayList(toAddMap.keySet());
+        removedProtocolIds = toDeleteMap==null? null: new ArrayList(toDeleteMap.keySet());
     }else{
-        removedProtocols = oldProtocols;
+        removedProtocolIds = getProtocolIds(oldProtocols);
     }//end of elseif  
       
         
-//DOING - when save form - should save protocols? or save protocol change should be handled in another action?    
-/*
-    String protocolIdSeq = (String) editForm.get(PROTOCOL_ID_SEQ);
-    String orgProtocolIdSeq = null;
-
-    if (clonedCrf.getProtocol() != null) {
-      orgProtocolIdSeq = clonedCrf.getProtocol().getProtoIdseq();
-    }
-
-    if (hasValue(protocolIdSeq)) {
-     Protocol protocol = new ProtocolTransferObject();
-     protocol.setProtoIdseq(protocolIdSeq);
-      header.setProtocol(protocol);
-      if (hasValue(orgProtocolIdSeq)&&!orgProtocolIdSeq.equals(protocolIdSeq)) {
-        headerUpdate = true;
-      }
-      else if (!hasValue(orgProtocolIdSeq))
-      {
-        headerUpdate = true;
-      }
-    }
-    else
-    {
-      header.setProtocol(null);
-      if(hasValue(orgProtocolIdSeq))
-          headerUpdate = true;
-    }
-*/
-//end of TODO
     String workflow = (String) editForm.get(WORKFLOW);
     String orgWorkflow = clonedCrf.getAslName();
    if (hasValue(workflow) ) {
@@ -956,18 +927,18 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     if (
         header!=null || ((deletedModules != null) && !deletedModules.isEmpty()) ||
           !updatedModules.isEmpty()||!addedModules.isEmpty()||!instrChanges.isEmpty() ||
-          (addedProtocols!=null && !addedProtocols.isEmpty()) || 
-          (removedProtocols!=null && !removedProtocols.isEmpty())) {
+          (addedProtocolIds!=null && !addedProtocolIds.isEmpty()) || 
+          (removedProtocolIds!=null && !removedProtocolIds.isEmpty())) {
         setSessionObject(request,FORM_EDIT_HEADER,header,true);
         setSessionObject(request,FORM_EDIT_UPDATED_MODULES,updatedModules,true);
         setSessionObject(request,FORM_EDIT_DELETED_MODULES,deletedModules,true);
         setSessionObject(request,FORM_EDIT_ADDED_MODULES,addedModules,true);
         setSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES,instrChanges,true);
-        if (addedProtocols !=null){
-            setSessionObject(request, FORM_EDIT_ADDED_PROTOCOLS, addedProtocols);
+        if (addedProtocolIds !=null){
+            setSessionObject(request, FORM_EDIT_ADDED_PROTOCOLS, addedProtocolIds);
         }    
-        if (removedProtocols !=null){
-            setSessionObject(request, FORM_EDIT_REMOVED_PROTOCOLS, removedProtocols);
+        if (removedProtocolIds !=null){
+            setSessionObject(request, FORM_EDIT_REMOVED_PROTOCOLS, removedProtocolIds);
         }    
         return true;
       }
@@ -1242,4 +1213,18 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
             }
         return service.isTargetForTriggerAction(targetIdList);
     }
+    
+    private List getProtocolIds(List protocols){
+        if (protocols==null || protocols.isEmpty()){
+            return null;
+        }
+        
+        List ids = new ArrayList();
+        Iterator it = protocols.iterator();
+        while (it.hasNext()){
+            Protocol p = (Protocol)it.next();
+            ids.add(p.getIdseq());
+        }
+        return ids;
+    }//end
 }
