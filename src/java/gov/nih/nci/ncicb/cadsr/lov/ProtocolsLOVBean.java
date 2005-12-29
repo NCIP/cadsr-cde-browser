@@ -55,12 +55,12 @@ public class ProtocolsLOVBean extends Object {
       String[] searchParm ={"proto.long_name","Keyword"};
       String[] jspLinkParm={ "proto.proto_idseq","P_ID"};
       String[] displayParm={"proto.long_name","Long Name",
-			    "proto.preferred_name","Short Name" ,
+                            "proto.protocol_id","Protocol ID",
+                            "proto.preferred_name","Short Name" ,
                             "proto_conte.name","Context",
                             "proto.asl_name","Workflow Status",
                             "proto.preferred_definition","Definition",
-                            "proto.lead_org","Lead Organization",
-                            "proto.protocol_id","Protocol ID"};
+                            "proto.lead_org","Lead Organization"};
       String[] sqlStmtParm = new String[2];
       sqlStmtParm[0] = " from sbrext.protocols_ext proto,sbr.contexts proto_conte " +
                            " where proto.conte_idseq = proto_conte.conte_idseq " +
