@@ -142,7 +142,7 @@
 
  <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap>
+      <td class="OraTableColumnHeader" nowrap width="20%">
         <bean:message key="cadsr.formbuilder.form.max.version" />&nbsp;</td>
       <td class="OraFieldText" nowrap> 
         <bean:write name="<%=FormConstants.FORM_MAX_VERSION%>"/>
@@ -150,28 +150,28 @@
       </td>
     </tr>
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap>
+      <td class="OraTableColumnHeader" nowrap width="20%">
         <bean:message key="cadsr.formbuilder.form.current.version" />&nbsp;</td>
       <td class="OraFieldText" nowrap> 
         <bean:write name="<%=FormConstants.CRF%>" property="version"/>
       </td>
     </tr>
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap>
+      <td class="OraTableColumnHeader" nowrap width="20%">
         <bean:message key="cadsr.formbuilder.form.new.version" />&nbsp;</td>
       <td class="OraFieldText" nowrap>
         <html:text property="<%=FormConstants.NEW_VERSION_NUMBER%>" size="20"/>
       </td>
     </tr>
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap>
+      <td class="OraTableColumnHeader" nowrap width="20%">
         <bean:message key="cadsr.formbuilder.form.new.version.changenote" />&nbsp;</td>
       <td class="OraFieldText" nowrap>
         <html:textarea property="<%=FormConstants.CHANGE_NOTE%>" rows="5" cols="40"/>
       </td>
     </tr>
     <tr class="OraTabledata">
-      <td class="OraTableColumnHeader" nowrap>
+      <td class="OraTableColumnHeader" nowrap width="20%">
         <bean:message key="cadsr.formbuilder.form.new.version.edit" />&nbsp;</td>
       <td class="OraFieldText" nowrap>
         <input type=checkbox class="OraFieldText" name="<%= FormConstants.EDIT_FORM_INDICATOR%>" value ="true"/>
