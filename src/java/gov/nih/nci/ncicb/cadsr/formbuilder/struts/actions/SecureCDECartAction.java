@@ -158,6 +158,22 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
       de = (DataElement) ((CDECartItem) al.get(deIndex)).getItem();
 
+      //get reference docs
+      FormBuilderServiceDelegate service = getFormBuilderService();
+      List refDocs = null;
+      
+      try {
+          refDocs = service.getRreferenceDocuments(de.getDeIdseq());
+          de.setReferenceDocs(refDocs);
+       }catch (FormBuilderException exp){
+           if (log.isErrorEnabled()) {
+             log.error("Exception on getting reference documents for the Data Element " , exp);
+           }
+           saveError(exp.getErrorCode(), request);
+           return mapping.findForward(FAILURE);
+       }       
+      
+      
       List values = de.getValueDomain().getValidValues();
       newValidValues = DTOTransformer.toFormValidValueList(values, q);
 
