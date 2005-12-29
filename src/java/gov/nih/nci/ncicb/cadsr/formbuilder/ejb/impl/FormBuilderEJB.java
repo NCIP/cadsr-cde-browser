@@ -1462,4 +1462,9 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         return newAction;
     }
 
+    public List getRreferenceDocuments(String acId) {
+        FormDAO mDAO = daoFactory.getFormDAO();
+        return mDAO.getAllReferenceDocuments(acId, null);//docType is not in use
+    }
+
 }

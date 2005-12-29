@@ -176,5 +176,7 @@ public interface FormBuilderServiceDelegate {
 
     public void deleteTriggerAction(String triggerActionId)
                 throws FormBuilderException;
+    public List getRreferenceDocuments(String acId)                
+                throws FormBuilderException;
 
 }

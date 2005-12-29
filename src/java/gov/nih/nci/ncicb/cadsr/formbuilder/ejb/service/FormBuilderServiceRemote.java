@@ -213,5 +213,8 @@ public interface FormBuilderServiceRemote {
               throws RemoteException;
 
      public void deleteTriggerAction(String triggerActionId)
-                 throws RemoteException;
- }
+                throws RemoteException;
+
+    public List getRreferenceDocuments(String acId) 
+                throws RemoteException;
+    }
