@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 
 <%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
+
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormJspUtil"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
