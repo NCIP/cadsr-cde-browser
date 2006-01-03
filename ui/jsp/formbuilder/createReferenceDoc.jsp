@@ -9,7 +9,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.resource.AdminComponent "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument "%>
 <HTML>
   <HEAD>
     <TITLE>Welcome to Form Builder..</TITLE>
@@ -79,7 +79,7 @@
                   </td>
                   <td class="OraFieldText" nowrap>
                     <html:select styleClass="Dropdown" property="docType">               
-                    <html:option value="<%=AdminComponent.REF_DOC_TYPE_IMAGE%>"/>
+                    <html:option value="<%=ReferenceDocument.REF_DOC_TYPE_IMAGE%>"/>
                     <html:options name="<%=FormConstants.ALL_REFDOC_TYPES%>" /> 
                     </html:select>
                   </td>
