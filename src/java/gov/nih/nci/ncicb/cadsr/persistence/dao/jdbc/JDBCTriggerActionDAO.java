@@ -803,7 +803,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
         protected int delete(String triggerId, String protocolId)
         {
             Object[] obj = new Object[]
-                { triggerId, protocolId, };
+                { protocolId, triggerId};
 
             int res = update(obj);
 
