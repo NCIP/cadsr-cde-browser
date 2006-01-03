@@ -2,11 +2,11 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
-import gov.nih.nci.ncicb.cadsr.domain.Question;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.TriggerActionChangesTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
@@ -14,7 +14,11 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
+import gov.nih.nci.ncicb.cadsr.resource.TriggerActionChanges;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
 import org.apache.commons.logging.Log;
@@ -68,7 +72,6 @@ public class ManageProtocolsAction
       
       FormBuilderBaseDynaFormBean bean = (FormBuilderBaseDynaFormBean)form;
       Form crf = (Form)getSessionObject(request, FormConstants.CRF); 
-      crf.getDelimitedProtocolLongNames();
       bean.set(FormConstants.PROTOCOLS_LOV_NAME_FIELD, crf.getDelimitedProtocolLongNames());
       
       String backTo = (String)getSessionObject(request, "backTo");
@@ -149,9 +152,43 @@ public class ManageProtocolsAction
       crf.setProtocols(protocols);
       setSessionObject(request, CRF, crf);
       
-    return mapping.findForward("success");
+      //check the skip pattern
+      List<TriggerActionChanges> triggerChangesList = findFormSkipPatternByProtocol(crf, id);
+      if (triggerChangesList!=null && !triggerChangesList.isEmpty()){
+        setSessionObject(request, PROTOCOL_ASSOCIATED_TRIGGERS, triggerChangesList);
+        return mapping.findForward("hasSkipPattern");          
+      }
+      
+      removeSessionObject(request, PROTOCOL_ASSOCIATED_TRIGGERS);
+      return mapping.findForward("success");
   }
     
+    public ActionForward updateSkipPattern(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+      
+      DynaActionForm formBean = (DynaActionForm)form;
+      String choice = (String)formBean.get("choice");//TODO: need to update the CRF for display
+      if ("yes".equalsIgnoreCase(choice)){
+          //save to session
+          List<String> updateTriggers = (List<String>)getSessionObject(request, UPDATE_SKIP_PATTERN_TRIGGERS);
+          List<String> associatedTriggers = (List<String>)getSessionObject(request, PROTOCOL_ASSOCIATED_TRIGGERS);
+          if (updateTriggers !=null){
+              updateTriggers.addAll(associatedTriggers);          
+          }else{
+              updateTriggers = associatedTriggers;
+          }
+          setSessionObject(request, UPDATE_SKIP_PATTERN_TRIGGERS, updateTriggers);
+          removeSessionObject(request,PROTOCOL_ASSOCIATED_TRIGGERS);
+          
+    
+      }
+      return mapping.findForward(SUCCESS);
+      }
+
+
     private boolean alreadyExist(List old, String newId){
         for (int i=0; i<old.size(); i++){
             Protocol p = (Protocol)old.get(i);
@@ -160,5 +197,94 @@ public class ManageProtocolsAction
             }
         }
         return false;
+    }
+    
+    private List<TriggerActionChanges> findFormSkipPatternByProtocol(Form crf, String protocolId){
+        //check module first
+        List modules = crf.getModules();
+        List retList = new ArrayList();
+        if (modules!=null && !modules.isEmpty()){
+            Iterator it = modules.iterator();
+            while (it.hasNext()){
+                Module module = (Module)it.next();
+                retList.addAll(findModuleSkipPattern(module, protocolId));
+                retList.addAll(findModuleQuestionSkipPattern(module, protocolId));
+            }    
+        }
+        return retList;
+    }
+    
+    private List<TriggerActionChanges> findModuleSkipPattern(Module module, String protocolId){
+        List retList = new ArrayList();
+        List triggers = module.getTriggerActions();
+        if (triggers!=null && !triggers.isEmpty()){
+            Iterator it = triggers.iterator();
+            while (it.hasNext()){
+                TriggerAction trigger = (TriggerAction)it.next();                
+                if (hasProtocol(trigger.getProtocols(), protocolId)){
+                    retList.add(makeTriggerActionChanges(trigger.getIdSeq(), protocolId));
+                }
+            }    
+        }
+        return retList;
+    }
+    
+    private TriggerActionChanges makeTriggerActionChanges(String trigerId, String protocolId){
+        TriggerActionChanges changes = new TriggerActionChangesTransferObject();
+        changes.setTriggerActionId(trigerId);
+        //protocols
+        List protocols = new ArrayList();
+        Protocol p = new ProtocolTransferObject();
+        p.setProtoIdseq(protocolId);
+        protocols.add(p);
+        changes.setDeleteProtocols(protocols );
+        return changes;
+    }
+    
+    private List<TriggerAction> findModuleQuestionSkipPattern(Module module, String protocolId){
+        List retList = new ArrayList();
+        List questions = module.getQuestions();
+        if (questions!=null && !questions.isEmpty()){
+            Iterator it = questions.iterator();
+            while (it.hasNext()){                
+                retList.addAll(findQuestionSkipPattern((Question)it.next(), protocolId));                    
+            }    
+        }
+        return retList;
+    }
+
+    private List<TriggerAction> findQuestionSkipPattern(Question question, String protocolId){
+        List retList = new ArrayList();
+        List triggers = question.getTriggerActions();
+        if (triggers!=null && !triggers.isEmpty()){
+            Iterator it = triggers.iterator();
+            while (it.hasNext()){   
+                TriggerAction trigger = (TriggerAction)it.next();
+                if (hasProtocol(trigger.getProtocols(), protocolId)){
+                    retList.add(trigger);    
+                }    
+            }    
+        }
+        return retList;
+    }
+    private boolean hasProtocol(List<Protocol> protocols, String protocolId){
+        if (protocols == null || protocols.isEmpty()){
+            return false;
+        }
+        
+        Iterator it = protocols.iterator();
+        while (it.hasNext()){
+            Protocol p = (Protocol)it.next();
+            if (p.getProtoIdseq().equals(protocolId)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    private boolean validValueHasSkipPattern(){
+        boolean ret = false;
+        return ret;
     }
 }

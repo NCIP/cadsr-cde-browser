@@ -53,9 +53,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
   private static String FORM_EDIT_DELETED_MODULES = "formEditDeletedModules";
   private static String FORM_EDIT_ADDED_MODULES = "formEditAddedModules";
   private static String FORM_EDIT_INSTRUCTION_CHANGES = "formEditInstructionChanges";  
-  private static String FORM_EDIT_ADDED_PROTOCOLS = "formEditAddedProtocols";
-  private static String FORM_EDIT_REMOVED_PROTOCOLS = "formEditRemovedProtocols";
-
+  private static final String FORM_EDIT_ADDED_PROTOCOLS = "formEditAddedProtocols";
+  private static final String FORM_EDIT_REMOVED_PROTOCOLS = "formEditRemovedProtocols";
   /**
    * Returns Complete form given an Id for Edit.
    *
@@ -146,7 +145,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     //clear up
     removeSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
     removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
-
+    removeSessionObject(request,UPDATE_SKIP_PATTERN_TRIGGERS);        
     return mapping.findForward(SUCCESS);
   }
 
@@ -430,6 +429,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     removeSessionObject(request, CRF);
     removeSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
     removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
+    removeSessionObject(request,UPDATE_SKIP_PATTERN_TRIGGERS);        
     saveMessage("cadsr.formbuilder.form.delete.success", request);
     ActionForward forward = mapping.findForward(SUCCESS);
     return forward;
@@ -496,7 +496,13 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           Collection removedProtocols = getSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS)==null?
                                         null:(Collection)getSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);
             
-          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules, deletedModules,addedModules,addedProtocols, removedProtocols,instrChanges);
+           Collection protocolTriggerActionChanges = getSessionObject(
+                    request,UPDATE_SKIP_PATTERN_TRIGGERS)==null?
+                    null:(Collection)getSessionObject(request,UPDATE_SKIP_PATTERN_TRIGGERS);
+           
+          Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, 
+            updatedModules, deletedModules,addedModules,addedProtocols, 
+            removedProtocols,protocolTriggerActionChanges, instrChanges);
           setSessionObject(request,CRF, updatedCrf,true);
           Form clonedCrf = (Form) updatedCrf.clone();
           setSessionObject(request, CLONED_CRF, clonedCrf,true);
@@ -519,6 +525,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         removeSessionObject(request, DELETED_MODULES);
         removeSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
         removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
+        removeSessionObject(request,UPDATE_SKIP_PATTERN_TRIGGERS);        
         saveMessage("cadsr.formbuilder.form.edit.save.success", request);
         return mapping.findForward(SUCCESS);
        }
@@ -640,10 +647,13 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
                                           null:(Collection)getSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
           Collection removedProtocols = getSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS)==null?
                                           null:(Collection)getSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);
+          Collection removeSkipPatternTriggerIds = getSessionObject(request,UPDATE_SKIP_PATTERN_TRIGGERS)==null?
+                                          null:(Collection)getSessionObject(request,UPDATE_SKIP_PATTERN_TRIGGERS);
           FormInstructionChanges instrChanges = (FormInstructionChanges)getSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES);          
           Form updatedCrf = service.updateForm(crf.getFormIdseq(),header, updatedModules
                                                   , deletedModules,addedModules,
-                                                  addedProtocols, removedProtocols, instrChanges);
+                                                  addedProtocols, removedProtocols, 
+                                                  removeSkipPatternTriggerIds, instrChanges);
           setSessionObject(request,CRF, updatedCrf);
           Form clonedCrf = (Form) updatedCrf.clone();
           setSessionObject(request, CLONED_CRF, clonedCrf);
@@ -691,6 +701,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     removeSessionObject(request, CLONED_CRF);
     removeSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
     removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
+    removeSessionObject(request,UPDATE_SKIP_PATTERN_TRIGGERS);        
     editForm.clear();
     return mapping.findForward(SUCCESS);
 
@@ -720,7 +731,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     removeSessionObject(request, FORM_EDIT_DELETED_MODULES);
     removeSessionObject(request, FORM_EDIT_ADDED_MODULES);
     removeSessionObject(request, FORM_EDIT_INSTRUCTION_CHANGES);
-    
+    removeSessionObject(request, UPDATE_SKIP_PATTERN_TRIGGERS);        
 
     return mapping.findForward(FORM_EDIT);
 
@@ -965,7 +976,8 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         removeSessionObject(request,FORM_EDIT_INSTRUCTION_CHANGES);
         removeSessionObject(request,FORM_EDIT_ADDED_PROTOCOLS);
         removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
-  }
+        removeSessionObject(request,UPDATE_SKIP_PATTERN_TRIGGERS);        
+ }
   /**
    * Removes the module given by "moduleIdSeq" from the module list
    *
