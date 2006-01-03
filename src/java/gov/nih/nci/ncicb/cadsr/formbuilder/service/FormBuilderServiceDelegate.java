@@ -42,6 +42,7 @@ public interface FormBuilderServiceDelegate {
     public Form updateForm(String formIdSeq, Form formHeader, Collection updatedModules,
         Collection deletedModules,Collection addedModules,
         Collection addedProtocols, Collection removedProtocols,
+        Collection protocolTriggerActionChanges,
         FormInstructionChanges instructionChanges) throws FormBuilderException;
 
     public Module updateModule(String moduleIdSeq, ModuleChanges moduleChanges) throws FormBuilderException;
