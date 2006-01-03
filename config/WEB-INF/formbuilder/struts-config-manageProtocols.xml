@@ -14,7 +14,13 @@
       <form-property name="leadOrg" type="java.lang.String"/>
       <form-property name="protocolId" type="java.lang.String"/>
     </form-bean>
-  </form-beans>
+    <form-bean name="updateSkipPatternForm"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      dynamic="true">
+      <form-property name="removedProtocolId" type="java.lang.String"/>
+      <form-property name="choice" type="java.lang.String"/>
+    </form-bean>
+    </form-beans>
 
   <action-mappings>
     <action name="manageProtocolsForm" path="/manageProtocols" parameter="method"
@@ -42,6 +48,16 @@
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ManageProtocolsAction"
       validate="false">
+      <forward name="hasSkipPattern" path="/formbuilder/updateSkipPatternConfirm.jsp"/>
+      <forward name="failure" path="/formbuilder/manageProtocols.jsp"/>
+      <forward name="success" path="/formbuilder/manageProtocols.jsp"/>
+    </action>
+
+    <action name="updateSkipPatternForm" path="/updateSkipPattern" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ManageProtocolsAction"
+      validate="false">
+      <forward name="failure" path="/formbuilder/manageProtocols.jsp"/>
       <forward name="success" path="/formbuilder/manageProtocols.jsp"/>
     </action>
 
