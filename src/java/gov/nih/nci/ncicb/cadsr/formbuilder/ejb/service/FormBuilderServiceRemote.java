@@ -131,6 +131,12 @@ public interface FormBuilderServiceRemote {
     public int removeFormClassification(String acCsiId)
         throws RemoteException;
 
+    public int removeFormClassification(String cscsiIdseq, String acId)
+        throws RemoteException;
+    public void removeFormClassificationUpdateTriggerActions(
+        String cscsiId,  String acIdSeq, List<TriggerActionChanges> triggerChangesList)
+        throws RemoteException;
+
     /**
      * Retrieves all the assigned classifications for an admin component
      *
@@ -212,6 +218,9 @@ public interface FormBuilderServiceRemote {
 
      public TriggerAction updateTriggerAction(TriggerActionChanges changes)
               throws RemoteException;
+     public void updateTriggerActions(
+        List<TriggerActionChanges> changesList)
+                throws RemoteException;
 
      public void deleteTriggerAction(String triggerActionId)
                 throws RemoteException;
