@@ -55,7 +55,15 @@
       <forward name="success" path="/ocbrowser/ocDetails.jsp"/>
       <forward name="failure" path="/common/systemError.jsp"/>
     </action>
-      
+    
+     <action name="ocform" path="/ocbrowser/viewRefDocAttchment" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.actions.ObjectClassAction"
+      validate="false" 
+      >     
+      <forward name="success" path="/ocbrowser/ocDetails.jsp"/>
+    </action>
+     
 
   </action-mappings>  
   
