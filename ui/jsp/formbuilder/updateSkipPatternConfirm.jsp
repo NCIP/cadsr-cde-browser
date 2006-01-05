@@ -26,7 +26,6 @@
 
 function submitFormToUpdateSkipPattern(choice) {
   document.forms[0].choice.value = choice;
-  alert(document.forms[0].choice.value);
   document.forms[0].submit();
 }
 
@@ -43,6 +42,7 @@ function submitFormToUpdateSkipPattern(choice) {
 </jsp:include>
 <%@ include file="showMessages.jsp" %>
 <html:form action="/updateSkipPattern.do?method=updateSkipPattern">
+<html:hidden property="removedProtocolId" value='<%=(String)request.getAttribute("removedProtocolId")%>'/>
    <input type="hidden" name="choice" value="no">
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >      
         <tr >
