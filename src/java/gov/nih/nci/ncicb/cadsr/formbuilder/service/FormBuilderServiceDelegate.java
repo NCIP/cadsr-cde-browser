@@ -108,7 +108,9 @@ public interface FormBuilderServiceDelegate {
 
     public int removeFormClassification(String acCsiId)
         throws FormBuilderException;
-
+    public int removeFormClassification(String cscsiIdseq, String acId)
+        throws FormBuilderException;
+        
     public Collection retrieveFormClassifications(String acId)
         throws FormBuilderException;
 
@@ -174,7 +176,13 @@ public interface FormBuilderServiceDelegate {
 
     public TriggerAction updateTriggerAction(TriggerActionChanges changes)
              throws FormBuilderException;
-
+    public void updateTriggerActions(List<TriggerActionChanges> changesList)
+             throws FormBuilderException;
+             
+    public void removeFormClassificationUpdateTriggerActions(String cscsiIdseq, 
+            String acId, List<TriggerActionChanges> triggerChangesList)             
+            throws FormBuilderException;
+    
     public void deleteTriggerAction(String triggerActionId)
                 throws FormBuilderException;
     public List getRreferenceDocuments(String acId)                
