@@ -44,7 +44,12 @@ public class OCBrowserServiceImpl implements OCBrowserService
     ObjectClassDAO dao = domainObjectsDaoFactory.getObjectClassDAO();
     List eager = new ArrayList();
 	  //eager.add(EagerConstants.CS_CSI);
-    eager.add(EagerConstants.AC_CS_CSI);
+     eager.add(EagerConstants.AC_CS_CSI);
+     eager.add(EagerConstants.ALTNAMES);
+     eager.add(EagerConstants.ALTNAME_CS_CSI);
+     eager.add(EagerConstants.DEFINITIONS);
+     eager.add(EagerConstants.DEFINITION_CS_CSI);
+     eager.add(EagerConstants.REFERENCE_DOCS);
     return dao.findByPK(ocIdseq,eager);
 
   }

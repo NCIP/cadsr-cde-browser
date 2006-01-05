@@ -58,6 +58,7 @@
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/PropertyBean.hbm.xml</value> 
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/QualifierBean.hbm.xml</value>
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ReferenceDocumentBean.hbm.xml</value>
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ReferenceDocumentAttachmentBean.hbm.xml</value>
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/RepresentationBean.hbm.xml</value>
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ClassificationSchemeBean.hbm.xml</value>
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ClassificationSchemeItemBean.hbm.xml</value>

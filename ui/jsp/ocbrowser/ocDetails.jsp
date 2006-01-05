@@ -10,6 +10,8 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.util.ObjectExtractor"%>
 <%@ page import="java.util.List"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.util.* " %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 
 <html>
   <head>
@@ -44,9 +46,6 @@
          </tr>
          <tr>
            <td>
-             <a class="link" href="#objectClass">Object Class Details</a>
-           </td>
-           <td>
              <a class="link" href="#concepts">Concepts</a>
            </td>
            <td>
@@ -61,13 +60,16 @@
            <td>
              <a class="link" href="#alternateDefinitions">Alternate Definitions</a>
            </td>
+           <td>
+             <a class="link" href="#refDocs">Reference Documents</a>
+           </td>
          </tr>
          <tr>
            <td>&nbsp;</td>
          </tr>
        </table>
        <logic:present name="<%=OCBrowserFormConstants.OBJECT_CLASS%>">
-         <bean:define id="oc" name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" scope="session"/>
+         <bean:define id="oc" name="<%=OCBrowserFormConstants.OBJECT_CLASS%>" scope="session" type="gov.nih.nci.ncicb.cadsr.domain.ObjectClass"/>
          <br>
          <A NAME="objectClass"/>
          <table cellpadding="0" cellspacing="0" width="100%" align="center">
@@ -490,6 +492,67 @@
            </table>
            </logic:empty>
          </table>
+         
+<A NAME="refDocs"/>
+         <table cellpadding="0" cellspacing="0" width="100%" align="center">
+           <tr>
+             <td class="OraHeaderSubSubSub" width="100%">Reference Documents</td>
+           </tr>
+           <tr>
+             <td width="100%">
+               <img height="1" src="<%=contextPath%>/i/beigedot.gif" width="99%" align="top" border="0"/>
+             </td>
+           </tr>
+         </table>
+         <logic:notEmpty name="oc" property="referenceDocuments">
+             <table width="90%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+               <tr class="OraTabledata">
+                 <td class="OraTableColumnHeader">Document Name</td>
+                 <td class="OraTableColumnHeader">Document Type</td>
+                 <td class="OraTableColumnHeader">Document Text</td>
+                 <td class="OraTableColumnHeader">URL</td>
+                 <td class="OraTableColumnHeader">Attachments</td>
+               </tr>
+               <logic:iterate id="refDoc" name="oc" type="gov.nih.nci.ncicb.cadsr.domain.ReferenceDocument" property="referenceDocuments" indexId="refDocIndex">
+                 <tr class="OraTabledata">
+                   <td class="OraFieldText">
+                     <bean:write name="refDoc" property="name"/>
+                   </td>
+                   <td class="OraFieldText">
+                     <bean:write name="refDoc" property="type"/>
+                   </td>
+                   <td class="OraFieldText">
+                     <bean:write name="refDoc" property="text"/>
+                   </td>
+                   <td class="OraFieldText">
+                    <a href="<bean:write name="refDoc" property="url"/>" target="AuxWindow"  >
+                    <bean:write name="refDoc" property="url"/>
+                    </a>
+                   </td>
+                   <td class="OraFieldText">
+               <logic:iterate id="attachment" name="refDoc" type="gov.nih.nci.ncicb.cadsr.domain.ReferenceDocumentAttachment" property="attachments" indexId="attachIndex">
+                 <html:link href='<%=request.getContextPath()+ "/ocbrowser/viewRefDocAttchment.do?"+NavigationConstants.METHOD_PARAM+"=viewReferenceDocAttchment"%>' 
+                   paramId = "<%=FormConstants.REFERENCE_DOC_ATTACHMENT_NAME%>"
+                   paramName="attachment" paramProperty="name"
+                   target="_parent" >
+                   <bean:write name="attachment" property="name"/><br>
+                 </html:link>                 
+               </logic:iterate>
+                   </td>
+                 </tr>
+               </logic:iterate>
+             </table>
+           </logic:notEmpty>
+         <logic:empty name="oc" property="referenceDocuments">
+           <br>
+           <table width="90%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+             <tr class="OraTabledata">
+               <td width="20%">Object Class does not have any reference documents.</td>
+             </tr>
+           </table>
+         </logic:empty>
+         <!-- end of reference documents -->
+         
        </logic:present>
        <logic:notPresent name="<%=OCBrowserFormConstants.OBJECT_CLASS%>">
          <br>
