@@ -490,7 +490,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         addFormProtocols(formIdSeq, addedProtocolIds);
         removeFormProtocols(formIdSeq, removedProtocolIds);
         
-        removeTriggerActions(protocolTriggerActionChanges);
+        updateTriggerActions((List<TriggerActionChanges>)protocolTriggerActionChanges);
         return getFormDetails(formIdSeq);
     }
 
@@ -733,6 +733,13 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         FormDAO myDAO = daoFactory.getFormDAO();
 
         return myDAO.removeClassification(cscsiIdseq, acId);
+    }
+
+    public void removeFormClassificationUpdateTriggerActions(String cscsiIdseq, String acId, 
+            List<TriggerActionChanges> triggerChangesList){
+        updateTriggerActions(triggerChangesList);
+        removeFormClassification(cscsiIdseq, acId);
+    
     }
 
     /**
@@ -1282,23 +1289,28 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         myDAO.removeFormProtocol(formIdseq, protocoldIdseq);
     }
     
-    public void  removeTriggerActions(Collection<TriggerActionChanges> protocolTriggerActionChanges){
-        if (protocolTriggerActionChanges==null || protocolTriggerActionChanges.isEmpty()){
+    public void  removeTriggerActionsChanges(Collection<TriggerActionChanges> triggerActionChanges){
+        if (triggerActionChanges==null || triggerActionChanges.isEmpty()){
             return;
         }
         TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
-        Iterator it = protocolTriggerActionChanges.iterator();
+        Iterator it = triggerActionChanges.iterator();
         while (it.hasNext()){
             TriggerActionChanges taChanges = (TriggerActionChanges)it.next();
-            List protocols = taChanges.getDeleteProtocols();
-            if (protocols == null || protocols.isEmpty()){
-                continue;
+            List protocolIds = taChanges.getDeleteProtocols();
+            List classificationIds = taChanges.getDeleteCsis();
+            if (protocolIds != null &&  !protocolIds.isEmpty()){
+                for (Object pid : protocolIds){
+                    dao.deleteTriggerActionProtocol(taChanges.getTriggerActionId(),(String)pid);    
+                }
             }
             
-            for (int i=0; i<protocols.size(); i++){
-                Protocol p = (Protocol)protocols.get(i);
-                dao.deleteTriggerActionProtocol(taChanges.getTriggerActionId(), p.getProtoIdseq());    
+            if (classificationIds != null && !classificationIds.isEmpty()){
+                for (Object cid:classificationIds){
+                    dao.deleteTriggerActionCSI(taChanges.getTriggerActionId(), (String)cid);    
+                }
             }
+            
         }
     }
 
@@ -1393,8 +1405,20 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
     {
         TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
         String newId = dao.createTriggerAction(action,getUserName().toUpperCase());
-
-
+        
+        //create protocols and classifications
+        List protocols = action.getProtocols();
+        if (protocols!=null && !protocols.isEmpty()){
+            for (Object obj : protocols){
+                dao.addTriggerActionProtocol(newId, ((Protocol)obj).getProtoIdseq(), getUserName().toUpperCase());
+            }    
+        }
+        List csiList = action.getClassSchemeItems();
+        if (csiList!=null && !csiList.isEmpty()){        
+            for (Object obj : csiList){
+                dao.addTriggerActionCSI(newId, ((ClassSchemeItem)obj).getAcCsiIdseq(), getUserName().toUpperCase());
+            }    
+        }
         return getTriggerActionForPK(newId);
 
     }
@@ -1450,6 +1474,17 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         
     }
 
+    public void updateTriggerActions(
+       List<TriggerActionChanges> changesList){
+           if (changesList==null || changesList.isEmpty()){
+               return;
+           }
+           
+           for (TriggerActionChanges changes:changesList){
+               updateTriggerAction(changes);               
+           }
+       }
+
     public void deleteTriggerAction(String triggerActionId)
     {
         TriggerActionDAO dao = daoFactory.getTriggerActionDAO();
@@ -1488,5 +1523,6 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         FormDAO mDAO = daoFactory.getFormDAO();
         return mDAO.getAllReferenceDocuments(acId, null);//docType is not in use
     }
+
 
 }
