@@ -75,6 +75,7 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String PROTOCOLS_LOV_CONTEXT_CHECK = "chkContext";
   public static final String CSI_NAME = "txtClassSchemeItem";
   public static final String CS_CSI_ID = "jspClassification";
+  public static final String AC_CS_CSI_ID = "acCsCsiId";
   public static final String CLASSIFY_CDE_ON_FORM = "classifyCDEOnForm";
   public static final String DELETED_REFDOCS = "deletedRefDocs";
   public static final String DELETED_ATTACHMENTS = "deletedAttachments";
@@ -166,4 +167,7 @@ public interface FormConstants extends FormBuilderConstants {
    
    public static final String PROTOCOL_ASSOCIATED_TRIGGERS = "protocolAssociatedTriggers";
    public static final String UPDATE_SKIP_PATTERN_TRIGGERS = "updateSkipPatternTrigger";
+   public static final String CLASSIFICATION_ASSOCIATED_TRIGGERS = "classificationAssociatedTriggers";
+
+   public static final String REMOVED_CLASSIFICATION_ID = "removedClassificationId";    
 }
