@@ -9,6 +9,14 @@
       <form-property name="jspClassification" type="java.lang.String[]" size="3"/> 
       <form-property name="classifyCDEOnForm" type="java.lang.String" />       
     </form-bean>
+    <form-bean name="updateSkipPatternFormForCSI"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      dynamic="true">
+      <form-property name="removedClassificationId" type="java.lang.String"/>
+      <form-property name="accs" type="java.lang.String"/>
+      <form-property name="choice" type="java.lang.String"/>
+    </form-bean>
+
   </form-beans>
 
   <action-mappings>
@@ -38,6 +46,15 @@
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ManageClassificationsAction"
       validate="false">
+      <forward name="hasSkipPattern" path="/formbuilder/updateSkipPatternConfirmForCSI.jsp"/>      
+      <forward name="success" path="/formbuilder/manageClassifications.jsp"/>
+    </action>
+    
+    <action name="updateSkipPatternFormForCSI" path="/updateSkipPatternForCSI" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ManageClassificationsAction"
+      validate="false">
+      <forward name="failure" path="/formbuilder/manageClassifications.jsp"/>
       <forward name="success" path="/formbuilder/manageClassifications.jsp"/>
     </action>
 
