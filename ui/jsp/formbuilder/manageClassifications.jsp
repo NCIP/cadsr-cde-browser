@@ -152,7 +152,7 @@
                 <bean:write name="classification" property="classSchemeItemType"/>
               </td>
               <td class="OraFieldText">
-                <html:link action='<%= "/removeClassification?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.REMOVE_CLASSIFICATION %>' paramId="<%= FormConstants.CS_CSI_ID%>" paramName="classification" paramProperty="acCsiIdseq">
+                <html:link action='<%= "/removeClassification?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.REMOVE_CLASSIFICATION %>' paramId="<%= FormConstants.CS_CSI_ID%>" paramName="classification" paramProperty="csCsiIdseq">
                   <html:img src='<%=urlPrefix+"i/delete.gif"%>' border="0" alt="Remove"/>
                 </html:link>
               </td>
