@@ -156,7 +156,7 @@ function submitModuleRepition(methodName,moduleIndexValue) {
             </td>
             <td class="OraFieldText">
            <bean:define name="<%=FormConstants.CRF%>" property="protocols" id="protocols"/>
-            <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/>")%>                
+            <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/><br/>")%>                
             <br/>
             <a href="javascript:manageProtocols()"><i>Manage Protocols</i></a> 
             <html:hidden property="<%=FormConstants.PROTOCOL_ID_SEQ%>"/>
