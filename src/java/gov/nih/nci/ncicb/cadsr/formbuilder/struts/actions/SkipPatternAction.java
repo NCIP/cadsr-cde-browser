@@ -707,6 +707,25 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                 //Create new Skip Pattern
                  isCreate=true;
                  triggerAction.setInstruction(instruction);
+                 if (selectedProtocolIds!=null && selectedProtocolIds.length!=0){
+                     List protocols = new ArrayList();
+                     for (int i=0; i<selectedProtocolIds.length; i++){
+                        Protocol p = new ProtocolTransferObject();
+                        p.setProtoIdseq(selectedProtocolIds[i]);
+                        protocols.add(p); 
+                     }
+                     triggerAction.setProtocols(protocols);
+                 }    
+                 
+                if (selectedAccsis!=null && selectedAccsis.length!=0){
+                    List cscsiList = new ArrayList();
+                    for (int i=0; i<selectedAccsis.length; i++){
+                       ClassSchemeItem csi = new CSITransferObject();
+                       csi.setAcCsiIdseq(selectedAccsis[i]);
+                       cscsiList.add(csi); 
+                    }
+                    triggerAction.setClassSchemeItems(cscsiList);
+                }    
                  
                  try {
                    FormBuilderServiceDelegate service = getFormBuilderService();
