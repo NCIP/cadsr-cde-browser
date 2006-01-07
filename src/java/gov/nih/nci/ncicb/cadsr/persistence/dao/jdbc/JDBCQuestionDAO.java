@@ -14,6 +14,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.QuestionChange;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
@@ -124,6 +125,20 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     }
     return 1;
   }
+  
+  public int createQuestionDefaultValue(QuestionChange change, String userName){
+      //default value
+      String pk = generateGUID();    
+      CreateQuestAttrQuery createQuestAttr= new CreateQuestAttrQuery(this.getDataSource());
+      int res = createQuestAttr.createRecord(change, pk, userName);
+      return res;
+  }
+
+    public int updateQuestionDefaultValue(QuestionChange change, String userName){
+        UpdateQuestAttrQuery updateQuestAttr= new UpdateQuestAttrQuery(this.getDataSource());
+        int res = updateQuestAttr.updateRecord(change, userName);
+        return res;
+    }
 
   /**
    * Test application
@@ -272,17 +287,21 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     String qrIdseq = generateGUID();
     int resRec = insertQuestRec.createContent(newQuestion, qcIdseq, qrIdseq);
 
-    if (resRec == 1) {
-      newQuestion.setQuesIdseq(qcIdseq);
-      return newQuestion;
-    }
-    else {
+    if (resRec != 1) {
        DMLException dml = new DMLException(
         "Did not succeed creating module question relationship " +
         "record in the quest_recs_ext table.");
        dml.setErrorCode(this.ERROR_CREATEING_QUESTION);
        throw dml;      
     }
+    
+    newQuestion.setQuesIdseq(qcIdseq);
+    //default value
+    String pk = generateGUID();    
+    CreateQuestAttrQuery createQuestAttr= new CreateQuestAttrQuery(this.getDataSource());
+    createQuestAttr.createRecord(newQuestion, pk, newQuestion.getCreatedBy());
+
+    return newQuestion;
   }
 
   public int updateQuestionDEAssociation(
@@ -667,4 +686,97 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     }
   }
 
+  /**
+   * Inner class that insert into quest_attributes_ext table
+   * 
+   */
+  private class CreateQuestAttrQuery extends SqlUpdate {
+    public CreateQuestAttrQuery(DataSource ds) {
+      String createSql =
+        " insert  into quest_attributes_ext(VV_IDSEQ, QC_IDSEQ, QUEST_IDSEQ, CREATED_BY, DEFAULT_VALUE, EDITABLE_IND) values(?,?,?,?,?, 'Yes')";
+
+      this.setDataSource(ds);
+      this.setSql(createSql);
+      declareParameter(new SqlParameter("VV_IDSEQ", Types.VARCHAR));
+      declareParameter(new SqlParameter("QC_IDSEQ", Types.VARCHAR));
+      declareParameter(new SqlParameter("QUEST_IDSEQ", Types.VARCHAR));
+      declareParameter(new SqlParameter("CREATED_BY", Types.VARCHAR));
+      declareParameter(new SqlParameter("DEFAULT_VALUE", Types.VARCHAR));
+      compile();
+    }
+
+    protected int createRecord(
+      Question question, String pk, String userName ) {
+
+      Object[] obj =
+        new Object[] {
+          question.getDefaultValidValue()==null? 
+            null: question.getDefaultValidValue().getValueIdseq(),
+          question.getQuesIdseq(),
+          pk,
+          userName,
+          question.getDefaultValue()
+        };
+      int res = update(obj);
+      return res;
+    }
+
+      protected int createRecord(
+        QuestionChange change, String pk, String userName ) {
+        
+        String vvId = change.getDefaultValidValue()==null? 
+              null: change.getDefaultValidValue().getValueIdseq();
+        String defaultValue =  change.getDefaultValue();
+        if (vvId==null && (defaultValue==null || defaultValue.length()==0)){
+            return 0;//no empty record.
+        }
+        Object[] obj =
+          new Object[] {
+            vvId,
+            change.getQuestionId(),
+            pk,
+            userName,
+            defaultValue
+          };
+        int res = update(obj);
+        return res;
+      }
+  }
+  
+    /**
+     * Inner class that update quest_attributes_ext table
+     * 
+     */
+    private class UpdateQuestAttrQuery extends SqlUpdate {
+      public UpdateQuestAttrQuery(DataSource ds) {
+        String createSql =
+          " update quest_attributes_ext set VV_IDSEQ=?, set MODIFIED_BY=?, set DEFAULT_VALUE=?  where QC_IDSEQ=?";
+
+        this.setDataSource(ds);
+        this.setSql(createSql);
+        declareParameter(new SqlParameter("VV_IDSEQ", Types.VARCHAR));
+        declareParameter(new SqlParameter("MODIFIED_BY", Types.VARCHAR));
+        declareParameter(new SqlParameter("DEFAULT_VALUE", Types.VARCHAR));
+        declareParameter(new SqlParameter("QC_IDSEQ", Types.VARCHAR));
+        compile();
+      }
+
+      protected int updateRecord(
+        QuestionChange change, String userName) {
+
+        Object[] obj =
+          new Object[] {
+            change.getDefaultValidValue()==null? 
+              null: change.getDefaultValidValue().getValueIdseq(),
+            userName,
+            change.getDefaultValidValue(),
+            change.getQuestionId()
+          };
+        int res = update(obj);
+        return res;
+      }
+
+    }
+
+  
 }

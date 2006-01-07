@@ -881,7 +881,15 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                         currQ.setModifiedBy(getUserName());
                         questionDao
                         .updateQuestionLongNameDispOrderDeIdseq(currQ);
+                        
                     }
+                    
+                    //TODO-add or update
+                    if (currQuestionChange.isDefaultValueChange()){
+                        questionDao.createQuestionDefaultValue(currQuestionChange, getUserName().toUpperCase());
+                    }
+                    
+                    
                     InstructionChanges qInstrChanges =
                         currQuestionChange.getInstrctionChanges();
                     if (qInstrChanges != null && !qInstrChanges.isEmpty())
@@ -1000,7 +1008,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             while (deletedIt.hasNext())
             {
                 Question currQuestion = (Question)deletedIt.next();
-                questionDao.deleteQuestion(currQuestion.getQuesIdseq());
+                questionDao.deleteQuestion(currQuestion.getQuesIdseq());                
                 //instructions
                 Instruction qInstr = currQuestion.getInstruction();
                 if (qInstr != null)

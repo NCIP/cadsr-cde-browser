@@ -21,6 +21,9 @@ public interface Question extends FormElement,Orderable,Instructionable   {
   public String getDefaultValue();
   public void setDefaultValue(String defaultValue);
   
+  public FormValidValue getDefaultValidValue();
+  public void setDefaultValidValue(FormValidValue vv);
+  
   public Object clone() throws CloneNotSupportedException ;
   
 }

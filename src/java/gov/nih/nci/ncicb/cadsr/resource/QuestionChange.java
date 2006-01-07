@@ -15,6 +15,15 @@ public interface QuestionChange extends Serializable
   
   public FormValidValueChanges getFormValidValueChanges();
   public void setFormValidValueChanges(FormValidValueChanges changes);
+ 
+  public void setDefaultValidValue(FormValidValue defaultValidValue) ;
+  public FormValidValue getDefaultValidValue() ;
+  public void setDefaultValue(String  defaultValue) ;
+  public String getDefaultValue() ;
+    
+  public void setDefaultValueChange(boolean defaultValueChange);
+  public boolean isDefaultValueChange();
+  
   
   public boolean isEmpty();  
 }

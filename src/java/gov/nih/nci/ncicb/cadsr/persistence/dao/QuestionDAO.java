@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.QuestionChange;
 
 import java.util.Collection;
 
@@ -146,5 +147,19 @@ public interface QuestionDAO {
    */
   public int updateQuestionLongNameDispOrderDeIdseq(
     Question question) throws DMLException;
-    
+
+    /**
+     * Changes the default value of a question
+     * @throws <b>DMLException</b>
+     */
+    public int updateQuestionDefaultValue(
+      QuestionChange questionChanges, String userName) throws DMLException;   
+      
+      
+        /**
+         * Changes the default value of a question
+         * @throws <b>DMLException</b>
+         */
+     public int createQuestionDefaultValue(QuestionChange questionChanges, 
+                            String userName) throws DMLException;  
 }

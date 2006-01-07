@@ -15,6 +15,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
@@ -101,9 +102,17 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     List modules = crf.getModules();
     Module selectedModule = (Module) modules.get(moduleIndex.intValue());
     String[] questionArr = getQuestionsAsArray(selectedModule.getQuestions());
+    List<String[]> defaults = getQuestionsDefaultValueAsArray(selectedModule.getQuestions());
+    String[] questionDefaultValueArr = (String[])defaults.get(0);
+    String[] questionDefaultValidValueIdArr = (String[])defaults.get(1);
+    
+    
     moduleEditForm.set(MODULE_QUESTIONS, questionArr);
 
     moduleEditForm.set(MODULE_LONG_NAME, selectedModule.getLongName());
+
+    moduleEditForm.set(FormConstants.QUESTION_DEFAULTVALUES, questionDefaultValueArr);
+    moduleEditForm.set(FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS, questionDefaultValidValueIdArr);
 
     if(selectedModule.getInstruction()!=null)
     {
@@ -118,6 +127,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS,validValueInstructionArr);
 
     setSessionObject(request, MODULE, selectedModule,true);
+
+
+
+
+
+
 
     FormBuilderServiceDelegate service = getFormBuilderService();
     Collection allVdIds = getAllVDsForQuestions(selectedModule.getQuestions());
@@ -1157,7 +1172,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
        while(newQuestionVVIt!=null&&newQuestionVVIt.hasNext())
        {
          FormValidValue fvv = (FormValidValue)newQuestionVVIt.next();
-         fvv.setQuestion(currQuestion);
+         fvv.setQuestion(currQuestion);         
        }
        newQuestionList.add(currQuestion);
      }
@@ -1167,6 +1182,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
        Question orgQuestion = (Question)orgQuestionList.get(orgQuestionIndex);
        //Check to see if the CDE association of the question has changed
        boolean hasDEAssosiationChanged = this.hasAssociationChanged(orgQuestion,currQuestion);
+       
        QuestionChange questionChange = new QuestionChangeTransferObject();
        questionChange.setQuestionId(currQuestion.getQuesIdseq());
 
@@ -1175,9 +1191,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
        if(!orgQuestion.getLongName().equals(currQuestion.getLongName())||
          orgQuestion.getDisplayOrder()!=currQuestion.getDisplayOrder()||
          hasDEAssosiationChanged)
-       {
-          questionChange.setUpdatedQuestion(currQuestion);
-       }
+           {
+              questionChange.setUpdatedQuestion(currQuestion);
+           }
        //Check to see if the questions instruction has changed
        InstructionChanges instructionChangesForQ = getInstructionChanges(orgQuestion.getInstruction(),currQuestion.getInstruction(),currQuestion.getQuesIdseq());
        instructionChangesForQ.setParentId(currQuestion.getQuesIdseq());
@@ -1196,13 +1212,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       {
          questionChange.setFormValidValueChanges(validValuesChanges);
       }
+      //default value change
+      questionChange = seQuestionDefaultValueChange(orgQuestion,currQuestion, questionChange);
+
       if(questionChange!=null&&!questionChange.isEmpty())
       {
          updatedQuestionList.add(questionChange);
       }
      }
    }
-
+   
    if(!newQuestionList.isEmpty())
    {
      moduleChanges.setNewQuestions(newQuestionList);
@@ -1218,13 +1237,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
    return moduleChanges;
  }
+ 
+ 
+ 
 
 
   /**
-  * Gets the validvalue Changes in a map
-  *  If no changes returns a empty Map
-  * Only Changes are present in the Map
-  * */
+ -
+ -
+ -
+  **/
   private FormValidValueChanges getNewDeletedUpdatedValidValues(Question currQuestion, List orgValidValueList,
                                             List editedValidValueList,boolean hasDEAssosiationChanged)
     {
@@ -1434,6 +1456,34 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     return questionArr;
   }
 
+    private List<String[]> getQuestionsDefaultValueAsArray(List questions) {
+      if (questions == null) {
+        return null;
+      }
+
+      ListIterator iterate = questions.listIterator();
+      String[] questionDefaultValueArr = new String[questions.size()];
+      String[] questionDefaultValidValueIdArr = new String[questions.size()];
+
+      while (iterate.hasNext()) {
+        int index = iterate.nextIndex();
+        Question question = (Question) iterate.next();
+        List vvList = question.getValidValues();
+        if (vvList!=null && !vvList.isEmpty() ){
+            questionDefaultValueArr[index] = question.getDefaultValue();
+        }else{        
+            FormValidValue fvv = question.getDefaultValidValue();
+            questionDefaultValueArr[index] = fvv==null? "": fvv.getLongName();
+            questionDefaultValidValueIdArr[index] = fvv==null? null: fvv.getIdseq();
+        }    
+      }//end of while         
+        List ret = new ArrayList(2);
+        ret.add(questionDefaultValueArr);
+        ret.add(questionDefaultValidValueIdArr);
+        
+        return ret;
+    }
+
   private void setQuestionsFromArray(
     Module module,
     String[] questionArr) {
@@ -1470,6 +1520,40 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
     return questionInstructionsArr;
   }
+
+
+    private void setQuestionDefaultValuesFromArray(
+      Module module,
+      String[] questionDefaultValuesArr,
+      String[] questionDefaultValidValueIDsArr) {
+      List questions = module.getQuestions();
+      if(questions==null)
+      {
+        questions = new ArrayList();
+      }
+
+
+      for (int i = 0; i < questionDefaultValuesArr.length; i++) {
+        String defaultValue = questionDefaultValuesArr[i];
+        Question currQuestion = (Question) questions.get(i);
+        if(currQuestion.getValidValues()!=null && !(currQuestion.getValidValues().isEmpty()))
+        { //use valid value id
+            FormValidValue vv = new FormValidValueTransferObject();
+            vv.setIdseq(questionDefaultValidValueIDsArr[i]);
+            vv.setLongName(questionDefaultValuesArr[i]);
+            currQuestion.setDefaultValidValue(vv);
+            vv.setQuestion(currQuestion);
+            //initNullValues(currQuestion.getInstruction(),module);// this is done to take care
+                                               // incase the attributes are null
+          }
+          else //use the text input
+          {
+            currQuestion.setDefaultValue(questionDefaultValuesArr[i]);
+          }
+        }//end of for
+    }
+
+
 
   private void setQuestionInstructionsFromArray(
     Module module,
@@ -1728,7 +1812,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
       String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
       setQuestionInstructionsFromArray(module,questionInstructionsArr);
-
+      String[] questionDefaultValuesArr = (String[]) moduleEditForm.get(QUESTION_DEFAULTVALUES);
+      String[] questionDefaultValidValueIDsArr = (String[]) moduleEditForm.get(QUESTION_DEFAULT_VALIDVALUE_IDS);
+      setQuestionDefaultValuesFromArray(module, questionDefaultValuesArr, questionDefaultValidValueIDsArr);
+      
       String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
       setValidValueInstructionsFromArray(module,vvInstructionsArr);
 
@@ -1918,4 +2005,43 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
         return service.isTargetForTriggerAction(targetIdList);
     }      
+    
+    
+    private QuestionChange seQuestionDefaultValueChange(Question orgQuestion, Question currQuestion, QuestionChange questionChange){
+        boolean hasDefaultValueChanged = hasDefaultValueChanged(orgQuestion,currQuestion);
+        if (hasDefaultValueChanged){
+            questionChange.setDefaultValueChange(true);          
+            questionChange.setDefaultValidValue(currQuestion.getDefaultValidValue());
+            questionChange.setDefaultValue(currQuestion.getDefaultValue());        
+        }else{
+            questionChange.setDefaultValueChange(false); 
+        }
+        return questionChange;
+    }
+    
+    private boolean hasDefaultValueChanged(Question orgQuestion, Question currQuestion){
+        String ofv = orgQuestion.getDefaultValue();
+        String cfv = currQuestion.getDefaultValue();
+        
+       if (ofv==null && cfv!=null || ofv!=null && cfv==null){
+          return true; 
+       }
+        if (ofv!=null && cfv!=null && !ofv.equals(cfv)){
+           return true; 
+        }
+       FormValidValue ofvv = orgQuestion.getDefaultValidValue();
+       FormValidValue cfvv = currQuestion.getDefaultValidValue();
+       if (cfvv==null && ofvv==null){
+           return false;
+       }
+       if (cfvv==null && ofvv!=null || cfvv!=null && ofvv==null){
+           return true;
+       }
+       //both are not null
+        if (ofvv.getValueIdseq().equals(cfvv.getValueIdseq())){
+           return false; 
+        }else{
+            return true;
+        }    
+    }
 }

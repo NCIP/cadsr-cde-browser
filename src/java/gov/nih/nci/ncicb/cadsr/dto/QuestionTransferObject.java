@@ -28,6 +28,7 @@ public class QuestionTransferObject extends FormElementTransferObject
   protected DataElement dataElement;
   protected List instructions = null;
   protected String defaultValue =null;
+  protected FormValidValue defaultValidValue =null;
   
   public QuestionTransferObject() {
     idseq = quesIdseq;
@@ -184,6 +185,15 @@ public class QuestionTransferObject extends FormElementTransferObject
     }
     
     
+    public FormValidValue getDefaultValidValue() {
+        return defaultValidValue;
+    }
+    
+    public void setDefaultValidValue(FormValidValue vv){
+        defaultValidValue = vv;        
+    }
+
+
   public String toString() {
     DebugStringBuffer sb = new DebugStringBuffer();
     sb.append(OBJ_SEPARATOR_START);
