@@ -120,7 +120,10 @@ function clearProtocol() {
   document.forms[0].protocolLongName.value = "";
 }
 
-
+function populateDefaultValue(defaultValidValueId,defaultValidValue, index){
+  document.forms[0].questionDefaultValues[index].value = defaultValidValue;
+  document.forms[0].questionDefaultValidValueIds[index].value = defaultValidValueId;
+}
 
   function switchAll(e)
   {
@@ -571,7 +574,20 @@ function clearProtocol() {
                               Default value 
                             </td>                      
                             <td class="OraFieldText">
-                                my default value                              
+                            <logic:notEmpty name="question" property="validValues">
+<%--                                 <html:select property='<%=FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS+"["+questionIndex+"]"%>'>
+					<html:optionsCollection name="question" property="validValues" value="valueIdseq" label="longName" />
+				</html:select >
+--%>
+<%--
+                                <bean:write name='<%=FormConstants.QUESTION_DEFAULTVALUES +"[" + questionIndex + "]"%>'/> 
+ --%>                             <html:hidden property='<%=FormConstants.QUESTION_DEFAULTVALUES+"["+questionIndex+"]"%>'/>
+                            </logic:notEmpty>    
+                            <logic:empty name="question" property="validValues">                                    
+                              <html:hidden property='<%=FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS+"["+questionIndex+"]"%>'/>
+                              <html:text property='<%=FormConstants.QUESTION_DEFAULTVALUES+"["+questionIndex+"]"%>'>
+                              </html:text>
+                            </logic:empty>    
                             </td>
                         </tr>                       
                       </table>
@@ -689,10 +705,14 @@ function clearProtocol() {
                                           <tr class="OraHeaderBlack" >
                                            <td class="OraFieldText" width="86%">
                                           <!-- TODO to populate default value -->
-                                            <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
+                                            <%--<html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
                                                 >                                                       
                                              <bean:write name="validValue" property="longName"/>
                                           </html:link>                                         
+                                          --%>
+                                          <a href="javascript:populateDefaultValue('<%=FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS+"[" + questionIndex +"]"%>',<%=FormConstants.QUESTION_DEFAULTVALUES+"[" + questionIndex +"]"%>, '<%=questionIndex%>')">
+                                             <bean:write name="validValue" property="longName"/>
+                                          </a>                          
                                            </td>
                                             <td align="center">
                                               <logic:notEqual value="<%= String.valueOf(validValueSize.intValue()-1) %>" name="validValueIndex">
@@ -852,7 +872,7 @@ function clearProtocol() {
                       </html:select >
                   </td>
                   <td align="left" width="1%">
-                      <a href="javascript:submitModuleEdit('<%=NavigationConstants.ADD_FROM_DELETED_QUESTION_LIST%>','<%=questionSize%>')">
+                      <a href="javascript:populateDefaultValue('<%=FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS+"[" + questionIndex +"]"%>',<%=FormConstants.QUESTION_DEFAULTVALUES+"[" + questionIndex +"]"%>, '<%=questionIndex%>')">
                          <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
                       </a>                          
                   </td>   
