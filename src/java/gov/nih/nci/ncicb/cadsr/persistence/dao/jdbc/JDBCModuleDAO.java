@@ -605,6 +605,10 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
      module.setModuleIdseq(rs.getString(1));  // MOD_IDSEQ
      module.setLongName(rs.getString(8));     // LONG_NAME
      module.setDisplayOrder(rs.getInt(13));   // DISPLAY_ORDER  
+     module.setVersion(rs.getFloat(3));
+     module.setConteIdseq(rs.getString(4));
+     module.setPreferredName(rs.getString(6));
+     module.setPreferredDefinition(rs.getString(7));
      return module;
     }
   }

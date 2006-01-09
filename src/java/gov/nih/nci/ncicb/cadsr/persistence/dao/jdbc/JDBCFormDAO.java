@@ -747,6 +747,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       int rownum) throws SQLException {
      Module module = new ModuleTransferObject();
      module.setModuleIdseq(rs.getString(1));  // MOD_IDSEQ
+     module.setVersion(rs.getFloat(3)); //version
+     module.setConteIdseq(rs.getString(4)); //context idseq
+     module.setAslName(rs.getString(5));  //workflow status
+     module.setPreferredName(rs.getString(6));
+     module.setPreferredDefinition(rs.getString(7));
      module.setLongName(rs.getString(8));     // LONG_NAME
      module.setDisplayOrder(rs.getInt(13));   // DISPLAY_ORDER
      return module;

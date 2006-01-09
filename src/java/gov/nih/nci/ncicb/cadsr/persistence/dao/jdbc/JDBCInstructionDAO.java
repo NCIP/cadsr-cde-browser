@@ -223,6 +223,10 @@ public abstract class JDBCInstructionDAO extends JDBCAdminComponentDAO
       int rownum) throws SQLException {
       Instruction instruction = new InstructionTransferObject();
       instruction.setIdseq(rs.getString(1));  //QUES_IDSEQ
+      instruction.setVersion(rs.getFloat(2));
+      instruction.setConteIdseq(rs.getString(4));
+      instruction.setPreferredName(rs.getString(6));
+      instruction.setPreferredDefinition(rs.getString(7));
       instruction.setLongName(rs.getString(8));   // LONG_NAME
       instruction.setDisplayOrder(rs.getInt(12)); // DISPLAY_ORDER
       instruction.setAslName(rs.getString(5));//Workflow
