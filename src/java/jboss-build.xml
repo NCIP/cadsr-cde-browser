@@ -24,11 +24,11 @@
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
-   <property name="cdebrowser.version" value="3.0.1.1" />
-   <property name="cdebrowser.build" value="17" />
+   <property name="cdebrowser.version" value="3.1" />
+   <property name="cdebrowser.build" value="1" />
    
    <!-- used for open source build for file suffix-->
-   <property name="cdebrowser.version.suffix" value="3_0_1_1" />
+   <property name="cdebrowser.version.suffix" value="3_1" />
    
    <property name="dev.user.password" value="cdeuser" />
    <property name="qa.user.password" value="cdeuser" />

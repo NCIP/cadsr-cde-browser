@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.dto.bc4j;
 
 import gov.nih.nci.ncicb.cadsr.dto.base.AdminComponentTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsViewRowImpl;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.DataElementConcept;
 import gov.nih.nci.ncicb.cadsr.resource.DerivedDataElement;
@@ -189,5 +190,24 @@ public class BC4JDataElementTransferObject extends AdminComponentTransferObject
     public void setOtherVersions(List deList)
     {
         otherVersions=deList;
-    }   
+    }  
+    
+    /**
+     * This equals method only compares the Idseq to define equals
+     * @param obj
+     * @return 
+     */  
+    public boolean equals(Object obj)
+    {
+     if(obj == null)
+      return false;
+     if(!(obj instanceof DataElement))
+      return false;
+     DataElement cde = (DataElement)obj;
+
+    if(this.getDeIdseq().equals(cde.getDeIdseq()))
+        return true;
+      else
+        return false;
+    }    
 }
