@@ -27,6 +27,7 @@ import oracle.jbo.ViewObject;
 import oracle.jbo.domain.Number;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import oracle.jbo.server.ViewRowImpl;
 
@@ -52,7 +53,7 @@ public class DataElementHandlerImpl extends Handler
       int publicId = new Integer(dataElement.getCDEId()).intValue();
       
       List deList= module.getAllCDEVersions(publicId);
-      
+      removeCurrentVersion(dataElement,deList);
       dataElement.setOtherVersions(deList);
         
     }
@@ -361,5 +362,13 @@ public class DataElementHandlerImpl extends Handler
     else {
       return inputObj.toString();
     }
+  }
+  private void removeCurrentVersion(DataElement currCDE, List cdes)
+  {
+      if(cdes==null) return;
+      if(cdes.isEmpty() )return;
+     int index = cdes.indexOf(currCDE);
+     cdes.remove(index);
+      
   }
 }
