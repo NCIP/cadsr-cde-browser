@@ -49,6 +49,12 @@ public class DataElementHandlerImpl extends Handler
       CDEBrowserBc4jModuleImpl module =
         (CDEBrowserBc4jModuleImpl) getConnection(sessionId);
       dataElement = module.getDataElements(key);
+      int publicId = new Integer(dataElement.getCDEId()).intValue();
+      
+      List deList= module.getAllCDEVersions(publicId);
+      
+      dataElement.setOtherVersions(deList);
+        
     }
     catch (Exception e) {
       System.out.println(
@@ -239,6 +245,8 @@ public class DataElementHandlerImpl extends Handler
 
     return deList;
   }
+  
+
 
   public DataElement findDataElementsByPublicId(
     int cdeId,

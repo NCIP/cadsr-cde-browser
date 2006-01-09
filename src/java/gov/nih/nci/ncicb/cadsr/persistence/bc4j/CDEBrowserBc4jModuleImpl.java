@@ -650,7 +650,9 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
     ViewObject vw = this.getDataElementsView();
     vw.setWhereClause(" CDE_ID= " + cdeId + " AND VERSION=" + version);
     vw.executeQuery();
-
+   
+   /**
+    * Removed since  HistoricalCdeIdsView not used as Public id id not an Alternate name
     if (vw.first() == null) {
       ViewObject view1 = this.getHistoricalCdeIdsView();
       view1.setWhereClause(
@@ -673,9 +675,26 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
       deRow = (DataElementsViewRowImpl) vw.first();
       de = new BC4JDataElementTransferObject(deRow);
     }
-
+    **/
+      deRow = (DataElementsViewRowImpl) vw.first();
+      de = new BC4JDataElementTransferObject(deRow);
     return de;
   }
+  
+    public List getAllCDEVersions(
+      int cdeId ) throws DataElementNotFoundException, Exception {
+      List deList =  new ArrayList();
+        DataElementsViewRowImpl deRow = null;
+      ViewObject vw = this.getDataElementsView();
+      vw.setWhereClause(" CDE_ID= " + cdeId );
+      vw.executeQuery();
+      
+      while (vw.hasNext()) {
+            deRow = (DataElementsViewRowImpl) vw.next();
+            deList.add(new BC4JDataElementTransferObject(deRow));
+          }      
+      return deList;
+    }  
 
   /**
    * Container's getter for DataElementConceptsView

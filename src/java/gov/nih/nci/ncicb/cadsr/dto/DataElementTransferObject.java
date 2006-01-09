@@ -25,6 +25,7 @@ public class DataElementTransferObject extends AdminComponentTransferObject
   private String usingContexts;
   private DerivedDataElement derivedDataElement;
   private List classifications;
+    private List otherVersions;
 
   public DataElementTransferObject() {
   }
@@ -182,4 +183,13 @@ public class DataElementTransferObject extends AdminComponentTransferObject
    {
      classifications=newClassifications;
    }
+   
+    public List getOtherVersions()
+    {
+        return otherVersions;
+    }
+    public void setOtherVersions(List deList)
+    {
+        otherVersions=deList;
+    }
 }
