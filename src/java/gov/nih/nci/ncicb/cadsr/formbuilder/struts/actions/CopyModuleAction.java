@@ -235,7 +235,11 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
       try
       {
          copiedModuleClone = (Module)copiedModule.clone();
-          FormActionUtil.removeAllIdSeqs(copiedModuleClone);
+         copiedModuleClone.setAslName("DRAFT NEW");
+         copiedModuleClone.setForm(copyForm);
+         copiedModuleClone.setVersion(new Float(1.0));
+         copiedModuleClone.setCreatedBy(request.getRemoteUser());
+         FormActionUtil.removeAllIdSeqs(copiedModuleClone);
       }
       catch (CloneNotSupportedException clexp) {
           if (log.isErrorEnabled()) {
@@ -440,6 +444,7 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
       HttpServletResponse response) throws IOException, ServletException {
 
       DynaActionForm dynaForm = (DynaActionForm)form;
+      Form crf = (Form)getSessionObject(request,CRF);
       List<Module> moduleList = (List<Module>)getSessionObject(request,MODULE_LIST);
       try
       {
@@ -450,12 +455,26 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
                 int currIndex = (new Integer(selectedIndexes[i])).intValue();
                 Module currModule= moduleList.get(currIndex);
                 Module copiedModuleClone = (Module)currModule.clone();
+                copiedModuleClone.setForm(crf);
+                copiedModuleClone.setVersion(new Float(1.0));
+                copiedModuleClone.setCreatedBy(request.getRemoteUser());
+                copiedModuleClone.setContext(crf.getContext());
+                copiedModuleClone.setConteIdseq(crf.getConteIdseq());
+                
+                Iterator instIter = copiedModuleClone.getInstructions().iterator();
+                
+                while (instIter.hasNext()) {
+                   Instruction instr = (Instruction) instIter.next();
+                   instr.setContext(crf.getContext());
+                   instr.setVersion(new Float(1.0));
+                   instr.setCreatedBy(request.getRemoteUser());
+                }
+                
                 copiedModules.add(copiedModuleClone);
               }      
               
               
           int displayOrderToCopy= ((Integer)getSessionObject(request,MODULE_DISPLAY_ORDER_TO_COPY)).intValue();
-          Form crf = (Form)getSessionObject(request,CRF);
             
           List desModules = crf.getModules();
 
