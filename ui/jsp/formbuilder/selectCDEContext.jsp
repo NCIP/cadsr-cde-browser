@@ -39,11 +39,11 @@
  
   <tr >
     <td >
-      <html:image src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
+      <html:image src='<%=urlPrefix+"i/yes.gif"%>' border="0" alt="Yes"/>
     </td> 
     <td>
       <html:link action='<%= "/cancelDesignations?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.CANCEL_DESIGNATIONS%>'>
-        <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+        <html:img src='<%=urlPrefix+"i/no.gif"%>' border="0" alt="No"/>
       </html:link>             
     </td>                
   </tr> 
@@ -126,22 +126,24 @@
         </tr>
       </table>
 
-      <table cellpadding="0" cellspacing="0" width="80%" align="center">
-        <tr >
-          <td >
-            &nbsp;
-          </td>
-        </tr>         
-        <tr>
-          <td class="OraHeaderSubSub" width="100%">Select Context</td>
-        </tr>
-        <tr>
-          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
-        </tr>
-      </table>
+  <br>
+  <br>
 
-    <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
-    <tr class="OraTabledata">
+    <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >
+    <html:hidden property="<%= FormConstants.QUESTION_INDEX %>" name="<%= FormConstants.CRF %>" value="context.conteIdseq"/>
+
+    <tr >
+      <td align="center" class="OraTipLabel">
+       Designate all CDE currenlty used on this Form as "Used-By" 
+           <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="context.name"
+              /> Context ?
+      </td>
+
+    </tr>    
+    
+    <!--tr class="OraTabledata">
       <td class="OraFieldtitlebold" nowrap><bean:message key="cadsr.formbuilder.form.context" />:&nbsp;</td>
       <td class="OraFieldText" nowrap>
         <html:select styleClass = "Dropdown" property="<%=FormConstants.CDE_CONTEXT_ID_SEQ%>" >
@@ -149,18 +151,18 @@
             property="conteIdseq" labelProperty="name" />
         </html:select>
       </td>
-    </tr>
+    </tr -->
 </table>
 <br/>
 <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
  
   <tr >
     <td >
-      <html:image src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
+      <html:image src='<%=urlPrefix+"i/yes.gif"%>' border="0" alt="Yes"/>
     </td> 
     <td>
       <html:link action='<%= "/cancelDesignations?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.CANCEL_DESIGNATIONS%>'>
-        <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+        <html:img src='<%=urlPrefix+"i/no.gif"%>' border="0" alt="No"/>
       </html:link>             
     </td>                
   </tr> 

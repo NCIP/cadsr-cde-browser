@@ -7,21 +7,10 @@ if(confirm(message)) location.href = url;
 }
 // --->
 </SCRIPT>
-      <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" >
+
+      <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" >
         <tr align="center">
-        <td width="40%">
-        </td>
-          <td >
-            <html:link action='<%="/formSearchAction"%>' >				
-            <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Done"/>
-            </html:link>             
-          </td> 
-         <td>
-           <html:link action='<%="/viewReferenceDocs.do?"+NavigationConstants.METHOD_PARAM+"="+"viewReferenceDocs"%>'
-             >
-             <html:img src='<%=urlPrefix+"i/refdocs.gif"%>' border="0" alt="Reference Documents"/>
-           </html:link>
-          </td>           
+        
           <td >
 		       <cde:secureIcon  formId="<%=FormConstants.CRF%>"
             formScope="<%=CaDSRConstants.SESSION_SCOPE%>"
@@ -35,6 +24,7 @@ if(confirm(message)) location.href = url;
 		   	   	altMessage="Select for Copy" 
 				/>   
           </td> 
+          
           <td >
 		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
             formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
@@ -47,7 +37,26 @@ if(confirm(message)) location.href = url;
 		   	   	altMessage="Edit"
 		   	   	target="_parent"            
             />		             
-          </td>       
+          </td>  
+          
+
+          
+          <td >
+		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
+           formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
+           activeImageSource="i/deleteButton.gif" 
+		       		activeUrl='<%="/formViewDeleteAction.do?"
+                         +NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>'
+		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		   	   	urlPrefix="<%=urlPrefix%>"
+		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+		   	   	paramProperty="formIdseq"
+		   	   	altMessage="Delete"  
+            confirmMessageKey="cadsr.formbuilder.form.delete.confirm"
+		   	   	/>		                
+          </td>  
+          
+     
           <!-- Publish Change Request -->
           <logic:notEqual value="GUEST" name="<%=CaDSRConstants.USER_KEY%>" property="username">
 	             <td >
@@ -90,21 +99,26 @@ if(confirm(message)) location.href = url;
 	  %>                    
 	             </td>    
          </logic:notEqual>          
-          <td >
-		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
-           formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
-           activeImageSource="i/deleteButton.gif" 
-		       		activeUrl='<%="/formViewDeleteAction.do?"
-                         +NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>'
-		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
-		   	   	urlPrefix="<%=urlPrefix%>"
-		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
-		   	   	paramProperty="formIdseq"
-		   	   	altMessage="Delete"  
-            confirmMessageKey="cadsr.formbuilder.form.delete.confirm"
-		   	   	/>		                
-          </td>  
-           <td>
+          
+          <td width=170>
+            &nbsp;
+          </td>
+
+           
+          </tr>
+      </table>
+      <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" >
+
+          
+          <tr align="center">  
+         <td>&nbsp;
+           <html:link action='<%="/viewReferenceDocs.do?"+NavigationConstants.METHOD_PARAM+"="+"viewReferenceDocs"%>'
+             >
+             <html:img src='<%=urlPrefix+"i/refdocs.gif"%>' border="0" alt="Reference Documents"/>
+           </html:link>
+          </td> 
+          
+            <td>
             <cde:secureIcon  formId="<%=FormConstants.CRF%>"
                 formScope="<%=CaDSRConstants.SESSION_SCOPE%>"
                 activeImageSource="i/designations.gif" 
@@ -116,7 +130,8 @@ if(confirm(message)) location.href = url;
 		paramProperty="formIdseq"
 		altMessage="Select to designate Data Elements in the Form" 
             />   
-           </td> 
+           </td>  
+           
          <td>
             <cde:secureIcon  formId="<%=FormConstants.CRF%>"
                 formScope="<%=CaDSRConstants.SESSION_SCOPE%>"
@@ -129,7 +144,8 @@ if(confirm(message)) location.href = url;
 		paramProperty="formIdseq"
 		altMessage="Form Versioning" 
             />   
-           </td>            
+           </td>              
+           
          <td>
             <cde:secureIcon  formId="<%=FormConstants.CRF%>"
                 formScope="<%=CaDSRConstants.SESSION_SCOPE%>"
@@ -142,8 +158,16 @@ if(confirm(message)) location.href = url;
 		paramProperty="formIdseq"
 		altMessage="Form Versioning" 
             />   
-           </td>            
+           </td>  
+           
+           <td >
+             <html:link action='<%="/formSearchAction"%>' >				
+             <html:img src='<%=urlPrefix+"i/backButton.gif"%>' border="0" alt="Done"/>
+             </html:link>             
+          </td>         
+          
           </tr>
+          
           <tr width="100%" align="right">
           <td colspan="9">
  	       <html:link action='<%="/formPrinterAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GET_FORM_TO_PRINT%>' paramId = "<%=FormConstants.FORM_ID_SEQ%>"
@@ -151,6 +175,7 @@ if(confirm(message)) location.href = url;
  				target="_blank">
 		Printer Friendly Version
 	      </html:link>
+	      &nbsp;&nbsp;
               <html:link action='<%="/excelDownload.do?"+NavigationConstants.METHOD_PARAM+"=downloadFormInExcel"%>' 
                 paramId = "<%=FormConstants.FORM_ID_SEQ%>"
                 paramName="<%=FormConstants.CRF%>" paramProperty="formIdseq"
@@ -158,8 +183,11 @@ if(confirm(message)) location.href = url;
                 Excel Download
               </html:link> 
         </td>
+
+
+          
         </tr> 
-        <tr></tr>
+
         <tr></tr>
       </table>
       </table>
