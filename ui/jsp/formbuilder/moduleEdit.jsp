@@ -120,9 +120,14 @@ function clearProtocol() {
   document.forms[0].protocolLongName.value = "";
 }
 
-function populateDefaultValue(defaultValidValueId,defaultValidValue, index){
-  document.forms[0].questionDefaultValues[index].value = defaultValidValue;
-  document.forms[0].questionDefaultValidValueIds[index].value = defaultValidValueId;
+function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
+    var objForm0 = document.forms[0];
+    var objQuestionDefaultValue = objForm0['questionDefaultValues[' + index + ']'];
+    var objQuestionDefaultValidValueId = objForm0['questionDefaultValidValueIds[' + index + ']'];
+    objQuestionDefaultValue.value = defaultValidValue;
+    objQuestionDefaultValidValueId.value = defaultValidValueId;
+
+
 }
 
   function switchAll(e)
@@ -575,18 +580,16 @@ function populateDefaultValue(defaultValidValueId,defaultValidValue, index){
                             </td>                      
                             <td class="OraFieldText">
                             <logic:notEmpty name="question" property="validValues">
-<%--                                 <html:select property='<%=FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS+"["+questionIndex+"]"%>'>
-					<html:optionsCollection name="question" property="validValues" value="valueIdseq" label="longName" />
-				</html:select >
---%>
-<%--
-                                <bean:write name='<%=FormConstants.QUESTION_DEFAULTVALUES +"[" + questionIndex + "]"%>'/> 
- --%>                             <html:hidden property='<%=FormConstants.QUESTION_DEFAULTVALUES+"["+questionIndex+"]"%>'/>
+                            <html:text property='<%=FormConstants.QUESTION_DEFAULTVALUES+"["+questionIndex+"]"%>' readonly="true" size="70"/>
+                            <a href="javascript:populateDefaultValue('','', '<%=questionIndex%>')">
+			               Clear
+			    </a>                          
+
+                            <html:hidden property='<%=FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS+"["+questionIndex+"]"%>'/>
                             </logic:notEmpty>    
                             <logic:empty name="question" property="validValues">                                    
-                              <html:hidden property='<%=FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS+"["+questionIndex+"]"%>'/>
-                              <html:text property='<%=FormConstants.QUESTION_DEFAULTVALUES+"["+questionIndex+"]"%>'>
-                              </html:text>
+                              <html:hidden property='<%=FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS+"["+questionIndex+"]"%>' />
+                              <html:text property='<%=FormConstants.QUESTION_DEFAULTVALUES+"["+questionIndex+"]"%>' size="70"/>
                             </logic:empty>    
                             </td>
                         </tr>                       
@@ -704,14 +707,9 @@ function populateDefaultValue(defaultValidValueId,defaultValidValue, index){
                                         <table width="100%" align="right" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
                                           <tr class="OraHeaderBlack" >
                                            <td class="OraFieldText" width="86%">
-                                          <!-- TODO to populate default value -->
-                                            <%--<html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
-                                                >                                                       
-                                             <bean:write name="validValue" property="longName"/>
-                                          </html:link>                                         
-                                          --%>
-                                          <a href="javascript:populateDefaultValue('<%=FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS+"[" + questionIndex +"]"%>',<%=FormConstants.QUESTION_DEFAULTVALUES+"[" + questionIndex +"]"%>, '<%=questionIndex%>')">
-                                             <bean:write name="validValue" property="longName"/>
+                                          <bean:write name="validValue" property="longName"/>
+                                          <a href="javascript:populateDefaultValue('<%=validValue.getLongName()%>','<%=validValue.getValueIdseq()%>', '<%=questionIndex%>')">
+                                             Set as Question Default Value
                                           </a>                          
                                            </td>
                                             <td align="center">
