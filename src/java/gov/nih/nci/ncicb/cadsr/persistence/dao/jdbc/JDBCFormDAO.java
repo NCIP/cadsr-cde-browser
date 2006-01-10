@@ -754,6 +754,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
      module.setPreferredDefinition(rs.getString(7));
      module.setLongName(rs.getString(8));     // LONG_NAME
      module.setDisplayOrder(rs.getInt(13));   // DISPLAY_ORDER
+     module.setNumberOfRepeats(14);//repeat_no
      return module;
     }
   }
