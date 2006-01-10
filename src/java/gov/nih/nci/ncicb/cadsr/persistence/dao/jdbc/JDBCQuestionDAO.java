@@ -136,9 +136,44 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
 
     public int updateQuestionDefaultValue(QuestionChange change, String userName){
         UpdateQuestAttrQuery updateQuestAttr= new UpdateQuestAttrQuery(this.getDataSource());
-        int res = updateQuestAttr.updateRecord(change, userName);
-        return res;
+        if (change.isDefaultValueChange()){
+            //if both is null, delete
+            String defaultValueId = change.getDefaultValidValue()==null? 
+                        null:change.getDefaultValidValue().getValueIdseq();
+            if ( (change.getDefaultValue()==null || change.getDefaultValue().length()==0) &&
+                (defaultValueId==null || defaultValueId.length()==0) ) {//delete
+                DeleteQuestAttrQuery deleteQuestAttr = new DeleteQuestAttrQuery(getDataSource());
+                    return deleteQuestAttr.deleteRecord(change);
+                } 
+            else{
+                int res = updateQuestAttr.updateRecord(change, userName);
+                if (res == 0){
+                    CreateQuestAttrQuery createQuery = new CreateQuestAttrQuery(getDataSource());
+                    String pk = generateGUID();
+                    return createQuery.createRecord(change, pk, userName);
+                }
+            }
+        }
+        return 0;
     }
+    
+    public Question  getQuestionDefaultValue(  Question question){
+        QuestionDefaultValueQuery query = new QuestionDefaultValueQuery();
+        query.setDataSource(getDataSource());
+        String qId = question.getIdseq();
+        query.setSql(qId);
+        List qList = query.execute();
+        if (qList != null && !qList.isEmpty()){
+            Question retQ = (Question)qList.get(0);
+            if (retQ != null){
+                question.setDefaultValue(retQ.getDefaultValue());
+                question.setDefaultValidValue(retQ.getDefaultValidValue());
+            }
+        }        
+        return question;
+    }
+
+
 
   /**
    * Test application
@@ -146,7 +181,14 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
     JDBCQuestionDAO test = new JDBCQuestionDAO(locator);
-    /*
+    
+    Question q = new QuestionTransferObject();
+    q.setIdseq("0870F3C9-8AF9-25FC-E044-0003BA0B1A09");
+      Question q1 = test.getQuestionDefaultValue(q);
+      
+      System.out.println("q1=" + q1);
+  
+   /*
     Collection result =
       test.getValidValues("D3830147-1454-11BF-E034-0003BA0B1A09");
     System.out.println(test);
@@ -750,7 +792,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     private class UpdateQuestAttrQuery extends SqlUpdate {
       public UpdateQuestAttrQuery(DataSource ds) {
         String createSql =
-          " update quest_attributes_ext set VV_IDSEQ=?, set MODIFIED_BY=?, set DEFAULT_VALUE=?  where QC_IDSEQ=?";
+          " update quest_attributes_ext set VV_IDSEQ=?, MODIFIED_BY=?, DEFAULT_VALUE=?  where QC_IDSEQ=?";
 
         this.setDataSource(ds);
         this.setSql(createSql);
@@ -769,7 +811,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
             change.getDefaultValidValue()==null? 
               null: change.getDefaultValidValue().getValueIdseq(),
             userName,
-            change.getDefaultValidValue(),
+            change.getDefaultValue(),
             change.getQuestionId()
           };
         int res = update(obj);
@@ -778,5 +820,98 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
 
     }
 
-  
+/*
+    class ValidValuesForAQuestionQuery_STMT extends MappingSqlQuery {
+      ValidValuesForAQuestionQuery_STMT() {
+        super();
+      }
+
+      public void _setSql(String idSeq) {
+        super.setSql(
+          "SELECT * FROM SBREXT.FB_VALID_VALUES_VIEW where QUES_IDSEQ = '" + idSeq + "'");
+    //       declareParameter(new SqlParameter("QUESTION_IDSEQ", Types.VARCHAR));
+      }
+      protected Object mapRow(
+        ResultSet rs,
+        int rownum) throws SQLException {
+            FormValidValue fvv = new FormValidValueTransferObject();
+            fvv.setValueIdseq(rs.getString(1));     // VV_IDSEQ
+            fvv.setVpIdseq(rs.getString(8));        // VP_IDSEQ
+            fvv.setLongName(rs.getString(9));       // LONG_NAME
+            fvv.setDisplayOrder(rs.getInt(14));     // DISPLAY_ORDER
+            fvv.setShortMeaning(rs.getString(15));    // Meaning  
+            fvv.setVersion(new Float(rs.getString(2))); // VERSION
+            //Bug Fix tt#1058
+            fvv.setAslName(rs.getString(5));
+            fvv.setPreferredDefinition(rs.getString(7));
+            ContextTransferObject contextTransferObject = new ContextTransferObject();
+            contextTransferObject.setConteIdseq(rs.getString(4)); //CONTE_IDSEQ
+            fvv.setContext(contextTransferObject);
+            
+           return fvv;
+      }
+    }
+
+*/
+    private class DeleteQuestAttrQuery extends SqlUpdate {
+      public DeleteQuestAttrQuery(DataSource ds) {
+        String deleteSql =
+          " delete from quest_attributes_ext where qc_idseq=?";
+
+        this.setDataSource(ds);
+        this.setSql(deleteSql);
+        declareParameter(new SqlParameter("QC_IDSEQ", Types.VARCHAR));
+        compile();
+      }
+
+      protected int deleteRecord(
+        QuestionChange change) {
+
+        Object[] obj =
+          new Object[] {
+            change.getQuestionId()
+          };
+        int res = update(obj);
+        return res;
+      }
+    }  
+
+
+/**
+ * get question default value
+ */
+    private class QuestionDefaultValueQuery extends MappingSqlQuery {
+      QuestionDefaultValueQuery() {
+        super();
+      }
+
+      public void setSql(String idSeq) {
+        super.setSql(        
+          " select qa.QUEST_IDSEQ, qa.default_value,  qa.QC_IDSEQ, qa.VV_IDSEQ, qa.EDITABLE_IND, vv.LONG_NAME from quest_attributes_ext qa, quest_contents_ext vv " +
+          " where qa.VV_IDSEQ =vv.QC_IDSEQ(+) and qa.QC_IDSEQ = '" + idSeq + "'");
+    //       declareParameter(new SqlParameter("QUESTION_IDSEQ", Types.VARCHAR));
+            compile();
+      }
+     /**
+      * 3.0 Refactoring- Removed JDBCTransferObject
+      */
+      protected Object mapRow(
+        ResultSet rs,
+        int rownum) throws SQLException {
+            Question question = new QuestionTransferObject();
+            String defaultValueStr = rs.getString(2);
+            question.setDefaultValue(defaultValueStr);
+            question.setIdseq(rs.getString(3));
+            if (defaultValueStr==null || defaultValueStr.length()==0 ){ //default value Id
+             FormValidValue fvv = new FormValidValueTransferObject();
+             fvv.setValueIdseq(rs.getString(4));   // VV_IDSEQ
+             fvv.setLongName(rs.getString(6));       // LONG_NAME
+             fvv.setIdseq(rs.getString(1));
+             fvv.setQuestion(question);
+             question.setDefaultValidValue(fvv);
+            } 
+        return question;
+        }
+}
+
 }

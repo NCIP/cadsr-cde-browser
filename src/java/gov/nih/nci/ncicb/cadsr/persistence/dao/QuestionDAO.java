@@ -162,4 +162,7 @@ public interface QuestionDAO {
          */
      public int createQuestionDefaultValue(QuestionChange questionChanges, 
                             String userName) throws DMLException;  
+                            
+    public Question getQuestionDefaultValue(Question question)   
+        throws DMLException;  
 }

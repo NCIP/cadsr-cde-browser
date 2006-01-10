@@ -56,6 +56,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ProtocolDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.TriggerActionDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCQuestionDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerActionChanges;
@@ -272,7 +273,8 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                 }
                 List qInstructions = qInstrdao.getInstructions(termId);
                 term.setInstructions(qInstructions);
-
+                                
+                
                 values = (List)qdao.getValidValues(termId);
                 term.setValidValues(values);
 
@@ -290,6 +292,9 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                     setSourceForTriggerActions(vv,actions);
                     vv.setTriggerActions(actions);
                 }
+                
+                //set question default 
+                term = setQuestionDefaultValue(term);
             }
 
             block.setQuestions(questions);
@@ -365,6 +370,10 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                setSourceForTriggerActions(vv,actions);
                vv.setTriggerActions(actions);
            }
+           
+            //set question default 
+            term = setQuestionDefaultValue(term);
+
         }
 
         module.setQuestions(questions);
@@ -884,9 +893,8 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                         
                     }
                     
-                    //TODO-add or update
                     if (currQuestionChange.isDefaultValueChange()){
-                        questionDao.createQuestionDefaultValue(currQuestionChange, getUserName().toUpperCase());
+                        questionDao.updateQuestionDefaultValue(currQuestionChange, getUserName().toUpperCase());
                     }
                     
                     
@@ -1526,11 +1534,18 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         newAction.setProtocols(dao.getAllProtocolsForTriggerAction(triggerId));        
         return newAction;
     }
+    
+    private Question setQuestionDefaultValue(Question term ){
+        QuestionDAO dao = daoFactory.getQuestionDAO();
+        term = dao.getQuestionDefaultValue(term);
+        return term;
+    }
 
     public List getRreferenceDocuments(String acId) {
         FormDAO mDAO = daoFactory.getFormDAO();
         return mDAO.getAllReferenceDocuments(acId, null);//docType is not in use
     }
+    
 
 
 }
