@@ -32,11 +32,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleInstructionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.QuestionRepititionTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.QuestionRepitition;
 
 
 public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction {
@@ -158,6 +160,49 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction 
        return mapping.findForward("done");
       }
       
+    /**
+     * Save Repititions
+     *
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     *
+     * @return
+     *
+     * @throws IOException
+     * @throws ServletException
+     */
+    public ActionForward saveRepetitions(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+
+      DynaActionForm dynaForm = (DynaActionForm)form;
+      
+      List<Module> repeats = (List<Module>)getSessionObject(request, MODULE_REPETITIONS);
+      Module module = (Module)getSessionObject(request, MODULE);
+      Integer repCount = getNewRepititionCount(module,repeats);
+      List<QuestionRepitition> qRepeats = getChangedQuestionRepititions(module,repeats);
+      //TODO get QuestionRepetitions
+      
+      removeSessionObject(request, MODULE);
+      removeSessionObject(request, MODULE_REPETITIONS);
+      
+       return mapping.findForward("done");
+      }
+      
+    private List<QuestionRepitition> getChangedQuestionRepititions(Module module,List<Module> repeats)
+    {
+        List<QuestionRepitition> qRepeats = new ArrayList<QuestionRepitition>();
+        return qRepeats;
+    }
+    private Integer getNewRepititionCount(Module module,List<Module> repeats)
+    {
+        //TODO check with module repitions
+        return repeats.size();
+    }
     private String[] getQuestionDefaultsAsArray(List modules) {
       if (modules == null) {
         return null;

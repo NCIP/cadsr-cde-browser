@@ -30,6 +30,8 @@ public static final String ERROR_COPYING_FORM="DML0019";
     public static final String ERROR_DELETEING_SKIP_PATTERN = "DML0025";
     public static final String ERROR_RETRIEVEING_SKIP_PATTERN = "DML0026";
     
-   
-
+    public static final String ERROR_CREATEING_QUESTION_REPITITION = "DML0027";
+    public static final String ERROR_DELETEING_QUESTION_REPITITION = "DML0028";
+    public static final String ERROR_RETRIEVEING_QUESTION_REPITITION = "DML0029";
+    public static final String ERROR_UPDATING_MODULE_REPITITION = "DML0030";
 }
