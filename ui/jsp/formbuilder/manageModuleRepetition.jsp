@@ -109,6 +109,13 @@ function submitModuleListEdit(methodName) {
           return false;
         }
   }
+  
+function populateDefaultValue(defaultId,defaultVVId, dvalue,vvId){
+	var default = document.getElementById(defaultId);
+	default.value=dvalue;
+	var defaultid = document.getElementById(defaultVVId);
+	defaultid.value=vvId;	
+}  
 </SCRIPT>
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff">

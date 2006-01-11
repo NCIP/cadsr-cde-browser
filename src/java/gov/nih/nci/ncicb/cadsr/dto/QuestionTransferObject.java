@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 
+import gov.nih.nci.ncicb.cadsr.resource.QuestionRepitition;
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 import java.sql.Date;
 
@@ -29,6 +30,7 @@ public class QuestionTransferObject extends FormElementTransferObject
   protected List instructions = null;
   protected String defaultValue =null;
   protected FormValidValue defaultValidValue =null;
+  protected List<QuestionRepitition> questionRepititions;
   
   public QuestionTransferObject() {
     idseq = quesIdseq;
@@ -115,6 +117,15 @@ public class QuestionTransferObject extends FormElementTransferObject
     instructions=newInstructions;
   }
   
+   public List<QuestionRepitition> getQuestionRepititions()
+   {
+        return questionRepititions;
+   }
+    public void setQuestionRepitition(List<QuestionRepitition> repeats)
+    {
+        questionRepititions=repeats;
+    }
+    
   /**
    * This equals method only compares the Idseq to define equals
    * @param obj

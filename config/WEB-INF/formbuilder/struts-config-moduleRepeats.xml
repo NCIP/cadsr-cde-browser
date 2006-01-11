@@ -7,7 +7,8 @@
       dynamic="true">
       <form-property name="moduleIndex" type="java.lang.Integer"/>
       <form-property name="numberOfModuleRepetitions" type="java.lang.Integer"/>      
-      <form-property name="questionDefaults" type="java.lang.String[]"/> 
+      <form-property name="questionDefaults" type="java.lang.String[]"/>
+      <form-property name="questionDefaultVVIds" type="java.lang.String[]"/>
     </form-bean>
       
   </form-beans>
@@ -24,7 +25,7 @@
     </action>   
     
     <action name="moduleRepeatForm" path="/moduleRepeatAction" parameter="method"
-      scope="request"
+      scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ModuleRepetitionAction"
       validate="false">      
       <forward name="viewRepetitions" path="/formbuilder/manageModuleRepetition.jsp" redirect="false"/>

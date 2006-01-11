@@ -24,6 +24,9 @@ public interface Question extends FormElement,Orderable,Instructionable   {
   public FormValidValue getDefaultValidValue();
   public void setDefaultValidValue(FormValidValue vv);
   
+  public List<QuestionRepitition> getQuestionRepititions();
+  public void setQuestionRepitition(List<QuestionRepitition> repeats);  
+  
   public Object clone() throws CloneNotSupportedException ;
   
 }

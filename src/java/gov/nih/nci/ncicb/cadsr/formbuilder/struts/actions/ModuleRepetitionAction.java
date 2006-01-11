@@ -56,10 +56,9 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction 
       List modules = crf.getModules();
       Module selectedModule = (Module) modules.get(moduleIndex.intValue());
       selectedModule.setForm(crf);
-      List<Module> modRepetitions = getRepetitions(selectedModule,selectedModule.getNumberOfRepeats());
-      String[] defaultArr =getQuestionDefaultsAsArray(modRepetitions);
-      dynaForm.set(QUESTION_DEFAULTS,defaultArr);
-      
+      List<Module> modRepetitions = getRepetitions(selectedModule);
+      setQuestionDefaultArrays(dynaForm,modRepetitions,selectedModule);// Sets both Defauts and DefaultVVIds
+
       setSessionObject(request, MODULE, selectedModule,true);
       setSessionObject(request, MODULE_REPETITIONS, modRepetitions,true);
       
@@ -80,7 +79,8 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction 
       numberOfRepetitions = (Integer) dynaForm.get(NUMBER_OF_MODULE_REPETITIONS);
       List<Module> currRepeats = (List<Module>)getSessionObject(request, MODULE_REPETITIONS);
       String[] defaultValueArr = (String[]) dynaForm.get(QUESTION_DEFAULTS);
-      setDefaultsFromArray(currRepeats,defaultValueArr);
+      String[] defaultValueIds = (String[]) dynaForm.get(QUESTION_DEFAULT_VV_IDS);
+      
      
      if(numberOfRepetitions<1)
      {
@@ -93,8 +93,8 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction 
       List<Module> newReps = getRepetitions(module,numberOfRepetitions);
       currRepeats.addAll(newReps);
       
-      String[] defaultArr =getQuestionDefaultsAsArray(currRepeats);
-      dynaForm.set(QUESTION_DEFAULTS,defaultArr);      
+      addToQuestionDefaultArrays(dynaForm,numberOfRepetitions,module);// adds both Defauts and DefaultVVIds
+     
       
       setSessionObject(request, MODULE_REPETITIONS, currRepeats,true);
       saveMessage("cadsr.formbuilder.module.repetition.add.success", request);
@@ -120,19 +120,110 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction 
         } 
     
     
+    private List<Module> getRepetitions(Module module)
+    {
+        List<Module> moduleRepeats  = new ArrayList<Module>();
+        List questions = module.getQuestions();
+        if(questions==null) return moduleRepeats;
+        if(module.getNumberOfRepeats()==0) return moduleRepeats;
+        
+        Map<Integer,Map<String,QuestionRepitition>> questionRepMap = getQuestionRepititionsMap(questions);
+        for(int i=0;i<module.getNumberOfRepeats();++i)
+        {
+            Module tempModuleClone =null;
+            try
+            {
+                tempModuleClone= (Module)module.clone();
+            }
+            catch (Exception e)
+            {
+                if (log.isErrorEnabled()) {
+                  log.error("Exception Clonning Module", e);
+                }   
+               return moduleRepeats;
+            }
+            Map<String,QuestionRepitition> qMap = questionRepMap.get(new Integer(i+1));
+            if(qMap==null) continue;
+            
+            setDefaults(qMap,tempModuleClone);
+            moduleRepeats.add(tempModuleClone);
+        } 
+        return moduleRepeats;
+    }
+    
+    private void setDefaults(Map<String,QuestionRepitition> qMap,Module module)
+    {
+        List questions = module.getQuestions();
+        ListIterator qIt = questions.listIterator();
+        while(qIt.hasNext())
+        {
+            Question q = (Question)qIt.next();
+            QuestionRepitition qRep = qMap.get(q.getQuesIdseq());
+            q.setDefaultValue(qRep.getDefaultValue());
+            q.setDefaultValidValue(qRep.getDefaultValidValue());
+        }
+    }
+    
+    /**
+     *
+     * @param questions
+     * @return a Map<repeantSequence#,Map<questionId,QuestionRepitition>>
+     */
+    private Map getQuestionRepititionsMap(List questions)
+    {
+        Iterator qIt = questions.iterator();
+        Map<Integer,Map<String,QuestionRepitition>> questionRepMap = new HashMap<Integer,Map<String,QuestionRepitition>>();
+        while (qIt.hasNext())
+        {
+            Question q = (Question)qIt.next();
+            List<QuestionRepitition> questionRepList = q.getQuestionRepititions();
+            if(questionRepList==null) continue;
+            
+            for(QuestionRepitition repitition:questionRepList)
+            {
+                Map<String,QuestionRepitition> qMap = questionRepMap.get(new Integer(repitition.getRepeatSequence()));
+                if(qMap==null)
+                {
+                    Map<String,QuestionRepitition> tempQMap = new HashMap<String,QuestionRepitition>();
+                    tempQMap.put(q.getQuesIdseq(),repitition);
+                    questionRepMap.put(new Integer(repitition.getRepeatSequence()),tempQMap);
+
+                }
+                else
+                {
+                    qMap.put(q.getQuesIdseq(),repitition);
+                }
+                
+            }
+        }
+        return questionRepMap;
+    }
+    
     private List<Module> getRepetitions(Module module,int numberOfRepetititons)
     {
         List<Module> moduleRepetitions = new ArrayList<Module>();
         
         if(numberOfRepetititons==0)
             return moduleRepetitions;
+        Module tempModuleClone =null;
         for(int i=0;i<numberOfRepetititons;++i)
         {
-            //TODO Add code to set defaults and remove skip patterns
-            moduleRepetitions.add(module);
+            try
+            {
+                tempModuleClone= (Module)module.clone();
+            }
+            catch (Exception e)
+            {
+                if (log.isErrorEnabled()) {
+                  log.error("Exception Clonning Module", e);
+                }   
+               return moduleRepetitions;
+            }
+            moduleRepetitions.add(tempModuleClone);
         }
         return moduleRepetitions;
     }
+    
     
     /**
      * View Modules in the module list
@@ -203,58 +294,79 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction 
         //TODO check with module repitions
         return repeats.size();
     }
-    private String[] getQuestionDefaultsAsArray(List modules) {
-      if (modules == null) {
-        return null;
-      }
-
-      ListIterator iterate = modules.listIterator();
-      String[] defaultArr = new String[getMaxDefaultSize(modules)];
-       int defaultIndex = 0;
-      while (iterate.hasNext()) {
-        int index = iterate.nextIndex();
-        Module module = (Module) iterate.next();
-        if(module!=null&&module.getQuestions()!=null)
+    
+    private void setQuestionDefaultArrays(DynaActionForm dynaForm,List<Module> modRepetitions,Module module) {
+      if (modRepetitions == null) return;
+      if (modRepetitions.isEmpty()) return;
+      List qList = module.getQuestions();
+      if(qList==null)return;
+      if (qList.isEmpty()) return;
+      
+      int arrSize = modRepetitions.size()*qList.size();
+      String[] defaults = new String[arrSize];
+      String[] defaultVVIds = new String[arrSize];
+      
+      
+      for(Module repitition:modRepetitions) {
+        int index = 0;
+        if(repitition!=null&&repitition.getQuestions()!=null)
         {
-          List qList = module.getQuestions();
+          qList = repitition.getQuestions();
           ListIterator qIterate = qList.listIterator();
           while(qIterate.hasNext())
           {
             Question question = (Question) qIterate.next();
-            String defaultValue = question.getDefaultValue();
-            if(defaultValue!=null)
+            FormValidValue defaultValidValue = question.getDefaultValidValue();
+            if(defaultValidValue!=null)
             {
-              defaultArr[defaultIndex] = defaultValue;
+                defaults[index] = defaultValidValue.getLongName();
+                defaultVVIds[index] = defaultValidValue.getValueIdseq();
             }
             else
             {
-              defaultArr[defaultIndex] =  "";
+                defaults[index] = question.getDefaultValue();
+                defaultVVIds[index] = "";               
             }
-           ++defaultIndex;
+            index++;
           }
          }
-        }
-      return defaultArr;
+      }  
+        dynaForm.set(QUESTION_DEFAULTS,defaults);   
+        dynaForm.set(QUESTION_DEFAULT_VV_IDS,defaultVVIds);   
+              
     }      
     
-    
-    private int getMaxDefaultSize(List modules)
-    {
-      if(modules==null)
-        return 0;
-      int maxSize = 0;
-      ListIterator iterate = modules.listIterator();
-      while (iterate.hasNext()) {
-        Module module = (Module) iterate.next();
-        if(module!=null&&module.getQuestions()!=null)
+    private void addToQuestionDefaultArrays(DynaActionForm dynaForm,int numberOfRepeats,Module module) {
+ 
+       if(module.getQuestions()==null) return;
+        if(module.getQuestions().isEmpty()) return;
+        
+       String[] defaults = (String[])dynaForm.get(QUESTION_DEFAULTS); 
+       String[] defaultvvids = (String[])dynaForm.get(QUESTION_DEFAULT_VV_IDS); 
+       int totalSize = defaults.length+(numberOfRepeats*module.getQuestions().size());
+        String[] newDefaults = new String[totalSize];
+        String[] newDefaultvvids = new String[totalSize];
+        
+        for(int i=0; i < totalSize;++i)
         {
-          List qList = module.getQuestions();
-          if(qList!=null)
-            maxSize=maxSize+qList.size();
-         }
+            if(i<defaults.length)
+            {
+                newDefaults[i]=defaults[i];
+                newDefaultvvids[i]=defaultvvids[i];
+            }
+            else
+            {
+                newDefaults[i]="";
+                newDefaultvvids[i]="";            
+            }
+            
         }
-      return maxSize;
-    }    
+        dynaForm.set(QUESTION_DEFAULTS,newDefaults);   
+        dynaForm.set(QUESTION_DEFAULT_VV_IDS,newDefaultvvids);  
+        
+              
+    }      
+    
     
     private void setDefaultsFromArray(
       List modules,
@@ -279,7 +391,59 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction 
               ++index;
          }
       }
-    }    
+    }
+    
+    private String[] getQuestionDefaultsAsArray(List modules) {
+       if (modules == null) {
+         return null;
+       }
+
+       ListIterator iterate = modules.listIterator();
+       String[] defaultArr = new String[getMaxDefaultSize(modules)];
+        int defaultIndex = 0;
+       while (iterate.hasNext()) {
+         int index = iterate.nextIndex();
+         Module module = (Module) iterate.next();
+         if(module!=null&&module.getQuestions()!=null)
+         {
+           List qList = module.getQuestions();
+           ListIterator qIterate = qList.listIterator();
+           while(qIterate.hasNext())
+           {
+             Question question = (Question) qIterate.next();
+             String defaultValue = question.getDefaultValue();
+             if(defaultValue!=null)
+             {
+               defaultArr[defaultIndex] = defaultValue;
+             }
+             else
+             {
+               defaultArr[defaultIndex] =  "";
+             }
+            ++defaultIndex;
+           }
+          }
+         }
+       return defaultArr;
+     }  
+     
+    private int getMaxDefaultSize(List modules)
+    {
+      if(modules==null)
+        return 0;
+      int maxSize = 0;
+      ListIterator iterate = modules.listIterator();
+      while (iterate.hasNext()) {
+        Module module = (Module) iterate.next();
+        if(module!=null&&module.getQuestions()!=null)
+        {
+          List qList = module.getQuestions();
+          if(qList!=null)
+            maxSize=maxSize+qList.size();
+         }
+        }
+      return maxSize;
+    }      
     
 }
 

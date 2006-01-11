@@ -108,14 +108,17 @@
                                         Default value
                                      </td>
                                      <td class="OraFieldText">
-                                        &nbsp;
-                                     </td>
+                                        <html:hidden property="<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"["+defaultIndex+"]"%>"/>
+                                         <html:text  styleClass="OraFieldText"  property='<%=FormConstants.QUESTION_DEFAULTS+"["+defaultIndex+"]"%>'>
+                                         </html:text>                                    
+                                     </td>                                    
                                       </logic:notEmpty>
                                       <logic:empty name="question" property = "validValues">
                                          <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
                                            Default value
                                         </td>
                                         <td class="OraFieldText">
+                                         <html:hidden property="<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"["+defaultIndex+"]"%>" value="" />
                                          <html:textarea  styleClass="OraFieldText" rows="1" cols="102" property='<%=FormConstants.QUESTION_DEFAULTS+"["+defaultIndex+"]"%>'>
                                          </html:textarea>
                                         </td>                                   
@@ -140,11 +143,11 @@
                                       <tr   class="OraTabledata">
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td class="OraFieldText">
-                                          <!-- TODO to populate default value -->
-                                            <html:link page='<%="/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes"%>'
-                                                >                                                       
-                                             <bean:write name="validValue" property="longName"/>
-                                          </html:link>
+                                          <bean:write name="validValue" property="longName"/>
+
+                                          <a href="javascript:populateDefaultValue('<%=FormConstants.QUESTION_DEFAULTS+"[" + defaultIndex +"]"%>','<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"[" + defaultIndex +"]"%>','<%=validValue.getLongName()%>','<%=validValue.getValueIdseq()%>')">
+                                             Click here to set as default
+                                          </a>                                           
                                         </td>
                                       </tr>
                                       <tr   class="OraTabledata">
