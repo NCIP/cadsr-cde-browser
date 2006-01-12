@@ -1,7 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-
-// java imports
 import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.userexception.DataElementNotFoundException;
@@ -9,27 +7,19 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.userexception.IllegalURLParametersExce
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
 import gov.nih.nci.ncicb.cadsr.util.UserErrorMessage;
 
-import java.util.Locale;
-import java.util.Properties;
+import javax.servlet.http.HttpServletRequest;
 
 import oracle.cle.persistence.HandlerFactory;
-
-import oracle.cle.process.PersistingProcess;
-import oracle.cle.process.ProcessConstants;
-import oracle.cle.process.ProcessInfo;
 import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.ProcessParameter;
-import oracle.cle.process.ProcessResult;
 import oracle.cle.process.Service;
-
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
 
-import javax.servlet.http.HttpServletRequest;
+
+// java imports
 
 
 public class GetDataElementDetails extends BasePersistingProcess {
