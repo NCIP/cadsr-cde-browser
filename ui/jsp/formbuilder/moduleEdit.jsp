@@ -26,10 +26,32 @@ function submitForm() {
 }
 
 function submitValidValueEdit(methodName,questionIndexValue,validValueIndexValue) {
+  
+  if (isValidValueQuestionDefault(questionIndexValue,validValueIndexValue)==true){
+    alert("Valid Value :" + validValueIndexValue + " is used as the question default value. Please clear the default value of this quesiton first.");
+    reutrn;
+  }
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
   document.forms[0].<%=FormConstants.QUESTION_INDEX%>.value=questionIndexValue;
   document.forms[0].<%=FormConstants.VALID_VALUE_INDEX%>.value=validValueIndexValue;
   document.forms[0].submit();
+}
+
+function isValidValueQuestionDefault(questionIndexValue,validValueIndexValue){
+    var objForm0 = document.forms[0];
+    var objQuestionDefaultValidValueId = objForm0['questionDefaultValidValueIds[' + questionIndexValue + ']'];
+    var objDeletedValidValueIds = objForm0['<%=FormConstants.SELECTED_ITEMS%>' + questionIndexValue];
+    var objDeletedValidValueId = objDeletedValidValueIds[validValueIndexValue];
+    alert("objDeletedValidValueId.value=" + objDeletedValidValueId.value);
+    alert("objQuestionDefaultValidValueId.value=" + objQuestionDefaultValidValueId.value);
+    //if (objDeletedValidValueId.value==objQuestionDefaultValidValueId.value){
+    if (objDeletedValidValueId==objQuestionDefaultValidValueId){
+    alert("used!");
+        return true;
+    }else{
+    alert("not equal");
+        return false;    
+    }    
 }
 
 function submitValidValuesEdit(methodName,questionIndexValue) {
@@ -126,8 +148,6 @@ function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
     var objQuestionDefaultValidValueId = objForm0['questionDefaultValidValueIds[' + index + ']'];
     objQuestionDefaultValue.value = defaultValidValue;
     objQuestionDefaultValidValueId.value = defaultValidValueId;
-
-
 }
 
   function switchAll(e)
@@ -676,6 +696,7 @@ function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
                                           <tr class="OraTabledata" >
                                            <td align="left" >
                                               <INPUT TYPE=CHECKBOX NAME="<%= FormConstants.SELECTED_ITEMS+questionIndex%>" value="<%= validValueIndex %>">
+                                              <INPUT TYPE=hidden NAME='<%= FormConstants.SELECTED_ITEMS+questionIndex%>' value='<%= validValue.getValueIdseq()%>'>
                                               </td>
                                                <!-- Adding from available vv list -->
                                                   
