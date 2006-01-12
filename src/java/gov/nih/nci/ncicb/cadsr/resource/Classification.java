@@ -26,5 +26,10 @@ public interface Classification
    public String getClassSchemePublicId();
    public void setClassSchemePublicId(String publicId);
 
+   public void setCsIdseq(String csIdseq);
+   public String getCsIdseq();
 
+   public void setCsiIdseq(String csiIdseq);
+   public String getCsiIdseq();
+   
 }
