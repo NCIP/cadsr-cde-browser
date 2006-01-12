@@ -2,11 +2,15 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.service.impl;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
+import gov.nih.nci.ncicb.cadsr.dao.AdminComponentDAO;
+import gov.nih.nci.ncicb.cadsr.dao.ClassificationSchemeItemDAO;
 import gov.nih.nci.ncicb.cadsr.dao.DataElementDAO;
 import gov.nih.nci.ncicb.cadsr.domain.AlternateName;
 import gov.nih.nci.ncicb.cadsr.domain.DataElement;
 import gov.nih.nci.ncicb.cadsr.domain.Definition;
 import gov.nih.nci.ncicb.cadsr.domain.bean.ClassSchemeClassSchemeItemBean;
+import gov.nih.nci.ncicb.cadsr.domain.bean.ClassificationSchemeBean;
+import gov.nih.nci.ncicb.cadsr.domain.bean.ClassificationSchemeItemBean;
 import gov.nih.nci.ncicb.cadsr.domain.bean.DataElementBean;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
@@ -138,5 +142,22 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
     cscsi.setClassSchemeItemType(cscsiBean.getCsi().getType());
     return cscsi;
   }
+
+   public List getReferenceDocuments(String acIdseq){
+      AdminComponentDAO dao = domainObjectsDaoFactory.getAdminComponentDAO();
+      ClassificationSchemeBean ac = new ClassificationSchemeBean();
+      ac.setId(acIdseq);
+      List refDocs = dao.getReferenceDocuments(ac);
+      return refDocs;
+   }
+
+   public List getReferenceDocumentsForCSI(String csiIdseq){
+      ClassificationSchemeItemDAO dao = domainObjectsDaoFactory.getClassificationSchemeItemDAO();
+      ClassificationSchemeItemBean csi = new ClassificationSchemeItemBean();
+      csi.setId(csiIdseq);
+      List refDocs = dao.getReferenceDocuments(csi);
+      return refDocs;
+      
+   }
   
 }
