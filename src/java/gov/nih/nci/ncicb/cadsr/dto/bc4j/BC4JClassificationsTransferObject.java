@@ -14,7 +14,9 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 	protected String classSchemeDefinition;
 	protected String classSchemeItemName;
 	protected String classSchemeItemType;
-  protected String csPublicId;
+   protected String csPublicId;
+   protected String csIdseq;
+   protected String csiIdseq;
 
 	public BC4JClassificationsTransferObject() {
 		super();
@@ -26,6 +28,8 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 		classSchemeDefinition = classificationsViewRowImpl.getPreferredDefinition();
 		classSchemeItemName = classificationsViewRowImpl.getCsiName();
 		classSchemeItemType = classificationsViewRowImpl.getCsitlName();
+      csIdseq = classificationsViewRowImpl.getCsIdseq();
+      csiIdseq = classificationsViewRowImpl.getCsiIdseq();
     //If clause added by Ram
     if (classificationsViewRowImpl.getCsId() != null)
       csPublicId = classificationsViewRowImpl.getCsId().stringValue();
@@ -85,5 +89,21 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
     csPublicId = publicId;
   }
 
+
+   public void setCsIdseq(String csIdseq) {
+      this.csIdseq = csIdseq;
+   }
+
+   public String getCsIdseq() {
+      return csIdseq;
+   }
+
+   public void setCsiIdseq(String csiIdseq) {
+      this.csiIdseq = csiIdseq;
+   }
+
+   public String getCsiIdseq() {
+      return csiIdseq;
+   }
 
 }
