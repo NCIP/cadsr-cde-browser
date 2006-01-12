@@ -1,29 +1,31 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
 import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
+import gov.nih.nci.ncicb.cadsr.html.HTMLPageScroller;
 import gov.nih.nci.ncicb.cadsr.resource.Classification;
-import gov.nih.nci.ncicb.cadsr.resource.handler.ClassificationHandler;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.resource.handler.ClassificationHandler;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.util.PageIterator;
 import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
-import gov.nih.nci.ncicb.cadsr.html.HTMLPageScroller;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 
 import oracle.cle.persistence.HandlerFactory;
-import oracle.cle.process.PersistingProcess;
-import oracle.cle.process.ProcessInfo;
 import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.ProcessParameter;
-import oracle.cle.process.ProcessResult;
 import oracle.cle.process.Service;
 import oracle.cle.util.statemachine.TransitionCondition;
-import oracle.cle.util.statemachine.TransitionConditionException;
 
 
 /**
@@ -54,6 +56,8 @@ public class GetClassificationSchemes extends BasePersistingProcess
 		try{
       registerParameterObject("de");
       registerResultObject("tib");
+      registerResultObject("csRefDocs");
+      registerResultObject("csiRefDocs");
       registerResultObject(ProcessConstants.CLASSIFICATION_VECTOR);
 
       registerStringParameter("newSearch");
@@ -93,7 +97,8 @@ public class GetClassificationSchemes extends BasePersistingProcess
     int blockSize = 20;
     HTMLPageScroller scroller = null;
     String scrollerHTML = "";
-    
+	 Map csRefDocs = new HashMap();
+    Map csiRefDocs = new HashMap();
 		try{
       DataElement de = (DataElement)getInfoObject("de");
       myRequest = (HttpServletRequest)getInfoObject("HTTPRequest");
@@ -140,12 +145,38 @@ public class GetClassificationSchemes extends BasePersistingProcess
       if (tabNum != 3) {
           tib.setMainTabNum(3);
       }
-    
+      
+      ApplicationServiceLocator  appServiceLocator =(ApplicationServiceLocator)
+      myRequest.getSession().getServletContext().getAttribute(ApplicationServiceLocator.APPLICATION_SERVICE_LOCATOR_CLASS_KEY);
+      
+      CDEBrowserService cdeBrowserService = appServiceLocator.findCDEBrowserService();
+      Iterator iter = classificationSchemes.iterator();
+      Set csNames = new HashSet();  // to avoid duplicate cs 
+      Set csiNames = new HashSet();
+      
+      while (iter.hasNext()) {
+         
+         Classification cs = (Classification) iter.next();
+         if (!csNames.contains(cs.getClassSchemeName())) {
+            List refDocs = cdeBrowserService.getReferenceDocuments(cs.getCsIdseq());
+            if (refDocs != null && refDocs.size()>0)
+               csRefDocs.put(cs.getClassSchemeName(), refDocs);
+            csNames.add(cs.getClassSchemeName());
+         }
+         if (!csiNames.contains(cs.getClassSchemeItemName())) {
+            List refDocs = cdeBrowserService.getReferenceDocumentsForCSI(cs.getCsiIdseq());
+            if (refDocs != null && refDocs.size()>0)
+               csiRefDocs.put(cs.getClassSchemeItemName(), refDocs);
+            csiNames.add(cs.getClassSchemeItemName());
+         }
+      }
 		} 
 		catch(Exception e){
       e.printStackTrace();      
       
     } 
+    setResult("csRefDocs", csRefDocs);
+    setResult("csiRefDocs", csiRefDocs);
     setResult(ProcessConstants.CLASSIFICATION_VECTOR, classificationSchemes);
     setResult(ProcessConstants.DE_CS_PAGE_ITERATOR,csIterator);
     setResult(ProcessConstants.DE_CS_PAGE_SCROLLER,scroller);
