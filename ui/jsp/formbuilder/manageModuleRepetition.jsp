@@ -110,12 +110,15 @@ function submitModuleListEdit(methodName) {
         }
   }
   
-function populateDefaultValue(defaultId,defaultVVId, dvalue,vvId){
-	var default = document.getElementById(defaultId);
-	default.value=dvalue;
-	var defaultid = document.getElementById(defaultVVId);
-	defaultid.value=vvId;	
-}  
+  
+
+function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
+    var objForm0 = document.forms[0];
+    var objQuestionDefaultValue = objForm0['<%=FormConstants.QUESTION_DEFAULTS%>[' + index + ']'];
+    var objQuestionDefaultValidValueId = objForm0['<%=FormConstants.QUESTION_DEFAULT_VV_IDS%>[' + index + ']'];
+    objQuestionDefaultValue.value = defaultValidValue;
+    objQuestionDefaultValidValueId.value = defaultValidValueId;
+}
 </SCRIPT>
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff">

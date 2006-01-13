@@ -12,6 +12,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleChanges;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+import gov.nih.nci.ncicb.cadsr.resource.QuestionRepitition;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerActionChanges;
@@ -227,4 +228,9 @@ public interface FormBuilderServiceRemote {
 
     public List getRreferenceDocuments(String acId) 
                 throws RemoteException;
+                
+    public Module saveQuestionRepititons(String moduleId,int repeatCount
+            , Map<String,List<QuestionRepitition>> repititionMap,List<String> questionWithoutRepitions)
+            throws RemoteException;
+                
     }

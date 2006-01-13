@@ -16,6 +16,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.ModuleInstructionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ProtocolDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionInstructionDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionRepititionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ReferenceDocumentDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ReferenceDocumentTypeDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.TriggerActionDAO;
@@ -47,6 +48,17 @@ public class JDBCDAOFactory extends AbstractDAOFactory
     return formDAO;
   }
 
+  public  QuestionRepititionDAO getQuestionRepititionDAO()
+  {
+      QuestionRepititionDAO dao = (JDBCQuestionRepititionDAO) daoCache.get(JDBC_QUESTION_REPITION_DAO);
+
+      if (dao == null) {
+        dao = new JDBCQuestionRepititionDAO(serviceLocator);
+        daoCache.put(JDBC_QUESTION_REPITION_DAO, dao);
+      }
+
+      return dao;      
+  }
   public FormValidValueDAO getFormValidValueDAO() {
     FormValidValueDAO vvDAO =
       (JDBCFormValidValueDAO) daoCache.get(JDBC_FORM_VALID_VALUE_DAO);

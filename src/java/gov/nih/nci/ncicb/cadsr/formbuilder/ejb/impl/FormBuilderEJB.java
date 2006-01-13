@@ -55,9 +55,11 @@ import java.util.HashMap;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ProtocolDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionRepititionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.TriggerActionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCQuestionDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+import gov.nih.nci.ncicb.cadsr.resource.QuestionRepitition;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerActionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
@@ -1508,6 +1510,49 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         dao.deleteTriggerAction(triggerActionId);
     }
     
+    public Module saveQuestionRepititons(String moduleId,int repeatCount
+    , Map<String,List<QuestionRepitition>> repititionMap,
+    List<String> questionWithoutRepitions)
+    {
+        QuestionRepititionDAO dao = daoFactory.getQuestionRepititionDAO();
+        String userId = getUserName().toUpperCase();
+        
+        if(questionWithoutRepitions!=null&&!questionWithoutRepitions.isEmpty())
+        {
+            Iterator<String> lit = questionWithoutRepitions.iterator();
+            while(lit.hasNext())
+            {
+                String key = lit.next();
+                dao.deleteRepititionsForQuestion(key);
+            }   
+        }
+        if(repititionMap!=null &&!repititionMap.isEmpty())
+        {
+            Set<String> keys = repititionMap.keySet();
+            Iterator<String>  it = keys.iterator();
+            while(it.hasNext())
+            {
+                String key = it.next();
+                dao.deleteRepititionsForQuestion(key);
+            }
+        }
+        dao.updateModuleRepeatCount(moduleId,repeatCount,userId);
+        if(repititionMap!=null &&!repititionMap.isEmpty())
+        {
+            Set keys = repititionMap.keySet();
+            Iterator<String> it = keys.iterator();
+            while(it.hasNext())
+            {
+                String key = it.next();
+                List<QuestionRepitition> qrList = repititionMap.get(key);
+                for(QuestionRepitition questionRep:qrList)
+                {
+                    dao.createRepitition(key,questionRep,userId);
+                }
+            }
+        } 
+         return getModule(moduleId);
+    }
     private void setSourceForTriggerActions(FormElement source, List<TriggerAction> actions)
     {
         for(TriggerAction action : actions)

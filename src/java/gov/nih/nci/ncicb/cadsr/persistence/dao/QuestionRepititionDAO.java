@@ -14,5 +14,5 @@ public interface QuestionRepititionDAO
     
     public int deleteRepititionsForQuestion(String questionId);
     
-    public int createRepitition(QuestionRepitition repitition,String username);
+    public int createRepitition(String questionId,QuestionRepitition repitition,String username);
 }

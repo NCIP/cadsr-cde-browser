@@ -108,9 +108,8 @@
                                         Default value
                                      </td>
                                      <td class="OraFieldText">
-                                        <html:hidden property="<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"["+defaultIndex+"]"%>"/>
-                                         <html:text  styleClass="OraFieldText"  property='<%=FormConstants.QUESTION_DEFAULTS+"["+defaultIndex+"]"%>'>
-                                         </html:text>                                    
+                                        <html:hidden property="<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"["+defaultIndex+"]"%>"  />
+                                         <html:text  styleClass="OraFieldText"  property='<%=FormConstants.QUESTION_DEFAULTS+"["+defaultIndex+"]"%>' readonly="true" size="70" />                                   
                                      </td>                                    
                                       </logic:notEmpty>
                                       <logic:empty name="question" property = "validValues">
@@ -119,8 +118,7 @@
                                         </td>
                                         <td class="OraFieldText">
                                          <html:hidden property="<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"["+defaultIndex+"]"%>" value="" />
-                                         <html:textarea  styleClass="OraFieldText" rows="1" cols="102" property='<%=FormConstants.QUESTION_DEFAULTS+"["+defaultIndex+"]"%>'>
-                                         </html:textarea>
+                                         <html:text  styleClass="OraFieldText"  property='<%=FormConstants.QUESTION_DEFAULTS+"["+defaultIndex+"]"%>' size="70" />         
                                         </td>                                   
                                        </logic:empty>
                                     </tr>                                    
@@ -145,7 +143,7 @@
                                         <td class="OraFieldText">
                                           <bean:write name="validValue" property="longName"/>
 
-                                          <a href="javascript:populateDefaultValue('<%=FormConstants.QUESTION_DEFAULTS+"[" + defaultIndex +"]"%>','<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"[" + defaultIndex +"]"%>','<%=validValue.getLongName()%>','<%=validValue.getValueIdseq()%>')">
+                                          <a href="javascript:populateDefaultValue('<%=validValue.getLongName()%>','<%=validValue.getValueIdseq()%>','<%=defaultIndex%>')">
                                              Click here to set as default
                                           </a>                                           
                                         </td>

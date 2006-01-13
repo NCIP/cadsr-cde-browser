@@ -2,9 +2,6 @@ package gov.nih.nci.ncicb.cadsr.resource;
 
 public interface QuestionRepitition
 {
-    public void setQuestion(Question question);
-
-    public Question getQuestion();
 
     public void setDefaultValue(String defaultValue);
 

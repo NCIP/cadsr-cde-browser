@@ -43,5 +43,6 @@ public interface FormBuilderConstants extends CaDSRConstants{
   public static final String ERROR_SKIP_PATTERN_DELETE="FB0018";
   public static final String ERROR_SKIP_PATTERN_EDIT="FB0019";
   public static final String ERROR_SKIP_PATTERN_TARGET_CHECK="FB0020"; 
+  public static final String ERROR_SAVE_QUESTION_REPITITON="FB0021"; 
 
 }

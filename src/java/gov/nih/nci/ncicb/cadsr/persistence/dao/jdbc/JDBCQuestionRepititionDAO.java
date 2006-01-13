@@ -67,7 +67,7 @@ public class JDBCQuestionRepititionDAO extends JDBCAdminComponentDAO implements 
         return deleteAction.delete(questionId);        
     }
     
-    public int createRepitition(QuestionRepitition repitition,String username)  
+    public int createRepitition(String questionId, QuestionRepitition repitition,String username)  
     {
 
         CreateQuestionRepitition createRepitition =
@@ -77,7 +77,7 @@ public class JDBCQuestionRepititionDAO extends JDBCAdminComponentDAO implements 
         if(fvv!=null)
             fvvIdSeq = fvv.getValueIdseq();
             
-        int res = createRepitition.create(repitition.getDefaultValue()
+        int res = createRepitition.create(questionId,repitition.getDefaultValue()
             ,fvvIdSeq,repitition.getRepeatSequence(),username);
 
         if (res == 1)
@@ -189,11 +189,12 @@ public class JDBCQuestionRepititionDAO extends JDBCAdminComponentDAO implements 
         public CreateQuestionRepitition(DataSource ds)
         {
             String sql =
-                " INSERT INTO quest_vv_ext " + " (VALUE,VV_IDSEQ,REPEAT_SEQUENCE, created_by) " +
-                " VALUES " + " (?,?, ?,?) ";
+                " INSERT INTO quest_vv_ext " + " (QUEST_IDSEQ,VALUE,VV_IDSEQ,REPEAT_SEQUENCE, created_by) " +
+                " VALUES " + " (?,?,?, ?,?) ";
 
             this.setDataSource(ds);
             this.setSql(sql);
+            declareParameter(new SqlParameter("QUEST_IDSEQ", Types.VARCHAR));
             declareParameter(new SqlParameter("VALUE", Types.VARCHAR));
             declareParameter(new SqlParameter("VV_IDSEQ", Types.VARCHAR));
             declareParameter(new SqlParameter("REPEAT_SEQUENCE", Types.INTEGER));
@@ -201,13 +202,13 @@ public class JDBCQuestionRepititionDAO extends JDBCAdminComponentDAO implements 
             compile();
         }
 
-        protected int create(String value, String vvIdSeq,
+        protected int create(String questionId,String value, String vvIdSeq,
                              int repeatSequence,String createdBy)
         {
 
 
             Object[] obj = new Object[]
-                { value,vvIdSeq,repeatSequence,createdBy };
+                { questionId,value,vvIdSeq,repeatSequence,createdBy };
 
             int res = update(obj);
 
