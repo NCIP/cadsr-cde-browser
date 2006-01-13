@@ -11,8 +11,13 @@
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="oracle.clex.process.PageConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
-<%@page import="java.util.Vector " %>
+<%@page import="java.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.domain.ReferenceDocument" %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.domain.ReferenceDocumentAttachment"%>
+
 
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
@@ -24,6 +29,8 @@
   Vector classificationVector = (Vector)infoBean.getInfo(ProcessConstants.CLASSIFICATION_VECTOR);
   DataElement de = (DataElement)infoBean.getInfo("de");
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
+  Map csRefDocs = (Map) infoBean.getInfo("csRefDocs");
+  Map csiRefDocs = (Map) infoBean.getInfo("csiRefDocs");
   String pageId = infoBean.getPageId();
   String pageName = PageConstants.PAGEID;
   String pageUrl = "&"+pageName+"="+pageId;
@@ -31,9 +38,6 @@
                 infoBean.getInfo(ProcessConstants.DE_CS_PAGE_SCROLLER);
   String scrollerHTML = scroller.getScrollerHTML();
 %>
-
-
-
 
 
 <HTML>
@@ -167,6 +171,156 @@ function listChanged(urlInfo) {
 <%
   }
 %>
+</table>
+<br>
+
+<table cellpadding="0" cellspacing="0" width="80%" align="center">
+  <tr>
+    <td class="OraHeaderSubSub" width="100%">Classifications Scheme Reference Documents</td>
+  </tr>
+  <tr>
+    <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+  </tr>
+  <tr>
+    <td><font size="-2" color="#336699">*CS:Classification Scheme&nbsp;&nbsp; </font></td>
+  </tr>
+</table>
+
+<table width="80%" align="center" cellpadding="1" cellspacing="1" bgcolor="#999966">
+  <tr class="OraTableColumnHeader">
+    <th>CS* Short Name</th>
+   <th>Document Name</th>
+   <th>Document Type</th>
+   <th>Document Text</th>
+   <th>URL</th>
+   <th>Attachments</th>
+  </tr>
+<%
+  if (csRefDocs!= null &&  csRefDocs.keySet().size() >0) {
+    Iterator csIter = csRefDocs.keySet().iterator(); 
+    while (csIter.hasNext()) {
+       String csName = (String) csIter.next(); 
+       List refDocs =(List) csRefDocs.get(csName);
+       for (int i=0;i<refDocs.size(); i++) {
+         ReferenceDocument refDoc = (ReferenceDocument)refDocs.get(i);
+ %>
+      <tr class="OraTabledata">
+        <td class="OraFieldText"><%=csName%></td>
+        <td class="OraFieldText"><%=refDoc.getName()%> </td>
+        <td class="OraFieldText"><%= refDoc.getType()%> </td>
+        <td class="OraFieldText"><%=refDoc.getText()%> </td>
+        <td class="OraFieldText">   
+        <% if (refDoc.getUrl() != null) { %>
+        <a href="<%=refDoc.getUrl()%>" target="AuxWindow"  >
+                    <%=refDoc.getUrl()%>
+                    </a>
+        <%} %>
+         </td>
+         <td>
+         
+         <% Iterator attIter = refDoc.getAttachments().iterator();
+         while (attIter.hasNext()) { 
+            ReferenceDocumentAttachment refDocAtt = (ReferenceDocumentAttachment) attIter.next(); %>
+                 <a href='<%=request.getContextPath()+ "/ocbrowser/viewRefDocAttchment.do?"+NavigationConstants.METHOD_PARAM+"=viewReferenceDocAttchment&"
+                 +FormConstants.REFERENCE_DOC_ATTACHMENT_NAME+"="+refDocAtt.getName()%>' 
+                   target="_parent" > <%=refDocAtt.getName()%>
+                 </a>                 
+                        <br>
+<%
+    }
+%>         
+          </td>
+ </tr>
+ <%
+      }
+  }
+  }
+  else { %>
+  
+       <tr class="OraTabledata">
+         <td colspan="6">There are no reference documents for the classifications.</td>
+       </tr>
+  
+  <%
+  }
+%>
+</table>
+
+<br>
+
+<table cellpadding="0" cellspacing="0" width="80%" align="center">
+  <tr>
+    <td class="OraHeaderSubSub" width="100%">Classification Scheme Item Reference Document</td>
+  </tr>
+  <tr>
+    <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+  </tr>
+  <tr>
+    <td><font size="-2" color="#336699">CSI:Classification Scheme Item</font></td>
+  </tr>
+</table>
+
+<table width="80%" align="center" cellpadding="1" cellspacing="1" bgcolor="#999966">
+  <tr class="OraTableColumnHeader">
+    <th>CSI* Name</th>
+   <th>Document Name</th>
+   <th>Document Type</th>
+   <th>Document Text</th>
+   <th>URL</th>
+   <th>Attachments</th>
+  </tr>
+<%
+  if (csiRefDocs!= null &&  csiRefDocs.keySet().size() >0) {
+    Iterator csiIter = csiRefDocs.keySet().iterator(); 
+    while (csiIter.hasNext()) {
+       String csiName = (String) csiIter.next(); 
+       List refDocs =(List) csiRefDocs.get(csiName);
+       for (int i=0;i<refDocs.size(); i++) {
+         ReferenceDocument refDoc = (ReferenceDocument)refDocs.get(i);
+ %>
+      <tr class="OraTabledata">
+        <td class="OraFieldText"><%=csiName%></td>
+        <td class="OraFieldText"><%=refDoc.getName()%> </td>
+        <td class="OraFieldText"><%= refDoc.getType()%> </td>
+        <td class="OraFieldText"><%=refDoc.getText()%> </td>
+        <td class="OraFieldText">   
+        <% if (refDoc.getUrl() != null) { %>
+        <a href="<%=refDoc.getUrl()%>" target="AuxWindow"  >
+                    <%=refDoc.getUrl()%>
+                    </a>
+        <%} %>
+         </td>
+         <td>
+         
+         <% Iterator attIter = refDoc.getAttachments().iterator();
+         while (attIter.hasNext()) { 
+            ReferenceDocumentAttachment refDocAtt = (ReferenceDocumentAttachment) attIter.next(); %>
+                 <a href='<%=request.getContextPath()+ "/ocbrowser/viewRefDocAttchment.do?"+NavigationConstants.METHOD_PARAM+"=viewReferenceDocAttchment&"
+                 +FormConstants.REFERENCE_DOC_ATTACHMENT_NAME+"="+refDocAtt.getName()%>' 
+                   target="_parent" > <%=refDocAtt.getName()%>
+                 </a>                 
+                        <br>
+<%
+    }
+%>         
+          </td>
+ </tr>
+ <%
+      }
+  }
+  }
+  else { %>
+  
+       <tr class="OraTabledata">
+         <td colspan="6">There are no reference documents for the classifications.</td>
+       </tr>
+  
+  <%
+  }
+%>
+</table>
+
+
 </form>
 
 <%@ include file="../common/common_bottom_border.jsp"%>
