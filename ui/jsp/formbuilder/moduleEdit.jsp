@@ -21,16 +21,27 @@
     <SCRIPT LANGUAGE="JavaScript">
 <!--
 
+function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
+    var objForm0 = document.forms[0];
+    var objQuestionDefaultValue = objForm0['questionDefaultValues[' + index + ']'];
+    var objQuestionDefaultValidValueId = objForm0['questionDefaultValidValueIds[' + index + ']'];
+    objQuestionDefaultValue.value = defaultValidValue;
+    objQuestionDefaultValidValueId.value = defaultValidValueId;
+}
+
+
 function submitForm() {
   document.forms[0].submit();
 }
 
 function submitValidValueEdit(methodName,questionIndexValue,validValueIndexValue) {
-  
-  if (isValidValueQuestionDefault(questionIndexValue,validValueIndexValue)==true){
-    alert("Valid Value :" + validValueIndexValue + " is used as the question default value. Please clear the default value of this quesiton first.");
-    reutrn;
-  }
+alert(methodName);
+  if (methodName=='<%=NavigationConstants.DELETE_VALID_VALUE%>' || methodName=='<%=NavigationConstants.DELETE_VALID_VALUES%>'){
+	  if (isValidValueQuestionDefault(questionIndexValue,validValueIndexValue)==true){
+	    alert("One of the Valid Value is used as the question default value. Please clear the default value of this quesiton first.");
+	    return;
+	  }
+  }	  
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
   document.forms[0].<%=FormConstants.QUESTION_INDEX%>.value=questionIndexValue;
   document.forms[0].<%=FormConstants.VALID_VALUE_INDEX%>.value=validValueIndexValue;
@@ -39,28 +50,63 @@ function submitValidValueEdit(methodName,questionIndexValue,validValueIndexValue
 
 function isValidValueQuestionDefault(questionIndexValue,validValueIndexValue){
     var objForm0 = document.forms[0];
-    var objQuestionDefaultValidValueId = objForm0['questionDefaultValidValueIds[' + questionIndexValue + ']'];
-    var objDeletedValidValueIds = objForm0['<%=FormConstants.SELECTED_ITEMS%>' + questionIndexValue];
+    var objQuestionDefaultValidValueId = objForm0['questionDefaultValidValueIds[' + questionIndexValue+ ']'];
+    
+    var objDeletedValidValueIds = objForm0['<%=FormConstants.SELECTED_ITEMS+"H"%>' + questionIndexValue];
+    
     var objDeletedValidValueId = objDeletedValidValueIds[validValueIndexValue];
-    alert("objDeletedValidValueId.value=" + objDeletedValidValueId.value);
-    alert("objQuestionDefaultValidValueId.value=" + objQuestionDefaultValidValueId.value);
-    //if (objDeletedValidValueId.value==objQuestionDefaultValidValueId.value){
-    if (objDeletedValidValueId==objQuestionDefaultValidValueId){
-    alert("used!");
+    
+    
+    //alert("objDeletedValidValueId.value=" + objDeletedValidValueId.value);
+    //alert("objQuestionDefaultValidValueId.value=" + objQuestionDefaultValidValueId.value);
+    if (objDeletedValidValueId.value==objQuestionDefaultValidValueId.value){
         return true;
     }else{
-    alert("not equal");
         return false;    
     }    
 }
 
+
+
+function getSelectedNumber(selectedElements){
+  var len = selectedElements.length; 
+  var i=0;
+  var total = 0;
+  for( i=0; i<len ; i++) {
+    if (selectedElements[i].checked==1) {
+    	total = total + 1;
+    }	
+  }
+  return total;
+}
+
+
 function submitValidValuesEdit(methodName,questionIndexValue) {
-   var selectedItems = '<%=FormConstants.SELECTED_ITEMS%>';
-   var selectedElements = selectedItems+questionIndexValue;
-   var selectedSize = getNumberOfSelectedItems(selectedElements);
-  if (validateSelection(selectedElements,'Please select at least one valid value to delete')) {
-      if(selectedSize>1)
+   var objForm0 = document.forms[0];
+   var selectedElements = objForm0['<%=FormConstants.SELECTED_ITEMS%>' + questionIndexValue];
+   var selectedSize = getSelectedNumber(selectedElements);
+   
+   if (selectedSize==0 && methodName=='<%=NavigationConstants.DELETE_VALID_VALUES%>'){
+   	alert('Please select at least one valid value to delete');
+   	return false;
+   }
+
+   if(selectedSize>1)
       {
+      	  //verify each valid value is used as default
+	  var len = selectedElements.length; 
+	  var i=0;
+	  for( i=0; i<len ; i++) {
+	   if (selectedElements[i].checked==1) {
+	      if (methodName=='<%=NavigationConstants.DELETE_VALID_VALUE%>' || methodName=='<%=NavigationConstants.DELETE_VALID_VALUES%>' ){
+		if (isValidValueQuestionDefault(questionIndexValue, i) ){  
+	          alert("One of the Valid Value is used as the question default value. Please clear the default value of this quesiton first.");
+	    	  return;
+	    	}  
+	      }
+	   } 
+	  }
+      
         document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
         document.forms[0].<%=FormConstants.QUESTION_INDEX%>.value=questionIndexValue;
         document.forms[0].submit();
@@ -68,11 +114,18 @@ function submitValidValuesEdit(methodName,questionIndexValue) {
       }
       else
       {
-        var selectedIndexValue = getValueOfSelectedItem(selectedElements);
+	  var selectedIndexValue;
+	  var len = selectedElements.length; 
+	  alert("len = " + len);
+	  var i=0;
+	  for( i=0; i<len ; i++) {
+	   if (selectedElements[i].checked==1) {
+	     selectedIndexValue = i;
+	   } 
+	  }
         submitValidValueEdit(methodName,questionIndexValue,selectedIndexValue);
-        return true;
+        return;
       }
-    }
  }
  
 function submitModuleEdit(methodName,questionIndexValue) {
@@ -142,13 +195,6 @@ function clearProtocol() {
   document.forms[0].protocolLongName.value = "";
 }
 
-function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
-    var objForm0 = document.forms[0];
-    var objQuestionDefaultValue = objForm0['questionDefaultValues[' + index + ']'];
-    var objQuestionDefaultValidValueId = objForm0['questionDefaultValidValueIds[' + index + ']'];
-    objQuestionDefaultValue.value = defaultValidValue;
-    objQuestionDefaultValidValueId.value = defaultValidValueId;
-}
 
   function switchAll(e)
   {
@@ -234,6 +280,17 @@ function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
         targetObj.value=newValue;
        
      }  
+     
+  function submitChangeAsso(url, questionIndexValue){
+    var objForm0 = document.forms[0];
+    var objQuestionDefaultValidValueId = objForm0['questionDefaultValidValueIds[' + questionIndexValue+ ']'];
+    if (objQuestionDefaultValidValueId.value !=''){
+    	alert('Please clear the default value of this question and save the module before change CDE association');
+    	return
+    } 	
+   window.location = url;
+  }
+
 -->
 <%
 
@@ -257,6 +314,8 @@ function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
       // params.put(FormConstants.QUESTION_INDEX, request.getParameter(FormConstants.QUESTION_INDEX));
 
       pageContext.setAttribute("params", params); 
+      
+      String moduleIndex = (String)(request.getParameter(FormConstants.MODULE_INDEX));
 
       %>
     <html:form action="/moduleSaveAction.do">
@@ -461,12 +520,18 @@ function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
                                     </logic:notEqual>
                                   </td>
                                   <td align="center">
+                                     <a href="javascript:submitChangeAsso('<%= "/CDEBrowser/gotoChangeAssociation.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CHANGE_DE_ASSOCIATION + "&questionIndex=" + questionIndex + "&moduleIndex="+moduleIndex%>', '<%=questionIndex%>')">
+                                      <img src="<%=urlPrefix%>i/association.gif" border="0" alt="Change CDE Association"/>
+                                      </a>
+<%--
+
                                     <html:link action='<%= "/gotoChangeAssociation?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CHANGE_DE_ASSOCIATION%>'
                                       name="params"
                                       scope="page"
                                       >
                                       <img src="<%=urlPrefix%>i/association.gif" border="0" alt="Change CDE Association"/>
                                     </html:link>
+--%>                                    
                                   </td>                                  
                                   <td align="center">
                                     <a href="javascript:submitModuleEdit('<%=NavigationConstants.DELETE_QUESTION%>','<%=questionIndex%>')">
@@ -696,7 +761,7 @@ function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
                                           <tr class="OraTabledata" >
                                            <td align="left" >
                                               <INPUT TYPE=CHECKBOX NAME="<%= FormConstants.SELECTED_ITEMS+questionIndex%>" value="<%= validValueIndex %>">
-                                              <INPUT TYPE=hidden NAME='<%= FormConstants.SELECTED_ITEMS+questionIndex%>' value='<%= validValue.getValueIdseq()%>'>
+                                              <INPUT TYPE=hidden NAME='<%= FormConstants.SELECTED_ITEMS+"H"+questionIndex%>' value='<%= validValue.getValueIdseq()%>'>
                                               </td>
                                                <!-- Adding from available vv list -->
                                                   
