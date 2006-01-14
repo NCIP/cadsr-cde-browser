@@ -162,6 +162,19 @@ public class ManageProtocolsAction
         return mapping.findForward("hasSkipPattern");          
       }
       
+      Iterator it = protocols.iterator();
+      List removed = new ArrayList();;
+      while (it.hasNext()){
+        Protocol p = (Protocol)it.next();
+        if (p.getProtoIdseq().equals(id)){
+            removed.add(p);
+        }
+      }
+      protocols.removeAll(removed);
+      //removed from crf.
+      crf.setProtocols(protocols);
+      setSessionObject(request, CRF, crf);
+
       removeSessionObject(request, PROTOCOL_ASSOCIATED_TRIGGERS);
       return mapping.findForward(SUCCESS);
   }
