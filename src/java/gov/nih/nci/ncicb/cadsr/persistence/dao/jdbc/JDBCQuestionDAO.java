@@ -906,7 +906,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
              FormValidValue fvv = new FormValidValueTransferObject();
              fvv.setValueIdseq(rs.getString(4));   // VV_IDSEQ
              fvv.setLongName(rs.getString(6));       // LONG_NAME
-             fvv.setIdseq(rs.getString(1));
+             //fvv.setIdseq(rs.getString(1));
              fvv.setQuestion(question);
              question.setDefaultValidValue(fvv);
             } 
