@@ -35,7 +35,6 @@ function submitForm() {
 }
 
 function submitValidValueEdit(methodName,questionIndexValue,validValueIndexValue) {
-alert(methodName);
   if (methodName=='<%=NavigationConstants.DELETE_VALID_VALUE%>' || methodName=='<%=NavigationConstants.DELETE_VALID_VALUES%>'){
 	  if (isValidValueQuestionDefault(questionIndexValue,validValueIndexValue)==true){
 	    alert("One of the Valid Value is used as the question default value. Please clear the default value of this quesiton first.");
@@ -116,7 +115,6 @@ function submitValidValuesEdit(methodName,questionIndexValue) {
       {
 	  var selectedIndexValue;
 	  var len = selectedElements.length; 
-	  alert("len = " + len);
 	  var i=0;
 	  for( i=0; i<len ; i++) {
 	   if (selectedElements[i].checked==1) {
