@@ -210,6 +210,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
     {
         Form myForm = null;
         FormDAO fdao = daoFactory.getFormDAO();
+        QuestionRepititionDAO qrdao = daoFactory.getQuestionRepititionDAO();
         FormInstructionDAO fInstrdao = daoFactory.getFormInstructionDAO();
 
         ModuleDAO mdao = daoFactory.getModuleDAO();
@@ -297,6 +298,9 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                 
                 //set question default 
                 term = setQuestionDefaultValue(term);
+                List<QuestionRepitition> qReps = qrdao.getQuestionRepititions(term.getQuesIdseq());
+                setQuestionRepititionDefaults(qReps,values);
+                term.setQuestionRepitition(qReps);                
             }
 
             block.setQuestions(questions);
@@ -325,6 +329,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
 
         ModuleDAO mdao = daoFactory.getModuleDAO();
         QuestionDAO qdao = daoFactory.getQuestionDAO();
+        QuestionRepititionDAO qrdao = daoFactory.getQuestionRepititionDAO();
         FormValidValueDAO vdao = daoFactory.getFormValidValueDAO();
         ModuleInstructionDAO moduleInstrDao =
             daoFactory.getModuleInstructionDAO();
@@ -375,7 +380,9 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
            
             //set question default 
             term = setQuestionDefaultValue(term);
-
+            List<QuestionRepitition> qReps = qrdao.getQuestionRepititions(term.getQuesIdseq());
+            setQuestionRepititionDefaults(qReps,values);
+            term.setQuestionRepitition(qReps);
         }
 
         module.setQuestions(questions);
@@ -1552,6 +1559,37 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             }
         } 
          return getModule(moduleId);
+    }
+    
+    /**
+     * Get FormValidValue from the question and assign it to Question repitition.
+     * This is done since the Question repitition quesry only retrives ids
+     * @param qreps
+     * @param values
+     */
+    private void setQuestionRepititionDefaults(List<QuestionRepitition> qreps,List values)
+    {
+        for(QuestionRepitition repitition:qreps)
+        {
+            if(repitition.getDefaultValidValue()!=null)
+            {
+              if(values!=null)
+              {
+                  Iterator it = values.iterator();
+                  FormValidValue value =null;
+                  while(it.hasNext())
+                  {
+                       value = (FormValidValue)it.next();
+                       if(value.getValueIdseq().equals(repitition.getDefaultValidValue().getValueIdseq()))
+                       {
+                           repitition.setDefaultValidValue(value);
+                       }
+                  }
+                  
+              }
+              
+            }
+        }
     }
     private void setSourceForTriggerActions(FormElement source, List<TriggerAction> actions)
     {

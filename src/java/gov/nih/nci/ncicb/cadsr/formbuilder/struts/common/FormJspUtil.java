@@ -67,5 +67,14 @@ public class FormJspUtil
           }
 
           return sbuf.substring(delimiter.length());
-        }        
+        }    
+        
+    public static String getDefaultValue(Question question)
+    {
+        if(question.getDefaultValidValue()!=null)
+            return question.getDefaultValidValue().getLongName();
+        if(question.getDefaultValue()!=null)
+            return question.getDefaultValue();
+        return "&nbsp;";
+    }
 }

@@ -11,15 +11,18 @@ import gov.nih.nci.ncicb.cadsr.resource.Orderable;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 
+import gov.nih.nci.ncicb.cadsr.resource.QuestionRepitition;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerActionChanges;
 
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 public class FormActionUtil 
 {
@@ -292,7 +295,102 @@ public class FormActionUtil
         }
         return retList;
     }
+  /**
+     * Creates repition of module looking at the questionRepititions and
+     * Also set defaults values for each repitition
+     * @param module
+     * @return
+     */
+    public static List<Module> getRepetitions(Module module)
+    {
+        List<Module> moduleRepeats = new ArrayList<Module>();
+        List questions = module.getQuestions();
+        if (questions == null)
+            return moduleRepeats;
+        if (module.getNumberOfRepeats() == 0)
+            return moduleRepeats;
 
+        Map<Integer, Map<String, QuestionRepitition>> questionRepMap =
+            getQuestionRepititionsMap(questions);
+        for (int i = 0; i < module.getNumberOfRepeats(); ++i)
+        {
+            Module tempModuleClone = null;
+            try
+            {
+                tempModuleClone = (Module)module.clone();
+            } catch (Exception e)
+            {
+                throw new RuntimeException("Error Cloning Module",e);
+            }
+            Map<String, QuestionRepitition> qMap =
+                questionRepMap.get(new Integer(i + 1));
+            if (qMap == null)
+              {
+                moduleRepeats.add(tempModuleClone);
+                continue;
+              }
 
+            setDefaults(qMap, tempModuleClone);
+            moduleRepeats.add(tempModuleClone);
+        }
+        return moduleRepeats;
+    }
 
+    /**
+     *
+     * @param questions
+     * @return a Map <repeantSequence#,Map<questionId,QuestionRepitition>>
+     */
+    public static Map getQuestionRepititionsMap(List questions)
+    {
+        Iterator qIt = questions.iterator();
+        Map<Integer, Map<String, QuestionRepitition>> questionRepMap =
+            new HashMap<Integer, Map<String, QuestionRepitition>>();
+        while (qIt.hasNext())
+        {
+            Question q = (Question)qIt.next();
+            List<QuestionRepitition> questionRepList =
+                q.getQuestionRepititions();
+            if (questionRepList == null)
+                continue;
+
+            for (QuestionRepitition repitition : questionRepList)
+            {
+                Map<String, QuestionRepitition> qMap =
+                    questionRepMap.get(new Integer(repitition.getRepeatSequence()));
+                if (qMap == null)
+                {
+                    Map<String, QuestionRepitition> tempQMap =
+                        new HashMap<String, QuestionRepitition>();
+                    tempQMap.put(q.getQuesIdseq(), repitition);
+                    questionRepMap
+                    .put(new Integer(repitition.getRepeatSequence()),
+                                       tempQMap);
+
+                } else
+                {
+                    qMap.put(q.getQuesIdseq(), repitition);
+                }
+
+            }
+        }
+        return questionRepMap;
+    }
+    
+    public static void setDefaults(Map<String, QuestionRepitition> qMap,
+                             Module module)
+    {
+        List questions = module.getQuestions();
+        ListIterator qIt = questions.listIterator();
+        while (qIt.hasNext())
+        {
+            Question q = (Question)qIt.next();
+            QuestionRepitition qRep = qMap.get(q.getQuesIdseq());
+            if(qRep!=null)
+            {
+                q.setDefaultValue(qRep.getDefaultValue());
+                q.setDefaultValidValue(qRep.getDefaultValidValue());
+            }
+        }
+    }    
 }

@@ -60,7 +60,7 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         List modules = crf.getModules();
         Module selectedModule = (Module)modules.get(moduleIndex.intValue());
         selectedModule.setForm(crf);
-        List<Module> modRepetitions = getRepetitions(selectedModule);
+        List<Module> modRepetitions = FormActionUtil.getRepetitions(selectedModule);
         setQuestionDefaultArrays(dynaForm, modRepetitions, selectedModule);
         dynaForm.set(QUESTION_DEFAULTS, new String[0]);
         dynaForm.set(QUESTION_DEFAULT_VV_IDS, new String[0]);
@@ -81,8 +81,6 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         Form crf = null;
         DynaActionForm dynaForm = (DynaActionForm)editForm;
         Integer numberOfRepetitions = null;
-
-
         numberOfRepetitions =
             (Integer)dynaForm.get(NUMBER_OF_MODULE_REPETITIONS);
         List<Module> currRepeats =
@@ -200,19 +198,25 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
             (List<Module>)getSessionObject(request, MODULE_REPETITIONS);
         Module module = (Module)getSessionObject(request, MODULE);
         
-        if(!haveElemetsToSave(module,repeats))
+        if(!haveQuestions(module)&&module.getNumberOfRepeats()<1)
         {
             saveMessage("cadsr.formbuilder.module.repetition.save.success",
                         request);
             return mapping.findForward("done");            
         }
-       
-                
-        List<String[]> defaultArrList = getArrayByRepitition(defaultValueArr,module.getQuestions().size());
-        List<String[]> defaultArrIdList = getArrayByRepitition(defaultValueIds,module.getQuestions().size());
+        Map<String,List<QuestionRepitition>> questionRepeatMap =null;
         List<String> noRepQIdList = new ArrayList<String>();
-        Map<String,List<QuestionRepitition>> questionRepeatMap = getQuestionRepeatMap(module,defaultArrList,defaultArrIdList,noRepQIdList);
-        
+       if(doesQuestionsHaveRepeats(module)&&repeats.isEmpty())
+        {
+            noRepQIdList = getQuestionIdsWithRepeats(module);
+        }
+        else
+        {
+            List<String[]> defaultArrList = getArrayByRepitition(defaultValueArr,module.getQuestions().size());
+            List<String[]> defaultArrIdList = getArrayByRepitition(defaultValueIds,module.getQuestions().size());
+            
+            questionRepeatMap = getQuestionRepeatMap(module,defaultArrList,defaultArrIdList,noRepQIdList);
+        }
         FormBuilderServiceDelegate service = getFormBuilderService();
         Module savedModeule = null;
         try
@@ -301,7 +305,7 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
        }
        return map;
    }
-   private boolean haveElemetsToSave(Module module, List<Module> repeats)
+   private boolean haveQuestions(Module module)
    {
        if(module==null)
             return false;
@@ -310,9 +314,26 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         if(module.getQuestions().size()<1)
             return false;
         return true;
-        //if(doesQuestionsHaveRepeats(module)&&repeats)
    }
    
+    private List<String> getQuestionIdsWithRepeats(Module module)
+    {
+       List<String> list = new ArrayList<String>();
+        if(module.getQuestions()==null)
+         return list;
+        if(module.getQuestions().isEmpty())
+         return list;      
+        Iterator it = module.getQuestions().iterator();
+        while(it.hasNext())
+        {
+            Question q = (Question)it.next();
+            List<QuestionRepitition> repList = q.getQuestionRepititions();
+            if((repList!=null)&&(!repList.isEmpty()))
+            list.add(q.getQuesIdseq());               
+        }
+        return list;   
+    }
+    
    private boolean doesQuestionsHaveRepeats(Module module)
    {
        if(module.getQuestions()==null)
@@ -349,96 +370,6 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
        return list;
     }
 
-    private List<Module> getRepetitions(Module module)
-    {
-        List<Module> moduleRepeats = new ArrayList<Module>();
-        List questions = module.getQuestions();
-        if (questions == null)
-            return moduleRepeats;
-        if (module.getNumberOfRepeats() == 0)
-            return moduleRepeats;
-
-        Map<Integer, Map<String, QuestionRepitition>> questionRepMap =
-            getQuestionRepititionsMap(questions);
-        for (int i = 0; i < module.getNumberOfRepeats(); ++i)
-        {
-            Module tempModuleClone = null;
-            try
-            {
-                tempModuleClone = (Module)module.clone();
-            } catch (Exception e)
-            {
-                if (log.isErrorEnabled())
-                {
-                    log.error("Exception Clonning Module", e);
-                }
-                return moduleRepeats;
-            }
-            Map<String, QuestionRepitition> qMap =
-                questionRepMap.get(new Integer(i + 1));
-            if (qMap == null)
-                continue;
-
-            setDefaults(qMap, tempModuleClone);
-            moduleRepeats.add(tempModuleClone);
-        }
-        return moduleRepeats;
-    }
-
-    private void setDefaults(Map<String, QuestionRepitition> qMap,
-                             Module module)
-    {
-        List questions = module.getQuestions();
-        ListIterator qIt = questions.listIterator();
-        while (qIt.hasNext())
-        {
-            Question q = (Question)qIt.next();
-            QuestionRepitition qRep = qMap.get(q.getQuesIdseq());
-            q.setDefaultValue(qRep.getDefaultValue());
-            q.setDefaultValidValue(qRep.getDefaultValidValue());
-        }
-    }
-
-    /**
-     *
-     * @param questions
-     * @return a Map<repeantSequence#,Map<questionId,QuestionRepitition>>
-     */
-    private Map getQuestionRepititionsMap(List questions)
-    {
-        Iterator qIt = questions.iterator();
-        Map<Integer, Map<String, QuestionRepitition>> questionRepMap =
-            new HashMap<Integer, Map<String, QuestionRepitition>>();
-        while (qIt.hasNext())
-        {
-            Question q = (Question)qIt.next();
-            List<QuestionRepitition> questionRepList =
-                q.getQuestionRepititions();
-            if (questionRepList == null)
-                continue;
-
-            for (QuestionRepitition repitition : questionRepList)
-            {
-                Map<String, QuestionRepitition> qMap =
-                    questionRepMap.get(new Integer(repitition.getRepeatSequence()));
-                if (qMap == null)
-                {
-                    Map<String, QuestionRepitition> tempQMap =
-                        new HashMap<String, QuestionRepitition>();
-                    tempQMap.put(q.getQuesIdseq(), repitition);
-                    questionRepMap
-                    .put(new Integer(repitition.getRepeatSequence()),
-                                       tempQMap);
-
-                } else
-                {
-                    qMap.put(q.getQuesIdseq(), repitition);
-                }
-
-            }
-        }
-        return questionRepMap;
-    }
 
     private List<Module> getRepetitions(Module module,
                                         int numberOfRepetititons)

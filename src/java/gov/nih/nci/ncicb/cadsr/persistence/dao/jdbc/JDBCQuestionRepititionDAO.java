@@ -36,7 +36,7 @@ public class JDBCQuestionRepititionDAO extends JDBCAdminComponentDAO implements 
 
         query.setDataSource(getDataSource());
         query.setSql();
-        return query.execute();        
+        return query.execute(questionId);
     }
 
 
@@ -133,7 +133,7 @@ public class JDBCQuestionRepititionDAO extends JDBCAdminComponentDAO implements 
       }
 
       public void setSql() {
-        super.setSql("select VALUE,VV_IDSEQ,REPEAT_SEQUENCE from quest_vv_ext where quest_idseq=?; ");
+        super.setSql("select VALUE,VV_IDSEQ,REPEAT_SEQUENCE from quest_vv_ext where quest_idseq=?");
         declareParameter(new SqlParameter("quest_idseq", Types.VARCHAR));
       }
       

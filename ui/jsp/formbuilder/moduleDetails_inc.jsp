@@ -33,7 +33,7 @@
           	      </td>
         	   </tr> 
         	</table>
-                
+                <%@ include file="/formbuilder/repititionDetails_inc.jsp"%> 
               </logic:iterate><!-- Module-->
               
             

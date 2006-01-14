@@ -624,6 +624,7 @@ function submitModuleRepition(methodName,moduleIndexValue) {
               </table> 
             <!-- Add for delete and new Module end -->  
             </logic:equal>
+            <%@ include file="/formbuilder/repititionDetails_inc.jsp"%> 
           </logic:iterate>
 
         </logic:notEmpty>   
