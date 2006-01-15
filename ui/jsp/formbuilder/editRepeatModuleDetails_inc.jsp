@@ -82,16 +82,24 @@
                                        <bean:write  name="question" property="instruction.longName"/>
                                      </td>
                                     </tr>
-                                    <logic:notEmpty name="question" property = "validValues">
-                                     <tr class="OraTabledata">
+                                     <logic:notEmpty name="question" property = "validValues">
                                       <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
                                         Default value
                                      </td>
-                                     <td class="OraFieldTextInstruction">
-                                        a default value
-                                     </td>
-                                    </tr>  
-                                    </logic:notEmpty>
+                                     <td class="OraFieldText">
+                                        <html:hidden property="<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"["+defaultIndex+"]"%>"  />
+                                         <html:text  styleClass="OraFieldText"  property='<%=FormConstants.QUESTION_DEFAULTS+"["+defaultIndex+"]"%>' readonly="true" size="70" />                                   
+                                     </td>                                    
+                                      </logic:notEmpty>
+                                      <logic:empty name="question" property = "validValues">
+                                         <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
+                                           Default value
+                                        </td>
+                                        <td class="OraFieldText">
+                                         <html:hidden property="<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"["+defaultIndex+"]"%>" value="" />
+                                         <html:text  styleClass="OraFieldText"  property='<%=FormConstants.QUESTION_DEFAULTS+"["+defaultIndex+"]"%>' size="70" />         
+                                        </td>                                   
+                                       </logic:empty>
                                    </table>                                                            
                                  </td>
                                </tr> 
@@ -207,6 +215,7 @@
                             </tr>         
                           </logic:equal>    
                                <%
+                                    System.out.println("*********defaultIndex"+defaultIndex);
                                     defaultIndex++;
                                  %>
                           </logic:iterate><!-- Question-->

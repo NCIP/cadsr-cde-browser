@@ -62,8 +62,6 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         selectedModule.setForm(crf);
         List<Module> modRepetitions = FormActionUtil.getRepetitions(selectedModule);
         setQuestionDefaultArrays(dynaForm, modRepetitions, selectedModule);
-        dynaForm.set(QUESTION_DEFAULTS, new String[0]);
-        dynaForm.set(QUESTION_DEFAULT_VV_IDS, new String[0]);
 
         setSessionObject(request, MODULE, selectedModule, true);
         setSessionObject(request, MODULE_REPETITIONS, modRepetitions, true);
@@ -113,11 +111,12 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
     }
 
     public ActionForward deleteRepetitions(ActionMapping mapping,
-                                           ActionForm editForm,
+                                           ActionForm deleteForm,
                                            HttpServletRequest request,
                                            HttpServletResponse response) throws IOException,
                                                                                                             ServletException
     {
+        DynaActionForm dynaForm = (DynaActionForm)deleteForm;
         List<Module> moduleList =
             (List<Module>)getSessionObject(request, MODULE_REPETITIONS);
 
@@ -131,6 +130,7 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
                 moduleList.remove(currIndex);
             }
         }
+        setQuestionDefaultsAsArray(moduleList,dynaForm);
         saveMessage("cadsr.formbuilder.module.repetition.delete.success",
                     request);
         return mapping.findForward("viewRepetitions");
@@ -360,10 +360,11 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
        for(int j=0;j<defArr.length;++j)
        {
         String[] tempArr = new String[itemsInaSet];
-        for(int i=0;i<itemsInaSet;++i)
+        for(int i=0;(i<itemsInaSet&&j<defArr.length);++i)
         {
             tempArr[i]=defArr[j];
-            ++j;
+            if(i<(itemsInaSet-1))
+                ++j;
         }
         list.add(tempArr);
        }
@@ -428,10 +429,10 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         String[] defaults = new String[arrSize];
         String[] defaultVVIds = new String[arrSize];
 
-
+        int index = 0;
         for (Module repitition : modRepetitions)
         {
-            int index = 0;
+            
             if (repitition != null && repitition.getQuestions() != null)
             {
                 qList = repitition.getQuestions();
@@ -523,40 +524,51 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         }
     }
 
-    private String[] getQuestionDefaultsAsArray(List modules)
+    private void setQuestionDefaultsAsArray(List modules,DynaActionForm dynaForm)
     {
+        String[] defaultArr = null;
+        String[] defaultArrIds = null;
         if (modules == null)
         {
-            return null;
+            defaultArr = new String[0];
+            defaultArrIds = new String[0];
         }
-
-        ListIterator iterate = modules.listIterator();
-        String[] defaultArr = new String[getMaxDefaultSize(modules)];
-        int defaultIndex = 0;
-        while (iterate.hasNext())
+        else
         {
-            int index = iterate.nextIndex();
-            Module module = (Module)iterate.next();
-            if (module != null && module.getQuestions() != null)
+            ListIterator iterate = modules.listIterator();
+            defaultArr = new String[getMaxDefaultSize(modules)];
+            defaultArrIds = new String[getMaxDefaultSize(modules)];
+            int defaultIndex = 0;
+            while (iterate.hasNext())
             {
-                List qList = module.getQuestions();
-                ListIterator qIterate = qList.listIterator();
-                while (qIterate.hasNext())
+                int index = iterate.nextIndex();
+                Module module = (Module)iterate.next();
+                if (module != null && module.getQuestions() != null)
                 {
-                    Question question = (Question)qIterate.next();
-                    String defaultValue = question.getDefaultValue();
-                    if (defaultValue != null)
+                    List qList = module.getQuestions();
+                    ListIterator qIterate = qList.listIterator();
+                    while (qIterate.hasNext())
                     {
-                        defaultArr[defaultIndex] = defaultValue;
-                    } else
-                    {
-                        defaultArr[defaultIndex] = "";
+                        Question question = (Question)qIterate.next();
+                        String defaultValue = question.getDefaultValue();
+                        if(defaultValue==null) defaultValue ="";
+                        FormValidValue fvv = question.getDefaultValidValue();
+                        if (fvv!=null)
+                        {
+                            defaultArr[defaultIndex] = fvv.getLongName();
+                            defaultArrIds[defaultIndex]=fvv.getValueIdseq();
+                        } else
+                        {
+                            defaultArr[defaultIndex] = defaultValue;
+                            defaultArrIds[defaultIndex]="";
+                        }
+                        ++defaultIndex;
                     }
-                    ++defaultIndex;
                 }
             }
         }
-        return defaultArr;
+        dynaForm.set(QUESTION_DEFAULTS, defaultArr);
+        dynaForm.set(QUESTION_DEFAULT_VV_IDS, defaultArrIds);        
     }
 
     private int getMaxDefaultSize(List modules)
