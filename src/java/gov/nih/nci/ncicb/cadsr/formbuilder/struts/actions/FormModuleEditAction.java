@@ -2084,7 +2084,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
            return true;
        }
        //both are not null
-        if (ofvv.getValueIdseq().equals(cfvv.getValueIdseq())){
+       String oValueId = ofvv.getValueIdseq()==null? "": ofvv.getValueIdseq();
+       String cValudId = cfvv.getValueIdseq()==null? "": cfvv.getValueIdseq();
+        if (oValueId.equals(cValudId)){
            return false; 
         }else{
             return true;
