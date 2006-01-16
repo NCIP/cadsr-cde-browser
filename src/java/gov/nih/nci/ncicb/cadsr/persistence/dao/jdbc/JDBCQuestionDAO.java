@@ -908,6 +908,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
              fvv.setLongName(rs.getString(6));       // LONG_NAME
              //fvv.setIdseq(rs.getString(1));
              fvv.setQuestion(question);
+             fvv.setLongName(rs.getString(6));
              question.setDefaultValidValue(fvv);
             } 
         return question;
