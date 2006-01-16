@@ -159,6 +159,33 @@
           </td>
         </tr>
       </table> 
+      <table cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr >
+          <td colspan=2>
+            &nbsp;
+          </td>
+        </tr>         
+        <tr>
+          <td class="OraHeaderSubSub" width="100%">Form Details</td>
+          <td align="right">
+             <logic:present name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
+               <html:link action='<%="/displayViewFormModuleRepeationAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.HIDE_REPETITIONS%>'
+                 >
+               <html:img src='i/hideModuleRepetitions.gif' border="0" alt="Hide Module Repetitions"/>
+              </html:link>                
+             </logic:present>
+             <logic:notPresent name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
+               <html:link action='<%="/displayViewFormModuleRepeationAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SHOW_REPETITIONS%>'
+                 >
+               <html:img src='i/showModuleRepetitions.gif' border="0" alt="Show Module Repetitions"/>
+              </html:link>  
+              </logic:notPresent>     
+          </td>          
+        </tr>
+        <tr>
+          <td colspan=2><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+        </tr>
+      </table>       
       
      <%@ include file="/formbuilder/moduleDetails_inc.jsp"%>
     

@@ -162,9 +162,58 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         DynaActionForm dynaForm = (DynaActionForm)form;
         removeSessionObject(request, MODULE);
         removeSessionObject(request, MODULE_REPETITIONS);
+        dynaForm.set(NUMBER_OF_MODULE_REPETITIONS,new Integer(0));        
 
-        return mapping.findForward("done");
+        return mapping.findForward(SUCCESS);
     }
+    
+    /**
+     * Set Session Object to show repitions in edit and details screens
+     *
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     *
+     * @return
+     *
+     * @throws IOException
+     * @throws ServletException
+     */
+    public ActionForward showRepetitions(ActionMapping mapping,
+                                               ActionForm form,
+                                               HttpServletRequest request,
+                                               HttpServletResponse response) throws IOException,
+                                                                                                                ServletException
+    {
+
+        setSessionObject(request, SHOW_MODULE_REPEATS,"True");
+        return mapping.findForward(SUCCESS);
+    }    
+    
+    /**
+     * Remove Session Object to hide repetitions in edit and details screens
+     *
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     *
+     * @return
+     *
+     * @throws IOException
+     * @throws ServletException
+     */
+    public ActionForward hideRepetitions(ActionMapping mapping,
+                                               ActionForm form,
+                                               HttpServletRequest request,
+                                               HttpServletResponse response) throws IOException,
+                                                                                                                ServletException
+    {
+
+        removeSessionObject(request, SHOW_MODULE_REPEATS);
+        return mapping.findForward(SUCCESS);
+    }     
 
     /**
      * Save Repititions
@@ -202,7 +251,10 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         {
             saveMessage("cadsr.formbuilder.module.repetition.save.success",
                         request);
-            return mapping.findForward("done");            
+            removeSessionObject(request, MODULE);
+            removeSessionObject(request, MODULE_REPETITIONS);
+            dynaForm.set(NUMBER_OF_MODULE_REPETITIONS,new Integer(0));                            
+            return mapping.findForward(SUCCESS);            
         }
         Map<String,List<QuestionRepitition>> questionRepeatMap =null;
         List<String> noRepQIdList = new ArrayList<String>();
@@ -249,7 +301,10 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         
         saveMessage("cadsr.formbuilder.module.repetition.save.success",
                     request);
-        return mapping.findForward("done"); 
+        removeSessionObject(request, MODULE);
+        removeSessionObject(request, MODULE_REPETITIONS);
+        dynaForm.set(NUMBER_OF_MODULE_REPETITIONS,new Integer(0));                        
+        return mapping.findForward(SUCCESS); 
     }
     
    private Map<String,List<QuestionRepitition>> getQuestionRepeatMap(Module module,List<String[]> defaultArrList,List<String[]> defaultArrIdList,
@@ -259,13 +314,15 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
 
        if(module.getQuestions()==null)
         return map;
-       Iterator it = module.getQuestions().iterator();
-       int i=0;
+       
+       
        int repeatNumber = defaultArrList.size();
        for(int j=0;j<repeatNumber;++j)
        {
-          String[] defautArr = defaultArrList.get(0);
-          String[] defautIdArr = defaultArrIdList.get(0);
+          String[] defautArr = defaultArrList.get(j);
+          String[] defautIdArr = defaultArrIdList.get(j);
+          Iterator it = module.getQuestions().iterator();
+           int i=0;
            while(it.hasNext())
            {
                Question q = (Question)it.next();

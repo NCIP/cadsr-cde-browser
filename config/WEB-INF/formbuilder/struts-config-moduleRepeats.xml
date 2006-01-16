@@ -21,7 +21,7 @@
       <forward name="failure" path="/formbuilder/formEdit.jsp" redirect="false"/>  
       <forward name="noChanges" path="/moduleRepeatAction.do?method=getModuleToRepeat" redirect="false"/>
       <forward name="saveConfirm" path="/formbuilder/formSaveConfirmModuleRepitition.jsp" redirect="false"/>
-      <forward name="sucess" path="/moduleRepeatAction.do?method=getToModuleToRepeat" redirect="false"/>
+      <forward name="success" path="/moduleRepeatAction.do?method=getToModuleToRepeat" redirect="false"/>
     </action>   
     
     <action name="moduleRepeatForm" path="/moduleRepeatAction" parameter="method"
@@ -29,8 +29,22 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ModuleRepetitionAction"
       validate="false">      
       <forward name="viewRepetitions" path="/formbuilder/manageModuleRepetition.jsp" redirect="false"/>
-      <forward name="done" path="/formbuilder/formEdit.jsp" redirect="false"/>
+      <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
     </action>  
+    
+    <action name="formEditForm" path="/displayModuleRepeationAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ModuleRepetitionAction"
+      validate="false">      
+      <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
+    </action>    
+    <action name="hrefCRFForm" path="/displayViewFormModuleRepeationAction" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.ModuleRepetitionAction"
+      validate="false">
+      <forward name="success" path="/formbuilder/formDetails.jsp"
+        redirect="false"/>    
+    </action>    
   </action-mappings>
 
 </struts-config>

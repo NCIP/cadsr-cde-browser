@@ -33,7 +33,9 @@
           	      </td>
         	   </tr> 
         	</table>
-                <%@ include file="/formbuilder/repititionDetails_inc.jsp"%> 
+                <logic:present name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
+                    <%@ include file="/formbuilder/repititionDetails_inc.jsp"%> 
+                </logic:present>
               </logic:iterate><!-- Module-->
               
             

@@ -167,6 +167,8 @@ public interface FormConstants extends FormBuilderConstants {
    public static final String NUMBER_OF_MODULE_REPETITIONS="numberOfModuleRepetitions";
    public static final String  QUESTION_DEFAULTS="questionDefaults";// 
    public static final String  QUESTION_DEFAULT_VV_IDS="questionDefaultVVIds";// 
+   public static final String SHOW_MODULE_REPEATS = "showModuleRepeats";    
+
    
    public static final String PROTOCOL_ASSOCIATED_TRIGGERS = "protocolAssociatedTriggers";
    public static final String UPDATE_SKIP_PATTERN_TRIGGERS = "updateSkipPatternTrigger";

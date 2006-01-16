@@ -167,7 +167,9 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String     DELETE_REPETITIONS = "deleteRepetitions";
     public static final String     DONE_MANAGE_REPETITIONS="doneManageRepetitions";
     public static final String     SAVE_REPETITIONS="saveRepetitions";
-    
+     public static final String SHOW_REPETITIONS="showRepetitions";
+    public static final String HIDE_REPETITIONS="hideRepetitions";
+     
 
   public static final String ADD_PROTOCOL = "addProtocol";
   public static final String REMOVE_PROTOCOL = "removeProtocol";

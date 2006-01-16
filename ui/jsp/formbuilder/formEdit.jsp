@@ -51,6 +51,12 @@ function submitModuleRepition(methodName,moduleIndexValue) {
   document.forms[0].submit();
   }
 }
+
+function repeatDisplay(methodName) {
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].action='<%=request.getContextPath()%>/displayModuleRepeationAction.do'; 
+    document.forms[0].submit();
+}
       
 -->
 <% 
@@ -231,15 +237,27 @@ function submitModuleRepition(methodName,moduleIndexValue) {
         </table>
       <table cellpadding="0" cellspacing="0" width="80%" align="center">
         <tr >
-          <td >
+          <td colspan=2>
             &nbsp;
           </td>
         </tr>         
         <tr>
           <td class="OraHeaderSubSub" width="100%">Form Details</td>
+          <td align="right">
+             <logic:present name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
+                <a href="javascript:repeatDisplay('<%=NavigationConstants.HIDE_REPETITIONS%>')">
+                  <img  src="i/hideModuleRepetitions.gif" border="0" alt="Hide Module Repetitions"/>
+                </a> 
+              </logic:present>
+             <logic:notPresent name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
+                <a href="javascript:repeatDisplay('<%=NavigationConstants.SHOW_REPETITIONS%>')">
+                  <img  src="i/showModuleRepetitions.gif" border="0" alt="Show Module Repetitions"/>
+                </a> 
+              </logic:notPresent>     
+          </td>          
         </tr>
         <tr>
-          <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+          <td colspan=2><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
         </tr>
       </table>        
         <!-- If the Modules Collection is empty and deleted modules Exists -->
@@ -405,10 +423,34 @@ function submitModuleRepition(methodName,moduleIndexValue) {
                                <bean:write  name="module" property="instruction.longName"/>
                              </td>
                             </tr>
+                             <tr class="OraTabledata">
+                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                Number of Repetitions 
+                             </td>
+                             <td class="OraFieldText">
+                               <bean:write name="module" property="numberOfRepeats"/>
+                             </td>
+                            </tr>                             
                            </table>
                        </td>
                       </tr>
                    </logic:present> 
+                   <logic:notPresent name="module" property="instruction">                   
+                      <tr>  
+                       <td colspan="2">
+                           <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                             <tr class="OraTabledata">
+                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                Number of Repetitions 
+                             </td>
+                             <td class="OraFieldTextInstruction">
+                               <bean:write name="module" property="numberOfRepeats"/>
+                             </td>
+                            </tr>
+                           </table>
+                       </td>
+                      </tr>
+                   </logic:notPresent>                      
                  </table>
                </td>
               </tr>
@@ -574,57 +616,118 @@ function submitModuleRepition(methodName,moduleIndexValue) {
                  <!-- Module Skip pattern end --> 
               </logic:present>
             </table>   
-
-            <logic:equal value="<%= String.valueOf(moduleSize.intValue()-1) %>" name="moduleIndex">
-            <!-- Add for delete and new Module -->
-             <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
-              <tr align="right">
-                <logic:notEmpty name="<%=FormConstants.DELETED_MODULES%>">
-
-                  <td align="right"   class="OraFieldText" nowrap>    
-                      <html:select styleClass="Dropdown" property="<%=FormConstants.ADD_DELETED_MODULE_IDSEQ%>">
-                        <html:options collection="<%=FormConstants.DELETED_MODULES%>" 
-                            property="moduleIdseq" labelProperty="longName" />
-                      </html:select >
-                  </td>
-                  <td align="left" width="25">
-                      <a href="javascript:submitFormEdit('<%=NavigationConstants.ADD_FROM_DELETED_LIST%>','<%=moduleSize%>')">
-                         <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
-                      </a>                          
-                  </td>   
-                </logic:notEmpty>
-
-                <logic:empty name="<%=FormConstants.DELETED_MODULES%>">
-
-                <td >
-                  &nbsp;
-                </td>  
-                </logic:empty>  
-                
-                <td align="right" width="205"> 
-                  <html:link action='<%="/formbuilder/copyFromModuleList.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GOTO_COPY_FROM_MODULE_LIST%>'
-                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >     
-                     Copy Module from module cart
-                  </html:link>		  
-                </td>   
-                <td align="right" width="160">
-                  <html:link action='<%="/formbuilder/moduleSearch.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_MODULE_SEARCH%>'
-                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" > 
-                     Copy module from a form
-                  </html:link>		   
-                </td>  
-                <td align="right" width="80">
-                  <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
-                       paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >
-                    <!-- html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/ -->         
-                     Create new
-                  </html:link>
-                </td>                               
-              </tr>
-              </table> 
-            <!-- Add for delete and new Module end -->  
-            </logic:equal>
-            <%@ include file="/formbuilder/repititionDetails_inc.jsp"%> 
+           
+            <logic:notPresent name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
+                <logic:equal value="<%= String.valueOf(moduleSize.intValue()-1) %>" name="moduleIndex">
+                <!-- Add for delete and new Module -->
+                 <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
+                  <tr align="right">
+                    <logic:notEmpty name="<%=FormConstants.DELETED_MODULES%>">
+    
+                      <td align="right"   class="OraFieldText" nowrap>    
+                          <html:select styleClass="Dropdown" property="<%=FormConstants.ADD_DELETED_MODULE_IDSEQ%>">
+                            <html:options collection="<%=FormConstants.DELETED_MODULES%>" 
+                                property="moduleIdseq" labelProperty="longName" />
+                          </html:select >
+                      </td>
+                      <td align="left" width="25">
+                          <a href="javascript:submitFormEdit('<%=NavigationConstants.ADD_FROM_DELETED_LIST%>','<%=moduleSize%>')">
+                             <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
+                          </a>                          
+                      </td>   
+                    </logic:notEmpty>
+    
+                    <logic:empty name="<%=FormConstants.DELETED_MODULES%>">
+    
+                    <td >
+                      &nbsp;
+                    </td>  
+                    </logic:empty>  
+                    
+                    <td align="right" width="205"> 
+                      <html:link action='<%="/formbuilder/copyFromModuleList.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GOTO_COPY_FROM_MODULE_LIST%>'
+                           paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >     
+                         Copy Module from module cart
+                      </html:link>		  
+                    </td>   
+                    <td align="right" width="160">
+                      <html:link action='<%="/formbuilder/moduleSearch.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_MODULE_SEARCH%>'
+                           paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" > 
+                         Copy module from a form
+                      </html:link>		   
+                    </td>  
+                    <td align="right" width="80">
+                      <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
+                           paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >
+                        <!-- html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/ -->         
+                         Create new
+                      </html:link>
+                    </td>                               
+                  </tr>
+                  </table> 
+                <!-- Add for delete and new Module end -->  
+                </logic:equal>
+            </logic:notPresent>
+            <logic:present name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
+      		<table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
+        	   <tr class>
+          	      <td >
+			             &nbsp;
+          	      </td>
+        	   </tr> 
+        	</table>            
+                     <%@ include file="/formbuilder/repititionDetails_inc.jsp"%> 
+                    <logic:equal value="<%= String.valueOf(moduleSize.intValue()-1) %>" name="moduleIndex">
+                    <!-- Add for delete and new Module -->
+                     <table width="79%" align="center" cellpadding="0" cellspacing="0" border="0">        
+                      <tr align="right">
+                        <logic:notEmpty name="<%=FormConstants.DELETED_MODULES%>">
+        
+                          <td align="right"   class="OraFieldText" nowrap>    
+                              <html:select styleClass="Dropdown" property="<%=FormConstants.ADD_DELETED_MODULE_IDSEQ%>">
+                                <html:options collection="<%=FormConstants.DELETED_MODULES%>" 
+                                    property="moduleIdseq" labelProperty="longName" />
+                              </html:select >
+                          </td>
+                          <td align="left" width="25">
+                              <a href="javascript:submitFormEdit('<%=NavigationConstants.ADD_FROM_DELETED_LIST%>','<%=moduleSize%>')">
+                                 <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
+                              </a>                          
+                          </td>   
+                        </logic:notEmpty>
+        
+                        <logic:empty name="<%=FormConstants.DELETED_MODULES%>">
+        
+                        <td >
+                          &nbsp;
+                        </td>  
+                        </logic:empty>  
+                        
+                        <td align="right" width="205"> 
+                          <html:link action='<%="/formbuilder/copyFromModuleList.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GOTO_COPY_FROM_MODULE_LIST%>'
+                               paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >     
+                             Copy Module from module cart
+                          </html:link>		  
+                        </td>   
+                        <td align="right" width="160">
+                          <html:link action='<%="/formbuilder/moduleSearch.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_MODULE_SEARCH%>'
+                               paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" > 
+                             Copy module from a form
+                          </html:link>		   
+                        </td>  
+                        <td align="right" width="80">
+                          <html:link action='<%="/gotoCreateModule?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.GO_TO_CREATE_MODULE%>'
+                               paramId="<%=FormConstants.DISPLAY_ORDER%>" paramName="moduleSize" >
+                            <!-- html:img src='<%=urlPrefix+"i/new.gif"%>' border="0" alt="Add New Module"/ -->         
+                             Create new
+                          </html:link>
+                        </td>                               
+                      </tr>
+                      </table> 
+                    <!-- Add for delete and new Module end -->  
+                    </logic:equal>
+            </logic:present>
+            
           </logic:iterate>
 
         </logic:notEmpty>   

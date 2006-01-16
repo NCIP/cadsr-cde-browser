@@ -45,7 +45,7 @@ if(confirm(message)) location.href = url;
 		   	   	altMessage="Delete"  
             confirmMessageKey="cadsr.formbuilder.form.delete.confirm"
 		   	   	/>		                
-          </td>      
+          </td>  
 
           <td > 
             <html:link action='<%="/cancelFormEditAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.CANCEL_FORM_EDIT%>'>

@@ -17,10 +17,34 @@
                                <bean:write  name="module" property="instruction.longName"/>
                              </td>
                             </tr>
+                             <tr class="OraTabledata">
+                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                Number of Repetitions 
+                             </td>
+                             <td class="OraFieldText">
+                               <bean:write name="module" property="numberOfRepeats"/>
+                             </td>
+                            </tr>                            
                            </table>
                        </td>
                       </tr>
-                   </logic:present>                                      
+                   </logic:present>     
+                   <logic:notPresent name="module" property="instruction">                   
+                      <tr>  
+                       <td colspan="2">
+                           <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                             <tr class="OraTabledata">
+                              <td class="OraTableColumnHeader" width="10%" nowrap>
+                                Number of Repetitions 
+                             </td>
+                             <td class="OraFieldTextInstruction">
+                               <bean:write name="module" property="numberOfRepeats"/>
+                             </td>
+                            </tr>
+                           </table>
+                       </td>
+                      </tr>
+                   </logic:notPresent>                     
 
                   <logic:notEmpty name="module" property = "questions">
                     <tr class="OraTabledata">
