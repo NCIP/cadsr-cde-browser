@@ -64,7 +64,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     String returnCode = (String) out.get("p_return_code");
     String returnDesc = (String) out.get("p_return_desc");
 
-    if (!StringUtils.doesValueExist(returnCode)) {
+    if (!StringUtils.doesValueExist(returnCode)) { 
       // null
       return 1;
     }
@@ -84,8 +84,8 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     // check if the user has the privilege to create module
     //This check need to be done only at the Form level
   /**
-    boolean create =
-      this.hasCreate(sourceModule.getCreatedBy(), "QUEST_CONTENT",
+    boolean create = 
+      this.hasCreate(sourceModule.getCreatedBy(), "QUEST_CONTENT", 
         sourceModule.getConteIdseq());
     if (!create) {
        DMLException dml = new DMLException("The user does not have the create module privilege.");
@@ -95,18 +95,18 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
    **/
     sourceModule.setPreferredName(generatePreferredName(sourceModule.getLongName()));
 
-    InsertQuestContent  insertQuestContent  =
+    InsertQuestContent  insertQuestContent  = 
       new InsertQuestContent (this.getDataSource());
-    String qcIdseq = generateGUID();
+    String qcIdseq = generateGUID(); 
     int res = insertQuestContent.createContent(sourceModule, qcIdseq);
     if (res != 1) {
-       DMLException dml = new DMLException("Did not succeed creating module record in the " +
+       DMLException dml = new DMLException("Did not succeed creating module record in the " + 
         " quest_contents_ext table.");
        dml.setErrorCode(this.ERROR_CREATEING_MODULE);
-       throw dml;
+       throw dml;        
     }
-
-    InsertQuestRec  insertQuestRec  =
+    
+    InsertQuestRec  insertQuestRec  = 
       new InsertQuestRec (this.getDataSource());
     String qrIdseq = generateGUID();
     int resRec = insertQuestRec.createContent(sourceModule, qcIdseq, qrIdseq);
@@ -114,10 +114,10 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       return qcIdseq;
     }
     else {
-       DMLException dml = new DMLException("Did not succeed creating form module relationship " +
+       DMLException dml = new DMLException("Did not succeed creating form module relationship " +  
         "record in the quest_recs_ext table.");
        dml.setErrorCode(this.ERROR_CREATEING_MODULE);
-       throw dml;
+       throw dml;          
     }
   }
 
@@ -147,7 +147,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     }
     else{
       DMLException dmlExp = new DMLException(returnDesc);
-      dmlExp.setErrorCode(ERROR_DELETEING_MODULE);
+      dmlExp.setErrorCode(ERROR_DELETEING_MODULE);    
       throw dmlExp;
     }
   }
@@ -155,7 +155,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
   /**
    * Changes the display order of the specified module. Display order of the
    * other modules in the form is also updated accordingly.
-   *
+   * 
    * @param <b>moduleId</b> Idseq of the module component.
    * @param <b>newDisplayOrder</b> New display order of the module component.
    *
@@ -169,7 +169,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
 
     return updateDisplayOrderDirect(moduleId, "FORM_MODULE", newDisplayOrder, username);
   }
-
+  
   public Module addQuestion(
     String moduleId,
     Question question) throws DMLException {
@@ -201,7 +201,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
 
     if (res != 1) {
       DMLException dmlExp = new DMLException("Did not succeed updating module's long name");
-      dmlExp.setErrorCode(ERROR_UPDATING_MODULE);
+      dmlExp.setErrorCode(ERROR_UPDATING_MODULE);    
       throw dmlExp;
     }
 
@@ -212,15 +212,15 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     ServiceLocator locator = new SimpleServiceLocator();
 
     JDBCModuleDAO test = new JDBCModuleDAO(locator);
-
+    
 
     System.out.println(test.getQuestionsInAModule("99CD59C5-AB7C-3FA4-E034-080020C9C0E0"));
 
-
+    
     /*
     Module module = test.findModuleByPrimaryKey("99CD59C5-B04A-3FA4-E034-080020C9C0E0");
     System.out.println(module);
-    module.setLongName("test long name");
+    module.setLongName("test long name");    
     try {
       int res = test.updateModuleComponent(module );
       System.out.println("updated module's long name " + res);
@@ -255,7 +255,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       module.setAslName("DRAFT NEW");
       module.setCreatedBy("Hyun");
       module.setDisplayOrder(4);
-
+   
       int res = test.createModuleComponentStoredProc(module);
       System.out.println("\n*****Create Module Result 1: " + res);
     }
@@ -376,9 +376,9 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
  private class InsertQuestContent extends SqlUpdate {
     public InsertQuestContent(DataSource ds) {
       // super(ds, contentInsertSql);
-      String contentInsertSql =
-      " INSERT INTO quest_contents_ext " +
-      " (qc_idseq, version, preferred_name, long_name, preferred_definition, " +
+      String contentInsertSql = 
+      " INSERT INTO quest_contents_ext " + 
+      " (qc_idseq, version, preferred_name, long_name, preferred_definition, " + 
       "  conte_idseq, proto_idseq, asl_name, created_by, qtl_name ) " +
       " VALUES " +
       " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
@@ -398,11 +398,11 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       declareParameter(new SqlParameter("p_qtl_name", Types.VARCHAR));
       compile();
     }
-    protected int createContent (Module sm, String qcIdseq)
+    protected int createContent (Module sm, String qcIdseq) 
     {
-      Object [] obj =
+      Object [] obj = 
         new Object[]
-          {qcIdseq,
+          {qcIdseq, 
            sm.getVersion().toString(),
            generatePreferredName(sm.getLongName()),
            sm.getLongName(),
@@ -415,7 +415,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
            sm.getCreatedBy(),
            "MODULE"
           };
-
+      
 	    int res = update(obj);
       return res;
     }
@@ -427,10 +427,10 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
    */
  private class InsertQuestRec extends SqlUpdate {
     public InsertQuestRec(DataSource ds) {
-      String questRecInsertSql =
+      String questRecInsertSql = 
       " INSERT INTO qc_recs_ext " +
-      " (qr_idseq, p_qc_idseq, c_qc_idseq, display_order, rl_name, created_by)" +
-      " VALUES " +
+      " (qr_idseq, p_qc_idseq, c_qc_idseq, display_order, rl_name, created_by)" +  
+      " VALUES " + 
       "( ?, ?, ?, ?, ?, ? )";
 
       this.setDataSource(ds);
@@ -443,18 +443,18 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       declareParameter(new SqlParameter("p_created_by", Types.VARCHAR));
       compile();
     }
-    protected int createContent (Module sm, String qcIdseq, String qrIdseq)
+    protected int createContent (Module sm, String qcIdseq, String qrIdseq) 
     {
-      Object [] obj =
+      Object [] obj = 
         new Object[]
-          {qrIdseq,
+          {qrIdseq, 
            sm.getForm().getFormIdseq(),
            qcIdseq,
            new Integer(sm.getDisplayOrder()),
            "FORM_MODULE",
            sm.getCreatedBy()
           };
-
+      
 	    int res = update(obj);
       return res;
     }
@@ -483,21 +483,23 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       question.setLongName(rs.getString(9));   // LONG_NAME
       question.setDisplayOrder(rs.getInt(13)); // DISPLAY_ORDER
       question.setAslName(rs.getString(5));//Workflow
+      question.setPreferredDefinition(rs.getString(7));
+      
       String deIdSeq = rs.getString(8);
       if(deIdSeq!=null)
        {
         DataElementTransferObject dataElementTransferObject =
-          new DataElementTransferObject();
+          new DataElementTransferObject();       
         dataElementTransferObject.setDeIdseq(deIdSeq); // DE_IDSEQ
-        dataElementTransferObject.setLongCDEName(rs.getString(15)); // DOC_TEXT
+        dataElementTransferObject.setLongCDEName(rs.getString(15)); // DOC_TEXT 
         dataElementTransferObject.setVersion(new Float(rs.getFloat(16))); // VERSION
         dataElementTransferObject.setLongName(rs.getString(17)); // DE_LONG_NAME
         dataElementTransferObject.setCDEId(Integer.toString(rs.getInt(18)));
         dataElementTransferObject.setAslName(rs.getString("DE_WORKFLOW"));
-        question.setDataElement(dataElementTransferObject);
-
-
-        ValueDomainTransferObject valueDomainTransferObject =
+        question.setDataElement(dataElementTransferObject); 
+      
+      
+        ValueDomainTransferObject valueDomainTransferObject = 
                                          new ValueDomainTransferObject();
         valueDomainTransferObject.setVdIdseq(rs.getString(19)); // VD_IDSEQ
         dataElementTransferObject.setValueDomain(valueDomainTransferObject);
@@ -532,17 +534,17 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       if(deIdSeq!=null)
        {
         DataElementTransferObject dataElementTransferObject =
-          new DataElementTransferObject();
+          new DataElementTransferObject();       
         dataElementTransferObject.setDeIdseq(deIdSeq); // DE_IDSEQ
-        dataElementTransferObject.setLongCDEName(rs.getString(15)); // DOC_TEXT
+        dataElementTransferObject.setLongCDEName(rs.getString(15)); // DOC_TEXT 
         dataElementTransferObject.setVersion(new Float(rs.getFloat(16))); // VERSION
         dataElementTransferObject.setLongName(rs.getString(17)); // DE_LONG_NAME
         dataElementTransferObject.setCDEId(Integer.toString(rs.getInt(18)));
         dataElementTransferObject.setAslName(rs.getString("DE_WORKFLOW"));
-        question.setDataElement(dataElementTransferObject);
-
-
-        ValueDomainTransferObject valueDomainTransferObject =
+        question.setDataElement(dataElementTransferObject); 
+      
+      
+        ValueDomainTransferObject valueDomainTransferObject = 
                                          new ValueDomainTransferObject();
         valueDomainTransferObject.setVdIdseq(rs.getString(19)); // VD_IDSEQ
         dataElementTransferObject.setValueDomain(valueDomainTransferObject);
@@ -575,7 +577,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
     else
     {
       DMLException dmlExp = new DMLException("No matching module record found");
-      dmlExp.setErrorCode(NO_MATCH_FOUND);
+      dmlExp.setErrorCode(NO_MATCH_FOUND);    
       throw dmlExp;
     }
 
@@ -594,7 +596,7 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       super.setSql("SELECT * FROM FB_MODULES_VIEW where MOD_IDSEQ = ? ");
       declareParameter(new SqlParameter("MOD_IDSEQ", Types.VARCHAR));
     }
-
+    
    /**
     * 3.0 Refactoring- Removed JDBCTransferObject
     */
@@ -615,13 +617,13 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
   }
 
   /**
-   * Inner class that updates long name of the question.
-   *
+   * Inner class that updates long name of the question. 
+   * 
    */
   private class UpdateModuleComponent extends SqlUpdate {
     public UpdateModuleComponent(DataSource ds) {
       String updateSql =
-        " UPDATE quest_contents_ext " +
+        " UPDATE quest_contents_ext " + 
         " SET LONG_NAME = ?,  modified_by = ? " +
         " WHERE QC_IDSEQ = ? ";
 

@@ -10,6 +10,16 @@
                        Copy to module cart
                   </html:link>&nbsp;
            	    </td>                       
+     <logic:present name="<%=FormConstants.MODULE_DISPLAY_ORDER_TO_COPY%>"> 
+          	    <td align="left" width="82%" >
+                   <html:link action='<%="/formbuilder/moduleSearch?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.COPY_SELECTED_MODULE_TO_FORM%>'
+                      paramId= "<%=FormConstants.MODULE_INDEX%>"
+		      paramName="modIndex"
+                      scope="page">
+                       Copy this module to form
+                  </html:link>&nbsp;
+           	    </td>      
+     </logic:present>      	    
          	 </tr>
       		</table>               
                  <%@ include file="/formbuilder/commonModuleDetails_inc.jsp"%> 

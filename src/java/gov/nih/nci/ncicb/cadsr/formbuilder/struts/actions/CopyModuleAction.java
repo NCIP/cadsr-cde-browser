@@ -36,6 +36,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.Question;
 
 
 public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
@@ -131,6 +132,9 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
       DynaActionForm dynaForm = (DynaActionForm)form;
       
       Form copyForm = (Form)getSessionObject(request,MODULE_COPY_FORM);
+      if (copyForm == null) {
+         copyForm = (Form)getSessionObject(request,"crf");
+      }
       int selectedDisplayOrder = ((Integer)dynaForm.get(MODULE_INDEX)).intValue();
       List copyFormModules = copyForm.getModules();
       Module copiedModule = (Module) copyFormModules.get(selectedDisplayOrder); 
@@ -138,6 +142,7 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
       try
       {
          copiedModuleClone = (Module)copiedModule.clone();
+         this.updateClonedModule(copiedModuleClone, copyForm,request.getRemoteUser());
       }
       catch (CloneNotSupportedException clexp) {
           if (log.isErrorEnabled()) {
@@ -455,21 +460,7 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
                 int currIndex = (new Integer(selectedIndexes[i])).intValue();
                 Module currModule= moduleList.get(currIndex);
                 Module copiedModuleClone = (Module)currModule.clone();
-                copiedModuleClone.setForm(crf);
-                copiedModuleClone.setVersion(new Float(1.0));
-                copiedModuleClone.setCreatedBy(request.getRemoteUser());
-                copiedModuleClone.setContext(crf.getContext());
-                copiedModuleClone.setConteIdseq(crf.getConteIdseq());
-                
-                Iterator instIter = copiedModuleClone.getInstructions().iterator();
-                
-                while (instIter.hasNext()) {
-                   Instruction instr = (Instruction) instIter.next();
-                   instr.setContext(crf.getContext());
-                   instr.setVersion(new Float(1.0));
-                   instr.setCreatedBy(request.getRemoteUser());
-                }
-                
+                updateClonedModule(copiedModuleClone, crf, request.getRemoteUser());
                 copiedModules.add(copiedModuleClone);
               }      
               
@@ -512,6 +503,41 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
          return mapping.findForward("viewModuleList");
       } 
 
-      }       
+      }   
+      
+   private void updateClonedModule (Module copiedModuleClone, Form crf, String userName){
+      copiedModuleClone.setForm(crf);
+      copiedModuleClone.setVersion(new Float(1.0));
+      copiedModuleClone.setNumberOfRepeats(0);
+      copiedModuleClone.setCreatedBy(userName);
+      copiedModuleClone.setContext(crf.getContext());
+      copiedModuleClone.setConteIdseq(crf.getConteIdseq());
+      
+      Iterator instIter = copiedModuleClone.getInstructions().iterator();
+      
+      while (instIter.hasNext()) {
+         Instruction instr = (Instruction) instIter.next();
+         instr.setContext(crf.getContext());
+         instr.setVersion(new Float(1.0));
+         instr.setCreatedBy(userName);
+         
+      }
+      Iterator<Question> questIter = copiedModuleClone.getQuestions().iterator();
+      
+      while (questIter.hasNext()) {
+        Question question = questIter.next();
+        question.setContext(crf.getContext());
+        
+         Iterator questInstrIter = question.getInstructions().iterator();
+         
+         while (questInstrIter.hasNext()) {
+            Instruction questionInstr = (Instruction) questInstrIter.next();
+            questionInstr.setContext(crf.getContext());
+         }
+        
+      }
+      
+      
+   }
 }
 

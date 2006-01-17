@@ -451,6 +451,10 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                            FormInstructionChanges instructionChanges)
     {
         ModuleDAO dao = daoFactory.getModuleDAO();
+        QuestionDAO questionDAO = daoFactory.getQuestionDAO();
+        QuestionInstructionDAO questInstrDAO = daoFactory.getQuestionInstructionDAO();
+        FormValidValueDAO formVVDAO = daoFactory.getFormValidValueDAO();
+        FormValidValueInstructionDAO formVVInstDAO = daoFactory.getFormValidValueInstructionDAO();
         FormDAO formdao = daoFactory.getFormDAO();
         FormInstructionDAO formInstrdao = daoFactory.getFormInstructionDAO();
         ModuleInstructionDAO moduleInstrdao =
@@ -469,9 +473,18 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             {
                 Module addedModule = (Module)addedIt.next();
                 String newModIdseq = dao.createModuleComponent(addedModule);
+                addedModule.setIdseq(newModIdseq);
                 Instruction instr = addedModule.getInstruction();
                 if (instr != null)
                     moduleInstrdao.createInstruction(instr, newModIdseq);
+               List<Question> questions = addedModule.getQuestions();
+               if (questions != null) {
+                  for (int i=0; i<questions.size(); i++) {
+                     questions.get(i).setModule(addedModule);
+                  }
+                    this.createNewQuestions(questionDAO,questInstrDAO,formVVDAO,
+                            formVVInstDAO, questions);
+               }
             }
         }
         if ((updatedModules != null) && !updatedModules.isEmpty())
@@ -1062,13 +1075,17 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                                     FormValidValueInstructionDAO fvvInstrDao,
                                     List newQuestions)
     {
+    Context questionContext = null;
         if (newQuestions != null && !newQuestions.isEmpty())
         {
             Iterator newIt = newQuestions.iterator();
             while (newIt.hasNext())
             {
                 Question currQuestion = (Question)newIt.next();
+                questionContext = currQuestion.getContext();
                 currQuestion.setCreatedBy(getUserName());
+                if (currQuestion.getVersion() == null)
+                  currQuestion.setVersion(new Float(1.0));
                 Question newQusetion =
                     questionDao.createQuestionComponent(currQuestion);
                 //instructions
@@ -1102,6 +1119,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                         if (vvInstr != null)
                         {
                             vvInstr.setCreatedBy(getUserName());
+                            vvInstr.setContext(questionContext);
                             fvvInstrDao
                             .createInstruction(vvInstr, newFVVIdseq);
                         }
