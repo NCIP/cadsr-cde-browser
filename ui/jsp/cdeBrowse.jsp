@@ -146,11 +146,15 @@
 CDE Browser
 </TITLE>
 </HEAD>
+
+<frameset rows="5%,*">
+   <html:frame page="/common/topHeader1.jsp" frameborder="0" scrolling = "no" frameName="tree_header"/>
   <frameset cols="25%,*">
     <frameset rows="15%,*">
        <html:frame page="/common/tree_hdr.html" frameborder="0" scrolling = "no" frameName="tree_header"/>
        <html:frame page="<%=treeURL%>" frameborder="0"  frameName="tree"/>
     </frameset>    
       <html:frame page="<%=browserURL%>" frameborder="0" frameName="body"/>
-   </frameset>
+   </frameset>   
+ </frameset>
 </HTML>
