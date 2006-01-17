@@ -1302,9 +1302,9 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         String resultFormPK = myDAO.createNewFormVersion(formIdSeq, newVersionNumber, changeNote, getUserName().toUpperCase());
 
         resultFormPK = resultFormPK.substring(0,36);
-        Form resultForm = this.getFormDetails(resultFormPK);
+        //Form resultForm = this.getFormDetails(resultFormPK);
         
-        return resultForm.getFormIdseq();
+        return resultFormPK;
     }
 
     public List getFormVersions(int publicId)
