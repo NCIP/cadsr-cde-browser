@@ -91,6 +91,12 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
       DynaActionForm dynaForm = (DynaActionForm)form;
       FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
       String formIdSeq = (String) formBean.get(FORM_ID_SEQ);
+      if ("".equals(formIdSeq)) {
+         formIdSeq = request.getParameter("P_IDSEQ");
+         if (formIdSeq==null || formIdSeq.length() == 0){        
+             formIdSeq = (String)request.getAttribute("P_IDSEQ");
+         }    
+      }
          Form crf = null; 
          try {
              crf = getFormBuilderService().getFormDetails(formIdSeq);
@@ -132,9 +138,6 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
       DynaActionForm dynaForm = (DynaActionForm)form;
       
       Form copyForm = (Form)getSessionObject(request,MODULE_COPY_FORM);
-      if (copyForm == null) {
-         copyForm = (Form)getSessionObject(request,"crf");
-      }
       int selectedDisplayOrder = ((Integer)dynaForm.get(MODULE_INDEX)).intValue();
       List copyFormModules = copyForm.getModules();
       Module copiedModule = (Module) copyFormModules.get(selectedDisplayOrder); 

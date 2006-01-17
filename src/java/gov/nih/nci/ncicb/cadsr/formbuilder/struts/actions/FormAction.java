@@ -321,7 +321,13 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     HttpServletResponse response) throws IOException, ServletException {
     setInitLookupValues(request);
     try {
+       Object displayOrderToCopy = getSessionObject(request,MODULE_DISPLAY_ORDER_TO_COPY);
+       
+       if (displayOrderToCopy != null) {
+          return mapping.findForward("setModuleCopyForm");
+       }
       setFormForAction(form, request);
+
     }
     catch (FormBuilderException exp) {
       if (log.isErrorEnabled()) {

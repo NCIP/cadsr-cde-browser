@@ -163,6 +163,9 @@
       validate="false">
       <forward name="success" path="/formbuilder/formDetails.jsp"
         redirect="false"/>
+      <forward name="setModuleCopyForm"
+        path="/formbuilder/moduleSearch.do?method=setSelectedFormAsModuleCopyForm"
+        redirect="false"/>     
       <forward name="failure"
         path="/formSearchFramedAction.do?method=getAllForms"
         redirect="false"/>     
