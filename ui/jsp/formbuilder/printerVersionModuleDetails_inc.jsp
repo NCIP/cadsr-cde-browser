@@ -70,6 +70,43 @@
                                  </td>
                                </tr> 
                             </logic:present>                            
+                            <logic:present name="question" property="defaultValidValue">
+                              <tr class="PrinterOraTableColumnHeader">
+                                 <td class="PrinterOraTableColumnHeader" width="50">&nbsp;</td>
+                                  <td class="PrinterOraTableColumnHeader" colspan="2">                              
+                                   <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentBlack" >
+                                     <tr class="PrinterOraTabledata">
+                                      <td class="PrinterOraTableColumnHeader" width="10%" nowrap>
+                                        <bean:message key="cadsr.formbuilder.form.questionDefaultValue"/>
+                                     </td>
+                                     <td class="PrinterOraFieldText">
+                                       <bean:write  name="question" property="defaultValidValue.longName"/>
+                                     </td>
+                                    </tr>
+                                   </table>                                                            
+                                 </td>
+                               </tr> 
+                            </logic:present>                            
+
+                            <logic:present name="question" property="defaultValue">
+                              <tr class="PrinterOraTableColumnHeader">
+                                 <td class="PrinterOraTableColumnHeader" width="50">&nbsp;</td>
+                                  <td class="PrinterOraTableColumnHeader" colspan="2">                              
+                                   <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentBlack" >
+                                     <tr class="PrinterOraTabledata">
+                                      <td class="PrinterOraTableColumnHeader" width="10%" nowrap>
+                                        <bean:message key="cadsr.formbuilder.form.questionDefaultValue"/>
+                                     </td>
+                                     <td class="PrinterOraFieldText">
+                                       <bean:write  name="question" property="defaultValue"/>
+                                     </td>
+                                    </tr>
+                                   </table>                                                            
+                                 </td>
+                               </tr> 
+                            </logic:present>                            
+
+                            
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">
                               <tr class="PrinterOraTabledata">

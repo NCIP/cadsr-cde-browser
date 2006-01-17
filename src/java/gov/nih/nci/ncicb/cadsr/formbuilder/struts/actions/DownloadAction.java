@@ -178,6 +178,12 @@ public class DownloadAction
    cell = row.createCell(colNumber++);
    cell.setCellValue("Question Instructions");
    cell.setCellStyle(boldCellStyle);
+
+//question default value
+     cell = row.createCell(colNumber++);
+     cell.setCellValue("Question Default Value");
+     cell.setCellStyle(boldCellStyle);
+
    cell = row.createCell(colNumber++);
    cell.setCellValue("Valid Value");
    cell.setCellStyle(boldCellStyle);
@@ -221,6 +227,17 @@ public class DownloadAction
      else
       colNumber++;
 
+     //question default value
+     String questionDefaultValue = question.getDefaultValue();
+     if (questionDefaultValue==null || questionDefaultValue.length()==0){
+         FormValidValue fvv = question.getDefaultValidValue();
+         if (fvv!=null && fvv.getLongName()!=null){
+             questionDefaultValue = fvv.getLongName();
+         }
+     }
+     
+     row.createCell(colNumber++).setCellValue(questionDefaultValue);     
+     
      //export valid value related info  
      List validValues = question.getValidValues();
 
