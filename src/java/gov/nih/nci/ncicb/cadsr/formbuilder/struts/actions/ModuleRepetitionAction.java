@@ -326,8 +326,10 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
            while(it.hasNext())
            {
                Question q = (Question)it.next();
+
                String vvId = defautIdArr[i];
                String value = defautArr[i];
+               if(vvId==null) continue;
                QuestionRepitition qr = null;
                if(!vvId.equalsIgnoreCase(""))
                {
