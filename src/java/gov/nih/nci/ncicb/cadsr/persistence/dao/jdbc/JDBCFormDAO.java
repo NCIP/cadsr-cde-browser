@@ -1000,7 +1000,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
      //setContext(new ContextTransferObject(rs.getString("context_name")));
      ContextTransferObject contextTransferObject = new ContextTransferObject();
      contextTransferObject.setConteIdseq(rs.getString(4)); //CONTE_IDSEQ
-     contextTransferObject.setName(rs.getString(5)); // CONTEXT_NAME
+     contextTransferObject.setName(rs.getString(10)); // CONTEXT_NAME
      form.setContext(contextTransferObject);
      form.setDateModified(rs.getTimestamp(13));
      
