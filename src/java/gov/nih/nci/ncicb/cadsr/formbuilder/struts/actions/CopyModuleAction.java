@@ -136,6 +136,7 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
       HttpServletResponse response) throws IOException, ServletException {
 
       DynaActionForm dynaForm = (DynaActionForm)form;
+      Form crf = (Form)getSessionObject(request,CRF);
       
       Form copyForm = (Form)getSessionObject(request,MODULE_COPY_FORM);
       int selectedDisplayOrder = ((Integer)dynaForm.get(MODULE_INDEX)).intValue();
@@ -145,7 +146,9 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
       try
       {
          copiedModuleClone = (Module)copiedModule.clone();
-         this.updateClonedModule(copiedModuleClone, copyForm,request.getRemoteUser());
+         this.updateClonedModule(copiedModuleClone, crf, request.getRemoteUser());
+         FormActionUtil.removeAllIdSeqs(copiedModuleClone);
+
       }
       catch (CloneNotSupportedException clexp) {
           if (log.isErrorEnabled()) {
@@ -156,7 +159,6 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
       } 
         
       int displayOrderToCopy= ((Integer)getSessionObject(request,MODULE_DISPLAY_ORDER_TO_COPY)).intValue();
-      Form crf = (Form)getSessionObject(request,CRF);
         
       List desModules = crf.getModules();
       
