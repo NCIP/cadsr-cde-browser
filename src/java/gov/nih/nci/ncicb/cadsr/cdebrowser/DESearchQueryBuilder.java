@@ -576,7 +576,8 @@ public class DESearchQueryBuilder extends Object {
                            +"      ,de.preferred_definition "
                            +"      ,acr.registration_status "
                            +"      ,rsl.display_order "
-                           +"      ,asl.display_order wkflow_order";
+                           +"      ,asl.display_order wkflow_order "
+                           +"      ,de.cde_id cdeid";
      finalSqlStmt.append(selectClause);
       finalSqlStmt.append(fromWhere);
       sqlWithoutOrderBy = finalSqlStmt.toString();
@@ -640,11 +641,21 @@ public class DESearchQueryBuilder extends Object {
     if (sortColumnHeader.getOrder() == SortableColumnHeader.DESCENDING)
        sortOrder = " DESC";
     StringBuffer sb = new StringBuffer();
-    sb = sb.append("upper(" + sortColumnHeader.getPrimary()+ ")" +  sortOrder);
+    if (sortColumnHeader.isColumnNumeric(sortColumnHeader.getPrimary()))
+       sb = sb.append((sortColumnHeader.getPrimary()) +  sortOrder);
+    else
+       sb = sb.append("upper(" + sortColumnHeader.getPrimary()+ ")" +  sortOrder);
     if(sortColumnHeader.getSecondary()!=null&&!sortColumnHeader.getSecondary().equalsIgnoreCase(""))
-      sb.append("," + "upper(" + sortColumnHeader.getSecondary()+ ")"+ sortOrder);
+       if (sortColumnHeader.isColumnNumeric(sortColumnHeader.getSecondary()))
+          sb.append("," +  sortColumnHeader.getSecondary()+ sortOrder);
+       else
+          sb.append("," + "upper(" + sortColumnHeader.getSecondary()+ ")"+ sortOrder);
+        
     if(sortColumnHeader.getTertiary()!=null&&!sortColumnHeader.getTertiary().equalsIgnoreCase(""))
-      sb.append("," + "upper("+ sortColumnHeader.getTertiary()+ ")"+ sortOrder);
+       if (sortColumnHeader.isColumnNumeric(sortColumnHeader.getTertiary()))
+          sb.append("," + sortColumnHeader.getTertiary()+ sortOrder);
+       else
+         sb.append("," + "upper("+ sortColumnHeader.getTertiary()+ ")"+ sortOrder);
     return sb.toString();
   }
 

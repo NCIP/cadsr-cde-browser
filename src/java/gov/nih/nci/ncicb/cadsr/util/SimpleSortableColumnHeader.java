@@ -1,5 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class SimpleSortableColumnHeader implements SortableColumnHeader {
    public SimpleSortableColumnHeader() {
    }
@@ -54,6 +58,10 @@ public class SimpleSortableColumnHeader implements SortableColumnHeader {
   public void setDefaultOrder(boolean defaultOrder)
   {
     this.defaultOrder = defaultOrder;
+  }
+  public boolean isColumnNumeric(String columnName) {
+    Set<String> numericNames = new HashSet(Arrays.asList(NUMERIC_COLUMNS));
+    return numericNames.contains(columnName);
   }
 
 }

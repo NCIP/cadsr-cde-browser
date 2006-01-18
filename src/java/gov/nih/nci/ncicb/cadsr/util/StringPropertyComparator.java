@@ -2,7 +2,11 @@ package gov.nih.nci.ncicb.cadsr.util;
 import gov.nih.nci.ncicb.cadsr.exception.NestedRuntimeException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This Class allows to sorta List Objects. Uses String "CompareIgnoreCase" to Compare attributes so
@@ -218,4 +222,10 @@ public class StringPropertyComparator implements Comparator,SortableColumnHeader
   {
     this.defaultOrder = defaultOrder;
   }
+  
+   public boolean isColumnNumeric(String columnName) {
+     Set<String> numericNames = new HashSet(Arrays.asList(NUMERIC_COLUMNS));
+     return numericNames.contains(columnName);
+   }
+
 }
