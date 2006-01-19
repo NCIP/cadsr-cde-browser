@@ -208,7 +208,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   }
 
     /**
-     * Creates a new form version 
+     * Creates a new form version
      *
      * @param <b>formIdSeq</b> existing form IdSeq.
      * @param <b>newVersionNumber</b> new version number
@@ -232,21 +232,21 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
            throw dmlExp;
       }
   }
-  
-  
+
+
   public List getFormVersions(int publicId){
     FormVersionsQuery query = new FormVersionsQuery();
     query.setDataSource(getDataSource());
     List result = query.getFormVersions(publicId);
-    return result;      
+    return result;
   }
-  
+
   public Float getMaxFormVersion(int publicId){
       MaxFormVersionsQuery query = new MaxFormVersionsQuery();
       query.setDataSource(getDataSource());
       query.setSql(publicId);
       List result = (List) query.execute();
-      
+
       if (result == null || result.isEmpty()){
           DMLException dmlExp = new DMLException("No matching record found.");
                 dmlExp.setErrorCode(NO_MATCH_FOUND);
@@ -256,18 +256,30 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       Float maxVersion = (Float) (result.get(0));
       return maxVersion;
   }
-    public void setLatestVersion(Version oldVersion, Version newVersion, String modifiedBy){
+    public void setLatestVersion(Version oldVersion, Version newVersion, List changedNoteList, String modifiedBy){
+
         if (oldVersion!=null){
-            RemoveLatestVersion removeSqlUpdate = new RemoveLatestVersion(getDataSource());
-            removeSqlUpdate.remove(oldVersion.getId(), oldVersion.getChangeNote());
-        }    
-        
-        if (newVersion!=null){    
             SetLatestVersion setLatestSqlUpdate = new SetLatestVersion(getDataSource());
-            setLatestSqlUpdate.setLatestVersion(newVersion.getId(), newVersion.getChangeNote(), modifiedBy);        
-        }    
+            setLatestSqlUpdate.updateVersionInfo(oldVersion.getId(), oldVersion.getChangeNote(), false, modifiedBy);
+            //remove(oldVersion.getId(), oldVersion.getChangeNote());
+        }
+
+        if (newVersion!=null){
+            //setLatestSqlUpdate.setLatestVersion(newVersion.getId(), newVersion.getChangeNote(), modifiedBy);
+             SetLatestVersion setLatestSqlUpdate = new SetLatestVersion(getDataSource());
+            setLatestSqlUpdate.updateVersionInfo(newVersion.getId(), newVersion.getChangeNote(), true, modifiedBy);
+        }
+
+
+        //SetChangeNote
+        Iterator it = changedNoteList.iterator();
+        while (it.hasNext()){
+            SetLatestVersion setLatestSqlUpdate = new SetLatestVersion(getDataSource());
+            Version version = (Version)it.next();
+            setLatestSqlUpdate.updateVersionInfo(version.getId(), version.getChangeNote(), false, modifiedBy);
+        }
     }
-    
+
   /**
    * Creates a new form component (just the header info).
    *
@@ -311,7 +323,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
             ids.add(p.getProtoIdseq());
         }
         addFormProtocols(qcIdseq, ids, sourceForm.getCreatedBy());
-    }    
+    }
     return qcIdseq;
   }
 
@@ -381,7 +393,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     query.setSql();
 
     List result = (List) query.execute(formId);
-    
+
     if (result == null || result.isEmpty()){
         DMLException dmlExp = new DMLException("No matching record found.");
               dmlExp.setErrorCode(NO_MATCH_FOUND);
@@ -389,7 +401,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     }
 
     myForm = (Form) (query.execute(formId).get(0));
-    
+
     //get protocols
     myForm.setProtocols(getProtocols(myForm));
     return myForm;
@@ -441,7 +453,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
                     , PersistenceConstants.CSI_TYPE_PUBLISH_FORM
                     ,  contextIdSeq);
   }
-  
+
   /**
    * Gets all the publishing Classifications for forms
    */
@@ -531,13 +543,13 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         query.removeFormProtocol(formIdseq, protocolIdseq);
         return;
     }
-    
+
     public void removeFormProtocols(String formIdseq, Collection protocolIds){
         RemoveFormProtocolQuery query = new RemoveFormProtocolQuery(getDataSource());
         query.removeFormProtocols(formIdseq, protocolIds);
         return;
     }
-    
+
     public void addFormProtocol(String formIdseq, String protocoldIdseq, String createdBy){
         AddFormProtocolQuery query = new AddFormProtocolQuery(getDataSource());
         query.addFormProtocol(formIdseq, protocoldIdseq, createdBy);
@@ -562,11 +574,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
     JDBCFormDAO formTest = new JDBCFormDAO(locator);
       //public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote, String createdBy) throws DMLException {
-/*      
-    formTest.createNewFormVersion("DA2BF104-B72B-1DC3-E034-0003BA12F5E7", new Float(17), "version 14","SBREXT");
+    formTest.createNewFormVersion("0870F3C9-8AC2-25FC-E044-0003BA0B1A09", new Float(18), "version 14","SBREXT");
     System.out.println("jereera ");
-    
-*/
+
+
+
     /*
     FormTransferObject newForm = new FormTransferObject();
 
@@ -724,7 +736,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     }
   }
 
-    
+
   /**
    * Inner class that accesses database to get all the modules that belong to
    * the specified form
@@ -759,8 +771,8 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     }
   }
 
-    
-    
+
+
     /**
      * Inner class that accesses database to get a form's protocols using the form idseq
      */
@@ -770,19 +782,19 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       }
 
       public void setSql() {
-        String sql = " SELECT p.proto_idseq, p.version, p.conte_idseq, p.preferred_name, p.preferred_definition, p.asl_name, p.long_name, p.LATEST_VERSION_IND, p.begin_date, p.END_DATE, p.PROTOCOL_ID, p.TYPE, p.PHASE, p.LEAD_ORG, p.origin, p.PROTO_ID, c.name contextname " + 
+        String sql = " SELECT p.proto_idseq, p.version, p.conte_idseq, p.preferred_name, p.preferred_definition, p.asl_name, p.long_name, p.LATEST_VERSION_IND, p.begin_date, p.END_DATE, p.PROTOCOL_ID, p.TYPE, p.PHASE, p.LEAD_ORG, p.origin, p.PROTO_ID, c.name contextname " +
                      " FROM protocol_qc_ext fp, protocols_ext p , sbr.contexts c" +
-                     " where QC_IDSEQ = ? and fp.PROTO_IDSEQ = p.PROTO_IDSEQ and p.deleted_ind='No' " + 
+                     " where QC_IDSEQ = ? and fp.PROTO_IDSEQ = p.PROTO_IDSEQ and p.deleted_ind='No' " +
                      " AND p.conte_idseq = c.conte_idseq";
         super.setSql(sql);
         declareParameter(new SqlParameter("QC_IDSEQ", Types.VARCHAR));
       }
 
       protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
-        Protocol protocol = new ProtocolTransferObject(); 
+        Protocol protocol = new ProtocolTransferObject();
         protocol.setProtoIdseq(rs.getString(1));
-        protocol.setVersion(rs.getFloat(2)); 
-        protocol.setConteIdseq(rs.getString(3)); 
+        protocol.setVersion(rs.getFloat(2));
+        protocol.setConteIdseq(rs.getString(3));
         protocol.setPreferredName(rs.getString(4));
         protocol.setPreferredDefinition(rs.getString(5));
         protocol.setAslName(rs.getString(6));
@@ -802,11 +814,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         context.setConteIdseq(rs.getString(3));
         context.setName(contextName);
         protocol.setContext(context);
-        
+
         return protocol;
       }
     }//end of class FormProtocolByFormPrimaryKey
-      
+
 
   /**
    * Inner class that accesses database to get a form using the form idseq
@@ -829,14 +841,14 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       form.setIdseq(rs.getString(1));
       form.setLongName(rs.getString(9)); //LONG_NAME
       form.setPreferredName(rs.getString(7)); // PREFERRED_NAME
-  
+
       //setContext(new ContextTransferObject(rs.getString("context_name")));
       ContextTransferObject contextTransferObject = new ContextTransferObject();
       contextTransferObject.setConteIdseq(rs.getString(4)); //CONTE_IDSEQ
       contextTransferObject.setName(rs.getString(12)); // CONTEXT_NAME
       form.setContext(contextTransferObject);
       form.setDateModified(rs.getTimestamp(15));
-      
+
       //multiple protocols will be set later
       /*ProtocolTransferObject protocolTransferObject =
         new ProtocolTransferObject(rs.getString(11)); //PROTOCOL_LONG_NAME
@@ -846,7 +858,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       List protocols = new ArrayList();
       protocols.add(protocolTransferObject);
       form.setProtocols(protocols);
-      */  
+      */
       form.setFormType(rs.getString(3)); // TYPE
       form.setAslName(rs.getString(6)); // WORKFLOW
       form.setVersion(new Float(rs.getString(2))); // VERSION
@@ -888,14 +900,14 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     contextTransferObject.setName(rs.getString(12)); // CONTEXT_NAME
     form.setContext(contextTransferObject);
     form.setDateModified(rs.getTimestamp(15));
-    
+
     //multiple protocols will be set later
     /*ProtocolTransferObject protocolTransferObject =
       new ProtocolTransferObject(rs.getString(11)); //PROTOCOL_LONG_NAME
     protocolTransferObject.setProtoIdseq(rs.getString(10));  // PROTO_IDSEQ
     form.setProtocol(protocolTransferObject);
     */
-    
+
     form.setFormType(rs.getString(3)); // TYPE
     form.setAslName(rs.getString(6)); // WORKFLOW
     form.setVersion(new Float(rs.getString(2))); // VERSION
@@ -925,9 +937,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       String type,
       String classificationIdseq,
       String contextRestriction,
-      String publicId, 
-      String version, 
-      String moduleName, 
+      String publicId,
+      String version,
+      String moduleName,
       String cdePublicId) {
 
       String selectWhat = "SELECT distinct f.qc_idseq, f.version, f.type, f.conte_idseq, f.CATEGORY_NAME, f.workflow, f.preferred_name, f.definition, " +
@@ -935,43 +947,43 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       StringBuffer fromWhat = new StringBuffer(" FROM FB_FORMS_VIEW f ");
       StringBuffer initialWhere = new StringBuffer();
       boolean hasWhere = false;
-      if (StringUtils.doesValueExist(moduleName) || StringUtils.doesValueExist(cdePublicId)){     
+      if (StringUtils.doesValueExist(moduleName) || StringUtils.doesValueExist(cdePublicId)){
         fromWhat.append(", FB_QUEST_MODULE_VIEW q ");
         initialWhere.append(" where ( f.QC_IDSEQ = q.FORM_IDSEQ )");
         hasWhere = true;
-      }  
-      if (StringUtils.doesValueExist(protocolIdSeq) || StringUtils.doesValueExist(protocolIdSeq)){     
+      }
+      if (StringUtils.doesValueExist(protocolIdSeq) || StringUtils.doesValueExist(protocolIdSeq)){
         fromWhat.append(", protocol_qc_ext p ");
         if (hasWhere){
             initialWhere.append(" AND ( f.QC_IDSEQ = p.qc_idseq) and (p.proto_idseq ='" + publicId + "') ");
-        }else{    
+        }else{
             initialWhere.append(" where ( f.QC_IDSEQ = p.qc_idseq) and (p.proto_idseq ='" + protocolIdSeq + "') ");
             hasWhere = true;
         }
-      }  
+      }
       String whereClause = makeWhereClause(
                           formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
-                          type, classificationIdseq,contextRestriction, 
+                          type, classificationIdseq,contextRestriction,
                           publicId, version, moduleName, cdePublicId, hasWhere);
-      String sql = selectWhat.toString() + " " + fromWhat.toString() + " " 
+      String sql = selectWhat.toString() + " " + fromWhat.toString() + " "
                     + initialWhere.toString() + whereClause;
       System.out.println(sql);
       super.setSql(sql);
-/*          
-      if (StringUtils.doesValueExist(moduleName) || StringUtils.doesValueExist(cdePublicId)){     
+/*
+      if (StringUtils.doesValueExist(moduleName) || StringUtils.doesValueExist(cdePublicId)){
         whereClause = makeWhereClause(
           formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
-          type, classificationIdseq,contextRestriction, 
+          type, classificationIdseq,contextRestriction,
           publicId, version, moduleName, cdePublicId, true);
-          String sql = "SELECT " + selectWhat + 
-                        " FROM FB_FORMS_VIEW f, FB_QUEST_MODULE_VIEW q where ( f.QC_IDSEQ = q.FORM_IDSEQ ) " + 
+          String sql = "SELECT " + selectWhat +
+                        " FROM FB_FORMS_VIEW f, FB_QUEST_MODULE_VIEW q where ( f.QC_IDSEQ = q.FORM_IDSEQ ) " +
                         whereClause + "ORDER BY upper(f.LONG_NAME)";
            super.setSql(sql);
            System.out.println(sql);
-     }else{     
+     }else{
       whereClause = makeWhereClause(
            formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName,
-           type, classificationIdseq,contextRestriction, 
+           type, classificationIdseq,contextRestriction,
            publicId, version, moduleName, cdePublicId, false);
            String sql = "SELECT " + selectWhat + " FROM FB_FORMS_VIEW  f " + whereClause + " ORDER BY upper(f.LONG_NAME)";
            super.setSql(sql);
@@ -1003,7 +1015,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
      contextTransferObject.setName(rs.getString(10)); // CONTEXT_NAME
      form.setContext(contextTransferObject);
      form.setDateModified(rs.getTimestamp(13));
-     
+
      //multiple protcols will be set later
      form.setFormType(rs.getString(3)); // TYPE
      form.setAslName(rs.getString(6)); // WORKFLOW
@@ -1024,7 +1036,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     contextTransferObject.setName(rs.getString(12)); // CONTEXT_NAME
     form.setContext(contextTransferObject);
     form.setDateModified(rs.getTimestamp(15));
-    
+
     //multiple protcols will be set later
     form.setFormType(rs.getString(3)); // TYPE
     form.setAslName(rs.getString(6)); // WORKFLOW
@@ -1046,11 +1058,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       String type,
       String classificationIdseq,
       String contextRestriction,
-      String publicId, 
-      String version, 
-      String moduleName, 
+      String publicId,
+      String version,
+      String moduleName,
       String cdePublicId,
-      boolean hasWhere) 
+      boolean hasWhere)
     {
       String where = "";
       StringBuffer whereBuffer = new StringBuffer("");
@@ -1143,7 +1155,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
           hasWhere = true;
         }
       }
-      
+
 /*        if (StringUtils.doesValueExist(publicId)) {
           if (hasWhere) {
             whereBuffer.append(" AND (f.PUBLIC_ID =" + publicId + ")");
@@ -1173,7 +1185,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
               hasWhere = true;
             }
         }//eles indicate all versions.
-        
+
          if (StringUtils.doesValueExist(moduleName)) {
              if (hasWhere) {
                whereBuffer.append(" AND (UPPER(q.MODULE_NAME) like UPPER('" + moduleName + "'))");
@@ -1183,7 +1195,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
                hasWhere = true;
              }
          }
-         
+
         if (StringUtils.doesValueExist(cdePublicId)) {
             if (hasWhere) {
               whereBuffer.append(" AND (q.CDE_ID='" + cdePublicId + "')");
@@ -1193,8 +1205,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
               hasWhere = true;
             }
         }
-          
-      //System.out.println("------------------whereBuffer=\n" + whereBuffer.toString());
+
       where = whereBuffer.toString();
 
       return where;
@@ -1271,7 +1282,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       form.setClassifications(new ArrayList());
 
      form.getClassifications().add(csi);
-      
+
     }
       return form;
 
@@ -1392,7 +1403,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       in.put("p_conte_idseq", newForm.getContext().getConteIdseq());
       //TODO - CopyForm - should copy the protocols in another table?
       //in.put("p_proto_idseq", newForm.getProtocol().getProtoIdseq());
-      //TESTING      
+      //TESTING
        in.put("p_proto_idseq", null);
        //end of testing
       in.put("p_asl_name", newForm.getAslName());
@@ -1410,12 +1421,12 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
      */
     private class VersionForm extends StoredProcedure {
       public VersionForm(DataSource ds) {
-        super(ds, "Sbrext_Form_Builder_Pkg.CRF_VERSION"); 
+        super(ds, "Sbrext_Form_Builder_Pkg.CRF_VERSION");
         declareParameter(new SqlParameter("P_Idseq", Types.VARCHAR));
         declareParameter(new SqlParameter("p_version", Types.FLOAT));
-        declareParameter(new SqlParameter("p_change_note", Types.VARCHAR)); 
-        declareParameter(new SqlParameter("p_Created_by", Types.VARCHAR)); 
-          
+        declareParameter(new SqlParameter("p_change_note", Types.VARCHAR));
+        declareParameter(new SqlParameter("p_Created_by", Types.VARCHAR));
+
         declareParameter(new SqlOutParameter("p_new_idseq", Types.VARCHAR));
         declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
         declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
@@ -1518,7 +1529,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
                 + " (select ac_idseq, cs_csi_idseq, cs_conte_idseq  from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
                 + CaDSRConstants.FORM_CS_TYPE + "') and upper(CSITL_NAME) = upper('"
                 + CaDSRConstants.FORM_CSI_TYPE + "')) accs "
-                + " WHERE quest.QC_IDSEQ = proto_qc.QC_IDSEQ(+) and proto_qc.PROTO_IDSEQ = proto.PROTO_IDSEQ " 
+                + " WHERE quest.QC_IDSEQ = proto_qc.QC_IDSEQ(+) and proto_qc.PROTO_IDSEQ = proto.PROTO_IDSEQ "
                 + " and quest.QC_IDSEQ = accs.AC_IDSEQ(+) and quest.qtl_name = 'CRF' "
                 + " AND   quest.deleted_ind = 'No' "
                 + " AND   quest.latest_version_ind = 'Yes' "
@@ -1559,10 +1570,10 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
        if (form.getProtocols()== null)
          form.setProtocols(new ArrayList());
        form.getProtocols().add(protocol);
-       
-         
+
+
      }
-     
+
      lastFormId = formId;
      currentForm = form;
      formsList.add(form);
@@ -1574,7 +1585,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       (rs.getString("CS_CSI_IDSEQ")).length() >0)) {
      ClassSchemeItem csi = new CSITransferObject();
      csi.setCsCsiIdseq(rs.getString("CS_CSI_IDSEQ"));
-     csi.setCsConteIdseq(rs.getString("cs_conte_idseq")); 
+     csi.setCsConteIdseq(rs.getString("cs_conte_idseq"));
   //   csi.setClassSchemeItemType(rs.getString("CSITL_NAME"));
   //   csi.setCsType(rs.getString("CSTL_NAME"));
      if (form.getClassifications() == null)
@@ -1663,7 +1674,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    }
    return form;
   }
-  
+
   protected List getAllTemplates() {
       execute();
       return formsList;
@@ -1761,7 +1772,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    Form form = null;
 
    if (!formId.equals(lastFormId)) {
-  
+
      form = new FormTransferObject();
      form.setFormIdseq(rs.getString("qc_idseq"));                       // QC_IDSEQ
      form.setIdseq(rs.getString("qc_idseq"));
@@ -1885,14 +1896,14 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
   */
  class  FormVersionsQuery  extends MappingSqlQuery {
     List versionList = null;
-    
+
     public FormVersionsQuery() {
     super();
    }
 
    public void setSql(int publicId) {
    String allFormVersionsByPublicId =
-            " SELECT qc_idseq, version, change_note, latest_version_ind from QUEST_CONTENTS_EXT crf where (crf.QTL_NAME = 'CRF' or crf.QTL_NAME = 'TEMPLATE') AND QC_ID=" + publicId;
+      " SELECT qc_idseq, version, change_note, latest_version_ind from QUEST_CONTENTS_EXT crf where QC_ID=" + publicId + " order by version";
    super.setSql(allFormVersionsByPublicId);
    compile();
   }
@@ -1902,18 +1913,18 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     String formId = rs.getString("qc_idseq");
     String changeNote = rs.getString("change_note");
     String latestVersionInd = rs.getString("latest_version_ind");
-    
+
     Version version = new Version();
     version.setId(formId);
     version.setVersionNumber(versionNumber);
     version.setChangeNote(changeNote);
     version.setLatestVersionIndicator("YES".equalsIgnoreCase(latestVersionInd));
-    
+
     if (versionList == null){
         versionList = new ArrayList();
     }
     versionList.add(version);
-    
+
     return version;
   }
 
@@ -1926,7 +1937,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
  }
 
     /**
-     * Inner class that accesses database to get the maximum form version 
+     * Inner class that accesses database to get the maximum form version
      * by the form public id.
      */
     class  MaxFormVersionsQuery  extends MappingSqlQuery {
@@ -1949,45 +1960,32 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
     }
 
 
-    private class RemoveLatestVersion extends SqlUpdate {
-      public RemoveLatestVersion(DataSource ds) {
-        this.setDataSource(ds);
-      }
-
-    protected int remove( String oldVersionFormId, String changeNoteForOld) {
-        String removeLatestVersionSql = 
-              "update quest_contents_ext set latest_version_ind = 'No', change_note='" 
-              + changeNoteForOld + "' where qc_idseq= '" + oldVersionFormId + "'";
-          this.setSql(removeLatestVersionSql);
-          compile();
-          int res = update();
-          return res;          
-      }
-    }
-
-    
     private class SetLatestVersion extends SqlUpdate {
         public SetLatestVersion(DataSource ds){
             this.setDataSource(ds);
         }
-    
-        protected int setLatestVersion(String formIdSeq, String changeNote, String modifiedBy){
-          String setLatestVersionSql = 
-            "update quest_contents_ext set latest_version_ind = 'Yes', change_note='" 
+
+        protected int updateVersionInfo(String formIdSeq, String changeNote, boolean lastestVersionInd, String modifiedBy){
+          String latestVersionIndStr = "No";
+          if (lastestVersionInd){
+              latestVersionIndStr = "Yes";
+          }
+          String setLatestVersionSql =
+            "update quest_contents_ext set latest_version_ind = '" + latestVersionIndStr + "', change_note='"
             + changeNote + "',  modified_by = '" + modifiedBy + "' where qc_idseq='" + formIdSeq + "'";
           setSql(setLatestVersionSql);
           compile();
           int res = update();
           return res;
         }
-    } 
-    
-    
+    }
+
+
     private void fetchProtocols( Collection forms){
         if (forms == null || forms.isEmpty()){
             return;
         }
-        
+
         Iterator it = forms.iterator();
         while (it.hasNext()){
             Form form = (Form)it.next();
@@ -1995,27 +1993,27 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         }
         return;
     }
-    
+
     private List getProtocols(Form form){
         FormProtocolByFormPrimaryKey query = new FormProtocolByFormPrimaryKey();
         query.setDataSource(getDataSource());
-        query.setSql();    
+        query.setSql();
         List protocols = query.execute(form.getFormIdseq());
         return protocols;
-    }    
-    
+    }
+
     private class RemoveFormProtocolQuery extends SqlUpdate {
       public RemoveFormProtocolQuery(DataSource ds) {
         this.setDataSource(ds);
       }
 
     protected int removeFormProtocol( String formIdseq, String protocolIdseq) {
-        String sql = 
+        String sql =
               "delete from  protocol_qc_ext where qc_idseq= '" + formIdseq + "' AND proto_idseq = '" + protocolIdseq+ "'";
           this.setSql(sql);
           compile();
           int res = update();
-          return res;          
+          return res;
       }
     protected int removeFormProtocols( String formIdseq, Collection protocolIds) {
         if (protocolIds==null || protocolIds.size()==0){
@@ -2029,12 +2027,12 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
             sbuf.append(delimtedBy).append("'").append(pid).append("'");
         }
         String ids = sbuf.toString().substring(delimtedBy.length());
-        String sql = 
+        String sql =
               "delete from  protocol_qc_ext where qc_idseq= '" + formIdseq + "' AND proto_idseq in( " + ids+ ")";
           setSql(sql);
           compile();
           int res = update();
-          return res;          
+          return res;
       }
     }
 
@@ -2044,13 +2042,13 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       }
 
     protected int addFormProtocol( String formIdseq, String protocolIdseq, String createdBy) {
-        String sql = 
+        String sql =
               "insert into protocol_qc_ext  (qc_idseq, proto_idseq, created_by ) values ('" + formIdseq + "', '" + protocolIdseq + "', '" + createdBy + "' )";
           this.setSql(sql);
           compile();
           int res = update();
-          return res;          
+          return res;
       }
     }
-    
+
 }
