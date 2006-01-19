@@ -40,6 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 
@@ -469,6 +470,7 @@ public class FormAction extends FormBuilderSecureBaseDispatchAction {
     
     FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
     formBean.clear();
+    formBean.set(FormConstants.LATEST_VERSION_INDICATOR, FormConstants.LATEST_VERSION);  //default 
     removeSessionObject(request,FORM_SEARCH_RESULTS);
     return mapping.findForward(SUCCESS);
     }

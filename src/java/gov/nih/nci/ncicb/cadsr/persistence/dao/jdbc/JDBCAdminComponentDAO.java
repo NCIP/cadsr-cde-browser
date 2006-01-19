@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
@@ -320,6 +321,13 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       return query.getCSCSIs(csType,csiType);
     }
 
+    /**
+        * Designate the ACs to the specified context.
+        * @param contextIdSeq context id seq
+        * @param acIdList  a list of AC id seq.
+        * @return the total number of ac designated to the context.
+        *  with the given registration status
+        */
   public int designate(String contextIdSeq, List acIdList){
       int res = 0;
        DesignateCDE designateCDE =
@@ -327,6 +335,20 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
        res = designateCDE.designate(contextIdSeq, acIdList);
       return res;
   }
+  
+    /**
+        * 
+        * @param acIdList a list of AC
+        * @param contextIdSeq context id seq.
+        * @return true if all the AC are designated in the context.
+        */
+    public boolean isAllACDesignatedToContext(List acIdList, String contextIdSeq){
+        CheckACDesignationQuery query = new CheckACDesignationQuery(getDataSource());
+        return query.isAllACDesignatedToContext(acIdList,contextIdSeq);
+    }
+
+
+
 
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
@@ -1037,4 +1059,64 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
      }
    }
 
+    /**
+     * Inner class to check if all AC are in the specified context.
+     */
+    class CheckACDesignationQuery extends MappingSqlQuery {
+      CheckACDesignationQuery(DataSource ds) {
+          super();
+          setDataSource(ds);
+      }
+
+      public  boolean isAllACDesignatedToContext(List acIdList, String contextIdSeq) {
+        setSql(acIdList, contextIdSeq);
+        List retList = execute();
+        if (retList == null || retList.isEmpty()){
+            return false;
+        }
+        
+        if (retList.containsAll(acIdList)){
+            return true;
+        }    
+        else{
+           return false;
+        }   
+      }
+      
+      
+      public void setSql(List acIdList, String contextIdSeq) {
+       String acIdListStr = getDelimetedIdSeq(acIdList, ", ");
+       System.out.println("acIdListStr=" + acIdListStr);
+        super.setSql(
+          "SELECT ac_idseq from designations where conte_idseq= '" + contextIdSeq + "' " +
+          " and detl_name='USED_BY' and lae_name='ENGLISH' and ac_idseq in (" + 
+          acIdListStr + ")" ); 
+          
+        compile();
+        
+      }
+
+      protected Object mapRow(
+        ResultSet rs,
+        int rownum) throws SQLException {
+        String acIdSeq = rs.getString(1);
+        return acIdSeq;
+      }
+    }
+    
+    private String getDelimetedIdSeq(List idSeqList, String delimiter){
+        if (idSeqList==null || idSeqList.isEmpty()){
+            return "";
+        }
+        
+        StringBuffer sbuf = new StringBuffer();            
+        String delimted = null;
+        Iterator it = idSeqList.iterator();
+        while (it.hasNext()){
+            String  idseq = (String)it.next();
+             sbuf.append(delimiter).append("'").append(idseq).append("'");
+        }
+        //System.out.println("subString = "  + sbuf.substring(1) );
+        return sbuf.substring(delimiter.length());
+    }
 }

@@ -140,7 +140,22 @@ public interface AdminComponentDAO {
    */
   public List getCSCSIHierarchyByType(String csType, String csiType);
 
+  /**
+      * Designate the ACs to the specified context.
+      * @param contextIdSeq context id seq
+      * @param acIdList  a list of AC id seq.
+      * @return the total number of ac designated to the context.
+      *  with the given registration status
+      */
   public int designate(String contextIdSeq, List acIdList);
+  
+  /**
+      * 
+      * @param acIdList a list of AC
+      * @param contextIdSeq context id seq.
+      * @return true if all the AC are designated in the context.
+      */
+  public boolean isAllACDesignatedToContext(List acIdList, String contextIdSeq);
   /**
       * 
       * @param cscsiIdseq cscsi idseq

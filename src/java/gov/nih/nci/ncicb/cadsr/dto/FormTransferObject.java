@@ -388,7 +388,10 @@ public class FormTransferObject extends FormElementTransferObject
         Iterator itq = questions.iterator();
         while (itq.hasNext()){
             QuestionTransferObject q = (QuestionTransferObject)itq.next();
-            CDEList.add(q.getDataElement().getDeIdseq());
+            String cdeIdSeq = q.getDataElement().getDeIdseq();
+            if (!CDEList.contains(cdeIdSeq)){
+                CDEList.add(cdeIdSeq);  
+            }    
         }
     }
     return CDEList;

@@ -54,6 +54,30 @@ public class FormDesignationsAction
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
 
+    Form crf = (Form) getSessionObject(request, CRF);
+    List cdeIdList = crf.getCDEIdList();
+    if (cdeIdList!=null && !cdeIdList.isEmpty()){
+        String contextIdSeq = null;
+        Context context = crf.getContext();
+        if (context!=null && context.getConteIdseq()!=null){
+            contextIdSeq = context.getConteIdseq();  
+        }
+        try{
+            FormBuilderServiceDelegate service = getFormBuilderService();
+            Boolean result = service.isAllACDesignatedToContext(cdeIdList , contextIdSeq);
+            if (result.booleanValue()){
+                request.setAttribute(FormConstants.ALREADY_DESIGNATED, result);
+            }    
+        }catch (FormBuilderException exp) {
+              if (log.isErrorEnabled()) {
+                log.error("Exception on service.isAllACDesignatedToContext ", exp);
+              }
+
+              saveError("cadsr.formbuilder.designation.fail", request);
+              ActionForward forward =  mapping.findForward("failure");
+              return forward;
+        }     
+    }    
     return mapping.findForward("success");
   }
 
@@ -65,9 +89,10 @@ public class FormDesignationsAction
     HttpServletResponse response) throws IOException, ServletException {
 
     try{
-        DynaActionForm dynaForm = (DynaActionForm) form;
-        String cdeContextIdSeq = (String) dynaForm.get(CDE_CONTEXT_ID_SEQ);
+        //DynaActionForm dynaForm = (DynaActionForm) form;
+        //String cdeContextIdSeq = (String) dynaForm.get(CDE_CONTEXT_ID_SEQ);
         Form crf = (Form) getSessionObject(request, CRF);
+        String cdeContextIdSeq = crf.getContext().getConteIdseq();
 
         FormBuilderServiceDelegate service = getFormBuilderService();
         List cdeList = crf.getCDEIdList();
@@ -79,7 +104,7 @@ public class FormDesignationsAction
           log.error("Exception on saveDesignations ", exp);
         }
 
-        saveError(exp.getErrorCode(), request);
+        saveError("cadsr.formbuilder.designation.fail", request);
         ActionForward forward =  mapping.findForward("failure");
         return forward;
       }

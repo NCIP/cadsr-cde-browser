@@ -1293,6 +1293,13 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
     {
         return daoFactory.getFormDAO().designate(contextIdSeq, acIdList);
     }
+    
+    public Boolean isAllACDesignatedToContext(List cdeIdList , String contextIdSeq){
+        FormDAO dao = daoFactory.getFormDAO();
+        boolean ret = dao.isAllACDesignatedToContext(cdeIdList, contextIdSeq);        
+        return new Boolean(ret);
+    }
+
 
     public String createNewFormVersion(String formIdSeq,
                                        Float newVersionNumber,

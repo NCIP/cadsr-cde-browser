@@ -136,6 +136,8 @@ public interface FormBuilderServiceDelegate {
     public Collection getAllDocumentTypes() ;
 
     public int saveDesignation(String contextIdSeq, List acIdList) throws FormBuilderException;
+    
+    public Boolean isAllACDesignatedToContext(List cdeIdList , String contextIdSeq) throws FormBuilderException;
 
     public String createNewFormVersion(String formIdSeq, Float newVersionNumber, String changeNote)
         throws FormBuilderException;
