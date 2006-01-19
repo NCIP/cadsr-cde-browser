@@ -65,7 +65,7 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
 
         setSessionObject(request, MODULE, selectedModule, true);
         setSessionObject(request, MODULE_REPETITIONS, modRepetitions, true);
-
+        dynaForm.set(NUMBER_OF_MODULE_REPETITIONS,new Integer(0)); 
 
         return mapping.findForward("viewRepetitions");
     }
@@ -103,7 +103,7 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         addToQuestionDefaultArrays(dynaForm, numberOfRepetitions, module);
         // adds both Defauts and DefaultVVIds
 
-
+         dynaForm.set(NUMBER_OF_MODULE_REPETITIONS,new Integer(0)); 
         setSessionObject(request, MODULE_REPETITIONS, currRepeats, true);
         saveMessage("cadsr.formbuilder.module.repetition.add.success",
                     request);
@@ -130,6 +130,7 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
                 moduleList.remove(currIndex);
             }
         }
+        dynaForm.set(NUMBER_OF_MODULE_REPETITIONS,new Integer(0)); 
         setQuestionDefaultsAsArray(moduleList,dynaForm);
         saveMessage("cadsr.formbuilder.module.repetition.delete.success",
                     request);
@@ -188,6 +189,7 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
     {
 
         setSessionObject(request, SHOW_MODULE_REPEATS,"True");
+        
         return mapping.findForward(SUCCESS);
     }    
     
@@ -247,26 +249,32 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
             (List<Module>)getSessionObject(request, MODULE_REPETITIONS);
         Module module = (Module)getSessionObject(request, MODULE);
         
-        if(!haveQuestions(module)&&module.getNumberOfRepeats()<1)
+        Map<String,List<QuestionRepitition>> questionRepeatMap =null;
+        List<String> noRepQIdList = new ArrayList<String>();
+        if(repeats.size()<1&&module.getNumberOfRepeats()<1)
         {
-            saveMessage("cadsr.formbuilder.module.repetition.save.success",
+            saveMessage("cadsr.formbuilder.module.repetition.nochange.success",
                         request);
             removeSessionObject(request, MODULE);
             removeSessionObject(request, MODULE_REPETITIONS);
             dynaForm.set(NUMBER_OF_MODULE_REPETITIONS,new Integer(0));                            
-            return mapping.findForward(SUCCESS);            
+            return mapping.findForward(SUCCESS);             
         }
-        Map<String,List<QuestionRepitition>> questionRepeatMap =null;
-        List<String> noRepQIdList = new ArrayList<String>();
-       if(doesQuestionsHaveRepeats(module)&&repeats.isEmpty())
+        int numberOfRepeats = 0;
+        if(!haveQuestions(module)||repeats.size()>1)
+        {
+            numberOfRepeats = repeats.size();
+        }
+         else if(doesQuestionsHaveRepeats(module)&&repeats.isEmpty())
         {
             noRepQIdList = getQuestionIdsWithRepeats(module);
+            numberOfRepeats = 0;
         }
         else
         {
             List<String[]> defaultArrList = getArrayByRepitition(defaultValueArr,module.getQuestions().size());
             List<String[]> defaultArrIdList = getArrayByRepitition(defaultValueIds,module.getQuestions().size());
-            
+            numberOfRepeats = repeats.size();
             questionRepeatMap = getQuestionRepeatMap(module,defaultArrList,defaultArrIdList,noRepQIdList);
         }
         FormBuilderServiceDelegate service = getFormBuilderService();

@@ -62,7 +62,7 @@ function submitSkip(methodName) {
       <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >      
         <tr >
          <td align="center">
-             <a href="javascript:submitSkip('<%=NavigationConstants.DELETE_SKIP_PATTERN%>')"> 
+             <a href="javascript:submitSkip('<%=NavigationConstants.DELETE_MODULE_SKIP_PATTERN%>')"> 
                 <html:img page='/i/yes.gif' border="0" alt="Yes"/>                
              </a> 
           </td>   

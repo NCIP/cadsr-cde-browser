@@ -618,14 +618,15 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
      * @throws IOException
      * @throws ServletException
      */
-    public ActionForward confirmSkipPatternDelete(
+    public ActionForward confirmModuleSkipPatternDelete(
       ActionMapping mapping,
       ActionForm form,
       HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException {
         
-      return mapping.findForward("confirmDelete");
+      return mapping.findForward("confirmDeleteModuleSkip");
     }    
+    
     /**
      *
      * @param mapping The ActionMapping used to select this instance.
@@ -638,7 +639,27 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
      * @throws IOException
      * @throws ServletException
      */
-    public ActionForward deleteSkipPattern(
+    public ActionForward confirmValidValueSkipPatternDelete(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+        
+      return mapping.findForward("confirmDeleteValidValueSkip");
+    }        
+    /**
+     *  Delete a  Skip pattern for a Module
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     *
+     * @return
+     *
+     * @throws IOException
+     * @throws ServletException
+     */
+    public ActionForward deleteModuleSkipPattern(
       ActionMapping mapping,
       ActionForm form,
       HttpServletRequest request,
@@ -665,6 +686,52 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       return mapping.findForward("backToModuleEdit");
     }
     
+    /**
+     * Delete a Skip pattern for Valid value
+     * @param mapping The ActionMapping used to select this instance.
+     * @param form The optional ActionForm bean for this request.
+     * @param request The HTTP Request we are processing.
+     * @param response The HTTP Response we are processing.
+     *
+     * @return
+     *
+     * @throws IOException
+     * @throws ServletException
+     */
+    public ActionForward deleteValidValueSkipPattern(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+        DynaActionForm formBean = (DynaActionForm) form;
+        String triggerIndexStr = (String)formBean.get(TRIGGER_ACTION_INDEX);
+        String questionIndexStr = (String)formBean.get(SK_QUESTION_INDEX);
+        String validValueIndexStr = (String)formBean.get(SK_VALID_VALUE_INDEX);
+        int triggerIndex= Integer.parseInt(triggerIndexStr);
+        int questionIndex= Integer.parseInt(questionIndexStr);
+        int validValueIndex= Integer.parseInt(validValueIndexStr);
+        Module sourceModule = (Module) getSessionObject(request,MODULE);
+        List questions = sourceModule.getQuestions();
+        Question question = (Question)questions.get(questionIndex);
+        List validValues = question.getValidValues();
+        FormValidValue sourceValidValue = (FormValidValue)validValues.get(validValueIndex);
+        
+        TriggerAction triggerAction =  sourceValidValue.getTriggerActions().remove(triggerIndex);
+        try {
+          FormBuilderServiceDelegate service = getFormBuilderService();
+          service.deleteTriggerAction(triggerAction.getIdSeq());
+          saveMessage("cadsr.formbuilder.delete.skippattern.success",request);
+        } catch (FormBuilderException exp) {
+            if (log.isErrorEnabled()) {
+              log.error("Exception on deleteing  Skip pattern  " , exp);
+            }
+        saveError(ERROR_SKIP_PATTERN_DELETE, request);
+            saveError(exp.getErrorCode(), request);
+            return mapping.findForward("backToModuleEdit");
+              
+        }          
+      return mapping.findForward("backToModuleEdit");
+    }    
         /**
          *
          * @param mapping The ActionMapping used to select this instance.

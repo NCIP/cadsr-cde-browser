@@ -12,7 +12,7 @@
                                                Skip to 
                                              </td>
                                              <td class="OraTableColumnHeader" align="right" width="5%">
-                                               <a href="javascript:submitForDeleteSkip('<%=NavigationConstants.CONFIRM_SKIP_PATTERN_DELETE%>','<%=triggerIndex%>')"> 
+                                               <a href="javascript:submitForDeleteSkipModule('<%=NavigationConstants.CONFIRM_MODULE_SKIP_PATTERN_DELETE%>','<%=triggerIndex%>')"> 
                                                   <img src=<%=urlPrefix%>i/delete.gif border=0 alt="Delete">
                                                </a>
                                              </td> 

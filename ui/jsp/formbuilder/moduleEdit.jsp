@@ -181,10 +181,19 @@ function submitModuleForValidValueSkipEdit(methodName,questionIndex,validValueIn
   }  
 }
 
-function submitForDeleteSkip(methodName,triggerIndex) {
+function submitForDeleteSkipModule(methodName,triggerIndex) {
 
   document.forms[0].action='<%=request.getContextPath()%>/formbuilder/skipAction.do'; 
   document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].<%=FormConstants.TRIGGER_ACTION_INDEX%>.value=triggerIndex;
+  document.forms[0].submit();
+}
+function submitForDeleteSkipValidValue(methodName,questionIndex,validValueIndex,triggerIndex) {
+
+  document.forms[0].action='<%=request.getContextPath()%>/formbuilder/skipAction.do'; 
+  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
+  document.forms[0].<%=FormConstants.SK_QUESTION_INDEX%>.value=questionIndex;
+  document.forms[0].<%=FormConstants.SK_VALID_VALUE_INDEX%>.value=validValueIndex;  
   document.forms[0].<%=FormConstants.TRIGGER_ACTION_INDEX%>.value=triggerIndex;
   document.forms[0].submit();
 }
