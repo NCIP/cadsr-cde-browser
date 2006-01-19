@@ -69,7 +69,7 @@ public class FormVersionAction
             return mapping.findForward("gotoCreateNewVersion");
         }
         
-        request.setAttribute(FormConstants.FORM_VERSION_LIST, formVersions);        
+        setSessionObject(request, FormConstants.FORM_VERSION_LIST, formVersions);        
         for (int i=0; i<formVersions.size(); i++){
             Version aVersion = (Version)formVersions.get(i);
             if (aVersion.isLatestVersionIndicator()){
@@ -110,12 +110,33 @@ public class FormVersionAction
       //get the oldVersion into session
       Version oldVersion = (Version)getSessionObject(request, OLD_LATEST_VERSION);
       
+      
+      List oldVersionList = (List)getSessionObject(request, FORM_VERSION_LIST);
+        
+      List changedNoteList = new ArrayList();
+      boolean changed = false;
+      
       for (int i=0; i<formIds.length; i++){
-          if ( formIds[i].equals(latestVersionId) ){
+          Version existingVersion = (Version)oldVersionList.get(i);
+          String existingChangeNote = existingVersion.getChangeNote()==null? "":existingVersion.getChangeNote();
+            
+          if (formIds[i].equals(latestVersionId) ){
+              newVersion.setId(formIds[i]);
               newVersion.setChangeNote(changeNotes[i]);
-          }          
+              changed = true;
+              continue;
+          }
           if ((oldVersion!=null) && (formIds[i].equals(oldVersion.getId()))){
               oldVersion.setChangeNote(changeNotes[i]);
+              changed = true;
+              continue;
+          }
+          if ( !existingChangeNote.equals(changeNotes[i])){
+              Version aVersion = new Version();
+              aVersion.setId(formIds[i]);
+              aVersion.setChangeNote(changeNotes[i]);
+              changedNoteList.add(aVersion);
+              changed = true;
           }
       }
       
@@ -123,8 +144,8 @@ public class FormVersionAction
       try{ 
           FormBuilderServiceDelegate service = getFormBuilderService();
 
-          if (oldVersion==null || !latestVersionId.equals(oldVersion.getId())){
-              service.setLatestVersion(oldVersion, newVersion);
+          if (changed){
+              service.setLatestVersion(oldVersion, newVersion, changedNoteList);
               //reload the form.
               Form newCRF = service.getFormDetails(newVersion.getId());
               setSessionObject(request, CRF, newCRF);    
@@ -133,7 +154,9 @@ public class FormVersionAction
           }else{
               saveMessage("cadsr.formbuilder.latest.version.nochange", request);
           }    
-          
+
+          removeSessionObject(request, FormConstants.OLD_LATEST_VERSION);
+
           return mapping.findForward("success");
       }catch (FormBuilderException ex){
           if (log.isErrorEnabled()) {
@@ -209,11 +232,13 @@ public class FormVersionAction
         String newFormIdSeq = service.createNewFormVersion(crf.getFormIdseq(), newVersionNumber, changeNote);
         saveMessage("cadsr.formbuilder.create.version.success", request);
         
+        Form newCRF = service.getFormDetails(newFormIdSeq);
+        setSessionObject(request, CRF, newCRF);    
+        request.setAttribute("showCached", CaDSRConstants.YES);
         if (editNewFormIndicator){
-            Form newCRF = service.getFormDetails(newFormIdSeq);
-            setSessionObject(request, CRF, newCRF);    
-            request.setAttribute("showCached", CaDSRConstants.YES);
             return mapping.findForward("successEditNew");            
+        }else{
+            return mapping.findForward("successShowNew");
         }
       }
       catch (FormBuilderException exp) {
@@ -225,9 +250,6 @@ public class FormVersionAction
         ActionForward forward =  mapping.findForward("failure");
         return forward;
       }
-
-      ActionForward forward =  mapping.findForward("success");
-      return forward;
   }
 
 
