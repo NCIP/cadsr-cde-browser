@@ -77,8 +77,11 @@
       <forward name="successEditNew"
         path="/formToEditAction.do?method=getFormToEdit"
         redirect="false"/>  
+      <forward name="successViewNew"
+        path="/formDetailsAction.do?method=getFormDetails"
+        redirect="false"/>  
       <forward name="failure"
-        path="/formbuilder/formVersion.jsp"
+        path="/formbuilder/formDetails.jsp"
         redirect="false"/>
     </action>     
     <action name="versionForm" path="/cancelNewVersion" parameter="method"
