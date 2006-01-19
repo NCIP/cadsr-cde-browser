@@ -134,12 +134,22 @@
 
     <tr >
       <td align="center" class="OraTipLabel">
+      <logic:notPresent name="<%=FormConstants.ALREADY_DESIGNATED%>">
        Designate all CDE currenlty used on this Form as "Used-By" 
            <bean:write
               name="<%= FormConstants.CRF %>"
               property="context.name"
               /> Context ?
+       </logic:notPresent>
+      <logic:present name="<%=FormConstants.ALREADY_DESIGNATED%>">
+       All CDE used on this form have already been designated as "Used-By" 
+           <bean:write
+              name="<%= FormConstants.CRF %>"
+              property="context.name"
+              /> Context
+       </logic:present>
       </td>
+      
 
     </tr>    
     
@@ -155,7 +165,7 @@
 </table>
 <br/>
 <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
- 
+<logic:notPresent name="<%=FormConstants.ALREADY_DESIGNATED%>">
   <tr >
     <td >
       <html:image src='<%=urlPrefix+"i/yes.gif"%>' border="0" alt="Yes"/>
@@ -166,6 +176,16 @@
       </html:link>             
     </td>                
   </tr> 
+</logic:notPresent>
+<logic:present name="<%=FormConstants.ALREADY_DESIGNATED%>" >
+  <tr >
+    <td >
+      <html:link action='<%= "/cancelDesignations?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.CANCEL_DESIGNATIONS%>'>
+        <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+      </html:link>             
+    </td> 
+  </tr> 
+</logic:present>
 </table>
 </html:form>
 <%@ include file="/common/common_bottom_border.jsp"%>
