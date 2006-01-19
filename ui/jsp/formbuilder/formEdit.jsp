@@ -244,16 +244,24 @@ function repeatDisplay(methodName) {
         <tr>
           <td class="OraHeaderSubSub" width="100%">Form Details</td>
           <td align="right">
+          <bean:define id="formObj" name="<%=FormConstants.CRF%>" />
+          <% Form aForm = (Form)formObj;
+            if(FormJspUtil.hasModuleRepetition(aForm)){ %>
              <logic:present name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
-                <a href="javascript:repeatDisplay('<%=NavigationConstants.HIDE_REPETITIONS%>')">
-                  <img  src="i/hideModuleRepetitions.gif" border="0" alt="Hide Module Repetitions"/>
-                </a> 
-              </logic:present>
+               <html:link action='<%="/displayViewFormModuleRepeationAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.HIDE_REPETITIONS%>'
+                 >
+               <html:img src='i/hideModuleRepetitions.gif' border="0" alt="Hide Module Repetitions"/>
+              </html:link>                
+             </logic:present>
              <logic:notPresent name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
-                <a href="javascript:repeatDisplay('<%=NavigationConstants.SHOW_REPETITIONS%>')">
-                  <img  src="i/showModuleRepetitions.gif" border="0" alt="Show Module Repetitions"/>
-                </a> 
-              </logic:notPresent>     
+               <html:link action='<%="/displayViewFormModuleRepeationAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SHOW_REPETITIONS%>'
+                 >
+               <html:img src='i/showModuleRepetitions.gif' border="0" alt="Show Module Repetitions"/>
+              </html:link>  
+              </logic:notPresent>  
+         <% }else{%>
+            &nbsp;
+         <%}%>           
           </td>          
         </tr>
         <tr>

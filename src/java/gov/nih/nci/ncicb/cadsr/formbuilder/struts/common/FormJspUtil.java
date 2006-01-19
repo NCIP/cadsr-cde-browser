@@ -77,4 +77,19 @@ public class FormJspUtil
             return question.getDefaultValue();
         return "&nbsp;";
     }
+    
+    public static boolean hasModuleRepetition(Form form)
+    {
+       if(form.getModules()==null)
+        return false;
+       List modules = form.getModules();
+       Iterator it = form.getModules().iterator();
+       while(it.hasNext())
+       {
+           Module module =(Module)it.next();
+           if(module.getNumberOfRepeats()>0)
+            return true;   
+       }
+       return false;
+    }    
 }

@@ -15,6 +15,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 
+
 <%
    // TO DO : Replace this with appropriate struts tags
    boolean isPublished = false;
@@ -168,6 +169,9 @@
         <tr>
           <td class="OraHeaderSubSub" width="100%">Form Details</td>
           <td align="right">
+          <bean:define id="formObj" name="<%=FormConstants.CRF%>" />
+          <% Form aForm = (Form)formObj;
+            if(FormJspUtil.hasModuleRepetition(aForm)){ %>
              <logic:present name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
                <html:link action='<%="/displayViewFormModuleRepeationAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.HIDE_REPETITIONS%>'
                  >
@@ -179,7 +183,10 @@
                  >
                <html:img src='i/showModuleRepetitions.gif' border="0" alt="Show Module Repetitions"/>
               </html:link>  
-              </logic:notPresent>     
+              </logic:notPresent>  
+         <% }else{%>
+            &nbsp;
+         <%}%>  
           </td>          
         </tr>
         <tr>

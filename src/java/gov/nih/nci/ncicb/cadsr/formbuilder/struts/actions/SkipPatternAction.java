@@ -954,7 +954,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       //Check to see if there there is matching target
        for(TriggerAction action:actionListToCheck)
        {
-           if(newTriggerId!=null&&newTriggerId.equals(action.getActionTarget().getIdseq()))
+           if(newTargetId!=null&&newTargetId.equals(action.getActionTarget().getIdseq()))
            {
                saveError("cadsr.formbuilder.save.skippattern.validate.error.duplicatesourcetarget",request);
                 return false;

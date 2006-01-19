@@ -3,12 +3,12 @@
                <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
                  <tr >
            	    <td align="left" width="100%">
-                   <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_MODULE_AS_TARGET%>'
-                      paramId= "<%=FormConstants.MODULE_INDEX%>"
-		      paramName="modIndex"
-                      scope="page">
-                       Skip to this Module
-                  </html:link>&nbsp;
+                       <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_MODULE_AS_TARGET%>'
+                          paramId= "<%=FormConstants.MODULE_INDEX%>"
+                          paramName="modIndex"
+                          scope="page">
+                           Skip to this Module
+                      </html:link>&nbsp;
            	    </td>                
          	 </tr>
       		</table>

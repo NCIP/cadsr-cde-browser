@@ -740,13 +740,13 @@ function clearProtocol() {
                                                <img src="<%=urlPrefix%>i/delete.gif" border="0" alt="Delete"/>
                                               </a>
                                             </td>
-                                            <!-- Subset -->
+                                            <!-- Subset Uncomment when working on subsets for CDEs
                                             <td align="left">
                                              <a href="javascript:submitToSubsets('<%=NavigationConstants.VIEW_SUBSETTEDVDS_LIST%>','<%=questionIndex %>')">
                                                  Select from existing subsets
                                              </a>
                                             </td>
-                                            <!-- Subset end -->
+                                            Subset end -->
                                         </tr>
                                       </table>
                                     </td>                               

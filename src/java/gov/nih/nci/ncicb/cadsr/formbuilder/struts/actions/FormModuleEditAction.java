@@ -2068,9 +2068,11 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     private boolean hasDefaultValueChanged(Question orgQuestion, Question currQuestion){
         String ofv = orgQuestion.getDefaultValue();
         String cfv = currQuestion.getDefaultValue();
+        if(ofv==null) ofv="";
+        if(cfv==null) cfv="";
         
-       if (ofv==null && cfv!=null || ofv!=null && cfv==null){
-          return true; 
+       if (ofv.equals("")&& cfv.equals("") ){
+          return false; 
        }
         if (ofv!=null && cfv!=null && !ofv.equals(cfv)){
            return true; 
