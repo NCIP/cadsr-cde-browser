@@ -142,7 +142,7 @@ public interface FormBuilderServiceDelegate {
     public List getFormVersions(int publicId)
         throws FormBuilderException;
 
-    public void setLatestVersion(Version oldVersion, Version newVersion)
+    public void setLatestVersion(Version oldVersion, Version newVersion, List changedNoteList)
         throws FormBuilderException;
     public Float getMaxFormVersion(int publicId)
         throws FormBuilderException;

@@ -1314,10 +1314,10 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         return versions;
     }
 
-    public void setLatestVersion(Version oldVersion, Version newVersion)
+    public void setLatestVersion(Version oldVersion, Version newVersion, List changedNoteList)
     {
         FormDAO myDAO = daoFactory.getFormDAO();
-        myDAO.setLatestVersion(oldVersion, newVersion, getUserName());
+        myDAO.setLatestVersion(oldVersion, newVersion, changedNoteList, getUserName());
         return;
     }
 

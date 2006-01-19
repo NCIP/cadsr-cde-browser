@@ -187,7 +187,7 @@ public interface FormBuilderServiceRemote {
 
       public List getFormVersions(int publicId)    throws RemoteException;
 
-      public void setLatestVersion(Version oldVersion, Version newVersion)
+      public void setLatestVersion(Version oldVersion, Version newVersion, List changedNoteList)
         throws RemoteException;
       public Float getMaxFormVersion(int publicId)
         throws RemoteException;
