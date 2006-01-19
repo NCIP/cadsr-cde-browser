@@ -161,7 +161,7 @@
                 <bean:write name="version" property="versionNumber"/>
             </td>
             <td class="OraFieldText">
-                <html:textarea cols="40" rows="3" name="version" property="changeNote"/>
+                <html:textarea cols="70" rows="3" name="version" property="changeNote"/>
                 <html:hidden name="version" property="id"/>
             </td>
         </tr>                                       

@@ -107,9 +107,9 @@ function gotoClassificationsLOV() {
                               <tr>
                                  <td valign="top"  class="OraTableColumnHeaderNoBG" nowrap>Version</td>
                                     <td class="OraTableColumnHeaderNoBG" nowrap>
-                                      <input type="radio" name="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.LATEST_VERSION%>" checked> Latest Version
-                                      <input type="radio" name="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.ALL_VERSION%>"> All Versions
-                                  </td>
+                                    <html:radio property="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.LATEST_VERSION%>" >Latest Version </html:radio>
+                                    <html:radio property="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.ALL_VERSION%>" >All Versions </html:radio>
+                                </td>
                                </tr>          
                              </table>
                          </td>                         
