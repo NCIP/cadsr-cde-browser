@@ -155,7 +155,7 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
    */
   protected void setInitLookupValues(HttpServletRequest req) {
     Object obj = getSessionObject(req, ALL_CONTEXTS);
-
+    
     if (obj == null) {
       Collection contexts = getFormBuilderService().getAllContexts();
       setSessionObject(req, ALL_CONTEXTS, contexts);

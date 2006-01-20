@@ -39,6 +39,7 @@ public class CDEBrowserParams
     String adminToolUrl="";
     String regStatusCsTree="";
     String csTypeRegStatus="";
+    String sentinalAPIUrl="";
     
     Map evsUrlMap = new HashMap();
     
@@ -314,7 +315,9 @@ public class CDEBrowserParams
             regStatusCsTree = properties.getProperty("CS_TYPE_REGISTRATION_STATUS");
             index++;             
             csTypeRegStatus = properties.getProperty("REG_STATUS_CS_TREE");
-            index++;             
+            index++;      
+            sentinalAPIUrl = properties.getProperty("SENTINAL_API_URL");
+            index++;                
             log.info("Loaded Properties"+properties);
                         
         } 
@@ -339,4 +342,14 @@ public class CDEBrowserParams
    public String getCsTypeRegStatus() {
       return csTypeRegStatus;
    }
+
+    public void setSentinalAPIUrl(String sentinalAPIUrl)
+    {
+        this.sentinalAPIUrl = sentinalAPIUrl;
+    }
+
+    public String getSentinalAPIUrl()
+    {
+        return sentinalAPIUrl;
+    }
 }

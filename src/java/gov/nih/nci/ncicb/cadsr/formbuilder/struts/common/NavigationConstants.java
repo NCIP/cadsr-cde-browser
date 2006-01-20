@@ -178,5 +178,7 @@ public interface NavigationConstants extends CommonNavigationConstants
   public static final String REMOVE_PROTOCOL = "removeProtocol";
   public static final String DONE_PROTOCOL = "doneProtocol";
   public static final String UPDATE_SKIP_PATTERN = "updateSkipPattern";
+  
+  public static final String SET_SENTINAL_ALERT="setAlertForForm";
 
 }

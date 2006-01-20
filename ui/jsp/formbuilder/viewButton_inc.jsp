@@ -100,9 +100,21 @@ if(confirm(message)) location.href = url;
 	             </td>    
          </logic:notEqual>          
           
-          <td width=170>
-            &nbsp;
-          </td>
+          <td >
+		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
+                         formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
+                          activeImageSource="i/sentinalalert.gif" 
+		       		activeUrl='<%="/formAlertAction.do?"
+                         +NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_SENTINAL_ALERT%>'
+		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
+		   	   	urlPrefix="<%=urlPrefix%>"
+		   	   	paramId = "<%=FormConstants.FORM_ID_SEQ%>"
+		   	   	paramProperty="formIdseq"
+		   	   	altMessage="Set Sentinal Alert"  
+		   	   	target="_parent" 
+		   	   	/>		                
+          </td>  
+
 
            
           </tr>
