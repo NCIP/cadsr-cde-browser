@@ -269,7 +269,6 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
     HttpServletRequest request) {
     if (key != null) {
       ActionMessage message = new ActionMessage(key);
-
       ActionMessages messages = null;
       messages = (ActionMessages)request.getAttribute(Globals.MESSAGE_KEY);
       if(messages==null)
@@ -279,6 +278,21 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
       saveMessages(request, messages);
     }
   }
+  
+    protected void saveMessage(
+      String key,
+      HttpServletRequest request, String arg0) {
+      if (key != null) {
+        ActionMessage message = new ActionMessage(key,arg0);
+        ActionMessages messages = null;
+        messages = (ActionMessages)request.getAttribute(Globals.MESSAGE_KEY);
+        if(messages==null)
+          messages = new ActionMessages();
+
+        messages.add(messages.GLOBAL_MESSAGE, message);
+        saveMessages(request, messages);
+      }
+    }
 
   /**
    * This Action forwards to the default formbuilder home.

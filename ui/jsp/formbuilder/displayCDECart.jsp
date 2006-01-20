@@ -98,7 +98,7 @@ function details(linkParms ){
   }
   else {
 %>
-<jsp:include page="../common/common_header_jsp_inc.jsp" flush="true">
+<jsp:include page="../common/common_cdebrowser_header_jsp_inc.jsp" flush="true">
   <jsp:param name="loginDestination" value="formCDECartAction.do?method=displayCDECart"/>
 </jsp:include>
 <%

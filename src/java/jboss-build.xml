@@ -25,7 +25,7 @@
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
    <property name="cdebrowser.version" value="3.1" />
-   <property name="cdebrowser.build" value="1" />
+   <property name="cdebrowser.build" value="2" />
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="3_1" />
@@ -201,6 +201,10 @@
       
       <!-- cadsr api lib -->
       <pathelement location="${java.lib.dir}/cadsr-api.jar"/>
+      
+      <!-- Sentinal tool API -->
+      <pathelement location="${java.lib.dir}/cadsrsentinelapi.jar"/>
+      
       
    </path>
    
@@ -647,6 +651,9 @@
       	
       	<!-- POI libs -->
       	<include name="poi-2.5.1-final-20040804.jar"/>
+      	
+      	<!-- Sentinal API -->
+      	<include name="cadsrsentinelapi.jar"/>
       	
       </lib>
        

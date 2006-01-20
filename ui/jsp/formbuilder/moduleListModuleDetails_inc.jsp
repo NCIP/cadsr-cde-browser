@@ -31,7 +31,7 @@
                  </table>
  		
  		
- 		 <%@ include file="/formbuilder/commonModuleDetails_inc.jsp"%> 
+ 		 <%@ include file="/formbuilder/commonModuleDetails_no_skip_repetition_inc.jsp"%> 
 
       		<table width="90%" align="center" cellpadding="0" cellspacing="0" border="0" >
         	   <tr class>

@@ -20,7 +20,7 @@
 </FONT>
 </td>
 <td width="30%" align="right">
- <FONT color="white" size=-2 face=arial>Version 3.1&nbsp;&nbsp;Build 1
+ <FONT color="white" size=-2 face=arial>Version @cdebrowser.version@&nbsp;&nbsp;Build @cdebrowser.build@
  <%=CDEBrowserParams.mode%></FONT>
 </TD>
 

@@ -175,5 +175,7 @@ public interface FormConstants extends FormBuilderConstants {
    public static final String UPDATE_SKIP_PATTERN_TRIGGERS = "updateSkipPatternTrigger";
    public static final String CLASSIFICATION_ASSOCIATED_TRIGGERS = "classificationAssociatedTriggers";
 
-   public static final String REMOVED_CLASSIFICATION_ID = "removedClassificationId";    
+   public static final String REMOVED_CLASSIFICATION_ID = "removedClassificationId";  
+   
+   public static final String SENTINAL_ALERT_NAME = "sentinalAlertName";
 }

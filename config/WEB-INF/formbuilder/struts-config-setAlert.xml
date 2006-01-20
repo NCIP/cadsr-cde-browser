@@ -5,7 +5,7 @@
     <form-bean name="alertForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
       dynamic="true">
-      <form-property name="formIdSeq" type="java.lang.String"/>
+      <form-property name="sentinalAlertName" type="java.lang.String"/>
     </form-bean>
   </form-beans>
   

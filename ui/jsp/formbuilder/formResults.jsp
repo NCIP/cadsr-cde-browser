@@ -47,7 +47,7 @@
     </logic:present>  
     
     <logic:present name="<%=FormConstants.MODULE_DISPLAY_ORDER_TO_COPY%>"> 
-            <%@ include  file="../common/in_process_common_header_inc.jsp" %>
+            <%@ include  file="../common/in_process_common_header_no_strip_inc.jsp" %>
             
             <jsp:include page="../common/tab_inc.jsp" flush="true">
                     <jsp:param name="label" value="Copy&nbsp;module&nbsp;Form&nbsp;Search" />
@@ -80,7 +80,7 @@
           <td  valign="bottom" class="OraFieldText" width="50%" align="right" nowrap>
             <html:link action='<%="/formbuilder/viewModuleList?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.VIEW_MODULE_LIST%>' 
               target="_parent">          
-                    Module cart         
+                    <html:img src='<%=urlPrefix+"i/moduleCart.gif"%>' border="0" alt="Done"/>        
             </html:link>          
           </td>
      </tr>       
