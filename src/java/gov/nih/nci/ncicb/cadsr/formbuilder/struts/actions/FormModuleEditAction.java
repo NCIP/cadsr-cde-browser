@@ -2071,12 +2071,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         if(ofv==null) ofv="";
         if(cfv==null) cfv="";
         
-       if (ofv.equals("")&& cfv.equals("") ){
-          return false; 
-       }
-        if (ofv!=null && cfv!=null && !ofv.equals(cfv)){
-           return true; 
-        }
+       if (!ofv.equals(cfv) ){
+          return true; 
+      }
        FormValidValue ofvv = orgQuestion.getDefaultValidValue();
        FormValidValue cfvv = currQuestion.getDefaultValidValue();
        if (cfvv==null && ofvv==null){
