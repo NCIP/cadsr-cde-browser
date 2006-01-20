@@ -181,7 +181,7 @@
   <tr >
     <td >
       <html:link action='<%= "/cancelDesignations?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.CANCEL_DESIGNATIONS%>'>
-        <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
+        <html:img src='<%=urlPrefix+"i/ok.gif"%>' border="0" alt="OK"/>
       </html:link>             
     </td> 
   </tr> 
