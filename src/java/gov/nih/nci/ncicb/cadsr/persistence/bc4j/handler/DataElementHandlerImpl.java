@@ -54,8 +54,7 @@ public class DataElementHandlerImpl extends Handler
       
       List deList= module.getAllCDEVersions(publicId);
       removeCurrentVersion(dataElement,deList);
-      dataElement.setOtherVersions(deList);
-        
+      dataElement.setOtherVersions(deList);        
     }
     catch (Exception e) {
       System.out.println(

@@ -691,7 +691,11 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
       
       while (vw.hasNext()) {
             deRow = (DataElementsViewRowImpl) vw.next();
-            deList.add(new BC4JDataElementTransferObject(deRow));
+            BC4JDataElementTransferObject bc4jDE = new BC4JDataElementTransferObject(deRow);
+            deList.add(bc4jDE);
+            //add classification to CDE
+            Vector cscVector = getClassificationSchemes(bc4jDE.getDeIdseq());
+            bc4jDE.setClassifications(new ArrayList(cscVector));
           }      
       return deList;
     }  
