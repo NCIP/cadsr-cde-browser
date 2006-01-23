@@ -32,6 +32,7 @@
 <TITLE>
 Data Element Details
 </TITLE>
+<SCRIPT LANGUAGE="JavaScript1.1" SRC="/CDEBrowser/jsLib/checkbox.js"></SCRIPT>
 </HEAD>
 <BODY topmargin="0">
 
@@ -48,6 +49,22 @@ function goPage(pageInfo) {
   document.location.href = "search?searchDataElements=&"+pageInfo;
   
 }
+
+
+function anotherDataElementDetails(linkParms, version )
+{
+  var urlString="/CDEBrowser/search?dataElementDetails=9" + linkParms + "&PageId=GetDetailsGroup"+"&queryDE=yes";
+  
+  //remove the dot. javascript does not like dot.
+  var temp = new Array();
+  temp = version.split('.');
+  
+  var versionStr = temp[0]+'_'+temp[1];
+  var myWindowName = "deDetails_v" + versionStr;
+  
+  newBrowserWin(urlString, myWindowName, 800, 600);
+}
+
   
 //-->
 </SCRIPT>
@@ -335,6 +352,129 @@ while (csiIter.hasNext()) {
 </table>
 <p>
 <%} %>
+
+
+
+
+
+
+
+
+
+
+
+
+<%--start all versions--%>
+<br>
+<table cellpadding="0" cellspacing="0" width="80%" align="center" >
+  <tr>
+    <td class="OraHeaderSubSub" width="100%">Other Versions</td>
+  </tr>
+  <tr>
+    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+  </tr>
+</table>
+
+
+<% List otherVersions = de.getOtherVersions();
+   if (otherVersions==null || otherVersions.isEmpty()){
+%>
+<table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+<TR class="OraTableColumnHeader">
+ <th class="OraTableColumnHeader">Version</th>
+ <th class="OraTableColumnHeader">Long Name</th>
+ <th class="OraTableColumnHeader">Workflow Status</th>
+ <th class="OraTableColumnHeader">Registration Status</th>
+ <th class="OraTableColumnHeader">Context</th>
+</TR>
+<tr>
+   No other versions available
+</tr>
+</table>
+<%
+   }else{
+    Iterator it = otherVersions.iterator();
+    while (it.hasNext()) 
+    {
+    DataElement thisDe = (DataElement) it.next();
+    List csiList = thisDe.getClassifications() ==null? null: (List)thisDe.getClassifications(); 
+ %>   
+<p>
+<table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+<TR class="OraTableColumnHeader">
+ <th class="OraTableColumnHeader">Version</th>
+ <th class="OraTableColumnHeader">Long Name</th>
+ <th class="OraTableColumnHeader">Workflow Status</th>
+ <th class="OraTableColumnHeader">Registration Status</th>
+ <th class="OraTableColumnHeader">Context</th>
+</TR>
+      <tr class="OraTabledata">
+      <td class="OraFieldText">
+      	<a href ="javascript:anotherDataElementDetails('<%="&p_de_idseq=" + thisDe.getDeIdseq()%>','<%=thisDe.getVersion()%>')">           
+          <%=thisDe.getVersion()%> 
+	</a>  
+      </td>
+        <td class="OraFieldText"><%=thisDe.getLongName()%> </td>
+        <td class="OraFieldText"><%=thisDe.getAslName()%> </td>
+        <td class="OraFieldText"><%=thisDe.getRegistrationStatus()%> </td>
+        <td class="OraFieldText"><%=thisDe.getContext().getName()%> </td>
+      </tr>
+	<%--classifications--%>
+	<tr class="OraTabledata">
+	<td class="OraHeaderSubSubSub" width="100%" colspan=5>Classifications </td>
+	</tr>
+<%--	<tr class="OraFieldText">
+	    <td colspan="5" ><font size="-2" color="#336699">*CS:Classification Scheme&nbsp;&nbsp; CSI:Classification Scheme Item</font></td>
+	</tr>
+--%>
+	<tr class="OraTabledata">
+	<td width="100%" colspan=5>
+        <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+	  <tr class="OraTableColumnHeader">
+	    <th>CS* Short Name</th>
+	    <th>CS* Definition</th>
+	    <th>CS* Public ID</th>
+	    <th>CSI* Name</th>
+	    <th>CSI* Type</th>
+	  </tr>
+
+	<% 
+	if ( csiList ==null || csiList.isEmpty() ){
+	%> <tr class="OraTabledata"> 
+	   <td colspan="5" class="OraFieldText">There are no classifications for the selected CDE
+	   </td>
+	   </tr>
+	<%}
+	 else
+	 {	  
+	  int classificationCount = csiList.size();
+	  Classification csi = null;
+          for (int i=0; i < classificationCount; i++) {
+	     csi = (Classification)(csiList.get(0));
+	%>
+	      <tr class="OraTabledata">
+		<td class="OraFieldText"><%=csi.getClassSchemeName()%> </td>
+		<td class="OraFieldText"><%=csi.getClassSchemeDefinition()%> </td>
+		<td class="OraFieldText">
+		  <%= csi.getClassSchemePublicId()%>
+		 </td>
+		<td class="OraFieldText"><%=csi.getClassSchemeItemName()%> </td>
+		<td class="OraFieldText"><%=csi.getClassSchemeItemType()%> </td>
+	      </tr>
+	<%
+	    }//end of for
+	  }  
+	%>
+	</table>
+        </td>
+	</tr>
+  </table>
+  </p>
+<%
+ }//end of while
+}//end of else
+%>      
+
 </form>
 
 <%@ include file="../common/common_bottom_border.jsp"%>
