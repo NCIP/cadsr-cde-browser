@@ -387,8 +387,10 @@ while (csiIter.hasNext()) {
  <th class="OraTableColumnHeader">Registration Status</th>
  <th class="OraTableColumnHeader">Context</th>
 </TR>
-<tr>
+<tr class="OraTabledata">
+   <td colspan="5" class="OraFieldText">
    No other versions available
+   </td>
 </tr>
 </table>
 <%
