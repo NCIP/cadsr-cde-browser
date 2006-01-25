@@ -3,7 +3,9 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.dto.ValidValueTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
+import gov.nih.nci.ncicb.cadsr.dto.ConceptDerivationRuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import java.sql.ResultSet;
@@ -16,7 +18,13 @@ import java.util.List;
 import javax.sql.DataSource;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
+
+import java.sql.Types;
+
 import java.util.Iterator;
+
+import org.springframework.jdbc.core.SqlParameter;
+
 
 public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDomainDAO {
   public JDBCValueDomainDAO(ServiceLocator locator) {
@@ -73,28 +81,38 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
     return records;
   }
 
+    public ValueDomain getValueDomainById(String vdId){
+        ValueDomainQuery query = new ValueDomainQuery(getDataSource());
+        query.setSql();
+
+        //value domain fully populated but concept is not populated        
+        List ret = query.getValueDomainById(vdId); 
+        if (ret!=null && !ret.isEmpty()){
+            return (ValueDomain)ret.get(0);
+        }
+        return null;
+    }
+    
 
   /**
    * Inner class to get all valid values for each value domain
    * 
    */
-  class PermissibleValueQuery extends MappingSqlQuery {
+  class ValueDomainQuery extends MappingSqlQuery {
   
     // vd_idseq is the key and vvList is the value (list of valid values)
-    private Map vvMap = null;
-    
-    PermissibleValueQuery(Map vvvMap) {
+    ValueDomainQuery(DataSource ds) {
       super();
-      this.vvMap = vvvMap;
+      this.setDataSource(ds);
     }
 
-    public void setSql(String whereString, String dummy) {
-      super.setSql("SELECT * FROM SBREXT.FB_VD_VV_VIEW " + whereString +"order by upper( PV_VALUE ) ");
-    }
-    
-    public Map getValidValueMap(){
-      return vvMap;
-    }
+    public void setSql() {
+      String sql = " SELECT VD_IDSEQ, LONG_NAME, VERSION, VD_ID, ASL_NAME, UOML_NAME, MAX_LENGTH_NUM, MIN_LENGTH_NUM, DECIMAL_PLACE, HIGH_VALUE_NUM, LOW_VALUE_NUM, CONDR_IDSEQ, FORML_NAME, DTL_NAME from VALUE_DOMAINS where VD_IDSEQ=?" ;
+      setSql(sql);
+      declareParameter(new SqlParameter("VD_IDSEQ", Types.VARCHAR));
+      compile();
+    }  
+
     
     protected Object mapRow(
       ResultSet rs,
@@ -103,18 +121,86 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
       // reaches to this point for each record retrieved.
       String vdomainIdSeq = rs.getString(1);  // VD_IDSEQ
       
-      ValidValueTransferObject vvto = new ValidValueTransferObject();
-      vvto.setShortMeaningValue(rs.getString(3)); // PV_VALUE
-      vvto.setShortMeaning(rs.getString(4));  // PV_SHORT_MEANING
-      vvto.setShortMeaningDescription(rs.getString(5)); // PV_MEANING_DESCRIPTION
-      vvto.setVpIdseq(rs.getString(6)); //VP_IDSEQ
-      
-      List vvList = (List) vvMap.get(vdomainIdSeq);
-      vvList.add(vvto);
-      vvMap.put(vdomainIdSeq, vvList);
-      return vvMap;
+      ValueDomain vd = new ValueDomainTransferObject();
+      vd.setVdIdseq(vdomainIdSeq);
+      vd.setLongName(rs.getString(2)); 
+      vd.setVersion(rs.getFloat(3));
+      vd.setPublicId(rs.getInt(4));
+      vd.setAslName(rs.getString(5));
+      vd.setUnitOfMeasure(rs.getString(6));
+      vd.setMaxLength(rs.getString(7));
+      vd.setMinLength(rs.getString(8));
+      vd.setDecimalPlace(rs.getString(9));
+      vd.setHighValue(rs.getString(10));
+      vd.setLowValue(rs.getString(11));
+      vd.setDisplayFormat(rs.getString(13));
+      vd.setDatatype(rs.getString(14));
+      ConceptDerivationRule cdr = 
+        new ConceptDerivationRuleTransferObject();
+      cdr.setIdseq(rs.getString(12));
+        
+      vd.setConceptDerivationRule(cdr);
+      return vd;
+    }
+    
+    
+    public List getValueDomainById(String vdId){
+        Object[] obj =
+          new Object[] {
+        vdId
+          };
+
+       return execute(obj);
+
+        
     }
   }
+
+
+    /**
+     * Inner class to get all valid values for each value domain
+     * 
+     */
+    class PermissibleValueQuery extends MappingSqlQuery {
+    
+      // vd_idseq is the key and vvList is the value (list of valid values)
+      private Map vvMap = null;
+      
+      PermissibleValueQuery(Map vvvMap) {
+        super();
+        this.vvMap = vvvMap;
+      }
+
+      public void setSql(String whereString, String dummy) {
+        super.setSql("SELECT * FROM SBREXT.FB_VD_VV_VIEW " + whereString +"order by upper( PV_VALUE ) ");
+      }
+
+      public Map getValidValueMap(){
+        return vvMap;
+      }
+      
+      protected Object mapRow(
+        ResultSet rs,
+        int rownum) throws SQLException {
+
+        // reaches to this point for each record retrieved.
+        String vdomainIdSeq = rs.getString(1);  // VD_IDSEQ
+        
+        ValidValueTransferObject vvto = new ValidValueTransferObject();
+        vvto.setShortMeaningValue(rs.getString(3)); // PV_VALUE
+        vvto.setShortMeaning(rs.getString(4));  // PV_SHORT_MEANING
+        vvto.setShortMeaningDescription(rs.getString(5)); // PV_MEANING_DESCRIPTION
+        vvto.setVpIdseq(rs.getString(6)); //VP_IDSEQ
+        
+        List vvList = (List) vvMap.get(vdomainIdSeq);
+        vvList.add(vvto);
+        vvMap.put(vdomainIdSeq, vvList);
+        return vvMap;
+      }
+    }
+
+
+
 
   public static void main(String[] args) {
     ServiceLocator locator = new SimpleServiceLocator();
