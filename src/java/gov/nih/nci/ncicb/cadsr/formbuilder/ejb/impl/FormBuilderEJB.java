@@ -54,14 +54,17 @@ import gov.nih.nci.ncicb.cadsr.resource.FormElement;
 import java.util.HashMap;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ProtocolDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionRepititionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.TriggerActionDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCQuestionDAO;
+import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.QuestionRepitition;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerActionChanges;
+import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.resource.Version;
 
 import java.rmi.RemoteException;
@@ -273,6 +276,24 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                     List<ReferenceDocument> deRefDocs =
                     getReferenceDocuments(term.getDataElement().getDeIdseq());
                     term.getDataElement().setReferenceDocs(deRefDocs);
+                    
+                    
+                    //set the value domain 
+                    ValueDomain currentVd = term.getDataElement().getValueDomain();                    
+                    if (currentVd!=null && currentVd.getVdIdseq()!=null){
+                        ValueDomainDAO vdDAO = daoFactory.getValueDomainDAO();                        
+                        ValueDomain vd = vdDAO.getValueDomainById(currentVd.getVdIdseq());
+                        
+                        //set concept to the value domain.
+                        String cdrId = vd.getConceptDerivationRule().getIdseq();
+                        if (cdrId!=null){
+                            ConceptDAO conceptDAO = daoFactory.getConceptDAO();
+                            ConceptDerivationRule cdr =  
+                                conceptDAO.findConceptDerivationRule(vd.getConceptDerivationRule().getIdseq());
+                            vd.setConceptDerivationRule(cdr);
+                        }                        
+                        term.getDataElement().setValueDomain(vd);
+                    }//end of if   
                 }
                 List qInstructions = qInstrdao.getInstructions(termId);
                 term.setInstructions(qInstructions);
