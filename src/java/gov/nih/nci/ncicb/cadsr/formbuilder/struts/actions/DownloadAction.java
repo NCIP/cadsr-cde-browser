@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
@@ -8,6 +9,7 @@ import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.util.ApplicationParameters;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.util.ContentTypeHelper;
@@ -184,6 +186,23 @@ public class DownloadAction
      cell.setCellValue("Question Default Value");
      cell.setCellStyle(boldCellStyle);
 
+//value domain details
+ cell = row.createCell(colNumber++);
+ cell.setCellValue("Value Domain Long Name");
+ cell.setCellStyle(boldCellStyle);
+ cell = row.createCell(colNumber++);
+ cell.setCellValue("Value Domain Data Type");
+ cell.setCellStyle(boldCellStyle);
+ cell = row.createCell(colNumber++);
+ cell.setCellValue("Value Domain Unit of Measure");
+ cell.setCellStyle(boldCellStyle);
+ cell = row.createCell(colNumber++);
+ cell.setCellValue("Display Format");
+ cell.setCellStyle(boldCellStyle);
+ cell = row.createCell(colNumber++);
+ cell.setCellValue("Concepts");
+ cell.setCellStyle(boldCellStyle);
+
    cell = row.createCell(colNumber++);
    cell.setCellValue("Valid Value");
    cell.setCellStyle(boldCellStyle);
@@ -238,6 +257,33 @@ public class DownloadAction
      
      row.createCell(colNumber++).setCellValue(questionDefaultValue);     
      
+     String vdLongName = "";
+     String vdDataType = "";
+     String vdUnitOfMeasure="";
+     String vdDisplayFormat = "";
+     String vdConcepts = "";
+     
+     DataElement de = question.getDataElement();
+     if (de!=null){
+         ValueDomain vd = de.getValueDomain();
+         if (vd!=null){
+             vdLongName = vd.getLongName();
+             vdDataType = vd.getDatatype();
+             vdDisplayFormat = vd.getDisplayFormat();
+             vdUnitOfMeasure = vd.getUnitOfMeasure();
+             vdConcepts = 
+                CDEDetailsUtils.getConceptCodesUrl(
+                    vd.getConceptDerivationRule(),
+                    CDEBrowserParams.getInstance(),"link",",");
+         }
+     }
+     
+    row.createCell(colNumber++).setCellValue(vdLongName);     
+    row.createCell(colNumber++).setCellValue(vdDataType);            
+    row.createCell(colNumber++).setCellValue(vdUnitOfMeasure);     
+    row.createCell(colNumber++).setCellValue(vdDisplayFormat);     
+    row.createCell(colNumber++).setCellValue(vdConcepts);     
+
      //export valid value related info  
      List validValues = question.getValidValues();
 

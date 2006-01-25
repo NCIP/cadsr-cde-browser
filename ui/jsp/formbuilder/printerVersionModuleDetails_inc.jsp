@@ -88,6 +88,72 @@
                                </tr> 
                             </logic:present>                            
 
+                            <logic:present name="question" property="dataElement.valueDomain">
+                              <tr class="PrinterOraTableColumnHeader">
+                                 <td class="PrinterOraTableColumnHeader" width="50">&nbsp;</td>
+                                  <td class="PrinterOraTableColumnHeader" colspan="2">                              
+                                   <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" 
+class="OraBGAccentBlack" >
+                                     <tr class="PrinterOraTabledata">
+                                      <td class="PrinterOraTableColumnHeader"  nowrap colspan="2">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.valueDomainDetails"/>        
+                                     </td>                                     
+                                    </tr>
+                                    
+                                    <tr class="PrinterOraTabledata">
+                                     <td class="PrinterOraTableColumnHeader" width="20%">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.longName"/>
+                                     </td>
+                                     <td class="OraFieldText">
+                                       <bean:write  name="question" property="dataElement.valueDomain.longName"/>          
+                            
+                                     </td>
+                                    </tr>
+                                    
+                                    <tr class="PrinterOraTabledata">
+                                     <td class="PrinterOraTableColumnHeader">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.datatype"/>
+                                     </td>
+                                     <td class="OraFieldText">
+                                       <bean:write  name="question" property="dataElement.valueDomain.datatype"/>          
+                            
+                                     </td>
+                                    </tr>
+
+                                    <tr class="PrinterOraTabledata">
+                                     <td class="PrinterOraTableColumnHeader">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.unitofmeasure"/>
+                                     </td>
+                                     <td class="OraFieldText">
+                                       <bean:write  name="question" property="dataElement.valueDomain.unitOfMeasure"/>     
+                                     </td>
+                                    </tr>
+
+                                    <tr class="PrinterOraTabledata">
+                                     <td class="PrinterOraTableColumnHeader">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.displayFormat"/>
+                                     </td>
+                                     <td class="OraFieldText">
+                                       <bean:write  name="question" property="dataElement.valueDomain.displayFormat"/>     
+                                     </td>
+                                    </tr>
+
+                                    <tr class="PrinterOraTabledata">
+                                     <td class="PrinterOraTableColumnHeader">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.concepts"/>
+                                     </td>
+                                     <td class="OraFieldText">
+                                       
+<%=CDEDetailsUtils.getConceptCodesUrl(question.getDataElement().getValueDomain().getConceptDerivationRule(),CDEBrowserParams.getInstance(),"link",",")%>
+                                     </td>
+                                    </tr>
+
+                                   </table>                                                            
+                                 </td>
+                               </tr> 
+                            </logic:present>
+                          
+
                             <logic:present name="question" property="defaultValue">
                               <tr class="PrinterOraTableColumnHeader">
                                  <td class="PrinterOraTableColumnHeader" width="50">&nbsp;</td>

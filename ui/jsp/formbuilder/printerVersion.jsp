@@ -11,6 +11,9 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils"%>
+
 <HTML>
   <HEAD>
     <TITLE>Formbuilder: Printer friendly form</TITLE>
