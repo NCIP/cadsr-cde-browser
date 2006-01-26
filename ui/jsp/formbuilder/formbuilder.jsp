@@ -42,7 +42,7 @@ FormBuilder
 </HEAD>
   <jsp:useBean id="requestMap" scope="request" class="java.util.HashMap" />
   
-<frameset rows="5%,*">
+<frameset rows="7%,*">
   <html:frame page="/common/topHeader1.jsp" frameborder="0" scrolling = "no" frameName="tree_header"/>
   <frameset cols="25%,*">
     <frameset rows="15%,*">

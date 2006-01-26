@@ -13,8 +13,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 
-import com.scenpro.DSRAlertAPI.DSRAlertAPI;
-import com.scenpro.DSRAlertAPI.DSRAlertAPIimpl;
+import gov.nih.nci.cadsralertapi.*;
+
 
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 
