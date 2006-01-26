@@ -112,7 +112,7 @@ function listChanged(urlInfo) {
 
 <table cellpadding="0" cellspacing="0" width="80%" align="center" >
   <tr>
-    <td class="OraHeaderSubSub" width="100%">Usage</td>
+    <td class="OraHeaderSubSub" width="100%">Form Usage</td>
   </tr>
   <tr>
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
@@ -138,7 +138,7 @@ function listChanged(urlInfo) {
     <th class="OraTableColumnHeader">Lead Org</th>
     <th class="OraTableColumnHeader">Form Name</th>
     <th class="OraTableColumnHeader">Question Name</th>
-    <th class="OraTableColumnHeader">Usage Type</th>
+    <th class="OraTableColumnHeader">Form Usage Type</th>
   </tr>
 <%
 
@@ -164,10 +164,10 @@ function listChanged(urlInfo) {
     <th class="OraTableColumnHeader">Protocol Number</th>
     <th class="OraTableColumnHeader">Lead Org</th>
     <th class="OraTableColumnHeader">Used By</th>
-    <th class="OraTableColumnHeader">Usage Type</th>
+    <th class="OraTableColumnHeader">Form Usage Type</th>
   </tr>
   <tr class="OraTabledata">
-         <td colspan="4">No usages exist for the selected CDE.</td>
+         <td colspan="4">No Form usages exist for the selected CDE.</td>
   </tr>
   </table>
 <%

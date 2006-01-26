@@ -8,22 +8,23 @@
    CustomQuery="true"
    RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormUsagesForACdeViewRowImpl"
    ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormUsagesForACdeViewImpl"
-   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
    UseGlueCode="false" >
    <SQLQuery><![CDATA[
-select NVL(proto.long_name,'N/A') protocol_number,
+select  NVL(proto.long_name,'N/A') protocol_number,
        NVL(proto.lead_org,'N/A') lead_org,
 	   crf.long_name crf_long_name,
 	   crf.qtl_name usage_type,
 	   crf.qc_idseq crf_idseq,
 	   proto.proto_idseq,
 	   que.de_idseq,
-           que.long_name que_long_name,
+       que.long_name que_long_name,
 	   que.de_idseq que_de_idseq
 from   sbrext.protocols_ext proto,
        sbrext.quest_contents_ext crf,
-       sbrext.quest_contents_ext que
-where  proto.proto_idseq (+) = crf.proto_idseq
+       sbrext.quest_contents_ext que,
+       sbrext.protocol_qc_ext proto_qc
+where  crf.qc_idseq = proto_qc.qc_idseq(+)
+and    proto.proto_idseq(+) = proto_qc.proto_idseq
 and    crf.qc_idseq = que.dn_crf_idseq
 and	   crf.qtl_name IN ('CRF','TEMPLATE')
 and    que.qtl_name = 'QUESTION'
@@ -31,15 +32,14 @@ and	   crf.deleted_ind = 'No'
    ]]></SQLQuery>
    <DesignTime>
       <Attr Name="_isCodegen" Value="true" />
-      <Attr Name="_version" Value="9.0.5.16.0" />
-      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
       <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_version" Value="10.1.3.34.12" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
    </DesignTime>
    <ViewAttribute
       Name="ProtocolNumber"
       IsQueriable="false"
       IsPersistent="false"
-      PrecisionRule="false"
       Precision="255"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
@@ -54,7 +54,6 @@ and	   crf.deleted_ind = 'No'
       Name="LeadOrg"
       IsQueriable="false"
       IsPersistent="false"
-      PrecisionRule="false"
       Precision="30"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
@@ -69,7 +68,6 @@ and	   crf.deleted_ind = 'No'
       Name="CrfLongName"
       IsQueriable="false"
       IsPersistent="false"
-      PrecisionRule="false"
       Precision="255"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
@@ -85,7 +83,6 @@ and	   crf.deleted_ind = 'No'
       IsQueriable="false"
       IsPersistent="false"
       IsNotNull="true"
-      PrecisionRule="false"
       Precision="30"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
@@ -101,7 +98,6 @@ and	   crf.deleted_ind = 'No'
       IsQueriable="false"
       IsPersistent="false"
       IsNotNull="true"
-      PrecisionRule="false"
       Precision="36"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
@@ -116,7 +112,6 @@ and	   crf.deleted_ind = 'No'
       Name="ProtoIdseq"
       IsQueriable="false"
       IsPersistent="false"
-      PrecisionRule="false"
       Precision="36"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
@@ -131,7 +126,6 @@ and	   crf.deleted_ind = 'No'
       Name="DeIdseq"
       IsQueriable="false"
       IsPersistent="false"
-      PrecisionRule="false"
       Precision="36"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
@@ -146,7 +140,6 @@ and	   crf.deleted_ind = 'No'
       Name="QueLongName"
       IsQueriable="false"
       IsPersistent="false"
-      PrecisionRule="false"
       Precision="255"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
@@ -161,7 +154,6 @@ and	   crf.deleted_ind = 'No'
       Name="QueDeIdseq"
       IsQueriable="false"
       IsPersistent="false"
-      PrecisionRule="false"
       Precision="36"
       Type="java.lang.String"
       ColumnType="VARCHAR2"

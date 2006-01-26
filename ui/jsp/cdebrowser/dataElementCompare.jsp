@@ -114,7 +114,7 @@ function subTabClicked(tabNum,urlParams) {
 
 
 <TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="/cdebrowser/i/tab_open.gif" height="21" width="13" border="0"></TD>
-<TD width=1% bgcolor="#B6B687"><A HREF="javascript:tabClicked(4, 'search?protocolsForDataElements=9')"><font size="-1" face="Arial" color="#000000">Usage</font></A></TD>
+<TD width=1% bgcolor="#B6B687"><A HREF="javascript:tabClicked(4, 'search?protocolsForDataElements=9')"><font size="-1" face="Arial" color="#000000">Form Usage</font></A></TD>
 <TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="/i/tab_close.gif" height="21" width="10" border="0" /></TD>
 
 
