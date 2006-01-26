@@ -1,6 +1,6 @@
                 <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentBlack">               
                  <tr class="PrinterOraTableColumnHeader">                 
-                    <td class="PrinterOraTableColumnHeader">
+                    <td class="PrinterOraTableColumnHeader" colspan="2">
                       <bean:write name="module" property="longName"/>
                     </td>
                   </tr>
@@ -20,6 +20,22 @@
                        </td>
                       </tr>
                    </logic:present>                    
+
+                      <tr class="PrinterOraTabledata" >  
+                       <td colspan="2">
+                           <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentBlack" >
+                             <tr class="PrinterOraTabledata">
+                              <td class="PrinterOraTableColumnHeader" width="10%" nowrap>
+                               Number of Repetitions&nbsp
+                             </td>
+                             <td class="PrinterOraTabledata">
+                                <bean:write name="module" property="numberOfRepeats"/>
+                             </td>
+                            </tr>
+                           </table>
+                       </td>
+                      </tr>
+
                   <logic:present name="module">
                   <logic:notEmpty name="module" property = "questions">
                     <tr class="PrinterOraTabledata">

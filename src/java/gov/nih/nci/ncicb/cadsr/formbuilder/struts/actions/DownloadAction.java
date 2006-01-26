@@ -165,6 +165,11 @@ public class DownloadAction
    cell = row.createCell(colNumber++);
    cell.setCellValue("Module Instructions");
    cell.setCellStyle(boldCellStyle);
+   
+   cell = row.createCell(colNumber++);
+   cell.setCellValue("Number of Repetitions");
+   cell.setCellStyle(boldCellStyle);
+   
    cell = row.createCell(colNumber++);
    cell.setCellValue("Question");
    cell.setCellStyle(boldCellStyle);
@@ -220,7 +225,9 @@ public class DownloadAction
     row.createCell((short)0).setCellValue(module.getLongName());
 
     if (module.getInstruction() != null)
-     row.createCell((short)1).setCellValue(module.getInstruction().getLongName());
+     row.createCell((short)1).setCellValue(module.getInstruction().getLongName());     
+
+    row.createCell((short)2).setCellValue(""+module.getNumberOfRepeats());
 
     //export question related info
     List questions = module.getQuestions();
@@ -231,7 +238,7 @@ public class DownloadAction
      Question question = (Question)questions.get(iQues);
      DataElement cde = question.getDataElement();
 
-     colNumber = 2;
+     colNumber = 3;
      row.createCell(colNumber++).setCellValue(question.getLongName());
 
      if (cde != null) {
