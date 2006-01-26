@@ -452,7 +452,7 @@ while (csiIter.hasNext()) {
 	  int classificationCount = csiList.size();
 	  Classification csi = null;
           for (int i=0; i < classificationCount; i++) {
-	     csi = (Classification)(csiList.get(0));
+	     csi = (Classification)(csiList.get(i));
 	%>
 	      <tr class="OraTabledata">
 		<td class="OraFieldText"><%=csi.getClassSchemeName()%> </td>
