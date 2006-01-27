@@ -1585,14 +1585,16 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         String defaultValue = questionDefaultValuesArr[i];
         Question currQuestion = (Question) questions.get(i);
         if( (currQuestion!=null) && currQuestion.getValidValues()!=null && !(currQuestion.getValidValues().isEmpty()))
-        { //use valid value id
-            FormValidValue vv = new FormValidValueTransferObject();
-            vv.setIdseq(questionDefaultValidValueIDsArr[i]);
-            vv.setLongName(questionDefaultValuesArr[i]);
-            currQuestion.setDefaultValidValue(vv);
-            vv.setQuestion(currQuestion);
-            //initNullValues(currQuestion.getInstruction(),module);// this is done to take care
-                                               // incase the attributes are null
+        { //use valid value id if it is not null or empty
+            if (questionDefaultValidValueIDsArr[i]!=null && questionDefaultValidValueIDsArr[i].length()>0){
+                FormValidValue vv = new FormValidValueTransferObject();
+                vv.setIdseq(questionDefaultValidValueIDsArr[i]);
+                vv.setLongName(questionDefaultValuesArr[i]);
+                currQuestion.setDefaultValidValue(vv);
+                vv.setQuestion(currQuestion);
+                //initNullValues(currQuestion.getInstruction(),module);// this is done to take care
+                                                   // incase the attributes are null
+            }
           }
           else //use the text input
           {
