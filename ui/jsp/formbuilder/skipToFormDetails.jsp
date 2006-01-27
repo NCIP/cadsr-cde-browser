@@ -12,6 +12,9 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants" %>
 <%@ page import="gov.nih.nci.ncicb.cadsr.resource.Form"%>
 <%@ page import="java.util.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils"%>
+
 
 
 
