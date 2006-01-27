@@ -246,7 +246,7 @@ public class DownloadAction
       row.createCell(colNumber++).setCellValue(cde.getCDEId());
       row.createCell(colNumber++).setCellValue(cde.getVersion().toString());
      } else
-      colNumber += 2;
+      colNumber += 3;
 
      if (question.getInstruction() != null)
       row.createCell(colNumber++).setCellValue(question.getInstruction().getLongName());
