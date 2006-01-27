@@ -627,7 +627,7 @@ function clearProtocol() {
                               <cde:RefDocAltQuestionTextDisplay questionBeanId= "question" 
                                                   htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
                                                   selectBoxClassName="AltQuestionField"
-                                                  selectBoxSize="20"
+                                                  selectBoxSize="4"
                                                   refDocType="<%=ReferenceDocument.REF_DOC_TYPE_PREFERRED_QUESTION_TEXT%>"
                                                   questionIndex="<%=questionIndex.toString()%>" 
                                                   selectBoxJSFunctionName="refDocSelected"

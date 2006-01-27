@@ -103,7 +103,7 @@
                                  </td>
                                </tr> 
                             </logic:present>                            
-
+                            <logic:present name="question" property="dataElement">
                             <logic:present name="question" property="dataElement.valueDomain">
                               <tr class="PrinterOraTableColumnHeader">
                                  <td class="PrinterOraTableColumnHeader" width="50">&nbsp;</td>
@@ -168,7 +168,7 @@ class="OraBGAccentBlack" >
                                  </td>
                                </tr> 
                             </logic:present>
-                          
+                           </logic:present>
 
                             <logic:present name="question" property="defaultValue">
                               <tr class="PrinterOraTableColumnHeader">

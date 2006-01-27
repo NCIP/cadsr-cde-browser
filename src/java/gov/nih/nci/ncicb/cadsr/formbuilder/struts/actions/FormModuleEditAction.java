@@ -978,7 +978,9 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     removeSessionObject(request,CLONED_MODULE);
     removeSessionObject(request,MODULE);
     removeSessionObject(request,DELETED_QUESTIONS);
-
+      
+    setSessionObject(request, MODULE, updatedModule,true);
+    
     log.debug("CRF insession="+((Form) getSessionObject(request, CRF)).toString());
     log.debug("Action Save Module Done");
     return mapping.findForward(SUCCESS);

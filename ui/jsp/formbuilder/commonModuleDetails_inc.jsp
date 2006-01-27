@@ -157,7 +157,7 @@ class="OraBGAccentVeryDark" >
                                  </td>
                                </tr> 
                             </logic:present>
-
+			   <logic:present name="question" property="dataElement">
                             <logic:present name="question" property="dataElement.valueDomain">
                               <tr class="OraTabledata">
                                  <td class="OraFieldText" width="50">&nbsp;</td>
@@ -221,6 +221,7 @@ class="OraBGAccentVeryDark" >
                                  </td>
                                </tr> 
                             </logic:present>
+                           </logic:present>
 
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">

@@ -100,7 +100,7 @@ public class RefDocAltQuestionTextDisplay extends TagSupport implements CaDSRCon
                     if(matchingDocs.size()<2)
                     {
                         // Generate Hyper link
-                         String itemIdentifierPrefix = "questionOptionHyperLink";
+                         String itemIdentifierPrefix = "questionOptionHyperLink"+refDocType;
                         ReferenceDocument currDoc = (ReferenceDocument)matchingDocs.get(0);
                         String displayString = currDoc.getDocText();
                         StringBuffer linkStr = new StringBuffer("<a href=\"javascript:"+hyperLinkJSFunctionName+"('"+htmlObjectRef+"','"+displayString+"')\">");
@@ -112,7 +112,7 @@ public class RefDocAltQuestionTextDisplay extends TagSupport implements CaDSRCon
                     else
                     {
                         //Generate Multi select box
-                         String itemIdentifier = "questionOptions"+questionIndex;
+                         String itemIdentifier = "questionOptions"+questionIndex+refDocType;
                         StringBuffer buffer = new StringBuffer("<select  name=\""+itemIdentifier+"\" size=\""+selectBoxSize+"\" class=\""+selectBoxClassName+"\"" +
                                               "onDblClick=\""+selectBoxJSFunctionName+"('"+itemIdentifier+"','"+htmlObjectRef+"')\">");
                         for(ReferenceDocument currDoc: matchingDocs)
