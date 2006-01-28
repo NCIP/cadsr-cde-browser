@@ -41,7 +41,7 @@ function submitForm(methodName) {
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff">
     
-    <%@ include file="../common/in_process_common_header_inc.jsp"%>
+    <%@ include file="../common/in_process_common_header1_inc.jsp"%>
     <jsp:include page="../common/tab_inc.jsp" flush="true">
       <jsp:param name="label" value="Skip&nbsp;Pattern"/>
       <jsp:param name="urlPrefix" value=""/>
