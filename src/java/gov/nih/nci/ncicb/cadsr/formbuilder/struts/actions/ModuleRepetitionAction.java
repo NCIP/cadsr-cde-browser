@@ -122,6 +122,10 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
 
         String[] selectedIndexes =
             (String[])request.getParameterValues(SELECTED_ITEMS);
+            
+        if(selectedIndexes==null)
+            mapping.findForward("viewRepetitions");
+            
         for (int i = selectedIndexes.length - 1; i > -1; --i)
         {
             int currIndex = (new Integer(selectedIndexes[i])).intValue();
