@@ -33,10 +33,23 @@ function submitToRepetitions(methodName) {
         return true;
  }
 
+function getSelectedNumber(selectedElements){
+  var len = selectedElements.length; 
+  var i=0;
+  var total = 0;
+  for( i=0; i<len ; i++) {
+    if (selectedElements[i].checked==1) {
+    	total = total + 1;
+    }	
+  }
+  return total;
+}
+
+
 function submitModuleListEdit(methodName) {
    var selectedItems = '<%=FormConstants.SELECTED_ITEMS%>';
    var selectedElements = selectedItems;
-   var selectedSize = getNumberOfSelectedItems(selectedElements);
+   var selectedSize = getSelectedNumber(selectedElements);
   if (validateSelection(selectedElements,'Please select at least one Module to delete'))
    {
         document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value=methodName;
