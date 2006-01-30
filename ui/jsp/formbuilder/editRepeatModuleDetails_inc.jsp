@@ -83,22 +83,26 @@
                                      </td>
                                     </tr>
                                      <logic:notEmpty name="question" property = "validValues">
+                                     <tr class="OraTabledata">
                                       <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
                                         Default value
                                      </td>
                                      <td class="OraFieldText">
                                         <html:hidden property="<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"["+defaultIndex+"]"%>"  />
                                          <html:text  styleClass="OraFieldText"  property='<%=FormConstants.QUESTION_DEFAULTS+"["+defaultIndex+"]"%>' readonly="true" size="70" />                                   
-                                     </td>                                    
+                                     </td>  
+                                     </tr>
                                       </logic:notEmpty>
                                       <logic:empty name="question" property = "validValues">
+                                      <tr class="OraTabledata">
                                          <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
                                            Default value
                                         </td>
                                         <td class="OraFieldText">
                                          <html:hidden property="<%=FormConstants.QUESTION_DEFAULT_VV_IDS+"["+defaultIndex+"]"%>" value="" />
                                          <html:text  styleClass="OraFieldText"  property='<%=FormConstants.QUESTION_DEFAULTS+"["+defaultIndex+"]"%>' size="70" />         
-                                        </td>                                   
+                                        </td> 
+                                      </tr>
                                        </logic:empty>
                                    </table>                                                            
                                  </td>
@@ -215,7 +219,6 @@
                             </tr>         
                           </logic:equal>    
                                <%
-                                    System.out.println("*********defaultIndex"+defaultIndex);
                                     defaultIndex++;
                                  %>
                           </logic:iterate><!-- Question-->
