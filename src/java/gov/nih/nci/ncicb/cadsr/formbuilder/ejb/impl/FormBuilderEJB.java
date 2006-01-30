@@ -378,6 +378,23 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                 List<ReferenceDocument> refDocs =
                     getReferenceDocuments(term.getDataElement().getDeIdseq());
                 term.getDataElement().setReferenceDocs(refDocs);
+
+                //set the value domain 
+                ValueDomain currentVd = term.getDataElement().getValueDomain();                    
+                if (currentVd!=null && currentVd.getVdIdseq()!=null){
+                    ValueDomainDAO vdDAO = daoFactory.getValueDomainDAO();                        
+                    ValueDomain vd = vdDAO.getValueDomainById(currentVd.getVdIdseq());
+                    
+                    //set concept to the value domain.
+                    String cdrId = vd.getConceptDerivationRule().getIdseq();
+                    if (cdrId!=null){
+                        ConceptDAO conceptDAO = daoFactory.getConceptDAO();
+                        ConceptDerivationRule cdr =  
+                            conceptDAO.findConceptDerivationRule(vd.getConceptDerivationRule().getIdseq());
+                        vd.setConceptDerivationRule(cdr);
+                    }                        
+                    term.getDataElement().setValueDomain(vd);
+                }//end of if   
             }        
 
             term.setInstructions(questionInstrDao.getInstructions(termId));
@@ -404,6 +421,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             List<QuestionRepitition> qReps = qrdao.getQuestionRepititions(term.getQuesIdseq());
             setQuestionRepititionDefaults(qReps,values);
             term.setQuestionRepitition(qReps);
+            
         }
 
         module.setQuestions(questions);
