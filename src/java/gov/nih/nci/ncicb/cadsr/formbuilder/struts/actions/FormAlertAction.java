@@ -13,7 +13,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 
-import gov.nih.nci.cadsralertapi.*;
+import gov.nih.nci.cadsr.sentinel.util.DSRAlert;
+
+import gov.nih.nci.cadsr.sentinel.util.DSRAlertImpl;
 
 
 import gov.nih.nci.ncicb.cadsr.resource.Form;
