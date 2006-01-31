@@ -107,8 +107,18 @@ function gotoClassificationsLOV() {
                               <tr>
                                  <td valign="top"  class="OraTableColumnHeaderNoBG" nowrap>Version</td>
                                     <td class="OraTableColumnHeaderNoBG" nowrap>
-                                    <html:radio property="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.LATEST_VERSION%>" >Latest Version </html:radio>
-                                    <html:radio property="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.ALL_VERSION%>" >All Versions </html:radio>
+                                    <logic:notEmpty name="searchForm" property="<%=FormConstants.LATEST_VERSION_INDICATOR%>" > 
+					    <html:radio property="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.LATEST_VERSION%>" >Latest Version </html:radio>
+					    <html:radio property="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.ALL_VERSION%>" >All Versions </html:radio>
+                                    </logic:notEmpty>
+                                    <logic:empty name="searchForm" property="<%=FormConstants.LATEST_VERSION_INDICATOR%>" > 
+					    <input type="radio"  name="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.LATEST_VERSION%>"
+						   checked="checked"> Latest Version 
+					    </input>
+					    <input type="radio"  name="<%=FormConstants.LATEST_VERSION_INDICATOR%>" value="<%=FormConstants.ALL_VERSION%>">
+					    All Versions
+					    </input>
+                                    </logic:empty>
                                 </td>
                                </tr>          
                              </table>
