@@ -1,5 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
 
+import gov.nih.nci.cadsr.sentinel.util.DSRAlert;
+import gov.nih.nci.cadsr.sentinel.util.DSRAlertImpl;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 
 import java.io.IOException;
@@ -13,9 +15,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 
-import gov.nih.nci.cadsr.sentinel.util.DSRAlert;
 
-import gov.nih.nci.cadsr.sentinel.util.DSRAlertImpl;
 
 
 import gov.nih.nci.ncicb.cadsr.resource.Form;
@@ -48,10 +48,10 @@ public class FormAlertAction extends FormBuilderSecureBaseDispatchAction {
       Form crf = (Form)getSessionObject(request,CRF);
       String formId = crf.getFormIdseq();
       int res = 0;
-      DSRAlertAPI sentinalApi = null;
+      DSRAlert sentinalApi = null;
       String alertName = "";
     try {
-         sentinalApi = DSRAlertAPIimpl.factory(url);
+         sentinalApi = DSRAlertImpl.factory(url);
         res = sentinalApi.createAlert(userName,formId);
         alertName = sentinalApi.getAlertName();
     }
@@ -63,14 +63,14 @@ public class FormAlertAction extends FormBuilderSecureBaseDispatchAction {
 
       return mapping.findForward(FAILURE);
     }
-    if(res!=DSRAlertAPI.RC_CREATED&&res!=DSRAlertAPI.RC_EXISTS)
+    if(res!=DSRAlert.RC_CREATED&&res!=DSRAlert.RC_EXISTS)
     {
         saveError(ERROR_FORM_ALERT, request);
         return mapping.findForward(FAILURE);  
     }
-    if (res==DSRAlertAPI.RC_CREATED)
+    if (res==DSRAlert.RC_CREATED)
         saveMessage("cadsr.formbuilder.form.sentinal.success", request,alertName);
-    if (res==DSRAlertAPI.RC_EXISTS)
+    if (res==DSRAlert.RC_EXISTS)
         saveMessage("cadsr.formbuilder.form.sentinal.exists", request,alertName);
     
     return mapping.findForward(SUCCESS);
