@@ -862,11 +862,9 @@ function clearProtocol() {
 								
 								 <logic:present name="validValue" property = "triggerActions" >
 								   <logic:notEmpty name="validValue" property = "triggerActions">
-									    <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
 									      <logic:iterate id="currTriggerAction" name="validValue" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
 											<%@ include file="/formbuilder/skipPatternDetailsEditVV_inc.jsp"%>
 									      </logic:iterate>
-									    </table>
 								    </logic:notEmpty>
 								 </logic:present>
 								                                                             
