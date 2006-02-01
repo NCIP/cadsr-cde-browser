@@ -123,7 +123,7 @@ class="OraBGAccentVeryDark" >
                             <logic:notEmpty name="question" property="defaultValue">
                             <% System.out.println("defaultValue not empty");%>
                               <tr class="OraTabledata">
-                                 <td class="OraFieldText" width="50">&nbsp;---------------------------------</td>
+                                 <td class="OraFieldText" width="50">&nbsp;</td>
                                   <td class="OraFieldText" colspan="2">                              
                                    <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" 
 class="OraBGAccentVeryDark" >
