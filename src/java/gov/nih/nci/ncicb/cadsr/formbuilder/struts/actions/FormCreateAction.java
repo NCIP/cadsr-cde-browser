@@ -95,14 +95,17 @@ public class FormCreateAction extends FormBuilderSecureBaseDispatchAction {
     context.setConteIdseq((String)dynaForm.get(CONTEXT_ID_SEQ));
     newForm.setContext(context);
 
-    Protocol protocol =
-      new ProtocolTransferObject((String)dynaForm.get(PROTOCOLS_LOV_NAME_FIELD));
-    protocol.setProtoIdseq((String)dynaForm.get(PROTOCOLS_LOV_ID_FIELD));
-    
-    List protocols = new ArrayList();
-    protocols.add(protocol);    
-    newForm.setProtocols(protocols);
+    String protocolId = (String)dynaForm.get(PROTOCOLS_LOV_NAME_FIELD);
+    if (protocolId.length()>0){
+        Protocol protocol =
+          new ProtocolTransferObject((String)dynaForm.get(PROTOCOLS_LOV_NAME_FIELD));
+        protocol.setProtoIdseq((String)dynaForm.get(PROTOCOLS_LOV_ID_FIELD));
         
+        List protocols = new ArrayList();
+        protocols.add(protocol);    
+        newForm.setProtocols(protocols);
+    }
+    
     newForm.setFormType((String)dynaForm.get(FORM_TYPE));
     newForm.setFormCategory((String)dynaForm.get(FORM_CATEGORY));
     newForm.setAslName("DRAFT NEW");
