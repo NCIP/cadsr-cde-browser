@@ -555,7 +555,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    boolean hasUpdate  = false; // TODO check with jeniffer setValuesForUpdate(mapping,form,request);
+    boolean hasUpdate  = setValuesForUpdate(mapping,form,request);
       if(hasUpdate)
       {
         return mapping.findForward(SAVE_CONFIRM);
