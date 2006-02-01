@@ -238,7 +238,7 @@ public class FormVersionAction
         if (editNewFormIndicator){
             return mapping.findForward("successEditNew");            
         }else{
-            return mapping.findForward("successShowNew");
+            return mapping.findForward("successViewNew");
         }
       }
       catch (FormBuilderException exp) {
@@ -250,6 +250,7 @@ public class FormVersionAction
         ActionForward forward =  mapping.findForward("failure");
         return forward;
       }
+      
   }
 
 
