@@ -1416,6 +1416,15 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
 
     public void addFormProtocol(String formIdseq, String protocoldIdseq)
     {
+        //sanity check
+        if (protocoldIdseq==null || protocoldIdseq.length()==0){            
+            return;
+        }
+        
+        if (formIdseq==null || formIdseq.length()==0){
+            return;
+        }
+        
         FormDAO myDAO = daoFactory.getFormDAO();
         myDAO.addFormProtocol(formIdseq, protocoldIdseq, getUserName());
         return;
@@ -1432,7 +1441,9 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         while (it.hasNext())
         {
             String pid = (String)it.next();
-            addFormProtocol(formIdseq, pid);
+            if (pid.length()>0){
+                addFormProtocol(formIdseq, pid);
+            }    
         }
         return;
     }
