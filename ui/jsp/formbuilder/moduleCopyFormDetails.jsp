@@ -14,6 +14,8 @@
 <%@ page import="java.util.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormJspUtil"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils"%>
 
 
 
