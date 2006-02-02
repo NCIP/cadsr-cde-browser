@@ -1,4 +1,4 @@
-
+<SCRIPT LANGUAGE="JavaScript1.1" SRC="jsLib/newWinJS.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function submitForm(methodName) {
