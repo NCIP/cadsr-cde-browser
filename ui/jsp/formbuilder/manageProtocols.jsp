@@ -46,7 +46,7 @@
     <logic:present name="<%=FormConstants.CRF%>" >
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%" ><bean:message key="cadsr.formbuilder.form.name" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -55,8 +55,8 @@
           </td>
         </tr>
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
-          <td class="OraFieldText" nowrap>
+          <td class="OraTableColumnHeader" nowrap width="20%" ><bean:message key="cadsr.formbuilder.form.context" />:</td>
+          <td class="OraFieldText" nowrap >
             <bean:write
               name="<%= FormConstants.CRF %>"
               property="context.name"
@@ -65,7 +65,7 @@
         </tr>
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.version" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%" ><bean:message key="cadsr.formbuilder.form.version" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -74,7 +74,7 @@
           </td>
         </tr>
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%" ><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -83,7 +83,7 @@
           </td>      
         </tr>
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
+          <td class="OraTableColumnHeader" nowrap width="20%" ><bean:message key="cadsr.formbuilder.form.type" />:</td>  
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -92,7 +92,7 @@
           </td>        
         </tr>
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%" ><bean:message key="cadsr.formbuilder.form.category" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -102,7 +102,7 @@
         </tr>     
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%" ><bean:message key="cadsr.formbuilder.form.definition" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -138,9 +138,16 @@
           <th scope="col">DELETE</th>          
         </tr>
         <logic:present name="<%=FormConstants.CRF%>" >
+          <logic:notPresent name="<%=FormConstants.CRF%>" property="protocols">
+          <tr class="OraTabledata">
+            No protocols.
+          </tr>
+        </logic:notPresent>
         
-          <logic:iterate id="protocol" indexId="protocolIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Protocol" property="protocols">
-          <logic:present name="protocol">          
+          <logic:present name="<%=FormConstants.CRF%>" property="protocols">
+
+          <logic:equal name="<%=FormConstants.CRF%>" property="protocols.empty" value="false">
+          <logic:iterate id="protocol" indexId="protocolIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Protocol" property="protocols">          
             <tr class="OraTabledata">
               <td class="OraFieldText">
                 <bean:write name="protocol" property="longName"/>
@@ -169,13 +176,15 @@
                     </html:link>
                  </td>
               </tr>
-          </logic:present>
-          <logic:notPresent name="protocol">
-          <tr>
-            No protocols.
-          </tr>
-        </logic:notPresent>
         </logic:iterate>
+       </logic:equal>
+       <logic:notEqual name="<%=FormConstants.CRF%>" property="protocols.empty" value="false">
+	       <tr class="OraTabledata">
+	       <td class="OraFieldText" colspan="8" >
+	       No Protocols
+	       </tr>
+       </logic:notEqual>
+    </logic:present>       
     </logic:present>
     </table>
     </logic:present>
