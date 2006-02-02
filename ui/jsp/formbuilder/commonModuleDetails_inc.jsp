@@ -121,7 +121,6 @@ class="OraBGAccentVeryDark" >
                             </logic:present>
 
                             <logic:notEmpty name="question" property="defaultValue">
-                            <% System.out.println("defaultValue not empty");%>
                               <tr class="OraTabledata">
                                  <td class="OraFieldText" width="50">&nbsp;</td>
                                   <td class="OraFieldText" colspan="2">                              
@@ -141,9 +140,7 @@ class="OraBGAccentVeryDark" >
                             </logic:notEmpty>
 
                             <logic:notEmpty name="question" property="defaultValidValue">
-                            <% System.out.println("defaultValidValue not empty");%>
 	                      <logic:notEmpty name="question" property="defaultValidValue.longName">                            
-	                            <% System.out.println("defaultValidValue.longName not empty");%>
                               <tr class="OraTabledata">
                                  <td class="OraFieldText" width="50">&nbsp;</td>
                                   <td class="OraFieldText" colspan="2">                              
