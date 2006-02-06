@@ -51,6 +51,7 @@ function submitForm(methodName) {
 
       <html:form action="/formbuilder/skipAction.do"> 
        <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
+       <html:hidden property="<%=FormConstants.MODULE_INDEX%>"/>
       <%@ include file="showMessages.jsp" %>
 
 
