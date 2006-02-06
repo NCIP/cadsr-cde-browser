@@ -1680,7 +1680,13 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         for(TriggerAction action : actions)
         {
             FormElement element = possibleTargetMap.get(action.getActionTarget().getIdseq());
-            action.setActionTarget(element);
+            // the target FormElement may not may not in the possibleTargetMap considering it may
+            //skip to a FormElement in a different module for example.
+            //In case the target FormElement is not in the possibleTargetMap, element will be null,
+            //In this case just keep the idseq which is already in the target action.
+            if (element!=null){
+                action.setActionTarget(element);
+            }    
 
         }
     }
