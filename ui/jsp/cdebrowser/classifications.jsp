@@ -208,7 +208,11 @@ function listChanged(urlInfo) {
         <td class="OraFieldText"><%=csName%></td>
         <td class="OraFieldText"><%=refDoc.getName()%> </td>
         <td class="OraFieldText"><%= refDoc.getType()%> </td>
-        <td class="OraFieldText"><%=refDoc.getText()%> </td>
+        <td class="OraFieldText">
+        <% if (refDoc.getText() != null) { %>
+        <%=refDoc.getText()%>  
+        <%} %>
+        </td>
         <td class="OraFieldText">   
         <% if (refDoc.getUrl() != null) { %>
         <a href="<%=refDoc.getUrl()%>" target="AuxWindow"  >
