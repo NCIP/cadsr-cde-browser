@@ -36,7 +36,7 @@
 
 <html:form action='<%="/saveDesignations?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SAVE_DESIGNATIONS%>'>
 <table width="20%" align="center" cellpadding="1" cellspacing="1" border="0" >
- 
+<logic:notPresent name="<%=FormConstants.ALREADY_DESIGNATED%>" >
   <tr >
     <td >
       <html:image src='<%=urlPrefix+"i/yes.gif"%>' border="0" alt="Yes"/>
@@ -47,12 +47,24 @@
       </html:link>             
     </td>                
   </tr> 
+</logic:notPresent>
+
+<logic:present name="<%=FormConstants.ALREADY_DESIGNATED%>" >
+  <tr >
+    <td >
+      <html:link action='<%= "/cancelDesignations?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.CANCEL_DESIGNATIONS%>'>
+        <html:img src='<%=urlPrefix+"i/ok.gif"%>' border="0" alt="OK"/>
+      </html:link>             
+    </td> 
+  </tr> 
+</logic:present>
+ 
 </table>
 
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
-          <td class="OraFieldText" nowrap>
+          <td class="OraTableColumnHeader" nowrap width="20%"><bean:message key="cadsr.formbuilder.form.name" />:</td>
+          <td class="OraFieldText" nowrap >
             <bean:write
               name="<%= FormConstants.CRF %>"
               property="longName"
@@ -60,7 +72,7 @@
           </td>
         </tr>
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.context" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%"><bean:message key="cadsr.formbuilder.form.context" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -70,7 +82,7 @@
         </tr>
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.version" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%"><bean:message key="cadsr.formbuilder.form.version" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -79,7 +91,7 @@
           </td>
         </tr>
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%"><bean:message key="cadsr.formbuilder.form.workflow" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -88,7 +100,7 @@
           </td>      
         </tr>
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.type" />:</td>  
+          <td class="OraTableColumnHeader" nowrap width="20%"><bean:message key="cadsr.formbuilder.form.type" />:</td>  
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -97,7 +109,7 @@
           </td>        
         </tr>
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.protocols.longName" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%"><bean:message key="cadsr.formbuilder.form.protocols.longName" />:</td>
           <td class="OraFieldText" nowrap>
            <bean:define name="<%=FormConstants.CRF%>" property="protocols" id="protocols"/>
             <%=FormJspUtil.getDelimitedProtocolLongNames((List)protocols,  "<br/>")%>                
@@ -106,7 +118,7 @@
 
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.category" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%"><bean:message key="cadsr.formbuilder.form.category" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
@@ -116,7 +128,7 @@
         </tr>     
 
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.definition" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%"><bean:message key="cadsr.formbuilder.form.definition" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
