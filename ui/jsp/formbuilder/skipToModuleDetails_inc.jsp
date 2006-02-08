@@ -4,7 +4,7 @@
                  <tr >
            	    <td align="left" width="100%">
                        <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_MODULE_AS_TARGET%>'
-                          paramId= "<%=FormConstants.MODULE_INDEX%>"
+                          paramId= "<%=FormConstants.TARGET_MODULE_INDEX%>"
                           paramName="modIndex"
                           scope="page">
                            Skip to this Module
@@ -51,7 +51,7 @@
                                 <%
                                         HashMap params = new java.util.HashMap();
                                         params.put(FormConstants.SK_QUESTION_INDEX,questionIndex);
-                                        params.put(FormConstants.MODULE_INDEX,modIndex);
+                                        params.put(FormConstants.TARGET_MODULE_INDEX,modIndex);
                                         params.put(NavigationConstants.METHOD_PARAM,NavigationConstants.SET_QUESTION_AS_TARGET);
                                         pageContext.setAttribute("linkParams", params);
                                 %>
