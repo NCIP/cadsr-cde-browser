@@ -490,7 +490,9 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       HttpServletResponse response) throws IOException, ServletException {
       DynaActionForm searchForm = (DynaActionForm) form;
       FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
-      String indexStr = (String)formBean.get(MODULE_INDEX);
+      //String indexStr = (String)formBean.get(MODULE_INDEX);
+      //MODULE_INDEX is the source module index.
+      String indexStr = (String)request.getParameter(TARGET_MODULE_INDEX);
       int index= Integer.parseInt(indexStr);
       TriggerAction triggerAction = (TriggerAction)getSessionObject(request,SKIP_PATTERN);
       Form targetForm = (Form)getSessionObject(request,SKIP_TARGET_FORM);
@@ -522,7 +524,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       HttpServletResponse response) throws IOException, ServletException {
       DynaActionForm searchForm = (DynaActionForm) form;
       FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
-      String modIndexStr = (String)formBean.get(MODULE_INDEX);
+      //String modIndexStr = (String)formBean.get(TARGET_MODULE_INDEX);
+       //String modIndexStr = (String)formBean.get(MODULE_INDEX);
+       
+      String modIndexStr = (String)request.getParameter(TARGET_MODULE_INDEX);
       String questionIndexStr = (String)formBean.get(SK_QUESTION_INDEX);
       int modIndex= Integer.parseInt(modIndexStr);
       int questionIndex= Integer.parseInt(questionIndexStr);
