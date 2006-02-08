@@ -33,6 +33,8 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String MODULE_SEARCH_RESULTS = "moduleSearchResults";
   public static final String FORM_SEARCH_RESULT_COMPARATOR="formSearchResultComparator";
   public static final String MODULE_INDEX = "moduleIndex";
+  public static final String TARGET_MODULE_INDEX = "targetModuleIndex";
+    
   public static final String DELETED_MODULE_INDEX = "deletedModuleIndex";
   public static final String ADD_DELETED_MODULE_IDSEQ = "addDeletedModuleIdSeq";
   public static final String FORM_ID = "formId";
