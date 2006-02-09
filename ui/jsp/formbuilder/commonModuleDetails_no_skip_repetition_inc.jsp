@@ -112,7 +112,7 @@
                                </tr> 
                             </logic:present>
 
-                            <logic:norEmpty name="question" property="defaultValue">
+                            <logic:notEmpty name="question" property="defaultValue">
                               <tr class="OraTabledata">
                                  <td class="OraFieldText" width="50">&nbsp;</td>
                                   <td class="OraFieldText" colspan="2">                              
@@ -128,10 +128,10 @@
                                    </table>                                                            
                                  </td>
                                </tr> 
-                            </logic:norEmpty>
+                            </logic:notEmpty>
 
-                            <logic:norEmpty name="question" property="defaultValidValue">
-                            <logic:norEmpty name="question" property="defaultValidValue.longName">
+                            <logic:notEmpty name="question" property="defaultValidValue">
+                            <logic:notEmpty name="question" property="defaultValidValue.longName">
                               <tr class="OraTabledata">
                                  <td class="OraFieldText" width="50">&nbsp;</td>
                                   <td class="OraFieldText" colspan="2">                              
@@ -147,8 +147,8 @@
                                    </table>                                                            
                                  </td>
                                </tr> 
-                            </logic:norEmpty>
-                            </logic:norEmpty>
+                            </logic:notEmpty>
+                            </logic:notEmpty>
 
 		          <logic:present name="question" property="dataElement">
                             <logic:present name="question" property="dataElement.valueDomain">
