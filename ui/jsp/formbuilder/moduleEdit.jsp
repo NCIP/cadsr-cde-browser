@@ -87,7 +87,7 @@ function submitValidValuesEdit(methodName,questionIndexValue) {
    
    if (selectedSize==0 && methodName=='<%=NavigationConstants.DELETE_VALID_VALUES%>'){
    	alert('Please select at least one valid value to delete');
-   	return false;
+   	return;
    }
 
    if(selectedSize>1)
