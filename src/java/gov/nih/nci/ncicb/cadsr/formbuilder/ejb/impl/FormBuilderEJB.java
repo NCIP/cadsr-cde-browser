@@ -1330,7 +1330,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
 
     public int saveDesignation(String contextIdSeq, List acIdList)
     {
-        return daoFactory.getFormDAO().designate(contextIdSeq, acIdList);
+        return daoFactory.getFormDAO().designate(contextIdSeq, acIdList, getUserName());
     }
     
     public Boolean isAllACDesignatedToContext(List cdeIdList , String contextIdSeq){
