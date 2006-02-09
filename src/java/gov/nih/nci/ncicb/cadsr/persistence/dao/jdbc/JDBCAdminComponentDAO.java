@@ -328,11 +328,11 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         * @return the total number of ac designated to the context.
         *  with the given registration status
         */
-  public int designate(String contextIdSeq, List acIdList){
+  public int designate(String contextIdSeq, List acIdList, String createdBy){
       int res = 0;
        DesignateCDE designateCDE =
           new DesignateCDE(this.getDataSource());
-       res = designateCDE.designate(contextIdSeq, acIdList);
+       res = designateCDE.designate(contextIdSeq, acIdList, createdBy);
       return res;
   }
   
@@ -534,8 +534,8 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     
       public DesignateCDE(DataSource ds) {
         String insertSql =
-          " INSERT INTO designations (desig_idseq, ac_idseq, conte_idseq, name, detl_name, lae_name) " +
-          " (select ?, ?, ?, PREFERRED_NAME, 'USED_BY', 'ENGLISH' from administered_components where " + 
+          " INSERT INTO designations (desig_idseq, ac_idseq, conte_idseq, name, detl_name, lae_name, created_by) " +
+          " (select ?, ?, ?, PREFERRED_NAME, 'USED_BY', 'ENGLISH', ? from administered_components where " + 
           " ac_idseq = ?)";
 
         this.setDataSource(ds);
@@ -543,13 +543,15 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         declareParameter(new SqlParameter("desig_idseq", Types.VARCHAR));
         declareParameter(new SqlParameter("ac_idseq", Types.VARCHAR));
         declareParameter(new SqlParameter("conte_idseq", Types.VARCHAR));
+          declareParameter(new SqlParameter("created_by", Types.VARCHAR));
         declareParameter(new SqlParameter("ac_idseq", Types.VARCHAR));
         compile();
       }
 
       protected int designate(
         String contextIdSeq, 
-        List acIdList){
+        List acIdList,
+        String createdBy){
         
         //sanity check
         if (acIdList == null ||  acIdList.size() == 0){
@@ -562,6 +564,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
                   "",
                   "",
                   contextIdSeq,
+                  createdBy,
                   ""
                }; 
         int total = 0; 
@@ -570,7 +573,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         while (it.hasNext()){
             obj[0] = generateGUID();
             obj[1] = (String)it.next();
-            obj[3] = obj[1];
+            obj[4] = obj[1];
             try{
                 res = update(obj);
             } catch (DataIntegrityViolationException e) {

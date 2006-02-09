@@ -147,7 +147,7 @@ public interface AdminComponentDAO {
       * @return the total number of ac designated to the context.
       *  with the given registration status
       */
-  public int designate(String contextIdSeq, List acIdList);
+  public int designate(String contextIdSeq, List acIdList, String createdBy);
   
   /**
       * 
