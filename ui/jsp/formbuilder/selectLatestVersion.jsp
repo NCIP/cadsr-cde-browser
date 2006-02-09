@@ -38,7 +38,7 @@
       <html:image src='<%=urlPrefix+"i/save.gif"%>' border="0" alt="Save"/>
     </td> 
     <td>
-      <html:link action='<%= "/cancelLatestVersion?" + NavigationConstants.METHOD_PARAM + NavigationConstants.CANCEL_LATEST_VERSION%>'>
+      <html:link action='<%= "/cancelLatestVersion?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.CANCEL_LATEST_VERSION%>'>
         <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
       </html:link>             
     </td>                
