@@ -694,18 +694,14 @@ function clearProtocol() {
 <%--  value domain details--%>
 			   <logic:present name="question" property="dataElement">
                             <logic:present name="question" property="dataElement.valueDomain">
-                              <tr class="OraTabledata">
-                                  <td class="OraFieldText" colspan="2">                              
-                                   <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" 
-class="OraBGAccentVeryDark" >
-                                     <tr class="OraTabledata">
-                                      <td class="OraTableColumnHeader"  nowrap colspan="2">
+                         	<tr class="OraTabledata">
+                                  <td class="OraTableColumnHeader" colspan="2">                              
                                         <bean:message key="cadsr.formbuilder.form.valueDomain.valueDomainDetails"/>        
                                      </td>                                     
                                     </tr>
                                     
                                     <tr class="OraTabledata">
-                                     <td class="OraTableColumnHeader" width="20%">
+                                     <td class="OraTableColumnHeader" width="26%">
                                         <bean:message key="cadsr.formbuilder.form.valueDomain.longName"/>
                                      </td>
                                      <td class="OraFieldText">
@@ -715,7 +711,7 @@ class="OraBGAccentVeryDark" >
                                     </tr>
                                     
                                     <tr class="OraTabledata">
-                                     <td class="OraTableColumnHeader">
+                                     <td class="OraTableColumnHeader" width="26%">
                                         <bean:message key="cadsr.formbuilder.form.valueDomain.datatype"/>
                                      </td>
                                      <td class="OraFieldText">
@@ -725,7 +721,7 @@ class="OraBGAccentVeryDark" >
                                     </tr>
 
                                     <tr class="OraTabledata">
-                                     <td class="OraTableColumnHeader">
+                                     <td class="OraTableColumnHeader" width="26%">
                                         <bean:message key="cadsr.formbuilder.form.valueDomain.unitofmeasure"/>
                                      </td>
                                      <td class="OraFieldText">
@@ -734,7 +730,7 @@ class="OraBGAccentVeryDark" >
                                     </tr>
 
                                     <tr class="OraTabledata">
-                                     <td class="OraTableColumnHeader">
+                                     <td class="OraTableColumnHeader" width="26%">
                                         <bean:message key="cadsr.formbuilder.form.valueDomain.displayFormat"/>
                                      </td>
                                      <td class="OraFieldText">
@@ -742,7 +738,7 @@ class="OraBGAccentVeryDark" >
                                      </td>
                                     </tr>
 
-                                    <tr class="OraTabledata">
+                                    <tr class="OraTabledata" width="26%">
                                      <td class="OraTableColumnHeader">
                                         <bean:message key="cadsr.formbuilder.form.valueDomain.concepts"/>
                                      </td>
@@ -751,9 +747,6 @@ class="OraBGAccentVeryDark" >
 <%=CDEDetailsUtils.getConceptCodesUrl(question.getDataElement().getValueDomain().getConceptDerivationRule(),CDEBrowserParams.getInstance(),"link",",")%>
                                      </td>
                                     </tr>
-                                   </table>                                                            
-                                 </td>
-                               </tr> 
                             </logic:present>
                            </logic:present>
 <%-- end of value domain details--%>
