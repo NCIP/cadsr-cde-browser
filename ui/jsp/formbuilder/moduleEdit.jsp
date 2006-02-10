@@ -12,6 +12,9 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.jsp.tag.handler.AvailableValidValue"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils"%>
+
 <HTML>
   <HEAD>
     <TITLE>Formbuilder: Edit Module</TITLE>
@@ -685,6 +688,77 @@ function clearProtocol() {
                             </logic:empty>    
                             </td>
                         </tr>                       
+
+
+
+<%--  value domain details--%>
+			   <logic:present name="question" property="dataElement">
+                            <logic:present name="question" property="dataElement.valueDomain">
+                              <tr class="OraTabledata">
+                                  <td class="OraFieldText" colspan="2">                              
+                                   <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" 
+class="OraBGAccentVeryDark" >
+                                     <tr class="OraTabledata">
+                                      <td class="OraTableColumnHeader"  nowrap colspan="2">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.valueDomainDetails"/>        
+                                     </td>                                     
+                                    </tr>
+                                    
+                                    <tr class="OraTabledata">
+                                     <td class="OraTableColumnHeader" width="20%">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.longName"/>
+                                     </td>
+                                     <td class="OraFieldText">
+                                       <bean:write  name="question" property="dataElement.valueDomain.longName"/>          
+                            
+                                     </td>
+                                    </tr>
+                                    
+                                    <tr class="OraTabledata">
+                                     <td class="OraTableColumnHeader">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.datatype"/>
+                                     </td>
+                                     <td class="OraFieldText">
+                                       <bean:write  name="question" property="dataElement.valueDomain.datatype"/>          
+                            
+                                     </td>
+                                    </tr>
+
+                                    <tr class="OraTabledata">
+                                     <td class="OraTableColumnHeader">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.unitofmeasure"/>
+                                     </td>
+                                     <td class="OraFieldText">
+                                       <bean:write  name="question" property="dataElement.valueDomain.unitOfMeasure"/>     
+                                     </td>
+                                    </tr>
+
+                                    <tr class="OraTabledata">
+                                     <td class="OraTableColumnHeader">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.displayFormat"/>
+                                     </td>
+                                     <td class="OraFieldText">
+                                       <bean:write  name="question" property="dataElement.valueDomain.displayFormat"/>     
+                                     </td>
+                                    </tr>
+
+                                    <tr class="OraTabledata">
+                                     <td class="OraTableColumnHeader">
+                                        <bean:message key="cadsr.formbuilder.form.valueDomain.concepts"/>
+                                     </td>
+                                     <td class="OraFieldText">
+                                       
+<%=CDEDetailsUtils.getConceptCodesUrl(question.getDataElement().getValueDomain().getConceptDerivationRule(),CDEBrowserParams.getInstance(),"link",",")%>
+                                     </td>
+                                    </tr>
+                                   </table>                                                            
+                                 </td>
+                               </tr> 
+                            </logic:present>
+                           </logic:present>
+<%-- end of value domain details--%>
+
+
                       </table>
                       </td></tr>
                       
