@@ -1607,6 +1607,8 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
                 vv.setQuestion(currQuestion);
                 //initNullValues(currQuestion.getInstruction(),module);// this is done to take care
                                                    // incase the attributes are null
+            }else{
+                currQuestion.setDefaultValidValue(null);
             }
           }
           else //use the text input
