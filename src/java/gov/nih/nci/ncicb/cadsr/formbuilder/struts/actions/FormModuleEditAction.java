@@ -19,6 +19,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormElement;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValueChange;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValueChanges;
@@ -29,6 +30,7 @@ import gov.nih.nci.ncicb.cadsr.resource.ModuleChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Orderable;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.resource.QuestionChange;
+import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 
@@ -961,6 +963,12 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     crf.getModules().remove(index.intValue());
     crf.getModules().add(index.intValue(),updatedModule);
     orgCrf.getModules().remove(index.intValue());
+    
+    //put the triggeractions' target. 
+    //Only the idseq is put in the triggeraction target by the EJB, not the target object.
+    setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),updatedModule.getTriggerActions());
+
+    
      try{
      Module newClonedModule = (Module)updatedModule.clone();
      orgCrf.getModules().add(index.intValue(),newClonedModule);
@@ -2095,4 +2103,21 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
             return true;
         }    
     }
+    
+    
+    private void setTargetsForTriggerActions(Map<String,FormElement> possibleTargetMap, List<TriggerAction> actions)
+    {
+        for(TriggerAction action : actions)
+        {
+            FormElement element = possibleTargetMap.get(action.getActionTarget().getIdseq());
+            //In this case just keep the idseq and fire a warning
+            if (element!=null){
+                action.setActionTarget(element);
+            }else{
+                log.warn("could not find the target FormElement for idseq = " + action.getActionTarget().getIdseq());
+            }
+
+        }
+    }
+
 }
