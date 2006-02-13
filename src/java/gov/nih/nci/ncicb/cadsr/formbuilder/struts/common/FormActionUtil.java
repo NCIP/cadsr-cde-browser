@@ -5,6 +5,7 @@ import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.TriggerActionChangesTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.FormElement;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.Orderable;
@@ -24,14 +25,14 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-public class FormActionUtil 
+public class FormActionUtil
 {
     private static final String PROTOCOL = "protocol";
     private static final String CSI = "CSI";
   public FormActionUtil()
   {
   }
-  
+
   /**
    * increments the display order of Elements by 1 starting from "startIndex" of
    * the list
@@ -69,7 +70,7 @@ public class FormActionUtil
       Orderable orderable = (Orderable) iterate.next();
       int displayOrder = orderable.getDisplayOrder();
       if(displayOrder < --displayOrder)
-        return;      
+        return;
       orderable.setDisplayOrder(--displayOrder);
     }
   }
@@ -83,7 +84,7 @@ public class FormActionUtil
         element.setDisplayOrder(displayOrder);
         displayOrder++;
     }
-  }  
+  }
     public static void removeAllIdSeqs(Module module)
     {
         module.setIdseq(null);
@@ -92,16 +93,16 @@ public class FormActionUtil
         {
             module.getInstruction().setIdseq(null);
         }
-            
+
         List qs = module.getQuestions();
         if(qs==null)
             return;
         for (Iterator it = qs.iterator(); it.hasNext();) {
             Question element = (Question)it.next();
             removeAllIdSeqs(element);
-        }         
-        return;        
-    }  
+        }
+        return;
+    }
     public static void  removeAllIdSeqs(Question question)
     {
         question.setIdseq(null);
@@ -117,9 +118,9 @@ public class FormActionUtil
             element.setValueIdseq(null);
             if(element.getInstruction()!=null)
                 element.getInstruction().setIdseq(null);
-        }         
+        }
         return;
-    }      
+    }
 
 
     public static List<TriggerActionChanges> findFormSkipPatternByProtocol(Form crf, String protocolId){
@@ -132,7 +133,7 @@ public class FormActionUtil
                 Module module = (Module)it.next();
                 retList.addAll(findModuleSkipPattern(module, protocolId, PROTOCOL));
                 retList.addAll(findModuleQuestionSkipPattern(module, protocolId, PROTOCOL));
-            }    
+            }
         }
         return retList;
     }
@@ -146,11 +147,11 @@ public class FormActionUtil
                 Module module = (Module)it.next();
                 retList.addAll(findModuleSkipPattern(module, acCsiId, CSI));
                 retList.addAll(findModuleQuestionSkipPattern(module, acCsiId, CSI));
-            }    
+            }
         }
         return retList;
     }
-    
+
     public static List<TriggerActionChanges> findModuleSkipPattern(Module module, String id, String type){
         List retList = new ArrayList();
         List triggers = module.getTriggerActions();
@@ -162,44 +163,44 @@ public class FormActionUtil
                     if (hasProtocol(trigger.getProtocols(), id)){
                         retList.add(makeTriggerActionChanges(trigger.getIdSeq(), id, type));
                     }
-                }    
+                }
                 if (CSI.equals(type)){
                     String acCsiId = getAcCsiId(trigger.getClassSchemeItems(), id);
                     if (acCsiId !=null){
                         retList.add(makeTriggerActionChanges(trigger.getIdSeq(), acCsiId, type));
                     }
-                }    
-            }    
+                }
+            }
         }
         return retList;
     }
-    
+
     public static  TriggerActionChanges makeTriggerActionChanges(String trigerId, String id, String type){
         TriggerActionChanges changes = new TriggerActionChangesTransferObject();
         changes.setTriggerActionId(trigerId);
-        
+
         //protocols
         if (PROTOCOL.equals(type)){
             List protocols = new ArrayList();
             protocols.add(id);
             changes.setDeleteProtocols(protocols );
-        }    
+        }
         if (CSI.equals(type)){
             List csiList = new ArrayList();
             csiList.add(id);
             changes.setDeleteCsis(csiList);
-        }    
+        }
         return changes;
     }
-    
+
     public static List<TriggerActionChanges> findModuleQuestionSkipPattern(Module module, String id, String type){
         List retList = new ArrayList();
         List questions = module.getQuestions();
         if (questions!=null && !questions.isEmpty()){
             Iterator it = questions.iterator();
-            while (it.hasNext()){                
-                retList.addAll(findQuestionSkipPattern((Question)it.next(), id, type));                    
-            }    
+            while (it.hasNext()){
+                retList.addAll(findQuestionSkipPattern((Question)it.next(), id, type));
+            }
         }
         return retList;
     }
@@ -210,17 +211,17 @@ public class FormActionUtil
         List triggers = question.getTriggerActions();
         if (triggers!=null && !triggers.isEmpty()){
             Iterator it = triggers.iterator();
-            while (it.hasNext()){   
+            while (it.hasNext()){
                 TriggerAction trigger = (TriggerAction)it.next();
                 if (hasProtocol(trigger.getProtocols(), protocolId)){
-                    retList.add(makeTriggerActionChanges(trigger.getIdSeq(), protocolId));    
+                    retList.add(makeTriggerActionChanges(trigger.getIdSeq(), protocolId));
                 }
-            }    
+            }
         }*/
         List vvList = question.getValidValues();
         if (vvList!=null && !vvList.isEmpty()){
             Iterator it = vvList.iterator();
-            while (it.hasNext()){   
+            while (it.hasNext()){
                 FormValidValue vv = (FormValidValue)it.next();
                 List<TriggerAction> triggers = (List<TriggerAction>)vv.getTriggerActions();
                 if (triggers==null || triggers.isEmpty()){
@@ -232,17 +233,17 @@ public class FormActionUtil
                     if (CSI.equals(type)){
                         String acCsiId = getAcCsiId(trigger.getClassSchemeItems(), id);
                         if (acCsiId != null){
-                            retList.add(makeTriggerActionChanges(trigger.getIdSeq(), acCsiId, type));    
-                        }    
+                            retList.add(makeTriggerActionChanges(trigger.getIdSeq(), acCsiId, type));
+                        }
                     }
                     if (PROTOCOL.equals(type)){
                         if (hasProtocol(trigger.getProtocols(), id)){
-                            retList.add(makeTriggerActionChanges(trigger.getIdSeq(), id, type));    
-                        }    
+                            retList.add(makeTriggerActionChanges(trigger.getIdSeq(), id, type));
+                        }
                     }
-                    
+
                 }
-            }    
+            }
         }
         return retList;
     }
@@ -250,7 +251,7 @@ public class FormActionUtil
         if (protocols == null || protocols.isEmpty()){
             return false;
         }
-        
+
         Iterator it = protocols.iterator();
         while (it.hasNext()){
             Protocol p = (Protocol)it.next();
@@ -260,12 +261,12 @@ public class FormActionUtil
         }
         return false;
     }
-    
+
     public static String getAcCsiId(List<ClassSchemeItem> csiList, String csCsiId){
         if (csiList == null || csiList.isEmpty()){
             return null;
         }
-        
+
         Iterator it = csiList.iterator();
         while (it.hasNext()){
             ClassSchemeItem csi = (ClassSchemeItem)it.next();
@@ -275,12 +276,12 @@ public class FormActionUtil
         }
         return null;
     }
-    
+
     public static void  updateSkipPatternInSession(Form crf, List<TriggerActionChanges> associatedTriggers){
-        //TODO        
+        //TODO
         return;
     }
-    
+
     public static List<TriggerActionChanges> findFormSkipPatternForByClassificiation(Form crf, String cscsiId){
         //check module first
         List modules = crf.getModules();
@@ -291,7 +292,7 @@ public class FormActionUtil
                 Module module = (Module)it.next();
                 retList.addAll(findModuleSkipPattern(module, cscsiId, CSI));
                 retList.addAll(findModuleQuestionSkipPattern(module, cscsiId, CSI));
-            }    
+            }
         }
         return retList;
     }
@@ -376,7 +377,7 @@ public class FormActionUtil
         }
         return questionRepMap;
     }
-    
+
     public static void setDefaults(Map<String, QuestionRepitition> qMap,
                              Module module)
     {
@@ -392,5 +393,46 @@ public class FormActionUtil
                 q.setDefaultValidValue(qRep.getDefaultValidValue());
             }
         }
-    }    
+    }
+
+        /** return possible trigger action target
+	     */
+	   public static Map<String,FormElement> getTriggerActionPossibleTargetMap(Form form){
+		   if (form == null){
+			   return null;
+	  	   }
+
+	       Map<String,FormElement> possibleTargets = new HashMap<String,FormElement>();
+	       List modules = form.getModules();
+	       if (modules == null || modules.isEmpty()){
+	           return null;
+	       }
+
+	       Iterator mIter = modules.iterator();
+	       while (mIter.hasNext())
+	       {
+	            //module itself
+	           Module block = (Module)mIter.next();
+	           block.setForm(form);
+	           possibleTargets.put(block.getModuleIdseq(), block);
+
+	            //questoins in this module
+	           List questions = block.getQuestions();
+	           if (questions == null || questions.isEmpty()){
+	               continue;
+	           }
+
+	           Iterator qIter = questions.iterator();
+
+	           while (qIter.hasNext())
+	           {
+	               Question term = (Question)qIter.next();
+	               term.setModule(block);
+	               String termId = term.getQuesIdseq();
+	               possibleTargets.put(termId,term); //one of the possible targets
+	           }
+	       }//end of while
+	       return possibleTargets;
+	   }
+
 }
