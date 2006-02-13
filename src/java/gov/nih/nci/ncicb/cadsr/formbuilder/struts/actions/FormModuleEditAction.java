@@ -128,6 +128,10 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     String[] validValueInstructionArr = getValidValueInstructionsAsArray(selectedModule.getQuestions());
     moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS,validValueInstructionArr);
 
+      //set the trigger action target
+    //setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),selectedModule.getTriggerActions());
+     setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),FormActionUtil.getModuleAllTriggerActions(selectedModule));
+     
     setSessionObject(request, MODULE, selectedModule,true);
 
     FormBuilderServiceDelegate service = getFormBuilderService();
@@ -148,6 +152,8 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     selectedModule.setForm(crf);
     Map availableValidValuesMap = getAvailableValidValuesForQuestions(selectedModule,selectedModule.getQuestions(),validValueMap);
     setSessionObject(request, AVAILABLE_VALID_VALUES_MAP, availableValidValuesMap,true);
+    
+
 
     return mapping.findForward(SUCCESS);
   }
@@ -966,8 +972,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     
     //put the triggeractions' target. 
     //Only the idseq is put in the triggeraction target by the EJB, not the target object.
-    setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),updatedModule.getTriggerActions());
-
+    setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),FormActionUtil.getModuleAllTriggerActions(updatedModule));
     
      try{
      Module newClonedModule = (Module)updatedModule.clone();
