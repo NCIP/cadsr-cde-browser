@@ -195,10 +195,11 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
     Map out = nForm.execute(sourceFormId, newForm);
 
-    if ((out.get("p_return_code")) == null) {
+    //if ((out.get("p_return_code")) == null) {
+     if ( (out.get("p_return_desc")) == null) {    
       /*newForm.setFormIdseq((String) out.get("p_new_idseq"));
       return newForm;*/
-      return (String) out.get("p_new_idseq");
+      return (String)out.get("p_new_idseq");
     }
     else {
         DMLException dmlExp = new DMLException((String) out.get("p_return_desc"));
@@ -221,7 +222,8 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
       Map out = vForm.execute(formIdSeq, newVersionNumber, changeNote, createdBy);
 
-      if ((out.get("p_return_code")) == null) {
+      //if ((out.get("p_return_code")) == null) {
+       if ((out.get("p_return_desc")) == null) {
         /*newForm.setFormIdseq((String) out.get("p_new_idseq"));
         return newForm;*/
         return (String) out.get("p_new_idseq");
@@ -1428,7 +1430,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         declareParameter(new SqlParameter("p_Created_by", Types.VARCHAR));
 
         declareParameter(new SqlOutParameter("p_new_idseq", Types.VARCHAR));
-        declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
+        //declareParameter(new SqlOutParameter("p_return_code", Types.VARCHAR));
         declareParameter(new SqlOutParameter("p_return_desc", Types.VARCHAR));
         compile();
       }
