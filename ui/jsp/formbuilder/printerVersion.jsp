@@ -132,14 +132,19 @@
       </table>      
             <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
               <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
+            <% 
+             pageContext.setAttribute("firstModule","firstModule"); 
+            %>
+              
 		<%@ include file="/formbuilder/printerVersionModuleDetails_inc.jsp"%>
             <% 
              List repeats = FormActionUtil.getRepetitions(module);
              pageContext.setAttribute("repeats",repeats);
-             %>
+             pageContext.removeAttribute("firstModule"); 
+            %>
             <logic:present name="repeats" >
             <logic:notEmpty name="repeats" >
-              <logic:iterate id="module" name="repeats" type="gov.nih.nci.ncicb.cadsr.resource.Module" indexId="modIndex" >                                          
+              <logic:iterate id="module" name="repeats" type="gov.nih.nci.ncicb.cadsr.resource.Module" indexId="modIndex" >                                                        
                  <%@ include file="/formbuilder/printerVersionModuleDetails_inc.jsp"%> 
       		<table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         	   <tr class>

@@ -21,6 +21,7 @@
                       </tr>
                    </logic:present>                    
 
+                   <logic:present name="firstModule" >                  
                       <tr class="PrinterOraTabledata" >  
                        <td colspan="2">
                            <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentBlack" >
@@ -35,6 +36,7 @@
                            </table>
                        </td>
                       </tr>
+		</logic:present>
 
                   <logic:present name="module">
                   <logic:notEmpty name="module" property = "questions">
