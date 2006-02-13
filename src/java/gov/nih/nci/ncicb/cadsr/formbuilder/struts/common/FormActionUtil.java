@@ -3,7 +3,10 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.struts.common;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.TriggerActionChangesTransferObject;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormElement;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
@@ -13,10 +16,13 @@ import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 
 import gov.nih.nci.ncicb.cadsr.resource.QuestionRepitition;
+import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerActionChanges;
 
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
+
+import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -434,5 +440,36 @@ public class FormActionUtil
 	       }//end of while
 	       return possibleTargets;
 	   }
+           
 
+    public static List<TriggerAction> getModuleAllTriggerActions(Module module){
+        List<TriggerAction> moduleTriggerActions = module.getTriggerActions();
+        
+        List questions = module.getQuestions();
+        if (questions ==null || questions.isEmpty()){
+            return moduleTriggerActions;
+        }
+        
+        List<TriggerAction> allActions = new ArrayList(moduleTriggerActions);
+        Iterator qIter = questions.iterator();
+        while (qIter.hasNext()) {
+            Question term = (Question)qIter.next();
+            List validValues = term.getValidValues();
+            if (validValues == null || validValues.isEmpty()){
+                continue;
+            }
+            Iterator vvIter = validValues.iterator();    
+            while (vvIter.hasNext())
+            {
+                FormValidValue vv = (FormValidValue)vvIter.next();
+               //Set Skip Patterns
+               List<TriggerAction> vvActions= vv.getTriggerActions();
+               if (vvActions==null || vvActions.isEmpty()){
+                   continue;
+               }
+               allActions.addAll(vvActions);
+           }
+        }
+        return allActions;
+    }        
 }
