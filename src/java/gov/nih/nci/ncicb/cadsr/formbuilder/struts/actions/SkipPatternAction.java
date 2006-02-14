@@ -104,7 +104,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
 
-    
+
     DynaActionForm searchForm = (DynaActionForm) form;
     FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
     formBean.clear();
@@ -127,8 +127,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         **/
       TriggerAction triggerAction = new TriggerActionTransferObject();
       triggerAction.setActionSource(sourceForm);
-      
-      setSessionObject(request,SKIP_PATTERN,triggerAction);    
+
+      setSessionObject(request,SKIP_PATTERN,triggerAction);
     return mapping.findForward("createSkipPattern");
   }
 
@@ -151,25 +151,25 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException {
 
-      
+
       DynaActionForm searchForm = (DynaActionForm) form;
       FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
 
       //Add the new Skip Source
       Module sourceModule = (Module) getSessionObject(request,MODULE);
        Form sourceForm = (Form) getSessionObject(request,CRF);
-       Form formClone = null;      
+       Form formClone = null;
        Module moduleClone = null;
 
         sourceModule.setForm(sourceForm);
         TriggerAction triggerAction = new TriggerActionTransferObject();
         triggerAction.setActionSource(sourceModule);
-        setSessionObject(request,SKIP_PATTERN,triggerAction); 
-        
+        setSessionObject(request,SKIP_PATTERN,triggerAction);
+
         formBean.set(SELECTED_SKIP_PROTOCOL_IDS,null);
         formBean.set(SELECTED_SKIP_AC_CSIS,null);
         formBean.set(SKIP_INSTRUCTION,"");
-        
+
          try {
            FormBuilderServiceDelegate service = getFormBuilderService();
            Collection  csis = service.retrieveFormClassifications(sourceForm.getFormIdseq());
@@ -178,9 +178,9 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
              if (log.isErrorEnabled()) {
                log.error("Exception while retriveing Classifications for Skip pattern  " , exp);
              }
-               
-         }    
-         
+
+         }
+
       return mapping.findForward("createSkipPattern");
     }
     /**
@@ -202,7 +202,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException {
 
-      
+
       DynaActionForm searchForm = (DynaActionForm) form;
       String triggerIndexStr = (String)searchForm.get(TRIGGER_ACTION_INDEX);
       int triggerIndex= Integer.parseInt(triggerIndexStr);
@@ -210,7 +210,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
 
 
       Module sourceModule = (Module) getSessionObject(request,MODULE);
-      
+
       TriggerAction triggerAction = sourceModule.getTriggerActions().get(triggerIndex);
       TriggerAction clone = null;
       try
@@ -222,16 +222,16 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
           if (log.isErrorEnabled()) {
             log.error("Exception while colneing trigger action");
           }
-          saveError(ERROR_SKIP_PATTERN_EDIT,request);        
+          saveError(ERROR_SKIP_PATTERN_EDIT,request);
           return mapping.findForward("editSkipPattern");
-          
+
       }
-      setSessionObject(request,SKIP_PATTERN,triggerAction);    
-      setSessionObject(request,SKIP_PATTERN_CLONE,clone);    
+      setSessionObject(request,SKIP_PATTERN,triggerAction);
+      setSessionObject(request,SKIP_PATTERN_CLONE,clone);
       formBean.set(SELECTED_SKIP_PROTOCOL_IDS,getProtocolIds(triggerAction.getProtocols()));
       formBean.set(SELECTED_SKIP_AC_CSIS,getAcCsiIds(triggerAction.getClassSchemeItems()));
       formBean.set(SKIP_INSTRUCTION,triggerAction.getInstruction());
-        
+
        Form sourceForm = (Form) getSessionObject(request,CRF);
         try {
           FormBuilderServiceDelegate service = getFormBuilderService();
@@ -241,10 +241,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
             if (log.isErrorEnabled()) {
               log.error("Exception while retriveing Classifications for Skip pattern  " , exp);
             }
-            saveError(ERROR_SKIP_PATTERN_EDIT,request);        
-            return mapping.findForward("editSkipPattern");            
-        }  
-        
+            saveError(ERROR_SKIP_PATTERN_EDIT,request);
+            return mapping.findForward("editSkipPattern");
+        }
+
       return mapping.findForward("editSkipPattern");
     }
     /**
@@ -266,7 +266,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException {
 
-      
+
       DynaActionForm searchForm = (DynaActionForm) form;
       FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
       String questionIndexStr = (String)formBean.get(SK_QUESTION_INDEX);
@@ -279,7 +279,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         Form sourceForm = (Form) getSessionObject(request,CRF);
         Question question = (Question)sourceModule.getQuestions().get(qIndex);
         FormValidValue vv = (FormValidValue)question.getValidValues().get(vvIndex);
-        
+
         vv.setQuestion(question);
         question.setModule(sourceModule);
         sourceModule.setForm(sourceForm);
@@ -287,11 +287,11 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
 
          TriggerAction triggerAction = new TriggerActionTransferObject();
          triggerAction.setActionSource(vv);
-         setSessionObject(request,SKIP_PATTERN,triggerAction);     
+         setSessionObject(request,SKIP_PATTERN,triggerAction);
         formBean.set(SELECTED_SKIP_PROTOCOL_IDS,null);
         formBean.set(SELECTED_SKIP_AC_CSIS,null);
         formBean.set(SKIP_INSTRUCTION,"");
-        
+
         try {
           FormBuilderServiceDelegate service = getFormBuilderService();
           Collection  csis = service.retrieveFormClassifications(sourceForm.getFormIdseq());
@@ -300,12 +300,12 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
             if (log.isErrorEnabled()) {
               log.error("Exception while retriveing Classifications for Skip pattern  " , exp);
             }
-              
-        }  
-        
+
+        }
+
       return mapping.findForward("createSkipPattern");
     }
-    
+
     /**
      * Skip From a Module
      *
@@ -325,12 +325,12 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException {
 
-      
+
       DynaActionForm searchForm = (DynaActionForm) form;
       FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
       String triggerIndexStr = (String)searchForm.get(TRIGGER_ACTION_INDEX);
       int triggerIndex= Integer.parseInt(triggerIndexStr);
-      
+
       String questionIndexStr = (String)formBean.get(SK_QUESTION_INDEX);
       String validvalueIndexStr = (String)formBean.get(SK_VALID_VALUE_INDEX);
       int qIndex= Integer.parseInt(questionIndexStr);
@@ -343,11 +343,11 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         FormValidValue vv = (FormValidValue)question.getValidValues().get(vvIndex);
         TriggerAction triggerAction = vv.getTriggerActions().get(triggerIndex);
 
-        setSessionObject(request,SKIP_PATTERN,triggerAction);     
+        setSessionObject(request,SKIP_PATTERN,triggerAction);
         formBean.set(SELECTED_SKIP_PROTOCOL_IDS,getProtocolIds(triggerAction.getProtocols()));
         formBean.set(SELECTED_SKIP_AC_CSIS,getAcCsiIds(triggerAction.getClassSchemeItems()));
         formBean.set(SKIP_INSTRUCTION,triggerAction.getInstruction());
-        
+
         TriggerAction clone = null;
         try
         {
@@ -358,12 +358,12 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
             if (log.isErrorEnabled()) {
               log.error("Exception while colneing trigger action");
             }
-            saveError(ERROR_SKIP_PATTERN_EDIT,request);        
+            saveError(ERROR_SKIP_PATTERN_EDIT,request);
             return mapping.findForward("editSkipPattern");
-            
+
         }
-        setSessionObject(request,SKIP_PATTERN_CLONE,clone); 
-        
+        setSessionObject(request,SKIP_PATTERN_CLONE,clone);
+
         try {
           FormBuilderServiceDelegate service = getFormBuilderService();
           Collection  csis = service.retrieveFormClassifications(sourceForm.getFormIdseq());
@@ -373,11 +373,11 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
               log.error("Exception while retriveing Classifications for Skip pattern  " , exp);
             }
             saveError(ERROR_SKIP_PATTERN_EDIT,request);
-        }  
-        
+        }
+
       return mapping.findForward("editSkipPattern");
     }
-    
+
   /**
    *  Skip to Location on the current form
    * @param mapping The ActionMapping used to select this instance.
@@ -395,15 +395,15 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    
+
       Form crf = (Form)getSessionObject(request,CRF);
       setSessionObject(request,SKIP_TARGET_FORM,crf,true);
 
       //Set the form as skip source
- 
+
       return mapping.findForward("skipToFormLocation");
   }
-  
+
     /**
      *  Skip to Location on the selected form
      * @param mapping The ActionMapping used to select this instance.
@@ -424,9 +424,9 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
 
       DynaActionForm searchForm = (DynaActionForm) form;
       FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
-        
+
        String formIdSeq = (String) formBean.get(FORM_ID_SEQ);
-        Form crf = null; 
+        Form crf = null;
         try {
             crf = getFormBuilderService().getFormDetails(formIdSeq);
             setSessionObject(request,SKIP_TARGET_FORM,crf,true);
@@ -434,16 +434,16 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         catch (FormBuilderException exp) {
           if (log.isErrorEnabled()) {
             log.error("Exception getting CRF", exp);
-          }      
+          }
           saveError(ERROR_FORM_RETRIEVE, request);
           saveError(ERROR_FORM_DOES_NOT_EXIST, request);
           return mapping.findForward(FAILURE);
         }
         //Set the form as skip source
-    
+
         return mapping.findForward("skipToFormLocation");
     }
-    
+
     /**
      * Set SKIP_TARGET_FORM as the skip target
      * @param mapping The ActionMapping used to select this instance.
@@ -463,14 +463,14 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       HttpServletResponse response) throws IOException, ServletException {
 
 
-      
+
       TriggerAction triggerAction = (TriggerAction)getSessionObject(request,SKIP_PATTERN);
       Form targetForm = (Form)getSessionObject(request,SKIP_TARGET_FORM);
       triggerAction.setActionTarget(targetForm);
-      
-      return mapping.findForward("editSkipPattern");      
+
+      return mapping.findForward("editSkipPattern");
     }
-    
+
     /**
      * Set SKIP_TARGET_FORM.Module as the skip target
      * @param mapping The ActionMapping used to select this instance.
@@ -501,10 +501,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
 
       targetModule.setForm(targetForm);
       triggerAction.setActionTarget(targetModule);
-      
-      return mapping.findForward("editSkipPattern");      
-    }    
-    
+
+      return mapping.findForward("editSkipPattern");
+    }
+
     /**
      * Set SKIP_TARGET_FORM.Module.question as the skip target
      * @param mapping The ActionMapping used to select this instance.
@@ -526,12 +526,12 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
       //String modIndexStr = (String)formBean.get(TARGET_MODULE_INDEX);
        //String modIndexStr = (String)formBean.get(MODULE_INDEX);
-       
+
       String modIndexStr = (String)request.getParameter(TARGET_MODULE_INDEX);
       String questionIndexStr = (String)formBean.get(SK_QUESTION_INDEX);
       int modIndex= Integer.parseInt(modIndexStr);
       int questionIndex= Integer.parseInt(questionIndexStr);
-        
+
       TriggerAction triggerAction = (TriggerAction)getSessionObject(request,SKIP_PATTERN);
       Form targetForm = (Form)getSessionObject(request,SKIP_TARGET_FORM);
       List moules = targetForm.getModules();
@@ -540,10 +540,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
 
       targetQuestion.setModule(targetModule);
       triggerAction.setActionTarget(targetQuestion);
-      
-      return mapping.findForward("editSkipPattern");      
-    }        
-    
+
+      return mapping.findForward("editSkipPattern");
+    }
+
   /**
    *
    * @param mapping The ActionMapping used to select this instance.
@@ -604,13 +604,13 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       ActionForm form,
       HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException {
-      
-        removeSessionObject(request,SKIP_PATTERN); 
-        removeSessionObject(request,SKIP_PATTERN_CLONE); 
-        removeSessionObject(request,SKIP_TARGET_FORM);   
+
+        removeSessionObject(request,SKIP_PATTERN);
+        removeSessionObject(request,SKIP_PATTERN_CLONE);
+        removeSessionObject(request,SKIP_TARGET_FORM);
       return mapping.findForward("backToModuleEdit");
     }
-    
+
     /**
      *
      * @param mapping The ActionMapping used to select this instance.
@@ -628,10 +628,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       ActionForm form,
       HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException {
-        
+
       return mapping.findForward("confirmDeleteModuleSkip");
-    }    
-    
+    }
+
     /**
      *
      * @param mapping The ActionMapping used to select this instance.
@@ -649,9 +649,9 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
       ActionForm form,
       HttpServletRequest request,
       HttpServletResponse response) throws IOException, ServletException {
-        
+
       return mapping.findForward("confirmDeleteValidValueSkip");
-    }        
+    }
     /**
      *  Delete a  Skip pattern for a Module
      * @param mapping The ActionMapping used to select this instance.
@@ -673,7 +673,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         String triggerIndexStr = (String)formBean.get(TRIGGER_ACTION_INDEX);
         int triggerIndex= Integer.parseInt(triggerIndexStr);
         Module sourceModule = (Module) getSessionObject(request,MODULE);
-        
+
         TriggerAction triggerAction =  sourceModule.getTriggerActions().remove(triggerIndex);
         try {
           FormBuilderServiceDelegate service = getFormBuilderService();
@@ -686,11 +686,11 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         saveError(ERROR_SKIP_PATTERN_DELETE, request);
             saveError(exp.getErrorCode(), request);
             return mapping.findForward("backToModuleEdit");
-              
-        }          
+
+        }
       return mapping.findForward("backToModuleEdit");
     }
-    
+
     /**
      * Delete a Skip pattern for Valid value
      * @param mapping The ActionMapping used to select this instance.
@@ -720,7 +720,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         Question question = (Question)questions.get(questionIndex);
         List validValues = question.getValidValues();
         FormValidValue sourceValidValue = (FormValidValue)validValues.get(validValueIndex);
-        
+
         TriggerAction triggerAction =  sourceValidValue.getTriggerActions().remove(triggerIndex);
         try {
           FormBuilderServiceDelegate service = getFormBuilderService();
@@ -733,10 +733,10 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         saveError(ERROR_SKIP_PATTERN_DELETE, request);
             saveError(exp.getErrorCode(), request);
             return mapping.findForward("backToModuleEdit");
-              
-        }          
+
+        }
       return mapping.findForward("backToModuleEdit");
-    }    
+    }
         /**
          *
          * @param mapping The ActionMapping used to select this instance.
@@ -755,13 +755,20 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
           HttpServletRequest request,
           HttpServletResponse response) throws IOException, ServletException {
           DynaActionForm skipForm = (DynaActionForm) form;
-            
+
           TriggerAction triggerAction = (TriggerAction)getSessionObject(request,SKIP_PATTERN);
-           TriggerAction triggerActionClone = (TriggerAction)getSessionObject(request,SKIP_PATTERN_CLONE); 
-           
+           TriggerAction triggerActionClone = (TriggerAction)getSessionObject(request,SKIP_PATTERN_CLONE);
+
           String instruction = (String)skipForm.get(SKIP_INSTRUCTION);
-          String[] selectedProtocolIds = (String[]) skipForm.get(SELECTED_SKIP_PROTOCOL_IDS); 
-          String[] selectedAccsis = (String[]) skipForm.get(SELECTED_SKIP_AC_CSIS); 
+          //because this form bean is in session scope and nothing will be submitted if checkbox is unchecked.
+          //String[] selectedProtocolIds = (String[]) skipForm.get(SELECTED_SKIP_PROTOCOL_IDS);
+          //String[] selectedAccsis = (String[]) skipForm.get(SELECTED_SKIP_AC_CSIS);
+
+          String[] selectedProtocolIds = request.getParameterValues(SELECTED_SKIP_PROTOCOL_IDS);
+          String[] selectedAccsis = request.getParameterValues(SELECTED_SKIP_AC_CSIS);
+          skipForm.set(SELECTED_SKIP_PROTOCOL_IDS, selectedProtocolIds);
+          skipForm.set(SELECTED_SKIP_AC_CSIS, selectedAccsis);
+
 
         //Validate
 
@@ -773,9 +780,9 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                            triggerAction.getIdSeq(),triggerAction.getActionTarget().getIdseq(),
                            selectedProtocolIds,selectedAccsis,request))
                            {
-                               return mapping.findForward("editSkipPattern");                        
+                               return mapping.findForward("editSkipPattern");
                            }
-                           
+
                 //Create new Skip Pattern
                  isCreate=true;
                  triggerAction.setInstruction(instruction);
@@ -784,21 +791,21 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                      for (int i=0; i<selectedProtocolIds.length; i++){
                         Protocol p = new ProtocolTransferObject();
                         p.setProtoIdseq(selectedProtocolIds[i]);
-                        protocols.add(p); 
+                        protocols.add(p);
                      }
                      triggerAction.setProtocols(protocols);
-                 }    
-                 
+                 }
+
                 if (selectedAccsis!=null && selectedAccsis.length!=0){
                     List cscsiList = new ArrayList();
                     for (int i=0; i<selectedAccsis.length; i++){
                        ClassSchemeItem csi = new CSITransferObject();
                        csi.setAcCsiIdseq(selectedAccsis[i]);
-                       cscsiList.add(csi); 
+                       cscsiList.add(csi);
                     }
                     triggerAction.setClassSchemeItems(cscsiList);
-                }    
-                 
+                }
+
                  try {
                    FormBuilderServiceDelegate service = getFormBuilderService();
                    savedAction = service.createTriggerAction(triggerAction);
@@ -810,8 +817,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                  saveError(ERROR_SKIP_PATTERN_CREATE, request);
                      saveError(exp.getErrorCode(), request);
                      return mapping.findForward("editSkipPattern");
-                       
-                 }                
+
+                 }
             }
             else
             {
@@ -830,18 +837,18 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                 else if(instruction==null&&triggerActionClone.getInstruction()!=null)
                 {
                     changes.setNewInstruction("");
-                    update=true;                    
+                    update=true;
                 }
                 else if(instruction!=null&&triggerActionClone.getInstruction()==null)
                 {
                     changes.setNewInstruction(instruction);
-                    update=true;                   
-                }    
+                    update=true;
+                }
                 if(!triggerActionClone.getActionTarget().getIdseq().equals(triggerAction.getActionTarget().getIdseq()))
                 {
                     changes.setTriggerActionId(triggerAction.getActionTarget().getIdseq());
                 }
-                
+
                 if(selectedProtocolIds.length==0)
                 {
                     changes.setDeleteProtocols(Arrays.asList(getProtocolIds(triggerAction.getProtocols())));
@@ -855,8 +862,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                     if(!changes.getAddProtocols().isEmpty()||!changes.getDeleteProtocols().isEmpty())
                         update=true;
                 }
-                if(selectedAccsis.length==0)
-                {   
+                if(selectedAccsis == null || selectedAccsis.length==0)
+                {
                     changes.setDeleteCsis(Arrays.asList(getAcCsiIds(triggerAction.getClassSchemeItems())));
                     update=true;
                 }
@@ -864,19 +871,19 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                 {
                     String[] orgIds = getAcCsiIds(triggerAction.getClassSchemeItems());
                     changes.setAddCsis(getNewIds(orgIds,selectedAccsis));
-                    changes.setDeleteCsis(getDeletedIds(orgIds,selectedAccsis));  
+                    changes.setDeleteCsis(getDeletedIds(orgIds,selectedAccsis));
                     if(!changes.getAddCsis().isEmpty()||!changes.getDeleteCsis().isEmpty())
                         update=true;
                 }
                 if(update)
                 {
-                
+
                     if(!validateSkipPattern(triggerAction.getActionSource().getTriggerActions(),
                                triggerAction.getIdSeq(),triggerAction.getActionTarget().getIdseq(),
                                selectedProtocolIds,selectedAccsis,request))
                                {
-                                   return mapping.findForward("editSkipPattern");                        
-                               }                
+                                   return mapping.findForward("editSkipPattern");
+                               }
                     try {
                       FormBuilderServiceDelegate service = getFormBuilderService();
                       savedAction = service.updateTriggerAction(changes);
@@ -889,54 +896,54 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                     saveError(ERROR_SKIP_PATTERN_SAVE, request);
                         saveError(exp.getErrorCode(), request);
                         return mapping.findForward("editSkipPattern");
-                          
-                    }     
+
+                    }
                 }
                 else
                 {
                      saveMessage("cadsr.formbuilder.save.skippattern.nochanges",request);
-                     removeSessionObject(request,SKIP_PATTERN); 
-                     removeSessionObject(request,SKIP_PATTERN_CLONE); 
-                     removeSessionObject(request,SKIP_TARGET_FORM);                     
+                     removeSessionObject(request,SKIP_PATTERN);
+                     removeSessionObject(request,SKIP_PATTERN_CLONE);
+                     removeSessionObject(request,SKIP_TARGET_FORM);
                      return mapping.findForward("backToModuleEdit");
                 }
-                
+
             }
             triggerAction.setIdSeq(savedAction.getIdSeq());
             triggerAction.setClassSchemeItems(savedAction.getClassSchemeItems());
             triggerAction.setProtocols(savedAction.getProtocols());
             triggerAction.setInstruction(savedAction.getInstruction());
-            
-            FormElement source = triggerAction.getActionSource();         
+
+            FormElement source = triggerAction.getActionSource();
             List<TriggerAction> actions = source.getTriggerActions();
-            
+
             if(actions==null)
             {
-                actions = new ArrayList<TriggerAction>(); 
+                actions = new ArrayList<TriggerAction>();
                 source.setTriggerActions(actions);
             }
             if(isCreate)
             {
                 actions.add(triggerAction);
             }
-                
-            removeSessionObject(request,SKIP_PATTERN); 
-            removeSessionObject(request,SKIP_PATTERN_CLONE); 
+
+            removeSessionObject(request,SKIP_PATTERN);
+            removeSessionObject(request,SKIP_PATTERN_CLONE);
             removeSessionObject(request,SKIP_TARGET_FORM);
-            
+
             return mapping.findForward("backToModuleEdit");
-          
+
         }
 
-  
+
       private String[] getProtocolIds(List<Protocol> protocols)
       {
           String[] protoIds = new String[0];
           if(protocols==null)
             return protoIds;
-            
+
           if(protocols.isEmpty())
-            return protoIds;    
+            return protoIds;
           protoIds = new String[protocols.size()];
           int i=0;
           for(Protocol proto:protocols )
@@ -951,9 +958,9 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         String[] accsiIds = new String[0];
         if(csis==null)
           return accsiIds;
-          
+
         if(csis.isEmpty())
-          return accsiIds;    
+          return accsiIds;
         accsiIds = new String[csis.size()];
         int i=0;
         for(ClassSchemeItem csi:csis )
@@ -980,7 +987,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
         }
         return newList;
     }
-    
+
     private List<String> getDeletedIds(String[] orgIds, String[] newIds)
     {
         List<String> orgList = new ArrayList(Arrays.asList(orgIds));  // new ArrayList<String>(orgIds);
@@ -998,8 +1005,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
            }
         }
         return deletedList;
-    }    
-  private boolean validateSkipPattern(List<TriggerAction> actions, 
+    }
+  private boolean validateSkipPattern(List<TriggerAction> actions,
                 String newTriggerId,String newTargetId, String[] newProtIdSeqs,
                 String[] newAcCsis,HttpServletRequest request)
   {
@@ -1007,11 +1014,11 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
           newAcCsis = new String[0];
       if(newProtIdSeqs==null)
           newProtIdSeqs = new String[0];
-          
+
       if(actions==null)
         return true;
       if(actions.isEmpty())
-        return true;   
+        return true;
       List<TriggerAction> actionListToCheck = actions;
       if(newTriggerId!=null) //Edit
       {
@@ -1022,7 +1029,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                 actionListToCheck.add(action);
          }
       }
-      
+
       //Check to see if there there is matching target
        for(TriggerAction action:actionListToCheck)
        {
@@ -1031,11 +1038,11 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                saveError("cadsr.formbuilder.save.skippattern.validate.error.duplicatesourcetarget",request);
                 return false;
            }
-           //Check to see is anyother trigger action to diffrent target use 
+           //Check to see is anyother trigger action to diffrent target use
            //the same protocol or classification
            if(action.getProtocols()==null)
                action.setProtocols(new ArrayList<Protocol>());
-           
+
             for(int i=0;i<newProtIdSeqs.length;++i)
             {
                Protocol tempProtocol = new ProtocolTransferObject();
@@ -1046,27 +1053,27 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                     return false;
                 }
             }
-            
+
            if(action.getClassSchemeItems()==null)
                action.setClassSchemeItems(new ArrayList<ClassSchemeItem>());
-               
+
            for(int j=0;j<newAcCsis.length;++j)
            {
                ClassSchemeItem tempCSI = new CSITransferObject();
-               tempCSI.setAcCsiIdseq(newAcCsis[j]);           
+               tempCSI.setAcCsiIdseq(newAcCsis[j]);
                if(action.getClassSchemeItems().contains(tempCSI))
                {
                    saveError("cadsr.formbuilder.save.skippattern.validate.error.classification",request);
                   return false;
               }
-           }            
-           
+           }
+
        }
       return true;
 
   }
 
-private boolean contains(List list,Object element)    
+private boolean contains(List list,Object element)
 
           {
              ListIterator it= list.listIterator();
@@ -1077,4 +1084,4 @@ private boolean contains(List list,Object element)
             }
             return false;
           }
-}  
+}
