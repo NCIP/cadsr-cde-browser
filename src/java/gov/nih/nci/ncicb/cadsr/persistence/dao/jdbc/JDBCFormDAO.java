@@ -1187,11 +1187,13 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         }//eles indicate all versions.
 
          if (StringUtils.doesValueExist(moduleName)) {
+            String temp = StringUtils.strReplace(moduleName, "*", "%");
+            temp = StringUtils.strReplace(temp, "'", "''");
              if (hasWhere) {
-               whereBuffer.append(" AND (UPPER(q.MODULE_NAME) like UPPER('" + moduleName + "'))");
+               whereBuffer.append(" AND (UPPER(q.MODULE_NAME) like UPPER('" + temp + "'))");
              }
              else {
-               whereBuffer.append(" WHERE (UPPER(q.MODULE_NAME) like UPPER('" + moduleName + "'))");
+               whereBuffer.append(" WHERE (UPPER(q.MODULE_NAME) like UPPER('" + temp + "'))");
                hasWhere = true;
              }
          }
