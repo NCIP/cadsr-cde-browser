@@ -87,8 +87,8 @@
                                       <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
                                         Default value
                                      </td>
-                                     <td class="OraFieldTextInstruction">
-                                        a default value
+                                     <td class="OraFieldText">
+                                        <%=FormJspUtil.getDefaultValue(question)%>
                                      </td>
                                     </tr>  
                                     </logic:notEmpty>
