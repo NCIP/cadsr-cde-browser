@@ -28,6 +28,11 @@ function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
     var objForm0 = document.forms[0];
     var objQuestionDefaultValue = objForm0['questionDefaultValues[' + index + ']'];
     var objQuestionDefaultValidValueId = objForm0['questionDefaultValidValueIds[' + index + ']'];
+
+    if (defaultValidValueId == "UNKNOWN"){
+        alert("Please save the module before setting the question default value.");
+        return;
+    }
     objQuestionDefaultValue.value = defaultValidValue;
     objQuestionDefaultValidValueId.value = defaultValidValueId;
 }
