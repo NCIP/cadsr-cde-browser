@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
@@ -388,7 +389,11 @@ public class FormTransferObject extends FormElementTransferObject
         Iterator itq = questions.iterator();
         while (itq.hasNext()){
             QuestionTransferObject q = (QuestionTransferObject)itq.next();
-            String cdeIdSeq = q.getDataElement().getDeIdseq();
+            DataElement de = q.getDataElement();
+            if (de == null){
+               continue; 
+            }
+            String cdeIdSeq = de.getDeIdseq();
             if (!CDEList.contains(cdeIdSeq)){
                 CDEList.add(cdeIdSeq);  
             }    
