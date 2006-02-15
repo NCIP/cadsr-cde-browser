@@ -183,6 +183,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     }
 
     q.setDataElement(de);
+    //clear out the default value
+    q.setDefaultValidValue(null);
+    q.setDefaultValue("");
 
     // Jump to the update location on the screen
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+questionIndex);     
