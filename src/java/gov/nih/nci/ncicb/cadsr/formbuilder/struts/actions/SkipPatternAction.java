@@ -849,7 +849,7 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                     changes.setTriggerActionId(triggerAction.getActionTarget().getIdseq());
                 }
 
-                if(selectedProtocolIds.length==0)
+                if(selectedProtocolIds==null || selectedProtocolIds.length==0)
                 {
                     changes.setDeleteProtocols(Arrays.asList(getProtocolIds(triggerAction.getProtocols())));
                     update=true;
