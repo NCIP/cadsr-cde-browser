@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.CDECartFormBean;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
@@ -176,6 +177,13 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       
       List values = de.getValueDomain().getValidValues();
       newValidValues = DTOTransformer.toFormValidValueList(values, q);
+      
+      //clear out the form valid value Id
+      Iterator it = newValidValues.iterator();
+      while (it.hasNext()){
+          FormValidValue fvv = (FormValidValue)it.next();
+          fvv.setValueIdseq(FormConstants.UNKNOWN_VV_ID);
+      }
 
       q.setLongName(newLongName);
       q.setValidValues(newValidValues);
