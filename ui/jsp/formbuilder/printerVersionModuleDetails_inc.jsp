@@ -283,7 +283,33 @@ type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" 
                   </logic:notEmpty>
                   </logic:present>
                 </table>
-
+                 <logic:present name="module" property = "triggerActions" >
+                   <logic:notEmpty name="module" property = "triggerActions">
+                            <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+                              <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+                            
+                             <%
+                               String currSkipTargetType = FormJspUtil.getFormElementType(currTriggerAction.getActionTarget());
+                               pageContext.setAttribute("currSkipTargetType",currSkipTargetType);
+                                             
+                            %> 
+                             
+                                  <tr class="printerOraTabledata">
+                                   <td>
+                                     <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" >
+                                       <tr>
+                                         <td class="printerOraTableColumnHeader" width="100%" nowrap>
+                                           Skip to 
+                                         </td>
+                                        </tr>
+                                      </table>
+                                     </td>
+                                  </tr>
+                                  <%@ include file="/formbuilder/printerSkipPatternDetailsViewInclude_inc.jsp"%>
+                              </logic:iterate>
+                            </table>
+                    </logic:notEmpty>
+                 </logic:present>
       		<table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         	   <tr class>
           	      <td >
