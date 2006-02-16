@@ -54,6 +54,9 @@ function submitBackToModuleEdit() {
 <%@ include file="showMessages.jsp" %>
 <html:form action="/editValidValueSkipAction.do">
    <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
+   <html:hidden property="<%=FormConstants.SK_VALID_VALUE_INDEX%>"/>
+   <html:hidden property="<%=FormConstants.SK_QUESTION_INDEX%>"/>
+   <html:hidden property="<%=FormConstants.TRIGGER_ACTION_INDEX%>"/>
 
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >      
         <tr >
