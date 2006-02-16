@@ -228,6 +228,44 @@ class="OraBGAccentBlack" >
                                                  </td>
                                                 </tr>   
                                               </logic:present>  
+                                              
+                                      <logic:present name="validValue" property = "triggerActions" >
+			              <logic:notEmpty name="validValue" property = "triggerActions">
+                                      
+                                      <tr  class="PrinterOraTabledata">
+
+                                        <td colspan="2">	
+				          <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" 
+class="OraBGAccentVeryDark">
+					    <logic:iterate id="currTriggerAction" name="validValue" 
+type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+                             
+                             <%
+                               String currSkipTargetType = FormJspUtil.getFormElementType(currTriggerAction.getActionTarget());
+                               pageContext.setAttribute("currSkipTargetType",currSkipTargetType);
+                                             
+                            %> 
+                             
+                                  <tr class="PrinterOraTabledata">
+                                   <td>
+                                     <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" >
+                                       <tr>
+                                         <td class="PrinterOraTableColumnHeader" width="100%" nowrap>
+                                           Skip to 
+                                         </td>
+                                        </tr>
+                                      </table>
+                                     </td>
+                                  </tr>
+                                  <%@ include file="/formbuilder/printerSkipPatternDetailsViewInclude_inc.jsp"%>
+					    </logic:iterate>
+					  </table>
+
+                                         </td>
+                                        </tr>
+				       </logic:notEmpty>
+				       </logic:present>                                         
+                                              
                                            </table>   
                                           <%}%>    
                                         </td>
