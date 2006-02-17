@@ -19,13 +19,13 @@
   
    <!-- Make sure these are correct for your instance -->
    
-   <property name="jboss.home" value="D:\tools\other\jboss-4.0.2" /> 
+   <property name="jboss.home" value="c:\jboss-4.0.2" /> 
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
    <property name="cdebrowser.version" value="3.1" />
-   <property name="cdebrowser.build" value="5" />
+   <property name="cdebrowser.build" value="10" />
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="3_1" />
