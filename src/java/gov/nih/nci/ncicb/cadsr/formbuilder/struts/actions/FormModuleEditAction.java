@@ -1604,6 +1604,8 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
                 vv.setIdseq(questionDefaultValidValueIDsArr[i]);
                 vv.setLongName(questionDefaultValuesArr[i]);
                 currQuestion.setDefaultValidValue(vv);
+                //clear out default value field
+                currQuestion.setDefaultValue(null);
                 vv.setQuestion(currQuestion);
                 //initNullValues(currQuestion.getInstruction(),module);// this is done to take care
                                                    // incase the attributes are null
