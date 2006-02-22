@@ -265,7 +265,7 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
             return mapping.findForward(SUCCESS);             
         }
         int numberOfRepeats = 0;
-        if(!haveQuestions(module)||repeats.size()>1)
+        if(!haveQuestions(module))
         {
             numberOfRepeats = repeats.size();
         }
