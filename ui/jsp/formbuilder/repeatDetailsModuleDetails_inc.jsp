@@ -82,8 +82,7 @@
                                        <bean:write  name="question" property="instruction.longName"/>
                                      </td>
                                     </tr>
-                                    <logic:notEmpty name="question" property = "validValues">
-                                     <tr class="OraTabledata">
+                                                <tr class="OraTabledata">
                                       <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
                                         Default value
                                      </td>
@@ -91,7 +90,7 @@
                                         <%=FormJspUtil.getDefaultValue(question)%>
                                      </td>
                                     </tr>  
-                                    </logic:notEmpty>
+        
                                    </table>                                                            
                                  </td>
                                </tr> 
@@ -103,22 +102,12 @@
                                   <td class="OraFieldText" colspan="2">                              
                                    <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" class="OraBGGrayVeryDark" >
                                      <tr class="OraTabledata">
-                                     <logic:notEmpty name="question" property = "validValues">
                                       <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
                                         Default value
                                      </td>
                                      <td class="OraFieldText">
                                         <%=FormJspUtil.getDefaultValue(question)%>
                                      </td>                                    
-                                      </logic:notEmpty>
-                                      <logic:empty name="question" property = "validValues">
-                                         <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
-                                           Default value
-                                        </td>
-                                        <td class="OraFieldText">
-                             		<%=FormJspUtil.getDefaultValue(question)%>       
-                                        </td>                                   
-                                       </logic:empty>
                                     </tr>                                    
                                    </table>                                                            
                                  </td>
