@@ -592,7 +592,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
         public UpdateTriggerActionTarget(DataSource ds)
         {
             String sql =
-                " UPDATE TRIGGERED_ACTIONS_EXT SET " + " T_QC_IDSEQ, modified_by = ? " +
+                " UPDATE TRIGGERED_ACTIONS_EXT SET " + " T_QC_IDSEQ=?, modified_by = ? " +
                 " WHERE TA_IDSEQ = ? ";
 
             this.setDataSource(ds);
