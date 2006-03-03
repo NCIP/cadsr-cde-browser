@@ -609,7 +609,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
             
       <table cellpadding="0" cellspacing="0" width="100%" align="center">
         <tr>
-          <td class="OraHeaderSubSub" width="100%">Bidiectional Associations</td>
+          <td class="OraHeaderSubSub" width="100%">Bidirectional Associations</td>
         </tr>
         <tr >
            <td width="100%" ><img height=1 src="<%=contextPath%>/i/beigedot.gif" width="99%" align=top border=0> </td>
