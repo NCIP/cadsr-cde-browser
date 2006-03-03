@@ -846,7 +846,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
                 }
                 if(!triggerActionClone.getActionTarget().getIdseq().equals(triggerAction.getActionTarget().getIdseq()))
                 {
-                    changes.setTriggerActionId(triggerAction.getActionTarget().getIdseq());
+//                    changes.setTriggerActionId(triggerAction.getActionTarget().getIdseq());
+                    changes.setNewTargetId(triggerAction.getActionTarget().getIdseq());
                 }
 
                 if(selectedProtocolIds==null || selectedProtocolIds.length==0)
@@ -997,7 +998,8 @@ public class SkipPatternAction extends FormBuilderSecureBaseDispatchAction {
            return orgList;
         if(newIds.length==0)
            return orgList;
-        for(String id:newIds)
+        //for(String id:newIds)
+        for(String id:orgIds)
         {
            if(!newList.contains(id))
            {
