@@ -1537,7 +1537,7 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
         if(changes.getNewTargetId()!=null)
         {
 
-            dao.updateTriggerActionInstruction(triggetId,
+            dao.updateTriggerActionTarget(triggetId,
                          changes.getNewTargetId(),userId);          
         }      
         
