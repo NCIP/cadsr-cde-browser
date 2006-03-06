@@ -38,9 +38,11 @@ import gov.nih.nci.ncicb.cadsr.dto.QuestionRepititionTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
+import gov.nih.nci.ncicb.cadsr.resource.FormElement;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.resource.QuestionRepitition;
+import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 
 
 public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
@@ -286,6 +288,9 @@ public class ModuleRepetitionAction extends FormBuilderSecureBaseDispatchAction
         try
         {
             savedModeule = service.saveQuestionRepititons(module.getModuleIdseq(),repeats.size(),questionRepeatMap,noRepQIdList);
+            //put the triggeractions' target. 
+            //Only the idseq is put in the triggeraction target by the EJB, not the target object.
+            FormActionUtil.setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),FormActionUtil.getModuleAllTriggerActions(savedModeule));
         }
         catch (FormBuilderException e)
         {
