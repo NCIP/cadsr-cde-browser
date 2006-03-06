@@ -37,6 +37,7 @@ public class CDEBrowserParams
     String nciTerminologyServerUrl="";
     String sentinelToolUrl="";
     String adminToolUrl="";
+    String umlBrowserUrl="";
     String regStatusCsTree="";
     String csTypeRegStatus="";
     String sentinalAPIUrl="";
@@ -318,6 +319,8 @@ public class CDEBrowserParams
             index++;      
             sentinalAPIUrl = properties.getProperty("SENTINAL_API_URL");
             index++;                
+            umlBrowserUrl = properties.getProperty("UMLBROWSER_URL");
+            index++;      
             log.info("Loaded Properties"+properties);
                         
         } 
@@ -352,4 +355,12 @@ public class CDEBrowserParams
     {
         return sentinalAPIUrl;
     }
+
+   public void setUmlBrowserUrl(String umlBrowserUrl) {
+      this.umlBrowserUrl = umlBrowserUrl;
+   }
+
+   public String getUmlBrowserUrl() {
+      return umlBrowserUrl;
+   }
 }
