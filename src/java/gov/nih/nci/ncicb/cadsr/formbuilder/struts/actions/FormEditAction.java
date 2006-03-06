@@ -706,7 +706,15 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     return mapping.findForward(SUCCESS);
 
     }
-
+    
+    public ActionForward cancelFormEditForRepetition(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response) throws IOException, ServletException {
+      
+      return mapping.findForward("formEdit");    
+      }
   /**
    * Cancel Save before ModuleEdit
    *
