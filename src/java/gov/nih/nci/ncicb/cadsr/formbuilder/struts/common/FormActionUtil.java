@@ -472,4 +472,20 @@ public class FormActionUtil
         }
         return allActions;
     }        
+    
+    static public void setTargetsForTriggerActions(Map<String,FormElement> possibleTargetMap, List<TriggerAction> actions)
+    {
+        for(TriggerAction action : actions)
+        {
+            FormElement element = possibleTargetMap.get(action.getActionTarget().getIdseq());
+            //In this case just keep the idseq and fire a warning
+            if (element!=null){
+                action.setActionTarget(element);
+            }else{
+                System.err.println("could not find the target FormElement for idseq = " + action.getActionTarget().getIdseq());
+            }
+
+        }
+    }
+
 }
