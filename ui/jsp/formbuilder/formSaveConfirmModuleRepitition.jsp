@@ -64,7 +64,7 @@ function submitFormToSave(methodName) {
              </a> 
           </td>   
          <td align="center">
-            <a href="javascript:submitFormToSave('<%=NavigationConstants.CANCEL_FORM_CHANGES_MODULE_EDIT%>')">
+            <a href="javascript:submitFormToSave('cancelFormEditForRepetition')">
                 <html:img src='<%=urlPrefix+"i/cancel.gif"%>' border="0" alt="Cancel"/>
              </a> 
           </td>            
