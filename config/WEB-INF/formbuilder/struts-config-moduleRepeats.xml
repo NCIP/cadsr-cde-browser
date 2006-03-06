@@ -21,7 +21,7 @@
       <forward name="failure" path="/formbuilder/formEdit.jsp" redirect="false"/>  
       <forward name="noChanges" path="/moduleRepeatAction.do?method=getModuleToRepeat" redirect="false"/>
       <forward name="saveConfirm" path="/formbuilder/formSaveConfirmModuleRepitition.jsp" redirect="false"/>
-      <forward name="success" path="/moduleRepeatAction.do?method=getToModuleToRepeat" redirect="false"/>
+      <forward name="success" path="/moduleRepeatAction.do?method=getModuleToRepeat" redirect="false"/>
     </action>   
     
     <action name="moduleRepeatForm" path="/moduleRepeatAction" parameter="method"
