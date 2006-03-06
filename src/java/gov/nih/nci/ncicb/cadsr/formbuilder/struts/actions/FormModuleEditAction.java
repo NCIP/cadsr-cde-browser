@@ -130,7 +130,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
       //set the trigger action target
     //setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),selectedModule.getTriggerActions());
-     setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),FormActionUtil.getModuleAllTriggerActions(selectedModule));
+     FormActionUtil.setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),FormActionUtil.getModuleAllTriggerActions(selectedModule));
      
     setSessionObject(request, MODULE, selectedModule,true);
 
@@ -972,7 +972,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     
     //put the triggeractions' target. 
     //Only the idseq is put in the triggeraction target by the EJB, not the target object.
-    setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),FormActionUtil.getModuleAllTriggerActions(updatedModule));
+    FormActionUtil.setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),FormActionUtil.getModuleAllTriggerActions(updatedModule));
     
      try{
      Module newClonedModule = (Module)updatedModule.clone();
@@ -2113,20 +2113,4 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         }    
     }
     
-    
-    private void setTargetsForTriggerActions(Map<String,FormElement> possibleTargetMap, List<TriggerAction> actions)
-    {
-        for(TriggerAction action : actions)
-        {
-            FormElement element = possibleTargetMap.get(action.getActionTarget().getIdseq());
-            //In this case just keep the idseq and fire a warning
-            if (element!=null){
-                action.setActionTarget(element);
-            }else{
-                log.warn("could not find the target FormElement for idseq = " + action.getActionTarget().getIdseq());
-            }
-
-        }
-    }
-
 }
