@@ -202,7 +202,7 @@
       <!-- cadsr api lib -->
       <pathelement location="${java.lib.dir}/cadsr-api.jar"/>
       
-      <!-- Sentinal tool API -->
+      <!-- Sentinal tool API -->             
       <pathelement location="${java.lib.dir}/cadsrsentinelapi.jar"/>
       
       
@@ -856,6 +856,13 @@
            <patternset>
              <include name="properties/*.*"/>
              <exclude name="properties/cdebrowser.properties"/>
+           </patternset>
+         </fileset>               
+      </copy> 
+     <copy todir="${open.source.dir.raw.config}">      
+         <fileset dir="${config.opensource}">
+           <patternset>
+             <include name="properties/jboss/cdebrowser.properties"/>
            </patternset>
          </fileset>               
       </copy> 
