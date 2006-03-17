@@ -126,13 +126,13 @@
       <pathelement location="${java.lib.dir}/jakarta-oro.jar"/> 
       
       <!-- Springframework libs -->
-      <pathelement location="${java.lib.dir}/spring115.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-context115.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-core115.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-dao115.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-orm115.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-context115.jar"/>
-      <pathelement location="${java.lib.dir}/spring-web115.jar"/>
+      <pathelement location="${java.lib.dir}/spring-1.2.4.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-context-1.2.4.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-core-1.2.4.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-dao-1.2.4.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-orm-1.2.4.jar"/> 
+      <pathelement location="${java.lib.dir}/spring-context-1.2.4.jar"/>
+      <pathelement location="${java.lib.dir}/spring-web-1.2.4.jar"/>
             
       <!--J2EE  libs -->
       <pathelement location="${java.lib.dir}/servlet.jar"/>
@@ -152,6 +152,8 @@
       <!-- cadsr api lib -->
       <pathelement location="${java.lib.dir}/cadsr-api.jar"/>
       
+      <!-- Sentinal tool API -->             
+      <pathelement location="${java.lib.dir}/cadsrsentinelapi.jar"/>
    </path>
    
    <path id="srcpath">
