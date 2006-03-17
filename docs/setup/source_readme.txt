@@ -31,8 +31,8 @@ Building the Application
 
 Pre-requisites
 ---------------
-1.  JBOSS 4.0.1 installed. Available from http://www.jboss.org
-2.  JDK 1.4.2_06  installed
+1.  JBOSS 4.0.2 installed. Available from http://www.jboss.org
+2.  JDK 1.4.5_05  installed
 3.  Ant 1.6.2 or above installed. Available from http://ant.apache.org/
 4.  caDSR @cdebrowser.version@ repository installed. Please refer to caDSR installation document
 
@@ -169,7 +169,7 @@ cdebrowser_error_tabs.properties
   Can be used to configure the number of tabs and their labels on the error page.    
 
 
-The source code has been compiled and tested using  JDK 1.4.2_06 , struts 1.1 and JBOSS 4.0.1
+The source code has been compiled and tested using  JDK 1.5.0_05 , struts 1.1 and JBOSS 4.0.2
 CDEBrowser @cdebrowser.version@ works with caDSR repository @cdebrowser.version@ and is not 
 compatible with earlier versions of caDSR repository
 
