@@ -32,7 +32,7 @@ Building the Application
 Pre-requisites
 ---------------
 1.  JBOSS 4.0.2 installed. Available from http://www.jboss.org
-2.  JDK 1.4.5_05  installed
+2.  JDK 1.5.0_05  installed
 3.  Ant 1.6.2 or above installed. Available from http://ant.apache.org/
 4.  caDSR @cdebrowser.version@ repository installed. Please refer to caDSR installation document
 
