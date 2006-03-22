@@ -80,7 +80,7 @@ Deploying Application
 =====================
 Pre-requisites
 ---------------
-1.  JBOSS 4.0.1 installed. Available from http://www.jboss.org
+1.  JBOSS 4.0.2 installed. Available from http://www.jboss.org
 
 
 1. Shutdown Jboss instance.
