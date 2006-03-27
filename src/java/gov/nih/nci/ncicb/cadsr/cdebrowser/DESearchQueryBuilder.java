@@ -445,9 +445,9 @@ public class DESearchQueryBuilder extends Object {
       }
       else if (treeParamType.equals("CSI") || treeParamType.equals("REGCSI") ){
         if (searchStr5.equals(""))
-          csiWhere = " and acs.cs_csi_idseq = '"+treeParamIdSeq+"'";
+          csiWhere = " and acs.cs_csi_idseq = '"+this.treeParamIdSeq+"'";
         else
-          csiWhere = " and acs.cs_csi_idseq IN ('"+treeParamIdSeq+"','"+searchStr5+"')";
+          csiWhere = " and acs.cs_csi_idseq IN ('"+this.treeParamIdSeq+"','"+searchStr5+"')";
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +
                                " sbr.contexts conte, " +
