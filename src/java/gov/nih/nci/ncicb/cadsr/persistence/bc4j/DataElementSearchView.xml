@@ -26,7 +26,7 @@ from sbr.data_elements de
     ,sbr.data_element_concepts dec  
 where de.deleted_ind = 'No' 
 and  de.de_idseq = rd.ac_idseq (+) 
-and rd.dctl_name (+) = 'LONG_NAME' 
+and rd.dctl_name (+) = 'Preferred Question Text' 
 and de.asl_name != 'RETIRED DELETED'  
 and conte.conte_idseq = de.conte_idseq  
 and de.de_idseq = dc.ac_idseq (+)  
@@ -41,7 +41,7 @@ and de.de_idseq IN
  from   sbr.reference_documents rd1,
         sbr.data_elements de1  
  where  de1.de_idseq  = rd1.ac_idseq (+)  
- and    rd1.dctl_name (+) = 'LONG_NAME'  
+ and    rd1.dctl_name (+) = 'Preferred Question Text'  
  and   (upper (de.long_name) like upper (:5)  
 OR upper (nvl(rd1.doc_text,'%')) like upper (:5)  
 OR upper (de.preferred_name) like upper ( :5))  

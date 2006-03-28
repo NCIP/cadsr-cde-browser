@@ -538,7 +538,7 @@ public class DataElementsViewRowImpl extends ViewRowImpl {
           "ReferenceDocumentsView");
 
       rdView.setWhereClause(
-        "AC_IDSEQ='" + getDeIdseq() + "' AND DCTL_NAME = 'LONG_NAME'");
+        "AC_IDSEQ='" + getDeIdseq() + "' AND DCTL_NAME = 'Preferred Question Text'");
 
       Row row = rdView.first();
 

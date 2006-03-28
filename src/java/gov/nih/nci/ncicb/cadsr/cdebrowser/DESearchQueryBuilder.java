@@ -311,7 +311,7 @@ public class DESearchQueryBuilder extends Object {
                             wkFlowFrom+
                      " where de.deleted_ind = 'No'  "+
                      registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere +
-                     " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
+                     " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                      //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                      " and de.asl_name != 'RETIRED DELETED' " +
                      " and conte.conte_idseq = de.conte_idseq " +
@@ -335,7 +335,7 @@ public class DESearchQueryBuilder extends Object {
                              wkFlowFrom+
                    " where de.deleted_ind = 'No' "+
                    registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere +
-                   " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
+                   " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                    //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                    " and de.asl_name != 'RETIRED DELETED' " +
                    " and conte.conte_idseq = de.conte_idseq " +
@@ -364,7 +364,7 @@ public class DESearchQueryBuilder extends Object {
                                wkFlowFrom+
                    " where de.deleted_ind = 'No' "+
                          registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere +
-                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
+                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                          " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
@@ -397,7 +397,7 @@ public class DESearchQueryBuilder extends Object {
                                registrationFrom+
                                wkFlowFrom+
                    " where de.deleted_ind = 'No' "+
-                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
+                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                          " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
@@ -429,7 +429,7 @@ public class DESearchQueryBuilder extends Object {
                     " where de.deleted_ind = 'No'  "+
                          //Commented for TT 1511
                         // registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere +
-                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
+                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                          " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
@@ -461,7 +461,7 @@ public class DESearchQueryBuilder extends Object {
                                wkFlowFrom+
                          " where de.deleted_ind = 'No' "+
                          registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere +
-                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
+                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                         //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                          " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
@@ -493,7 +493,7 @@ public class DESearchQueryBuilder extends Object {
                                wkFlowFrom+
                          " where de.deleted_ind = 'No' "+
                          registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere +
-                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
+                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                          " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
                          //" and csc.cs_idseq = '"+treeParamIdSeq+"'" +
@@ -516,7 +516,7 @@ public class DESearchQueryBuilder extends Object {
                                 wkFlowFrom +
                          " where de.deleted_ind = 'No' "+
                          contextExludeWhere+registrationExcludeWhere + workflowExcludeWhere +
-                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
+                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                          " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
@@ -543,7 +543,7 @@ public class DESearchQueryBuilder extends Object {
                                 wkFlowFrom+
                          " where de.deleted_ind = 'No' "+
                          contextExludeWhere+registrationExcludeWhere + workflowExcludeWhere +
-                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'LONG_NAME'" +
+                         " and de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                          //" and de.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                          " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
@@ -752,7 +752,7 @@ public class DESearchQueryBuilder extends Object {
                   +"(select de_idseq "
                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
                   +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'LONG_NAME' "
+                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
                   + searchWhere
                   +" union "
                   +" select de_idseq "
@@ -795,7 +795,7 @@ public class DESearchQueryBuilder extends Object {
                   +"(select de_idseq "
                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
                   +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'LONG_NAME' "
+                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
                   + searchWhere + " ) ";
       return docWhere;
     }
@@ -811,7 +811,7 @@ public class DESearchQueryBuilder extends Object {
                   +"(select de_idseq "
                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
                   +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'LONG_NAME' "
+                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
                   + searchWhere
                   +" union "
                   +" select de_idseq "
@@ -833,7 +833,7 @@ public class DESearchQueryBuilder extends Object {
                   +"(select de_idseq "
                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
                   +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'LONG_NAME' "
+                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
                   + searchWhere
                   +" union "
                   +" select de_idseq "
@@ -865,7 +865,7 @@ public class DESearchQueryBuilder extends Object {
                   +"(select de_idseq "
                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
                   +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'LONG_NAME' "
+                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
                   + searchWhere + " ) ";
       return docWhere;
     }
@@ -893,7 +893,7 @@ public class DESearchQueryBuilder extends Object {
                   +"(select de_idseq "
                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
                   +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'LONG_NAME' "
+                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
                   + searchWhere+ " ) ";
       return docWhere;
     }
@@ -921,7 +921,7 @@ public class DESearchQueryBuilder extends Object {
                   +"(select de_idseq "
                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
                   +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'LONG_NAME' "
+                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
                   + searchWhere
                   +" union "
                   +" select de_idseq "
@@ -969,7 +969,7 @@ public class DESearchQueryBuilder extends Object {
                   +"(select de_idseq "
                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
                   +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'LONG_NAME' "
+                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
                   + searchWhere + " ) ";
       return docWhere;
     }
