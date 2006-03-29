@@ -955,7 +955,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       if (StringUtils.doesValueExist(protocolIdSeq) || StringUtils.doesValueExist(protocolIdSeq)){
         fromWhat.append(", protocol_qc_ext p ");
         if (hasWhere){
-            initialWhere.append(" AND ( f.QC_IDSEQ = p.qc_idseq) and (p.proto_idseq ='" + publicId + "') ");
+            initialWhere.append(" AND ( f.QC_IDSEQ = p.qc_idseq) and (p.proto_idseq ='" + protocolIdSeq + "') ");
         }else{
             initialWhere.append(" where ( f.QC_IDSEQ = p.qc_idseq) and (p.proto_idseq ='" + protocolIdSeq + "') ");
             hasWhere = true;
