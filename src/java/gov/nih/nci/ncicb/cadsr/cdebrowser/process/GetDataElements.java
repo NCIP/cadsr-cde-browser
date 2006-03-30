@@ -46,7 +46,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.24 2006-02-09 20:33:28 jiangj Exp $
+ * @version: $Id: GetDataElements.java,v 1.25 2006-03-30 16:25:08 jiangj Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -362,10 +362,10 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
           // Set search preference  from old Search Bean to the new one
          setValuesFromOldSearchBean(desb);
          desb.setLOVLists(dbUtil);
-         userSession.removeAttribute(BrowserFormConstants.BROWSER_SEARCH_SCOPE);
-         userSession.removeAttribute("baseQuery");
-         userSession.removeAttribute("searchCrumb");
-      //myRequest.setAttribute(CaDSRConstants.ANCHOR, "results");
+
+         userSession.setAttribute(BrowserFormConstants.BROWSER_SEARCH_SCOPE, BrowserFormConstants.BROWSER_SEARCH_SCOPE_NEW);
+         userSession.setAttribute("baseQuery", "");
+         userSession.setAttribute("searchCrumb", "");
 
       }
       else if (performQuery.equals("sortResults")) {
