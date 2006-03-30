@@ -342,6 +342,7 @@ function clearProtocol() {
       <html:hidden property="<%=FormConstants.SK_QUESTION_INDEX%>"/>
       <html:hidden property="<%=FormConstants.SK_VALID_VALUE_INDEX%>"/>
       <html:hidden property="<%=FormConstants.TRIGGER_ACTION_INDEX%>"/>
+      <html:hidden property="<%=FormConstants.MODULE_INDEX%>"/>
       
       
       <%@ include file="../common/in_process_common_header_inc.jsp"%>

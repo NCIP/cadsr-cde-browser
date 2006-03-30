@@ -1,15 +1,22 @@
+            <bean:define id="currentModuleIndex" name="moduleEditForm" property="moduleIndex" scope="session"/>
             <logic:notEmpty name="<%=FormConstants.SKIP_TARGET_FORM%>" property = "modules">
               <logic:iterate id="module" name="<%=FormConstants.SKIP_TARGET_FORM%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules" indexId="modIndex" >                            
                <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
                  <tr >
            	    <td align="left" width="100%">
-                       <html:link action='<%="/formbuilder/skipAction?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SET_MODULE_AS_TARGET%>'
-                          paramId= "<%=FormConstants.TARGET_MODULE_INDEX%>"
-                          paramName="modIndex"
-                          scope="page">
-                           Skip to this Module
-                      </html:link>&nbsp;
-           	    </td>                
+                                <%
+                                        HashMap paramsModule = new java.util.HashMap();
+                                        paramsModule.put(FormConstants.TARGET_MODULE_INDEX,modIndex);
+                                        paramsModule.put(NavigationConstants.METHOD_PARAM,NavigationConstants.SET_MODULE_AS_TARGET);
+                                        if (currentModuleIndex!=null && currentModuleIndex!=""){
+                                        	paramsModule.put(FormConstants.MODULE_INDEX,currentModuleIndex);
+                                        }	
+                                        pageContext.setAttribute("linkParamsModule", paramsModule);
+                                %>
+                                <html:link  name="linkParamsModule" scope="page"  action="/formbuilder/skipAction">
+                                     Skip to this Module
+                                </html:link>&nbsp;
+  </td>                
          	 </tr>
       		</table>
  		<table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">               
@@ -53,9 +60,11 @@
                                         params.put(FormConstants.SK_QUESTION_INDEX,questionIndex);
                                         params.put(FormConstants.TARGET_MODULE_INDEX,modIndex);
                                         params.put(NavigationConstants.METHOD_PARAM,NavigationConstants.SET_QUESTION_AS_TARGET);
+                                        if (currentModuleIndex!=null && currentModuleIndex!=""){
+                                            params.put(FormConstants.MODULE_INDEX,currentModuleIndex);
+                                        }	
                                         pageContext.setAttribute("linkParams", params);
                                 %>
-                                
                                 <html:link  name="linkParams" scope="page"  action="/formbuilder/skipAction">
                                      Skip to this Question
                                 </html:link>&nbsp;
