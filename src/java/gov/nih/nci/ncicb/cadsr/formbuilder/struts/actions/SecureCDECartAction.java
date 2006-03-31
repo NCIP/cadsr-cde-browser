@@ -81,9 +81,24 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
     int displayOrder = Integer.parseInt((String) dynaForm.get(QUESTION_INDEX));
 
+    //for getting reference docs
+    FormBuilderServiceDelegate service = getFormBuilderService();
+    List refDocs = null;
+      
     for (int i = 0; i < selectedItems.length; i++) {
       DataElement de =
-        (DataElement) ((CDECartItem) al.get(Integer.parseInt(selectedItems[i]))).getItem();
+          (DataElement) ((CDECartItem) al.get(Integer.parseInt(selectedItems[i]))).getItem();
+      //may refactor the following code for better performance 
+      try {
+            refDocs = service.getRreferenceDocuments(de.getDeIdseq());
+            de.setReferenceDocs(refDocs);
+      }catch (FormBuilderException exp){
+             if (log.isErrorEnabled()) {
+               log.error("Exception on getting reference documents for the Data Element de Idseq=" + de.getIdseq() , exp);
+             }
+             saveError(exp.getErrorCode(), request);
+             return mapping.findForward(FAILURE);
+      }       
 
       Question q = new QuestionTransferObject();
       module.setForm(crf);
