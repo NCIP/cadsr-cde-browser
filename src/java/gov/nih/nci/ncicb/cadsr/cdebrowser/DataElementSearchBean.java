@@ -364,9 +364,9 @@ public class DataElementSearchBean extends Object {
       searchInList.append("<option  selected value=\"Long Name\">Long Name</option> ");
       searchInList.append(
         "<option value=\"Short Name\">Short Name</option> ");
-      searchInList.append("<option value=\"Doc Text\">Document Text</option> ");
+      searchInList.append("<option value=\"Doc Text\">Preferred Question Text</option> ");
       searchInList.append(
-        "<option value=\"Hist\">Historic Short CDE Name</option> ");
+        "<option value=\"Hist\">Alternate Question Text</option> ");
     }
     else {
       if (StringUtils.containsKey(searchIn, "ALL")) {
@@ -395,19 +395,19 @@ public class DataElementSearchBean extends Object {
 
       if (StringUtils.containsKey(searchIn, "Doc Text")) {
         searchInList.append(
-          "<option selected value=\"Doc Text\">Document Text</option> ");
+          "<option selected value=\"Doc Text\">Preferred Question Text</option> ");
       }
       else {
-        searchInList.append("<option value=\"Doc Text\">Document Text</option> ");
+        searchInList.append("<option value=\"Doc Text\">Preferred Question Text</option> ");
       }
 
       if (StringUtils.containsKey(searchIn, "Hist")) {
         searchInList.append(
-          "<option selected value=\"Hist\">Historic Short CDE Name</option> ");
+          "<option selected value=\"Hist\">Alternate Question Text</option> ");
       }
       else {
         searchInList.append(
-          "<option value=\"Hist\">Historic Short CDE Name</option> ");
+          "<option value=\"Hist\">Alternate Question Text</option> ");
       }
     }
 
@@ -528,7 +528,7 @@ public class DataElementSearchBean extends Object {
       altName = "";
       objectClass = "";
       property = "";
-      
+
   }
   public void resetLOVList() throws Exception
   {

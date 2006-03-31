@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.12 2005-10-03 21:57:09 jiangja Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.13 2006-03-31 13:38:54 jiangj Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -411,7 +411,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     columnInfo.add(
       new ColumnInfo("LONG_NAME", "Data Element Long Name", "String"));
     columnInfo.add(
-      new ColumnInfo("DOC_TEXT", "Data Element Document Text", "String"));
+      new ColumnInfo("DOC_TEXT", "Data Element Preferred Question Text", "String"));
     columnInfo.add(
       new ColumnInfo(
         "PREFERRED_DEFINITION", "Data Element Preferred Definition", "String"));
