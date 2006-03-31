@@ -512,7 +512,7 @@ function gotoCDESearchPrefs() {
                sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
                separator=">>" 
                showDefault="Y"
-               labelMapping="doc_text,Document Text,long_name,Long Name,name,Owned By,de_usedby,Used By Context,registration_status,Registration Status,display_order,Registration Status,asl_name,Workflow Status,cdeid,Public ID,de_version,Version,wkflow_order,Workflow Status"
+               labelMapping="doc_text,Preferred Question Text,long_name,Long Name,name,Owned By,de_usedby,Used By Context,registration_status,Registration Status,display_order,Registration Status,asl_name,Workflow Status,cdeid,Public ID,de_version,Version,wkflow_order,Workflow Status"
                defaultText=" (Default) "
                ascendingText=" [Ascending]"
                descendingText=" [Descending]"
@@ -555,7 +555,7 @@ function gotoCDESearchPrefs() {
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
  	       	  actionUrl='<%="/search?performQuery=sortResults" + pageUrl + urlParams %>'
-     	   	  columnHeader="Document Text" 
+     	   	  columnHeader="Preferred Question Text" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
        	     sortFieldValue = "doc_text"
@@ -680,7 +680,7 @@ function gotoCDESearchPrefs() {
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader">Long Name</th>
-    <th class="OraTableColumnHeader">Document Text</th>
+    <th class="OraTableColumnHeader">Preferred Question Text</th>
     <th class="OraTableColumnHeader">Owned By</th>
     <th class="OraTableColumnHeader">Used By Context</th>
     <th class="OraTableColumnHeader">Registration</th>

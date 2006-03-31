@@ -51,7 +51,7 @@ from sbr.reference_documents rd2,
 sbr.data_elements de2  
 where  de2.de_idseq  = rd2.ac_idseq (+)  
 and    rd2.dctl_name (+) = 
-'HISTORIC SHORT CDE NAME'  
+'Alternate Question Text'  
 and    upper (nvl(rd2.doc_text,'%')) 
 like upper (:5))
 order by de.preferred_name,de.version

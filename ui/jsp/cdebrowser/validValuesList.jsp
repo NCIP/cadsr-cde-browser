@@ -99,7 +99,7 @@ function listChanged(urlInfo) {
  
 
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Document Text:</td>
+    <td class="TableRowPromptText">Preferred Question Text:</td>
     <td class="OraFieldText"><%=de.getLongCDEName()%></td>
  </tr>
  

@@ -1,24 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=WINDOWS-1252">
@@ -180,7 +159,7 @@ function subTabClicked(tabNum,urlParams) {
  </tr>
 
  <tr class="OraTabledata">
-    <td class="TableRowPromptText">Document Text:</td>
+    <td class="TableRowPromptText">Preferred Question Text:</td>
     <td class="OraFieldText"></td>
  </tr>
  
