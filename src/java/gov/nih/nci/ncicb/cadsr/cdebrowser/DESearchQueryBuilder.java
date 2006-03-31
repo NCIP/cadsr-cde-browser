@@ -48,10 +48,10 @@ public class DESearchQueryBuilder extends Object {
     if (treeParamType != null && (treeParamType.equalsIgnoreCase("REGCSI") ||
     treeParamType.equalsIgnoreCase("REGCS")))  {
        String[] subStr = treeParamIdSeq.split(",");
-       this.treeParamIdSeq =subStr[0]; 
+       this.treeParamIdSeq =subStr[0];
        this.treeParamRegStatus = subStr[1];
     }
-    else 
+    else
       this.treeParamIdSeq = treeParamIdSeq;
     this.treeParamType =  treeParamType;
     this.treeConteIdSeq = treeConteIdSeq;
@@ -149,7 +149,7 @@ public class DESearchQueryBuilder extends Object {
         latestWhere = " and de.latest_version_ind = 'Yes' ";
       }
       whereBuffer.append(latestWhere);
-      
+
       if (this.treeParamRegStatus !=null)
         whereBuffer.append(" and acr.registration_status = '"+ this.treeParamRegStatus + "'");
     }
@@ -240,7 +240,7 @@ public class DESearchQueryBuilder extends Object {
       //if (!getSearchStr(3).equals("")){
       if (!searchStr3.equals("")){
         String newCdeStr = StringReplace.strReplace(searchStr3,"*","%");
-        cdeIdWhere = " and " + buildSearchString("to_char(de.cde_id) like 'SRCSTR'", 
+        cdeIdWhere = " and " + buildSearchString("to_char(de.cde_id) like 'SRCSTR'",
         newCdeStr, searchBean.getNameSearchMode());
       }
 
@@ -650,7 +650,7 @@ public class DESearchQueryBuilder extends Object {
           sb.append("," +  sortColumnHeader.getSecondary()+ sortOrder);
        else
           sb.append("," + "upper(" + sortColumnHeader.getSecondary()+ ")"+ sortOrder);
-        
+
     if(sortColumnHeader.getTertiary()!=null&&!sortColumnHeader.getTertiary().equalsIgnoreCase(""))
        if (sortColumnHeader.isColumnNumeric(sortColumnHeader.getTertiary()))
           sb.append("," + sortColumnHeader.getTertiary()+ sortOrder);
@@ -731,290 +731,145 @@ public class DESearchQueryBuilder extends Object {
   }
 
   private String buildSearchTextWhere(String text, String[] searchDomain, String searchMode) {
-    String docWhere = "";
+    String docWhere = null;
     String newSearchStr = "";
-    String searchWhere = "";
+    String searchWhere = null;
+    String longNameWhere =null;
+    String shortNameWhere =null;
+    String docTextSearchWhere =null;
+    String docTextTypeWhere =null;
+    String umlAltNameWhere = null;
+     
 
     newSearchStr = StringReplace.strReplace(text,"*","%");
     newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
-    
+
+     if (StringUtils.containsKey(searchDomain,"ALL") ||
+        StringUtils.containsKey(searchDomain,"Long Name") ) {
+         longNameWhere = buildSearchString("upper (de1.long_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode);
+      }
+
+     if (StringUtils.containsKey(searchDomain,"ALL") ||
+        StringUtils.containsKey(searchDomain,"Short Name") ) {
+        shortNameWhere = buildSearchString("upper (de1.preferred_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode);
+      }
+     if (StringUtils.containsKey(searchDomain,"ALL") ||
+         StringUtils.containsKey(searchDomain,"Doc Text") ||
+          StringUtils.containsKey(searchDomain,"Hist")) {
+       docTextSearchWhere =
+         buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode);
+     }
+
+     // compose the search for data elements table
+     searchWhere = longNameWhere;
+
+     if (searchWhere == null) {
+        searchWhere = shortNameWhere;
+     } else if (shortNameWhere !=null) {
+        searchWhere = searchWhere + " OR " + shortNameWhere;
+     }
+
+     if (searchWhere == null && docTextSearchWhere != null ) {
+        searchWhere = " and " + docTextSearchWhere;
+     } else if (docTextSearchWhere != null) {
+        searchWhere = searchWhere + " OR " + docTextSearchWhere;
+        searchWhere = " and (" + searchWhere +  ") ";
+     }
+
+     if (StringUtils.containsKey(searchDomain,"ALL") ||
+       ( StringUtils.containsKey(searchDomain,"Doc Text")&&
+          StringUtils.containsKey(searchDomain,"Hist"))) {
+         docWhere = "(select de_idseq "
+                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
+                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
+                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
+                  + searchWhere
+                  +" union "
+                  +" select de_idseq "
+                  +" from sbr.reference_documents rd2,sbr.data_elements de2 "
+                  +" where  de2.de_idseq  = rd2.ac_idseq (+) "
+                  +" and    rd2.dctl_name (+) = 'Alternate Question Text' "
+                  +" and    upper (nvl(rd2.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
+     } else if  ( StringUtils.containsKey(searchDomain,"Doc Text")) {
+        docTextTypeWhere = "rd1.dctl_name (+) = 'Preferred Question Text'";
+     } else if  ( StringUtils.containsKey(searchDomain,"Hist")) {
+        docTextTypeWhere = "rd1.dctl_name (+) = 'Alternate Question Text'";
+     }
+
+    if (docTextSearchWhere == null && searchWhere != null) {
+       //this is a search not involving reference documents
+        docWhere = "(select de_idseq "
+                    +" from sbr.data_elements de1 "
+                    +" where  " + searchWhere + " ) ";
+
+    } else if (docWhere == null && docTextTypeWhere != null) {
+       docWhere = "(select de_idseq "
+                   +" from sbr.reference_documents rd1,sbr.data_elements de1 "
+                   +" where  de1.de_idseq  = rd1.ac_idseq (+) "
+                   +" and  " + docTextTypeWhere
+                   + searchWhere + " ) ";
+
+    }
     
     if (StringUtils.containsKey(searchDomain,"ALL") ||
-       (StringUtils.containsKey(searchDomain,"Long Name") &&
-          StringUtils.containsKey(searchDomain,"Short Name") &&
-          StringUtils.containsKey(searchDomain,"Hist") &&
-          StringUtils.containsKey(searchDomain,"Doc Text"))) {
-      searchWhere = " and (" + buildSearchString("upper (de.long_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)
-      + " OR " + buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode) +
-        " OR " + buildSearchString("upper (de.preferred_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)  + ") ";
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
-                  + searchWhere
-                  +" union "
-                  +" select de_idseq "
-                  +" from sbr.reference_documents rd2,sbr.data_elements de2 "
-                  +" where  de2.de_idseq  = rd2.ac_idseq (+) "
-                  +" and    rd2.dctl_name (+) = 'HISTORIC SHORT CDE NAME' "
-                  +" and "
-                  + buildSearchString ("upper (nvl(rd2.doc_text,'%')) like upper ('SRCSTR')", newSearchStr, searchMode)
-                  +")";
-      return docWhere;
-    }
-
-    else if(StringUtils.containsKey(searchDomain,"Long Name") &&
-            StringUtils.containsKey(searchDomain,"Short Name") &&
-            StringUtils.containsKey(searchDomain,"Hist")) {
-
-      searchWhere =
-        " and (" + buildSearchString("upper (de.long_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)
-         + " OR " +  buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode)
-         + " OR " + buildSearchString("upper (de.preferred_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)  + ") ";
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'HISTORIC SHORT CDE NAME' "
-                  + searchWhere + " ) ";
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Long Name") &&
-            StringUtils.containsKey(searchDomain,"Short Name") &&
-            StringUtils.containsKey(searchDomain,"Doc Text")) {
-
-        searchWhere =
-          " and (" + buildSearchString("upper (de.long_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)
-           + " OR " +  buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode)
-           + " OR " + buildSearchString("upper (de.preferred_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)  + ") ";
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
-                  + searchWhere + " ) ";
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Long Name") &&
-            StringUtils.containsKey(searchDomain,"Doc Text") &&
-            StringUtils.containsKey(searchDomain,"Hist")) {
-     searchWhere =
-          " and (" + buildSearchString("upper (de.long_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)
-           + " OR " +  buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode)+ ") ";
-
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
-                  + searchWhere
-                  +" union "
-                  +" select de_idseq "
-                  +" from sbr.reference_documents rd2,sbr.data_elements de2 "
-                  +" where  de2.de_idseq  = rd2.ac_idseq (+) "
-                  +" and    rd2.dctl_name (+) = 'HISTORIC SHORT CDE NAME' "
-                  +" and    upper (nvl(rd2.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Short Name") &&
-            StringUtils.containsKey(searchDomain,"Doc Text") &&
-            StringUtils.containsKey(searchDomain,"Hist")) {
-     searchWhere =
-             " and (" + buildSearchString("upper (de.preferred_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)
-              + " OR " +  buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode)+ ") ";
-
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
-                  + searchWhere
-                  +" union "
-                  +" select de_idseq "
-                  +" from sbr.reference_documents rd2,sbr.data_elements de2 "
-                  +" where  de2.de_idseq  = rd2.ac_idseq (+) "
-                  +" and    rd2.dctl_name (+) = 'HISTORIC SHORT CDE NAME' "
-                  +" and    upper (nvl(rd2.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Long Name") &&
-            StringUtils.containsKey(searchDomain,"Short Name")) {
-      searchWhere =
-        " (" + buildSearchString("upper (de.preferred_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode) +
-          " OR " + buildSearchString("upper (de.long_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode) + ") ";
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.data_elements de1 "
-                  +" where  " + searchWhere + " ) ";
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Long Name") &&
-            StringUtils.containsKey(searchDomain,"Doc Text")) {
-      searchWhere =
-        " and (" + buildSearchString("upper (de.long_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)
-         + " OR " +  buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode)+ ") ";
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
-                  + searchWhere + " ) ";
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Long Name") &&
-            StringUtils.containsKey(searchDomain,"Hist")) {
-      searchWhere =
-        " and (" + buildSearchString("upper (de.long_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)
-         + " OR " +  buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode)+ ") ";
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'HISTORIC SHORT CDE NAME' "
-                  + searchWhere + " ) ";
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Short Name") &&
-            StringUtils.containsKey(searchDomain,"Doc Text")) {
-      searchWhere =
-        " and (" + buildSearchString("upper (de.preferred_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)
-         + " OR " +  buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode)+ ") ";
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
-                  + searchWhere+ " ) ";
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Short Name") &&
-            StringUtils.containsKey(searchDomain,"Hist")) {
-      searchWhere =
-        " and (" + buildSearchString("upper (de.preferred_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode)
-         + " OR " +  buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode)+ ") ";
-
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'HISTORIC SHORT CDE NAME' "
-                  + searchWhere+ " ) ";
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Doc Text") &&
-            StringUtils.containsKey(searchDomain,"Hist")) {
-      searchWhere =
-        " and " + buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode);
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
-                  + searchWhere
-                  +" union "
-                  +" select de_idseq "
-                  +" from sbr.reference_documents rd2,sbr.data_elements de2 "
-                  +" where  de2.de_idseq  = rd2.ac_idseq (+) "
-                  +" and    rd2.dctl_name (+) = 'HISTORIC SHORT CDE NAME' "
-                  +" and " +buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode) +") ";
-      return docWhere;
-    }
-    else if (StringUtils.containsKey(searchDomain,"Short Name")) {
-      searchWhere =buildSearchString("upper (de.preferred_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode);
- 
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.data_elements de1 "
-                  +" where "+ searchWhere + " ) ";
-      return docWhere;
-    }
-    else if (StringUtils.containsKey(searchDomain,"Long Name")) {
-      searchWhere =buildSearchString("upper (de.long_name) like upper ( 'SRCSTR') ", newSearchStr, searchMode);
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.data_elements de1 "
-                  +" where "+ searchWhere + " ) " ;
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Hist")) {
-      searchWhere =
-        " and " +  buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode);
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'HISTORIC SHORT CDE NAME' "
-                  + searchWhere + " ) ";
-      return docWhere;
-    }
-    else if(StringUtils.containsKey(searchDomain,"Doc Text")) {
-      searchWhere =
-        " and " +  buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode);
-
-      docWhere = " and de.de_idseq IN "
-                  +"(select de_idseq "
-                  +" from sbr.reference_documents rd1,sbr.data_elements de1 "
-                  +" where  de1.de_idseq  = rd1.ac_idseq (+) "
-                  +" and    rd1.dctl_name (+) = 'Preferred Question Text' "
-                  + searchWhere + " ) ";
-      return docWhere;
-    }
-
-    return docWhere;
+    StringUtils.containsKey(searchDomain,"UML ALT Name") ) {
+      umlAltNameWhere = 
+       " (select de_idseq  from sbr.designations dsn,sbr.data_elements de1  "
+       + "where  de1.de_idseq  = dsn.ac_idseq (+)  "
+       + "and dsn.detl_name = 'UML Class:UML Attr'  and "
+      +  buildSearchString("upper (nvl(dsn.name,'%')) like upper ('SRCSTR')", newSearchStr, searchMode)
+      +" )";
+    
+      if (docWhere == null)
+         return  " and de.de_idseq IN " + umlAltNameWhere;
+      else {
+         String nameWhere = " and de.de_idseq IN (" + umlAltNameWhere 
+         + " union " + docWhere +") " ;     
+         return nameWhere;
+      }
+   }
+   
+    return " and de.de_idseq IN " + docWhere;
   }
-  
-  
+
+
   private String buildSearchString(String whereTemplate, String searchPhrase, String searchMode) {
     Pattern p = Pattern.compile(REPLACE_TOKEN);
-    Matcher matcher = p.matcher(whereTemplate);  
-    
-    if (searchMode.equals(ProcessConstants.DE_SEARCH_MODE_EXACT)) 
+    Matcher matcher = p.matcher(whereTemplate);
+
+    if (searchMode.equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
      return matcher.replaceAll(searchPhrase);
-    
+
     String oper = null;
     if (searchMode.equals(ProcessConstants.DE_SEARCH_MODE_ANY)) oper = " or ";
     else oper =" and ";
-     
+
     String[] words = searchPhrase.split(" ");
     String whereClause = "(";
     for (int i=0; i<words.length; i++) {
-        if (whereClause.length() > 2) 
+        if (whereClause.length() > 2)
             whereClause += oper;
         whereClause += buildWordMatch(matcher, words[i]);
-        
+
     }
-    
+
     whereClause += ")";
-      
+
     return whereClause;
   }
-  
+
   /**
    *  This method returns the query for whole word matching the input param word
-   *  
+   *
      * @param matcher
      * @param word
-     * @return 
+     * @return
      */
   private String buildWordMatch(Matcher matcher, String word){
      return  "(" + matcher.replaceAll("% "+word+" %")
-              + " or " + matcher.replaceAll(word+" %") 
-              + " or " + matcher.replaceAll(word) 
-              + " or " + matcher.replaceAll("% "+word) + ")"  ;    
+              + " or " + matcher.replaceAll(word+" %")
+              + " or " + matcher.replaceAll(word)
+              + " or " + matcher.replaceAll("% "+word) + ")"  ;
   }
 
   private String buildValidValueWhere(String value, String searchMode) {
@@ -1024,27 +879,27 @@ public class DESearchQueryBuilder extends Object {
       +" , sbr.vd_pvs vp, sbr.permissible_values pv  "
       + " where  vd.vd_idseq = vp.vd_idseq  "
       + "and    pv.pv_idseq = vp.pv_idseq and ";
-      
+
     Pattern p = Pattern.compile(REPLACE_TOKEN);
-    Matcher matcher = p.matcher("upper (pv.value) like upper ('SRCSTR') ");  
-      
-    if (searchMode.equals(ProcessConstants.DE_SEARCH_MODE_EXACT)) 
-       return (" and de.vd_idseq IN (" + whereClause 
+    Matcher matcher = p.matcher("upper (pv.value) like upper ('SRCSTR') ");
+
+    if (searchMode.equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
+       return (" and de.vd_idseq IN (" + whereClause
        + matcher.replaceAll(newSearchStr) +")");
-      
+
     String oper = null;
       if (searchMode.equals(ProcessConstants.DE_SEARCH_MODE_ANY)) oper = " UNION ";
       else oper =" INTERSECT ";
-       
+
       String[] words = newSearchStr.split(" ");
       String vvWhere = " and de.vd_idseq IN (";
       for (int i=0; i<words.length; i++) {
-          if (i > 0) 
+          if (i > 0)
               vvWhere += oper;
           vvWhere += (whereClause + buildWordMatch(matcher, words[i]));
-          
+
       }
-      
+
       vvWhere += ")";
 
      return vvWhere;
