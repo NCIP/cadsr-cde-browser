@@ -367,6 +367,10 @@ public class DataElementSearchBean extends Object {
       searchInList.append("<option value=\"Doc Text\">Preferred Question Text</option> ");
       searchInList.append(
         "<option value=\"Hist\">Alternate Question Text</option> ");
+       searchInList.append(
+         "<option value=\"UML ALT Name\">UML Class:UML Attr Alternate Name</option> ");
+        
+       
     }
     else {
       if (StringUtils.containsKey(searchIn, "ALL")) {
@@ -409,6 +413,16 @@ public class DataElementSearchBean extends Object {
         searchInList.append(
           "<option value=\"Hist\">Alternate Question Text</option> ");
       }
+      
+       if (StringUtils.containsKey(searchIn, "UML ALT Name")) {
+         searchInList.append(
+           "<option selected value=\"UML ALT Name\">UML Class:UML Attr Alternate Name</option> ");
+       }
+       else {
+         searchInList.append(
+           "<option value=\"UML ALT Name\">UML Class:UML Attr Alternate Name</option> ");
+       }
+
     }
 
     searchInList.append("</select> ");
