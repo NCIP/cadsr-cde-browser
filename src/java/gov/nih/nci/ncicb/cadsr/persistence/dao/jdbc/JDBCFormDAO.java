@@ -1405,9 +1405,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       in.put("p_conte_idseq", newForm.getContext().getConteIdseq());
       //TODO - CopyForm - should copy the protocols in another table?
       //in.put("p_proto_idseq", newForm.getProtocol().getProtoIdseq());
-      //TESTING
-       in.put("p_proto_idseq", null);
-       //end of testing
+      in.put("p_proto_idseq", null);
       in.put("p_asl_name", newForm.getAslName());
       in.put("p_created_by", newForm.getCreatedBy());
 
@@ -1464,12 +1462,22 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
    //Form is now associated with multiple protocols. So form header does not include protocols any more
   private class UpdateFormComponent extends SqlUpdate {
     public UpdateFormComponent(DataSource ds) {
-      String updateFormSql =
+      /*String updateFormSql =
         " UPDATE quest_contents_ext SET " +
         " qtl_name = ?, conte_idseq = ?, asl_name = ?, preferred_name = ?, " +
         " preferred_definition = ?, proto_idseq = ?, long_name = ?, qcdl_name = ?, " +
         " modified_by = ? " +
         " WHERE qc_idseq = ? ";
+       */
+       
+       //update form should keep the existing proto_idseq 
+       //even though the protocols are stored in a new table in 3.1
+       String updateFormSql =
+         " UPDATE quest_contents_ext SET " +
+         " qtl_name = ?, conte_idseq = ?, asl_name = ?, preferred_name = ?, " +
+         " preferred_definition = ?, long_name = ?, qcdl_name = ?, " +
+         " modified_by = ? " +
+         " WHERE qc_idseq = ? ";        
 
       this.setDataSource(ds);
       this.setSql(updateFormSql);
@@ -1478,7 +1486,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
       declareParameter(new SqlParameter("asl_name", Types.VARCHAR));
       declareParameter(new SqlParameter("preferred_name", Types.VARCHAR));
       declareParameter(new SqlParameter("preferred_definition", Types.VARCHAR));
-      declareParameter(new SqlParameter("proto_idseq", Types.VARCHAR));
+      //declareParameter(new SqlParameter("proto_idseq", Types.VARCHAR));
       declareParameter(new SqlParameter("long_name", Types.VARCHAR));
       declareParameter(new SqlParameter("qcdl_name", Types.VARCHAR));
       declareParameter(new SqlParameter("modified_by", Types.VARCHAR));
@@ -1488,7 +1496,7 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
     protected int updateFormFields(Form form) {
 
-      String protocolIdSeq = null;
+      //String protocolIdSeq = null;
       //form is now associated with mulitple forms. Form fields do not include protocols.
       /*if(form.getProtocol()!=null) {
          protocolIdSeq = form.getProtocol().getProtoIdseq();
@@ -1499,7 +1507,8 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
         new Object[] {
           form.getFormType(), form.getContext().getConteIdseq(), form.getAslName(),
           form.getPreferredName(), form.getPreferredDefinition(),
-          protocolIdSeq, form.getLongName(),
+          //protocolIdSeq, 
+          form.getLongName(),
           form.getFormCategory(), form.getModifiedBy(), form.getFormIdseq()
         };
       int res = update(obj);
