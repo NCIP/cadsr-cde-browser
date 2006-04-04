@@ -390,7 +390,7 @@ function repeatDisplay(methodName) {
                             <tr class="OraTableColumnHeader">
                               <td align="center">
                                   <a href="javascript:submitModuleRepition('<%=NavigationConstants.CHECK_CHANGES_MODULE_EDIT%>','<%=moduleIndex%>')">
-                                     Manage repetition
+                                     Manage Repetition
                                   </a>                                    
                                 </td>                              
                              <td align="center">
