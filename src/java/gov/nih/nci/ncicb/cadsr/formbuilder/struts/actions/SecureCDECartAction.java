@@ -109,7 +109,11 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       q.setQuesIdseq(new Date().getTime() + "" + i);
       q.setValidValues(newValidValues);
       q.setDataElement(de);
-      q.setLongName(de.getLongName());
+      if (de.getLongCDEName()==null){
+        q.setLongName("");
+      }else{
+        q.setLongName(de.getLongCDEName());
+      }
       q.setVersion(crf.getVersion());
       q.setAslName(crf.getAslName());
       q.setPreferredDefinition(de.getPreferredDefinition());
@@ -173,13 +177,16 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       ArrayList al = new ArrayList(col);
 
       de = (DataElement) ((CDECartItem) al.get(deIndex)).getItem();
+      if (newLongName==null || "null".equals(newLongName)){
+          newLongName = "";
+      }
 
       //get reference docs
       FormBuilderServiceDelegate service = getFormBuilderService();
       List refDocs = null;
       
       try {
-          refDocs = service.getRreferenceDocuments(de.getDeIdseq());
+          refDocs = service.getRreferenceDocuments(de.getDeIdseq());          
           de.setReferenceDocs(refDocs);
        }catch (FormBuilderException exp){
            if (log.isErrorEnabled()) {
