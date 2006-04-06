@@ -669,7 +669,7 @@ function clearProtocol() {
                               <cde:questionAltText questionBeanId= "question" 
                                                   htmlObjectRef='<%=FormConstants.MODULE_QUESTIONS+"["+questionIndex+"]"%>'
                                                   questionProperty = "longName"
-                                                  deProperty = "longName"
+                                                  deProperty = "longCDEName"
                                                   orgModuleBeanId= '<%=FormConstants.CLONED_MODULE%>'
                                                   formIndex="0"
                                                   questionIndex="<%=questionIndex.toString()%>" /> 
@@ -874,7 +874,12 @@ function clearProtocol() {
                                           <tr class="OraHeaderBlack" >
                                            <td class="OraFieldText" width="86%">
                                           <bean:write name="validValue" property="longName"/>
-                                          <a href="javascript:populateDefaultValue('<%=validValue.getLongName()%>','<%=validValue.getValueIdseq()%>', '<%=questionIndex%>')">
+                                          <% String formattedValidValue = validValue.getLongName();
+                                             formattedValidValue = StringUtils.strReplace(formattedValidValue, "\"","&quot;");
+                                             formattedValidValue = StringUtils.strReplace(formattedValidValue, "\'",  "&acute;");
+                                             //System.out.println("=======formattedValidValue=" + formattedValidValue);
+                                           %>  
+                                          <a href="javascript:populateDefaultValue('<%=formattedValidValue%>', '<%=validValue.getValueIdseq()%>', '<%=questionIndex%>')">
                                              Set as Question Default Value
                                           </a>                          
                                            </td>
