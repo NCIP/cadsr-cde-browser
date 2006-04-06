@@ -9,6 +9,8 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.resource.DataElement"%>
+
 <html:html>
 <HEAD>
 <TITLE>Change Associations</TITLE>
@@ -103,7 +105,11 @@ function details(linkParms ){
 %>
       <tr class="OraTabledata">
         <td class="OraFieldText">
-          <% String s = StringUtils.strReplace(de.getItem().getLongName(),"\"","&quot;"); %> 
+          <% String s = ((DataElement)(de.getItem())).getLongCDEName();
+             if (s!=null && s.length()!=0){
+             	s = StringUtils.strReplace(s,"\"","&quot;"); 
+             }
+          %> 
           <html:radio property="selectedText" value="<%= itemId + \",\" + s %>"/>
             <a href="<%= detailsURL %>">
           <bean:write name="de" property="item.longName"/>
