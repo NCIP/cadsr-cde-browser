@@ -24,7 +24,7 @@ import gov.nih.nci.ncicb.cadsr.util.*;
  * Preferred question text. Depending on the  ref doc type;
  *  If only a single item item exist a hyper text is displayed
  *  Otherwise a Select box is displayed
- *  
+ *
  * Example Usage
  * <cde:RefDocAltQuestionTextDisplay questionBeanId= "question" //Current Question bean Id
  *                    htmlObjectRef="targetObjectId"// Target location to copy value
@@ -34,13 +34,13 @@ import gov.nih.nci.ncicb.cadsr.util.*;
  *                    questionIndex="1"  // index of the question in the module
  *                    selectBoxJSFunctionName="refDocSelected" //JS function when selected
  *                    hyperLinkJSFunctionName="refDocHyperlink" //hper for single vaue
- *                    /> 
- *                 
+ *                    />
+ *
  * Uses the the javascripts below to populate selection to question text
  * function refDocSelected(srcCompId,targetCompId)
  *   {
  *        var targetObj = document.getElementById(targetCompId);
- *         
+ *
  *         var srcObj = document.getElementById(srcCompId);
  *         var i;
  *         var count = 0;
@@ -50,13 +50,13 @@ import gov.nih.nci.ncicb.cadsr.util.*;
  *             }
  *           }
  *     }
- *  
+ *
  *  function refDocHyperlink(targetCompId,newValue)
  *    {
  *        var targetObj = document.getElementById(targetCompId);
  *        targetObj.value=newValue;
- *       
- *     }  
+ *
+ *     }
  */
 public class RefDocAltQuestionTextDisplay extends TagSupport implements CaDSRConstants,FormConstants
 {
@@ -68,15 +68,15 @@ public class RefDocAltQuestionTextDisplay extends TagSupport implements CaDSRCon
   private String refDocType;
   private String hyperLinkJSFunctionName;
   private String selectBoxJSFunctionName;
-  
 
-  
+
+
 
 
   public RefDocAltQuestionTextDisplay()
   {
   }
-  
+
   public int doStartTag() throws javax.servlet.jsp.JspException {
     HttpServletRequest  req;
     JspWriter out;
@@ -86,28 +86,32 @@ public class RefDocAltQuestionTextDisplay extends TagSupport implements CaDSRCon
         Question currQuestion = (Question)pageContext.getAttribute(questionBeanId);
         String longName = currQuestion.getLongName();
         DataElement de = currQuestion.getDataElement();
-        
-        
-        if(de!=null) 
+
+
+        if(de!=null)
         {
             List refDocs = de.getRefereceDocs();
-            if(refDocs!=null&&!refDocs.isEmpty()) 
+            if(refDocs!=null&&!refDocs.isEmpty())
             {
                 List<ReferenceDocument> matchingDocs = ReferenceDocUtil.getReferenceDocsByType(refDocs,refDocType);
                 if(!matchingDocs.isEmpty())
                 {
-                    
+
                     if(matchingDocs.size()<2)
                     {
                         // Generate Hyper link
                          String itemIdentifierPrefix = "questionOptionHyperLink"+refDocType;
                         ReferenceDocument currDoc = (ReferenceDocument)matchingDocs.get(0);
                         String displayString = currDoc.getDocText();
+                        if (displayString!=null && displayString.length()>0){
+                            displayString = StringUtils.strReplace(displayString, "'", "\\'");
+                            displayString = StringUtils.strReplace(displayString, "\"", "&quot;");
+                        }
                         StringBuffer linkStr = new StringBuffer("<a href=\"javascript:"+hyperLinkJSFunctionName+"('"+htmlObjectRef+"','"+displayString+"')\">");
-                        linkStr.append(displayString);
+                        linkStr.append(currDoc.getDocText());
                         linkStr.append("</a>");
                         //out.print(script);
-                        out.print(linkStr.toString());                        
+                        out.print(linkStr.toString());
                     }
                     else
                     {
@@ -118,7 +122,10 @@ public class RefDocAltQuestionTextDisplay extends TagSupport implements CaDSRCon
                         for(ReferenceDocument currDoc: matchingDocs)
                         {
                             String displayString = (currDoc).getDocText();
-                            buffer.append("<option value=\""+displayString+"\">"+displayString+"</option>");
+                            if (displayString!=null && displayString.length()>0){
+                                displayString = StringUtils.strReplace(displayString, "\"", "&quot;");
+                            }
+                            buffer.append("<option value=\""+displayString+"\">"+(currDoc).getDocText()+"</option>");
                         }
                         buffer.append("</select>");
                         out.print(buffer.toString());
@@ -132,9 +139,9 @@ public class RefDocAltQuestionTextDisplay extends TagSupport implements CaDSRCon
       }//end try/catch
       return Tag.SKIP_BODY;
 
-    }//end doStartTag()  
+    }//end doStartTag()
 
-  
+
   private Question getQuestionFromList(
     String questionIdSeq,
     List questions) {
