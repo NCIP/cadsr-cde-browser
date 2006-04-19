@@ -36,7 +36,7 @@ public class TreeUtils {
 
     return results;
   }
-  
+
   /*
    * Get the Complete bread crumbs and set it as a parameter in getAction
    * of webnode
@@ -59,16 +59,18 @@ public class TreeUtils {
     //remove the extra ">>"
     crumbs.delete(crumbs.length()-2,crumbs.length());
     String crumbsStr = crumbs.toString();
-    
+
     //This is done to get around ' in the names
-    
+
     crumbsStr = StringUtils.strReplace(crumbsStr,"'","*??*");
-    
+    //This is done to get around " in the names
+    crumbsStr = StringUtils.strReplace(crumbsStr,"\"","&quot;");
+
     //crumbsStr = URLEncoder.encode(crumbsStr);
     String actionValue = webNode.getAction();
     String newActionStr = StringUtils.strReplace(actionValue,TreeConstants.TREE_BREADCRUMBS_HOLDER,crumbsStr);
     webNode.setAction(newActionStr);
-  }  
+  }
     private static StringBuffer removeContextDesc(StringBuffer crumbs)
   {
      if(crumbs.indexOf("(")>0)
@@ -78,6 +80,6 @@ public class TreeUtils {
       crumbs.delete(startIndex,endIndex+1);
      }
       return crumbs;
-      
+
   }
 }
