@@ -25,7 +25,7 @@
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
    <property name="cdebrowser.version" value="3.1" />
-   <property name="cdebrowser.build" value="15" />
+   <property name="cdebrowser.build" value="16" />
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="3_1" />
@@ -846,6 +846,9 @@
          <fileset dir="${config.home}/WEB-INF">
            <patternset>
              <include name="jboss/web.xml"/>
+             <include name="admin/*.xml"/>
+             <include name="cdebrowser/*.xml"/>
+             <include name="formbuilder/*.xml"/>
              <include name="spring/*.xml"/>
              <include name="ocbrowser/*.xml"/>
            </patternset>
