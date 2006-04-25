@@ -80,6 +80,7 @@ public class GetDataElementDetails extends BasePersistingProcess {
     String cdeId = getStringInfo("cdeId");
     String version = getStringInfo("version");
     Object sessionId = getSessionId();
+    myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
 
     try {
       if (queryDE == null) {
@@ -100,19 +101,20 @@ public class GetDataElementDetails extends BasePersistingProcess {
         else {
           throw new IllegalURLParametersException("Incorrect URL parameters");
         }
+
+      ApplicationServiceLocator  appServiceLocator =(ApplicationServiceLocator)
+      myRequest.getSession().getServletContext().getAttribute(ApplicationServiceLocator.APPLICATION_SERVICE_LOCATOR_CLASS_KEY);
+      
+      CDEBrowserService cdeBrowserService = appServiceLocator.findCDEBrowserService();
+      // add service to cdeBrowserService to retrieve the cs of alt names and alt def
+      cdeBrowserService.populateDataElementAltNameDef(de);
+
       }
       else {
         de = (DataElement) getInfoObject("de");
       }
 
       tib = new TabInfoBean("cdebrowser_details_tabs");
-      myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
-       ApplicationServiceLocator  appServiceLocator =(ApplicationServiceLocator)
-       myRequest.getSession().getServletContext().getAttribute(ApplicationServiceLocator.APPLICATION_SERVICE_LOCATOR_CLASS_KEY);
-       
-      CDEBrowserService cdeBrowserService = appServiceLocator.findCDEBrowserService();
-// add service to cdeBrowserService to retrieve the cs of alt names and alt def
-      cdeBrowserService.populateDataElementAltNameDef(de);
       tib.processRequest(myRequest);
 
       if (tib.getMainTabNum() != 0) {
