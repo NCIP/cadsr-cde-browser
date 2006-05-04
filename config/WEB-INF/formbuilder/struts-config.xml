@@ -343,6 +343,7 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.SecureCDECartAction"
       validate="false">
       <forward name="success" path="/moduleToEditAction.do?method=getModuleToEdit"/>
+      <forward name="failure" path="/formbuilder/moduleEdit.jsp"/>
     </action> 
   </action-mappings>
  
