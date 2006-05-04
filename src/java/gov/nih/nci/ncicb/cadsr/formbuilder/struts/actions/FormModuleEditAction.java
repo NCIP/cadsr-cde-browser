@@ -378,8 +378,13 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
           Question deletedQuestion =
             (Question) questions.remove(questionIndex.intValue());
             FormActionUtil.setInitDisplayOrders(questions);
-    
-          deletedQuestions.add(deletedQuestion);
+          //Save the deleted question if it has a longName
+          if (!((deletedQuestion.getLongName() == null)||(deletedQuestion.getLongName().equals("")))){
+             deletedQuestions.add(deletedQuestion);
+          }
+          else {
+              saveMessage("cadsr.formbuilder.delete.question.delete.success.noname",request);
+          }
         }
     
         setSessionObject(request, DELETED_QUESTIONS, deletedQuestions,true);

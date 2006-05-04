@@ -182,7 +182,58 @@
       </field>
       <field   property="moduleQuestions" 
       	indexedListProperty="moduleQuestions"
-        depends="required, maxlength">
+        depends="requiredif">
+        <arg0 key="cadsr.formbuilder.module.question.name"/>
+        <var>
+          <var-name>field[0]</var-name>
+          <var-value>method</var-value>
+        </var>
+        <var>
+          <var-name>fieldTest[0]</var-name>
+          <var-value>EQUAL</var-value>
+        </var>
+        <var>
+          <var-name>fieldValue[0]</var-name>
+          <var-value>moveQuestionUp</var-value>
+        </var>      
+      </field>     
+      <field   property="moduleQuestions" 
+      	indexedListProperty="moduleQuestions"
+        depends="requiredif">
+        <arg0 key="cadsr.formbuilder.module.question.name"/>
+        <var>
+          <var-name>field[0]</var-name>
+          <var-value>method</var-value>
+        </var>
+        <var>
+          <var-name>fieldTest[0]</var-name>
+          <var-value>EQUAL</var-value>
+        </var>
+        <var>
+          <var-name>fieldValue[0]</var-name>
+          <var-value>moveQuestionDown</var-value>
+        </var>      
+      </field>     
+      <field   property="moduleQuestions" 
+      	indexedListProperty="moduleQuestions"
+        depends="requiredif">
+        <arg0 key="cadsr.formbuilder.module.question.name"/>
+        <var>
+          <var-name>field[0]</var-name>
+          <var-value>method</var-value>
+        </var>
+        <var>
+          <var-name>fieldTest[0]</var-name>
+          <var-value>EQUAL</var-value>
+        </var>
+        <var>
+          <var-name>fieldValue[0]</var-name>
+          <var-value>saveModule</var-value>
+        </var>      
+      </field>       
+      <field   property="moduleQuestions" 
+      	indexedListProperty="moduleQuestions"
+        depends="maxlength">
         <arg0 key="cadsr.formbuilder.module.question.name"/>
         <arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
         <var>

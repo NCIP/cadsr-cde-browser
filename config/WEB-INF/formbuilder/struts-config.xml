@@ -79,6 +79,7 @@
       <form-property name="skQuestionIndex" type="java.lang.Integer"/>
       <form-property name="skValidValueIndex" type="java.lang.Integer"/>
       <form-property name="triggerActionIndex" type="java.lang.Integer"/>
+      <form-property name="method" type="java.lang.String"/>
       
     </form-bean>       
     <form-bean name="displayCartForm"
