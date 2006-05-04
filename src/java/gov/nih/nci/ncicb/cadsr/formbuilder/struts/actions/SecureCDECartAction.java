@@ -75,6 +75,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     Form crf = (Form) getSessionObject(request, CRF);
     Module module = (Module) getSessionObject(request, MODULE);
     List questions = module.getQuestions();   
+    List newQuestions = new ArrayList(selectedItems.length);
 
     Collection col = sessionCart.getDataElements();
     ArrayList al = new ArrayList(col);
@@ -100,6 +101,10 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
              return mapping.findForward(FAILURE);
       }       
 
+      if (!isValidCDE(de)){
+         saveError("cadsr.formbuilder.form.question.add.badCDE", request, de.getCDEId());
+         return mapping.findForward(FAILURE);
+      }
       Question q = new QuestionTransferObject();
       module.setForm(crf);
       q.setModule(module);
@@ -109,11 +114,8 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       q.setQuesIdseq(new Date().getTime() + "" + i);
       q.setValidValues(newValidValues);
       q.setDataElement(de);
-      if (de.getLongCDEName()==null){
-        q.setLongName("");
-      }else{
-        q.setLongName(de.getLongCDEName());
-      }
+      q.setLongName(de.getLongCDEName());
+
       q.setVersion(crf.getVersion());
       q.setAslName(crf.getAslName());
       q.setPreferredDefinition(de.getPreferredDefinition());
@@ -122,17 +124,19 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       q.setDisplayOrder(displayOrder);
 
       if (displayOrder < questions.size()) {
-        questions.add(displayOrder, q);
+        newQuestions.add(displayOrder, q);
       }
       else {
-        questions.add(q);        
+        newQuestions.add(q);        
       }
-      FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
+    }//end of for
+    //only when all CDE are valid to be added to a form then add new questions to form.module.questions
+    questions.addAll(newQuestions);
+    FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
                                       // in case  they are  incorrect in database
                                             
-    }
     // Jump to the update location on the screen
-        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+displayOrder);    
+    request.setAttribute(CaDSRConstants.ANCHOR,"Q"+displayOrder);    
         
     saveMessage("cadsr.formbuilder.question.add.success",request);
     return mapping.findForward("success");
@@ -195,7 +199,11 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
            saveError(exp.getErrorCode(), request);
            return mapping.findForward(FAILURE);
        }       
-      
+        
+      if (!isValidCDE(de)){
+          saveError("cadsr.formbuilder.form.question.add.badCDE", request, de.getCDEId());
+          return mapping.findForward(FAILURE);
+      }
       
       List values = de.getValueDomain().getValidValues();
       newValidValues = DTOTransformer.toFormValidValueList(values, q);
@@ -471,5 +479,17 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     
     removeSessionObject(request,SELECTED_DATAELEMENTS);
     return mapping.findForward(CANCEL);
-  }   
+  }
+  
+  private boolean  isValidCDE(DataElement de){
+    if (de.getLongCDEName()==null || de.getLongCDEName().length()==0){
+        //does not allow to add such CDE
+         if (log.isDebugEnabled()) {
+           log.debug("CDE without Preferred Question Text is not allowed to add to a form. " +
+                   "the Data Element de Idseq=" + de.getIdseq());
+         }
+        return false;
+    }
+    return true;
+  }  
 }

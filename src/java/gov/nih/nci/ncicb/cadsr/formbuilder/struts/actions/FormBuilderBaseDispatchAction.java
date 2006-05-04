@@ -264,6 +264,24 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
       saveErrors(request,errorMessages);
     }
   }
+
+    protected void saveError(
+        String key,
+         HttpServletRequest request,
+         String arg0) {
+      if (key != null) {
+        ActionError errorMessage = new ActionError(key, arg0);
+        ActionErrors errorMessages = null;
+        errorMessages = (ActionErrors)request.getAttribute(Globals.ERROR_KEY);
+        if(errorMessages==null)
+          errorMessages = new ActionErrors();
+
+        errorMessages.add(errorMessages.GLOBAL_ERROR, errorMessage);
+        saveErrors(request,errorMessages);
+      }
+    }
+
+
   protected void saveMessage(
     String key,
     HttpServletRequest request) {
