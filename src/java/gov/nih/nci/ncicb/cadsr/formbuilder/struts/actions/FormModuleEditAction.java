@@ -383,7 +383,8 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
              deletedQuestions.add(deletedQuestion);
           }
           else {
-              saveMessage("cadsr.formbuilder.delete.question.delete.success.noname",request);
+              //do not show this message.
+              ;//saveMessage("cadsr.formbuilder.delete.question.delete.success.noname",request);
           }
         }
     
