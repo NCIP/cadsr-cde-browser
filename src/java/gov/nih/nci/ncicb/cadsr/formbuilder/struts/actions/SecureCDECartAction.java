@@ -123,15 +123,14 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
       q.setDisplayOrder(displayOrder);
 
-      if (displayOrder < questions.size()) {
-        newQuestions.add(displayOrder, q);
-      }
-      else {
-        newQuestions.add(q);        
-      }
+      newQuestions.add(q);        
     }//end of for
     //only when all CDE are valid to be added to a form then add new questions to form.module.questions
-    questions.addAll(newQuestions);
+    if (displayOrder < questions.size()) {
+        questions.addAll(displayOrder, newQuestions);
+    }else{
+        questions.addAll(newQuestions);
+    }
     FormActionUtil.setInitDisplayOrders(questions); //This is done to set display order in a sequential order 
                                       // in case  they are  incorrect in database
                                             
