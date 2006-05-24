@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.13 2006-03-31 13:38:54 jiangj Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.14 2006-05-24 14:34:24 jiangj Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -229,7 +229,6 @@ public class GetExcelDownload extends BasePersistingProcess {
 
       //+" ORDER BY PREFERRED_NAME ";
       rs = st.executeQuery(sqlStmt);
-
       List colInfo = this.initColumnInfo();
       wb = new HSSFWorkbook();
 
@@ -271,8 +270,7 @@ public class GetExcelDownload extends BasePersistingProcess {
       int maxRowNumber = 0;
 
       while (rs.next()) {
-        row = sheet.createRow(rowNumber++);
-
+        row = sheet.createRow(rowNumber);
         col = 0;
 
         for (int i = 0; i < colInfo.size(); i++) {
@@ -294,7 +292,7 @@ public class GetExcelDownload extends BasePersistingProcess {
             if ((array != null) && (array.length()!=0)) {
               ResultSet nestedRs = array.getResultSet();
 
-              int nestedRowNumber = 0;
+              int nestedRowNumber = 0;  
 
               while (nestedRs.next()) {
                 row = sheet.getRow(rowNumber + nestedRowNumber);
@@ -361,14 +359,17 @@ public class GetExcelDownload extends BasePersistingProcess {
             cell.setCellValue((String) valueStruct[currCol.rsIndex]);
           }
           else {
+            row = sheet.getRow(rowNumber);
             HSSFCell cell = row.createCell(col++);
 
             String columnName = ((ColumnInfo) colInfo.get(i)).rsColumnName;
             cell.setCellValue(rs.getString(columnName));
           }
         }
-
-        rowNumber = maxRowNumber + 1;
+        if (maxRowNumber > rowNumber)
+            rowNumber = maxRowNumber + 2;
+        else 
+            rowNumber += 2;
       }
 
       fileOut = new FileOutputStream(filename);
