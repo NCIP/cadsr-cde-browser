@@ -5,9 +5,9 @@
 <!--                                                                       -->
 <!-- ===================================================================== -->
 <<<<<<< oracle-ds.xml
-<!-- $Id: oracle-ds.xml,v 1.8 2005-11-14 17:35:36 kakkodis Exp $ -->
+<!-- $Id: oracle-ds.xml,v 1.9 2006-06-06 20:26:46 marwahah Exp $ -->
 =======
-<!-- $Id: oracle-ds.xml,v 1.8 2005-11-14 17:35:36 kakkodis Exp $ -->
+<!-- $Id: oracle-ds.xml,v 1.9 2006-06-06 20:26:46 marwahah Exp $ -->
 >>>>>>> 1.6.2.2
 <!-- ==================================================================== -->
 <!--  Datasource config for Oracle originally from Steven Coy             -->
@@ -24,5 +24,6 @@
    		<idle-timeout-minutes>1</idle-timeout-minutes>
    		<max-pool-size>85</max-pool-size>
    		<min-pool-size>10</min-pool-size>
+   		<application-managed-security/>
 	</local-tx-datasource>
 </datasources>

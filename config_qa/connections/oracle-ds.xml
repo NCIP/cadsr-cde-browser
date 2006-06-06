@@ -4,7 +4,7 @@
 <!--  JBoss Server Configuration                                           -->
 <!--                                                                       -->
 <!-- ===================================================================== -->
-<!-- $Id: oracle-ds.xml,v 1.10 2006-01-27 16:54:26 kakkodis Exp $           -->
+<!-- $Id: oracle-ds.xml,v 1.11 2006-06-06 20:26:46 marwahah Exp $           -->
 <!-- ==================================================================== -->
 <!--  Datasource config for Oracle originally from Steven Coy             -->
 <!-- ==================================================================== -->
@@ -22,5 +22,6 @@
    		<idle-timeout-minutes>1</idle-timeout-minutes>
    		<max-pool-size>85</max-pool-size>
    		<min-pool-size>10</min-pool-size>
+   		<application-managed-security/>
 	</local-tx-datasource>
 </datasources>
