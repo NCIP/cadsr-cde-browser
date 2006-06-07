@@ -4,9 +4,9 @@
   =============================================
 
   Author: Shaji Kakkodi
-  
+  @version: $Id:
 
-  This build script was created using Ant version 1.6 and Java 1.4.2_06
+  This build script was created using Ant version 1.6 and Java 1.5_05
 -->
 
 <project name="formbuilder" default="init" basedir=".">
@@ -20,11 +20,11 @@
    <!-- Make sure these are correct for your instance -->
    
    
-   <property name="cdebrowser.version" value="3.0.1.1" />
-   <property name="cdebrowser.build" value="17" />
+   <property name="cdebrowser.version" value="3.1" />
+   <property name="cdebrowser.build" value="13" />
    
    <!-- used for open source build for file suffix-->
-   <property name="cdebrowser.version.suffix" value="3_0_1_1" />
+   <property name="cdebrowser.version.suffix" value="3.1" />
    
    <property name="dev.user.password" value="cdeuser" />
 
@@ -180,7 +180,7 @@
           </fileset>
           <manifest>
 	    <attribute name="Built-By" value="${user.name}"/>
-	    <attribute name="Class-Path" value="ojdbc14.jar spring.jar spring-jdbc.jar"/>
+	    <attribute name="Class-Path" value="classes12.jar spring-1.2.4.jar spring-jdbc-1.2.4.jar"/>
           </manifest>           
         </jar>
       </target>
@@ -344,10 +344,11 @@
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/common/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/struts/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/formbuilder/service/**"/>
-                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/common/**"/>
-                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/struts/**"/> 
-                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/service/**"/>
-                <include name="gov/nih/nci/ncicb/cadsr/umlbrowser/util/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/common/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/struts/**"/> 
+                <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/service/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/util/**"/>
+                <include name="gov/nih/nci/ncicb/cadsr/admin/**"/>
                 <include name="gov/nih/nci/ncicb/cadsr/jsp/**"/>
               </patternset>
         </fileset>       
@@ -359,8 +360,11 @@
         <patternset>
           <include name="WEB-INF/*.tld"/>
           <include name="WEB-INF/struts-config*.xml"/>
-          <include name="WEB-INF/umlbrowser/struts-config*.xml"/>
-          <include name="WEB-INF/validat*.xml"/>
+          <include name="WEB-INF/cdebrowser/struts-config*.xml"/>
+          <include name="WEB-INF/formbuilder/struts-config*.xml"/>
+          <include name="WEB-INF/ocbrowser/struts-config*.xml"/>
+          <include name="WEB-INF/admin/struts-config*.xml"/>
+          <include name="WEB-INF/formbuilder/validat*.xml"/>
           <include name="WEB-INF/jboss-web.xml"/>
           <include name="WEB-INF/spring/*.xml"/>
           <include name="WEB-INF/ehcache.xml"/>
@@ -377,7 +381,8 @@
           <include name="formbuilder/**/*.*"/>  
          <!-- release 3.0, reorganze ui directory -->
           <include name="cdebrowser/**/*.*"/>  
-          <include name="umlbrowser/**/*.*"/>  
+          <include name="ocbrowser/**/*.*"/>  
+          <include name="admin/**/*.*"/>  
           <include name="*.jsp"/>
         </patternset>
       </fileset>
@@ -458,17 +463,19 @@
       	
       	<!-- Spring Libs -->
       	
-      	<include name="spring115.jar"/>
-      	<include name="spring-context115.jar"/>
-      	<include name="spring-core115.jar"/>
-      	<include name="spring-dao115.jar"/>
-      	<include name="spring-orm115.jar"/>
-      	<include name="spring-context115.jar"/>
-      	<include name="spring-web115.jar"/>
+      	<include name="spring-1.2.4.jar"/>
+      	<include name="spring-context-1.2.4.jar"/>
+      	<include name="spring-core-1.2.4.jar"/>
+      	<include name="spring-dao-1.2.4.jar"/>
+      	<include name="spring-orm-1.2.4.jar"/>
+      	<include name="spring-context-1.2.4.jar"/>
+      	<include name="spring-web-1.2.4.jar"/>
+      	<include name="spring-hibernate-1.2.4.jar"/>
+      	<include name="spring-beans-1.2.4.jar"/>
       	
       	
       	
-      	<include name="hibernate2.jar"/>
+      	<include name="hibernate3.jar"/>
       	<include name="ehcache-0.7.jar"/>
       	
       	
@@ -481,6 +488,9 @@
       	
       	<!-- POI libs -->
       	<include name="poi-2.5.1-final-20040804.jar"/>
+      	
+      	<!-- Sentinal API -->
+      	<include name="cadsrsentinelapi.jar"/>
       	
       </lib>
        
@@ -518,8 +528,9 @@
                <attribute name="Built-By" value="${user.name}"/>
                <attribute name="Class-Path" 
                   value="persistence_form.jar common.jar 
-                  spring115.jar spring-context115.jar spring-core115.jar 
-                  spring-dao115.jar spring-orm115.jar
+                  spring-1.2.4.jar spring-context-1.2.4.jar spring-core-1.2.4.jar 
+                  spring-dao-1.2.4.jar spring-orm-1.2.4.jar spring-hibernate-1.2.4.jar
+                  spring-beans-1.2.4.jar
                   commons-logging.jar log4j-1.2.8.jar properties/"/>
             </manifest>  	    
          </jar>         
@@ -547,11 +558,13 @@
         
         <fileset dir="${java.lib.dir}">
           <patternset>
-            <include name="spring115.jar"/>
-            <include name="spring-context115.jar"/>
-            <include name="spring-core115.jar"/>
-            <include name="spring-dao115.jar"/>
-            <include name="spring-orm115.jar"/>
+            <include name="spring-1.2.4.jar"/>
+            <include name="spring-context-1.2.4.jar"/>
+            <include name="spring-core-1.2.4.jar"/>
+            <include name="spring-dao-1.2.4.jar"/>
+            <include name="spring-orm-1.2.4.jar"/>
+            <include name="spring-hibernate-1.2.4.jar"/>
+            <include name="spring-beans-1.2.4.jar"/>
           </patternset>
         </fileset>
 
