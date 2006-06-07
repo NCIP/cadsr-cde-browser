@@ -5,6 +5,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.TreeUtils " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="java.net.URLEncoder" %>
 
 <%
   	// get parameters
@@ -140,7 +141,10 @@
           String myId   = displayWebNode.getId();
         
           // get info used for mouse-over hover pop-up info
+          
           String webNodeInfo = displayWebNode.getInfo();
+          if (webNodeInfo != null)
+             webNodeInfo = URLEncoder.encode(webNodeInfo, "UTF-8");
 
           // check for highligh match to show background color highlight
           if (treeAction != null && treeAction.equals("highlight") && myId.equals(targetId))
