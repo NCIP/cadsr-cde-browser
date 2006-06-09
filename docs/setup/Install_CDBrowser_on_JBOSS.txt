@@ -125,7 +125,6 @@ Deploying Application
 7. Access the application using url http://<HOST>:<POST>/CDEBrowser/
     eg.
     	http://localhost:8080/CDEBrowser/
-<<<<<<< Install_CDBrowser_on_JBOSS.txt
     	
 8. Only users who have 'CDE MANAGER' role for 'QUEST CONTENT' can login to formbuilder module
 	Defult instalation does not create 'guest' account but sbrext user has the required 
@@ -140,6 +139,3 @@ Deploying Application
          5. Create a user called 'GUEST'
          6. Assing the group to the user	
        
-       =======
-       
-       >>>>>>> 1.3.2.4
