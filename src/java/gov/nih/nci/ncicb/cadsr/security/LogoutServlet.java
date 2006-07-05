@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.security;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormLockerUtil;
 import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
 
 import gov.nih.nci.ncicb.cadsr.util.TimeUtils;
@@ -44,6 +45,10 @@ public class LogoutServlet extends HttpServlet {
   protected void doPost(
     HttpServletRequest request,
     HttpServletResponse response) throws ServletException, IOException {
+    
+    //unlock all forms locked by this session
+     FormLockerUtil.unlockFormBySession(request.getSession());
+    
     synchronized (SessionUtils.sessionObjectCache) {
       log.error("LogoutServlet.doPost at start:"+TimeUtils.getEasternTime());
       HttpSession session = request.getSession();
