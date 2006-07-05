@@ -178,6 +178,7 @@
       <forward name="success" path="/formbuilder/formEdit.jsp" redirect="false"/>
       <forward name="failure" path="/formSearchFramedAction.do?method=getAllForms"
         redirect="false"/>       
+      <forward name="lockedFormViewOnly" path="/formDetailsAction.do?method=getFormDetails"/>
     </action>
     <action name="formEditForm" path="/formSaveAction" parameter="method"
       scope="session"
