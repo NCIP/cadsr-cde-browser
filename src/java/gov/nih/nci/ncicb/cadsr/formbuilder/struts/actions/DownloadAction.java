@@ -7,6 +7,7 @@ import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
@@ -47,6 +48,13 @@ public class DownloadAction
   DynaActionForm hrefCRFForm = (DynaActionForm)form;
 
   String formIdSeq = (String)hrefCRFForm.get(FORM_ID_SEQ);
+  
+  //check form lock
+   if (isFormLocked(formIdSeq, request)){
+       NCIUser nciUser = getFormLockedBy(formIdSeq, request);
+       saveError("cadsr.formbuilder.form.locked.cannot.download",  request, nciUser.getUsername(), nciUser.getEmailAddress());
+       return mapping.findForward(FAILURE);        
+   }
 
   FormBuilderServiceDelegate service = getFormBuilderService();
   Form crf = null;
