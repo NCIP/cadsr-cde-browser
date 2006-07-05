@@ -148,7 +148,7 @@ function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
       
     <%@ include file="../common/in_process_common_header_inc.jsp"%>
     <jsp:include page="../common/tab_inc.jsp" flush="true">
-      <jsp:param name="label" value="Manage&nbsp;repetitions&nbsp;"/>
+      <jsp:param name="label" value="Manage&nbsp;Repetition&nbsp;"/>
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
 
