@@ -18,9 +18,9 @@
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.DownloadAction"
       validate="false" >     
+      <forward name="failure" path="/formSearchFramedAction.do?method=getAllForms"/>
     </action>
      
 
   </action-mappings>
-
 </struts-config>
