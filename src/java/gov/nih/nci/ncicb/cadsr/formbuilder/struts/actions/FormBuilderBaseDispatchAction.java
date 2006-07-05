@@ -15,6 +15,8 @@ import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.struts.common.*;
+
+
 import java.util.Iterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,13 +32,17 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+
+
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -281,6 +287,22 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
       }
     }
 
+    protected void saveError(
+        String key,
+         HttpServletRequest request,
+         String arg0,
+         String arg1) {
+      if (key != null) {
+        ActionError errorMessage = new ActionError(key, arg0, arg1);
+        ActionErrors errorMessages = null;
+        errorMessages = (ActionErrors)request.getAttribute(Globals.ERROR_KEY);
+        if(errorMessages==null)
+          errorMessages = new ActionErrors();
+
+        errorMessages.add(errorMessages.GLOBAL_ERROR, errorMessage);
+        saveErrors(request,errorMessages);
+      }
+    }
 
   protected void saveMessage(
     String key,
@@ -311,6 +333,21 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
         saveMessages(request, messages);
       }
     }
+    
+    protected void saveMessage(
+      String key,
+      HttpServletRequest request, String arg0, String arg1) {
+      if (key != null) {
+        ActionMessage message = new ActionMessage(key,arg0, arg1);
+        ActionMessages messages = null;
+        messages = (ActionMessages)request.getAttribute(Globals.MESSAGE_KEY);
+        if(messages==null)
+          messages = new ActionMessages();
+
+        messages.add(messages.GLOBAL_MESSAGE, message);
+        saveMessages(request, messages);
+      }
+    }    
 
   /**
    * This Action forwards to the default formbuilder home.
@@ -405,4 +442,5 @@ public class FormBuilderBaseDispatchAction extends BaseDispatchAction
         session.setAttribute(FormBuilderConstants.CLEAR_SESSION_KEYS, keys);
 
   }
+  
 }
