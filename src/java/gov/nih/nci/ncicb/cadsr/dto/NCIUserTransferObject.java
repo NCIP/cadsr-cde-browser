@@ -14,6 +14,9 @@ import java.util.Map;
 public class NCIUserTransferObject implements NCIUser,CaDSRConstants {
   private String username = null;
   private Map contexts = new HashMap();
+  //added for GF1224-lock form
+  private String emailAddress;
+  private String phoneNumber;
 
   public NCIUserTransferObject(String newUsername) {
    setUsername(newUsername);
@@ -85,4 +88,20 @@ public class NCIUserTransferObject implements NCIUser,CaDSRConstants {
     sb.append(OBJ_SEPARATOR_END);
     return sb.toString();    
   }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 }
