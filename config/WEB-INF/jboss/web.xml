@@ -34,7 +34,9 @@
       <description> Spring application context xml files</description>
   </context-param>  
   <listener>
+  <!-- TODO
     <listener-class>gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormLockerSessionListener</listener-class>
+    -->
     <listener-class>oracle.clex.util.ServletEventListener</listener-class>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>  
