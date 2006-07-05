@@ -338,11 +338,20 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     }
     
     newQuestion.setQuesIdseq(qcIdseq);
-    //default value
-    String pk = generateGUID();    
-    CreateQuestAttrQuery createQuestAttr= new CreateQuestAttrQuery(this.getDataSource());
-    createQuestAttr.createRecord(newQuestion, pk, newQuestion.getCreatedBy());
-
+    //default value, 
+    String defaultValue = newQuestion.getDefaultValue();
+    String defaultValidValueIdSeq = null;
+    FormValidValue defaultValidValueObj = newQuestion.getDefaultValidValue();
+    if (defaultValidValueObj!=null){
+        defaultValidValueIdSeq = defaultValidValueObj.getValueIdseq();
+    }
+    
+    if ( (defaultValidValueIdSeq!=null && defaultValidValueIdSeq.length()!=0) ||
+        (defaultValue!=null && defaultValue.length()!=0) ){
+        String pk = generateGUID();    
+        CreateQuestAttrQuery createQuestAttr= new CreateQuestAttrQuery(this.getDataSource());
+        createQuestAttr.createRecord(newQuestion, pk, newQuestion.getCreatedBy());
+    }
     return newQuestion;
   }
 
