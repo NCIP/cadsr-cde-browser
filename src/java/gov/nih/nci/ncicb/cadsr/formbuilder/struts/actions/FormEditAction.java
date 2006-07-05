@@ -12,6 +12,7 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormLockerUtil;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
@@ -21,6 +22,7 @@ import gov.nih.nci.ncicb.cadsr.resource.FormInstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.InstructionChanges;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.Orderable;
 
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
@@ -76,6 +78,34 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     Form crf = null;
     Form clonedCrf = null;
     setInitLookupValues(request);
+    
+    DynaActionForm hrefCRFForm = (DynaActionForm) formEditForm;
+    String showCached = (String)request.getAttribute("showCached");
+
+    String formIdSeq = null;
+    if(showCached!=null&&showCached.equalsIgnoreCase(CaDSRConstants.YES))
+    {
+        crf = (Form) getSessionObject(request, CRF);
+        formIdSeq = crf.getIdseq();
+    }
+      else if (hrefCRFForm != null) {
+        formIdSeq = (String) hrefCRFForm.get(FORM_ID_SEQ);
+    }
+    
+    if (isFormLocked(formIdSeq, request)){
+        System.out.println("-------------------Form is already locked");
+        NCIUser nciUser = getFormLockedBy(formIdSeq, request);
+        saveMessage("cadsr.formbuilder.form.locked",  request, nciUser.getUsername(), nciUser.getEmailAddress());
+        //TODO - request--pass the locked info to next page...
+        
+        return mapping.findForward("lockedFormViewOnly");        
+    }else{
+        lockForm(formIdSeq, request);
+    }
+    
+    
+    
+    
 
     try {
       crf = setFormForAction(formEditForm, request);
@@ -412,9 +442,18 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     if (log.isDebugEnabled()) {
       log.info("Delete Form With Id " + formIdSeq);
     }
+    
+    //check if this is locked
+    if (isFormLocked(formIdSeq, request)){
+        NCIUser nciUser = getFormLockedBy(formIdSeq, request);
+        saveError("cadsr.formbuilder.form.locked.cannot.delete", request, nciUser.getUsername(), nciUser.getEmailAddress());
+        return mapping.findForward(FAILURE);
+    }
     FormBuilderServiceDelegate service = getFormBuilderService();
     try {
         service.deleteForm(formIdSeq);
+        //unlock the form after delete this form.
+        unlockCRFInSession(request);
       }
     catch (FormBuilderException exp) {
         if (log.isDebugEnabled()) {
@@ -584,6 +623,10 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
+
+    //unlock form 
+    unlockCRFInSession(request);
+    
     boolean hasUpdate  = setValuesForUpdate(mapping,form,request);
       if(hasUpdate)
       {
@@ -703,6 +746,10 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     removeSessionObject(request,FORM_EDIT_REMOVED_PROTOCOLS);        
     removeSessionObject(request,UPDATE_SKIP_PATTERN_TRIGGERS);        
     editForm.clear();
+    
+    //unlock form 
+    unlockCRFInSession(request);
+            
     return mapping.findForward(SUCCESS);
 
     }
