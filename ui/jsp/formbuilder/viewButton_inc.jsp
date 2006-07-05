@@ -44,7 +44,7 @@ if(confirm(message)) location.href = url;
           <td >
 		       <cde:secureIcon  formId="<%=FormConstants.CRF%>" 
            formScope="<%=CaDSRConstants.SESSION_SCOPE%>" 
-           activeImageSource="i/deleteButton.gif" 
+           activeImageSource="i/deleteFormButton.gif" 
 		       		activeUrl='<%="/formViewDeleteAction.do?"
                          +NavigationConstants.METHOD_PARAM+"="+NavigationConstants.DELETE_FORM%>'
 		   	   	role="<%=CaDSRConstants.CDE_MANAGER%>" 
