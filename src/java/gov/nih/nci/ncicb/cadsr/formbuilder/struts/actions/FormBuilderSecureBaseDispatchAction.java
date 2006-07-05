@@ -5,6 +5,7 @@ import gov.nih.nci.ncicb.cadsr.exception.FatalException;
 import gov.nih.nci.ncicb.cadsr.exception.InvalidUserException;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormElementLocker;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceStartupException;
@@ -12,6 +13,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.*;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormLockerUtil;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
@@ -23,9 +25,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -150,5 +154,40 @@ public class FormBuilderSecureBaseDispatchAction extends FormBuilderBaseDispatch
       {
         return request.getRemoteUser();
       }  
-  }  
+  }
+  
+    public  boolean isFormLocked(String formIdSeq,
+                                       HttpServletRequest request) {
+        return FormLockerUtil.isFormLocked(formIdSeq, request);                                       
+    }
+
+    public  boolean lockForm(String formIdSeq, HttpServletRequest request) {
+        return FormLockerUtil.lockForm(formIdSeq, request);
+    }
+
+    public  void unlockForm(String formIdSeq,
+                                  HttpServletRequest request) {
+        FormLockerUtil.unlockForm(formIdSeq, request);
+    }  
+    
+    public  void unlockCRFInSession(HttpServletRequest request){
+        Form crf = (Form)getSessionObject(request, CRF);
+        unlockForm(crf.getIdseq(), request);
+        return;
+    }
+    
+    public NCIUser getFormLockedBy(String formIdSeq, HttpServletRequest request){
+        ServletContext servletContext =
+            request.getSession(true).getServletContext();
+        Object formOwnerObject = servletContext.getAttribute("testcontext");
+        if (formOwnerObject == null){
+            return null;
+        }        
+        
+        Map formOwnerMap = (Map)formOwnerObject;
+        FormElementLocker locker = (FormElementLocker)formOwnerMap.get(formIdSeq);
+        
+        return getNCIUser(locker.getUserName());
+    }
+    
 }
