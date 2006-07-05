@@ -175,7 +175,10 @@ public class JDBCUserManagerDAO extends JDBCBaseDAO implements UserManagerDAO {
       int rownum) throws SQLException {
       NCIUserTransferObject user =
         new NCIUserTransferObject(rs.getString("UA_NAME"));
-
+      
+      //added for GF1224 - lock the form
+      user.setEmailAddress(rs.getString("electronic_mail_address"));
+      user.setPhoneNumber(rs.getString("PHONE_NUMBER"));
       return user;
     }
   }
