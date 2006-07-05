@@ -68,6 +68,7 @@ public class FormDesignationsAction
             if (result.booleanValue()){
                 request.setAttribute(FormConstants.ALREADY_DESIGNATED, result);
             }    
+            return mapping.findForward("success");
         }catch (FormBuilderException exp) {
               if (log.isErrorEnabled()) {
                 log.error("Exception on service.isAllACDesignatedToContext ", exp);
@@ -77,8 +78,10 @@ public class FormDesignationsAction
               ActionForward forward =  mapping.findForward("failure");
               return forward;
         }     
-    }    
-    return mapping.findForward("success");
+    }else{
+        saveMessage("cadsr.formbuilder.designation.nocde", request);
+        return mapping.findForward("failure");
+    }
   }
 
 
