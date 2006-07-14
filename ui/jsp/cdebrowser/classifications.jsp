@@ -141,6 +141,7 @@ function listChanged(urlInfo) {
     <th>CS* Short Name</th>
     <th>CS* Definition</th>
     <th>CS* Public ID</th>
+    <th>CS* Version</th>
     <th>CSI* Name</th>
     <th>CSI* Type</th>
   </tr>
@@ -157,6 +158,7 @@ function listChanged(urlInfo) {
         <td class="OraFieldText">
           <%= classification.getClassSchemePublicId()%>
          </td>
+        <td class="OraFieldText"><%=classification.getCsVersion()%> </td>
         <td class="OraFieldText"><%=classification.getClassSchemeItemName()%> </td>
         <td class="OraFieldText"><%=classification.getClassSchemeItemType()%> </td>
       </tr>
@@ -166,7 +168,7 @@ function listChanged(urlInfo) {
   else {
 %>
        <tr class="OraTabledata">
-         <td colspan="5">There are no classifications for the selected CDE.</td>
+         <td colspan="6">There are no classifications for the selected CDE.</td>
        </tr>
 <%
   }
@@ -189,6 +191,7 @@ function listChanged(urlInfo) {
 <table width="80%" align="center" cellpadding="1" cellspacing="1" bgcolor="#999966">
   <tr class="OraTableColumnHeader">
     <th>CS* Short Name</th>
+    <th>CS* Version</th>
    <th>Document Name</th>
    <th>Document Type</th>
    <th>Document Text</th>
@@ -199,13 +202,14 @@ function listChanged(urlInfo) {
   if (csRefDocs!= null &&  csRefDocs.keySet().size() >0) {
     Iterator csIter = csRefDocs.keySet().iterator(); 
     while (csIter.hasNext()) {
-       String csName = (String) csIter.next(); 
-       List refDocs =(List) csRefDocs.get(csName);
+       Classification cs = (Classification) csIter.next(); 
+       List refDocs =(List) csRefDocs.get(cs);
        for (int i=0;i<refDocs.size(); i++) {
          ReferenceDocument refDoc = (ReferenceDocument)refDocs.get(i);
  %>
       <tr class="OraTabledata">
-        <td class="OraFieldText"><%=csName%></td>
+        <td class="OraFieldText"><%=cs.getClassSchemeName()%></td>
+        <td class="OraFieldText"><%=cs.getCsVersion()%></td>
         <td class="OraFieldText"><%=refDoc.getName()%> </td>
         <td class="OraFieldText"><%= refDoc.getType()%> </td>
         <td class="OraFieldText">
@@ -242,7 +246,7 @@ function listChanged(urlInfo) {
   else { %>
   
        <tr class="OraTabledata">
-         <td colspan="6">There are no reference documents for the classifications.</td>
+         <td colspan="7">There are no reference documents for the classifications.</td>
        </tr>
   
   <%

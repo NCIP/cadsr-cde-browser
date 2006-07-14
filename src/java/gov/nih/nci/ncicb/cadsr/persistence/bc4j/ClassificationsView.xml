@@ -20,7 +20,8 @@ SELECT AdministeredComponents.AC_IDSEQ,
        ClassificationSchemes.CS_IDSEQ,
        ClassificationSchemes.PREFERRED_NAME, 
        ClassificationSchemes.PREFERRED_DEFINITION,
-ClassificationSchemes.CS_ID
+ClassificationSchemes.CS_ID,
+ClassificationSchemes.VERSION CS_VERSION
 FROM AC_CSI AcCsi, ADMINISTERED_COMPONENTS AdministeredComponents, 
 CLASSIFICATION_SCHEMES ClassificationSchemes, CLASS_SCHEME_ITEMS ClassSchemeItems, CS_CSI CsCsi
 WHERE 
@@ -211,4 +212,16 @@ WHERE
       EntityUsage="ClassificationSchemes"
       AliasName="CS_ID" >
    </ViewAttribute>
+   <ViewAttribute
+      Name="CsVersion"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="4"
+      Scale="2"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="CS_VERSION"
+      Expression="CS_VERSION"
+      SQLType="NUMERIC" >
+   </ViewAttribute>   
 </ViewObject>

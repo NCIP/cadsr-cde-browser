@@ -159,8 +159,11 @@ public class GetClassificationSchemes extends BasePersistingProcess
          Classification cs = (Classification) iter.next();
          if (!csNames.contains(cs.getClassSchemeName())) {
             List refDocs = cdeBrowserService.getReferenceDocuments(cs.getCsIdseq());
-            if (refDocs != null && refDocs.size()>0)
-               csRefDocs.put(cs.getClassSchemeName(), refDocs);
+            if (refDocs != null && refDocs.size()>0) {
+               //csRefDocs.put(cs.getClassSchemeName(), refDocs);
+               //GT 1247
+               csRefDocs.put(cs, refDocs);
+            }
             csNames.add(cs.getClassSchemeName());
          }
          if (!csiNames.contains(cs.getClassSchemeItemName())) {

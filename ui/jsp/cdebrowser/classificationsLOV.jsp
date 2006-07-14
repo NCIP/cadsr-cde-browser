@@ -42,7 +42,7 @@ List of Values - Classifications
 
 
 <SCRIPT LANGUAGE="JavaScript">
-<!--
+//<!--
 function passback(P_ID, P_NAME) {
    opener.document.forms[0].<%= clb.getJsName() %>.value = P_NAME;
    opener.document.forms[0]['<%= clb.getJsId() %>'].value = P_ID;
@@ -58,6 +58,18 @@ function goPage(pageInfo) {
   document.location.href = "search?classificationsLOV=9&"+pageInfo + "<%= pageUrl %>";
 }
 
+var reFloat = /^((\d+(\.\d*)?)|((\d*\.)?\d+))$/
+function validate() {
+  var csVersion = document.forms[0].SEARCH[1].value;
+  if ((csVersion != '')&&(!(reFloat.test(csVersion)))) {
+     alert('Enter a valid CS Version.');
+     document.forms[0].SEARCH[1].focus();
+     return false;
+  }
+  else {
+   return true;
+  }
+}
 
   
 //-->
@@ -66,7 +78,7 @@ function goPage(pageInfo) {
 <center>
 <p class="OraHeaderSubSub">Classifications </p>
 </center>
-<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
+<form method="POST" onSubmit="return validate()" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
 <input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
 <INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= clb.getJsId() %>">
@@ -113,7 +125,7 @@ function goPage(pageInfo) {
 
 <TR>
   <TD></TD>
-  <TD><input type=submit name="submit" value="Find">&nbsp;
+  <TD><input type="submit" name="submit"  value="Find">&nbsp;
   <INPUT type="button" value="Close" onclick="javascript:closeOnClick()"></TD>
 </TR>
 </table>

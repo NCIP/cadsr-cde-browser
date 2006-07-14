@@ -39,6 +39,7 @@ public class ClassificationsLOVBean extends Object {
       //searchStr = request.getParameter("SEARCH");
       searchStr = request.getParameterValues("SEARCH");
       String csWhere = "";
+      String csvWhere = "";
       String csiWhere = "";
       if (searchStr !=null) {
          for (int i = 0; i <searchStr.length ; i++)  {
@@ -52,8 +53,13 @@ public class ClassificationsLOVBean extends Object {
                       " OR upper (cs.preferred_name) like upper ( '"+newSearchStr0+"')) "
                       ;
          }
-         if (!searchStr[1].equals("")){
-            String newSearchStr1 = StringReplace.strReplace(searchStr[1],"*","%");
+         //Release 3.2 GF#1247
+         if (!searchStr[1].equals("")) {
+             Float newSearchFlt1 = new Float(searchStr[1]);
+             csvWhere = " and cs.version = "+newSearchFlt1.toString()+"  ";
+         }
+         if (!searchStr[2].equals("")){
+            String newSearchStr1 = StringReplace.strReplace(searchStr[2],"*","%");
             //Release 3.0, TT#1178
             newSearchStr1 = StringReplace.strReplace(newSearchStr1,"'","''");
             csiWhere = " and upper (csi.csi_name) like upper ( '"+newSearchStr1+"') ";
@@ -61,28 +67,30 @@ public class ClassificationsLOVBean extends Object {
          if (request.getParameter("chkContext") == null){
             /*whereClause = " and   (upper (nvl(cs.long_name,'%')) like upper ( '%"+searchStr[0]+"%') " +
                       " OR upper (nvl(cs.preferred_name,'%')) like upper ( '%"+searchStr[0]+"%')) "+
-                      " and upper (nvl(csi.csi_name,'%')) like upper ( '%"+searchStr[1]+"%') "
+                      " and upper (nvl(csi.csi_name,'%')) like upper ( '%"+searchStr[2]+"%') "
                       ;*/
-              whereClause = csWhere + csiWhere;
+              whereClause = csWhere + csvWhere + csiWhere;
          }
          else {
             /*whereClause = " and   (upper (nvl(cs.long_name,'%')) like upper ( '%"+searchStr[0]+"%') " +
                       " OR upper (nvl(cs.preferred_name,'%')) like upper ( '%"+searchStr[0]+"%')) "+
-                      " and upper (nvl(csi.csi_name,'%')) like upper ( '%"+searchStr[1]+"%') "+
+                      " and upper (nvl(csi.csi_name,'%')) like upper ( '%"+searchStr[2]+"%') "+
                       additionalWhere;*/
-              whereClause = csWhere + csiWhere + additionalWhere;
-            isContextSpecific = true;
+              whereClause = csWhere + csvWhere + csiWhere + additionalWhere;
+              isContextSpecific = true;
         }
 
       }
       // pass the following parameters to CommonListCntrlBean
       String[] searchParm ={"cs.long_name","Classification Scheme",
+                            "cs.version","CS Version", //Release 3.2 GF#1247
                             "csi.csi_name","Class Scheme Item"};
       String[] jspLinkParm={ "csc.cs_csi_idseq","P_ID"};
       String[] displayParm={"csi.csi_name", "Class Scheme Item Name",
                             "cs.preferred_name","CS Short Name" ,
                             "cs.long_name","CS Long Name",
                             "cs_conte.name","CS Context",
+                            "cs.version", "CS Version",  //Release 3.2 GF#1247
                             "cs.asl_name","CS Workflow Status",
                             "cs.preferred_definition","CS Definition"
                             };
@@ -90,7 +98,7 @@ public class ClassificationsLOVBean extends Object {
       sqlStmtParm[0] = " from sbr.classification_schemes cs,sbr.contexts cs_conte, " +
                        "      sbr.class_scheme_items csi, sbr.cs_csi csc " +
                        " where cs.conte_idseq = cs_conte.conte_idseq " +
-                       " and cs.latest_version_ind = 'Yes' " +
+        //Release 3.2 GF#1247  " and cs.latest_version_ind = 'Yes' " +
                        " and cs.deleted_ind = 'No' " +
                        " and cs.cs_idseq = csc.cs_idseq " +
                        " and csi.csi_idseq = csc.csi_idseq " +

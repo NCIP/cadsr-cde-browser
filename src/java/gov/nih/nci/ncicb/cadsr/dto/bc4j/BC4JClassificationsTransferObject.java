@@ -17,6 +17,7 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
    protected String csPublicId;
    protected String csIdseq;
    protected String csiIdseq;
+   protected Float csVersion;
 
 	public BC4JClassificationsTransferObject() {
 		super();
@@ -30,6 +31,7 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 		classSchemeItemType = classificationsViewRowImpl.getCsitlName();
       csIdseq = classificationsViewRowImpl.getCsIdseq();
       csiIdseq = classificationsViewRowImpl.getCsiIdseq();
+      csVersion = new Float(classificationsViewRowImpl.getCsVersion().floatValue());
     //If clause added by Ram
     if (classificationsViewRowImpl.getCsId() != null)
       csPublicId = classificationsViewRowImpl.getCsId().stringValue();
@@ -105,5 +107,12 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
    public String getCsiIdseq() {
       return csiIdseq;
    }
-
+   
+    public Float getCsVersion(){
+      return csVersion;
+    }
+    
+    public void setCsVersion(Float pVersion){
+       this.csVersion = pVersion;
+    }
 }

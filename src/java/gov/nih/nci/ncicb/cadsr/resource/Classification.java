@@ -32,4 +32,8 @@ public interface Classification
    public void setCsiIdseq(String csiIdseq);
    public String getCsiIdseq();
    
+    public Float getCsVersion();
+
+    public void setCsVersion(Float pVersion);
+   
 }

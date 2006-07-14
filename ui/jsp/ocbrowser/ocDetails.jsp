@@ -263,6 +263,7 @@
                  <th class="OraTableColumnHeader">CS* Short Name</th>
                  <th class="OraTableColumnHeader">CS* Definition</th>
                  <th class="OraTableColumnHeader">CS* Public ID</th>
+                 <th class="OraTableColumnHeader">CS* Version</th>
                  <th class="OraTableColumnHeader">CSI* Name</th>
                  <th class="OraTableColumnHeader">CSI* Type</th>
                </TR>
@@ -277,7 +278,10 @@
                          </td>
                          <td class="OraFieldText">
                            <bean:write name="accscsi" property="csCsi.cs.publicId"/>
-                         </td>                        
+                         </td>       
+                         <td class="OraFieldText">
+                           <bean:write name="accscsi" property="csCsi.cs.version"/>
+                         </td>                          
                          <td class="OraFieldText">
                            <bean:write name="accscsi" property="csCsi.csi.name"/>
                          </td>
@@ -289,7 +293,7 @@
                    </logic:notEmpty>  
                    <logic:empty name="oc" property="acCsCsis">
                      <TR class="OraTabledata">
-                       <td colspan="5" class="OraFieldText">No Classification exist for this Object Class</td>
+                       <td colspan="6" class="OraFieldText">No Classification exist for this Object Class</td>
                      </TR>
                    </logic:empty>                               
                 </table>
@@ -345,6 +349,7 @@
                            <th class="OraTableColumnHeader">CS* Short Name</th>
                            <th class="OraTableColumnHeader">CS* Definition</th>
                            <th class="OraTableColumnHeader">CS* Public ID</th>
+                           <th class="OraTableColumnHeader">CS* Version</th>
                            <th class="OraTableColumnHeader">CSI* Name</th>
                            <th class="OraTableColumnHeader">CSI* Type</th>
                          </TR>
@@ -359,7 +364,10 @@
                                    </td>
                                    <td class="OraFieldText">
                                      <bean:write name="acscsi" property="cs.publicId"/>
-                                   </td>                        
+                                   </td>     
+                                   <td class="OraFieldText">
+                                     <bean:write name="acscsi" property="cs.version"/>
+                                   </td>                                      
                                    <td class="OraFieldText">
                                      <bean:write name="acscsi" property="csi.name"/>
                                    </td>
@@ -371,7 +379,7 @@
                              </logic:notEmpty>  
                              <logic:empty name="alternateName" property="csCsis">
                                <TR class="OraTabledata">
-                                 <td colspan="5" class="OraFieldText">No Classification exist for this Definition</td>
+                                 <td colspan="6" class="OraFieldText">No Classification exist for this Definition</td>
                                </TR>
                              </logic:empty>                               
                           </table>
@@ -445,6 +453,7 @@
                            <th class="OraTableColumnHeader">CS* Short Name</th>
                            <th class="OraTableColumnHeader">CS* Definition</th>
                            <th class="OraTableColumnHeader">CS* Public ID</th>
+                           <th class="OraTableColumnHeader">CS* Version</th>
                            <th class="OraTableColumnHeader">CSI* Name</th>
                            <th class="OraTableColumnHeader">CSI* Type</th>
                          </TR>
@@ -459,7 +468,10 @@
                                    </td>
                                    <td class="OraFieldText">
                                      <bean:write name="dcscsi" property="cs.publicId"/>
-                                   </td>                        
+                                   </td>    
+                                   <td class="OraFieldText">
+                                     <bean:write name="dcscsi" property="cs.version"/>
+                                   </td>                                    
                                    <td class="OraFieldText">
                                      <bean:write name="dcscsi" property="csi.name"/>
                                    </td>
@@ -471,7 +483,7 @@
                              </logic:notEmpty>  
                              <logic:empty name="definition" property="csCsis">
                                <TR class="OraTabledata">
-                                 <td colspan="5" class="OraFieldText">No Classification exist for this Definition</td>
+                                 <td colspan="6" class="OraFieldText">No Classification exist for this Definition</td>
                                </TR>
                              </logic:empty>                               
                           </table>
