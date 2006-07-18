@@ -279,6 +279,7 @@ function submitForm(methodName) {
                   <th scope="col"> </th>
                   <th scope="col">CS* Short Name</th>
                   <th scope="col">CS* Definition</th>
+                  <th scope="col">CS* Version</th>
                   <th scope="col">CSI* Name</th>
                   <th scope="col">CSI* Type</th>
                 </tr>
@@ -297,6 +298,9 @@ function submitForm(methodName) {
                           <td class="OraFieldText">
                                 <bean:write name="csi" property="classSchemeDefinition"/>  
                           </td>
+                          <td class="OraFieldText">
+                                <bean:write name="csi" property="csVersion"/>  
+                          </td>                          
                           <td class="OraFieldText">
                                 <bean:write name="csi" property="classSchemeItemName"/>  
                           </td>

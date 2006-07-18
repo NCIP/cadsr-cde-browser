@@ -43,8 +43,8 @@ List of Values - Classifications
 
 <SCRIPT LANGUAGE="JavaScript">
 //<!--
-function passback(P_ID, P_NAME) {
-   opener.document.forms[0].<%= clb.getJsName() %>.value = P_NAME;
+function passback(P_ID, P_NAME, P_VERSION) {
+   opener.document.forms[0].<%= clb.getJsName() %>.value = P_NAME+' '+P_VERSION;
    opener.document.forms[0]['<%= clb.getJsId() %>'].value = P_ID;
    opener.document.forms[0].<%= clb.getJsName() %>.focus();
    window.close();

@@ -366,7 +366,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
             super
             .setSql("SELECT csi.csi_name, csi.csitl_name, csi.csi_idseq, " +
                          "       cscsi.cs_csi_idseq, cs.preferred_definition, cs.long_name, " +
-                         "        accsi.ac_csi_idseq, cs.cs_idseq " +
+                         "        accsi.ac_csi_idseq, cs.cs_idseq, cs.version " +
                          " FROM ac_csi accsi, cs_csi cscsi, " +
                          "      class_scheme_items csi, classification_schemes cs  " +
                          "      ,TA_PROTO_CSI_EXT ta_proto_csi  " +
@@ -391,6 +391,7 @@ public class JDBCTriggerActionDAO extends JDBCAdminComponentDAO implements Trigg
             csito.setClassSchemeLongName(rs.getString(6));
             csito.setAcCsiIdseq(rs.getString(7));
             csito.setCsIdseq(rs.getString(8));
+            csito.setCsVersion(new Float(rs.getString(9)));
             return csito;
         }
     }

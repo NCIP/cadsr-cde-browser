@@ -39,6 +39,9 @@ public interface ClassSchemeItem   extends Cloneable{
   public void setCsConteIdseq(String csConteIdseq);
   public String getCsConteIdseq();
   
+  public void setCsVersion(Float csVersion);
+  public Float getCsVersion();
+  
   public Object clone() throws CloneNotSupportedException;
 
 }

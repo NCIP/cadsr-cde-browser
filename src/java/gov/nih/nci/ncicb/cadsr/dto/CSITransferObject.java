@@ -20,6 +20,7 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
   private String csConteIdseq = null;
   private String acCsiIdseq = null;
   private String csType = null;
+  private Float csVersion = null;
   
   public CSITransferObject() {
   }
@@ -135,6 +136,14 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
    }
    public void setClassSchemeType(String aClassSchemeType){
       csType = aClassSchemeType;
+   }
+   
+   public Float getCsVersion() {
+        return csVersion;
+   }
+   
+   public void setCsVersion(Float csVersion){
+       this.csVersion = csVersion;
    }
    
     /**

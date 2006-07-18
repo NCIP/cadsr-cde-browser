@@ -90,7 +90,10 @@ public class ClassificationsLOVBean extends Object {
                             "cs.preferred_name","CS Short Name" ,
                             "cs.long_name","CS Long Name",
                             "cs_conte.name","CS Context",
-                            "cs.version", "CS Version",  //Release 3.2 GF#1247
+                            "case when cs.version = trunc(cs.version) " + 
+                            "            then  to_char(cs.version,'99.9')" + 
+                            "			else   to_char(cs.version,'99.99')" + 
+                            "			end csversion", "CS Version",  //Release 3.2 GF#1247
                             "cs.asl_name","CS Workflow Status",
                             "cs.preferred_definition","CS Definition"
                             };
@@ -105,7 +108,7 @@ public class ClassificationsLOVBean extends Object {
                        " and cs.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " +
                        whereClause;
       sqlStmtParm[1] = " order by cs.preferred_name ";
-      int[] lovPassbackCols = {0};
+      int[] lovPassbackCols = {0,4};
 
       clb = new CommonLOVBean(
         request,

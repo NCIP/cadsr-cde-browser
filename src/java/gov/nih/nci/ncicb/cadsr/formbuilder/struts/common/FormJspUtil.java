@@ -63,7 +63,7 @@ public class FormJspUtil
           Iterator it = classSchemeItems.iterator();
           while (it.hasNext()){
               ClassSchemeItem  csi = (ClassSchemeItem)it.next();
-               sbuf.append(delimiter).append(csi.getClassSchemeItemName());
+               sbuf.append(delimiter).append(csi.getClassSchemeItemName()+" "+csi.getCsVersion());
           }
 
           return sbuf.substring(delimiter.length());
