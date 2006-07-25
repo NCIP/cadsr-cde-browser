@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
@@ -345,6 +346,13 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     public boolean isAllACDesignatedToContext(List acIdList, String contextIdSeq){
         CheckACDesignationQuery query = new CheckACDesignationQuery(getDataSource());
         return query.isAllACDesignatedToContext(acIdList,contextIdSeq);
+    }
+    
+    public Context getContext(String acIdSeq) {
+        ContextQuery query = new ContextQuery();
+        query.setDataSource(getDataSource());
+        query.setSql();
+        return query.getContext(acIdSeq);
     }
 
 
@@ -1106,6 +1114,51 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         String acIdSeq = rs.getString(1);
         return acIdSeq;
       }
+    }
+    
+    /**
+     * Inner class that queries the context for the 
+     * administered component 
+     */
+    class ContextQuery extends MappingSqlQuery {
+      ContextQuery() {
+        super();
+      }
+
+      public void setSql() {
+        super.setSql(
+          "select con.CONTE_IDSEQ, con.DESCRIPTION, con.NAME, con.PAL_NAME, con.LL_NAME, con.language "+
+    " from contexts con, Administered_components ac "+
+    " where ac.CONTE_IDSEQ = con.CONTE_IDSEQ "+
+    " and ac.ac_idseq = ?");
+
+        declareParameter(new SqlParameter("AC_IDSEQ", Types.VARCHAR));
+      }
+      
+      protected Context getContext(String acIdSeq) {
+          Object[] params = new Object[]{acIdSeq};
+          List results = execute(params);
+          Context context = null;
+          if (results.size()>0) {
+              context = (Context)results.get(0);
+          }
+          return context;
+      }
+
+      protected Object mapRow(
+        ResultSet rs,
+        int rownum) throws SQLException {
+        ContextTransferObject cto = new ContextTransferObject();
+
+        cto.setConteIdseq(rs.getString(1));
+        cto.setName(rs.getString(3));
+        cto.setDescription(rs.getString(2));
+        cto.setPalName(rs.getString(4));
+        cto.setLlName(rs.getString(5));
+        cto.setLanguage(rs.getString(6));
+
+        return cto;
+      }    
     }
     
     private String getDelimetedIdSeq(List idSeqList, String delimiter){

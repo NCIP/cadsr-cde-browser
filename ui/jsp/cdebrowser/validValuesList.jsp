@@ -147,6 +147,10 @@ function listChanged(urlInfo) {
     <td class="OraFieldText"><%=vd.getPreferredName()%></td>
  </tr>
  
+  <tr class="OraTabledata">
+     <td class="TableRowPromptText">Context Name:</td>
+     <td class="OraFieldText"><%=vd.getContext().getName()%></td>
+ </tr>
 
  <tr class="OraTabledata">
     <td class="TableRowPromptText">Definition:</td>

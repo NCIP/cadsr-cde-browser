@@ -158,6 +158,11 @@ public class GetValidValues extends BasePersistingProcess {
         de.getValueDomain().setReferenceDocs(vdDAO.getAllReferenceDocuments(de.getValueDomain().getVdIdseq(), null));
       }
       
+      if (de.getValueDomain().getContext() == null) {
+          ValueDomainDAO vdDAO = daoFactory.getValueDomainDAO();
+          de.getValueDomain().setContext(vdDAO.getContext(de.getVdIdseq()));
+      }
+      
       ValidValueHandler validValueHandler =
         (ValidValueHandler) HandlerFactory.getHandler(ValidValue.class);
       vvList =

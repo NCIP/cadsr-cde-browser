@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
 import java.util.Collection;
 import java.util.List;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
 
 
 public interface AdminComponentDAO {
@@ -164,5 +165,11 @@ public interface AdminComponentDAO {
       *  with the given registration status
       */
   public boolean hasRegisteredAC(String cscsiIdseq, String regStatus);
+  /**
+     * 
+     * @param acIdSeq
+     * @return
+     */
+  public Context getContext(String acIdSeq);
 
 }
