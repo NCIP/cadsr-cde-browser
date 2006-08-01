@@ -17,15 +17,15 @@
        -->
   <property file="build.properties"/>
   
-   <!-- Make sure these are correct for your instance -->
+   <!-- Make sure these are correct for your instance C:\jboss-4.0.4.GA-->
    
-   <property name="jboss.home" value="C:\jboss-4.0.2" />   
+   <property name="jboss.home" value="C:\jboss-4.0.4.GA" />   
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
-   <property name="cdebrowser.version" value="3.1" />
-   <property name="cdebrowser.build" value="18" />
+   <property name="cdebrowser.version" value="3.2" />
+   <property name="cdebrowser.build" value="dev" />
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="3_1" />
@@ -143,69 +143,13 @@
 
 
    <!--Set the lib classpath-->
+   <!--Set the lib classpath-->
    <path id="classpath">
-      <!--browser libs -->
-
-      <pathelement location="${java.lib.dir}/classes12.jar"/>
-      <pathelement location="${java.lib.dir}/cle20.jar"/>
-      <pathelement location="${java.lib.dir}/collections.jar"/>
-      <pathelement location="${java.lib.dir}/healthtoolkit.zip"/>
-      <pathelement location="${java.lib.dir}/jdev-cm.jar"/>
-      <pathelement location="${java.lib.dir}/jdev-rt.jar"/>
-      <pathelement location="${java.lib.dir}/nls_charset12.jar"/>
-      <pathelement location="${java.lib.dir}/ssosdk307.jar"/>
-      <pathelement location="${java.lib.dir}/xmlcomp.jar"/>      
-      <pathelement location="${java.lib.dir}/xmlparserv2.jar"/>    
-      <pathelement location="${java.lib.dir}/xsu12.jar"/> 
-      
-      <!--BC4J libs -->
-      <pathelement location="${java.lib.dir}/bc4jct.jar"/>
-      <pathelement location="${java.lib.dir}/bc4jdatum.jar"/>
-      <pathelement location="${java.lib.dir}/bc4jdomorcl.jar"/>
-      <pathelement location="${java.lib.dir}/bc4jmt.jar"/>   
-      
-      <!-- Struts libs -->
-      <pathelement location="${java.lib.dir}/struts-1.1.jar"/>
-      <pathelement location="${java.lib.dir}/commons-beanutils.jar"/>
-      <pathelement location="${java.lib.dir}/commons-collections.jar"/>
-      <pathelement location="${java.lib.dir}/commons-fileupload.jar"/>
-      <pathelement location="${java.lib.dir}/commons-digester.jar"/>
-      <pathelement location="${java.lib.dir}/commons-lang.jar"/>
-      <pathelement location="${java.lib.dir}/commons-logging.jar"/>
-      <pathelement location="${java.lib.dir}/commons-validator.jar"/>
-      <pathelement location="${java.lib.dir}/jakarta-oro.jar"/> 
-      
-      <!-- Springframework libs -->
-      <pathelement location="${java.lib.dir}/spring-1.2.4.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-context-1.2.4.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-core-1.2.4.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-dao-1.2.4.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-orm-1.2.4.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-context-1.2.4.jar"/>
-      <pathelement location="${java.lib.dir}/spring-web-1.2.4.jar"/>
-            
-      <!--J2EE  libs -->
-      <pathelement location="${java.lib.dir}/servlet.jar"/>
-      <pathelement location="${java.lib.dir}/jndi.jar"/>   
-      <pathelement location="${java.lib.dir}/jta.jar"/>  
-      <pathelement location="${java.lib.dir}/jdbc.jar"/>
-      <pathelement location="${java.lib.dir}/oc4j.jar"/>
-      <pathelement location="${java.lib.dir}/ejb.jar"/>
-      <pathelement location="${java.lib.dir}/jms.jar"/>
-      
-      <!--JBoss JAAS lib -->
-      <pathelement location="${java.lib.dir}/jbosssx.jar"/>
-      
-      <!-- Apache POI  libs -->
-      <pathelement location="${java.lib.dir}/poi-2.5.1-final-20040804.jar"/>
-      
-      <!-- cadsr api lib -->
-      <pathelement location="${java.lib.dir}/cadsr-api.jar"/>
-      
-      <!-- Sentinal tool API -->             
-      <pathelement location="${java.lib.dir}/cadsrsentinelapi.jar"/>
-      
-      
+    <fileset dir="${java.lib.dir}">
+      <include name="*.jar"/>
+      <include name="*.zip"/>
+    </fileset>
+  
    </path>
    
    <path id="srcpath">
@@ -588,73 +532,64 @@
       </fileset>
 
       <lib dir="${java.lib.dir}">
-       	<include name="classes12.jar"/>
-      	<include name="cle20.jar"/>
-
-      	<include name="healthtoolkit.zip"/>
-      	<include name="nls_charset12.jar"/>
-      	<include name="ssosdk307.jar"/>
-      	<include name="xmlcomp.jar"/>         
-      	<include name="xsu12.jar"/> 
-      	
-      	<!--BC4J libs -->
-      	<include name="xmlparserv2.jar"/>       	
-      	<include name="collections.jar"/>
-      	<include name="bc4jmt.jar"/>
-      	<include name="jdev-cm.jar"/>
-      	<include name="jdev-rt.jar"/>
-      	<include name="bc4jct.jar"/>
-      	<include name="bc4jdatum.jar"/>
-      	<include name="bc4jdomorcl.jar"/>
-      	     	
-      
-      	<!-- old bc4j -->
-      	<!--include name="bc4jct.jar"/-->
-      	<!--include name="bc4jdatum.jar"/-->
-      	<!--include name="bc4jdomorcl.jar"/-->
-      	<!--include name="bc4jmt.jar"/-->   
-      	
-      	<!-- Struts libs -->
-      	<include name="struts-1.1.jar"/>
-      	<include name="commons-beanutils.jar"/>
-      	<include name="commons-collections.jar"/>
-      	<include name="commons-fileupload.jar"/>
-      	<include name="commons-digester.jar"/>
-      	<include name="commons-lang.jar"/>
-      	<include name="commons-validator.jar"/>
-      	<include name="jakarta-oro.jar"/>
-      	
-      	<!-- Spring Libs -->
-      	
-      	<include name="spring-1.2.4.jar"/>
-      	<include name="spring-context-1.2.4.jar"/>
-      	<include name="spring-core-1.2.4.jar"/>
-      	<include name="spring-dao-1.2.4.jar"/>
-      	<include name="spring-orm-1.2.4.jar"/>
-      	<include name="spring-context-1.2.4.jar"/>
-      	<include name="spring-web-1.2.4.jar"/>
-      	<include name="spring-hibernate-1.2.4.jar"/>
-      	<include name="spring-beans-1.2.4.jar"/>
-      	
-      	
-      	
-      	<include name="hibernate3.jar"/>
-      	<include name="ehcache-0.7.jar"/>
-      	
-      	
-      	<include name="aopalliance.jar"/>
-      	
+        	<include name="classes12.jar"/>
+       	<include name="cle20.jar"/>
  
-      	<!-- cadsr api lib -->
-      	<include name="cadsr-api.jar"/>
-      	
-      	
-      	<!-- POI libs -->
-      	<include name="poi-2.5.1-final-20040804.jar"/>
-      	
-      	<!-- Sentinal API -->
-      	<include name="cadsrsentinelapi.jar"/>
-      	
+        	<include name="xml-apis.jar"/>
+       	<include name="xercesImpl.jar"/>
+       	<include name="healthtoolkit.zip"/>
+       	<include name="nls_charset12.jar"/>
+       	<include name="ssosdk307.jar"/>
+       	<include name="xmlcomp.jar"/>         
+       	<include name="xsu12.jar"/> 
+       	
+       	<!--BC4J libs -->
+       	<include name="xmlparserv2.jar"/>       	
+       	<include name="collections.jar"/>
+       	<include name="bc4jmt.jar"/>
+       	<include name="jdev-cm.jar"/>
+       	<include name="jdev-rt.jar"/>
+       	<include name="bc4jct.jar"/>
+       	<include name="bc4jdatum.jar"/>
+       	<include name="bc4jdomorcl.jar"/>
+       	     	
+       
+       	<!-- old bc4j -->
+       	<!--include name="bc4jct.jar"/-->
+       	<!--include name="bc4jdatum.jar"/-->
+       	<!--include name="bc4jdomorcl.jar"/-->
+       	<!--include name="bc4jmt.jar"/-->   
+       	
+       	<!-- Struts libs -->
+       	<include name="struts.jar"/>
+       	<include name="commons-*.jar"/>
+       	<include name="jakarta-oro.jar"/>
+       	
+       	<!-- Spring Libs -->
+       	
+       	<include name="spring-1.2.4.jar"/>
+       	<include name="spring-context-1.2.4.jar"/>
+       	<include name="spring-core-1.2.4.jar"/>
+       	<include name="spring-dao-1.2.4.jar"/>
+       	<include name="spring-orm-1.2.4.jar"/>
+       	<include name="spring-context-1.2.4.jar"/>
+       	<include name="spring-web-1.2.4.jar"/>
+       	<include name="spring-hibernate-1.2.4.jar"/>
+       	<include name="spring-beans-1.2.4.jar"/>
+       	
+       	<include name="hibernate3.jar"/>
+       	<include name="ehcache-0.7.jar"/>
+       	
+       	<include name="aopalliance.jar"/>
+       	
+       	<!-- cadsr api lib -->
+       	<include name="cadsr-api.jar"/>
+       	
+       	<!-- POI libs -->
+       	<include name="poi-2.5.1-final-20040804.jar"/>
+       	
+       	<!-- Sentinal API -->
+       	<include name="cadsrsentinelapi.jar"/>
       </lib>
        
       <manifest>
