@@ -1,6 +1,6 @@
 <!DOCTYPE form-validation PUBLIC
           "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
-          "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+          "http://jakarta.apache.org/commons/dtds/validator_1_2.dtd">
 <!--
 
    This file contains the default Struts Validator pluggable validator
@@ -49,7 +49,7 @@
          methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
                        org.apache.commons.validator.Field,
-                       org.apache.struts.action.ActionErrors,
+                       org.apache.struts.action.ActionMessages,
                        javax.servlet.http.HttpServletRequest"
                   msg="errors.required">
 
