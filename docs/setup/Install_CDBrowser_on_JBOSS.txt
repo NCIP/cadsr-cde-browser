@@ -30,13 +30,13 @@ the steps below to build an ear file. An ear file is not provided with the
 download because the database connection information and environment properties 
 could be different for each deployment.
 
-  1. Update  cle-providers.xml  located in directory  <INSTALL_HOME>\config\connections
+  1. Update  cle-providers.xml  located in directory  <INSTALL_HOME>/config/connections
             - Update the hostname,port and SID that could be used to connect to caDSR repository.
             - Please update the values for user and password with the username/password to be used to 
                connect to caDSR repository.
                caDSR installation scripts creates a user called "sbrext" that can be used for this purpose	
 
- 2. Update  cdebrowser.properties located in directory  <INSTALL_HOME>\config\properties\jboss
+ 2. Update  cdebrowser.properties located in directory  <INSTALL_HOME>/config/properties/jboss
             - Update value for property XML_DOWNLOAD_DIR to point to directory on the server that could be 
               used by the application to temporarily write files. Application should have write 
               privileges to this directory.
@@ -69,9 +69,9 @@ Deploying Application
 ------------------------------
 1. Shutdown Jboss instance.
 
-2. Copy  file  <INSTALL_HOME>\config\connections\oracle-ds.xml to directory <JBOSS_HOME> server\default\deploy
-    If file already exists in <JBOSS_HOME> server\default\deploy, then update the file with 
-    datasource defined in <INSTALL_HOME>\config\connections\oracle-ds.xml.
+2. Copy  file  <INSTALL_HOME>/config/connections/oracle-ds.xml to directory <JBOSS_HOME> server/default/deploy
+    If file already exists in <JBOSS_HOME> server/default/deploy, then update the file with 
+    datasource defined in <INSTALL_HOME>/config/connections/oracle-ds.xml.
 
     Note: Please update the following tags in oracle-ds.xml to match your database(caDSR repository) environment.		
                 <connection-url>jdbc:oracle:thin:@hostname:port:SID</connection-url>
@@ -80,7 +80,7 @@ Deploying Application
 		
                 caDSR installation scripts creates a user called "sbrext" that can be used for this purpose
 
-3. Edit login-config.xml in <JBOSS_HOME>\server\default\conf to add the 
+3. Edit login-config.xml in <JBOSS_HOME>/server/default/conf to add the 
    xml snipet below between <policy> tags
 
 	<application-policy name="FormbuilderDomain">
@@ -91,7 +91,7 @@ Deploying Application
 		</authentication>
 	</application-policy>    
 
-4. Edit log4j.xml in <JBOSS_HOME>\server\default\conf to added the xml snippet below to end of the file before
+4. Edit log4j.xml in <JBOSS_HOME>/server/default/conf to added the xml snippet below to end of the file before
   </log4j:configuration> closing tag
 
 
@@ -118,7 +118,7 @@ Deploying Application
         </category>
 
 5. Copy cdebrowser.ear from <INSTALL_HOME>/dist to 
-	<JBOSS_HOME>\server\default\deploy
+	<JBOSS_HOME>/server/default/deploy
 	
 6. Startup the Jboss instance
     
