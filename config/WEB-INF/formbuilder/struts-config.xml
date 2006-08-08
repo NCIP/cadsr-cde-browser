@@ -1,5 +1,7 @@
 <?xml version = '1.0' encoding = 'windows-1252'?>
-<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<!--<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+-->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
   <form-beans>
     <form-bean name="searchForm"
@@ -225,9 +227,12 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
       validate="false">
       <forward name="success"
+        path="/unlockFormAction.do?method=unlockCurrentForm"
+        redirect="false"/>
+<!--      <forward name="success"
         path="/formSearchFramedAction.do?method=getAllForms"
         redirect="false"/>
-      <forward name="failure"
+-->      <forward name="failure"
         path="/formbuilder/formEdit.jsp"
         redirect="false"/>
       <forward name="formEdit" path="/formbuilder/formEdit.jsp" redirect="false"/>
@@ -346,6 +351,19 @@
       <forward name="success" path="/moduleToEditAction.do?method=getModuleToEdit"/>
       <forward name="failure" path="/formbuilder/moduleEdit.jsp"/>
     </action> 
+
+    <action name="searchForm" path="/unlockFormAction" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
+      validate="false">
+      <forward name="success"
+        path="/formSearchFramedAction.do?method=getAllForms"
+        redirect="false"/>
+       <forward name="failure"
+        path="/formbuilder/formEdit.jsp"
+        redirect="false"/>
+    </action>      
+
   </action-mappings>
  
   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
