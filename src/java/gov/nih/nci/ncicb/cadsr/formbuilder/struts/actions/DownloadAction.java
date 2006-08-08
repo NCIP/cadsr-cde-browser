@@ -49,13 +49,6 @@ public class DownloadAction
 
   String formIdSeq = (String)hrefCRFForm.get(FORM_ID_SEQ);
   
-  //check form lock
-   if (isFormLocked(formIdSeq, request)){
-       NCIUser nciUser = getFormLockedBy(formIdSeq, request);
-       saveError("cadsr.formbuilder.form.locked.cannot.download",  request, nciUser.getUsername(), nciUser.getEmailAddress());
-       return mapping.findForward(FAILURE);        
-   }
-
   FormBuilderServiceDelegate service = getFormBuilderService();
   Form crf = null;
 

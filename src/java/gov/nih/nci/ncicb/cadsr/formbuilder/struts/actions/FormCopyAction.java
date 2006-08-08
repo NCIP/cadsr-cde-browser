@@ -76,32 +76,6 @@ public class FormCopyAction extends FormBuilderSecureBaseDispatchAction {
         formIdSeq = (String) hrefCRFForm.get(FORM_ID_SEQ);
     }
 
-    if (isFormLocked(formIdSeq, request)){
-          NCIUser nciUser = getFormLockedBy(formIdSeq, request);
-          //saveMessage("cadsr.formbuilder.form.locked",  request, nciUser.getUsername(), nciUser.getEmailAddress());
-          saveError("cadsr.formbuilder.form.locked.cannot.copy",  request, nciUser.getUsername(), nciUser.getEmailAddress());
-          // saveError("cadsr.formbuilder.form.locked.cannot.delete",  request, nciUser.getUsername(), nciUser.getEmailAddress());
-          //  saveError("cadsr.formbuilder.form.locked.cannot.delete",  request, "nciUser.getUsername()", "nciUser.getEmailAddress()");
-            
-            //testing
-             ActionError errorMessage = new ActionError("cadsr.formbuilder.form.locked.cannot.delete", "arg0", "arg1");
-             ActionErrors errorMessages = null;
-             errorMessages = (ActionErrors)request.getAttribute(Globals.ERROR_KEY);
-             if(errorMessages==null)
-               errorMessages = new ActionErrors();
-
-             errorMessages.add(errorMessages.GLOBAL_ERROR, errorMessage);
-             saveErrors(request,errorMessages);
-            //testing
-        
-        
-            //testing
-            request.getSession().invalidate();
-            
-          return mapping.findForward("failure");        
-    }
-      
-
     try {
       setFormForAction(form, request);
       DynaActionForm dynaForm = (DynaActionForm) form;
