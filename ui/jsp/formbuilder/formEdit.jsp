@@ -105,6 +105,11 @@ function repeatDisplay(methodName) {
             <bean:message key="cadsr.formbuilder.helpText.form.edit"/>
           </td>
         </tr>  
+        <tr>    
+          <td align="left" class="AbbreviatedText">
+            <bean:message key="cadsr.formbuilder.form.will.be.locked.by.you"/>
+          </td>
+        </tr>  
     </table> 
 
       <%@ include file="/formbuilder/editButton_inc.jsp"%>
@@ -856,7 +861,7 @@ class="OraBGAccentVeryDark" >
 
     <%@ include file="/common/common_bottom_border.jsp"%>
 
-    <html:javascript formName="formEditForm"/>
+<html:javascript formName="formEditForm"/>
    
   </BODY>
 </HTML>
