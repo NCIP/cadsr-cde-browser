@@ -1,6 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.servicelocator.spring;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.CDEBrowserTreeService;
+import gov.nih.nci.ncicb.cadsr.formbuilder.service.LockingService;
+import gov.nih.nci.ncicb.cadsr.formbuilder.service.LockingService;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.spring.ApplicationContextFactory;
@@ -14,6 +16,8 @@ public class ApplicationServiceLocatorImpl implements ApplicationServiceLocator
  private  CDEBrowserTreeService treeService = null;
 
  private  CDEBrowserService cdebrowserService = null;
+ 
+ private  LockingService lockingService = null;
 
   public ApplicationServiceLocatorImpl()
   {
@@ -68,5 +72,24 @@ public class ApplicationServiceLocatorImpl implements ApplicationServiceLocator
      }
      return cdebrowserService;
    }
+   
+   
+    public LockingService findLockingService() throws ServiceLocatorException{
+        if(lockingService==null)
+        {
+             try
+             {
+               Object obj = new SpringObjectLocatorImpl().findObject("lockingService");
+               lockingService = (LockingService) (obj);
+             }
+             catch (Exception e)
+             {
+               throw new ServiceLocatorException("Exp while locating lockingService ",e);
+             }
+        }
+        return lockingService;
+    }
+    
+   
 
 }
