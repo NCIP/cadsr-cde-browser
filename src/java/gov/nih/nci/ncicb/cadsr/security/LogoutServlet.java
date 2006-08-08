@@ -2,7 +2,8 @@ package gov.nih.nci.ncicb.cadsr.security;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormLockerUtil;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
 
 import gov.nih.nci.ncicb.cadsr.util.TimeUtils;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,11 +49,11 @@ public class LogoutServlet extends HttpServlet {
     HttpServletResponse response) throws ServletException, IOException {
     
     //unlock all forms locked by this session
-     FormLockerUtil.unlockFormBySession(request.getSession());
-    
+    HttpSession session = request.getSession();
+    getApplicationServiceLocator(session.getServletContext()).findLockingService().unlockFormByUser(request.getRemoteUser());
+     
     synchronized (SessionUtils.sessionObjectCache) {
       log.error("LogoutServlet.doPost at start:"+TimeUtils.getEasternTime());
-      HttpSession session = request.getSession();
       String error = request.getParameter("authorizationError");
       String forwardUrl;
       if (error == null ) {
@@ -130,4 +132,16 @@ public class LogoutServlet extends HttpServlet {
 
     return true;
   }
+
+
+    protected ApplicationServiceLocator getApplicationServiceLocator(ServletContext sc)
+      throws ServiceLocatorException {
+      ApplicationServiceLocator appServiceLocator =
+        (ApplicationServiceLocator) sc.getAttribute(
+          ApplicationServiceLocator.APPLICATION_SERVICE_LOCATOR_CLASS_KEY);
+      if(appServiceLocator==null)
+        throw new ServiceLocatorException("Could no find ApplicationServiceLocator with key ="+ ApplicationServiceLocator.APPLICATION_SERVICE_LOCATOR_CLASS_KEY);
+      return appServiceLocator;
+    } 
+        
 }
