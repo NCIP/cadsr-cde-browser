@@ -875,8 +875,10 @@ function clearProtocol() {
                                            <td class="OraFieldText" width="86%">
                                           <bean:write name="validValue" property="longName"/>
                                           <% String formattedValidValue = validValue.getLongName();
-                                             formattedValidValue = StringUtils.strReplace(formattedValidValue, "\"","&quot;");
-                                             formattedValidValue = StringUtils.strReplace(formattedValidValue, "\'",  "&acute;");
+                                             if (formattedValidValue!=null){
+                                                formattedValidValue = StringUtils.strReplace(formattedValidValue, "\"","&quot;");
+                                                formattedValidValue = StringUtils.strReplace(formattedValidValue, "\'",  "&acute;");
+                                             }                                                                                         
                                              //System.out.println("=======formattedValidValue=" + formattedValidValue);
                                            %>  
                                           <a href="javascript:populateDefaultValue('<%=formattedValidValue%>', '<%=validValue.getValueIdseq()%>', '<%=questionIndex%>')">
