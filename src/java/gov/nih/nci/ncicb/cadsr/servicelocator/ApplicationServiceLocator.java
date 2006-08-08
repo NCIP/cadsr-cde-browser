@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.servicelocator;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.CDEBrowserTreeService;
+import gov.nih.nci.ncicb.cadsr.formbuilder.service.LockingService;
 import gov.nih.nci.ncicb.cadsr.ocbrowser.service.OCBrowserService;
 
 public interface ApplicationServiceLocator
@@ -12,4 +13,6 @@ public interface ApplicationServiceLocator
   public CDEBrowserTreeService findTreeService() throws ServiceLocatorException;
 
   public CDEBrowserService findCDEBrowserService() throws ServiceLocatorException;
+  
+  public LockingService findLockingService() throws ServiceLocatorException;
 }
