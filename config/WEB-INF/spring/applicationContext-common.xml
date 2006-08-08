@@ -1,35 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+
+
 
 
 <beans>
 
+
+
   <bean id="treeCache" class="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTreeCache">
+
     <property name="appServiceLocator"><ref local="appServiceLocator"/></property>
+
   </bean>
+
+
 
   <bean id="treeService" class="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.impl.CDEBrowserTreeServiceImpl">
+
      <property name="locator"><ref local="serviceLocator"/></property>
+
      <property name="daoFactory"><ref local="daoFactory"/></property>
-  </bean>
-  
-  <bean id="CDEBrowserService" class="gov.nih.nci.ncicb.cadsr.cdebrowser.service.impl.CDEBrowserServiceImpl">
-     <property name="daoFactory"><ref local="daoFactory"/></property>
-     <property name="domainObjectsDaoFactory"><ref local="domainObjectsDaoFactory"/></property>
-  </bean>  
-  
-  <bean id="appServiceLocator" class="gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl">
+
   </bean>
 
+  
+
+  <bean id="CDEBrowserService" class="gov.nih.nci.ncicb.cadsr.cdebrowser.service.impl.CDEBrowserServiceImpl">
+
+     <property name="daoFactory"><ref local="daoFactory"/></property>
+
+     <property name="domainObjectsDaoFactory"><ref local="domainObjectsDaoFactory"/></property>
+
+  </bean>  
+
+  
+
+  <bean id="appServiceLocator" class="gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl">
+
+  </bean>
+
+
+
   <bean id="daoFactory" class="gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory"
+
   	factory-method="getDAOFactory">
+
      <constructor-arg> <ref bean="serviceLocator"/></constructor-arg>
+
   </bean>  
+
   
+
   <bean id="serviceLocator" class="gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl">
+
   </bean>  
+
   
+
   <bean id="domainObjectsDaoFactory" class="gov.nih.nci.ncicb.cadsr.persistence.dao.domain.hibernate.DomainObjectsDAOFactory">
+
     <property name="dataElementDAO"><ref bean="dataElementDAO"/></property>
+
   </bean>	
+  <!--move to formlocker context xml-->
+  
+  <bean id="formOwnerMap" class="java.util.HashMap">
+  </bean>
+  
+  <bean id="lockingService" class="gov.nih.nci.ncicb.cadsr.formbuilder.service.impl.LockingServiceImpl">
+    <property name="lockerMap"> 
+        <ref bean="formOwnerMap"/> 
+    </property>
+  </bean>    
+    <!--end of move to formlocker context xml-->
 </beans>
+
