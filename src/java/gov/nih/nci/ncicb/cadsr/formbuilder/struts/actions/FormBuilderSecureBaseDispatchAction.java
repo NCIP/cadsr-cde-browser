@@ -13,7 +13,6 @@ import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
 import gov.nih.nci.ncicb.cadsr.servicelocator.*;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormLockerUtil;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
@@ -125,6 +124,12 @@ public class FormBuilderSecureBaseDispatchAction extends FormBuilderBaseDispatch
     NCIUser newuser = getNCIUser(username);
     request.getSession().setAttribute(this.USER_KEY, newuser);
   }
+  
+    /**This method returns the login user information in NCIUser object
+     * */
+     protected NCIUser getApplictionUser(HttpServletRequest request){      
+      return (NCIUser)(request.getSession().getAttribute(this.USER_KEY));
+    }
 
   protected NCIUser getNCIUser(String username) {
     String locatorClassName =
@@ -157,37 +162,29 @@ public class FormBuilderSecureBaseDispatchAction extends FormBuilderBaseDispatch
   }
   
     public  boolean isFormLocked(String formIdSeq,
-                                       HttpServletRequest request) {
-        return FormLockerUtil.isFormLocked(formIdSeq, request);                                       
+                                       String userId) {
+        return getApplicationServiceLocator().findLockingService().isFormLocked(formIdSeq, userId);                                   
     }
 
-    public  boolean lockForm(String formIdSeq, HttpServletRequest request) {
-        return FormLockerUtil.lockForm(formIdSeq, request);
+    public  boolean lockForm(String formIdSeq, NCIUser user, String sessionId) {
+       return getApplicationServiceLocator().findLockingService().lockForm(formIdSeq, user, sessionId);
     }
 
     public  void unlockForm(String formIdSeq,
-                                  HttpServletRequest request) {
-        FormLockerUtil.unlockForm(formIdSeq, request);
+                                  String userId) {
+        getApplicationServiceLocator().findLockingService().unlockForm(formIdSeq, userId);
+        return;
     }  
     
     public  void unlockCRFInSession(HttpServletRequest request){
         Form crf = (Form)getSessionObject(request, CRF);
-        unlockForm(crf.getIdseq(), request);
+        unlockForm(crf.getIdseq(), request.getRemoteUser());
         return;
     }
     
     public NCIUser getFormLockedBy(String formIdSeq, HttpServletRequest request){
-        ServletContext servletContext =
-            request.getSession(true).getServletContext();
-        Object formOwnerObject = servletContext.getAttribute("testcontext");
-        if (formOwnerObject == null){
-            return null;
-        }        
-        
-        Map formOwnerMap = (Map)formOwnerObject;
-        FormElementLocker locker = (FormElementLocker)formOwnerMap.get(formIdSeq);
-        
-        return getNCIUser(locker.getUserName());
+        FormElementLocker locker = getApplicationServiceLocator().findLockingService().getFormLocker(formIdSeq);
+        return locker.getNciUser();
     }
     
 }
