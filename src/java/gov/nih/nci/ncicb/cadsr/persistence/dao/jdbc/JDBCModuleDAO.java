@@ -485,6 +485,8 @@ public class JDBCModuleDAO extends JDBCAdminComponentDAO implements ModuleDAO {
       question.setAslName(rs.getString(5));//Workflow
       question.setPreferredDefinition(rs.getString(7));
       
+      question.setMandatory("Yes".equalsIgnoreCase(rs.getString(21)));
+      
       String deIdSeq = rs.getString(8);
       if(deIdSeq!=null)
        {
