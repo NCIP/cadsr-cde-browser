@@ -954,8 +954,8 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                         
                     }
                     
-                    if (currQuestionChange.isDefaultValueChange()){
-                        questionDao.updateQuestionDefaultValue(currQuestionChange, getUserName().toUpperCase());
+                    if (currQuestionChange.isQuestAttrChange()){
+                        questionDao.updateQuestAttr(currQuestionChange, getUserName().toUpperCase());
                     }
                     
                     
