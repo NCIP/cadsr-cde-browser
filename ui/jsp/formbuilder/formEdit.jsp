@@ -534,7 +534,22 @@ function repeatDisplay(methodName) {
                                  </td>
                                </tr> 
                             </logic:present>
-
+                            <%--mandatory--%>                            
+                              <tr class="OraTabledata">
+                                 <td class="OraFieldText" width="50">&nbsp;</td>
+                                  <td class="OraFieldText" colspan="2">                              
+                                   <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
+                                     <tr class="OraTabledata">
+                                      <td class="OraTableColumnHeader" width="10%" nowrap>
+	                                  <bean:message key="cadsr.formbuilder.form.question.mandatory"/> 
+                                     </td>
+                                     <td class="OraFieldText">
+						<html:checkbox name="question" property="mandatory" disabled="true"/>
+					</td>
+                                    </tr>
+                                   </table>                                                            
+                                 </td>
+                               </tr> 
                             <logic:notEmpty name="question" property="defaultValidValue">
                               <logic:notEmpty name="question" property="defaultValidValue.longName">
                               <tr class="OraTabledata">

@@ -81,13 +81,29 @@
                                         <bean:message key="cadsr.formbuilder.form.instruction"/>
                                      </td>
                                      <td class="PrinterOraFieldText">
-                                       <bean:write  name="question" property="instruction.longName"/>
+                                        <bean:write name="question" property="instruction.longName"/>
                                      </td>
                                     </tr>
                                    </table>                                                            
                                  </td>
                                </tr> 
                             </logic:present>                            
+                            <%--mandatory--%>
+                              <tr class="PrinterOraTableColumnHeader">
+                                 <td class="PrinterOraTableColumnHeader" width="50">&nbsp;</td>
+                                  <td class="PrinterOraTableColumnHeader" colspan="2">                              
+                                   <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentBlack" >
+                                     <tr class="PrinterOraTabledata">
+                                      <td class="PrinterOraTableColumnHeader" width="10%" nowrap>
+                                        <bean:message key="cadsr.formbuilder.form.question.mandatory"/>
+                                     </td>
+                                     <td class="PrinterOraFieldText">
+        				<html:checkbox name="question" property="mandatory" disabled="true"/>
+                                     </td>
+                                    </tr>
+                                   </table>                                                            
+                                 </td>
+                               </tr> 
                             <logic:present name="question" property="defaultValidValue">
                               <tr class="PrinterOraTableColumnHeader">
                                  <td class="PrinterOraTableColumnHeader" width="50">&nbsp;</td>

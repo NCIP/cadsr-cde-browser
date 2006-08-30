@@ -82,6 +82,15 @@
                                        <bean:write  name="question" property="instruction.longName"/>
                                      </td>
                                     </tr>
+                                     <tr class="OraTabledata">
+                                      <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
+                                          <bean:message key="cadsr.formbuilder.form.question.mandatory"/> 
+                                     </td>
+                                     <td class="OraFieldText">
+                                	<html:checkbox name="question" property="mandatory" disabled="true"/>
+                                     </td>
+                                    </tr>
+
                                      <logic:notEmpty name="question" property = "validValues">
                                      <tr class="OraTabledata">
                                       <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
@@ -108,12 +117,20 @@
                                  </td>
                                </tr> 
                             </logic:present>
-                            <logic:notPresent name="question" property="instruction">
                             
+                            <logic:notPresent name="question" property="instruction">                            
                               <tr class="OraTabledata">
                                  <td class="OraFieldText" width="50">&nbsp;</td>
                                   <td class="OraFieldText" colspan="2">                              
                                    <table align="center" width="100%" cellpadding="0" cellspacing="1" border="0" class="OraBGGrayVeryDark" >
+                                     <tr class="OraTabledata">
+                                      <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
+                                          <bean:message key="cadsr.formbuilder.form.question.mandatory"/> 
+                                     </td>
+                                     <td class="OraFieldText">
+                                	<html:checkbox name="question" property="mandatory" disabled="true"/>
+                                     </td>
+                                    </tr>
                                      <tr class="OraTabledata">
                                      <logic:notEmpty name="question" property = "validValues">
                                       <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
@@ -139,7 +156,6 @@
                                </tr> 
                             
                             </logic:notPresent>                            
-
                             <logic:present name="question">
                             <logic:notEmpty name="question" property = "validValues">
                               <tr class="OraTabledata">
