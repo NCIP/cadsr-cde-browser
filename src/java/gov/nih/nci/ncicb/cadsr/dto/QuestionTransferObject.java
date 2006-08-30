@@ -31,6 +31,7 @@ public class QuestionTransferObject extends FormElementTransferObject
   protected String defaultValue =null;
   protected FormValidValue defaultValidValue =null;
   protected List<QuestionRepitition> questionRepititions;
+  protected boolean mandatory;
   
   public QuestionTransferObject() {
     idseq = quesIdseq;
@@ -125,6 +126,16 @@ public class QuestionTransferObject extends FormElementTransferObject
     {
         questionRepititions=repeats;
     }
+    
+    
+    //added for eDCI
+    public boolean isMandatory(){
+        return mandatory;
+    }
+    public void setMandatory(boolean mandatory){
+        this.mandatory = mandatory;
+    }
+        
     
   /**
    * This equals method only compares the Idseq to define equals

@@ -187,6 +187,11 @@ public class DownloadAction
    cell.setCellValue("Question Instructions");
    cell.setCellStyle(boldCellStyle);
 
+//question mandatory   
+   cell = row.createCell(colNumber++);
+   cell.setCellValue("Answer is Mandatory");
+   cell.setCellStyle(boldCellStyle);
+
 //question default value
      cell = row.createCell(colNumber++);
      cell.setCellValue("Question Default Value");
@@ -253,6 +258,11 @@ public class DownloadAction
       row.createCell(colNumber++).setCellValue(question.getInstruction().getLongName());
      else
       colNumber++;
+
+     if (question.isMandatory())
+       row.createCell(colNumber++).setCellValue("Yes");
+     else
+       row.createCell(colNumber++).setCellValue("No");
 
      //question default value
      String questionDefaultValue = question.getDefaultValue();
