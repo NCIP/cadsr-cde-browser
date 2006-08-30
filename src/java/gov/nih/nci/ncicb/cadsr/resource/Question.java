@@ -27,6 +27,10 @@ public interface Question extends FormElement,Orderable,Instructionable   {
   public List<QuestionRepitition> getQuestionRepititions();
   public void setQuestionRepitition(List<QuestionRepitition> repeats);  
   
+  //added for eDCI
+  public boolean isMandatory();
+  public void setMandatory(boolean mandatory);  
+  
   public Object clone() throws CloneNotSupportedException ;
   
 }

@@ -18,11 +18,15 @@ public interface QuestionChange extends Serializable
  
   public void setDefaultValidValue(FormValidValue defaultValidValue) ;
   public FormValidValue getDefaultValidValue() ;
+  
   public void setDefaultValue(String  defaultValue) ;
   public String getDefaultValue() ;
+  
+  public boolean isMandatory();
+  public void setMandatory(boolean mandatory);
     
-  public void setDefaultValueChange(boolean defaultValueChange);
-  public boolean isDefaultValueChange();
+  public void setQuestAttrChange(boolean change);
+  public boolean isQuestAttrChange();
   
   
   public boolean isEmpty();  
