@@ -55,6 +55,7 @@ function submitBackToModuleEdit() {
 <html:form action="/editModuleSkipAction.do">
    <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
    <html:hidden property="<%=FormConstants.MODULE_INDEX%>"/>
+   <html:hidden property="<%=FormConstants.TRIGGER_ACTION_INDEX%>"/>
 
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >      
         <tr >
