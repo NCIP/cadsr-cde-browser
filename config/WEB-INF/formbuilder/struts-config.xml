@@ -71,6 +71,7 @@
       <form-property name="questionOption" type="java.lang.String"/>  
       <form-property name="moduleQuestions" type="java.lang.String[]"/>  
       <form-property name="questionInstructions" type="java.lang.String[]"/>
+      <form-property name="questionMandatories" type="java.lang.String[]"/>      
       <form-property name="questionDefaultValues" type="java.lang.String[]"/>
       <form-property name="questionDefaultValidValueIds" type="java.lang.String[]"/>
       <form-property name="formsValidValueInstructions" type="java.lang.String[]"/>            
