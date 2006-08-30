@@ -15,7 +15,8 @@ public class QuestionChangeTransferObject implements QuestionChange
   private String questionId;
   private String defaultValue;
   private FormValidValue  defaultValidValue;
-  private boolean defaultValueChange = false;
+  private boolean questAttrChange = false;
+  private boolean mandatory;
   
   public QuestionChangeTransferObject()
   {
@@ -61,8 +62,8 @@ public class QuestionChangeTransferObject implements QuestionChange
   }
 
   public boolean isEmpty()
-  { 
-    if(updatedQuestion==null&&instructionChanges==null&&fvvChanges==null && !defaultValueChange)
+  { //TODO refactor
+    if(updatedQuestion==null&&instructionChanges==null&&fvvChanges==null && !questAttrChange)
       return true;
     boolean result = true;
     if(updatedQuestion!=null)
@@ -71,7 +72,7 @@ public class QuestionChangeTransferObject implements QuestionChange
       result = false;
     if(fvvChanges!=null&&!fvvChanges.isEmpty())
       result = false;
-    if (defaultValueChange)  {
+    if (questAttrChange)  {
         result = false;
     }
     return result;
@@ -101,11 +102,19 @@ public class QuestionChangeTransferObject implements QuestionChange
         return instructionChanges;
     }
 
-    public void setDefaultValueChange(boolean defaultValueChange) {
-        this.defaultValueChange = defaultValueChange;
+    public void setQuestAttrChange(boolean defaultValueChange) {
+        this.questAttrChange = defaultValueChange;
     }
 
-    public boolean isDefaultValueChange() {
-        return defaultValueChange;
+    public boolean isQuestAttrChange() {
+        return questAttrChange;
     }
+    
+    public boolean isMandatory(){
+        return mandatory;
+    }
+    
+    public void setMandatory(boolean mandatory){
+        this.mandatory = mandatory;
+    }    
 }
