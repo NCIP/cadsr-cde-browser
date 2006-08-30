@@ -134,9 +134,11 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       return res;
   }
 
-    public int updateQuestionDefaultValue(QuestionChange change, String userName){
+    public int updateQuestAttr(QuestionChange change, String userName){
         UpdateQuestAttrQuery updateQuestAttr= new UpdateQuestAttrQuery(this.getDataSource());
-        if (change.isDefaultValueChange()){
+        if (change.isQuestAttrChange()){
+        /*
+            //will not delete considering the mandatory_ind
             //if both is null, delete
             String defaultValueId = change.getDefaultValidValue()==null? 
                         null:change.getDefaultValidValue().getValueIdseq();
@@ -146,13 +148,13 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
                     return deleteQuestAttr.deleteRecord(change);
                 } 
             else{
-                int res = updateQuestAttr.updateRecord(change, userName);
-                if (res == 0){
-                    CreateQuestAttrQuery createQuery = new CreateQuestAttrQuery(getDataSource());
-                    String pk = generateGUID();
-                    return createQuery.createRecord(change, pk, userName);
-                }
-            }
+          */
+          int res = updateQuestAttr.updateRecord(change, userName);
+          if (res == 0){
+               CreateQuestAttrQuery createQuery = new CreateQuestAttrQuery(getDataSource());
+               String pk = generateGUID();
+               return createQuery.createRecord(change, pk, userName);
+          }
         }
         return 0;
     }
@@ -347,7 +349,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     }
     
     if ( (defaultValidValueIdSeq!=null && defaultValidValueIdSeq.length()!=0) ||
-        (defaultValue!=null && defaultValue.length()!=0) ){
+        (defaultValue!=null && defaultValue.length()!=0) || (newQuestion.isMandatory()) ){
         String pk = generateGUID();    
         CreateQuestAttrQuery createQuestAttr= new CreateQuestAttrQuery(this.getDataSource());
         createQuestAttr.createRecord(newQuestion, pk, newQuestion.getCreatedBy());
@@ -744,7 +746,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
   private class CreateQuestAttrQuery extends SqlUpdate {
     public CreateQuestAttrQuery(DataSource ds) {
       String createSql =
-        " insert  into quest_attributes_ext(VV_IDSEQ, QC_IDSEQ, QUEST_IDSEQ, CREATED_BY, DEFAULT_VALUE, EDITABLE_IND) values(?,?,?,?,?, 'Yes')";
+        " insert  into quest_attributes_ext(VV_IDSEQ, QC_IDSEQ, QUEST_IDSEQ, CREATED_BY, DEFAULT_VALUE, EDITABLE_IND, MANDATORY_IND ) values(?,?,?,?,?, 'Yes', ?)";
 
       this.setDataSource(ds);
       this.setSql(createSql);
@@ -753,6 +755,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       declareParameter(new SqlParameter("QUEST_IDSEQ", Types.VARCHAR));
       declareParameter(new SqlParameter("CREATED_BY", Types.VARCHAR));
       declareParameter(new SqlParameter("DEFAULT_VALUE", Types.VARCHAR));
+      declareParameter(new SqlParameter("MANDATORY_IND", Types.VARCHAR));
       compile();
     }
 
@@ -766,7 +769,8 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
           question.getQuesIdseq(),
           pk,
           userName,
-          question.getDefaultValue()
+          question.getDefaultValue(),
+          question.isMandatory()?"Yes":"No"
         };
       int res = update(obj);
       return res;
@@ -778,8 +782,8 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
         String vvId = change.getDefaultValidValue()==null? 
               null: change.getDefaultValidValue().getValueIdseq();
         String defaultValue =  change.getDefaultValue();
-        if (vvId==null && (defaultValue==null || defaultValue.length()==0)){
-            return 0;//no empty record.
+        if (vvId==null && (defaultValue==null || defaultValue.length()==0) && !change.isMandatory()){
+            return 0;//no empty record. record means NOT MANDATORY
         }
         Object[] obj =
           new Object[] {
@@ -787,7 +791,8 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
             change.getQuestionId(),
             pk,
             userName,
-            defaultValue
+            defaultValue,
+            (change.isMandatory())? "Yes": "No"
           };
         int res = update(obj);
         return res;
@@ -801,13 +806,14 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     private class UpdateQuestAttrQuery extends SqlUpdate {
       public UpdateQuestAttrQuery(DataSource ds) {
         String createSql =
-          " update quest_attributes_ext set VV_IDSEQ=?, MODIFIED_BY=?, DEFAULT_VALUE=?  where QC_IDSEQ=?";
+          " update quest_attributes_ext set VV_IDSEQ=?, MODIFIED_BY=?, DEFAULT_VALUE=?,  MANDATORY_IND=? where QC_IDSEQ=?";
 
         this.setDataSource(ds);
         this.setSql(createSql);
         declareParameter(new SqlParameter("VV_IDSEQ", Types.VARCHAR));
         declareParameter(new SqlParameter("MODIFIED_BY", Types.VARCHAR));
         declareParameter(new SqlParameter("DEFAULT_VALUE", Types.VARCHAR));
+          declareParameter(new SqlParameter("MANDATORY_IND", Types.VARCHAR));
         declareParameter(new SqlParameter("QC_IDSEQ", Types.VARCHAR));
         compile();
       }
@@ -821,6 +827,7 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
               null: change.getDefaultValidValue().getValueIdseq(),
             userName,
             change.getDefaultValue(),
+            (change.isMandatory()? "Yes" : "No"),
             change.getQuestionId()
           };
         int res = update(obj);
