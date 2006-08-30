@@ -152,7 +152,7 @@ public interface QuestionDAO {
      * Changes the default value of a question
      * @throws <b>DMLException</b>
      */
-    public int updateQuestionDefaultValue(
+    public int updateQuestAttr(
       QuestionChange questionChanges, String userName) throws DMLException;   
       
       
