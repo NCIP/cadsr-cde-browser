@@ -353,6 +353,7 @@ public class DESearchQueryBuilder extends Object {
                                " sbr.contexts conte, " +
                                //" sbrext.de_cde_id_view dc, " +
                                " sbrext.quest_contents_ext frm ," +
+                                " sbrext.protocol_qc_ext ptfrm ," +
                                " sbrext.protocols_ext pt ," +
                                " sbrext.quest_contents_ext qc " +
                                //"sbr.value_domains vd, "+
@@ -369,7 +370,8 @@ public class DESearchQueryBuilder extends Object {
                          " and de.asl_name != 'RETIRED DELETED' " +
                          " and conte.conte_idseq = de.conte_idseq " +
                          //" and de.de_idseq = dc.ac_idseq (+) " +
-                         " and pt.proto_idseq = frm.proto_idseq " +
+                         " and pt.proto_idseq = ptfrm.proto_idseq " +
+                         " and frm.qc_idseq = ptfrm.qc_idseq " +
                          " and frm.qtl_name = 'CRF' " +
                          " and qc.dn_crf_idseq = frm.qc_idseq " +
                          " and qc.qtl_name = 'QUESTION' " +
