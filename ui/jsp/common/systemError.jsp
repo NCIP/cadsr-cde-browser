@@ -1,8 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
 <HTML>
   <HEAD>
     <TITLE>CDEBrowser: System Error</TITLE>
@@ -21,8 +19,6 @@
       <jsp:param name="label" value="System&nbsp;Error"/>
       <jsp:param name="urlPrefix" value=""/>
     </jsp:include>
-    <bean:define id="exception" name="org.apache.struts.action.EXCEPTION"
-       type="java.lang.Throwable" />
 
     <table>
       <tr>
@@ -47,12 +43,13 @@
        </table>
       </logic:messagesPresent>  
   <!--
-   <logic:present name="exception">
-       Exception StackTrace <br>
    <%  
-    exception.printStackTrace(new java.io.PrintWriter(out));
+    java.lang.Throwable exception = (java.lang.Throwable) 
+    request.getAttribute("org.apache.struts.action.EXCEPTION");
+    
+    if (exception !=null)
+	exception.printStackTrace(new java.io.PrintWriter(out));
     %>
-    </logic:present >    
   -->
         </td>
       </tr>
