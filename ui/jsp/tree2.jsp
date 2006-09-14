@@ -55,7 +55,7 @@
     if ("<%=treeName%>" == "deTree")
      frm.document.location = "<%=request.getContextPath()%>" + "/search?" + urlParams + "<%=callerParams%>";
     else
-     frm.document.location = "/CDEBrowser/formDetailsAction.do?method=getFormDetails&"+urlParams;;
+     top.document.location = "/CDEBrowser/formDetailsAction.do?method=getFormDetails&"+urlParams;;
    }
   //-->
   </script>
