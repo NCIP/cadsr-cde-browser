@@ -27,7 +27,6 @@
           }
           
          treeName =(String) request.getSession().getAttribute("treeTypeName");
-         System.out.println("treeName is " + treeName);
     } 
     catch (Exception ex) {
       System.out.println("Error: "+ex.getMessage());;
