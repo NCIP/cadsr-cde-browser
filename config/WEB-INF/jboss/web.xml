@@ -2,6 +2,99 @@
 <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
 <web-app>
   <description>web.xml file for CDE Browser</description>
+  <context-param>
+    <description>Comma separated list of URIs of (additional) faces config files.
+            (e.g. /WEB-INF/my-config.xml)
+            See JSF 1.0 PRD2, 10.3.2
+            Attention: You do not need to put /WEB-INF/faces-config.xml in here.
+    </description>
+    <param-name>javax.faces.CONFIG_FILES</param-name>
+    <param-value>/WEB-INF/cdebrowser-faces-config.xml</param-value>
+  </context-param>
+  <context-param>
+    <description>State saving method: "client" or "server" (= default)
+            See JSF Specification 2.5.3</description>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>server</param-value>
+  </context-param>
+  <context-param>
+    <description>Only applicable if state saving method is "server" (= default).
+            Defines the amount (default = 20) of the latest views are stored in session.</description>
+    <param-name>org.apache.myfaces.NUMBER_OF_VIEWS_IN_SESSION</param-name>
+    <param-value>20</param-value>
+  </context-param>
+  <context-param>
+    <description>Only applicable if state saving method is "server" (= default).
+            If true (default) the state will be serialized to a byte stream before it 
+            is written to the session.
+            If false the state will not be serialized to a byte stream.</description>
+    <param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <context-param>
+    <description>Only applicable if state saving method is "server" (= default) and if 
+            org.apache.myfaces.SERIALIZE_STATE_IN_SESSION is true (= default)
+            If true (default) the serialized state will be compressed before it 
+            is written to the session. If false the state will not be compressed.</description>
+    <param-name>org.apache.myfaces.COMPRESS_STATE_IN_SESSION</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <context-param>
+    <description>This parameter tells MyFaces if javascript code should be allowed in the
+            rendered HTML output.
+            If javascript is allowed, command_link anchors will have javascript code
+            that submits the corresponding form.
+            If javascript is not allowed, the state saving info and nested parameters
+            will be added as url parameters.
+            Default: "true"</description>
+    <param-name>org.apache.myfaces.ALLOW_JAVASCRIPT</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>org.apache.myfaces.DETECT_JAVASCRIPT</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <context-param>
+    <description>If true, rendered HTML code will be formatted, so that it is "human readable".
+            i.e. additional line separators and whitespace will be written, that do not
+            influence the HTML code.
+            Default: "true"</description>
+    <param-name>org.apache.myfaces.PRETTY_HTML</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <description>If true, a javascript function will be rendered that is able to restore the
+            former vertical scroll on every request. Convenient feature if you have pages
+            with long lists and you do not want the browser page to always jump to the top
+            if you trigger a link or button action that stays on the same page.
+            Default: "false"</description>
+    <param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+    <context-param>
+  		<description>
+  			Validate managed beans and navigation rules.
+  		</description>
+       	<param-name>org.apache.myfaces.validate</param-name>
+       	<param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.apache.myfaces.ADD_RESOURCE_CLASS</param-name>
+        <param-value>org.apache.myfaces.component.html.util.StreamingAddResource</param-value>
+     </context-param>
+    <context-param>
+        <param-name>facelets.LIBRARIES</param-name>
+        <param-value>/WEB-INF/tomahawk.taglib.xml;/WEB-INF/aatree.taglib.xml</param-value>
+    </context-param>
+    <context-param> 
+        <param-name>org.apache.myfaces.CHECK_EXTENSIONS_FILTER</param-name> 
+        <param-value>false</param-value> 
+    </context-param> 
+  <listener>
+  <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
+  </listener>
+ 
   <session-config>
     <session-timeout>300</session-timeout>
   </session-config>
@@ -40,6 +133,66 @@
     <listener-class>oracle.clex.util.ServletEventListener</listener-class>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>  
+  <servlet>
+  <servlet-name>Faces Servlet</servlet-name>
+  <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+  <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>Faces Servlet</servlet-name>
+  <url-pattern>*.jsf</url-pattern>
+</servlet-mapping>
+<filter>
+    <filter>
+        <filter-name>AjaxAnywhere</filter-name>
+        <filter-class>org.ajaxanywhere.AAFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AjaxAnywhere</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AjaxAnywhere</filter-name>
+        <url-pattern>*.do</url-pattern> <!-- default Struts mapping -->
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AjaxAnywhere</filter-name>
+        <url-pattern>*.htm</url-pattern> <!-- other framewords mapping-->
+    </filter-mapping>
+	<filter-name>MyFacesExtensionsFilter</filter-name>
+	<filter-class>org.apache.myfaces.webapp.filter.ExtensionsFilter</filter-class>
+    <init-param>
+        <param-name>maxFileSize</param-name>
+        <param-value>20m</param-value>
+        <description>Set the size limit for uploaded files.
+            Format: 10 - 10 bytes
+                    10k - 10 KB
+                    10m - 10 MB
+                    1g - 1 GB
+        </description>
+    </init-param>
+</filter>
+
+<!-- extension mapping for adding <script/>, <link/>, and other resource tags to JSF-pages  -->
+<filter-mapping>
+    <filter-name>MyFacesExtensionsFilter</filter-name>
+    <!-- servlet-name must match the name of your javax.faces.webapp.FacesServlet entry -->
+    <servlet-name>Faces Servlet</servlet-name>
+</filter-mapping>
+
+<!-- extension mapping for serving page-independent resources (javascript, stylesheets, images, etc.)  -->
+<filter-mapping>
+    <filter-name>MyFacesExtensionsFilter</filter-name>
+    <url-pattern>/faces/myFacesExtensionResource/*</url-pattern>
+</filter-mapping>
+
+<!-- extension mapping for adding <script/>, <link/>, and other resource tags to JSF-pages  -->
+<filter-mapping>
+    <filter-name>MyFacesExtensionsFilter</filter-name>
+    <url-pattern>*.jsf</url-pattern>
+</filter-mapping>
+ 
   <servlet>
     <servlet-name>CDEBrowserServletController</servlet-name>
     <servlet-class>oracle.clex.process.controller.HttpServletController</servlet-class>

@@ -1,5 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
+import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+
 import java.util.Collection;
 import java.util.List;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
@@ -171,5 +173,7 @@ public interface AdminComponentDAO {
      * @return
      */
   public Context getContext(String acIdSeq);
+  public List<ClassSchemeItem> getCSCSIHierarchyByContext(String contextIdseq);
+  public List getCSCSIHierarchyByTypeAndContext(String csType, String csiType,String contextIdseq);
 
 }

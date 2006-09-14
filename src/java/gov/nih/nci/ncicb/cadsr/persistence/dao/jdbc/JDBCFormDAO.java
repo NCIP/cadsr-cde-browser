@@ -487,7 +487,19 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
 
   return query.getFormCollection();
  }
+ 
+   /**
+    * Gets all the forms sort by context id, protocol name, form name
+    *
+    * @param
+    *
+    * @return forms that match the criteria.
+    */
+   public List getFormsOrderByProtocol(String contextIdSeq) {
+    FormProtoQuery query = new FormProtoQuery(getDataSource());
 
+    return query.getFormCollection(contextIdSeq);
+   }
  /**
   * Gets all the forms sort by context id, protocol name, form name
   *
@@ -2061,5 +2073,105 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
           return res;
       }
     }
+   /**
+    * Inner class that accesses database to get all the forms
+    * sort by context and protocol
+    */
+   class FormProtoQuery  extends MappingSqlQuery {
+   String lastFormId = null;
+   Form currentForm = null;
+   List formsList = new ArrayList();
+    FormProtoQuery(DataSource ds) {
+       super(
+         ds,   " SELECT quest.qc_idseq " + " ,quest.long_name long_name " + " ,quest.preferred_name preffered_name "
+                  + " ,quest.preferred_definition preferred_definition " + " ,quest.CONTE_IDSEQ "
+                  + " ,proto_qc.PROTO_IDSEQ PROTO_IDSEQ " + " ,proto.LONG_NAME   proto_name "
+                  + " ,proto.preferred_name proto_preferred_name "
+                  + "  ,proto.preferred_definition proto_preferred_definition, proto.CONTE_IDSEQ proto_context "
+                  + ", accs.cs_csi_idseq, accs.cs_conte_idseq "
+                  + " FROM  sbrext.quest_contents_ext quest,protocols_ext proto, protocol_qc_ext proto_qc,  "
+                  + " (select ac_idseq, cs_csi_idseq, cs_conte_idseq  from sbrext.ac_class_view_ext where upper(CSTL_NAME) = upper('"
+                  + CaDSRConstants.FORM_CS_TYPE + "') and upper(CSITL_NAME) = upper('"
+                  + CaDSRConstants.FORM_CSI_TYPE + "')) accs "
+                  + " WHERE quest.QC_IDSEQ = proto_qc.QC_IDSEQ(+) and proto_qc.PROTO_IDSEQ = proto.PROTO_IDSEQ "
+                  + " and quest.QC_IDSEQ = accs.AC_IDSEQ(+) and quest.qtl_name = 'CRF' "
+                  + " AND   quest.deleted_ind = 'No' "
+                  + " AND   quest.latest_version_ind = 'Yes' "
+                  + " AND  proto.conte_idseq = ? "
+                  + " ORDER BY upper(proto.LONG_NAME),upper(quest.long_name), quest.QC_IDSEQ");
+
+       declareParameter(new SqlParameter("CONTE_IDSEQ", Types.VARCHAR));
+       compile();
+    }
+
+    protected Object mapRow(ResultSet rs, int rownum) throws SQLException {
+     String formId = rs.getString("qc_idseq");
+
+     Form form = null;
+
+     if (!formId.equals(lastFormId)) {
+       form = new FormTransferObject();
+       form.setClassifications(new ArrayList());
+       form.setFormIdseq(rs.getString("qc_idseq"));                       // QC_IDSEQ
+       form.setIdseq(rs.getString("qc_idseq"));
+       form.setLongName(rs.getString("long_name"));                       //LONG_NAME
+       form.setPreferredName(rs.getString("preffered_name"));             // PREFERRED_NAME
+       form.setPreferredDefinition(rs.getString("preferred_definition")); // preferred_definition
+
+       //setContext(new ContextTransferObject(rs.getString("context_name")));
+       ContextTransferObject contextTransferObject = new ContextTransferObject();
+       contextTransferObject.setConteIdseq(rs.getString("CONTE_IDSEQ")); //CONTE_IDSEQ
+       form.setContext(contextTransferObject);
+        if (rs.getString("PROTO_IDSEQ") != null &&
+        (rs.getString("PROTO_IDSEQ")).length() >0) {
+         Protocol protocol = new ProtocolTransferObject();
+         protocol.setLongName(rs.getString("proto_name"));
+         protocol.setPreferredName(rs.getString("proto_preferred_name"));
+         protocol.setLongName(rs.getString("proto_name"));
+         protocol.setPreferredDefinition(rs.getString("proto_preferred_definition"));
+         protocol.setIdseq(rs.getString("PROTO_IDSEQ"));
+         protocol.setProtoIdseq(rs.getString("PROTO_IDSEQ"));
+         protocol.setConteIdseq(rs.getString("proto_context"));
+         if (form.getProtocols()== null)
+           form.setProtocols(new ArrayList());
+         form.getProtocols().add(protocol);
+
+
+       }
+
+       lastFormId = formId;
+       currentForm = form;
+       formsList.add(form);
+     } else
+     {
+       form = currentForm;
+     }
+     if ((rs.getString("CS_CSI_IDSEQ")!= null &&
+        (rs.getString("CS_CSI_IDSEQ")).length() >0)) {
+       ClassSchemeItem csi = new CSITransferObject();
+       csi.setCsCsiIdseq(rs.getString("CS_CSI_IDSEQ"));
+       csi.setCsConteIdseq(rs.getString("cs_conte_idseq"));
+    //   csi.setClassSchemeItemType(rs.getString("CSITL_NAME"));
+    //   csi.setCsType(rs.getString("CSTL_NAME"));
+       if (form.getClassifications() == null)
+        form.setClassifications(new ArrayList());
+
+       form.getClassifications().add(csi);
+     }
+     return form;
+    }
+
+    protected List getFormCollection(String contextIdseq) {
+       Object[] obj =
+         new Object[] {
+            contextIdseq
+         };
+
+      execute(obj);
+       
+      return formsList;
+    }
+
+   }
 
 }

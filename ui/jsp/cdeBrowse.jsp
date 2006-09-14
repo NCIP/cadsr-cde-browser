@@ -1,11 +1,12 @@
+<%@ page errorPage="/common/systemError.jsp" %> 
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
-<%@ page contentType="text/html;charset=windows-1252"%>
+<%@page contentType="text/html;charset=windows-1252"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
@@ -110,15 +111,13 @@
                   + ";moduleIndex:"+modIndex;
   }
 
-  treeURL = "/common/WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree"+
-      "&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" + 
-      TreeConstants.DE_SEARCH_TREE + ";" +
-      TreeConstants.CTEP_USER_FLAG + ":" +
-      ctepUser +  ";"+
+  treeURL = "/treeLoader.jsp?&treeParams="+
+      TreeConstants.TREE_TYPE_URL_PARAM +":" + 
+      TreeConstants.DE_SEARCH_TREE + ";"+
       brContextExcludeListParamStr +
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
       TreeConstants.DE_SEARCH_FUNCTION + treeParams +
-      "&skin=CDEBrowser1";
+      "&treeName=deTree";
 
 
   if (performQuery != null ) {
@@ -146,6 +145,7 @@
 CDE Browser
 </TITLE>
 </HEAD>
+
 
 <frameset rows="7%,*">
    <html:frame page="/common/topHeader1.jsp" frameborder="0" scrolling = "no" frameName="tree_header"/>

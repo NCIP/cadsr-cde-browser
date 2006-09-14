@@ -20,13 +20,11 @@
   String treeURL;
   String formbuilderURL;
     treeURL = 
-      "common/WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree"+
+      "/treeLoader.jsp?"+
       "&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" + 
       TreeConstants.FORM_SEARCH_TREE + ";" +
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
       TreeConstants.FORM_SEARCH_FUNCTION + ";" +
-      TreeConstants.CTEP_USER_FLAG + ":" +
-      ctepUser +
       "&treeName=formTree" +
       "&skin=CDEBrowser1";
     formbuilderURL = "formbuilder/formSearch.jsp";
