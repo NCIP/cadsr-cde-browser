@@ -60,8 +60,8 @@ public class JDBCUtilDAO extends JDBCBaseDAO implements UtilDAO
      return properties;
    }
     public void setSql(String toolName,String locale) {
-      super.setSql("select NAME, VALUE from TOOL_PROPERTIES_EXT " +
-        " where tool = '"+toolName +"' and locale = '" +locale +"'");
+      super.setSql("select PROPERTY, VALUE from TOOL_OPTIONS_EXT " +
+        " where tool_name = '"+toolName +"' and locale = '" +locale +"'");
     }
 
     protected Object mapRow(
