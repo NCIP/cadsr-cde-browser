@@ -10,5 +10,4 @@ public interface TreeFunctions
 
   public String getFormJsFunctionName() ;
 
-  public String isCTEPUser(); 
 }

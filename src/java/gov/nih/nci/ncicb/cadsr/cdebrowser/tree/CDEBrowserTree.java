@@ -135,7 +135,6 @@ public class CDEBrowserTree
       cache.getProtocolFormNodeWithNoProtocol(currContext.getConteIdseq());
 */
       DefaultMutableTreeNode protocolFormsLabelNode = null;
-      DefaultMutableTreeNode formsLabelNode = null;
 
    /** for release 3.0.1, forms without protocol is not displayed, uncomment this
     * code to display them
