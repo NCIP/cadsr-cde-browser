@@ -2,6 +2,8 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeFunctions;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeIdGenerator;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.webtree.LazyActionTreeNode;
+
 import java.util.List;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -22,5 +24,14 @@ public interface CDEBrowserTreeService
   public List getAllTemplateNodesForCTEP(TreeFunctions treeFunctions, TreeIdGenerator idGen, Context ctepContext) throws Exception ;
   public Map getAllPublishingNode(TreeFunctions treeFunctions, 
                    TreeIdGenerator idGen, boolean showFormsAlphebetically) throws Exception ;
+  public List<LazyActionTreeNode> getAllTemplateNodesForCTEP(String contextId) throws Exception;
+  public void addClassificationNode(LazyActionTreeNode parentNode, String contextId) throws Exception;
+  public void addProtocolNodes(LazyActionTreeNode pNode, String contextIdseq) throws Exception;
+  public void addPublishedFormbyAlphaNode(LazyActionTreeNode pNode, String contextId) throws Exception;
+  public void addPublishedFormbyProtocolNode(LazyActionTreeNode pNode, String contextId) throws Exception;
+  public void addPublishedFormNodesByProtocol(LazyActionTreeNode pNode, String protocolId) throws Exception;
+  public void addPublishedTemplates(LazyActionTreeNode pNode, String contextId) throws Exception ;
+  
+  
 
 }

@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.impl;
 
 import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CsCSICatetegoryHolder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CsCsiCategorytHolder;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeFunctions;
@@ -18,6 +19,8 @@ import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.webtree.LazyActionTreeNode;
+import gov.nih.nci.ncicb.webtree.ProtocolFormNode;
 import gov.nih.nci.ncicb.webtree.WebNode;
 
 import java.net.URLEncoder;
@@ -282,7 +285,6 @@ public class CDEBrowserTreeServiceImpl
         } else if (diseaseCsCsiList.contains(currCsCsiIdseq)) {
           CsCsiCategorytHolder cscsiCategoryHolder = (CsCsiCategorytHolder)disCscsiHolder.get(currCsCsiIdseq);
 
-          DefaultMutableTreeNode cscsiNode = cscsiCategoryHolder.getNode();
           Map categoryHolder = cscsiCategoryHolder.getCategoryHolder();
           DefaultMutableTreeNode categoryNode = (DefaultMutableTreeNode)categoryHolder.get(currCategory);
           DefaultMutableTreeNode
@@ -846,7 +848,6 @@ public class CDEBrowserTreeServiceImpl
                                          String csiType) throws Exception {
     Map csiByContextMap = new HashMap();
 
-    Map csNodeMap = new HashMap();
     FormDAO dao = daoFactory.getFormDAO();
     List allCscsi = dao.getCSCSIHierarchyByType(csType, csiType);
     Map csMap = new HashMap(); //this map stores the webnode for cs given cs_idseq
@@ -983,4 +984,608 @@ public class CDEBrowserTreeServiceImpl
   public AbstractDAOFactory getDaoFactory() {
     return daoFactory;
   }
+  
+   /**
+   * @returns a list of template nodes that
+   *  are further categorized by classification 'CRF_DISEASE' and 'Phase'
+   */
+   public List<LazyActionTreeNode> getAllTemplateNodesForCTEP(String currContextIdseq) throws Exception {
+     List allTemplatesForCtep = new ArrayList();
+
+     Map<String, CsCSICatetegoryHolder> disCscsiHolder = new HashMap();
+     Map<String, CsCSICatetegoryHolder> phaseCscsiHolder = new HashMap();
+
+     LazyActionTreeNode phaseNode = new LazyActionTreeNode("Folder", "Phase", false);
+     LazyActionTreeNode diseaseNode = new LazyActionTreeNode("Folder", "Disease", false);
+     allTemplatesForCtep.add(phaseNode);
+     allTemplatesForCtep.add(diseaseNode);
+
+     FormDAO dao = daoFactory.getFormDAO();
+     List templateTypes = dao.getAllTemplateTypes(currContextIdseq);
+     Collection csiList = dao.getCSIForContextId(currContextIdseq);
+
+     Map<String, CSITransferObject> cscsiMap = new HashMap();
+     List phaseCsCsiList = new ArrayList();
+     List diseaseCsCsiList = new ArrayList();
+     Iterator iter = csiList.iterator();
+
+     while (iter.hasNext()) {
+       CSITransferObject csiTO = (CSITransferObject)iter.next();
+
+       cscsiMap.put(csiTO.getCsCsiIdseq(), csiTO);
+
+       if (csiTO.getClassSchemeLongName().equals("CRF_DISEASE")) {
+         diseaseCsCsiList.add(csiTO.getCsCsiIdseq());
+       }
+
+       if (csiTO.getClassSchemeLongName().equals("Phase")) {
+         phaseCsCsiList.add(csiTO.getCsCsiIdseq());
+       }
+     }
+
+     Collection templates = dao.getAllTemplatesForContextId(currContextIdseq);
+     //Add all the csi nodes
+     addAllcscsiNodes(phaseCsCsiList, cscsiMap, currContextIdseq, phaseNode, templateTypes, phaseCscsiHolder);
+     addAllcscsiNodes(diseaseCsCsiList, cscsiMap, currContextIdseq, diseaseNode, templateTypes, disCscsiHolder);
+     iter = templates.iterator();
+
+     while (iter.hasNext()) {
+       Form currTemplate = (Form)iter.next();
+
+       Collection csColl = currTemplate.getClassifications();
+       String currCsCsiIdseq = null;
+       Iterator csIter = csColl.iterator();
+
+       if (csIter.hasNext()) {
+         ClassSchemeItem currCsi = (ClassSchemeItem)csIter.next();
+
+         currCsCsiIdseq = currCsi.getCsCsiIdseq();
+       }
+
+       String currCategory = currTemplate.getFormCategory();
+
+       //
+       if (currCategory != null && !currCategory.equals("") && currCsCsiIdseq != null) {
+         ClassSchemeItem currcscsi = cscsiMap.get(currCsCsiIdseq);
+
+         if (currcscsi == null)
+           continue;
+
+         if (phaseCsCsiList.contains(currCsCsiIdseq)) {
+           CsCSICatetegoryHolder cscsiCategoryHolder = phaseCscsiHolder.get(currCsCsiIdseq);
+
+           Map categoryHolder = cscsiCategoryHolder.getCategoryHolder();
+           LazyActionTreeNode categoryNode = (LazyActionTreeNode)categoryHolder.get(currCategory);
+            LazyActionTreeNode
+              templateNode = getTemplateNode(currTemplate, currcscsi, currContextIdseq, "CTEP");
+           categoryNode.addLeaf(templateNode);
+         } else if (diseaseCsCsiList.contains(currCsCsiIdseq)) {
+           CsCSICatetegoryHolder cscsiCategoryHolder = disCscsiHolder.get(currCsCsiIdseq);
+
+           Map categoryHolder = cscsiCategoryHolder.getCategoryHolder();
+           LazyActionTreeNode categoryNode = (LazyActionTreeNode)categoryHolder.get(currCategory);
+            LazyActionTreeNode
+              templateNode = getTemplateNode(currTemplate, currcscsi, currContextIdseq, "CTEP" );
+           categoryNode.addLeaf(templateNode);
+         }
+       }
+     }
+
+     return allTemplatesForCtep;
+   }
+  
+   private void addAllcscsiNodes(List cscsiList,     Map cscsiMap,       String contextId, LazyActionTreeNode csNode,
+                                 List templateTypes, Map cscsiholderMap) {
+     if (cscsiList == null || cscsiMap == null || csNode == null || cscsiholderMap == null)
+       return;
+
+     ListIterator it = cscsiList.listIterator();
+
+     while (it.hasNext()) {
+       String cscsiId = (String)it.next();
+
+       ClassSchemeItem cscsi = (ClassSchemeItem)cscsiMap.get(cscsiId);
+       LazyActionTreeNode node = new LazyActionTreeNode("Folder", 
+            cscsi.getClassSchemeItemName(), false);
+       csNode.addLeaf(node);
+       Map categoryMap = addInitialCategoryNodes(node, templateTypes);
+       CsCSICatetegoryHolder cscsiCatHolder = new CsCSICatetegoryHolder();
+       cscsiCatHolder.setNode(node);
+       cscsiCatHolder.setCategoryHolder(categoryMap);
+       cscsiholderMap.put(cscsiId, cscsiCatHolder);
+     }
+   }
+
+   private Map addInitialCategoryNodes(LazyActionTreeNode cscsiNode, List templateTypes) {
+     if (templateTypes == null)
+       return new HashMap();
+
+     Map holderMap = new HashMap(); // Map holding catagory to  catagory Node
+     ListIterator it = templateTypes.listIterator();
+
+     while (it.hasNext()) {
+       String type = (String)it.next();
+
+       LazyActionTreeNode node = new LazyActionTreeNode("Folder", type, false);
+       cscsiNode.addLeaf(node);
+       holderMap.put(type, node);
+     }
+
+     return holderMap;
+   }  
+   
+   private LazyActionTreeNode getTemplateNode( Form template, ClassSchemeItem csi,
+   String contextIdseq, String contextName) throws Exception {
+     String templateIdseq = template.getFormIdseq();
+
+     String longName = template.getLongName();
+  //   String prefferedDefinition = template.getPreferredDefinition();
+
+     LazyActionTreeNode tmpNode = new LazyActionTreeNode(
+                    "Template", longName,
+                     "javascript:performFormAction('P_PARAM_TYPE=TEMPLATE&P_IDSEQ=" 
+                     + templateIdseq + "&P_CONTE_IDSEQ="
+                        + contextIdseq + "&csName="
+                        + URLEncoder.encode(
+                             csi.getClassSchemeLongName()) + "&diseaseName=" + URLEncoder.encode(
+                                                                                  csi.getClassSchemeItemName())
+                        + "&templateType="
+                        + URLEncoder.encode(
+                             template.getFormCategory()) + "&templateName=" + URLEncoder.encode(
+                                                                                 longName) + "&contextName="
+                        + URLEncoder.encode(contextName) 
+                        + "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes&" +
+                         csi.getClassSchemeItemName() + ">>" + longName                                
+                         +    "')",
+                     templateIdseq, true);
+
+     return tmpNode;
+   }   
+   public void addClassificationNode(LazyActionTreeNode pNode, String contextId) throws Exception {
+
+     FormDAO dao = daoFactory.getFormDAO();
+     List allCscsi = dao.getCSCSIHierarchyByContext(contextId);
+     
+     if (allCscsi == null || allCscsi.size() == 0)
+         return;
+         
+     CDEBrowserParams params = CDEBrowserParams.getInstance();
+     String[] regStatusArr = params.getCsTypeRegStatus().split(",");
+     
+     Map<String, LazyActionTreeNode> csMap = new HashMap(); //this map stores the webnode for cs given cs_idseq
+     Map<String, LazyActionTreeNode> csiMap = new HashMap();
+     Map <String, Map> regStatusMapByCsId = new HashMap();
+     Map <String, Map> csiMapByRegStatus = new HashMap();
+     for (int i=0; i<regStatusArr.length; i++)
+        csiMapByRegStatus.put(regStatusArr[i], new HashMap());
+     
+     Iterator iter = allCscsi.iterator();
+
+     while (iter.hasNext()) {
+        ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
+
+        String csId = cscsi.getCsIdseq();
+       // create classification scheme node if necessary
+       LazyActionTreeNode csNode = csMap.get(csId);
+
+       if (csNode == null) {
+         csNode = getClassificationSchemeNode(cscsi);
+
+         pNode.addLeaf(csNode);
+         csMap.put(csId, csNode);
+         
+         if (cscsi.getClassSchemeType().equalsIgnoreCase(params.getRegStatusCsTree())){
+             Map<String, LazyActionTreeNode>  regStatusMap = new HashMap();
+             for (int i=0; i<regStatusArr.length; i++){
+               LazyActionTreeNode regNode = getRegStatusNode(regStatusArr[i], 
+               contextId, csId);
+               csNode.addLeaf(regNode);
+               regStatusMap.put(regStatusArr[i], regNode);
+             }
+             regStatusMapByCsId.put(csId, regStatusMap);
+         }
+       }
+
+       // add csi node
+       String parentId = cscsi.getParentCscsiId();
+       LazyActionTreeNode parentNode = null;
+       LazyActionTreeNode csiNode =null;
+       
+       if (!cscsi.getClassSchemeType().equalsIgnoreCase(params.getRegStatusCsTree())) {
+          //this is a regular cs tree stucture
+           csiNode = getClassificationSchemeItemNode( cscsi);
+          if (parentId != null) 
+             parentNode = csiMap.get(parentId);
+          else
+             parentNode = csNode;
+          
+          parentNode.addLeaf(csiNode);
+          csiMap.put(cscsi.getCsCsiIdseq(), csiNode);
+
+       } else {//this is the CS tree with registration status
+          if (parentId == null) {
+            //this is the first level csi link to reg status         
+             Map<String, LazyActionTreeNode> regStatusNodesMap = regStatusMapByCsId.get(csId);
+             for (int i=0; i<regStatusArr.length; i++) {
+                if (dao.hasRegisteredAC(cscsi.getCsCsiIdseq(), regStatusArr[i])) {
+                 csiNode = this.getRegStatusCSINode( cscsi, regStatusArr[i]);
+                 regStatusNodesMap.get(regStatusArr[i]).addLeaf(csiNode);
+                 csiMapByRegStatus.get(regStatusArr[i]).put(cscsi.getCsCsiIdseq(), csiNode);
+                }
+             }
+          } else {
+             for (int i=0; i<regStatusArr.length; i++) {
+                if (dao.hasRegisteredAC(cscsi.getCsCsiIdseq(), regStatusArr[i])) {
+                   csiNode = getRegStatusCSINode(cscsi, regStatusArr[i]);
+                   ((LazyActionTreeNode) csiMapByRegStatus.get(regStatusArr[i]).get(parentId)).addLeaf(csiNode);
+                   csiMapByRegStatus.get(regStatusArr[i]).put(cscsi.getCsCsiIdseq(), csiNode);
+                }
+             }
+          }
+       }
+       
+
+       // for CTEP disease, add core, none core sub node
+//       if (treeFunctions.getTreeType().equals(TreeConstants.DE_SEARCH_TREE)) {
+         if (cscsi.getClassSchemeItemType().equals("DISEASE_TYPE")) {
+           if (cscsi.getClassSchemePrefName().equals("DISEASE")) {
+             csiNode.addLeaf(this.getDiseaseSubNode(cscsi, "Core Data Set"));
+
+             csiNode.addLeaf(this.getDiseaseSubNode(cscsi, "Non-Core Data Set"));
+           }
+         }
+     }
+
+   }   
+   
+
+     private LazyActionTreeNode getClassificationSchemeNode(ClassSchemeItem csi)
+     throws Exception {
+       String      extraURLParameters = 
+        "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+
+       return new LazyActionTreeNode("Classifications", 
+               csi.getClassSchemeLongName(),  
+               "javascript:performAction"  
+                 + "('P_PARAM_TYPE=CLASSIFICATION&P_IDSEQ="
+                    + csi.getCsIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq()
+                    +  extraURLParameters + "')",
+                csi.getCsiIdseq(), false);
+
+     }
+     
+   private LazyActionTreeNode getRegStatusNode(String regStatus,
+         String contextIdseq, String csIdseq) throws Exception {
+      String      extraURLParameters = 
+       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+
+      LazyActionTreeNode regStatusNode = new LazyActionTreeNode(
+                     "Registration Status", regStatus,
+                     "javascript:performAction" 
+                     + "('P_PARAM_TYPE=REGCS&P_IDSEQ=" + csIdseq + "&P_CONTE_IDSEQ="
+                     + contextIdseq                                      //context idseq
+                     + "&P_REGSTATUS=" + regStatus     //classification idseq
+                     + extraURLParameters + "')",
+                                 false);                                 //registration status
+     return regStatusNode;
+   }
+     
+   private LazyActionTreeNode getClassificationSchemeItemNode( 
+       ClassSchemeItem csi) throws Exception {
+      String      extraURLParameters = 
+       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+     return new LazyActionTreeNode(
+               "Classification Scheme Item", csi.getClassSchemeItemName(),
+                           "javascript:performAction" + "('P_PARAM_TYPE=CSI&P_IDSEQ="
+                              + csi.getCsCsiIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq()
+                              + extraURLParameters + "')",
+                            false);
+   }
+   private LazyActionTreeNode getRegStatusCSINode(ClassSchemeItem csi,
+                           String regStatus) throws Exception {
+      String  extraURLParameters = 
+       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+      return new LazyActionTreeNode(  "Classification Scheme Item",
+                           csi.getClassSchemeItemName(),
+                           "javascript:performAction('P_PARAM_TYPE=REGCSI&P_IDSEQ="
+                              + csi.getCsCsiIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq()
+                              + "&P_REGSTATUS=" + regStatus
+                              + extraURLParameters + "')",
+                            false);
+   }
+
+   private LazyActionTreeNode getDiseaseSubNode(ClassSchemeItem csi, 
+                                                    String nodeName) throws Exception {
+     int firstSpace = nodeName.indexOf(" ");
+      String  extraURLParameters = 
+       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+
+     String nodeType = nodeName.substring(0, firstSpace).toUpperCase();
+     return new LazyActionTreeNode(
+               "Classification Scheme Item",
+                           nodeName,
+                           "javascript:performAction('P_PARAM_TYPE=" + nodeType + "&P_IDSEQ="
+                              + csi.getCsiIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq() + "&P_CS_CSI_IDSEQ="
+                              + csi.getCsCsiIdseq() + "&diseaseName="
+                              + URLEncoder.encode(
+                                   csi.getClassSchemeItemName()) + "&csName=" + URLEncoder.encode(
+                                                                                   csi.getClassSchemeLongName())
+                              + extraURLParameters + "')",
+                           false);
+   }
+   
+   /**
+   * @returns two maps with contextid as key and value a holder object containing web node
+   * one containg the forms with no protocol and other with protocols
+   */
+   public void addProtocolNodes(LazyActionTreeNode pNode, String contextIdseq) throws Exception {
+
+      Map cSMap = null;
+
+     Map treeNodeMap = new HashMap();
+
+     FormDAO dao = daoFactory.getFormDAO();
+     List forms = dao.getFormsOrderByProtocol(contextIdseq);
+     if (forms == null || forms.size() == 0)
+      return;
+     
+     Map protocolHolder = new HashMap();
+     Iterator iter = forms.iterator();
+
+     while (iter.hasNext()) {
+       Form currForm = (Form)iter.next();
+
+       String currProtoIdSeq = null;
+       
+       if (currForm.getProtocols() != null && currForm.getProtocols().size()>0)
+          currProtoIdSeq = currForm.getProtocols().get(0).getProtoIdseq();
+       LazyActionTreeNode formNode = getFormNode(currForm, false);
+
+       // add form node to protocol node
+       if (currProtoIdSeq != null && !currProtoIdSeq.equals("")) {
+
+         LazyActionTreeNode protoNode = (LazyActionTreeNode)protocolHolder.get(currProtoIdSeq);
+
+         if (protoNode == null) {
+           protoNode = getProtocolNode( currForm.getProtocols().get(0), contextIdseq);
+           pNode.addLeaf(protoNode);
+           protocolHolder.put(currProtoIdSeq, protoNode);
+           treeNodeMap.clear();
+         }
+
+         // check and see if form need to be added to cs tree
+         if (currForm.getClassifications() == null || currForm.getClassifications().size() == 0) {
+           protoNode.addLeaf(formNode);
+         } else {
+           //add formNode to csTree
+           if (cSMap == null)
+            cSMap = this.getFormClassificationNodesByContext(CaDSRConstants.FORM_CS_TYPE,
+                            CaDSRConstants.FORM_CSI_TYPE, contextIdseq);
+
+//           this.copyCSTree(currForm, cSMap, treeNodeMap, formNode, protoNode, idGen);
+         }
+       } else {
+       /** for release 3.0.1, forms without protocol is not displayed, uncomment this
+        * code to display them
+       //forms do not have protocol
+        DefaultMutableTreeNode noProtocolNode = (DefaultMutableTreeNode)allFormsWithNoProtocol.get(currContextId);
+    
+        if (noProtocolNode == null) {
+         noProtocolNode=getWebNode("No Protocol", idGen.getNewId());
+         allFormsWithNoProtocol.put(currContextId, noProtocolNode);
+         treeNodeMap.clear();
+        }
+        if (currForm.getClassifications() == null ||
+            currForm.getClassifications().size() == 0) {
+          noProtocolNode.add(formNode);
+        } else
+        {
+        this.copyCSTree(currForm, currCSMap, treeNodeMap, formNode, noProtocolNode, idGen);
+    
+        }
+        */
+       }
+     }
+
+   }
+   
+   private Map getFormClassificationNodesByContext(String csType, String csiType, 
+   String contextId) throws Exception {
+
+     FormDAO dao = daoFactory.getFormDAO();
+     List allCscsi = dao.getCSCSIHierarchyByTypeAndContext(csType, csiType, contextId);
+     Map csMap = new HashMap(); //this map stores the webnode for cs given cs_idseq
+     Map csiMap = new HashMap();
+
+     Iterator iter = allCscsi.iterator();
+
+     while (iter.hasNext()) {
+       ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
+
+       String csId = cscsi.getCsIdseq();
+       // create classification scheme node if necessary
+       LazyActionTreeNode csNode = (LazyActionTreeNode)csMap.get(csId);
+
+       if (csNode == null) {
+         csNode = getClassificationSchemeNode( cscsi);
+
+         csMap.put(csId, csNode);
+       }
+
+       // add csi node
+       LazyActionTreeNode csiNode = getClassificationSchemeItemNode(cscsi);
+
+       String parentId = cscsi.getParentCscsiId();
+       LazyActionTreeNode parentNode = null;
+
+       if (parentId != null)
+         parentNode = (LazyActionTreeNode)csiMap.get(parentId);
+       else
+         parentNode = csNode;
+
+       if (parentNode != null)
+         parentNode.addLeaf(csiNode);
+
+       csiMap.put(cscsi.getCsCsiIdseq(), csiNode);
+     }
+
+     return csiMap;
+   }     
+   
+   private LazyActionTreeNode getFormNode(Form form, boolean showContextName) throws Exception {
+     String formIdseq = form.getFormIdseq();
+      String  extraURLParameters = 
+       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+
+     String displayName = form.getLongName();
+     String preferred_definition = form.getPreferredDefinition();
+     String currContextId = form.getConteIdseq();
+     String contextName = "";
+     String formLongName = "";
+
+     if (form.getLongName() != null)
+       formLongName = URLEncoder.encode(form.getLongName());
+
+     if (form.getContext() != null)
+       contextName = form.getContext().getName();
+
+     if (contextName != null)
+       contextName = URLEncoder.encode(contextName);
+       
+      if (showContextName)
+        displayName = displayName + " (" + contextName + ")";
+
+     String protocolId = "";
+
+     //TODO - tree for multiple form/protocols
+     //if (form.getProtoIdseq() != null)
+      // protocolId = form.getProtoIdseq();
+
+     LazyActionTreeNode
+        formNode = new LazyActionTreeNode(
+                     "Form",  displayName,
+                                  "javascript:performFormAction('P_PARAM_TYPE=CRF&P_IDSEQ="
+                                     + formIdseq + "&P_CONTE_IDSEQ=" + currContextId + "&P_PROTO_IDSEQ=" + protocolId
+                                     + extraURLParameters + "')", true);
+     return formNode;
+   }
+   
+   private LazyActionTreeNode getProtocolNode(Protocol protocol,
+   String contextId ) throws Exception {
+     String protoIdseq = protocol.getProtoIdseq();
+      String  extraURLParameters = 
+       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+
+     String longName = protocol.getLongName();
+
+     LazyActionTreeNode protocolNode = new LazyActionTreeNode(
+                          "Protocol", longName,
+                          "javascript:performAction('P_PARAM_TYPE=PROTOCOL&P_IDSEQ=" + protoIdseq + "&P_CONTE_IDSEQ="
+                                         + contextId + "&protocolLongName=" + longName
+                                         + extraURLParameters + "')",
+                                         protoIdseq, false);
+     return protocolNode;
+   }   
+   
+   private ProtocolFormNode getLazyProtocolNode(Protocol protocol,
+   String contextId ) throws Exception {
+     String protoIdseq = protocol.getProtoIdseq();
+      String  extraURLParameters = 
+       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+
+     String longName = protocol.getLongName();
+
+     ProtocolFormNode protocolNode = new ProtocolFormNode(
+                          "Protocol", longName,
+                          "javascript:performAction('P_PARAM_TYPE=PROTOCOL&P_IDSEQ=" + protoIdseq + "&P_CONTE_IDSEQ="
+                                         + contextId + "&protocolLongName=" + longName
+                                         + extraURLParameters + "')",
+                                         false);
+     protocolNode.setIdentifier(protoIdseq);
+     return protocolNode;
+   }   
+   
+   public void addPublishedFormbyAlphaNode(LazyActionTreeNode pNode, String contextId) throws Exception {
+      FormDAO dao = daoFactory.getFormDAO();
+      List publishedForms = dao.getAllPublishedForms(contextId);
+      Iterator formsIt = publishedForms.iterator();
+
+      while (formsIt.hasNext()) {
+        Form currForm = (Form)formsIt.next();
+
+        pNode.addLeaf(getFormNode(currForm,true));
+      }
+   }   
+   
+   public void addPublishedFormbyProtocolNode(LazyActionTreeNode pNode, String contextId) throws Exception {
+      FormDAO dao = daoFactory.getFormDAO();
+      List publishedProtocols = null;
+
+      publishedProtocols = dao.getAllProtocolsForPublishedForms(contextId);
+
+      Iterator protocolIt = publishedProtocols.iterator();
+
+      while (protocolIt.hasNext()) {
+         Protocol currProto = (Protocol)protocolIt.next();
+         pNode.addLeaf(this.getLazyProtocolNode(currProto,contextId));
+      }
+   }   
+   public void addPublishedFormNodesByProtocol(LazyActionTreeNode pNode, String protocolId) throws Exception {
+      FormDAO dao = daoFactory.getFormDAO();
+
+      List formsForProtocol = dao.getAllPublishedFormsForProtocol(protocolId);
+
+      Iterator formIt = formsForProtocol.iterator();
+
+      while (formIt.hasNext()) {
+         Form currForm = (Form)formIt.next();
+         pNode.addLeaf(this.getFormNode(currForm,true));
+      }
+   }   
+   public void addPublishedTemplates(LazyActionTreeNode pNode, String contextId) throws Exception {
+      FormDAO dao = daoFactory.getFormDAO();
+
+      List publishedTemplates = dao.getAllPublishedTemplates(contextId);
+
+      Iterator templateIt = publishedTemplates.iterator();
+
+      while (templateIt.hasNext()) {
+         Form currTemplate = (Form)templateIt.next();
+         pNode.addLeaf(this.getTemplateNode(currTemplate,contextId));
+      }
+   }   
+   private LazyActionTreeNode getTemplateNode( Form template, 
+   String contextIdseq) throws Exception {
+      String templateIdseq = template.getFormIdseq();
+      String  extraURLParameters = 
+       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+
+      String currContextId = template.getConteIdseq();
+      String contextName = "";
+      String templateLongName = "";
+
+      if (template.getLongName() != null)
+        templateLongName = URLEncoder.encode(template.getLongName());
+
+      if (template.getContext() != null)
+        contextName = template.getContext().getName();
+
+      if (contextName != null)
+        contextName = URLEncoder.encode(contextName);
+        
+      String displayName = templateLongName + " (" + contextName + ")";
+
+      LazyActionTreeNode tmpNode = new LazyActionTreeNode(
+                     "Template", template.getLongName(),
+                      "javascript:performFormAction('P_PARAM_TYPE=TEMPLATE&P_IDSEQ=" 
+                      + templateIdseq + "&P_CONTE_IDSEQ="
+                         + template.getConteIdseq() + 
+                        "&templateName=" + templateLongName
+                        +"&contextName=" + contextName
+                         + extraURLParameters + "')",         
+                          templateIdseq, true);
+
+      return tmpNode;
+   
+   }   
 }

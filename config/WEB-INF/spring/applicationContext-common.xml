@@ -65,7 +65,12 @@
     <property name="dataElementDAO"><ref bean="dataElementDAO"/></property>
 
   </bean>	
-  <!--move to formlocker context xml-->
+  
+   <bean id="treeData" class="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTreeData">
+     <property name="daoFactory"><ref local="daoFactory"/></property>
+    <property name="appServiceLocator"><ref local="appServiceLocator"/></property>
+  </bean>
+ <!--move to formlocker context xml-->
   
   <bean id="formOwnerMap" class="java.util.HashMap">
   </bean>
@@ -74,6 +79,9 @@
     <property name="lockerMap"> 
         <ref bean="formOwnerMap"/> 
     </property>
+  </bean>    
+  <bean id="treeNode" class="gov.nih.nci.ncicb.webtree.LazyActionTreeNode">
+    <property name="appServiceLocator"><ref local="appServiceLocator"/></property>
   </bean>    
     <!--end of move to formlocker context xml-->
 </beans>
