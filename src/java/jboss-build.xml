@@ -475,6 +475,8 @@
           <include name="WEB-INF/jboss-web.xml"/>
           <include name="WEB-INF/spring/*.xml"/>
           <include name="WEB-INF/ehcache.xml"/>
+          <include name="WEB-INF/cdebrowser-faces-config.xml"/>
+          <include name="WEB-INF/*.taglib.xml"/>
         </patternset>
       </fileset>
       <fileset dir="${classes.build.dir}">
@@ -491,6 +493,7 @@
           <include name="ocbrowser/**/*.*"/>  
           <include name="admin/**/*.*"/>  
           <include name="*.jsp"/>
+          <include name="*.js"/>
         </patternset>
       </fileset>
       
@@ -590,6 +593,15 @@
        	
        	<!-- Sentinal API -->
        	<include name="cadsrsentinelapi.jar"/>
+         
+         <!-- JSF libs -->
+       	<include name="myfaces*.jar"/>
+       	<include name="tomahawk*.jar"/>
+         
+         <!-- AJAX libs -->
+        	<include name="jsfCompAA-0.1.jar"/>
+       	<include name="ajaxanywhere-1.1.0.6.jar"/>
+        
       </lib>
        
       <manifest>
@@ -786,6 +798,8 @@
              <include name="formbuilder/*.xml"/>
              <include name="spring/*.xml"/>
              <include name="ocbrowser/*.xml"/>
+             <include name="cdebrowser-faces-config.xml"/>
+             <include name="*.taglib.xml"/>
            </patternset>
          </fileset>               
       </copy>       
