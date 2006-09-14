@@ -86,7 +86,6 @@
   String baseQuery = (String) pageContext.getSession().getAttribute("baseQuery");
   String searchCrumb = (String) pageContext.getSession().getAttribute("searchCrumb");
   if (baseQuery == null) baseQuery = "";
-  System.out.println("baseQuery is:" + baseQuery);
 
   String doneURL = "";
 
