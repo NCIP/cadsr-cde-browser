@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.util;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
 
@@ -10,6 +11,8 @@ import javax.naming.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import oracle.cle.process.ProcessResult;
 
 import oracle.jbo.*;
 
@@ -148,6 +151,21 @@ public class SessionHelper
       session.invalidate();
     }
   }
-    
-    
+   
+   /**
+    * This method retrieves the info bean objects defined by the Oracle
+    * MVC framework from a Http Session. 
+    */
+   public static Object getInfoBean(HttpSession session, String key) {
+   Object infoBean = null;
+     if (session != null) {
+        Hashtable infoBeans = (Hashtable) session.getAttribute("InfoTablePool");
+        if (infoBeans != null) {
+           Hashtable deGrp =(Hashtable) infoBeans.get("DataElementsGroup");
+           if (deGrp != null) 
+            infoBean =  ((ProcessResult) deGrp.get(key)).getValue();
+         }
+   }
+      return infoBean;
+   }
 }
