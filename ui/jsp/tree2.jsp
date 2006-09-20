@@ -36,7 +36,7 @@
 <link rel="stylesheet" type="text/css" href="css/TreeBrowser.css"/>
 <script language="JavaScript1.2"
         src="common/skins/CDEBrowser1/JavaScript.js"></script>
-<script src="aa/aa.js"></script>
+<script src="jsLib/aa/aa.js"></script>
 <script language="JavaScript1.2">
   <!--
   function performAction(urlParams){
@@ -191,3 +191,24 @@
         </t:documentBody>
     </t:document>
 </f:view>
+<htm:script type="text/javascript"> 
+
+<t:outputText 
+
+value="<!-- 
+
+ajaxAnywhere.getZonesToReload = function(url, submitButton) { 
+
+
+return 'treeZone'; 
+
+
+} 
+
+var elements = new Array(); elements.push(getElmById('ajaxButtonSave')); 
+
+ajaxAnywhere.formName = 'cdeBrowserTree'; ajaxAnywhere.substituteFormSubmitFunction(); ajaxAnywhere.substituteSubmitButtons(); -->" /> 
+
+</htm:script> 
+
+
