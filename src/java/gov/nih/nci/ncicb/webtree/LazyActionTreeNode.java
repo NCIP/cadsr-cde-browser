@@ -21,6 +21,7 @@ public class LazyActionTreeNode extends TreeNodeBase {
    protected Log log = LogFactory.getLog(LazyActionTreeNode.class.getName());
    String treeCrumbs;
    protected boolean isChildrenLoaded = false;
+   private String _toolTip;
    
    public LazyActionTreeNode() {
    }
@@ -118,7 +119,14 @@ public class LazyActionTreeNode extends TreeNodeBase {
      return 0;    
    else 
       return children.size(); 
-   }   
-   
-   
+   }
+
+
+   public void setToolTip(String toolTip) {
+      this._toolTip = toolTip;
+   }
+
+   public String getToolTip() {
+      return _toolTip;
+   }
 }

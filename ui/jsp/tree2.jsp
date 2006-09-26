@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
+<%@ taglib uri="http://jsf-comp.sourceforge.net/aa" prefix="jcaa" %>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* "%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
 <%@ page import="java.util.*"%>
@@ -57,6 +58,7 @@
     else
      top.document.location = "/CDEBrowser/formDetailsAction.do?method=getFormDetails&"+urlParams;;
    }
+
   //-->
   </script>
         </t:documentHead>
@@ -67,10 +69,10 @@
                 <br/>
                 <br/>
                 <!-- Expand/Collapse Handled By Server -->
-<aa:zoneJSF id="treeZone">
-       <t:tree2 id="cdeBrowserTree" value="#{treeBacker.treeModel}"
-           
-                         var="node" varNodeToggler="t" clientSideToggle="false"
+ <aa:zoneJSF id="treeZone">
+      <jcaa:aaTree id="cdeBrowserTree" value="#{treeBacker.treeModel}"
+            ajaxZone="treeZone"
+            var="node" varNodeToggler="t" clientSideToggle="false"
                          binding="#{treeBacker.tree}">
                     <f:facet name="Context Folder">
                         <h:panelGroup style="white-space:nowrap;">
@@ -136,7 +138,7 @@
                             <h:outputLink id="csLink"
                                           value="#{node.action}">
                                 <h:outputText value="#{node.description}"
-                                              styleClass="treeNode"/>
+                                 styleClass="treeNode" title="#{node.toolTip}"/>
                             </h:outputLink>
                         </h:panelGroup>
                     </f:facet>
@@ -145,7 +147,7 @@
                             <h:outputLink id="csiLink"
                                           value="#{node.action}">
                                 <h:outputText value="#{node.description}"
-                                              styleClass="treeNode"/>
+                                 styleClass="treeNode" title="#{node.toolTip}"/>
                             </h:outputLink>
                         </h:panelGroup>
                     </f:facet>
@@ -185,30 +187,33 @@
                             </h:outputLink>
                         </h:panelGroup>
                     </f:facet>
-                </t:tree2>
-         </aa:zoneJSF>
-        </h:form>
+                </jcaa:aaTree>
+          </aa:zoneJSF>
+       </h:form>
+<script type="text/javascript"> 
+ajaxAnywhere.getZonesToReload = function(url, submitButton) {
+  return "treeZone"
+}
+
+ajaxAnywhere.formName = "cdeBrowserTree"; 
+ajaxAnywhere.bindById();
+//ajaxAnywhere.substituteFormSubmitFunction();
+//ajaxAnywhere.substituteSubmitButtons();
+</script>
         </t:documentBody>
     </t:document>
 </f:view>
-<htm:script type="text/javascript"> 
+<!--
+<span id=cnt>0</span> seconds since last page refresh. 
+<script> 
 
-<t:outputText 
+var sec=0; function counter(){ 
 
-value="<!-- 
+setTimeout("counter();",1000); document.getElementById("cnt").innerHTML = sec++; 
 
-ajaxAnywhere.getZonesToReload = function(url, submitButton) { 
+} counter(); 
 
+</script> 
 
-return 'treeZone'; 
-
-
-} 
-
-var elements = new Array(); elements.push(getElmById('ajaxButtonSave')); 
-
-ajaxAnywhere.formName = 'cdeBrowserTree'; ajaxAnywhere.substituteFormSubmitFunction(); ajaxAnywhere.substituteSubmitButtons(); -->" /> 
-
-</htm:script> 
-
+-->
 
