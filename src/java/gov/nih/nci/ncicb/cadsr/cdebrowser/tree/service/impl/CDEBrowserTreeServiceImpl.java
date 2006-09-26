@@ -1244,13 +1244,15 @@ public class CDEBrowserTreeServiceImpl
        String      extraURLParameters = 
         "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
 
-       return new LazyActionTreeNode("Classifications", 
+       LazyActionTreeNode csNode = new LazyActionTreeNode("Classifications", 
                csi.getClassSchemeLongName(),  
                "javascript:performAction"  
                  + "('P_PARAM_TYPE=CLASSIFICATION&P_IDSEQ="
                     + csi.getCsIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq()
                     +  extraURLParameters + "')",
                 csi.getCsiIdseq(), false);
+      csNode.setToolTip(csi.getClassSchemeDefinition());
+      return csNode;
 
      }
      
@@ -1274,12 +1276,14 @@ public class CDEBrowserTreeServiceImpl
        ClassSchemeItem csi) throws Exception {
       String      extraURLParameters = 
        "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
-     return new LazyActionTreeNode(
+     LazyActionTreeNode csiNode =new  LazyActionTreeNode(
                "Classification Scheme Item", csi.getClassSchemeItemName(),
                            "javascript:performAction" + "('P_PARAM_TYPE=CSI&P_IDSEQ="
                               + csi.getCsCsiIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq()
                               + extraURLParameters + "')",
                             false);
+     csiNode.setToolTip(csi.getCsiDescription());
+     return csiNode;
    }
    private LazyActionTreeNode getRegStatusCSINode(ClassSchemeItem csi,
                            String regStatus) throws Exception {
