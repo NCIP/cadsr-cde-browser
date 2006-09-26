@@ -21,7 +21,6 @@ public class ContextNode extends LazyActionTreeNode {
            super(type, description, actionURL, id, leaf);
    }
    public void loadChildren() {
-         CDEBrowserTreeService treeService = getAppServiceLocator().findTreeService();
          try {
             ClassificationNode csNode = new ClassificationNode("Folder",
             "Classifications", getIdentifier(), false);
