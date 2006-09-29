@@ -36,7 +36,7 @@
       Name="CsiName"
       IsUnique="true"
       IsNotNull="true"
-      Precision="20"
+      Precision="256"
       ColumnName="CSI_NAME"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
