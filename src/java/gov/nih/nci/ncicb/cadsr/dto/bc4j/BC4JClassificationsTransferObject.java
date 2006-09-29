@@ -11,6 +11,7 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 
 	protected String deIdseq;
 	protected String classSchemeName;
+   protected String classSchemeLongName;
 	protected String classSchemeDefinition;
 	protected String classSchemeItemName;
 	protected String classSchemeItemType;
@@ -28,6 +29,7 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 		classSchemeName = classificationsViewRowImpl.getPreferredName();
 		classSchemeDefinition = classificationsViewRowImpl.getPreferredDefinition();
 		classSchemeItemName = classificationsViewRowImpl.getCsiName();
+	   classSchemeLongName = classificationsViewRowImpl.getLongName();
 		classSchemeItemType = classificationsViewRowImpl.getCsitlName();
       csIdseq = classificationsViewRowImpl.getCsIdseq();
       csiIdseq = classificationsViewRowImpl.getCsiIdseq();
@@ -56,6 +58,14 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 	public void setClassSchemeName(String aClassSchemeName) {
 		classSchemeName = aClassSchemeName;
 	}
+
+   public String getClassSchemeLongName() {
+      return classSchemeLongName;
+   }
+
+   public void setClassSchemeLongName(String aClassSchemeName) {
+      classSchemeLongName = aClassSchemeName;
+   }
 
 	public String getClassSchemeDefinition() {
 		return classSchemeDefinition;

@@ -14,6 +14,9 @@ public interface Classification
    public String getClassSchemeName();
    public void setClassSchemeName(String aClassSchemeName);
    
+   public String getClassSchemeLongName();
+   public void setClassSchemeLongName(String aClassSchemeName);
+
    public String getClassSchemeDefinition();
    public void setClassSchemeDefinition(String aClassSchemeDefinition);
    
@@ -35,5 +38,7 @@ public interface Classification
     public Float getCsVersion();
 
     public void setCsVersion(Float pVersion);
+
+    
    
 }

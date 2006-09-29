@@ -21,7 +21,8 @@ SELECT AdministeredComponents.AC_IDSEQ,
        ClassificationSchemes.PREFERRED_NAME, 
        ClassificationSchemes.PREFERRED_DEFINITION,
 ClassificationSchemes.CS_ID,
-ClassificationSchemes.VERSION CS_VERSION
+ClassificationSchemes.VERSION CS_VERSION,
+ClassificationSchemes.LONG_NAME
 FROM AC_CSI AcCsi, ADMINISTERED_COMPONENTS AdministeredComponents, 
 CLASSIFICATION_SCHEMES ClassificationSchemes, CLASS_SCHEME_ITEMS ClassSchemeItems, CS_CSI CsCsi
 WHERE 
@@ -224,4 +225,12 @@ WHERE
       Expression="CS_VERSION"
       SQLType="NUMERIC" >
    </ViewAttribute>   
+   <ViewAttribute
+      Name="LongName"
+      IsUpdateable="false"
+      PrecisionRule="false"
+      EntityAttrName="LongName"
+      EntityUsage="ClassificationSchemes"
+      AliasName="LongName" >
+   </ViewAttribute>
 </ViewObject>

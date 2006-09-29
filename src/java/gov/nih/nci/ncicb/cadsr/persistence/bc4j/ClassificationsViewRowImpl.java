@@ -23,6 +23,7 @@ public class ClassificationsViewRowImpl extends ViewRowImpl
   public static final int PREFERREDDEFINITION = 9;
   public static final int CSID = 10;
   public static final int CSVERSION = 11;
+  public static final int LONGNAME = 12;
   /**
    *
    * This is the default constructor (do not remove)
@@ -141,6 +142,8 @@ public class ClassificationsViewRowImpl extends ViewRowImpl
         return getCsId();
       case CSVERSION:
         return getCsVersion();
+      case LONGNAME:
+        return getLongName();
       default:
         return super.getAttrInvokeAccessor(index, attrDef);
       }
@@ -258,6 +261,14 @@ public class ClassificationsViewRowImpl extends ViewRowImpl
         setAttributeInternal(CSVERSION, value);
     }
 
+   /**
+    *
+    * Gets the attribute value for LONG_NAME using the alias name longName
+    */
+   public String getLongName()
+   {
+     return (String)getAttributeInternal(LONGNAME);
+   }
 
 
 
