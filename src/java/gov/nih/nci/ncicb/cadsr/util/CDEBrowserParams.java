@@ -86,6 +86,11 @@ public class CDEBrowserParams
       }
       return instance;
     }
+    
+   public static void reloadInstance(){
+      instance = null;
+      getInstance();
+   }
 
     public static CDEBrowserParams getDebugInstance(){
       if (instance == null ) {
