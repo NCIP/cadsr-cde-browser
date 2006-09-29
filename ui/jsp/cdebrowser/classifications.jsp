@@ -138,7 +138,7 @@ function listChanged(urlInfo) {
 
 <table width="80%" align="center" cellpadding="1" cellspacing="1" bgcolor="#999966">
   <tr class="OraTableColumnHeader">
-    <th>CS* Short Name</th>
+    <th>CS* Long Name</th>
     <th>CS* Definition</th>
     <th>CS* Public ID</th>
     <th>CS* Version</th>
@@ -153,7 +153,7 @@ function listChanged(urlInfo) {
       classification = (Classification)classificationVector.elementAt(i);
 %>
       <tr class="OraTabledata">
-        <td class="OraFieldText"><%=classification.getClassSchemeName()%> </td>
+        <td class="OraFieldText"><%=classification.getClassSchemeLongName()%> </td>
         <td class="OraFieldText"><%=classification.getClassSchemeDefinition()%> </td>
         <td class="OraFieldText">
           <%= classification.getClassSchemePublicId()%>
