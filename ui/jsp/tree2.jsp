@@ -14,7 +14,7 @@
             <%
 // get parameters
     String treeParams = (String) request.getParameter("treeParams");
-    String treeName = "deTree"; //default to cde tree
+    String treeName = null;
     String callerParams = "";
     Hashtable params = null;
     try {
@@ -44,10 +44,10 @@
     var frm = findFrameByName('body');
     document.body.style.cursor = "wait";
     frm.document.body.style.cursor = "wait";
-    if ("<%=treeName%>" == "deTree")
-     frm.document.location = "<%=request.getContextPath()%>" + "/search?" + urlParams + "<%=callerParams%>";
-    else
+    if ("<%=treeName%>" == "formTree")
      frm.document.location = "/CDEBrowser/formSearchAction.do?method=getAllFormsForTreeNode&"+urlParams;
+    else
+     frm.document.location = "<%=request.getContextPath()%>" + "/search?" + urlParams + "<%=callerParams%>";
    }
   function performFormAction(urlParams){
     var frm = findFrameByName('body');
