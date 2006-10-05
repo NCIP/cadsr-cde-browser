@@ -1,28 +1,18 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.servlets;
-import com.evermind.security.RoleManager;
-import com.evermind.security.User;
 
-import com.evermind.security.UserManager;
-import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.UserManagerDAO;
-import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
-import gov.nih.nci.ncicb.cadsr.security.oc4j.DBUserManager;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
-import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
-import java.io.OutputStream;
-import java.util.Map;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.servlet.*;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import oracle.cle.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.util.SessionUtils;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 
 /**
  * This Filter is used to make sure there is valid service insession for cdebrowser
@@ -34,7 +24,6 @@ public class SessionFilter implements javax.servlet.Filter
     
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws java.io.IOException, javax.servlet.ServletException
     {
-      String controllerName = filterConfig.getInitParameter("controllerName");
       String expiredSessionJSP = filterConfig.getInitParameter("expiredSessionJSP");      
       HttpServletRequest req = (HttpServletRequest)request;
       Object param = request.getParameter("FirstTimer"); 
