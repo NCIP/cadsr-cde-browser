@@ -75,6 +75,8 @@
       <form-property name="questionDefaultValues" type="java.lang.String[]"/>
       <form-property name="questionDefaultValidValueIds" type="java.lang.String[]"/>
       <form-property name="formsValidValueInstructions" type="java.lang.String[]"/>            
+      <form-property name="formsValueMeaningTexts" type="java.lang.String[]"/>            
+      <form-property name="formsValueMeaningDescs" type="java.lang.String[]"/>            
       <form-property name="addDeletedQuestionIdSeqArr" type="java.lang.String[]"/>
       <form-property name="validValueIndex" type="java.lang.Integer"/>
       <form-property name="addAvailableValidValueIndex" type="java.lang.Integer"/> 
@@ -352,6 +354,13 @@
       <forward name="success" path="/moduleToEditAction.do?method=getModuleToEdit"/>
       <forward name="failure" path="/formbuilder/moduleEdit.jsp"/>
     </action> 
+
+    <action name="moduleEditForm" path="/showValueMeaningAlterNames" parameter="method"
+      scope="session"
+      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormModuleEditAction"
+      validate="false">
+      <forward name="success" path="/formbuilder/valueMeaningAlterNames.jsp" redirect="false"/>
+    </action>
 
     <action name="searchForm" path="/unlockFormAction" parameter="method"
       scope="session"
