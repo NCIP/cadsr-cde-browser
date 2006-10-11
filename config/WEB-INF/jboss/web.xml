@@ -1,45 +1,47 @@
 <?xml version = '1.0' encoding = 'windows-1252'?>
-<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
   <description>web.xml file for CDE Browser</description>
   <context-param>
+    <param-name>javax.faces.CONFIG_FILES</param-name>
+    <param-value>/WEB-INF/cdebrowser-faces-config.xml</param-value>
     <description>Comma separated list of URIs of (additional) faces config files.
             (e.g. /WEB-INF/my-config.xml)
             See JSF 1.0 PRD2, 10.3.2
             Attention: You do not need to put /WEB-INF/faces-config.xml in here.
     </description>
-    <param-name>javax.faces.CONFIG_FILES</param-name>
-    <param-value>/WEB-INF/cdebrowser-faces-config.xml</param-value>
   </context-param>
   <context-param>
-    <description>State saving method: "client" or "server" (= default)
-            See JSF Specification 2.5.3</description>
     <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
     <param-value>server</param-value>
+    <description>State saving method: "client" or "server" (= default)
+            See JSF Specification 2.5.3</description>
   </context-param>
   <context-param>
-    <description>Only applicable if state saving method is "server" (= default).
-            Defines the amount (default = 20) of the latest views are stored in session.</description>
     <param-name>org.apache.myfaces.NUMBER_OF_VIEWS_IN_SESSION</param-name>
     <param-value>20</param-value>
+    <description>Only applicable if state saving method is "server" (= default).
+            Defines the amount (default = 20) of the latest views are stored in session.</description>
   </context-param>
   <context-param>
+    <param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
+    <param-value>false</param-value>
     <description>Only applicable if state saving method is "server" (= default).
             If true (default) the state will be serialized to a byte stream before it 
             is written to the session.
             If false the state will not be serialized to a byte stream.</description>
-    <param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
-    <param-value>false</param-value>
   </context-param>
   <context-param>
+    <param-name>org.apache.myfaces.COMPRESS_STATE_IN_SESSION</param-name>
+    <param-value>false</param-value>
     <description>Only applicable if state saving method is "server" (= default) and if 
             org.apache.myfaces.SERIALIZE_STATE_IN_SESSION is true (= default)
             If true (default) the serialized state will be compressed before it 
             is written to the session. If false the state will not be compressed.</description>
-    <param-name>org.apache.myfaces.COMPRESS_STATE_IN_SESSION</param-name>
-    <param-value>false</param-value>
   </context-param>
   <context-param>
+    <param-name>org.apache.myfaces.ALLOW_JAVASCRIPT</param-name>
+    <param-value>true</param-value>
     <description>This parameter tells MyFaces if javascript code should be allowed in the
             rendered HTML output.
             If javascript is allowed, command_link anchors will have javascript code
@@ -47,37 +49,35 @@
             If javascript is not allowed, the state saving info and nested parameters
             will be added as url parameters.
             Default: "true"</description>
-    <param-name>org.apache.myfaces.ALLOW_JAVASCRIPT</param-name>
-    <param-value>true</param-value>
   </context-param>
   <context-param>
     <param-name>org.apache.myfaces.DETECT_JAVASCRIPT</param-name>
     <param-value>false</param-value>
   </context-param>
   <context-param>
+    <param-name>org.apache.myfaces.PRETTY_HTML</param-name>
+    <param-value>true</param-value>
     <description>If true, rendered HTML code will be formatted, so that it is "human readable".
             i.e. additional line separators and whitespace will be written, that do not
             influence the HTML code.
             Default: "true"</description>
-    <param-name>org.apache.myfaces.PRETTY_HTML</param-name>
-    <param-value>true</param-value>
   </context-param>
   <context-param>
+    <param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
+    <param-value>true</param-value>
     <description>If true, a javascript function will be rendered that is able to restore the
             former vertical scroll on every request. Convenient feature if you have pages
             with long lists and you do not want the browser page to always jump to the top
             if you trigger a link or button action that stays on the same page.
             Default: "false"</description>
-    <param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
-    <param-value>true</param-value>
   </context-param>
 
     <context-param>
-  		<description>
-  			Validate managed beans and navigation rules.
-  		</description>
        	<param-name>org.apache.myfaces.validate</param-name>
        	<param-value>true</param-value>
+	<description>
+		Validate managed beans and navigation rules.
+	</description>
     </context-param>
     <context-param>
         <param-name>org.apache.myfaces.ADD_RESOURCE_CLASS</param-name>
@@ -91,75 +91,32 @@
         <param-name>org.apache.myfaces.CHECK_EXTENSIONS_FILTER</param-name> 
         <param-value>false</param-value> 
     </context-param> 
-  <listener>
-  <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
-  </listener>
- 
-  <session-config>
-    <session-timeout>300</session-timeout>
-  </session-config>
-  <mime-mapping>
-    <extension>html</extension>
-    <mime-type>text/html</mime-type>
-  </mime-mapping>
-  <mime-mapping>
-    <extension>txt</extension>
-    <mime-type>text/plain</mime-type>
-  </mime-mapping>
-  <welcome-file-list>
-    <welcome-file>cdeBrowse.jsp</welcome-file>
-  </welcome-file-list>
-  <!-- authentication -->
-  <login-config>
-    <auth-method>FORM</auth-method>
-    <form-login-config>
-      <form-login-page>/LoginForm.jsp</form-login-page>
-      <form-error-page>/authenticationError.jsp</form-error-page>
-    </form-login-config>
-  </login-config>
-  <error-page>
-    <error-code>403</error-code>
-    <location>logout?FirstTimer=0&amp;authorizationError=yes</location>
-  </error-page>
   <context-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>/WEB-INF/spring/applicationContext-common.xml /WEB-INF/spring/applicationContext-domainDao.xml /WEB-INF/spring/applicationContext-ocbrowser.xml</param-value>
       <description> Spring application context xml files</description>
   </context-param>  
-  <listener>
-
-    <listener-class>gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormLockerSessionListener</listener-class>
-
-    <listener-class>oracle.clex.util.ServletEventListener</listener-class>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>  
-  <servlet>
-  <servlet-name>Faces Servlet</servlet-name>
-  <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-  <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-  <servlet-name>Faces Servlet</servlet-name>
-  <url-pattern>*.jsf</url-pattern>
-</servlet-mapping>
-<filter>
+  <filter> 
+       <filter-name>SessionFilter</filter-name>
+       <filter-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.SessionFilter</filter-class>   
+       <init-param>
+      		<param-name>controllerName</param-name>
+      		<param-value>search</param-value>
+    	</init-param>  
+       <init-param>
+      		<param-name>expiredSessionJSP</param-name>
+      		<param-value>/common/expiredSession.jsp</param-value>
+    	</init-param> 
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>N</param-value>
+    </init-param>         	
+   </filter> 
     <filter>
         <filter-name>AjaxAnywhere</filter-name>
         <filter-class>org.ajaxanywhere.AAFilter</filter-class>
     </filter>
-
-   <filter-mapping>
-        <filter-name>AjaxAnywhere</filter-name>
-        <url-pattern>*.jsf</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>AjaxAnywhere</filter-name>
-        <url-pattern>*.do</url-pattern> <!-- default Struts mapping -->
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>AjaxAnywhere</filter-name>
-        <url-pattern>*.htm</url-pattern> <!-- other framewords mapping-->
-    </filter-mapping>
+<filter>
 	<filter-name>MyFacesExtensionsFilter</filter-name>
 	<filter-class>org.apache.myfaces.webapp.filter.ExtensionsFilter</filter-class>
     <init-param>
@@ -173,6 +130,44 @@
         </description>
     </init-param>
 </filter>
+  <filter> 
+       <filter-name>EditFormFilter</filter-name>
+       <filter-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.EditFormFilter</filter-class>   
+       <init-param>
+      		<param-name>controllerName</param-name>
+      		<param-value>action</param-value>
+    	</init-param>  
+       <init-param>
+      		<param-name>formDetailPage</param-name>
+      		<param-value>/formDetailsAction.do?method=getFormDetails</param-value>
+    	</init-param> 
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>N</param-value>
+    </init-param>         	
+   </filter>         
+ 
+  <filter-mapping> 
+         <filter-name>SessionFilter</filter-name>
+         <url-pattern>/search</url-pattern> 
+ </filter-mapping>
+
+  <filter-mapping> 
+         <filter-name>SessionFilter</filter-name>
+         <url-pattern>*.do</url-pattern> 
+ </filter-mapping>
+   <filter-mapping>
+        <filter-name>AjaxAnywhere</filter-name>
+        <url-pattern>*.jsf</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AjaxAnywhere</filter-name>
+        <url-pattern>*.do</url-pattern> <!-- default Struts mapping -->
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AjaxAnywhere</filter-name>
+        <url-pattern>*.htm</url-pattern> <!-- other framewords mapping-->
+    </filter-mapping>
 
 <!-- extension mapping for adding <script/>, <link/>, and other resource tags to JSF-pages  -->
 <filter-mapping>
@@ -192,122 +187,6 @@
     <filter-name>MyFacesExtensionsFilter</filter-name>
     <url-pattern>*.jsf</url-pattern>
 </filter-mapping>
- 
-  <servlet>
-    <servlet-name>CDEBrowserServletController</servlet-name>
-    <servlet-class>oracle.clex.process.controller.HttpServletController</servlet-class>
-    <init-param>
-      <param-name>cle-service-descriptor</param-name>
-      <param-value>cdeBrowser.xml</param-value>
-    </init-param>
-  </servlet>
-  <servlet>
-    <servlet-name>DownloadTemplateServlet</servlet-name>
-    <servlet-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.DownloadTemplateServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CDEBrowserServletController</servlet-name>
-    <url-pattern>/search</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>DownloadTemplateServlet</servlet-name>
-    <url-pattern>/downloadtemplate</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>LogoutServlet</servlet-name>
-    <servlet-class>gov.nih.nci.ncicb.cadsr.security.LogoutServlet</servlet-class>
-    <init-param>
-      <param-name>LogoutHome</param-name>
-      <param-value>cdeBrowse.jsp</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>LogoutServlet</servlet-name>
-    <url-pattern>/logout</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>action</servlet-name>
-    <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
-    <init-param>
-      <param-name>config</param-name>
-      <param-value>/WEB-INF/formbuilder/struts-config.xml,/WEB-INF/formbuilder/struts-config-copy.xml,
-           /WEB-INF/formbuilder/struts-config-addQuestion.xml,/WEB-INF/formbuilder/struts-config-cancel.xml,
-           /WEB-INF/formbuilder/struts-config-manageClassifications.xml,
-	   /WEB-INF/formbuilder/struts-config-manageProtocols.xml,           
-           /WEB-INF/formbuilder/struts-config-designation.xml,
-           /WEB-INF/formbuilder/struts-config-version.xml,/WEB-INF/formbuilder/struts-config-module.xml,           
-           /WEB-INF/formbuilder/struts-config-formCreate.xml, /WEB-INF/cdebrowser/struts-config-cdeSideBySide.xml,
-           /WEB-INF/formbuilder/struts-config-manageReferenceDocs.xml,/WEB-INF/formbuilder/struts-config-downloadFormToExcel.xml,
-           /WEB-INF/cdebrowser/struts-config-browserSearchScreenType.xml,/WEB-INF/formbuilder/struts-config-publish.xml,
-           /WEB-INF/cdebrowser/struts-config-cde-search-preferences.xml,/WEB-INF/ocbrowser/struts-config-ocDetails.xml,
-           /WEB-INF/admin/struts-config-admin.xml,/WEB-INF/formbuilder/struts-config-skippattern.xml,
-           /WEB-INF/formbuilder/struts-config-moduleRepeats.xml,/WEB-INF/formbuilder/struts-config-setAlert.xml
-       </param-value>
-    </init-param>
-    <init-param>
-      <param-name>debug</param-name>
-      <param-value>2</param-value>
-    </init-param>
-    <init-param>
-      <param-name>detail</param-name>
-      <param-value>2</param-value>
-    </init-param>
-    <init-param>
-      <param-name>validate</param-name>
-      <param-value>true</param-value>
-    </init-param>
-    <init-param>
-      <param-name>ServiceLocatorClassName</param-name>
-      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</param-value>
-    </init-param>
-    <init-param>
-      <param-name>ApplicationServiceLocatorClassName</param-name>
-      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl</param-value>
-    </init-param>    
-    
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <filter> 
-       <filter-name>SessionFilter</filter-name>
-       <filter-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.SessionFilter</filter-class>   
-       <init-param>
-      		<param-name>controllerName</param-name>
-      		<param-value>search</param-value>
-    	</init-param>  
-       <init-param>
-      		<param-name>expiredSessionJSP</param-name>
-      		<param-value>/expiredSession.jsp</param-value>
-    	</init-param> 
-    <init-param>
-      <param-name>debug</param-name>
-      <param-value>N</param-value>
-    </init-param>         	
-   </filter> 
-  <servlet-mapping>
-    <servlet-name>action</servlet-name>
-    <url-pattern>*.do</url-pattern>
-  </servlet-mapping>
-  <filter-mapping> 
-         <filter-name>SessionFilter</filter-name>
-         <url-pattern>/search*</url-pattern> 
- </filter-mapping>
-
-  <filter> 
-       <filter-name>EditFormFilter</filter-name>
-       <filter-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.EditFormFilter</filter-class>   
-       <init-param>
-      		<param-name>controllerName</param-name>
-      		<param-value>action</param-value>
-    	</init-param>  
-       <init-param>
-      		<param-name>formDetailPage</param-name>
-      		<param-value>/formDetailsAction.do?method=getFormDetails</param-value>
-    	</init-param> 
-    <init-param>
-      <param-name>debug</param-name>
-      <param-value>N</param-value>
-    </init-param>         	
-   </filter>         
  
  
  
@@ -427,8 +306,133 @@
       <url-pattern>/formPublishAction.do</url-pattern>
 </filter-mapping>
 <!--end of form edit filter-->
+  <listener>
+  <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
+   </listener>  
+  <listener>
+     <listener-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.CDEBrowserSessionListener</listener-class>
+   </listener>  
+  <listener>
+     <listener-class>gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormLockerSessionListener</listener-class>
+    </listener>  
+  <listener>
+    <listener-class>oracle.clex.util.ServletEventListener</listener-class>
+     </listener>  
+  <listener>
+   <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+   </listener>  
+  <servlet>
+  <servlet-name>Faces Servlet</servlet-name>
+  <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+  <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>action</servlet-name>
+    <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+    <init-param>
+      <param-name>config</param-name>
+      <param-value>/WEB-INF/formbuilder/struts-config.xml,/WEB-INF/formbuilder/struts-config-copy.xml,
+           /WEB-INF/formbuilder/struts-config-addQuestion.xml,/WEB-INF/formbuilder/struts-config-cancel.xml,
+           /WEB-INF/formbuilder/struts-config-manageClassifications.xml,
+	   /WEB-INF/formbuilder/struts-config-manageProtocols.xml,           
+           /WEB-INF/formbuilder/struts-config-designation.xml,
+           /WEB-INF/formbuilder/struts-config-version.xml,/WEB-INF/formbuilder/struts-config-module.xml,           
+           /WEB-INF/formbuilder/struts-config-formCreate.xml, /WEB-INF/cdebrowser/struts-config-cdeSideBySide.xml,
+           /WEB-INF/formbuilder/struts-config-manageReferenceDocs.xml,/WEB-INF/formbuilder/struts-config-downloadFormToExcel.xml,
+           /WEB-INF/cdebrowser/struts-config-browserSearchScreenType.xml,/WEB-INF/formbuilder/struts-config-publish.xml,
+           /WEB-INF/cdebrowser/struts-config-cde-search-preferences.xml,/WEB-INF/ocbrowser/struts-config-ocDetails.xml,
+           /WEB-INF/admin/struts-config-admin.xml,/WEB-INF/formbuilder/struts-config-skippattern.xml,
+           /WEB-INF/formbuilder/struts-config-moduleRepeats.xml,/WEB-INF/formbuilder/struts-config-setAlert.xml
+       </param-value>
+    </init-param>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>2</param-value>
+    </init-param>
+    <init-param>
+      <param-name>detail</param-name>
+      <param-value>2</param-value>
+    </init-param>
+    <init-param>
+      <param-name>validate</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ServiceLocatorClassName</param-name>
+      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ApplicationServiceLocatorClassName</param-name>
+      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl</param-value>
+    </init-param>    
+    
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>CDEBrowserServletController</servlet-name>
+    <servlet-class>oracle.clex.process.controller.HttpServletController</servlet-class>
+    <init-param>
+      <param-name>cle-service-descriptor</param-name>
+      <param-value>cdeBrowser.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <servlet-name>DownloadTemplateServlet</servlet-name>
+    <servlet-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.DownloadTemplateServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>gov.nih.nci.ncicb.cadsr.security.LogoutServlet</servlet-class>
+    <init-param>
+      <param-name>LogoutHome</param-name>
+      <param-value>cdeBrowse.jsp</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>Faces Servlet</servlet-name>
+  <url-pattern>*.jsf</url-pattern>
+</servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CDEBrowserServletController</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DownloadTemplateServlet</servlet-name>
+    <url-pattern>/downloadtemplate</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>action</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+
+
+  <session-config>
+    <session-timeout>300</session-timeout>
+  </session-config>
+  <mime-mapping>
+    <extension>html</extension>
+    <mime-type>text/html</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>txt</extension>
+    <mime-type>text/plain</mime-type>
+  </mime-mapping>
+  <welcome-file-list>
+    <welcome-file>cdeBrowse.jsp</welcome-file>
+  </welcome-file-list>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/logout?FirstTimer=0&amp;authorizationError=yes</location>
+  </error-page>
+<error-page>
+   <error-code>500</error-code>
+   <location>/common/SystemError.jsp</location>
+</error-page>
   
- 
  <taglib>
     <taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
     <taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
@@ -449,20 +453,114 @@
       <taglib-uri>aaTreeTags</taglib-uri>
       <taglib-location>/WEB-INF/aatree.tld</taglib-location>
    </taglib> 
-   
+ 
   <resource-ref>      
 	<res-ref-name>jdbc/CDEBrowserDS</res-ref-name>     
 	<res-type>javax.sql.DataSource</res-type>      
 	<res-auth>Container</res-auth> 
   </resource-ref>  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>/formbuilder/*</url-pattern>
+    </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>/formCDECartAction.do</url-pattern>
+    </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>/formCDECartRedirectAction.do</url-pattern>
+    </web-resource-collection>    
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>/formSearchAction.do</url-pattern>
+    </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>/moduleSaveAction.do</url-pattern>
+    </web-resource-collection>  
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>/moduleToEditAction.do</url-pattern>
+    </web-resource-collection>     
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>/gotoChangeAssociation.do</url-pattern>
+    </web-resource-collection> 
+    <web-resource-collection>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>/changeAssociation.do</url-pattern>
+    </web-resource-collection>          
+    <auth-constraint>
+      <description>Authorized Users Group</description>
+      <role-name>CDE MANAGER</role-name>
+      <role-name>CONTEXT ADMIN</role-name>
+    </auth-constraint>
+  </security-constraint>
   
-  <ejb-ref>
-    <ejb-ref-name>ejb/FormBuilder</ejb-ref-name>
-    <ejb-ref-type>Session</ejb-ref-type>
-    <home>gov.nih.nci.ncicb.cadsr.formbuilder.ejb.FormBuilderHome</home>
-    <remote>gov.nih.nci.ncicb.cadsr.formbuilder.ejb.FormBuilder</remote>
-    <ejb-link>FormBuilder</ejb-link>
-  </ejb-ref>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Secure Form Edit Services</web-resource-name>
+      <url-pattern>/formSaveAction.do</url-pattern>
+      <url-pattern>/manageReferexnceDocs.do</url-pattern>
+      <url-pattern>/formEditDeleteAction.do</url-pattern>
+      <url-pattern>/gotoManageClassifications.do</url-pattern>
+      <url-pattern>/gotoAddClassifications.do</url-pattern>
+      <url-pattern>/gotoManageProtocolsFormEdit.do</url-pattern>
+      <url-pattern>/saveFormModuleRepeatAction.do</url-pattern>
+      <url-pattern>/gotoCreateModule.do</url-pattern>
+      <url-pattern>/formbuilder/*</url-pattern>
+      <url-pattern>/formCDECartAction.do</url-pattern>
+      <url-pattern>/formCDECartRedirectAction.do</url-pattern>
+      <url-pattern>/moduleSaveAction.do</url-pattern>
+      <url-pattern>/moduleToEditAction.do</url-pattern>
+      <url-pattern>/gotoChangeAssociation.do</url-pattern>
+      <url-pattern>/changeAssociation.do</url-pattern>
+      <url-pattern>/formSaveAction.do</url-pattern>
+      <url-pattern>/formToEditAction.do</url-pattern>
+       <url-pattern>/moduleRepeatAction.do</url-pattern>
+       <url-pattern>/addProtocol.do</url-pattern>
+      <url-pattern>/formToCopyAction.do</url-pattern>
+      <url-pattern>/saveDesignations.do.do</url-pattern>
+      <url-pattern>/saveLatestVersion.do</url-pattern>
+      <url-pattern>/gotoCreateNewVersion.do</url-pattern>
+      <url-pattern>/formViewDeleteAction.do</url-pattern>
+      <url-pattern>/excelDownload.do</url-pattern>
+<!--    
+      <url-pattern>/formPrinterAction.do</url-pattern>
+-->
+      <url-pattern>/formViewAddToList.do</url-pattern>
+      <url-pattern>/createValidValueSkipAction.do</url-pattern>
+      <url-pattern>/formHrefDeleteAction.do</url-pattern>
+      <url-pattern>/formPublishAction.do</url-pattern>
+    </web-resource-collection>
+   <auth-constraint>
+      <description>Authorized Users Group</description>
+      <role-name>CDE MANAGER</role-name>
+      <role-name>CONTEXT ADMIN</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+
+ <!-- authentication -->
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+      <form-login-page>/LoginForm.jsp</form-login-page>
+      <form-error-page>/authenticationError.jsp</form-error-page>
+    </form-login-config>
+  </login-config>
+  
+  <security-role>
+    <description>The Only Secure Role</description>
+    <role-name>CDE MANAGER</role-name>
+  </security-role>
+  <security-role>
+    <description>The Secure Role</description>
+    <role-name>CONTEXT ADMIN</role-name>
+  </security-role>   
+ 
   <env-entry>
     <description>Specifies the implementation class of FormBuilderServiceDelegate that should be used.</description>
     <env-entry-name>FormBuilderServiceDelegate</env-entry-name>
@@ -475,189 +573,15 @@
     <env-entry-value>gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
     <env-entry-type>java.lang.String</env-entry-type>
   </env-entry>
-  <security-role>
-    <description>The Only Secure Role</description>
-    <role-name>CDE MANAGER</role-name>
-  </security-role>
-  <security-role>
-    <description>The Secure Role</description>
-    <role-name>CONTEXT ADMIN</role-name>
-  </security-role>   
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Secure Services</web-resource-name>
-      <url-pattern>/formbuilder/*</url-pattern>
-    </web-resource-collection>
-    <web-resource-collection>
-      <web-resource-name>Secure Services</web-resource-name>
-      <url-pattern>formCDECartAction.do</url-pattern>
-    </web-resource-collection>
-    <web-resource-collection>
-      <web-resource-name>Secure Services</web-resource-name>
-      <url-pattern>formCDECartRedirectAction.do</url-pattern>
-    </web-resource-collection>    
-    <web-resource-collection>
-      <web-resource-name>Secure Services</web-resource-name>
-      <url-pattern>formSearchAction.do</url-pattern>
-    </web-resource-collection>
-    <web-resource-collection>
-      <web-resource-name>Secure Services</web-resource-name>
-      <url-pattern>moduleSaveAction.do</url-pattern>
-    </web-resource-collection>  
-    <web-resource-collection>
-      <web-resource-name>Secure Services</web-resource-name>
-      <url-pattern>moduleToEditAction.do</url-pattern>
-    </web-resource-collection>     
-    <web-resource-collection>
-      <web-resource-name>Secure Services</web-resource-name>
-      <url-pattern>gotoChangeAssociation.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Services</web-resource-name>
-      <url-pattern>changeAssociation.do</url-pattern>
-    </web-resource-collection>          
-    <auth-constraint>
-      <description>Authorized Users Group</description>
-      <role-name>CDE MANAGER</role-name>
-      <role-name>CONTEXT ADMIN</role-name>
-    </auth-constraint>
-  </security-constraint>
   
-  <security-constraint>
-      <!--form edit page-->
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formSaveAction.do</url-pattern>
-    </web-resource-collection>
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>manageReferexnceDocs.do</url-pattern>
-    </web-resource-collection>    
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formEditDeleteAction.do</url-pattern>
-    </web-resource-collection>  
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>gotoManageClassifications.do</url-pattern>
-    </web-resource-collection>  
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>gotoAddClassifications.do</url-pattern>
-    </web-resource-collection>  
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>gotoManageProtocolsFormEdit.do</url-pattern>
-    </web-resource-collection>  
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>saveFormModuleRepeatAction.do</url-pattern>
-    </web-resource-collection>  
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>gotoCreateModule.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formbuilder/</url-pattern>
-    </web-resource-collection>
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formCDECartAction.do</url-pattern>
-    </web-resource-collection>
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formCDECartRedirectAction.do</url-pattern>
-    </web-resource-collection>    
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>moduleSaveAction.do</url-pattern>
-    </web-resource-collection>  
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>moduleToEditAction.do</url-pattern>
-    </web-resource-collection>     
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>gotoChangeAssociation.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>changeAssociation.do</url-pattern>
-    </web-resource-collection>          
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formSaveAction.do</url-pattern>
-    </web-resource-collection>          
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formToEditAction.do</url-pattern>
-    </web-resource-collection>          
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-       <url-pattern>moduleRepeatAction.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-       <url-pattern>addProtocol.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formToCopyAction.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>saveDesignations.do.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>saveLatestVersion.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>gotoCreateNewVersion.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formViewDeleteAction.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>excelDownload.do</url-pattern>
-    </web-resource-collection>
-<!--    
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formPrinterAction.do</url-pattern>
-    </web-resource-collection> 
--->
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formViewAddToList.do</url-pattern>
-    </web-resource-collection> 
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>createValidValueSkipAction.do</url-pattern>
-    </web-resource-collection>
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formHrefDeleteAction.do</url-pattern>
-    </web-resource-collection>
-    <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
-      <url-pattern>formPublishAction.do</url-pattern>
-    </web-resource-collection>
-<auth-constraint>
-      <description>Authorized Users Group</description>
-      <role-name>CDE MANAGER</role-name>
-      <role-name>CONTEXT ADMIN</role-name>
-    </auth-constraint>
-  </security-constraint>
-<error-page>
-   <error-code>500</error-code>
-   <location>/common/SystemError.jsp</location>
-</error-page>
   
+  <ejb-ref>
+    <ejb-ref-name>ejb/FormBuilder</ejb-ref-name>
+    <ejb-ref-type>Session</ejb-ref-type>
+    <home>gov.nih.nci.ncicb.cadsr.formbuilder.ejb.FormBuilderHome</home>
+    <remote>gov.nih.nci.ncicb.cadsr.formbuilder.ejb.FormBuilder</remote>
+    <ejb-link>FormBuilder</ejb-link>
+  </ejb-ref>
 
   
 </web-app>
