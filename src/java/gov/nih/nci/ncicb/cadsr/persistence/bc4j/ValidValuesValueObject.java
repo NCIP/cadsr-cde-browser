@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.persistence.bc4j;
 
+import gov.nih.nci.ncicb.cadsr.resource.ValueMeaning;
 import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
@@ -94,4 +95,18 @@ public class ValidValuesValueObject implements ValidValue {
    {
      conceptDerivationRule = rule;
    }   
+   
+   //the following 2 mehtod are added to ValidValue interface which is implemented 
+   //both in bc4j layer and form builder value object.
+   //These two methods must be impelemented even tho they may not be used 
+   //in BC4J persistent layer   
+   public ValueMeaning getValueMeaning(){
+       return null;
+   }
+   
+   public void setValueMeaning(ValueMeaning vm){
+       return;
+   }
+   
+   //end of TODO
 }
