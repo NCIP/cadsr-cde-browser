@@ -7,9 +7,11 @@ import java.util.List;
 public class FormValidValueChangeTransferObject implements FormValidValueChange 
 {
 
-  private FormValidValue updatedValueValue = null;
+  private FormValidValue updatedValidValue = null;
   private InstructionChanges instructionChanges = null;
   private String vvId = null;
+  private String updatedFormValueMeaningText = null;
+  private String updatedFormValueMeaningDesc = null;
   
   public FormValidValueChangeTransferObject()
   {
@@ -26,12 +28,12 @@ public class FormValidValueChangeTransferObject implements FormValidValueChange
   
   public FormValidValue getUpdatedValidValue()
   {
-    return updatedValueValue;
+    return updatedValidValue;
   }
 
   public void setUpdatedValidValue(FormValidValue fvv)
   {
-    this.updatedValueValue=fvv;
+    this.updatedValidValue=fvv;
   }
 
   public InstructionChanges getInstrctionChanges()
@@ -46,13 +48,34 @@ public class FormValidValueChangeTransferObject implements FormValidValueChange
 
   public boolean isEmpty()
   {
-    if(updatedValueValue==null&&instructionChanges==null)
-      return true;
+    //if(updatedValueValue==null&&instructionChanges==null)
+    //  return true;
+      
     boolean result = true;
-    if(instructionChanges!=null&&!instructionChanges.isEmpty())
+    if(instructionChanges!=null&&(!instructionChanges.isEmpty()))
       result =false;
-    if(updatedValueValue!=null)
+    if(updatedValidValue!=null)
       result =false;
+    if (updatedFormValueMeaningText !=null)
+        return false;
+    if (updatedFormValueMeaningDesc !=null) 
+        return false;
     return result;
   }
+
+    public void setUpdatedFormValueMeaningText(String formValueMeaningText) {
+        this.updatedFormValueMeaningText = formValueMeaningText;
+    }
+
+    public String getUpdatedFormValueMeaningText() {
+        return updatedFormValueMeaningText;
+    }
+
+    public void setUpdatedFormValueMeaningDesc(String formValueMeaningDesc) {
+        this.updatedFormValueMeaningDesc = formValueMeaningDesc;
+    }
+
+    public String getUpdatedFormValueMeaningDesc() {
+        return updatedFormValueMeaningDesc;
+    }
 }
