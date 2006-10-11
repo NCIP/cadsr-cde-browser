@@ -552,7 +552,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
     private class InsertValidValuesAtt extends SqlUpdate {
       public InsertValidValuesAtt(DataSource ds) {
         String insertValidValueAttrSql = 
-        " insert into valid_values_att_ext (qc_idseq, meaning_text, description_text, created_by) values(?,?, ?)";
+        " insert into valid_values_att_ext (qc_idseq, meaning_text, description_text, created_by) values(?,?, ?, ?)";
 
         this.setDataSource(ds);
         this.setSql(insertValidValueAttrSql);
