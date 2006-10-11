@@ -1,11 +1,24 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
+
+import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.dto.ValidValueTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ValueMeaningTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ValueDomainTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ReferenceDocumentTransferObject;
 import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.dto.ConceptDerivationRuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.DefinitionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.DesignationTransferObject;
+import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+import gov.nih.nci.ncicb.cadsr.resource.Classification;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.Definition;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
+import gov.nih.nci.ncicb.cadsr.resource.ValueMeaning;
+import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import java.sql.ResultSet;
@@ -55,7 +68,7 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
     String whereString = "";
     Map vvMap = new HashMap();
 
-		while(vdIdseqIterator.hasNext()) {
+    while(vdIdseqIterator.hasNext()) {
 
       // put every vd_idseq with empty list into the map
       List vvList = new ArrayList();
@@ -69,8 +82,8 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
       else {
         whereString = whereString + " where VD_IDSEQ = '" + vdomainIdSeq + "'";
       }
-		}
-
+    }
+    
     PermissibleValueQuery query = new PermissibleValueQuery(vvMap);
     query.setDataSource(getDataSource());
     query.setSql(whereString, "");
@@ -192,6 +205,18 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
         vvto.setShortMeaningDescription(rs.getString(5)); // PV_MEANING_DESCRIPTION
         vvto.setVpIdseq(rs.getString(6)); //VP_IDSEQ
         
+        ValueMeaning vm = new ValueMeaningTransferObject();
+        vm.setLongName(vvto.getShortMeaning());
+        vm.setPreferredDefinition(rs.getString("VM_DESCRIPTION"));
+        String vmIdSeq = rs.getString("VM_IDSEQ");
+        vm.setIdseq(vmIdSeq);
+        
+        //set designations and definitions
+        vm.setDefinitions(getDefinitions(vmIdSeq));
+        vm.setDesignations(getDesignations(vmIdSeq, null));
+                
+        vvto.setValueMeaning(vm);
+        
         List vvList = (List) vvMap.get(vdomainIdSeq);
         vvList.add(vvto);
         vvMap.put(vdomainIdSeq, vvList);
@@ -217,5 +242,4 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
     Map vdMap = vddao.getPermissibleValues(vdIdseqList);
     System.out.println(vdMap);
   }
-
 }
