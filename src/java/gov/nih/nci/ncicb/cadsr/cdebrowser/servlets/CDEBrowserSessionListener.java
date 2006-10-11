@@ -14,7 +14,6 @@ public class CDEBrowserSessionListener implements HttpSessionListener{
     protected static Log log = LogFactory.getLog(CDEBrowserSessionListener.class.getName());
 
     public void sessionCreated(HttpSessionEvent se) {
-        System.out.println("CDE Browser new session created");
         if (log.isDebugEnabled()){
             log.debug("New CDE Browser session " + se.getSession().getId() + " is created");
         }
@@ -26,7 +25,6 @@ public class CDEBrowserSessionListener implements HttpSessionListener{
          if (log.isDebugEnabled()){
              log.debug("Session " + se.getSession().getId() + " is about to be destroyed.");
          }
-        System.out.println("------------------------------CDEBrowser about to destroy a session");
     }
 
 
