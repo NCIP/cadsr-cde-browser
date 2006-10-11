@@ -1,10 +1,15 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao;
 
+import gov.nih.nci.ncicb.cadsr.dto.DefinitionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.DesignationTransferObject;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCAdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 
 import java.util.Collection;
 import java.util.List;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.Definition;
+import gov.nih.nci.ncicb.cadsr.resource.Designation;
 
 
 public interface AdminComponentDAO {
@@ -175,5 +180,10 @@ public interface AdminComponentDAO {
   public Context getContext(String acIdSeq);
   public List<ClassSchemeItem> getCSCSIHierarchyByContext(String contextIdseq);
   public List getCSCSIHierarchyByTypeAndContext(String csType, String csiType,String contextIdseq);
+
+  //added for Value Meaning becomes an admin component
+  public List<Designation> getDesignations(String acIdSeq, String type);
+  public List<Definition> getDefinitions(String acIdSeq);
+  public List<ClassSchemeItem> getAcAttrCSCSIByAcAttrId(String acAttrIdSeq);
 
 }

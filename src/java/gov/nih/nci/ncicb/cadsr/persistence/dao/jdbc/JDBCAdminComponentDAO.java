@@ -4,12 +4,16 @@ import gov.nih.nci.ncicb.cadsr.dto.AttachmentTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ReferenceDocumentTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.DesignationTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.DefinitionTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
-import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+import gov.nih.nci.ncicb.cadsr.resource.Designation;
+import gov.nih.nci.ncicb.cadsr.resource.Definition;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.SimpleServiceLocator;
@@ -383,6 +387,37 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     }
 
 
+    public List<Designation> getDesignations(String acIdSeq, String type) {
+        DesignationQuery query = new DesignationQuery();
+        query.setDataSource(getDataSource());
+        query.setSql(type);
+        List<Designation> desigs = query.getDesignations(acIdSeq, type);
+        for (Designation designation:desigs){
+            List<ClassSchemeItem> cscsiList = getAcAttrCSCSIByAcAttrId(designation.getDesigIDSeq());
+            ((DesignationTransferObject)designation).setCsCsis(cscsiList);
+        }      
+        return desigs;
+    }
+    
+    public List<Definition> getDefinitions(String acIdSeq){
+        DefinitionQuery query = new DefinitionQuery();
+        query.setDataSource(getDataSource());
+        query.setSql();
+        List<Definition> definitions = query.getDefinitions(acIdSeq);
+        for (Definition def:definitions){
+            List<ClassSchemeItem> cscsiList = getAcAttrCSCSIByAcAttrId(def.getId());
+            ((DefinitionTransferObject)def).setCsCsis(cscsiList);
+        }   
+        return definitions;
+    }
+
+    public List<ClassSchemeItem> getAcAttrCSCSIByAcAttrId(String acAttrIdSeq){
+        AcAttrQuery query = new AcAttrQuery();
+        query.setDataSource(getDataSource());
+        query.setSql();
+        List<ClassSchemeItem> results = query.getAcAttrCsCsi(acAttrIdSeq);
+        return results;
+    }
 
 
   public static void main(String[] args) {
@@ -1204,7 +1239,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     /**
      * Inner class to check if all AC are in the specified context.
      */
-    class CheckACDesignationQuery extends MappingSqlQuery {
+    private class CheckACDesignationQuery extends MappingSqlQuery {
       CheckACDesignationQuery(DataSource ds) {
           super();
           setDataSource(ds);
@@ -1290,7 +1325,150 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         return cto;
       }    
     }
+  
+    private class DesignationQuery extends MappingSqlQuery {
+      DesignationQuery() {
+        super();
+      }
+
+      public void setSql(String type) {
+       if (type== null){
+        super.setSql(
+          "select des.desig_idseq, des.name, des.detl_name, des.lae_name, con.CONTE_IDSEQ, con.NAME, con.PAL_NAME "+
+            " from contexts con, designations des "+
+            " where des.CONTE_IDSEQ = con.CONTE_IDSEQ "+
+            " and des.ac_idseq = ?");
+
+        declareParameter(new SqlParameter("AC_IDSEQ", Types.VARCHAR));
+       }else{
+           super.setSql(
+             "select des.desig_idseq, des.name, des.detl_name, des.lae_name, con.CONTE_IDSEQ, con.NAME, con.PAL_NAME "+
+           " from contexts con, designations des "+
+           " where des.CONTE_IDSEQ = con.CONTE_IDSEQ "+
+           " and des.ac_idseq = ? and des.detl_name=?");
+           declareParameter(new SqlParameter("AC_IDSEQ", Types.VARCHAR));
+           declareParameter(new SqlParameter("detl_name", Types.VARCHAR));
+       }
+      }
+      
+      protected  List<Designation> getDesignations(String acIdSeq, String type) {
+          Object[] params;
+          if (type == null){
+               params = new Object[]{acIdSeq};
+          }else{
+               params = new Object[]{acIdSeq, type};
+          }
+          List results = execute(params);
+          return (List<Designation>)results;
+      }
+
+      protected Object mapRow(
+        ResultSet rs,
+        int rownum) throws SQLException {
+        DesignationTransferObject dto = new DesignationTransferObject();
+
+        dto.setDesigIDSeq(rs.getString(1));
+        dto.setName(rs.getString(2));
+        dto.setType(rs.getString(3));
+        dto.setLanguage(rs.getString(4));
+        Context  cto = new ContextTransferObject();
+        cto.setConteIdseq(rs.getString(5));
+        cto.setName(rs.getString(6));
+        dto.setContext(cto);
+
+        return dto;
+      }    
+    }//end of private class
+
     
+    private class DefinitionQuery extends  MappingSqlQuery {
+      DefinitionQuery() {
+        super();
+      }
+
+      public void setSql() {
+        super.setSql(
+          " select def.defin_idseq, def.definition,  def.defl_name, " + 
+          " def.lae_name, con.CONTE_IDSEQ, con.NAME, con.PAL_NAME " + 
+          " from contexts con, definitions def " + 
+          " where def.CONTE_IDSEQ = con.CONTE_IDSEQ " + 
+          " and def.ac_idseq = ? ");
+
+        declareParameter(new SqlParameter("AC_IDSEQ", Types.VARCHAR));
+      }
+      
+      protected  List<Definition> getDefinitions(String acIdSeq) {
+          Object[] params = new Object[]{acIdSeq};
+          List results = execute(params);
+          return (List<Definition>)results;
+      }
+
+      protected Object mapRow(
+        ResultSet rs,
+        int rownum) throws SQLException {
+        Definition dto = new DefinitionTransferObject();
+
+        dto.setDefinition(rs.getString(2));
+        dto.setType(rs.getString(3));
+        dto.setLanguage(rs.getString(4));
+        //dto.setOrigin();
+        Context  cto = new ContextTransferObject();
+        cto.setConteIdseq(rs.getString(5));
+        cto.setName(rs.getString(6));
+        dto.setContext(cto);
+
+        return dto;
+      }    
+    }//end of private class
+    
+    
+    private class AcAttrQuery extends MappingSqlQuery {
+       AcAttrQuery() {
+         super();
+       }
+
+       public void setSql() {
+         super.setSql( "SELECT csi.csi_name, csi.csitl_name, csi.csi_idseq, " + 
+         "               cscsi.cs_csi_idseq, cs.preferred_definition, cs.long_name, "+ 
+         "                ext.aca_idseq, cs.cs_idseq, cs.version , csi.description description" + 
+         "        FROM ac_att_cscsi_ext ext, cs_csi cscsi, " + 
+         "             class_scheme_items csi, classification_schemes cs  " + 
+         "        WHERE ext.ATT_IDSEQ = ? " + 
+         "        AND   ext.cs_csi_idseq = cscsi.cs_csi_idseq " + 
+         "        AND   cscsi.csi_idseq = csi.csi_idseq " + 
+         "        AND   cscsi.cs_idseq = cs.cs_idseq " + 
+         "        ORDER BY upper(csi.csi_name)  ");
+           declareParameter(new SqlParameter("ATT_IDSEQ", Types.VARCHAR));
+       }
+       
+       protected List<ClassSchemeItem> getAcAttrCsCsi(String acAttrIdSeq) {
+           Object[] params = new Object[]{acAttrIdSeq};
+           List<ClassSchemeItem>  results = execute(params);                
+           return results;
+       }
+
+       protected Object mapRow(
+         ResultSet rs,
+         int rownum) throws SQLException {
+         ClassSchemeItem csito = new CSITransferObject();
+
+           csito.setClassSchemeItemName(rs.getString(1));
+           csito.setClassSchemeItemType(rs.getString(2));
+           csito.setCsiIdseq(rs.getString(3));
+           csito.setCsCsiIdseq(rs.getString(4));
+           csito.setClassSchemeDefinition(rs.getString(5));
+           csito.setClassSchemeLongName(rs.getString(6));
+           csito.setCsIdseq(rs.getString(8));
+           csito.setCsVersion(new Float(rs.getString(9)));           
+           csito.setCsiDescription(rs.getString("description"));
+
+         return csito;
+       }    
+     }
+    
+    
+    
+      
     private String getDelimetedIdSeq(List idSeqList, String delimiter){
         if (idSeqList==null || idSeqList.isEmpty()){
             return "";
