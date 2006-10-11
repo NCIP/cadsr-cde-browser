@@ -1,18 +1,22 @@
 package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
+import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.DataElementTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.FormValidValueTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ValueMeaningTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.QuestionTransferObject;
 import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.QuestionDAO;
-import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+import gov.nih.nci.ncicb.cadsr.resource.Designation;
+import gov.nih.nci.ncicb.cadsr.resource.Definition;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.dto.DesignationTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.DefinitionTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
+
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
-import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.ValueMeaning;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 import gov.nih.nci.ncicb.cadsr.resource.QuestionChange;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
@@ -57,8 +61,8 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
     query.setDataSource(getDataSource());
     query._setSql(questionId);
 
-    return query.execute();
-
+    Collection result =  query.execute();
+    return result;
   }
 
   public Question addValidValues(
@@ -450,6 +454,14 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
       
   }
 
+/**
+ * retrieve the value meaning attributes (designations, classifications) and put it in the ValueMeaning class
+ */
+    private ValueMeaning retrieveValueMeaningAttr(ValueMeaning vm){
+        vm.setDesignations(getDesignations(vm.getIdseq(), null)); ///this should be the VM_IDSEQ;
+        vm.setDefinitions(getDefinitions(vm.getIdseq())); ///this should be the VM_IDSEQ;
+        return vm;
+    }
 
   /**
    * Inner class that accesses database to create a question record in the
@@ -573,9 +585,21 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
           //Bug Fix tt#1058
           fvv.setAslName(rs.getString(5));
           fvv.setPreferredDefinition(rs.getString(7));
+          fvv.setFormValueMeaningText(rs.getString(16)); //Meaning_text
+          fvv.setFormValueMeaningDesc(rs.getString("DESCRIPTION_TEXT")); //DESCRIPTION_TEXT          
           ContextTransferObject contextTransferObject = new ContextTransferObject();
           contextTransferObject.setConteIdseq(rs.getString(4)); //CONTE_IDSEQ
           fvv.setContext(contextTransferObject);
+          
+          //added for value meaning
+          ValueMeaning vm = new ValueMeaningTransferObject();
+          vm.setIdseq(rs.getString("VM_IDSEQ"));
+          vm.setLongName(rs.getString("short_meaning"));
+          vm.setPreferredDefinition(rs.getString("VM_DESCRIPTION"));
+          
+          vm = retrieveValueMeaningAttr(vm);
+          
+          fvv.setValueMeaning(vm);
           
          return fvv;
     }
@@ -609,7 +633,9 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
           fvv.setVpIdseq(rs.getString(8));        // VP_IDSEQ
           fvv.setLongName(rs.getString(9));       // LONG_NAME
           fvv.setDisplayOrder(rs.getInt(14));     // DISPLAY_ORDER
-          fvv.setShortMeaning(rs.getString(15));    // Meaning      
+          fvv.setShortMeaning(rs.getString(15));    // Meaning
+          fvv.setFormValueMeaningText(rs.getString(16)); //Meaning_text
+          fvv.setFormValueMeaningDesc(rs.getString("DESCRIPTION_TEXT")); //DESCRIPTION_TEXT
          return fvv;
     }
   }
@@ -930,5 +956,6 @@ public class JDBCQuestionDAO extends JDBCAdminComponentDAO implements QuestionDA
         return question;
         }
 }
+
 
 }
