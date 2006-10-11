@@ -109,6 +109,9 @@ public interface FormConstants extends FormBuilderConstants {
   public static final String QUESTION_DEFAULT_VALIDVALUE_IDS = "questionDefaultValidValueIds";  
   public static final String QUESTION_MANDATORIES = "questionMandatories";
   public static final String FORM_VALID_VALUE_INSTRUCTIONS = "formsValidValueInstructions";
+  public static final String FORM_VALUE_MEANING_TEXT = "formsValueMeaningTexts";
+  public static final String FORM_VALUE_MEANING_DESC = "formsValueMeaningDescs";
+  public static final String VALUE_MEANING_OBJ = "ValueMeaningObj";      
   public static final String DELETED_QUESTIONS = "deletedQuestions";
   public static final String ADD_DELETED_QUESTION_IDSEQ_ARR =
     "addDeletedQuestionIdSeqArr";
