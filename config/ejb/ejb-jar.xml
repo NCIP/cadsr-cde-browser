@@ -32,5 +32,47 @@
       </method>
       <trans-attribute>Required</trans-attribute>
     </container-transaction>
+    <container-transaction>
+          <method>
+            <ejb-name>FormBuilder</ejb-name>
+            <method-name>get*</method-name>
+          </method>
+          <trans-attribute>Supports</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+          <method>
+            <ejb-name>FormBuilder</ejb-name>
+            <method-name>validateUser</method-name>
+          </method>
+          <trans-attribute>Supports</trans-attribute>
+    </container-transaction>    
+    <container-transaction>
+          <method>
+            <ejb-name>FormBuilder</ejb-name>
+            <method-name>retrieveCDECart</method-name>
+          </method>
+          <trans-attribute>Supports</trans-attribute>
+    </container-transaction>  
+    <container-transaction>
+          <method>
+            <ejb-name>FormBuilder</ejb-name>
+            <method-name>retrieveFormClassifications</method-name>
+          </method>
+          <trans-attribute>Supports</trans-attribute>
+    </container-transaction>   
+    <container-transaction>
+          <method>
+            <ejb-name>FormBuilder</ejb-name>
+            <method-name>isAllACDesignatedToContext</method-name>
+          </method>
+          <trans-attribute>Supports</trans-attribute>
+    </container-transaction>    
+    <container-transaction>
+          <method>
+            <ejb-name>FormBuilder</ejb-name>
+            <method-name>isTargetForTriggerAction</method-name>
+          </method>
+          <trans-attribute>Supports</trans-attribute>
+    </container-transaction>      
   </assembly-descriptor>
 </ejb-jar>
