@@ -17,7 +17,10 @@ import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
+import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.resource.Definition;
+import gov.nih.nci.ncicb.cadsr.resource.Designation;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.FormElement;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
@@ -33,6 +36,8 @@ import gov.nih.nci.ncicb.cadsr.resource.QuestionChange;
 import gov.nih.nci.ncicb.cadsr.resource.TriggerAction;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
+
+import gov.nih.nci.ncicb.cadsr.resource.ValueMeaning;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -112,8 +117,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
 
     updateEditFormFromQuestion(selectedModule.getQuestions(), moduleEditForm);
-
-
+     
     //set the trigger action target
     //setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),selectedModule.getTriggerActions());
     FormActionUtil.setTargetsForTriggerActions(FormActionUtil.getTriggerActionPossibleTargetMap(crf),FormActionUtil.getModuleAllTriggerActions(selectedModule));
@@ -236,7 +240,6 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
       questions.add(currQuestionIndex + 1, currQuestion);
     }
 
-    //rebuild the editForm
     updateEditFormFromQuestion(module.getQuestions(), moduleEditForm);
 
     // Jump to the update location on the screen
@@ -432,7 +435,6 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     int currValidValueIndex = validValueIndex.intValue();
     Module module = (Module) getSessionObject(request, MODULE);
 
-    
     setQuestionFromEditForm(module, moduleEditForm);
     //change order
     List questions = module.getQuestions();
@@ -454,7 +456,6 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
 
     updateEditFormFromQuestion(module.getQuestions(), moduleEditForm);
-    
     // Jump to the update location on the screen
       if(questionIndex!=null)
         request.setAttribute(CaDSRConstants.ANCHOR,"Q"+(questionIndex.intValue()));
@@ -1147,8 +1148,8 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
        ListIterator editedIterator =  null;
        if(editedValidValueList!=null)
         editedIterator = editedValidValueList.listIterator();
-       while(editedIterator!=null&&editedIterator.hasNext())
-       {
+       if (editedIterator!=null){
+        while( editedIterator.hasNext()){
          FormValidValue editedVV = (FormValidValue)editedIterator.next();
          editedVV.setQuestion(currQuestion);
          // get new valid Values
@@ -1171,12 +1172,23 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
            {
               vvChange.setInstrctionChanges(instructionChanges);
            }
+
+
+            //if there is any form value meaning text/desc changes
+            if( !editedVV.getFormValueMeaningText().equals(orgVV.getFormValueMeaningText()) || 
+                !editedVV.getFormValueMeaningDesc().equals(orgVV.getFormValueMeaningDesc()) )
+            {
+                vvChange.setUpdatedFormValueMeaningText(editedVV.getFormValueMeaningText());
+                vvChange.setUpdatedFormValueMeaningDesc(editedVV.getFormValueMeaningDesc());
+             }
+
            if(vvChange!=null&&!vvChange.isEmpty())
            {
              updatedVVList.add(vvChange);
            }
          }// contained in orgValidValues
-       }
+       }//end of while
+    }//end of if
        if(!newVVList.isEmpty())
           fvvChanges.setNewValidValues(newVVList);
        if(!updatedVVList.isEmpty())
@@ -1361,16 +1373,19 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
   }
 
 
-  private String[] getValidValueInstructionsAsArray(List questions) {
+  private List<String[]> getValueMeaningAsArray(List<Question> questions) {
     if (questions == null) {
       return null;
     }
 
     ListIterator iterate = questions.listIterator();
-    String[] validValueInstructionsArr = new String[getMaxVVSize(questions)];
-     int vvIndex = 0;
+    int size = getMaxVVSize(questions);
+    String[] valueMeaningTexts = new String[size];
+    String[] valueMeaningDescs = new String[size];
+    String[] vvInstructions = new String[size];
+
+    int vvIndex = 0;
     while (iterate.hasNext()) {
-      int index = iterate.nextIndex();
       Question question = (Question) iterate.next();
       if(question!=null&&question.getValidValues()!=null)
       {
@@ -1379,42 +1394,151 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         while(vvIterate.hasNext())
         {
           FormValidValue vv = (FormValidValue) vvIterate.next();
-          Instruction instr = vv.getInstruction();
-          if(instr!=null)
+          String vvInstr = (vv.getInstruction()!=null? vv.getInstruction().getLongName():"");
+          String valueMeaningText = vv.getFormValueMeaningText();
+          String valueMeaningDesc = vv.getFormValueMeaningDesc();
+          valueMeaningTexts[vvIndex] = "";
+          valueMeaningDescs[vvIndex] = "";
+          vvInstructions[vvIndex] = "";
+          if(valueMeaningText!=null)
           {
-            validValueInstructionsArr[vvIndex] = instr.getLongName();
+            valueMeaningTexts[vvIndex] = valueMeaningText;
           }
-          else
-          {
-            validValueInstructionsArr[vvIndex] = "";
-          }
-         ++vvIndex;
+          if(valueMeaningDesc!=null){
+            valueMeaningDescs[vvIndex] = valueMeaningDesc;
+          }  
+          vvInstructions[vvIndex] = vvInstr;
+          ++vvIndex;
         }
        }
       }
-    return validValueInstructionsArr;
-  }  
+    List<String[]> ret = new ArrayList(2);
+    ret.add(valueMeaningTexts);
+    ret.add(valueMeaningDescs);
+    ret.add(vvInstructions);
+    
+    return ret;
+  }
+
+
+
+  private String[] getValidValueInstructionsAsArray(List questions){
+      if (questions == null) {
+        return null;
+      }
+
+      ListIterator iterate = questions.listIterator();
+      String[] validValueInstructionsArr = new String[getMaxVVSize(questions)];
+       int vvIndex = 0;
+      while (iterate.hasNext()) {
+        int index = iterate.nextIndex();
+        Question question = (Question) iterate.next();
+        if(question!=null&&question.getValidValues()!=null)
+        {
+          List vvList = question.getValidValues();
+          ListIterator vvIterate = vvList.listIterator();
+          while(vvIterate.hasNext())
+          {
+            FormValidValue vv = (FormValidValue) vvIterate.next();
+            Instruction instr = vv.getInstruction();
+            if(instr!=null)
+            {
+              validValueInstructionsArr[vvIndex] = instr.getLongName();
+            }
+            else
+            {
+              validValueInstructionsArr[vvIndex] = "";
+            }
+           ++vvIndex;
+          }
+         }
+        }
+      return validValueInstructionsArr;
+  }
+    
+    
+  private void setValidValueAttrFromArray(
+    Module module,
+    String[] validValueInstructionArr,
+    String[] valueMeaningText,
+    String[] valueMeaningDesc) {
+    List questions = module.getQuestions();
+    if(questions==null)
+    {
+      questions = new ArrayList();
+    }
+    int index=0;
+    for (int i = 0; i < questions.size(); i++) {
+        Question currQuestion = (Question) questions.get(i);
+        
+        List vvList = currQuestion.getValidValues();
+        if(vvList==null)
+        {
+          vvList = new ArrayList();
+        }
+       for (int j = 0; j < vvList.size(); j++) {
+            String instrStr = validValueInstructionArr[index];
+            FormValidValue currVV = (FormValidValue) vvList.get(j);
+            if(currVV.getInstruction()!=null)
+            {
+              if(instrStr!=null&&!instrStr.trim().equals(""))
+              {
+                currVV.getInstruction().setLongName(instrStr);
+                 initNullValues(currVV.getInstruction(),module);
+                                             // this is done to take care
+                                             // incase the attributes are null
+              }
+              else
+              {
+                currVV.setInstruction(null);
+              }
+            }
+            else if((instrStr!=null)&&(!instrStr.equals("")))
+            {
+              Instruction instr = new InstructionTransferObject();
+              instr.setLongName(instrStr);
+              instr.setDisplayOrder(0);
+              instr.setVersion(new Float(1));
+              instr.setAslName("DRAFT NEW");
+              instr.setContext(module.getContext());
+              instr.setPreferredDefinition(instrStr);
+              currVV.setInstruction(instr);
+            }
+            
+            //SAVE value meaning text
+             currVV.setFormValueMeaningText(valueMeaningText[index]); 
+             currVV.setFormValueMeaningDesc(valueMeaningDesc[index]); 
+             ++index;
+       }//end of vv
+    }//end of question
+  }
+  
   
     private void  setQuestionFromAllArray(Module module, String[] questionArr, String[] questionInstructionsArr, 
-            String[] questionDefaultValuesArr, String[] questionDefaultValidValueIDsArr, String[] questionMandatory){
+            String[] questionDefaultValuesArr, String[] questionDefaultValidValueIDsArr, String[] questionMandatory,
+            String[]  validValueInstructionArr, String[] valueMeaningText, String[] valueMeaningDesc){
         List questions = module.getQuestions();
         if(questions==null)
         {
-            questions = new ArrayList();
+            return; 
         }
         for (int i = 0; i < questions.size(); i++) {
             Question currQuestion = (Question) questions.get(i);
             setQuestionName(module, currQuestion, questionArr[i]);
             setQuestionInstruction(module, currQuestion, questionInstructionsArr[i]);
             setQuestionDefaultValue(module, currQuestion, questionDefaultValuesArr[i], questionDefaultValidValueIDsArr[i]);
-            setQuestionMandatory(currQuestion, questionMandatory[i]);
-            }//end of for 
-          return;
+            setQuestionMandatory(currQuestion, questionMandatory[i]);            
+        }//end of for 
+        
+        //set question VV instruction and value meaning text here
+        setValidValueAttrFromArray(module, validValueInstructionArr,valueMeaningText, valueMeaningDesc);
+        return;
     }    
     
     private void  setQuestionName(Module module, Question question, String name){
         question.setContext(module.getContext());//This is done so that all new Element created will have this Context
         question.setLongName(name);
+        return;
     }
     
     private void setQuestionInstruction(Module module, Question currQuestion, String instrStr){
@@ -1473,7 +1597,6 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         currQuestion.setMandatory("Yes".equalsIgnoreCase(mandatory));
         return;
     }
-
   private void initNullValues(Instruction instr, Module module)
   {
       if(instr.getVersion()==null)
@@ -1769,6 +1892,46 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
        return mapping.findForward("useSubsets");
       }
+      
+
+    public ActionForward showValueMeaningAlterNames(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response) throws IOException, ServletException {        
+        
+        String questionIndexStr = (String)request.getParameter("questionIndex");
+        String moduleIndexStr = (String)request.getParameter("moduleIndex");
+        String validValueIndexStr = (String)request.getParameter("validValueIndex");
+        
+        int questionIndex = 0;
+        int moduleIndex = 0;
+        int validValueIndex = 0;
+        try{
+            questionIndex = Integer.parseInt(questionIndexStr);
+            moduleIndex = Integer.parseInt(moduleIndexStr);
+            validValueIndex = Integer.parseInt(validValueIndexStr);            
+        }catch (Exception e){
+            log.error("Could not parse integer for questionIndex, moduleIndex or validValueIndex");
+            saveError("cadsr.formbuilder.valueMeaning.alternate.fail", request);
+            return mapping.findForward(FAILURE);
+        }
+        
+        Form crf = (Form)getSessionObject(request, FormConstants.CRF);
+        List modules = crf.getModules();
+        Module module = (Module)modules.get(moduleIndex);
+        Question question = (Question)(module.getQuestions().get(questionIndex));
+        FormValidValue fvv = (FormValidValue)(question.getValidValues().get(validValueIndex));
+        ValueMeaning vm = fvv.getValueMeaning();
+
+        request.setAttribute(FormConstants.VALUE_MEANING_OBJ, vm);
+                
+        return mapping.findForward("success");
+    }
+      
+      
+      
+      
     private boolean isTargetToSkipPattern(Question question) throws FormBuilderException
     {
         List<String> targetIdList = new ArrayList<String>();
@@ -1826,14 +1989,21 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
 
 
     private void updateEditFormFromQuestion(List questions, DynaActionForm moduleEditForm){
+        if (questions == null || questions.isEmpty()){
+            return;
+        }
         
         String[] questionArr = getQuestionsAsArray(questions);
         String[] questionInstructionsArr = this.getQuestionInstructionsAsArray(questions);
-        String[] vvInstructionsArr = this.getValidValueInstructionsAsArray(questions);
+        //refactor - may combine these two together for performance.
+        //String[] vvInstructionsArr = this.getValidValueInstructionsAsArray(questions);
+        List<String[]> valueMeaningAttr = getValueMeaningAsArray(questions);
 
         moduleEditForm.set(MODULE_QUESTIONS, questionArr);
         moduleEditForm.set(QUESTION_INSTRUCTIONS, questionInstructionsArr);
-        moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, vvInstructionsArr);
+        moduleEditForm.set(FORM_VALUE_MEANING_TEXT,(String[])valueMeaningAttr.get(0));
+        moduleEditForm.set(FORM_VALUE_MEANING_DESC,(String[])valueMeaningAttr.get(1));
+        moduleEditForm.set(FORM_VALID_VALUE_INSTRUCTIONS, (String[])valueMeaningAttr.get(2));
 
         //update default values, mandatory.
          List<String[]> defaults = getQuestionAttrAsArray(questions);
@@ -1845,18 +2015,28 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
     }
     
     private void setQuestionFromEditForm(Module module,  DynaActionForm moduleEditForm){
+        if (module.getQuestions() == null || module.getQuestions().isEmpty()){
+            return;
+        }
         String[] questionArr = (String[]) moduleEditForm.get(MODULE_QUESTIONS);
         String[] questionInstructionsArr = (String[]) moduleEditForm.get(QUESTION_INSTRUCTIONS);
+        //value meaning, instruction and text
         String[] vvInstructionsArr = (String[]) moduleEditForm.get(FORM_VALID_VALUE_INSTRUCTIONS);
+        String[] valueMeaningTextArr = (String[]) moduleEditForm.get(FormConstants.FORM_VALUE_MEANING_TEXT);
+        String[] valueMeaningDescArr = (String[]) moduleEditForm.get(FormConstants.FORM_VALUE_MEANING_DESC);
         //default value for a question
         String[] questionDefaultValueArr = (String[]) moduleEditForm.get(QUESTION_DEFAULTVALUES);
         String[] questionDefaultValidValueIdArr = (String[]) moduleEditForm.get(QUESTION_DEFAULT_VALIDVALUE_IDS);
         //question mandatory
         String[] questionMandatoryArr = (String[]) moduleEditForm.get(QUESTION_MANDATORIES);
         setQuestionFromAllArray(module,questionArr, 
-                                questionInstructionsArr, questionDefaultValueArr,  
+                                questionInstructionsArr, 
+                                questionDefaultValueArr,  
                                 questionDefaultValidValueIdArr, 
-                                questionMandatoryArr);
+                                questionMandatoryArr,
+                                vvInstructionsArr,
+                                valueMeaningTextArr,
+                                valueMeaningDescArr);
 
     }
 }
