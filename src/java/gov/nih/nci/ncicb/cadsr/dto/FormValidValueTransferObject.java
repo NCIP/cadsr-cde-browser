@@ -1,7 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.ValueMeaning;
 import gov.nih.nci.ncicb.cadsr.resource.Instruction;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
+import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
 import gov.nih.nci.ncicb.cadsr.util.DebugStringBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +19,11 @@ public class FormValidValueTransferObject extends FormElementTransferObject
   private int dispOrder;
   private String shortMeaning;
   private List instructions;
-  
+  //added for making value meaning a admin components
+  private ValueMeaning valueMeaning;
+  private String formValueMeaningText; //this is the user's choice
+  private String formValueMeaningDesc; //this is the user's choice
+
   public FormValidValueTransferObject() {
   }
 
@@ -163,4 +169,26 @@ public class FormValidValueTransferObject extends FormElementTransferObject
     sb.append(OBJ_SEPARATOR_END);  
     return sb.toString();  
   }
+
+    public String getFormValueMeaningText(){
+        return formValueMeaningText;
+    }
+    public void setFormValueMeaningText(String vmText){
+        formValueMeaningText = vmText;
+    }
+    
+    public String getFormValueMeaningDesc(){
+        return formValueMeaningDesc;
+    }
+    public void setFormValueMeaningDesc(String vmDesc){
+        formValueMeaningDesc = vmDesc;
+    }
+    
+    public void setValueMeaning(ValueMeaning valueMeaning) {
+        this.valueMeaning = valueMeaning;
+    }
+
+    public ValueMeaning getValueMeaning() {
+        return valueMeaning;
+    }
 }
