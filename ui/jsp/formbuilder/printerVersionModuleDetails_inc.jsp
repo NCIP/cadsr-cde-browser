@@ -218,9 +218,9 @@ class="OraBGAccentBlack" >
                                       <tr COLSPAN="3" class="PrinterOraTabledata">
                                         <td class="PrinterOraFieldText" width="50">&nbsp;</td>
                                         <td class="PrinterOraFieldText">
-                                          <bean:write name="validValue" property="longName"/>
+                                          <br><bean:write name="validValue" property="longName"/>
                                         </td>
-                                      </tr>
+                                      </tr>                                      
                                       <tr   class="PrinterOraTabledata">
                                         <td class="PrinterOraFieldText" width="50">&nbsp;</td>
                                         <td >                                      
@@ -229,9 +229,15 @@ class="OraBGAccentBlack" >
                                             <logic:present name="question" property="dataElement">
                                                <tr class="PrinterOraTabledata" >
                                                  <td  class="PrinterOraTableColumnHeader" width="10%" nowrap >
-                                                   <bean:message key="cadsr.formbuilder.valueMeaning.name" /></td>
+                                                   <bean:message key="cadsr.formbuilder.valueMeaning.text" /></td>
                                                  <td class="PrinterOraFieldText" >
-                                                  <bean:write name="validValue" property="shortMeaning"/></td>                                          
+                                                  <bean:write name="validValue" property="formValueMeaningText"/></td>                                          
+                                               </tr>  
+                                               <tr class="PrinterOraTabledata" >
+                                                 <td  class="PrinterOraTableColumnHeader" width="10%" nowrap >
+                                                   <bean:message key="cadsr.formbuilder.valueMeaning.description" /></td>
+                                                 <td class="PrinterOraFieldText" >
+                                                  <bean:write name="validValue" property="formValueMeaningDesc"/></td>                                          
                                                </tr>  
                                             </logic:present>
                                               <logic:present name="validValue" property="instruction">                

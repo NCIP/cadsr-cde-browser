@@ -267,9 +267,16 @@ class="OraBGAccentVeryDark" >
                                             <logic:present name="question" property="dataElement">
                                                <tr class="OraTabledata">
                                                  <td  class="OraTableColumnHeader" width="10%" nowrap >
-                                                   <bean:message key="cadsr.formbuilder.valueMeaning.name" /></td>
+                                                   <bean:message key="cadsr.formbuilder.valueMeaning.text" /></td>
                                                  <td class="OraFieldText" >
-                                                  <bean:write name="validValue" property="shortMeaning"/></td>             
+                                                  <bean:write name="validValue" property="formValueMeaningText"/></td>             
+                             
+                                               </tr>  
+                                               <tr class="OraTabledata">
+                                                 <td  class="OraTableColumnHeader" width="10%" nowrap >
+                                                   <bean:message key="cadsr.formbuilder.valueMeaning.description" /></td>
+                                                 <td class="OraFieldText" >
+                                                  <bean:write name="validValue" property="formValueMeaningDesc"/></td>             
                              
                                                </tr>  
                                             </logic:present>
