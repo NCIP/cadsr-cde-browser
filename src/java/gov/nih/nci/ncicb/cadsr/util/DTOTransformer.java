@@ -36,6 +36,12 @@ public class DTOTransformer {
     fvv.setVersion(new Float(1.0)); //Bug Fix tt#1058
     fvv.setShortMeaning(validValue.getShortMeaning());
     fvv.setQuestion(question);
+    
+    //added for making value meaning a admin component
+    fvv.setValueMeaning(validValue.getValueMeaning());    
+    //take the default value meaning text
+    fvv.setFormValueMeaningText(validValue.getShortMeaning());
+    fvv.setFormValueMeaningDesc(validValue.getValueMeaning().getPreferredDefinition());
 
     return fvv;
   }
