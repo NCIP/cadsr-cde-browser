@@ -1,6 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.ValueMeaning;
+
 import java.util.Collection;
 
 public class ValidValueTransferObject implements ValidValue {
@@ -13,6 +15,7 @@ public class ValidValueTransferObject implements ValidValue {
   protected String description;
   protected Collection instructions = null;
   protected ConceptDerivationRule conceptDerivationRule = null;
+  protected ValueMeaning valueMeaning = null;
   
   public ValidValueTransferObject() {
   }
@@ -104,4 +107,12 @@ public class ValidValueTransferObject implements ValidValue {
    {
      conceptDerivationRule = rule;
    } 
+   
+    public void setValueMeaning(ValueMeaning vm){
+        valueMeaning = vm;
+    }
+    
+    public ValueMeaning getValueMeaning() {
+        return valueMeaning;
+    }
 }
