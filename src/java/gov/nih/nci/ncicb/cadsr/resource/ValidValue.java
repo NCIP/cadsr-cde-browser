@@ -31,4 +31,8 @@ public interface ValidValue extends Serializable {
   public ConceptDerivationRule getConceptDerivationRule();
   
   public void setConceptDerivationRule(ConceptDerivationRule rule);  
+  
+  public void setValueMeaning(ValueMeaning vm);
+  
+  public ValueMeaning getValueMeaning();
 }
