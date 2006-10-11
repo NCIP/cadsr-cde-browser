@@ -6,6 +6,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import oracle.cle.process.ProcessConstants;
@@ -30,13 +31,9 @@ public class SessionFilter implements javax.servlet.Filter
       if(param==null)
       {
         HttpSession userSession = req.getSession(false);
-        Object obj = null;
-        if(userSession!=null)    
-          obj = userSession.getAttribute(ProcessConstants.SERVICENAME);  
-        if(obj==null)
+        if(userSession==null)
           {
-            RequestDispatcher dispatcher = filterConfig.getServletContext().getRequestDispatcher(expiredSessionJSP);
-            dispatcher.forward(request,response);
+             ((HttpServletResponse)response).sendRedirect(req.getContextPath()+ expiredSessionJSP);
             return;
           }
       }
