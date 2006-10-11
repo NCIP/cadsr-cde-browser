@@ -1004,7 +1004,14 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                         fvvDao
                         .updateDisplayOrder(currVV.getValueIdseq(), currVV
                                                   .getDisplayOrder(),
-                                                  getUserName());
+                                                  getUserName());                                                
+                    }
+                    if (currVVChange.getUpdatedFormValueMeaningText()!=null || 
+                        currVVChange.getUpdatedFormValueMeaningDesc()!=null){
+                        fvvDao.updateValueMeaning(currVVChange.getValidValueId(), 
+                            currVVChange.getUpdatedFormValueMeaningText(), 
+                            currVVChange.getUpdatedFormValueMeaningDesc(), 
+                            getUserName());
                     }
                     InstructionChanges vvInstrChanges =
                         currVVChange.getInstrctionChanges();
@@ -1050,7 +1057,8 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
             {
                 FormValidValue currfvv = (FormValidValue)newIt.next();
                 String newfvvIdseq =
-                    fvvDao.createFormValidValueComponent(currfvv, parentId);
+                    fvvDao.createFormValidValueComponent(currfvv, parentId, getUserName());                                
+                
                 //instructions
                 Instruction vvInstr = currfvv.getInstruction();
                 if (vvInstr != null)
@@ -1150,9 +1158,11 @@ public class FormBuilderEJB extends SessionBeanAdapter implements FormBuilderSer
                         fvv.setCreatedBy(getUserName());
                         fvv.setQuestion(newQusetion);
                         String newFVVIdseq =
-                            fvvDao.createFormValidValueComponent(fvv,
-                                                                                  newQusetion
-                                                                                  .getQuesIdseq());
+                            fvvDao.createFormValidValueComponent(
+                                    fvv,newQusetion.getQuesIdseq(),getUserName());
+                        //createFormValidValueComponent() will 
+                        //create valid value and record in the valid_value_att_ext 
+                        
                         //instructions
                         Instruction vvInstr = fvv.getInstruction();
                         if (vvInstr != null)
