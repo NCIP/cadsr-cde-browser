@@ -218,7 +218,10 @@ public class DownloadAction
    cell.setCellValue("Valid Value");
    cell.setCellStyle(boldCellStyle);
    cell = row.createCell(colNumber++);
-   cell.setCellValue("Value Meaning");
+   cell.setCellValue("Value Meaning Text");
+   cell.setCellStyle(boldCellStyle);
+   cell = row.createCell(colNumber++);
+   cell.setCellValue("Value Meaning Desc.");
    cell.setCellStyle(boldCellStyle);
    cell = row.createCell(colNumber++);
    cell.setCellValue("Valid Value Instructions");
@@ -314,7 +317,8 @@ public class DownloadAction
        row = sheet.createRow(rowNumber++);
        colNumber = vvColNum;
        row.createCell(colNumber++).setCellValue(validValue.getLongName());
-       row.createCell(colNumber++).setCellValue(validValue.getShortMeaning());
+       row.createCell(colNumber++).setCellValue(validValue.getFormValueMeaningText());
+       row.createCell(colNumber++).setCellValue(validValue.getFormValueMeaningDesc());
 
        if (validValue.getInstruction() != null)
         row.createCell(colNumber++).setCellValue(validValue.getInstruction().getLongName());
