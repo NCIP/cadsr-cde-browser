@@ -24,21 +24,14 @@
              </A><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font>
           </TD>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1>
+             <A HREF='<%=request.getContextPath()%>/formSearchAction.do' TARGET="_top">
+               <html:img page="/i/formicon.gif" alt="FormBuilder" border="0"  width="32" height="32" />
+             </A><br><font color=brown face=verdana size=1>&nbsp;Form&nbsp;Builder&nbsp;</font>
+           </TD>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1>
           <A HREF="javascript:newBrowserWin('<%=request.getContextPath()%>/common/help/cdeBrowserHelp.html','helpWin',700,600)">
             <html:img page="/i/icon_help.gif" alt="Help" border="0"  width="32" height="32" />
           </A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
-         <logic:present name="nciUser">
-            <TD valign="TOP" align="CENTER" width="1%" colspan=1>
-               <A HREF="<%=request.getContextPath()%>/logout?FirstTimer=0" TARGET="_top">
-                  <html:img page="/i/logout.gif" alt="Logout" border="0"  width="32" height="32" />
-               </A><br><font color=brown face=verdana size=1>&nbsp;Logout&nbsp;</font></TD>
-          </logic:present>
-          <logic:notPresent name="nciUser">
-            <TD valign="TOP" align="CENTER" width="1%" colspan=1>
-               <A HREF="<%= dest %>" TARGET="_top">
-                 <html:img page="/i/icon_login.gif" alt="Login" border="0"  width="32" height="32" />
-              </A><br><font color=brown face=verdana size=1>&nbsp;Login&nbsp;</font></TD>
-          </logic:notPresent>
         </TR>
       </TABLE>
     </td>
