@@ -17,7 +17,8 @@ public interface FormValidValueDAO {
    *
    * @throws <b>DMLException</b>
    */
-  public String createFormValidValueComponent(FormValidValue newValidValue,String parentId)
+  public String createFormValidValueComponent(FormValidValue newValidValue,String parentId,
+   String userName)
     throws DMLException;
 
   /**
@@ -59,4 +60,8 @@ public interface FormValidValueDAO {
    */
   public int deleteFormValidValue(String validValueId)
     throws DMLException;
+    
+  public int updateValueMeaning(String vvIdSeq, String updatedValueMeaningText, 
+                            String updatedValueMeaningDesc, String userName)
+    throws DMLException;   
 }

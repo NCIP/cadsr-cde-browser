@@ -68,7 +68,7 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
    *
    * @throws <b>DMLException</b>
    */
-  public String createFormValidValueComponent(FormValidValue newValidValue, String parentId)
+  public String createFormValidValueComponent(FormValidValue newValidValue, String parentId, String userName)
     throws DMLException {
 
     // check if the user has the privilege to create valid value
@@ -89,10 +89,12 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
 
     String returnCode = (String) out.get("p_return_code");
     String returnDesc = (String) out.get("p_return_desc");
-    String newFVVIdeq = (String) out.get("p_val_idseq");
+    String newFVVIdSeq = (String) out.get("p_val_idseq");
     
     if (!StringUtils.doesValueExist(returnCode)) {
-      return newFVVIdeq;
+        updateValueMeaning(newFVVIdSeq, newValidValue.getFormValueMeaningText(), 
+                            newValidValue.getFormValueMeaningDesc(), userName);
+      return newFVVIdSeq;
     }
     else{
       DMLException dml =  new DMLException(returnDesc);
@@ -152,6 +154,35 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
       newDisplayOrder,username);
   }
 
+    /**
+     * Changes the value meaning text in valid_value_att_ext table.
+     */
+    public int updateValueMeaning(String vvIdSeq, String updatedValueMeaningText, 
+                                    String updatedValueMeaningDesc, String userName)
+    throws DMLException {
+        int count = 0;
+        if ( (updatedValueMeaningText==null || updatedValueMeaningText.length()==0) &&
+            (updatedValueMeaningDesc==null || updatedValueMeaningDesc.length()==0)){
+            //remove this value meaning text
+             DeleteValidValuesAtt sqlDeleteValidValuesAtt = 
+                                new DeleteValidValuesAtt(this.getDataSource());
+             return sqlDeleteValidValuesAtt.deleteValidValueAtt(vvIdSeq);
+        }
+
+        UpdateValidValuesAtt sqlUpdateValidValuesAtt = 
+                                new UpdateValidValuesAtt(this.getDataSource());
+        count = sqlUpdateValidValuesAtt.updateValueMeaning(
+            vvIdSeq, updatedValueMeaningText, updatedValueMeaningDesc, userName);
+        if (count != 0){
+            return count;
+        }
+        InsertValidValuesAtt sqlInsertValidValuesAtt = new InsertValidValuesAtt(this.getDataSource());
+        return sqlInsertValidValuesAtt.insertValueMeaning(
+            vvIdSeq, updatedValueMeaningText, updatedValueMeaningDesc,userName);
+    }
+    
+    
+    
   /**
    * Deletes the specified form valid value and all its associated components.
    * 
@@ -482,5 +513,88 @@ public class JDBCFormValidValueDAO extends JDBCAdminComponentDAO
         }
     }
   }
+
+
+
+    /**
+     * Inner class that accesses database to create a question and valid value 
+     * relationship record in the qc_recs_ext table.
+     */
+    private class UpdateValidValuesAtt extends SqlUpdate {
+      public UpdateValidValuesAtt(DataSource ds) {
+        String updateValidValueAttrSql = 
+        " update valid_values_att_ext set meaning_text = ?, description_text=?, modified_by=? " +
+        " where qc_idseq=?";
+
+        this.setDataSource(ds);
+        this.setSql(updateValidValueAttrSql);
+        declareParameter(new SqlParameter("meaning_text", Types.VARCHAR));
+        declareParameter(new SqlParameter("description_text", Types.VARCHAR));
+        declareParameter(new SqlParameter("modified_by", Types.VARCHAR));
+        declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
+        compile();
+      }
+      protected int updateValueMeaning(String qcIdSeq, String valueMeaningText, 
+                                        String valueMeaningDesc,String userName) 
+      {
+        Object [] obj = 
+          new Object[]
+            {valueMeaningText,
+            valueMeaningDesc,
+             userName,
+             qcIdSeq};
+        
+              int res = update(obj);
+        return res;
+      }
+    }
   
+    private class InsertValidValuesAtt extends SqlUpdate {
+      public InsertValidValuesAtt(DataSource ds) {
+        String insertValidValueAttrSql = 
+        " insert into valid_values_att_ext (qc_idseq, meaning_text, description_text, created_by) values(?,?, ?)";
+
+        this.setDataSource(ds);
+        this.setSql(insertValidValueAttrSql);
+        declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
+        declareParameter(new SqlParameter("meaning_text", Types.VARCHAR));
+        declareParameter(new SqlParameter("description_text", Types.VARCHAR));
+        declareParameter(new SqlParameter("created_by", Types.VARCHAR));
+        compile();
+      }
+      protected int insertValueMeaning(String qcIdSeq, String valueMeaningText, 
+                    String valueMeaningDesc, String userName) 
+      {
+        Object [] obj = 
+          new Object[]
+            {qcIdSeq,
+             valueMeaningText,
+             valueMeaningDesc,
+             userName};            
+        int res = update(obj);
+        return res;
+      }
+    }
+
+
+    private class DeleteValidValuesAtt extends SqlUpdate {
+      public DeleteValidValuesAtt(DataSource ds) {
+        String deleteValidValueAttrSql = 
+        " delete from valid_values_att_ext where qc_idseq=?";
+        this.setDataSource(ds);
+        this.setSql(deleteValidValueAttrSql);
+        declareParameter(new SqlParameter("qc_idseq", Types.VARCHAR));
+        compile();
+      }
+      protected int deleteValidValueAtt(String qcIdSeq) 
+      {
+        Object [] obj = 
+          new Object[]
+                {qcIdSeq};
+        
+        int res = update(obj);
+        return res;
+      }
+    }
+
 }
