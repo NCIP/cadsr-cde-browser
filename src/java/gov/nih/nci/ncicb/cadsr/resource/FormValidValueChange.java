@@ -13,5 +13,11 @@ public interface FormValidValueChange extends Serializable
   public InstructionChanges getInstrctionChanges();
   public void setInstrctionChanges(InstructionChanges changes);
   
+  //added when valuemeaing becomes an admin components
+  public String getUpdatedFormValueMeaningText();
+  public void setUpdatedFormValueMeaningText(String vmText);
+  public String getUpdatedFormValueMeaningDesc();
+  public void setUpdatedFormValueMeaningDesc(String desc);
+  
   public boolean isEmpty();
 }
