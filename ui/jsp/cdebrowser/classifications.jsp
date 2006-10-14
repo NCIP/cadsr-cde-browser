@@ -203,7 +203,7 @@ function listChanged(urlInfo) {
 
 <table width="80%" align="center" cellpadding="1" cellspacing="1" bgcolor="#999966">
   <tr class="OraTableColumnHeader">
-    <th>CS* Short Name</th>
+    <th>CS* Long Name</th>
     <th>CS* Version</th>
    <th>Document Name</th>
    <th>Document Type</th>
@@ -221,7 +221,7 @@ function listChanged(urlInfo) {
          ReferenceDocument refDoc = (ReferenceDocument)refDocs.get(i);
  %>
       <tr class="OraTabledata">
-        <td class="OraFieldText"><%=cs.getClassSchemeName()%></td>
+        <td class="OraFieldText"><%=cs.getClassSchemeLongName()%></td>
         <td class="OraFieldText"><%=cs.getCsVersion()%></td>
         <td class="OraFieldText"><%=refDoc.getName()%> </td>
         <td class="OraFieldText"><%= refDoc.getType()%> </td>
