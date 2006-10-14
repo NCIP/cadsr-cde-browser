@@ -265,13 +265,13 @@ while (csiIter.hasNext()) {
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
 <% if (currCSI != null) { %>
 <TR class="OraTableColumnHeader">
- <th class="OraTableColumnHeader">CS* Short Name</th>
+ <th class="OraTableColumnHeader">CS* Long Name</th>
  <th class="OraTableColumnHeader">CS* Definition</th>
  <th class="OraTableColumnHeader">CSI* Name</th>
  <th class="OraTableColumnHeader">CSI* Type</th>
 </TR>
       <tr class="OraTabledata">
-        <td class="OraFieldText"><%=currCSI.getClassSchemePrefName()%> </td>
+        <td class="OraFieldText"><%=currCSI.getClassSchemeLongName()%> </td>
         <td class="OraFieldText"><%=currCSI.getClassSchemeDefinition()%> </td>
         <td class="OraFieldText"><%=currCSI.getClassSchemeItemName()%> </td>
         <td class="OraFieldText"><%=currCSI.getClassSchemeItemType()%> </td>
@@ -433,7 +433,7 @@ while (csiIter.hasNext()) {
 	<td width="100%" colspan=5>
         <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
 	  <tr class="OraTableColumnHeader">
-	    <th>CS* Short Name</th>
+	    <th>CS* Long Name</th>
 	    <th>CS* Definition</th>
 	    <th>CS* Public ID</th>
 	    <th>CSI* Name</th>
@@ -455,7 +455,7 @@ while (csiIter.hasNext()) {
 	     csi = (Classification)(csiList.get(i));
 	%>
 	      <tr class="OraTabledata">
-		<td class="OraFieldText"><%=csi.getClassSchemeName()%> </td>
+		<td class="OraFieldText"><%=csi.getClassSchemeLongName()%> </td>
 		<td class="OraFieldText"><%=csi.getClassSchemeDefinition()%> </td>
 		<td class="OraFieldText">
 		  <%= csi.getClassSchemePublicId()%>
