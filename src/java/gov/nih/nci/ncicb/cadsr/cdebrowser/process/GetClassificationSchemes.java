@@ -1,13 +1,19 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
 import gov.nih.nci.ncicb.cadsr.html.HTMLPageScroller;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Classification;
+import gov.nih.nci.ncicb.cadsr.resource.Contact;
 import gov.nih.nci.ncicb.cadsr.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.resource.handler.ClassificationHandler;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
 import gov.nih.nci.ncicb.cadsr.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.util.PageIterator;
 import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
@@ -58,6 +64,7 @@ public class GetClassificationSchemes extends BasePersistingProcess
       registerResultObject("tib");
       registerResultObject("csRefDocs");
       registerResultObject("csiRefDocs");
+      registerResultObject("csContacts");
       registerResultObject(ProcessConstants.CLASSIFICATION_VECTOR);
 
       registerStringParameter("newSearch");
@@ -99,6 +106,7 @@ public class GetClassificationSchemes extends BasePersistingProcess
     String scrollerHTML = "";
 	 Map csRefDocs = new HashMap();
     Map csiRefDocs = new HashMap();
+    Map csContacts = new HashMap();
 		try{
       DataElement de = (DataElement)getInfoObject("de");
       myRequest = (HttpServletRequest)getInfoObject("HTTPRequest");
@@ -153,6 +161,9 @@ public class GetClassificationSchemes extends BasePersistingProcess
       Iterator iter = classificationSchemes.iterator();
       Set csNames = new HashSet();  // to avoid duplicate cs 
       Set csiNames = new HashSet();
+	   ServiceLocator locator = 
+	   ServiceLocatorFactory.getLocator(CaDSRConstants.CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
+	   AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
       
       while (iter.hasNext()) {
          
@@ -172,6 +183,22 @@ public class GetClassificationSchemes extends BasePersistingProcess
                csiRefDocs.put(cs.getClassSchemeItemName(), refDocs);
             csiNames.add(cs.getClassSchemeItemName());
          }
+         
+         //get contact information
+         if (!csContacts.containsKey(cs.getCsIdseq())) {
+            AdminComponentDAO acDAO = daoFactory.getAdminComponentDAO();
+            List contacts = acDAO.getContacts(cs.getCsIdseq());
+            String contactInfo = "";
+             if (contacts != null && contacts.size() >0) {
+             
+               for (Iterator contactIter=contacts.iterator(); contactIter.hasNext(); ) {
+                 
+                 contactInfo += contactIter.next().toString();
+               }
+             }
+             csContacts.put(cs.getCsIdseq(), contactInfo);
+   
+         }
       }
 		} 
 		catch(Exception e){
@@ -180,6 +207,7 @@ public class GetClassificationSchemes extends BasePersistingProcess
     } 
     setResult("csRefDocs", csRefDocs);
     setResult("csiRefDocs", csiRefDocs);
+    setResult("csContacts", csContacts);
     setResult(ProcessConstants.CLASSIFICATION_VECTOR, classificationSchemes);
     setResult(ProcessConstants.DE_CS_PAGE_ITERATOR,csIterator);
     setResult(ProcessConstants.DE_CS_PAGE_SCROLLER,scroller);

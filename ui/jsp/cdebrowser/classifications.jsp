@@ -19,7 +19,6 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.domain.ReferenceDocumentAttachment"%>
 
 
-
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 
@@ -31,6 +30,7 @@
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
   Map csRefDocs = (Map) infoBean.getInfo("csRefDocs");
   Map csiRefDocs = (Map) infoBean.getInfo("csiRefDocs");
+  Map csContacts = (Map) infoBean.getInfo("csContacts");
   String pageId = infoBean.getPageId();
   String pageName = PageConstants.PAGEID;
   String pageUrl = "&"+pageName+"="+pageId;
@@ -49,7 +49,23 @@ Classifications
 </TITLE>
 </HEAD>
 <BODY topmargin="0">
-
+<%
+String csId = "";
+String contactInfo = "";
+Iterator csConIter = csContacts.keySet().iterator();
+while (csConIter.hasNext()) {
+	csId = (String) csConIter.next();
+	contactInfo = (String) csContacts.get(csId);
+	if (contactInfo != null && contactInfo.trim().length()>0)
+	   contactInfo = "Contact Information<br>" + contactInfo;
+	else
+	   contactInfo = "No contact information available";
+%>
+<div id="<%=csId%>" class="tip"><%=contactInfo%></div>
+<% }
+%>
+<script type="text/javascript" src="/CDEBrowser/jsLib/tooltip.js"></script>
+<link rel="stylesheet" href="/CDEBrowser/css/tooltip.css" type="text/css" />
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function goPage(pgNum,urlInfo) {
@@ -62,11 +78,9 @@ function listChanged(urlInfo) {
   
 //-->
 </SCRIPT>
-
 <%@ include  file="cdebrowserCommon_html/tab_include.html" %>
 <form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
 <input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
-
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
     <td class="OraHeaderSubSub" width="100%">Selected Data Element</td>
@@ -151,9 +165,9 @@ function listChanged(urlInfo) {
   if (classificationCount > 0) {
     for (int i=0;i<classificationCount; i++) {
       classification = (Classification)classificationVector.elementAt(i);
-%>
+  %>
       <tr class="OraTabledata">
-        <td class="OraFieldText"><%=classification.getClassSchemeLongName()%> </td>
+        <td class="OraFieldText" onmouseout="popUp(event,'<%=classification.getCsIdseq()%>')" onmouseover="popUp(event,'<%=classification.getCsIdseq()%>')" onclick="return false"><%=classification.getClassSchemeLongName()%> </td>
         <td class="OraFieldText"><%=classification.getClassSchemeDefinition()%> </td>
         <td class="OraFieldText">
           <%= classification.getClassSchemePublicId()%>
@@ -175,7 +189,6 @@ function listChanged(urlInfo) {
 %>
 </table>
 <br>
-
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
     <td class="OraHeaderSubSub" width="100%">Classifications Scheme Reference Documents</td>

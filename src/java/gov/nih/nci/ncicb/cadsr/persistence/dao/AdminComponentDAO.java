@@ -8,6 +8,7 @@ import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
 import java.util.Collection;
 import java.util.List;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.Contact;
 import gov.nih.nci.ncicb.cadsr.resource.Definition;
 import gov.nih.nci.ncicb.cadsr.resource.Designation;
 
@@ -156,16 +157,16 @@ public interface AdminComponentDAO {
       *  with the given registration status
       */
   public int designate(String contextIdSeq, List acIdList, String createdBy);
-  
+
   /**
-      * 
+      *
       * @param acIdList a list of AC
       * @param contextIdSeq context id seq.
       * @return true if all the AC are designated in the context.
       */
   public boolean isAllACDesignatedToContext(List acIdList, String contextIdSeq);
   /**
-      * 
+      *
       * @param cscsiIdseq cscsi idseq
       * @param regStatus the registration status
       * @return true if there are admin component registered under this cscsi
@@ -173,13 +174,15 @@ public interface AdminComponentDAO {
       */
   public boolean hasRegisteredAC(String cscsiIdseq, String regStatus);
   /**
-     * 
+     *
      * @param acIdSeq
      * @return
      */
   public Context getContext(String acIdSeq);
   public List<ClassSchemeItem> getCSCSIHierarchyByContext(String contextIdseq);
   public List getCSCSIHierarchyByTypeAndContext(String csType, String csiType,String contextIdseq);
+
+  public List<Contact> getContacts(String acIdseq);
 
   //added for Value Meaning becomes an admin component
   public List<Designation> getDesignations(String acIdSeq, String type);

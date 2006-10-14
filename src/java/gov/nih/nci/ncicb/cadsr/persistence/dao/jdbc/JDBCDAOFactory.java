@@ -2,6 +2,7 @@ package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 
 import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
@@ -36,7 +37,16 @@ public class JDBCDAOFactory extends AbstractDAOFactory
 
   public JDBCDAOFactory() {
   }
+   public AdminComponentDAO getAdminComponentDAO() {
+     AdminComponentDAO acDAO = (AdminComponentDAO) daoCache.get(JDBC_ADMIN_COMPONENT_DAO);
 
+     if (acDAO == null) {
+       acDAO = new JDBCAdminComponentDAO(serviceLocator);
+       daoCache.put(JDBC_ADMIN_COMPONENT_DAO, acDAO);
+     }
+
+     return acDAO;
+   }
   public FormDAO getFormDAO() {
     FormDAO formDAO = (JDBCFormDAO) daoCache.get(JDBC_FORM_DAO);
 

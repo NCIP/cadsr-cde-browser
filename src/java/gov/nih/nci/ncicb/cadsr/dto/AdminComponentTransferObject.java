@@ -1,6 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.dto;
 
 import gov.nih.nci.ncicb.cadsr.resource.AdminComponent;
+import gov.nih.nci.ncicb.cadsr.resource.Contact;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.Definition;
 
@@ -32,6 +33,7 @@ public class AdminComponentTransferObject extends BaseTransferObject
   //Publish Change Order
   protected boolean published;  
   protected List<Definition> definitions;
+  protected List<Contact> contacts;
 
 
   public AdminComponentTransferObject() {
@@ -225,6 +227,14 @@ public class AdminComponentTransferObject extends BaseTransferObject
   }
    public void setDefinitions(List<Definition> newDefinitions){
      this.definitions = newDefinitions;
+  }
+  
+  public List<Contact> getContacts() {
+     return contacts;
+  }
+  
+  public void setContacts(List<Contact> newContacts) {
+     this.contacts = newContacts;
   }
 
 }

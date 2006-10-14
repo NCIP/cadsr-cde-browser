@@ -73,5 +73,8 @@ public interface AdminComponent extends Audit {
   //release 3.1 added definitions
   public List<Definition> getDefinitions();
   public void setDefinitions(List<Definition> definitions);
+  public List<Contact> getContacts();
+
+  public void setContacts(List<Contact> contacts);
 
 }

@@ -3,7 +3,13 @@ package gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc;
 import gov.nih.nci.ncicb.cadsr.dto.AttachmentTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.AddressTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.PersonTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ContactTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.OrganizationTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ContactCommunicationTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ReferenceDocumentTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.jdbc.JDBCFormTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.DesignationTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.DefinitionTransferObject;
@@ -11,7 +17,12 @@ import gov.nih.nci.ncicb.cadsr.exception.DMLException;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Attachment;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+import gov.nih.nci.ncicb.cadsr.resource.Contact;
+import gov.nih.nci.ncicb.cadsr.resource.ContactCommunication;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.Person;
+import gov.nih.nci.ncicb.cadsr.resource.Address;
+import gov.nih.nci.ncicb.cadsr.resource.Organization;
 import gov.nih.nci.ncicb.cadsr.resource.Designation;
 import gov.nih.nci.ncicb.cadsr.resource.Definition;
 import gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument;
@@ -253,14 +264,14 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
   /**
    * Gets all CSI by funtion and admin Component type
-   * 
+   *
    * @param <b>acId</b> Idseq of an admin component
-   *    
-   *    
+   *
+   *
    * @param csType
    * @param csiType
    * @param contextIdseq
-   * @return 
+   * @return
    */
   public List getCSIByType(String csType, String csiType, String contextIdseq)
     {
@@ -280,18 +291,18 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       AllCSCSIsByTypeQuery query = new AllCSCSIsByTypeQuery(getDataSource());
       return query.getCSCSIs(csType,csiType);
     }
-    
-    
+
+
     /**
    * Gets all CSI for CTEP
    *
-   * @param 
+   * @param
    *
    *
    */
   public List getCSIForContextId(String contextId)
     {
-      
+
       CSCSIsByContextIDQuery query = new CSCSIsByContextIDQuery(getDataSource());
       return query.getCSCSIs(contextId);
     }
@@ -299,13 +310,13 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     /**
    * Gets all CSCSI
    *
-   * @param 
+   * @param
    *
    *
    */
   public List getCSCSIHierarchy()
     {
-      
+
       CSCSIsHierQuery query = new CSCSIsHierQuery();
       query.setDataSource(getDataSource());
       query.setSql();
@@ -322,7 +333,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
    {
       CSCSIsHierByContextQuery  query = new CSCSIsHierByContextQuery(getDataSource());
       return query.getCSCSIs(contextIdseq);
-     
+
    }
 
   /**
@@ -334,7 +345,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
    */
   public List getCSCSIHierarchyByType(String csType, String csiType)
     {
-      
+
       CSCSIsHierQueryByType query = new CSCSIsHierQueryByType(getDataSource());
       return query.getCSCSIs(csType,csiType);
     }
@@ -345,10 +356,10 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     * @param csiType
     *
     */
-   public List getCSCSIHierarchyByTypeAndContext(String csType, String csiType, 
+   public List getCSCSIHierarchyByTypeAndContext(String csType, String csiType,
    String contextIdseq)
      {
-       
+
        CSCSIsHierQueryByTypeAndContext query = new CSCSIsHierQueryByTypeAndContext(getDataSource());
        return query.getCSCSIs(csType,csiType, contextIdseq);
      }
@@ -367,9 +378,9 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
        res = designateCDE.designate(contextIdSeq, acIdList, createdBy);
       return res;
   }
-  
+
     /**
-        * 
+        *
         * @param acIdList a list of AC
         * @param contextIdSeq context id seq.
         * @return true if all the AC are designated in the context.
@@ -378,7 +389,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         CheckACDesignationQuery query = new CheckACDesignationQuery(getDataSource());
         return query.isAllACDesignatedToContext(acIdList,contextIdSeq);
     }
-    
+
     public Context getContext(String acIdSeq) {
         ContextQuery query = new ContextQuery();
         query.setDataSource(getDataSource());
@@ -386,6 +397,33 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         return query.getContext(acIdSeq);
     }
 
+   public List<Contact> getContacts(String acIdseq) {
+      List<Contact> contacts = new ArrayList();
+      PersonContactByACIdQuery personQuery = new PersonContactByACIdQuery();
+      personQuery.setDataSource(getDataSource());
+      contacts.addAll(personQuery.getPersonContacts(acIdseq));
+
+      ContactCommunicationsQuery commQuery = new ContactCommunicationsQuery();
+      commQuery.setDataSource(getDataSource());
+      Iterator<Contact> perIter=contacts.iterator();
+      while (perIter.hasNext()) {
+         Person person = perIter.next().getPerson();
+         person.setContactCommunications( commQuery.getContactCommsbyPerson(person.getId()));
+
+      }
+
+      OrgContactByACIdQuery orgQuery = new OrgContactByACIdQuery();
+      orgQuery.setDataSource(getDataSource());
+      List<Contact> orgContacts = orgQuery.getOrgContacts(acIdseq);
+      Iterator<Contact> orgIter=orgContacts.iterator();
+      while (orgIter.hasNext()) {
+         Organization org = orgIter.next().getOrganization();
+         org.setContactCommunications( commQuery.getContactCommsbyOrg(org.getId()));
+      }
+
+      contacts.addAll(orgContacts);
+      return contacts;
+   }
 
     public List<Designation> getDesignations(String acIdSeq, String type) {
         DesignationQuery query = new DesignationQuery();
@@ -395,10 +433,10 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         for (Designation designation:desigs){
             List<ClassSchemeItem> cscsiList = getAcAttrCSCSIByAcAttrId(designation.getDesigIDSeq());
             ((DesignationTransferObject)designation).setCsCsis(cscsiList);
-        }      
+        }
         return desigs;
     }
-    
+
     public List<Definition> getDefinitions(String acIdSeq){
         DefinitionQuery query = new DefinitionQuery();
         query.setDataSource(getDataSource());
@@ -407,7 +445,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         for (Definition def:definitions){
             List<ClassSchemeItem> cscsiList = getAcAttrCSCSIByAcAttrId(def.getId());
             ((DefinitionTransferObject)def).setCsCsis(cscsiList);
-        }   
+        }
         return definitions;
     }
 
@@ -438,11 +476,11 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     Collection csito = jdbcAdminComponentDAO.retrieveClassifications(
       "29A8FB19-0AB1-11D6-A42F-0010A4C1E842");
     */
-    
-    
-    Collection csito = jdbcAdminComponentDAO.getCSCSIHierarchy();
-   System.out.println (csito.size());
-    
+
+
+    Collection contacts = jdbcAdminComponentDAO.getContacts("0B244855-6696-5A67-E044-0003BA8EB8F1");
+   System.out.println (contacts.size());
+
   }
 
   /**
@@ -601,11 +639,11 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       //constants.
       private static final String DESIGNATIONS_COL_NAME = "'UNKNOWN_NAME'";
       private static final String DESIGNATIONS_COL_LAE_NAME = "'ENGLISH'";
-    
+
       public DesignateCDE(DataSource ds) {
         String insertSql =
           " INSERT INTO designations (desig_idseq, ac_idseq, conte_idseq, name, detl_name, lae_name, created_by) " +
-          " (select ?, ?, ?, PREFERRED_NAME, 'USED_BY', 'ENGLISH', ? from administered_components where " + 
+          " (select ?, ?, ?, PREFERRED_NAME, 'USED_BY', 'ENGLISH', ? from administered_components where " +
           " ac_idseq = ?)";
 
         this.setDataSource(ds);
@@ -619,10 +657,10 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       }
 
       protected int designate(
-        String contextIdSeq, 
+        String contextIdSeq,
         List acIdList,
         String createdBy){
-        
+
         //sanity check
         if (acIdList == null ||  acIdList.size() == 0){
             log.info("ac ID list is null or empty list. Nothing is designated.");
@@ -636,8 +674,8 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
                   contextIdSeq,
                   createdBy,
                   ""
-               }; 
-        int total = 0; 
+               };
+        int total = 0;
         int res = 0;
         Iterator it = acIdList.iterator();
         while (it.hasNext()){
@@ -649,7 +687,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
             } catch (DataIntegrityViolationException e) {
               //log info but will not throw exception
               log.info("ac ID " + obj[1] + " is already designated to context ID " + contextIdSeq);
-            }    
+            }
             total += res;
         }
         return total;
@@ -828,7 +866,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
     //Publish Change Order
   class CSCSIsByContextIDQuery extends MappingSqlQuery {
-    
+
     CSCSIsByContextIDQuery(DataSource ds)  {
       super(ds, "SELECT  csi.csi_idseq "
                                +"       ,csi_name "
@@ -869,7 +907,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
     }
  }
-  
+
   class CSCSIsByTypeQuery extends MappingSqlQuery {
     CSCSIsByTypeQuery(DataSource ds) {
       super(
@@ -896,7 +934,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         csiTO.setClassSchemeItemType(rs.getString("csitl_name"));
         csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
         csiTO.setClassSchemeLongName(rs.getString("LONG_NAME"));
- 
+
    return csiTO;
    }
 
@@ -922,7 +960,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       super(
         ds,
           "select distinct cscsi.CS_CSI_IDSEQ, i.CSITL_NAME , "  +
-          " cs.LONG_NAME, cscsi.LABEL , cs.CONTE_IDSEQ " + 
+          " cs.LONG_NAME, cscsi.LABEL , cs.CONTE_IDSEQ " +
           " from  classification_schemes cs, "
           + " sbr.class_scheme_items i , cs_csi cscsi "
 	   			+" where cs.CSTL_NAME=? and i.CSITL_NAME=? "
@@ -934,7 +972,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       declareParameter(new SqlParameter("CSITL_NAME", Types.VARCHAR));
       compile();
     }
-    
+
    protected Object mapRow(
       ResultSet rs,
       int rownum) throws SQLException {
@@ -944,7 +982,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
         csiTO.setClassSchemeLongName(rs.getString("LONG_NAME"));
         csiTO.setCsConteIdseq(rs.getString("CONTE_IDSEQ"));
- 
+
    return csiTO;
    }
 
@@ -993,7 +1031,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       return res;
     }
   }
-  
+
     //Load all CsCSI Hierarchy
   private class CSCSIsHierQuery extends MappingSqlQuery {
     CSCSIsHierQuery() {
@@ -1015,7 +1053,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
 
     protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
-      
+
         ClassSchemeItem csiTO = new CSITransferObject();
         csiTO.setCsIdseq(rs.getString("cs_idseq"));
         csiTO.setClassSchemeType(rs.getString("cstl_name"));
@@ -1027,11 +1065,11 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         csiTO.setClassSchemeItemName(rs.getString("csi_name"));
         csiTO.setClassSchemeItemType(rs.getString("csitl_name"));
         csiTO.setCsiDescription(rs.getString("csi_description"));
-        
+
         csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
         csiTO.setParentCscsiId(rs.getString("parent_csi_idseq"));
         csiTO.setCsConteIdseq(rs.getString("cs_conte_idseq"));
- 
+
    return csiTO;
     }
   }
@@ -1054,7 +1092,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
 
      protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
-       
+
          ClassSchemeItem csiTO = new CSITransferObject();
          csiTO.setCsIdseq(rs.getString("cs_idseq"));
          csiTO.setClassSchemeType(rs.getString("cstl_name"));
@@ -1066,11 +1104,11 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
          csiTO.setClassSchemeItemName(rs.getString("csi_name"));
          csiTO.setClassSchemeItemType(rs.getString("csitl_name"));
          csiTO.setCsiDescription(rs.getString("csi_description"));
-         
+
          csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
          csiTO.setParentCscsiId(rs.getString("parent_csi_idseq"));
          csiTO.setCsConteIdseq(rs.getString("cs_conte_idseq"));
-   
+
       return csiTO;
      }
       protected List getCSCSIs(String contextIdseq) {
@@ -1098,14 +1136,14 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         + " and CS_ASL_NAME = 'RELEASED' "
         + " and CSTL_NAME != 'Publishing' "
         + " order by cs_conte_idseq, CSI_LEVEL, upper(cs_long_name), upper(csi_name)");
-        
+
       declareParameter(new SqlParameter("CSTL_NAME", Types.VARCHAR));
       declareParameter(new SqlParameter("CSITL_NAME", Types.VARCHAR));
       compile();
     }
 
     protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
-      
+
         ClassSchemeItem csiTO = new CSITransferObject();
         csiTO.setCsIdseq(rs.getString("cs_idseq"));
         csiTO.setClassSchemeLongName(rs.getString("cs_long_name"));
@@ -1116,14 +1154,14 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         csiTO.setClassSchemeItemName(rs.getString("csi_name"));
         csiTO.setClassSchemeItemType(rs.getString("csitl_name"));
         csiTO.setCsiDescription(rs.getString("csi_description"));
-        
+
         csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
         csiTO.setParentCscsiId(rs.getString("parent_csi_idseq"));
         csiTO.setCsConteIdseq(rs.getString("cs_conte_idseq"));
- 
+
    return csiTO;
     }
-    
+
    protected List getCSCSIs(
       String csType,
       String csiType) {
@@ -1139,7 +1177,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
     }
 
   }
-  
+
    private class CSCSIsHierQueryByTypeAndContext extends MappingSqlQuery {
 
      CSCSIsHierQueryByTypeAndContext (DataSource ds) {
@@ -1154,7 +1192,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
          + " and CSTL_NAME != 'Publishing' "
          + " and cs_conte_idseq = ? "
          + " order by CSI_LEVEL, upper(cs_long_name), upper(csi_name)");
-         
+
        declareParameter(new SqlParameter("conte_idseq", Types.VARCHAR));
        declareParameter(new SqlParameter("CSTL_NAME", Types.VARCHAR));
        declareParameter(new SqlParameter("CSITL_NAME", Types.VARCHAR));
@@ -1162,7 +1200,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
      }
 
      protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
-       
+
          ClassSchemeItem csiTO = new CSITransferObject();
          csiTO.setCsIdseq(rs.getString("cs_idseq"));
          csiTO.setClassSchemeLongName(rs.getString("cs_long_name"));
@@ -1173,14 +1211,14 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
          csiTO.setClassSchemeItemName(rs.getString("csi_name"));
          csiTO.setClassSchemeItemType(rs.getString("csitl_name"));
          csiTO.setCsiDescription(rs.getString("csi_description"));
-         
+
          csiTO.setCsCsiIdseq(rs.getString("cs_csi_idseq"));
          csiTO.setParentCscsiId(rs.getString("parent_csi_idseq"));
          csiTO.setCsConteIdseq(rs.getString("cs_conte_idseq"));
-   
+
     return csiTO;
      }
-     
+
     protected List getCSCSIs(
        String csType, String csiType, String contextIdseq) {
 
@@ -1193,10 +1231,10 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
        return execute(obj);
      }
 
-   }  
-  
+   }
+
    /**
-       * 
+       *
        * @param cscsiIdseq cscsi idseq
        * @param regStatus the registration status
        * @return true if there are admin component registered under this cscsi
@@ -1205,7 +1243,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
    public boolean hasRegisteredAC(String cscsiIdseq, String regStatus){
       HasACRegistered hasAC = new HasACRegistered(this.getDataSource());
       return hasAC.executeHasACRegistered(cscsiIdseq, regStatus);
-      
+
    }
    /**
     * Inner class that accesses database to delete a question.
@@ -1230,7 +1268,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
        Map out = execute(in);
        String returnCode = (String) out.get("p_is_registered");
 
-       
+
 
        return returnCode.equals("1");
      }
@@ -1251,26 +1289,26 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         if (retList == null || retList.isEmpty()){
             return false;
         }
-        
+
         if (retList.containsAll(acIdList)){
             return true;
-        }    
+        }
         else{
            return false;
-        }   
+        }
       }
-      
-      
+
+
       public void setSql(List acIdList, String contextIdSeq) {
        String acIdListStr = getDelimetedIdSeq(acIdList, ", ");
        System.out.println("acIdListStr=" + acIdListStr);
         super.setSql(
           "SELECT ac_idseq from designations where conte_idseq= '" + contextIdSeq + "' " +
-          " and detl_name='USED_BY' and lae_name='ENGLISH' and ac_idseq in (" + 
-          acIdListStr + ")" ); 
-          
+          " and detl_name='USED_BY' and lae_name='ENGLISH' and ac_idseq in (" +
+          acIdListStr + ")" );
+
         compile();
-        
+
       }
 
       protected Object mapRow(
@@ -1280,10 +1318,10 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         return acIdSeq;
       }
     }
-    
+
     /**
-     * Inner class that queries the context for the 
-     * administered component 
+     * Inner class that queries the context for the
+     * administered component
      */
     class ContextQuery extends MappingSqlQuery {
       ContextQuery() {
@@ -1299,7 +1337,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
         declareParameter(new SqlParameter("AC_IDSEQ", Types.VARCHAR));
       }
-      
+
       protected Context getContext(String acIdSeq) {
           Object[] params = new Object[]{acIdSeq};
           List results = execute(params);
@@ -1323,9 +1361,9 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         cto.setLanguage(rs.getString(6));
 
         return cto;
-      }    
+      }
     }
-  
+
     private class DesignationQuery extends MappingSqlQuery {
       DesignationQuery() {
         super();
@@ -1350,7 +1388,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
            declareParameter(new SqlParameter("detl_name", Types.VARCHAR));
        }
       }
-      
+
       protected  List<Designation> getDesignations(String acIdSeq, String type) {
           Object[] params;
           if (type == null){
@@ -1377,10 +1415,10 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         dto.setContext(cto);
 
         return dto;
-      }    
+      }
     }//end of private class
 
-    
+
     private class DefinitionQuery extends  MappingSqlQuery {
       DefinitionQuery() {
         super();
@@ -1388,15 +1426,15 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
       public void setSql() {
         super.setSql(
-          " select def.defin_idseq, def.definition,  def.defl_name, " + 
-          " def.lae_name, con.CONTE_IDSEQ, con.NAME, con.PAL_NAME " + 
-          " from contexts con, definitions def " + 
-          " where def.CONTE_IDSEQ = con.CONTE_IDSEQ " + 
+          " select def.defin_idseq, def.definition,  def.defl_name, " +
+          " def.lae_name, con.CONTE_IDSEQ, con.NAME, con.PAL_NAME " +
+          " from contexts con, definitions def " +
+          " where def.CONTE_IDSEQ = con.CONTE_IDSEQ " +
           " and def.ac_idseq = ? ");
 
         declareParameter(new SqlParameter("AC_IDSEQ", Types.VARCHAR));
       }
-      
+
       protected  List<Definition> getDefinitions(String acIdSeq) {
           Object[] params = new Object[]{acIdSeq};
           List results = execute(params);
@@ -1418,32 +1456,32 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         dto.setContext(cto);
 
         return dto;
-      }    
+      }
     }//end of private class
-    
-    
+
+
     private class AcAttrQuery extends MappingSqlQuery {
        AcAttrQuery() {
          super();
        }
 
        public void setSql() {
-         super.setSql( "SELECT csi.csi_name, csi.csitl_name, csi.csi_idseq, " + 
-         "               cscsi.cs_csi_idseq, cs.preferred_definition, cs.long_name, "+ 
-         "                ext.aca_idseq, cs.cs_idseq, cs.version , csi.description description" + 
-         "        FROM ac_att_cscsi_ext ext, cs_csi cscsi, " + 
-         "             class_scheme_items csi, classification_schemes cs  " + 
-         "        WHERE ext.ATT_IDSEQ = ? " + 
-         "        AND   ext.cs_csi_idseq = cscsi.cs_csi_idseq " + 
-         "        AND   cscsi.csi_idseq = csi.csi_idseq " + 
-         "        AND   cscsi.cs_idseq = cs.cs_idseq " + 
+         super.setSql( "SELECT csi.csi_name, csi.csitl_name, csi.csi_idseq, " +
+         "               cscsi.cs_csi_idseq, cs.preferred_definition, cs.long_name, "+
+         "                ext.aca_idseq, cs.cs_idseq, cs.version , csi.description description" +
+         "        FROM ac_att_cscsi_ext ext, cs_csi cscsi, " +
+         "             class_scheme_items csi, classification_schemes cs  " +
+         "        WHERE ext.ATT_IDSEQ = ? " +
+         "        AND   ext.cs_csi_idseq = cscsi.cs_csi_idseq " +
+         "        AND   cscsi.csi_idseq = csi.csi_idseq " +
+         "        AND   cscsi.cs_idseq = cs.cs_idseq " +
          "        ORDER BY upper(csi.csi_name)  ");
            declareParameter(new SqlParameter("ATT_IDSEQ", Types.VARCHAR));
        }
-       
+
        protected List<ClassSchemeItem> getAcAttrCsCsi(String acAttrIdSeq) {
            Object[] params = new Object[]{acAttrIdSeq};
-           List<ClassSchemeItem>  results = execute(params);                
+           List<ClassSchemeItem>  results = execute(params);
            return results;
        }
 
@@ -1459,22 +1497,22 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
            csito.setClassSchemeDefinition(rs.getString(5));
            csito.setClassSchemeLongName(rs.getString(6));
            csito.setCsIdseq(rs.getString(8));
-           csito.setCsVersion(new Float(rs.getString(9)));           
+           csito.setCsVersion(new Float(rs.getString(9)));
            csito.setCsiDescription(rs.getString("description"));
 
          return csito;
-       }    
+       }
      }
-    
-    
-    
-      
+
+
+
+
     private String getDelimetedIdSeq(List idSeqList, String delimiter){
         if (idSeqList==null || idSeqList.isEmpty()){
             return "";
         }
-        
-        StringBuffer sbuf = new StringBuffer();            
+
+        StringBuffer sbuf = new StringBuffer();
         String delimted = null;
         Iterator it = idSeqList.iterator();
         while (it.hasNext()){
@@ -1484,4 +1522,170 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         //System.out.println("subString = "  + sbuf.substring(1) );
         return sbuf.substring(delimiter.length());
     }
+
+   class PersonContactByACIdQuery extends MappingSqlQuery {
+      String last_accId = null;
+      Contact currentContact = null;
+      List contactList = new ArrayList();
+      Person currPerson = null;
+
+     PersonContactByACIdQuery() {
+       super();
+     }
+
+     public void setQuerySql(String acidSeq) {
+       String querySql = " SELECT acc.acc_idseq, acc.org_idseq, acc.per_idseq, acc.contact_role,"
+       +" per.LNAME, per.FNAME, addr.CADDR_IDSEQ,"
+       + " addr.ADDR_LINE1, addr.ADDR_LINE2, addr.CADDR_IDSEQ, addr.CITY, addr.POSTAL_CODE, addr.STATE_PROV "
+      + "  FROM sbr.ac_contacts acc, sbr.persons per, sbr.contact_addresses addr "
+        + " where  acc.ac_idseq = '"+ acidSeq +"' and "
+      + " acc.per_idseq = per.per_idseq  and addr.PER_IDSEQ = per.PER_IDSEQ "
+      + "   ORDER BY acc.acc_idseq, acc.rank_order ";
+       super.setSql(querySql);
+     }
+
+
+     protected Object mapRow( ResultSet rs,  int rownum) throws SQLException {
+        String accId = rs.getString("acc_idseq");
+
+        Address address = new AddressTransferObject();
+        address.setAddressLine1(rs.getString("addr_line1"));
+        address.setAddressLine2(rs.getString("addr_line2"));
+        address.setId(rs.getString("CADDR_IDSEQ"));
+        address.setCity(rs.getString("city"));
+        address.setPostalCode(rs.getString("POSTAL_CODE"));
+        address.setState(rs.getString("STATE_PROV"));
+
+        String personId = rs.getString("per_idseq");
+
+        if (currPerson == null || !currPerson.getId().equals(personId)) {
+           currPerson = new PersonTransferObject();
+           currPerson.setFirstName(rs.getString("fname"));
+           currPerson.setLastName(rs.getString("lname"));
+           currPerson.setId(rs.getString("per_idseq"));
+           currPerson.setAddresses(new ArrayList());
+        }
+
+        currPerson.getAddresses().add(address);
+
+        if (currentContact == null || !currentContact.getIdseq().equals(accId)) {
+           currentContact = new ContactTransferObject();
+           currentContact.setIdseq(accId);
+           currentContact.setContactRole(rs.getString("contact_role"));
+           contactList.add(currentContact);
+        }
+        currentContact.setPerson(currPerson);
+
+       return currentContact;
+     }
+
+      protected List getPersonContacts(String acIdSeq) {
+        setQuerySql(acIdSeq);
+        this.execute();
+        return contactList;
+      }
+   }
+
+   class ContactCommunicationsQuery extends MappingSqlQuery {
+   ContactCommunicationsQuery() {
+     super();
+   }
+
+   public void setQuerySql(String idType, String orgIdSeq) {
+    String querySql = " select cc.CCOMM_IDSEQ, cc.CTL_NAME, cc.CYBER_ADDRESS, " +
+    " cc.RANK_ORDER " +
+    " from contact_comms cc "
+    + " where "+ idType +" = '"+ orgIdSeq +"'"
+    + " and ( CTL_NAME='PHONE' OR CTL_NAME='EMAIL') "
+       + " ORDER BY rank_order";
+     super.setSql(querySql);
+   }
+
+
+   protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
+
+     ContactCommunication cc = new ContactCommunicationTransferObject();
+     cc.setId(rs.getString("ccomm_idseq"));
+     cc.setType(rs.getString("ctl_name"));
+     cc.setValue(rs.getString("cyber_address"));
+     cc.setRankOrder(rs.getInt("rank_order"));
+
+     return cc;
+   }
+    protected List<ContactCommunication> getContactCommsbyPerson( String personId) {
+      this.setQuerySql("per_idseq", personId);
+
+      return execute();
+
+    }
+
+    protected List<ContactCommunication> getContactCommsbyOrg( String orgId) {
+      this.setQuerySql("org_idseq", orgId);
+      return execute();
+
+    }
+   }
+
+   class OrgContactByACIdQuery extends MappingSqlQuery {
+      String last_accId = null;
+      Contact currentContact = null;
+      List contactList = new ArrayList();
+      Organization currOrg = null;
+
+     OrgContactByACIdQuery() {
+       super();
+     }
+
+     public void setQuerySql(String acidSeq) {
+       String querySql = " SELECT acc.acc_idseq, acc.org_idseq, acc.per_idseq, acc.contact_role,"
+       +" org.name, addr.CADDR_IDSEQ,"
+       + " addr.ADDR_LINE1, addr.ADDR_LINE2, addr.CADDR_IDSEQ, addr.CITY, addr.POSTAL_CODE, addr.STATE_PROV "
+      + "  FROM sbr.ac_contacts acc, sbr.organizations org, sbr.contact_addresses addr "
+        + " where  acc.ac_idseq = '"+ acidSeq +"' and "
+      + " acc.org_idseq = org.org_idseq  and addr.ORG_IDSEQ = ORG.ORG_IDSEQ "
+      + "   ORDER BY acc.acc_idseq, acc.rank_order ";
+       super.setSql(querySql);
+     }
+
+
+     protected Object mapRow( ResultSet rs,  int rownum) throws SQLException {
+        String accId = rs.getString("acc_idseq");
+
+        Address address = new AddressTransferObject();
+        address.setAddressLine1(rs.getString("addr_line1"));
+        address.setAddressLine2(rs.getString("addr_line2"));
+        address.setId(rs.getString("CADDR_IDSEQ"));
+        address.setCity(rs.getString("city"));
+        address.setPostalCode(rs.getString("POSTAL_CODE"));
+        address.setState(rs.getString("STATE_PROV"));
+
+        String orgId = rs.getString("org_idseq");
+
+        if (currOrg == null || !currOrg.getId().equals(orgId)) {
+           currOrg = new OrganizationTransferObject();
+           currOrg.setName(rs.getString("name"));
+           currOrg.setId(rs.getString("org_idseq"));
+           currOrg.setAddresses(new ArrayList());
+        }
+
+        currOrg.getAddresses().add(address);
+
+        if (currentContact == null || !currentContact.getIdseq().equals(accId)) {
+           currentContact = new ContactTransferObject();
+           currentContact.setIdseq(accId);
+           currentContact.setContactRole(rs.getString("contact_role"));
+           contactList.add(currentContact);
+        }
+        currentContact.setOrganization(currOrg);
+
+       return currentContact;
+     }
+
+      protected List getOrgContacts(String acIdSeq) {
+        setQuerySql(acIdSeq);
+        this.execute();
+        return contactList;
+      }
+   }
+
 }
