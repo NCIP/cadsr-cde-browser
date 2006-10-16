@@ -260,7 +260,7 @@
              </table>
              <table vAlign="top" cellSpacing="1" cellPadding="1" width="90%" align="center" border="0" class="OraBGAccentVeryDark">
                <TR class="OraTableColumnHeader">
-                 <th class="OraTableColumnHeader">CS* Short Name</th>
+                 <th class="OraTableColumnHeader">CS* Long Name</th>
                  <th class="OraTableColumnHeader">CS* Definition</th>
                  <th class="OraTableColumnHeader">CS* Public ID</th>
                  <th class="OraTableColumnHeader">CS* Version</th>
@@ -271,7 +271,7 @@
                    <logic:iterate id="accscsi" name="oc" property="acCsCsis" type="gov.nih.nci.ncicb.cadsr.domain.AdminComponentClassSchemeClassSchemeItem" >                                          
                        <TR class="OraTabledata">
                          <td class="OraFieldText">
-                           <bean:write name="accscsi" property="csCsi.cs.preferredName"/>
+                           <bean:write name="accscsi" property="csCsi.cs.longName"/>
                          </td>
                          <td class="OraFieldText">
                            <bean:write name="accscsi" property="csCsi.cs.preferredDefinition"/>
@@ -346,7 +346,7 @@
                      <td class=OraFieldText >
                        <table vAlign="top" cellSpacing="1" cellPadding="1" width="100%" align="center" border="0" class="OraBGAccentVeryDark">
                          <TR class="OraTableColumnHeader">
-                           <th class="OraTableColumnHeader">CS* Short Name</th>
+                           <th class="OraTableColumnHeader">CS* Long Name</th>
                            <th class="OraTableColumnHeader">CS* Definition</th>
                            <th class="OraTableColumnHeader">CS* Public ID</th>
                            <th class="OraTableColumnHeader">CS* Version</th>
@@ -357,7 +357,7 @@
                              <logic:iterate id="acscsi" name="alternateName" property="csCsis" type="gov.nih.nci.ncicb.cadsr.domain.ClassSchemeClassSchemeItem" >                                          
                                  <TR class="OraTabledata">
                                    <td class="OraFieldText">
-                                     <bean:write name="acscsi" property="cs.preferredName"/>
+                                     <bean:write name="acscsi" property="cs.longName"/>
                                    </td>
                                    <td class="OraFieldText">
                                      <bean:write name="acscsi" property="cs.preferredDefinition"/>
@@ -450,7 +450,7 @@
                      <td class=OraFieldText >
                        <table vAlign="top" cellSpacing="1" cellPadding="1" width="100%" align="center" border="0" class="OraBGAccentVeryDark">
                          <TR class="OraTableColumnHeader">
-                           <th class="OraTableColumnHeader">CS* Short Name</th>
+                           <th class="OraTableColumnHeader">CS* Long Name</th>
                            <th class="OraTableColumnHeader">CS* Definition</th>
                            <th class="OraTableColumnHeader">CS* Public ID</th>
                            <th class="OraTableColumnHeader">CS* Version</th>
@@ -461,7 +461,7 @@
                              <logic:iterate id="dcscsi" name="definition" property="csCsis" type="gov.nih.nci.ncicb.cadsr.domain.ClassSchemeClassSchemeItem" >                                          
                                  <TR class="OraTabledata">
                                    <td class="OraFieldText">
-                                     <bean:write name="dcscsi" property="cs.preferredName"/>
+                                     <bean:write name="dcscsi" property="cs.longName"/>
                                    </td>
                                    <td class="OraFieldText">
                                      <bean:write name="dcscsi" property="cs.preferredDefinition"/>
