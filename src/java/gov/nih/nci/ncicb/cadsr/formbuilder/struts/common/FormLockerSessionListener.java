@@ -18,7 +18,7 @@ public class FormLockerSessionListener implements HttpSessionListener{
     protected static Log log = LogFactory.getLog(FormLockerSessionListener.class.getName());
 
     public void sessionCreated(HttpSessionEvent se) {
-        System.out.println("----------------!!!!!!!!!!!!new session created");
+        System.out.println("----------------!!!!!!!!!!!!new session created " + se.getSession().getId());
         if (log.isDebugEnabled()){
             log.debug("New session " + se.getSession().getId() + " is created");
         }
@@ -29,7 +29,7 @@ public class FormLockerSessionListener implements HttpSessionListener{
          if (log.isDebugEnabled()){
              log.debug("Session " + se.getSession().getId() + " is about to be destroyed.");
          }
-        System.out.println("------------------------------!!!!!!!!!!!!about to destroy a session");
+        System.out.println("------------------------------!!!!!!!!!!!!about to destroy a session " + se.getSession().getId());
         getApplicationServiceLocator(se.getSession().getServletContext()).findLockingService().unlockFormBySession(se.getSession().getId());
     }
     
