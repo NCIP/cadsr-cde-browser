@@ -10,9 +10,11 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
 
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -124,7 +126,8 @@ public class LockingServiceImpl implements LockingService{
         } 
 
         synchronized(formOwnerMap){            
-            Iterator it = formOwnerMap.values().iterator();
+            List values = new ArrayList(formOwnerMap.values());
+            Iterator it = values.iterator();            
             while (it.hasNext()){
                 FormElementLocker locker = (FormElementLocker)it.next();
                 if (locker.getNciUser().getUsername().equalsIgnoreCase(userId)){ //locked by this user
