@@ -256,13 +256,13 @@ function repeatDisplay(methodName) {
           <% Form aForm = (Form)formObj;
             if(FormJspUtil.hasModuleRepetition(aForm)){ %>
              <logic:present name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
-               <html:link action='<%="/displayViewFormModuleRepeationAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.HIDE_REPETITIONS%>'
+               <html:link action='<%="/displayModuleRepeationAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.HIDE_REPETITIONS%>'
                  >
                <html:img src='/CDEBrowser/i/hideModuleRepetitions.gif' border="0" alt="Hide Module Repetitions"/>
               </html:link>                
              </logic:present>
              <logic:notPresent name="<%=FormConstants.SHOW_MODULE_REPEATS%>">
-               <html:link action='<%="/displayViewFormModuleRepeationAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SHOW_REPETITIONS%>'
+               <html:link action='<%="/displayModuleRepeationAction.do?"+NavigationConstants.METHOD_PARAM+"="+NavigationConstants.SHOW_REPETITIONS%>'
                  >
                <html:img src='/CDEBrowser/i/showModuleRepetitions.gif' border="0" alt="Show Module Repetitions"/>
               </html:link>  
