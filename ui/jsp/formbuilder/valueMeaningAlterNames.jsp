@@ -147,13 +147,13 @@ while (csiIter.hasNext()) {
 <tr class="OraTabledata"><td width="100%" colspan=4>
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">
-        <bean:message key="cadsr.formbuilder.valueMeaning.alternate.name"/> </th>
-    <th class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader" width="50%">
+        <bean:message key="cadsr.formbuilder.valueMeaning.alternate.definition"/> </th>
+    <th class="OraTableColumnHeader" width="16%">
         <bean:message key="cadsr.formbuilder.valueMeaning.alternate.type"/></th>
-    <th class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader" width="16%">
         <bean:message key="cadsr.formbuilder.valueMeaning.alternate.context"/></th>
-    <th class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader" >
         <bean:message key="cadsr.formbuilder.valueMeaning.alternate.language"/></th>
   </tr>
 <%
@@ -196,16 +196,14 @@ while (csiIter.hasNext()) {
 <tr class="OraTabledata"><td width="100%" colspan=4>
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader" width="50%">
         <bean:message key="cadsr.formbuilder.valueMeaning.alternate.definition"/> </th>
-    <th class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader" width="16%">
         <bean:message key="cadsr.formbuilder.valueMeaning.alternate.type"/></th>
-    <th class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader" width="16%">
         <bean:message key="cadsr.formbuilder.valueMeaning.alternate.context"/></th>
-    <th class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader" >
         <bean:message key="cadsr.formbuilder.valueMeaning.alternate.language"/></th>
-    <th class="OraTableColumnHeader">
-        <bean:message key="cadsr.formbuilder.valueMeaning.alternate.source"/></th>
   </tr>
 <%
   if (currAltDefs != null && currAltDefs.size() > 0) {
@@ -225,7 +223,6 @@ while (csiIter.hasNext()) {
         <td class="OraFieldText"><%=def.getType()%> </td>
         <td class="OraFieldText"><%=def.getContext().getName()%> </td>
         <td class="OraFieldText"><%=def.getLanguage()%> </td>
-        <td class="OraFieldText"><%="def.getOrigin()"%> </td>
       </tr>
 <%
     }

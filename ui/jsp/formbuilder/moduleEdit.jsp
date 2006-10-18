@@ -21,6 +21,8 @@
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
     <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/jsLib/checkbox.js"></SCRIPT>
+    <SCRIPT LANGUAGE="JavaScript1.1" SRC='<%=request.getContextPath()%>/jsLib/newWinJS.js'></SCRIPT>
+
     <SCRIPT LANGUAGE="JavaScript">
 <!--
 
@@ -924,6 +926,10 @@ function clearProtocol() {
                                             <tr class="OraFieldText" >
                                               <td colspan="4"> 
                                                  <table width="100%" align="right" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+                                                  <%
+                                                     String dest =request.getContextPath() + "/showValueMeaningAlterNames.do?"+NavigationConstants.METHOD_PARAM+"=showValueMeaningAlterNames&validValueIndex=" + validValueIndex + "&vvColumnIndex=" + vvInstrIndex +
+                                                            	"&questionIndex=" + questionIndex + "&moduleIndex="+moduleIndex;
+                                                   %>
                                                   <logic:notEmpty name="validValue" property="valueMeaning">                                            
                                                       <tr class="OraTabledata" >
                                                        <td  class="OraTableColumnHeader" width="30%">
@@ -935,13 +941,9 @@ function clearProtocol() {
                                                           </html:textarea>
                                                           &nbsp;
                                                           <logic:notEmpty name="validValue" property="valueMeaning.designations">
-                                                            <html:link action='<%="/showValueMeaningAlterNames?"+NavigationConstants.METHOD_PARAM+"=showValueMeaningAlterNames&validValueIndex=" + validValueIndex + "&vvColumnIndex=" + vvInstrIndex%>'
-                                                                name="params" 
-                                                                scope="page"
-                                                                target="_blank"
-                                                            >
+                                                            <a href="javaScript:newWin('<%=dest%>', 'Alternates', 800, 600);">
                                                             Modify
-                                                            </html:link>
+                                                            </a>
                                                           </logic:notEmpty>
                                                        </td>                                          
                                                       </tr>
@@ -955,13 +957,9 @@ function clearProtocol() {
                                                           </html:textarea>
                                                        	<logic:notEmpty name="validValue" property="valueMeaning.definitions">                                            
                                                           &nbsp;
-                                                            <html:link action='<%="/showValueMeaningAlterNames?"+NavigationConstants.METHOD_PARAM+"=showValueMeaningAlterNames&validValueIndex=" + validValueIndex + "&vvColumnIndex=" + vvInstrIndex%>'
-                                                                name="params" 
-                                                                scope="page"
-                                                                target="_blank"
-                                                            >
-                                                            Modify
-                                                            </html:link>
+                                                            <a href="javaScript:newWin('<%=dest%>', 'Alternates', 800, 600);">
+                                                           Modify
+                                                            </a>
                                                         </logic:notEmpty> <%--definitions--%>
                                                        </td>                                          
                                                       </tr>
