@@ -37,7 +37,7 @@
     <logic:present name="<%=FormConstants.CRF%>">
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
         <tr class="OraTabledata">
-          <td class="OraTableColumnHeader" nowrap><bean:message key="cadsr.formbuilder.form.name" />:</td>
+          <td class="OraTableColumnHeader" nowrap width="20%"><bean:message key="cadsr.formbuilder.form.name" />:</td>
           <td class="OraFieldText" nowrap>
             <bean:write
               name="<%= FormConstants.CRF %>"
