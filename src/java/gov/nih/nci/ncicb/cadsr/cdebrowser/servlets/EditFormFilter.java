@@ -11,6 +11,7 @@ import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,10 +29,16 @@ public class EditFormFilter implements javax.servlet.Filter{
         public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws java.io.IOException, javax.servlet.ServletException
         {
-          String expiredSessionJSP = filterConfig.getInitParameter("formDetailPage");      
+          String forwardToJSP = filterConfig.getInitParameter("formDetailPage");  
+          String expiredSessionJSP = filterConfig.getInitParameter("expiredSessionJSP");      
           HttpServletRequest req = (HttpServletRequest)request;
           HttpSession userSession = req.getSession(false);
-          ServletContext sc = userSession.getServletContext();
+          
+          //in case session already expired
+          if (userSession == null){
+              ((HttpServletResponse)response).sendRedirect(req.getContextPath()+ expiredSessionJSP);
+              return;
+          }
 
           String formIdSeq = null;
           Object obj = request.getParameter(FormConstants.FORM_ID_SEQ);
@@ -46,6 +53,7 @@ public class EditFormFilter implements javax.servlet.Filter{
                 }
             }    
           }
+         ServletContext sc = userSession.getServletContext();
          ApplicationServiceLocator loc = getApplicationServiceLocator(sc);
          LockingService service = loc.findLockingService();
          if (!service.isFormLocked(formIdSeq, ((HttpServletRequest)request).getRemoteUser())){
@@ -61,7 +69,7 @@ public class EditFormFilter implements javax.servlet.Filter{
              saveMessage("cadsr.formbuilder.form.locked", (HttpServletRequest)request, 
                     locker.getNciUser().getUsername(), locker.getNciUser().getEmailAddress());
              request.setAttribute(FormConstants.FORM_ID_SEQ, formIdSeq);
-             RequestDispatcher dispatcher = filterConfig.getServletContext().getRequestDispatcher(expiredSessionJSP);
+             RequestDispatcher dispatcher = filterConfig.getServletContext().getRequestDispatcher(forwardToJSP);
              dispatcher.forward(request,response);
              return;             
         }catch (Exception e){
