@@ -277,7 +277,7 @@ function submitForm(methodName) {
              <table width="100%" align="center" cellpadding="0" cellspacing="1" bgcolor="#999966">
                 <tr class="OraTableColumnHeader">
                   <th scope="col"> </th>
-                  <th scope="col">CS* Short Name</th>
+                  <th scope="col">CS* Long Name</th>
                   <th scope="col">CS* Definition</th>
                   <th scope="col">CS* Version</th>
                   <th scope="col">CSI* Name</th>
