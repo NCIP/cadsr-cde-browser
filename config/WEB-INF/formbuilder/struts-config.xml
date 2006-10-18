@@ -361,19 +361,6 @@
       validate="false">
       <forward name="success" path="/formbuilder/valueMeaningAlterNames.jsp" redirect="false"/>
     </action>
-
-    <action name="searchForm" path="/unlockFormAction" parameter="method"
-      scope="session"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
-      validate="false">
-      <forward name="success"
-        path="/formSearchFramedAction.do?method=getAllForms"
-        redirect="false"/>
-       <forward name="failure"
-        path="/formbuilder/formEdit.jsp"
-        redirect="false"/>
-    </action>      
-
   </action-mappings>
  
   <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
