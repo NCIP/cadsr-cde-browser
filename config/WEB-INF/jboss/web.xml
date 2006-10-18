@@ -867,7 +867,7 @@
       <web-resource-name>Secure Services</web-resource-name>
       <url-pattern>/formSearchAction.do</url-pattern>
       <url-pattern>/formSaveAction.do</url-pattern>
-      <url-pattern>/manageReferexnceDocs.do</url-pattern>
+      <url-pattern>/manageReferenceDocs.do</url-pattern>
       <url-pattern>/formEditDeleteAction.do</url-pattern>
       <url-pattern>/gotoManageClassifications.do</url-pattern>
       <url-pattern>/gotoAddClassifications.do</url-pattern>
