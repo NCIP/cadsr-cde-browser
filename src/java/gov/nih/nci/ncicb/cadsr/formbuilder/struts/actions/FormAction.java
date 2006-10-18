@@ -47,6 +47,27 @@ import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 
 public class FormAction extends FormBuilderSecureBaseDispatchAction {
 
+    /**
+     * set a session object.
+     * @param mapping
+     * @param form
+     * @param request
+     * @param response
+     * @param name
+     * @return
+     * @throws Exception
+     */
+    protected ActionForward dispatchMethod(
+      ActionMapping mapping,
+      ActionForm form,
+      HttpServletRequest request,
+      HttpServletResponse response,
+      String name) throws Exception {
+          ActionForward forward = super.dispatchMethod(mapping, form, request, response, name);
+          request.getSession().setAttribute("Initialized", "true");
+      return forward;
+      }
+
 
   /**
    * Returns all forms for the given criteria.
