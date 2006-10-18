@@ -112,6 +112,22 @@
       <param-value>N</param-value>
     </init-param>         	
    </filter> 
+  <filter> 
+       <filter-name>FormBuilderSessionFilter</filter-name>
+       <filter-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.SessionFilter</filter-class>   
+       <init-param>
+      		<param-name>controllerName</param-name>
+      		<param-value>formBuilder</param-value>
+    	</init-param>  
+       <init-param>
+      		<param-name>expiredSessionJSP</param-name>
+      		<param-value>/common/expiredSession.jsp</param-value>
+    	</init-param> 
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>N</param-value>
+    </init-param>         	
+   </filter> 
     <filter>
         <filter-name>AjaxAnywhere</filter-name>
         <filter-class>org.ajaxanywhere.AAFilter</filter-class>
@@ -141,6 +157,10 @@
       		<param-name>formDetailPage</param-name>
       		<param-value>/formDetailsAction.do?method=getFormDetails</param-value>
     	</init-param> 
+       <init-param>
+      		<param-name>expiredSessionJSP</param-name>
+      		<param-value>/common/expiredSession.jsp</param-value>
+    	</init-param> 
     <init-param>
       <param-name>debug</param-name>
       <param-value>N</param-value>
@@ -151,7 +171,6 @@
          <filter-name>SessionFilter</filter-name>
          <url-pattern>/search</url-pattern> 
  </filter-mapping>
-
   <filter-mapping> 
          <filter-name>SessionFilter</filter-name>
          <url-pattern>*.do</url-pattern> 
@@ -188,16 +207,359 @@
     <url-pattern>*.jsf</url-pattern>
 </filter-mapping>
  
+<!--the following should cover all form builder related url pattern-->
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formSaveAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/manageReferexnceDocs.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formEditDeleteAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/gotoManageClassifications.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/gotoAddClassifications.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/gotoManageProtocolsFormEdit.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/saveFormModuleRepeatAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/gotoCreateModule.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formbuilder/*</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formCDECartAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formCDECartRedirectAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/moduleSaveAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/moduleToEditAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/gotoChangeAssociation.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/changeAssociation.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formSaveAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formToEditAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+       <url-pattern>/moduleRepeatAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+       <url-pattern>/addProtocol.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formToCopyAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/saveLatestVersion.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/gotoCreateNewVersion.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formViewDeleteAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/excelDownload.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formPrinterAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formViewAddToList.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/createValidValueSkipAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formHrefDeleteAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formPublishAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formDetailsAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/displayModuleRepeationAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/saveFormModuleEditAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/saveFormDoneAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/CancelFormEditAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/cancelModuleEditAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formPrinterAction.do</url-pattern>
+</filter-mapping> 
+      
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/pageAction.do</url-pattern>
+</filter-mapping> 
+
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formLOVAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formLOVAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/showValueMeaningAlterNames.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/getFormVersions.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/saveLatestVersion.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/cancelLatestVersion.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/saveNewVersion.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/cancelNewVersion.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/createModuleSkipAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/editModuleSkipAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/editValidValueSkipAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formAlertAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formPublish.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formUnpublish.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formCopyAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/displayViewFormModuleRepeationAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/displayViewFormModuleRepeationAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/createModule.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/viewReferenceDocs.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/editReferenceDoc.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/viewReferenceDocAttchment.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/uploadDocument.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/createReferenceDoc.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/manageProtocols.do</url-pattern>      
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/gotoAddProtocols.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/removeProtocol.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/updateSkipPattern.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/updateSkipPattern.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/doneProtocol.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/addClassifications.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/removeClassification.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/updateSkipPatternForCSI.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/formCreate.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/gotoFormCreate.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/getContexts.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/saveDesignations.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/cancelDesignations.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/gotoManageProtocolsFormCopy.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/cancelAction.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/gotoAddQuestion.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/addQuestion.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/newFormSearchAction.do</url-pattern>      
+</filter-mapping> 
+
+<!--end of FormBuilderSessionFilter mapping-->
+
+
  
  
  <!--form edit filter-->
  <filter-mapping> 
          <filter-name>EditFormFilter</filter-name>
       <url-pattern>/formSaveAction.do</url-pattern>
-</filter-mapping> 
- <filter-mapping> 
-         <filter-name>EditFormFilter</filter-name>
-      <url-pattern>/manageReferenceDocs.do</url-pattern>
 </filter-mapping> 
  <filter-mapping> 
          <filter-name>EditFormFilter</filter-name>
@@ -295,7 +657,7 @@
 </filter-mapping>
 <filter-mapping> 
          <filter-name>EditFormFilter</filter-name>
-      <url-pattern>/formbuilder/skipAction.do</url-pattern>
+      <url-pattern>/formbuilder/*</url-pattern>
 </filter-mapping>
 <filter-mapping> 
          <filter-name>EditFormFilter</filter-name>
@@ -411,7 +773,7 @@
 
 
   <session-config>
-    <session-timeout>300</session-timeout>
+    <session-timeout>3</session-timeout>
   </session-config>
   <mime-mapping>
     <extension>html</extension>
@@ -459,6 +821,7 @@
 	<res-type>javax.sql.DataSource</res-type>      
 	<res-auth>Container</res-auth> 
   </resource-ref>  
+  <!--
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Secure Services</web-resource-name>
@@ -498,10 +861,11 @@
       <role-name>CONTEXT ADMIN</role-name>
     </auth-constraint>
   </security-constraint>
-  
+  -->
   <security-constraint>
     <web-resource-collection>
-      <web-resource-name>Secure Form Edit Services</web-resource-name>
+      <web-resource-name>Secure Services</web-resource-name>
+      <url-pattern>/formSearchAction.do</url-pattern>
       <url-pattern>/formSaveAction.do</url-pattern>
       <url-pattern>/manageReferexnceDocs.do</url-pattern>
       <url-pattern>/formEditDeleteAction.do</url-pattern>
@@ -519,21 +883,72 @@
       <url-pattern>/changeAssociation.do</url-pattern>
       <url-pattern>/formSaveAction.do</url-pattern>
       <url-pattern>/formToEditAction.do</url-pattern>
-       <url-pattern>/moduleRepeatAction.do</url-pattern>
-       <url-pattern>/addProtocol.do</url-pattern>
+      <url-pattern>/moduleRepeatAction.do</url-pattern>
+      <url-pattern>/addProtocol.do</url-pattern>
       <url-pattern>/formToCopyAction.do</url-pattern>
       <url-pattern>/saveDesignations.do.do</url-pattern>
       <url-pattern>/saveLatestVersion.do</url-pattern>
       <url-pattern>/gotoCreateNewVersion.do</url-pattern>
       <url-pattern>/formViewDeleteAction.do</url-pattern>
       <url-pattern>/excelDownload.do</url-pattern>
-<!--    
       <url-pattern>/formPrinterAction.do</url-pattern>
--->
       <url-pattern>/formViewAddToList.do</url-pattern>
       <url-pattern>/createValidValueSkipAction.do</url-pattern>
       <url-pattern>/formHrefDeleteAction.do</url-pattern>
       <url-pattern>/formPublishAction.do</url-pattern>
+      <url-pattern>/formDetailsAction.do</url-pattern>
+      <url-pattern>/displayModuleRepeationAction.do</url-pattern>
+      
+      <url-pattern>/saveFormModuleEditAction.do</url-pattern>
+      <url-pattern>/saveFormDoneAction.do</url-pattern>
+      <url-pattern>/CancelFormEditAction.do</url-pattern>
+      <url-pattern>/cancelModuleEditAction.do</url-pattern>
+      <url-pattern>/formPrinterAction.do</url-pattern>
+      <url-pattern>/pageAction.do</url-pattern>
+      <url-pattern>/formLOVAction.do</url-pattern>
+      <url-pattern>/formLOVAction.do</url-pattern>
+      <url-pattern>/showValueMeaningAlterNames.do</url-pattern>
+      <url-pattern>/getFormVersions.do</url-pattern>
+      <url-pattern>/saveLatestVersion.do</url-pattern>
+      <url-pattern>/cancelLatestVersion.do</url-pattern>
+      <url-pattern>/saveNewVersion.do</url-pattern>
+      <url-pattern>/cancelNewVersion.do</url-pattern>
+      <url-pattern>/createModuleSkipAction.do</url-pattern>
+      <url-pattern>/editModuleSkipAction.do</url-pattern>
+      <url-pattern>/editValidValueSkipAction.do</url-pattern>
+      <url-pattern>/formAlertAction.do</url-pattern>
+      <url-pattern>/formPublish.do</url-pattern>
+      <url-pattern>/formUnpublish.do</url-pattern>
+      <url-pattern>/formCopyAction.do</url-pattern>
+      <url-pattern>/displayViewFormModuleRepeationAction.do</url-pattern>
+      <url-pattern>/displayViewFormModuleRepeationAction.do</url-pattern>
+      <url-pattern>/createModule.do</url-pattern>
+      <url-pattern>/viewReferenceDocs.do</url-pattern>
+      <url-pattern>/editReferenceDoc.do</url-pattern>
+      <url-pattern>/viewReferenceDocAttchment.do</url-pattern>
+      <url-pattern>/uploadDocument.do</url-pattern>
+      <url-pattern>/createReferenceDoc.do</url-pattern>
+      <url-pattern>/manageProtocols.do</url-pattern>      
+      <url-pattern>/gotoAddProtocols.do</url-pattern>
+      <url-pattern>/removeProtocol.do</url-pattern>
+      <url-pattern>/updateSkipPattern.do</url-pattern>
+      <url-pattern>/doneProtocol.do</url-pattern>
+      <url-pattern>/addClassifications.do</url-pattern>
+      <url-pattern>/removeClassification.do</url-pattern>
+      <url-pattern>/updateSkipPatternForCSI.do</url-pattern>
+      <url-pattern>/formCreate.do</url-pattern>
+      <url-pattern>/gotoFormCreate.do</url-pattern>
+      <url-pattern>/getContexts.do</url-pattern>
+      <url-pattern>/saveDesignations.do</url-pattern>
+      <url-pattern>/cancelDesignations.do</url-pattern>
+      <url-pattern>/gotoManageProtocolsFormCopy.do</url-pattern>
+      <url-pattern>/cancelAction.do</url-pattern>
+      <url-pattern>/gotoAddQuestion.do</url-pattern>
+      <url-pattern>/addQuestion.do</url-pattern>
+
+
+      <!--not covered by FormBuilderSessionFilter-->
+      <url-pattern>/newFormSearchAction.do</url-pattern>      
     </web-resource-collection>
    <auth-constraint>
       <description>Authorized Users Group</description>
