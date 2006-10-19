@@ -1094,7 +1094,7 @@ function clearProtocol() {
                       </html:select >
                   </td>
                   <td align="left" width="1%">
-                      <a href="javascript:populateDefaultValue('<%=FormConstants.QUESTION_DEFAULT_VALIDVALUE_IDS+"[" + questionIndex +"]"%>',<%=FormConstants.QUESTION_DEFAULTVALUES+"[" + questionIndex +"]"%>, '<%=questionIndex%>')">
+                      <a href="javascript:submitModuleEdit('<%=NavigationConstants.ADD_FROM_DELETED_QUESTION_LIST%>','<%=questionIndex.intValue()+1%>')">
                          <img src=<%=urlPrefix%>i/add.gif border=0 alt="Add">
                       </a>                          
                   </td>   
