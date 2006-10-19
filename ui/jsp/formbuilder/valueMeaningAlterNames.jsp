@@ -14,7 +14,7 @@
   <head>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK rel="stylesheet" TYPE="text/css" HREF="/CDEBrowser/css/blaf.css">
-    <title>Select Form Value Meaning Text</title>
+    <title>Select Form Value Meaning Text and Description</title>
     
     <SCRIPT LANGUAGE="JavaScript1.1">
     function passBack(alter, columnName) {
@@ -107,7 +107,7 @@
 	      	longName = StringUtils.strReplace(longName, "\'",  "&acute;");
 	   }   	
 	%>      		
-       	<a href="javascript:passBack('<%=longName%>', 'formsValueMeaningTexts')">Select</a>
+       	<a href="javascript:passBack('<%=longName%>', 'formsValueMeaningTexts')">Select as Value Meaning Text</a>
        	</td>
 
       </tr>
@@ -148,7 +148,7 @@ while (csiIter.hasNext()) {
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
     <th class="OraTableColumnHeader" width="50%">
-        <bean:message key="cadsr.formbuilder.valueMeaning.alternate.definition"/> </th>
+        <bean:message key="cadsr.formbuilder.valueMeaning.alternate.name"/> </th>
     <th class="OraTableColumnHeader" width="16%">
         <bean:message key="cadsr.formbuilder.valueMeaning.alternate.type"/></th>
     <th class="OraTableColumnHeader" width="16%">
@@ -170,7 +170,8 @@ while (csiIter.hasNext()) {
 	      	altName = StringUtils.strReplace(altName, "\'",  "&acute;");
 	   }   	
 	%>      		        
-       	<a href="javascript:passBack('<%=altName%>', 'formsValueMeaningTexts')">Select</a>
+	<br>
+       	<a href="javascript:passBack('<%=altName%>', 'formsValueMeaningTexts')">Select as Value Meaning Text</a>
         </td>
         <td class="OraFieldText"><%=des.getType()%> </td>
         <td class="OraFieldText"><%=des.getContext().getName()%> </td>
@@ -218,7 +219,8 @@ while (csiIter.hasNext()) {
 	      	altDef = StringUtils.strReplace(altDef, "\'",  "&acute;");
 	   }   	
 	%>      		        
-       	<a href="javascript:passBack('<%=altDef%>', 'formsValueMeaningDescs')">Select</a>
+	<br>
+       	<a href="javascript:passBack('<%=altDef%>', 'formsValueMeaningDescs')">Select as Value Meaning Description</a>
         </td>
         <td class="OraFieldText"><%=def.getType()%> </td>
         <td class="OraFieldText"><%=def.getContext().getName()%> </td>
