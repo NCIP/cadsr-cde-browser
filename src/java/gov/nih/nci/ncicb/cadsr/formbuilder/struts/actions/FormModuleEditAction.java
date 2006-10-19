@@ -1914,7 +1914,7 @@ public class FormModuleEditAction  extends FormBuilderSecureBaseDispatchAction{
         }catch (Exception e){
             log.error("Could not parse integer for questionIndex, moduleIndex or validValueIndex");
             saveError("cadsr.formbuilder.valueMeaning.alternate.fail", request);
-            return mapping.findForward(FAILURE);
+            throw new FatalException(e);
         }
         
         Form crf = (Form)getSessionObject(request, FormConstants.CRF);
