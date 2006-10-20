@@ -90,9 +90,10 @@
   }
   
 <bean:define id="qIndex" name="addQuestionForm" property="<%= FormConstants.QUESTION_INDEX %>"/> 
+<bean:define id="moduleIndex" name="addQuestionForm" property="<%=FormConstants.MODULE_INDEX%>"/>
 
   function submitCancelForm() {
-          document.location.href= '<%=request.getContextPath()+"/cancelAction.do?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_MODULE_TO_EDIT+"&"+FormConstants.QUESTION_INDEX +"="+qIndex%>'
+          document.location.href= '<%=request.getContextPath()+"/cancelAction.do?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.GET_MODULE_TO_EDIT+"&"+FormConstants.QUESTION_INDEX +"="+qIndex %>';
       }     
   
 function details(linkParms ){
@@ -126,7 +127,6 @@ function details(linkParms ){
 <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
 <html:hidden property="<%=FormConstants.MODULE_INDEX%>"/>
 
-<bean:define id="moduleIndex" name="addQuestionForm" property="<%=FormConstants.MODULE_INDEX%>"/>
 
 <logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
   <%@ include file="addQuestion_inc.jsp" %>
