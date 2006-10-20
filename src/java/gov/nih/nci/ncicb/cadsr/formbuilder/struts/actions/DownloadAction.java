@@ -218,10 +218,10 @@ public class DownloadAction
    cell.setCellValue("Valid Value");
    cell.setCellStyle(boldCellStyle);
    cell = row.createCell(colNumber++);
-   cell.setCellValue("Value Meaning Text");
+   cell.setCellValue("Form Value Meaning Text");
    cell.setCellStyle(boldCellStyle);
    cell = row.createCell(colNumber++);
-   cell.setCellValue("Value Meaning Desc.");
+   cell.setCellValue("Form Value Meaning Desc.");
    cell.setCellStyle(boldCellStyle);
    cell = row.createCell(colNumber++);
    cell.setCellValue("Valid Value Instructions");
