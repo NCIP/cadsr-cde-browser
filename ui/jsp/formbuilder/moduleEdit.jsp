@@ -321,18 +321,18 @@ function clearProtocol() {
 </SCRIPT>
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff" <%=jumptoStr%> >
+  <bean:define id="moduleIndex" name="moduleEditForm" property="<%=FormConstants.MODULE_INDEX%>"/>
+
     <% 
       String contextPath = request.getContextPath();
       String urlPrefix = contextPath+"/";
 
       // Prepare parameter map for add and edit linx
       java.util.Map params = new java.util.HashMap();
-      params.put(FormConstants.MODULE_INDEX, request.getParameter(FormConstants.MODULE_INDEX));
+      params.put(FormConstants.MODULE_INDEX, moduleIndex);
       // params.put(FormConstants.QUESTION_INDEX, request.getParameter(FormConstants.QUESTION_INDEX));
 
       pageContext.setAttribute("params", params); 
-      
-      String moduleIndex = (String)(request.getParameter(FormConstants.MODULE_INDEX));
 
       %>
     <html:form action="/moduleSaveAction.do">
@@ -923,6 +923,7 @@ function clearProtocol() {
                                               </a>
                                             </td>
                                           </tr>
+<logic:present name="question" property="dataElement">
                                             <tr class="OraFieldText" >
                                               <td colspan="4"> 
                                                  <table width="100%" align="right" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -968,11 +969,33 @@ function clearProtocol() {
 						         <html:hidden  value="" property="<%=FormConstants.FORM_VALUE_MEANING_TEXT%>"/>
 						         <html:hidden  value="" property="<%=FormConstants.FORM_VALUE_MEANING_DESC%>"/>
                                                       </logic:empty>
-<%--????                                                      
-                                                   <logic:notPresent name="question" property="dataElement">   
-                                                    <html:hidden  value="" property="<%=FormConstants.FORM_VALUE_MEANING_TEXT%>"/>
-                                                   </logic:notPresent>
---%>
+</logic:present>
+                                                      
+<logic:notPresent name="question" property="dataElement">   
+                                            <tr class="OraFieldText" >
+                                              <td colspan="4"> 
+                                                 <table width="100%" align="right" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+                                                      <tr class="OraTabledata" >
+                                                       <td  class="OraTableColumnHeader" width="30%">
+                                                            <bean:message key="cadsr.formbuilder.valueMeaning.text" />
+                                                       </td>
+                                                       <td class="OraFieldText" >                                                       
+                                                          <html:textarea  styleClass="OraFieldText" rows="2" cols="80" property='<%=FormConstants.FORM_VALUE_MEANING_TEXT + "[" + vvInstrIndex + "]"%>' >
+                                                          </html:textarea>
+                                                       </td>                                          
+                                                      </tr>
+                                                      <%--value meaning description--%>
+                                                      <tr class="OraTabledata" >
+                                                       <td  class="OraTableColumnHeader" width="30%">
+                                                            <bean:message key="cadsr.formbuilder.valueMeaning.description" />
+                                                       </td>
+                                                       <td class="OraFieldText" >                                                       
+                                                          <html:textarea  styleClass="OraFieldText" rows="2" cols="80" property='<%=FormConstants.FORM_VALUE_MEANING_DESC + "[" + vvInstrIndex + "]"%>'>
+                                                          </html:textarea>
+                                                       </td>                                          
+                                                      </tr>
+</logic:notPresent>
+
                                                     <tr class="OraTabledata" >
                                                      <td  class="OraTableColumnHeader" width="30%">
                                                         <bean:message key="cadsr.formbuilder.form.instruction"/>
