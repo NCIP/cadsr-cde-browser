@@ -25,15 +25,15 @@ import org.apache.struts.action.ActionMessages;
 public class EditFormFilter implements javax.servlet.Filter{
         private FilterConfig filterConfig;
         protected static Log log = LogFactory.getLog(EditFormFilter.class.getName());
-        
+
         public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws java.io.IOException, javax.servlet.ServletException
         {
-          String forwardToJSP = filterConfig.getInitParameter("formDetailPage");  
-          String expiredSessionJSP = filterConfig.getInitParameter("expiredSessionJSP");      
+          String forwardToJSP = filterConfig.getInitParameter("formDetailPage");
+          String expiredSessionJSP = filterConfig.getInitParameter("expiredSessionJSP");
           HttpServletRequest req = (HttpServletRequest)request;
           HttpSession userSession = req.getSession(false);
-          
+
           //in case session already expired
           if (userSession == null){
               ((HttpServletResponse)response).sendRedirect(req.getContextPath()+ expiredSessionJSP);
@@ -45,13 +45,13 @@ public class EditFormFilter implements javax.servlet.Filter{
           if (obj!=null){
               formIdSeq = (String)obj;
           }else{
-            if(userSession != null){    
-                obj = userSession.getAttribute(FormConstants.CRF);  
+            if(userSession != null){
+                obj = userSession.getAttribute(FormConstants.CRF);
                 if(obj!=null){
                     Form crf = (Form)obj;
                     formIdSeq = crf.getIdseq();
                 }
-            }    
+            }
           }
          ServletContext sc = userSession.getServletContext();
          ApplicationServiceLocator loc = getApplicationServiceLocator(sc);
@@ -65,17 +65,30 @@ public class EditFormFilter implements javax.servlet.Filter{
          try{
              FormElementLocker locker = getApplicationServiceLocator(sc).findLockingService().getFormLocker(formIdSeq);
              //System.out.println("locked by user ID=" + ((HttpServletRequest)request).getRemoteUser() + "at " + locker.getTimeStamp());
-         
-             saveMessage("cadsr.formbuilder.form.locked", (HttpServletRequest)request, 
-                    locker.getNciUser().getUsername(), locker.getNciUser().getEmailAddress());
+
+             String email = locker.getNciUser().getEmailAddress();
+             String phone = locker.getNciUser().getPhoneNumber();
+             String contact;
+             if (email!=null && email.length()>0){
+                 contact = "Email: "  + email;
+             }else{
+                 if (phone!=null && phone.length()>0){
+                    contact = "Phone: " + locker.getNciUser().getPhoneNumber();
+                 }   
+                 else{
+                    contact = "Email/Phone not available";                    
+                    }
+             }
+             saveMessage("cadsr.formbuilder.form.locked", (HttpServletRequest)request,
+                    locker.getNciUser().getUsername(), contact);
              request.setAttribute(FormConstants.FORM_ID_SEQ, formIdSeq);
              RequestDispatcher dispatcher = filterConfig.getServletContext().getRequestDispatcher(forwardToJSP);
              dispatcher.forward(request,response);
-             return;             
+             return;
         }catch (Exception e){
             throw new javax.servlet.ServletException(e);
         }
-    }  
+    }
 
 
     public void init(final FilterConfig filterConfig){
@@ -85,7 +98,7 @@ public class EditFormFilter implements javax.servlet.Filter{
     public void destroy(){
         filterConfig = null;
     }
-        
+
     protected void saveMessage(
       String key,
       HttpServletRequest request, String arg0, String arg1) {
@@ -99,7 +112,7 @@ public class EditFormFilter implements javax.servlet.Filter{
         messages.add(messages.GLOBAL_MESSAGE, message);
         request.setAttribute(Globals.MESSAGE_KEY, messages);
       }
-    }    
+    }
 
     protected ApplicationServiceLocator getApplicationServiceLocator(ServletContext sc)
       throws ServiceLocatorException {
@@ -109,5 +122,5 @@ public class EditFormFilter implements javax.servlet.Filter{
       if(appServiceLocator==null)
         throw new ServiceLocatorException("Could no find ApplicationServiceLocator with key ="+ ApplicationServiceLocator.APPLICATION_SERVICE_LOCATOR_CLASS_KEY);
       return appServiceLocator;
-    }         
+    }
 }
