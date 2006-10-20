@@ -73,6 +73,9 @@ function details(linkParms ){
 <html:form action='<%= "/changeAssociation?" + NavigationConstants.METHOD_PARAM + "=" + NavigationConstants.CHANGE_DE_ASSOCIATION %>' >
 
 <html:hidden property="<%= FormConstants.QUESTION_INDEX %>"/>
+<html:hidden property="<%=FormConstants.MODULE_INDEX%>"/>
+<bean:define id="moduleIndex" name="changeAssociationForm" property="<%=FormConstants.MODULE_INDEX%>"/>
+
 
 <logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
   <%@ include file="changeAssociation_inc.jsp" %>
@@ -159,7 +162,7 @@ function details(linkParms ){
       
       <tr >
         <td>
-          <a href='<%= "cdeBrowse.jsp?src=gotoChangeAssociation&amp;moduleIndex=" +  request.getParameter("moduleIndex") + "&amp;questionIndex=" + request.getParameter("questionIndex") %>'><html:img src='<%=urlPrefix+"i/add_more_data_elements.gif"%>' border="0" alt="Add more data elements"/></a>
+          <a href='<%= "cdeBrowse.jsp?src=gotoChangeAssociation&amp;moduleIndex=" +  moduleIndex + "&amp;questionIndex=" + request.getParameter("questionIndex") %>'><html:img src='<%=urlPrefix+"i/add_more_data_elements.gif"%>' border="0" alt="Add more data elements"/></a>
           </td>
       <logic:empty name="<%=CaDSRConstants.CDE_CART%>" property = "dataElements">
         <td>
