@@ -98,7 +98,7 @@
 <p>
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
       <tr class="OraTabledata">
-        <td class="OraTableColumnHeader">Value Meaning</td>
+        <td class="OraTableColumnHeader" width="20%">Value Meaning Text</td>
         <td class="OraFieldText"><%=vm.getLongName()%>
 	<br>
         <% String longName = vm.getLongName();
@@ -108,6 +108,20 @@
 	   }   	
 	%>      		
        	<a href="javascript:passBack('<%=longName%>', 'formsValueMeaningTexts')">Select as Value Meaning Text</a>
+       	</td>
+
+      </tr>
+      <tr class="OraTabledata">
+        <td class="OraTableColumnHeader">Value Meaning Definition</td>
+        <td class="OraFieldText"><%=vm.getPreferredDefinition()%>
+	<br>
+        <% String desc = vm.getPreferredDefinition();
+           if (desc!=null){
+		desc = StringUtils.strReplace(desc, "\"","&quot;");
+	      	desc = StringUtils.strReplace(desc, "\'",  "&acute;");
+	   }   	
+	%>      		
+       	<a href="javascript:passBack('<%=desc%>', 'formsValueMeaningDescs')">Select as Value Meaning Desc.</a>
        	</td>
 
       </tr>
