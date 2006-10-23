@@ -85,22 +85,28 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     //for getting reference docs
     FormBuilderServiceDelegate service = getFormBuilderService();
     List refDocs = null;
-      
+    
+    int length = selectedItems.length;
+    List deIdList = new ArrayList(length);
+    List vdIdList = new ArrayList(length);
+    DataElement de = null;   
     for (int i = 0; i < selectedItems.length; i++) {
-      DataElement de =
-          (DataElement) ((CDECartItem) al.get(Integer.parseInt(selectedItems[i]))).getItem();
+        de =
+            (DataElement) ((CDECartItem) al.get(Integer.parseInt(selectedItems[i]))).getItem();
+        deIdList.add(de.getDeIdseq());
+        if (de.getValueDomain()!=null && de.getValueDomain().getVdIdseq()!=null){
+            vdIdList.add(de.getValueDomain().getVdIdseq());            
+        }    
+    }
+    
+    try {
+    Map vvMap = service.getValidValues(vdIdList);
+    for (int i = 0; i < selectedItems.length; i++) {      
+      de = (DataElement) ((CDECartItem) al.get(Integer.parseInt(selectedItems[i]))).getItem();      
+      String vdIdSeq = de.getValueDomain().getVdIdseq();
       //may refactor the following code for better performance 
-      try {
             refDocs = service.getRreferenceDocuments(de.getDeIdseq());
             de.setReferenceDocs(refDocs);
-      }catch (FormBuilderException exp){
-             if (log.isErrorEnabled()) {
-               log.error("Exception on getting reference documents for the Data Element de Idseq=" + de.getIdseq() , exp);
-             }
-             saveError(exp.getErrorCode(), request);
-             return mapping.findForward(FAILURE);
-      }       
-
       if (!isValidCDE(de)){
          saveError("cadsr.formbuilder.form.question.add.badCDE", request, de.getCDEId());
          return mapping.findForward(FAILURE);
@@ -109,7 +115,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       module.setForm(crf);
       q.setModule(module);
 
-      List values = de.getValueDomain().getValidValues();
+      //set valid value
+      List values = (List)vvMap.get(vdIdSeq);
+      de.getValueDomain().setValidValues(values);
       List newValidValues = DTOTransformer.toFormValidValueList(values, q);
       q.setQuesIdseq(new Date().getTime() + "" + i);
       q.setValidValues(newValidValues);
@@ -125,6 +133,15 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
 
       newQuestions.add(q);        
     }//end of for
+    }catch (FormBuilderException exp){
+            if (log.isErrorEnabled()) {
+              log.error("Exception on getting reference documents or Permissible values for the Data Element de Idseq=" + de.getIdseq() , exp);
+            }
+            saveError(exp.getErrorCode(), request);
+            return mapping.findForward(FAILURE);
+    }       
+        
+    
     //only when all CDE are valid to be added to a form then add new questions to form.module.questions
     if (displayOrder < questions.size()) {
         questions.addAll(displayOrder, newQuestions);
