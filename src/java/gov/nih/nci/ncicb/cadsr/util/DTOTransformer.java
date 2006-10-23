@@ -26,10 +26,11 @@ public class DTOTransformer {
   public static FormValidValue toFormValidValue(
     ValidValue validValue,
     Question question) {
+    
     FormValidValue fvv = new FormValidValueTransferObject();
     fvv.setVpIdseq(validValue.getVpIdseq());
-    fvv.setLongName(validValue.getShortMeaning());
-    fvv.setPreferredDefinition(validValue.getShortMeaningDescription());
+    fvv.setLongName(validValue.getShortMeaningValue());
+    fvv.setPreferredDefinition(validValue.getShortMeaning());
     fvv.setContext(question.getModule().getForm().getContext());
     fvv.setAslName(question.getModule().getForm().getAslName());
     fvv.setVpIdseq(validValue.getVpIdseq());
