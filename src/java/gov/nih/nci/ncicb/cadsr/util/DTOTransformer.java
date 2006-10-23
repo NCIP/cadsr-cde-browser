@@ -28,8 +28,8 @@ public class DTOTransformer {
     Question question) {
     FormValidValue fvv = new FormValidValueTransferObject();
     fvv.setVpIdseq(validValue.getVpIdseq());
-    fvv.setLongName(validValue.getShortMeaningValue());
-    fvv.setPreferredDefinition(validValue.getShortMeaning());
+    fvv.setLongName(validValue.getShortMeaning());
+    fvv.setPreferredDefinition(validValue.getShortMeaningDescription());
     fvv.setContext(question.getModule().getForm().getContext());
     fvv.setAslName(question.getModule().getForm().getAslName());
     fvv.setVpIdseq(validValue.getVpIdseq());

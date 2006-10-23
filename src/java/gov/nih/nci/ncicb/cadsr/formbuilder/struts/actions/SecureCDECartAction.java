@@ -205,15 +205,19 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       }
       
       List values = de.getValueDomain().getValidValues();
+      
+      //should add value meaning to the vaildValue part.
+      //end
       newValidValues = DTOTransformer.toFormValidValueList(values, q);
       
+/*      
       //clear out the form valid value Id
       Iterator it = newValidValues.iterator();
       while (it.hasNext()){
           FormValidValue fvv = (FormValidValue)it.next();
           fvv.setValueIdseq(FormConstants.UNKNOWN_VV_ID);
       }
-
+*/
       q.setLongName(newLongName);
       q.setValidValues(newValidValues);
       saveMessage("cadsr.formbuilder.question.changeAssociation.newAssociation",request);
