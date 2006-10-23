@@ -891,7 +891,6 @@ function clearProtocol() {
                                              	formattedValidValue = StringUtils.strReplace(formattedValidValue, "\"","&quot;");
                                              	formattedValidValue = StringUtils.strReplace(formattedValidValue, "\'",  "&acute;");
                                              }	
-                                             //System.out.println("=======formattedValidValue=" + formattedValidValue);
                                            %>  
                                           <a href="javascript:populateDefaultValue('<%=formattedValidValue%>', '<%=validValue.getValueIdseq()%>', '<%=questionIndex%>')">
                                              Set as Question Default Value
@@ -923,15 +922,15 @@ function clearProtocol() {
                                               </a>
                                             </td>
                                           </tr>
-<logic:present name="question" property="dataElement">
                                             <tr class="OraFieldText" >
                                               <td colspan="4"> 
                                                  <table width="100%" align="right" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+<logic:present name="question" property="dataElement">
                                                   <%
                                                      String dest =request.getContextPath() + "/showValueMeaningAlterNames.do?"+NavigationConstants.METHOD_PARAM+"=showValueMeaningAlterNames&validValueIndex=" + validValueIndex + "&vvColumnIndex=" + vvInstrIndex +
                                                             	"&questionIndex=" + questionIndex + "&moduleIndex="+moduleIndex;
                                                    %>
-                                                  <logic:notEmpty name="validValue" property="valueMeaning">                                            
+                                                  <logic:notEmpty name="validValue" property="valueMeaning"> 
                                                       <tr class="OraTabledata" >
                                                        <td  class="OraTableColumnHeader" width="30%">
                                                             <bean:message key="cadsr.formbuilder.valueMeaning.text" />
@@ -972,28 +971,8 @@ function clearProtocol() {
 </logic:present>
                                                       
 <logic:notPresent name="question" property="dataElement">   
-                                            <tr class="OraFieldText" >
-                                              <td colspan="4"> 
-                                                 <table width="100%" align="right" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                                                      <tr class="OraTabledata" >
-                                                       <td  class="OraTableColumnHeader" width="30%">
-                                                            <bean:message key="cadsr.formbuilder.valueMeaning.text" />
-                                                       </td>
-                                                       <td class="OraFieldText" >                                                       
-                                                          <html:textarea  styleClass="OraFieldText" rows="2" cols="80" property='<%=FormConstants.FORM_VALUE_MEANING_TEXT + "[" + vvInstrIndex + "]"%>' >
-                                                          </html:textarea>
-                                                       </td>                                          
-                                                      </tr>
-                                                      <%--value meaning description--%>
-                                                      <tr class="OraTabledata" >
-                                                       <td  class="OraTableColumnHeader" width="30%">
-                                                            <bean:message key="cadsr.formbuilder.valueMeaning.description" />
-                                                       </td>
-                                                       <td class="OraFieldText" >                                                       
-                                                          <html:textarea  styleClass="OraFieldText" rows="2" cols="80" property='<%=FormConstants.FORM_VALUE_MEANING_DESC + "[" + vvInstrIndex + "]"%>'>
-                                                          </html:textarea>
-                                                       </td>                                          
-                                                      </tr>
+						         <html:hidden property='<%=FormConstants.FORM_VALUE_MEANING_TEXT + "[" + vvInstrIndex + "]"%>'/>
+						         <html:hidden property='<%=FormConstants.FORM_VALUE_MEANING_DESC + "[" + vvInstrIndex + "]"%>'/>
 </logic:notPresent>
 
                                                     <tr class="OraTabledata" >
