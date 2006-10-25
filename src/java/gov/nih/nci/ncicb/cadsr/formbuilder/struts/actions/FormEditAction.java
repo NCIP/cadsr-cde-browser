@@ -692,6 +692,11 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           setSessionObject(request,CRF, updatedCrf);
           Form clonedCrf = (Form) updatedCrf.clone();
           setSessionObject(request, CLONED_CRF, clonedCrf);
+          
+          if (request.getParameter(FormConstants.UNLOCK)!=null){
+              //unlock the form
+              unlockForm(header.getFormIdseq(), request.getRemoteUser());
+          }    
         }
         catch (FormBuilderException exp) {
           if (log.isErrorEnabled()) {
@@ -710,7 +715,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
         }
         saveMessage("cadsr.formbuilder.form.edit.save.success", request);
         removeSessionObject(request, DELETED_MODULES);
-        
+                
         return mapping.findForward(SUCCESS);
 
     }
@@ -734,8 +739,16 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     HttpServletResponse response) throws IOException, ServletException {
 
     //unlock form 
-    unlockCRFInSession(request);
-
+    Form crf = (Form) getSessionObject(request, CRF);
+    if (crf!=null){
+        String formIdSeq = crf.getIdseq();
+         unlockForm((String)formIdSeq, request.getRemoteUser());
+         if (log.isDebugEnabled()){
+             log.debug("Form " + formIdSeq + " is unlocked by user " + request.getRemoteUser());
+         }    
+     }    
+     
+     
     FormBuilderBaseDynaFormBean editForm = (FormBuilderBaseDynaFormBean) form;
     removeSessionObject(request, DELETED_MODULES);
     removeSessionObject(request, CLONED_CRF);
@@ -744,6 +757,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
     removeSessionObject(request,UPDATE_SKIP_PATTERN_TRIGGERS);        
     editForm.clear();    
             
+    
     return mapping.findForward(SUCCESS);
 
     }
