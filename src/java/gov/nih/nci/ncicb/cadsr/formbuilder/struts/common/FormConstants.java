@@ -184,5 +184,6 @@ public interface FormConstants extends FormBuilderConstants {
    
    public static final String SENTINAL_ALERT_NAME = "sentinalAlertName";
    public static final String UNKNOWN_VV_ID = "unknownVVId";
+   public static final String UNLOCK = "unlock";
        
 }
