@@ -41,7 +41,7 @@ function submitFormToSave(methodName) {
 	<jsp:param name="urlPrefix" value="" />
 </jsp:include>
 <%@ include file="showMessages.jsp" %>
-<html:form action="/saveFormDoneAction.do">
+<html:form action="/saveFormDoneAction.do?unlock=true">
    <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
       <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" >      
         <tr >
