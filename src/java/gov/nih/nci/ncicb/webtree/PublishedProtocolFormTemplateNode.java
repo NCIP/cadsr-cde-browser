@@ -22,7 +22,7 @@ public class PublishedProtocolFormTemplateNode extends LazyActionTreeNode {
        treeService.addPublishedTemplates(this, this.getAction());
 
       } catch (Exception e) {
-      log.error("Unable to retrieve CTEP protocol forms", e);   
+      log.error("Unable to retrieve CTEP protocol form templates", e);   
      }
       isChildrenLoaded = true;
 

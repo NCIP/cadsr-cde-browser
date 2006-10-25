@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.persistence.PersistenceConstants;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.CDECartDAO;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ClassificationSchemeDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.DerivedDataElementDAO;
@@ -47,6 +48,16 @@ public class JDBCDAOFactory extends AbstractDAOFactory
 
      return acDAO;
    }
+    public ClassificationSchemeDAO getClassificationSchemeDAO() {
+      ClassificationSchemeDAO csDAO = (ClassificationSchemeDAO) daoCache.get(JDBC_CLASS_SCHEME_COMPONENT_DAO);
+
+      if (csDAO == null) {
+        csDAO = new JDBCClassificationSchemeDAO(serviceLocator);
+        daoCache.put(JDBC_CLASS_SCHEME_COMPONENT_DAO, csDAO);
+      }
+
+      return csDAO;
+    }
   public FormDAO getFormDAO() {
     FormDAO formDAO = (JDBCFormDAO) daoCache.get(JDBC_FORM_DAO);
 

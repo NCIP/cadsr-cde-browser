@@ -21,7 +21,7 @@ public class PublishedFormNodeByProtocol extends LazyActionTreeNode {
        //to do change this line
        treeService.addPublishedFormbyProtocolNode(this, this.getAction());
       } catch (Exception e) {
-       log.error("Unable to retrieve CTEP protocol forms", e);   
+       log.error("Unable to retrieve CTEP protocol forms order by protocol", e);   
     }
     
      isChildrenLoaded = true;

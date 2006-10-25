@@ -22,7 +22,7 @@ public class ContextNode extends LazyActionTreeNode {
    }
    public void loadChildren() {
          try {
-            ClassificationNode csNode = new ClassificationNode("Folder",
+            ClassificationFolderNode csNode = new ClassificationFolderNode("Folder",
             "Classifications", getIdentifier(), false);
             super.addLeaf(csNode);
             

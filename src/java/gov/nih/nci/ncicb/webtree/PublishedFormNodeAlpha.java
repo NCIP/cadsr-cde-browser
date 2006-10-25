@@ -21,7 +21,7 @@ public class PublishedFormNodeAlpha extends LazyActionTreeNode {
          //to do change this line
          treeService.addPublishedFormbyAlphaNode(this, this.getAction());
         } catch (Exception e) {
-         log.error("Unable to retrieve CTEP protocol forms", e);   
+         log.error("Unable to retrieve CTEP protocol forms by alphabetic order", e);   
       }
       
      isChildrenLoaded = true;

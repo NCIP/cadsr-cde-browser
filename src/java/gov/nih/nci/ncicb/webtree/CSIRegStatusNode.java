@@ -7,21 +7,20 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class ClassificationNode extends LazyActionTreeNode {
-   protected Log log = LogFactory.getLog(ClassificationNode.class.getName());
-   public ClassificationNode() {
+public class CSIRegStatusNode extends LazyActionTreeNode {
+   protected Log log = LogFactory.getLog(CSIRegStatusNode.class.getName());
+   public CSIRegStatusNode() {
    }
-   public ClassificationNode(String type, String description, String actionURL, boolean leaf) {
-           super(type, description, leaf);
-           setAction(actionURL);
+   public CSIRegStatusNode(String type, String description, String actionURL, String id, boolean leaf) {
+           super(type, description, actionURL, id, leaf);
    }
    public void loadChildren() {
       CDEBrowserTreeService treeService = getAppServiceLocator().findTreeService();
        try {
        //to do change this line
-         treeService.addClassificationNode(this, this.getAction());
+         treeService.loadCSIRegStatusNodes(this);
       } catch (Exception e) {
-       log.error("Unable to classifications for " + this.getDescription(), e);
+       log.error("Unable to classification scheme items for " + this.getDescription(), e);
     }
 
      isChildrenLoaded = true;

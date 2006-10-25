@@ -10,15 +10,21 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.CDEBrowserTreeService;
 import gov.nih.nci.ncicb.cadsr.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ContextHolderTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ClassificationSchemeDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.FormDAO;
 import gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem;
+import gov.nih.nci.ncicb.cadsr.resource.ClassificationScheme;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.resource.ContextHolder;
 import gov.nih.nci.ncicb.cadsr.resource.Form;
 import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.webtree.CSIRegStatusNode;
+import gov.nih.nci.ncicb.webtree.ClassSchemeItemNode;
+import gov.nih.nci.ncicb.webtree.ClassSchemeNode;
+import gov.nih.nci.ncicb.webtree.ClassSchemeRegStatusNode;
 import gov.nih.nci.ncicb.webtree.LazyActionTreeNode;
 import gov.nih.nci.ncicb.webtree.ProtocolFormNode;
 import gov.nih.nci.ncicb.webtree.WebNode;
@@ -1142,103 +1148,95 @@ public class CDEBrowserTreeServiceImpl
      return tmpNode;
    }   
    public void addClassificationNode(LazyActionTreeNode pNode, String contextId) throws Exception {
-
-     FormDAO dao = daoFactory.getFormDAO();
-     List allCscsi = dao.getCSCSIHierarchyByContext(contextId);
-     
-     if (allCscsi == null || allCscsi.size() == 0)
-         return;
-         
+   
      CDEBrowserParams params = CDEBrowserParams.getInstance();
-     String[] regStatusArr = params.getCsTypeRegStatus().split(",");
-     
-     Map<String, LazyActionTreeNode> csMap = new HashMap(); //this map stores the webnode for cs given cs_idseq
-     Map<String, LazyActionTreeNode> csiMap = new HashMap();
-     Map <String, Map> regStatusMapByCsId = new HashMap();
-     Map <String, Map> csiMapByRegStatus = new HashMap();
-     for (int i=0; i<regStatusArr.length; i++)
-        csiMapByRegStatus.put(regStatusArr[i], new HashMap());
-     
-     Iterator iter = allCscsi.iterator();
-
-     while (iter.hasNext()) {
-        ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
-
-        String csId = cscsi.getCsIdseq();
-       // create classification scheme node if necessary
-       LazyActionTreeNode csNode = csMap.get(csId);
-
-       if (csNode == null) {
-         csNode = getClassificationSchemeNode(cscsi);
-
-         pNode.addLeaf(csNode);
-         csMap.put(csId, csNode);
-         
-         if (cscsi.getClassSchemeType().equalsIgnoreCase(params.getRegStatusCsTree())){
-             Map<String, LazyActionTreeNode>  regStatusMap = new HashMap();
-             for (int i=0; i<regStatusArr.length; i++){
-               LazyActionTreeNode regNode = getRegStatusNode(regStatusArr[i], 
-               contextId, csId);
-               csNode.addLeaf(regNode);
-               regStatusMap.put(regStatusArr[i], regNode);
-             }
-             regStatusMapByCsId.put(csId, regStatusMap);
-         }
-       }
-
-       // add csi node
-       String parentId = cscsi.getParentCscsiId();
-       LazyActionTreeNode parentNode = null;
-       LazyActionTreeNode csiNode =null;
-       
-       if (!cscsi.getClassSchemeType().equalsIgnoreCase(params.getRegStatusCsTree())) {
-          //this is a regular cs tree stucture
-           csiNode = getClassificationSchemeItemNode( cscsi);
-          if (parentId != null) 
-             parentNode = csiMap.get(parentId);
-          else
-             parentNode = csNode;
-          
-          parentNode.addLeaf(csiNode);
-          csiMap.put(cscsi.getCsCsiIdseq(), csiNode);
-
-       } else {//this is the CS tree with registration status
-          if (parentId == null) {
-            //this is the first level csi link to reg status         
-             Map<String, LazyActionTreeNode> regStatusNodesMap = regStatusMapByCsId.get(csId);
-             for (int i=0; i<regStatusArr.length; i++) {
-                if (dao.hasRegisteredAC(cscsi.getCsCsiIdseq(), regStatusArr[i])) {
-                 csiNode = this.getRegStatusCSINode( cscsi, regStatusArr[i]);
-                 regStatusNodesMap.get(regStatusArr[i]).addLeaf(csiNode);
-                 csiMapByRegStatus.get(regStatusArr[i]).put(cscsi.getCsCsiIdseq(), csiNode);
-                }
-             }
-          } else {
-             for (int i=0; i<regStatusArr.length; i++) {
-                if (dao.hasRegisteredAC(cscsi.getCsCsiIdseq(), regStatusArr[i])) {
-                   csiNode = getRegStatusCSINode(cscsi, regStatusArr[i]);
-                   ((LazyActionTreeNode) csiMapByRegStatus.get(regStatusArr[i]).get(parentId)).addLeaf(csiNode);
-                   csiMapByRegStatus.get(regStatusArr[i]).put(cscsi.getCsCsiIdseq(), csiNode);
-                }
-             }
-          }
-       }
-       
-
-       // for CTEP disease, add core, none core sub node
-//       if (treeFunctions.getTreeType().equals(TreeConstants.DE_SEARCH_TREE)) {
-         if (cscsi.getClassSchemeItemType().equals("DISEASE_TYPE")) {
-           if (cscsi.getClassSchemePrefName().equals("DISEASE")) {
-             csiNode.addLeaf(this.getDiseaseSubNode(cscsi, "Core Data Set"));
-
-             csiNode.addLeaf(this.getDiseaseSubNode(cscsi, "Non-Core Data Set"));
+     ClassificationSchemeDAO csDao = daoFactory.getClassificationSchemeDAO();
+     Collection<ClassificationScheme> rootCS = csDao.getRootClassificationSchemes(contextId);
+       for (Iterator csIter=rootCS.iterator(); csIter.hasNext();){
+           ClassificationScheme cs = (ClassificationScheme) csIter.next();
+           ClassSchemeNode csNode = getClassificationSchemeNode(cs);
+           pNode.addLeaf(csNode);
+           if (cs.getClassSchemeType().equalsIgnoreCase(params.getRegStatusCsTree())){
+           //add registration status nodes for registration_status cs type
+               String[] regStatusArr = params.getCsTypeRegStatus().split(",");
+               for (int i=0; i<regStatusArr.length; i++){
+                 ClassSchemeRegStatusNode regNode = getRegStatusNode(regStatusArr[i], 
+                 contextId, cs.getCsIdseq());
+                 csNode.addLeaf(regNode);
+               }
+               csNode.markChildrenLoaded();
            }
-         }
-     }
-
+       }
    }   
    
+    public void loadCSNodes(ClassSchemeNode pNode, String csId) throws Exception {
+    
+        // first Add Has_A classification scheme from cs_recs 
+        ClassificationSchemeDAO csDao = daoFactory.getClassificationSchemeDAO();
+        Collection<ClassificationScheme> childrenCS 
+           = csDao.getChildrenClassificationSchemes(csId);
+        for (Iterator cIter=childrenCS.iterator(); cIter.hasNext(); ){
+            ClassificationScheme cs = (ClassificationScheme) cIter.next();
+            pNode.addLeaf(getClassificationSchemeNode(cs));
+        }
+        List allCscsi = csDao.getFirstLevelCSIByCS(csId);
+        Iterator iter = allCscsi.iterator();
+        while (iter.hasNext()) {
+           ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
+           ClassSchemeItemNode csiNode = getClassificationSchemeItemNode(cscsi);
+           pNode.addLeaf(csiNode);
+            if (cscsi.getClassSchemeItemType().equals("DISEASE_TYPE")) {
+              if (cscsi.getClassSchemePrefName().equals("DISEASE")) {
+                csiNode.addLeaf(this.getDiseaseSubNode(cscsi, "Core Data Set"));
 
+                csiNode.addLeaf(this.getDiseaseSubNode(cscsi, "Non-Core Data Set"));
+              }
+            }        }        
+
+    }  
+    public void loadRegStatusCSNodes(LazyActionTreeNode pNode) throws Exception {
+        String csId = pNode.getIdentifier();
+        ClassificationSchemeDAO csDao = daoFactory.getClassificationSchemeDAO();
+        List allCscsi = csDao.getFirstLevelCSIByCS(csId);
+        Iterator iter = allCscsi.iterator();
+        while (iter.hasNext()) {
+           ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
+            if (csDao.hasRegisteredAC(cscsi.getCsCsiIdseq(), pNode.getDescription())) {
+           CSIRegStatusNode csiNode = getRegStatusCSINode(cscsi, pNode.getDescription());;
+           pNode.addLeaf(csiNode);
+          }
+        }        
+    
+    }
+    
+    public void loadCSINodes(ClassSchemeItemNode pNode) throws Exception {
+        String csiId = pNode.getIdentifier();
+        ClassificationSchemeDAO csDao = daoFactory.getClassificationSchemeDAO();
+        List allCscsi = csDao.getChildrenCSI(csiId);
+        Iterator iter = allCscsi.iterator();
+        while (iter.hasNext()) {
+           ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
+           ClassSchemeItemNode csiNode = getClassificationSchemeItemNode(cscsi);
+           pNode.addLeaf(csiNode);
+       
+        }        
+    
+    }
+    
+    public void loadCSIRegStatusNodes(CSIRegStatusNode pNode) throws Exception {
+        String csiId = pNode.getIdentifier();
+        ClassificationSchemeDAO csDao = daoFactory.getClassificationSchemeDAO();
+        List allCscsi = csDao.getChildrenCSI(csiId);
+        Iterator iter = allCscsi.iterator();
+        while (iter.hasNext()) {
+           ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
+           CSIRegStatusNode csiNode = getRegStatusCSINode(cscsi, pNode.getToolTip());
+           pNode.addLeaf(csiNode);
+       
+        }        
+    
+    }
+    
      private LazyActionTreeNode getClassificationSchemeNode(ClassSchemeItem csi)
      throws Exception {
        String      extraURLParameters = 
@@ -1255,47 +1253,66 @@ public class CDEBrowserTreeServiceImpl
       return csNode;
 
      }
+    private ClassSchemeNode getClassificationSchemeNode(ClassificationScheme cs)
+    throws Exception {
+      String      extraURLParameters = 
+       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+
+      ClassSchemeNode csNode = new ClassSchemeNode("Classifications", 
+              cs.getLongName(),  
+              "javascript:performAction"  
+                + "('P_PARAM_TYPE=CLASSIFICATION&P_IDSEQ="
+                   + cs.getCsIdseq() + "&P_CONTE_IDSEQ=" + cs.getConteIdseq()
+                   +  extraURLParameters + "')",
+               cs.getCsIdseq(), false);
+     csNode.setToolTip(cs.getPreferredDefinition());
+     return csNode;
+
+    }
      
-   private LazyActionTreeNode getRegStatusNode(String regStatus,
+   private ClassSchemeRegStatusNode getRegStatusNode(String regStatus,
          String contextIdseq, String csIdseq) throws Exception {
       String      extraURLParameters = 
        "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
 
-      LazyActionTreeNode regStatusNode = new LazyActionTreeNode(
+      ClassSchemeRegStatusNode regStatusNode = new ClassSchemeRegStatusNode(
                      "Registration Status", regStatus,
                      "javascript:performAction" 
                      + "('P_PARAM_TYPE=REGCS&P_IDSEQ=" + csIdseq + "&P_CONTE_IDSEQ="
-                     + contextIdseq                                      //context idseq
+                     + contextIdseq                    //context idseq
                      + "&P_REGSTATUS=" + regStatus     //classification idseq
-                     + extraURLParameters + "')",
-                                 false);                                 //registration status
+                     + extraURLParameters + "')", csIdseq,
+                                 false);                  //registration status
      return regStatusNode;
    }
      
-   private LazyActionTreeNode getClassificationSchemeItemNode( 
+   private ClassSchemeItemNode getClassificationSchemeItemNode( 
        ClassSchemeItem csi) throws Exception {
       String      extraURLParameters = 
        "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
-     LazyActionTreeNode csiNode =new  LazyActionTreeNode(
+      ClassSchemeItemNode csiNode =new ClassSchemeItemNode(
                "Classification Scheme Item", csi.getClassSchemeItemName(),
                            "javascript:performAction" + "('P_PARAM_TYPE=CSI&P_IDSEQ="
                               + csi.getCsCsiIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq()
-                              + extraURLParameters + "')",
+                              + extraURLParameters + "')", csi.getCsCsiIdseq(),
                             false);
-     csiNode.setToolTip(csi.getCsiDescription());
-     return csiNode;
+      csiNode.setToolTip(csi.getCsiDescription());
+      return csiNode;
    }
-   private LazyActionTreeNode getRegStatusCSINode(ClassSchemeItem csi,
+   private CSIRegStatusNode getRegStatusCSINode(ClassSchemeItem csi,
                            String regStatus) throws Exception {
       String  extraURLParameters = 
        "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
-      return new LazyActionTreeNode(  "Classification Scheme Item",
+      CSIRegStatusNode csiRSNode = new CSIRegStatusNode(  "Classification Scheme Item",
                            csi.getClassSchemeItemName(),
                            "javascript:performAction('P_PARAM_TYPE=REGCSI&P_IDSEQ="
                               + csi.getCsCsiIdseq() + "&P_CONTE_IDSEQ=" + csi.getCsConteIdseq()
                               + "&P_REGSTATUS=" + regStatus
-                              + extraURLParameters + "')",
+                              + extraURLParameters + "')", csi.getCsCsiIdseq(),
                             false);
+      csiRSNode.setToolTip(regStatus);
+      return csiRSNode;
+    
    }
 
    private LazyActionTreeNode getDiseaseSubNode(ClassSchemeItem csi, 
@@ -1591,5 +1608,7 @@ public class CDEBrowserTreeServiceImpl
 
       return tmpNode;
    
-   }   
+   }
+   
+   
 }

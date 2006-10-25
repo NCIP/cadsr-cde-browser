@@ -2,6 +2,9 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeFunctions;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeIdGenerator;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.webtree.CSIRegStatusNode;
+import gov.nih.nci.ncicb.webtree.ClassSchemeItemNode;
+import gov.nih.nci.ncicb.webtree.ClassSchemeNode;
 import gov.nih.nci.ncicb.webtree.LazyActionTreeNode;
 
 import java.util.List;
@@ -31,6 +34,10 @@ public interface CDEBrowserTreeService
   public void addPublishedFormbyProtocolNode(LazyActionTreeNode pNode, String contextId) throws Exception;
   public void addPublishedFormNodesByProtocol(LazyActionTreeNode pNode, String protocolId) throws Exception;
   public void addPublishedTemplates(LazyActionTreeNode pNode, String contextId) throws Exception ;
+  public void loadCSNodes(ClassSchemeNode pNode, String csId) throws Exception ;
+  public void loadRegStatusCSNodes(LazyActionTreeNode pNode) throws Exception ;
+  public void loadCSINodes(ClassSchemeItemNode pNode) throws Exception;
+  public void loadCSIRegStatusNodes(CSIRegStatusNode pNode) throws Exception;
   
   
 

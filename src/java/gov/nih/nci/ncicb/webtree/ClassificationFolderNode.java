@@ -7,11 +7,11 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class ClassificationNode extends LazyActionTreeNode {
-   protected Log log = LogFactory.getLog(ClassificationNode.class.getName());
-   public ClassificationNode() {
+public class ClassificationFolderNode extends LazyActionTreeNode {
+   protected Log log = LogFactory.getLog(ClassificationFolderNode.class.getName());
+   public ClassificationFolderNode() {
    }
-   public ClassificationNode(String type, String description, String actionURL, boolean leaf) {
+   public ClassificationFolderNode(String type, String description, String actionURL, boolean leaf) {
            super(type, description, leaf);
            setAction(actionURL);
    }
@@ -21,11 +21,13 @@ public class ClassificationNode extends LazyActionTreeNode {
        //to do change this line
          treeService.addClassificationNode(this, this.getAction());
       } catch (Exception e) {
-       log.error("Unable to classifications for " + this.getDescription(), e);
+       log.error("Unable to retrieve classification schemes for" + this.getDescription(), e);
     }
 
      isChildrenLoaded = true;
   }
+  
+  
 }
 
 
