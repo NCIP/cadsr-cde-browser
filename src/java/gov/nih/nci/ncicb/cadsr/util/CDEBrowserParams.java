@@ -334,12 +334,10 @@ public class CDEBrowserParams
             log.error("Error getting init parameters, missing resource values");
             log.error("Property missing index: " + index);
             log.error(mre.getMessage(), mre);
-            System.exit(-1);
         }
         catch (Exception e)
         {
-            log.error("Exception occurred", e);
-            System.exit(-1);
+            log.error("Exception occurred when loading properties", e);
         }    
   }
 
