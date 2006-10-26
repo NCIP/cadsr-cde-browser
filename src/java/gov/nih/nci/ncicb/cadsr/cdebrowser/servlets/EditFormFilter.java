@@ -9,6 +9,8 @@ import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
 
+import java.util.Date;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,6 +70,9 @@ public class EditFormFilter implements javax.servlet.Filter{
 
              String email = locker.getNciUser().getEmailAddress();
              String phone = locker.getNciUser().getPhoneNumber();
+             Date since = locker.getTimeStamp();
+             String thatSessionId = locker.getSessionId();
+             
              String contact;
              if (email!=null && email.length()>0){
                  contact = "Email: "  + email;
@@ -79,8 +84,17 @@ public class EditFormFilter implements javax.servlet.Filter{
                     contact = "Email/Phone not available";                    
                     }
              }
+             
              saveMessage("cadsr.formbuilder.form.locked", (HttpServletRequest)request,
-                    locker.getNciUser().getUsername(), contact);
+                   locker.getNciUser().getUsername(), contact);
+             if (log.isDebugEnabled()){
+                 StringBuffer sb = new StringBuffer();
+                 sb.append("Form ").append(formIdSeq).append(" is locked by user ")
+                    .append(locker.getNciUser().getUsername()).append(" since ")
+                    .append(since.toString()).append(" Session id=")
+                    .append(thatSessionId);
+                 log.debug(sb.toString());
+             }
              request.setAttribute(FormConstants.FORM_ID_SEQ, formIdSeq);
              RequestDispatcher dispatcher = filterConfig.getServletContext().getRequestDispatcher(forwardToJSP);
              dispatcher.forward(request,response);
