@@ -149,9 +149,8 @@
                                       <tr   class="OraTabledata">
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td >
-                                        <% if(question.getDataElement()!=null|| validValue.getInstruction()!=null){%>
+                                        <%--if(question.getDataElement()!=null|| validValue.getInstruction()!=null){ --%>
                                           <table align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGGrayVeryDark" >                          
-                                            <logic:present name="question" property="dataElement">
                                                <tr class="OraTabledata">
                                                  <td  class="OraTableColumnHeaderGrayBG" width="10%" nowrap >
                                                    <bean:message key="cadsr.formbuilder.valueMeaning.text" /></td>
@@ -164,7 +163,6 @@
                                                  <td class="OraFieldText" >
                                                   <bean:write name="validValue" property="formValueMeaningDesc"/></td>                                          
                                                </tr>  
-                                            </logic:present>
                                               <logic:present name="validValue" property="instruction">                
                                                  <tr class="OraTabledata">
                                                   <td class="OraTableColumnHeaderGrayBG" width="10%" nowrap>
@@ -177,7 +175,7 @@
                                                 
                                               </logic:present>                                                
                                            </table>   
-                                          <%}%>
+                                          <%--}--%>
                                         </td>                                        
                                       </tr>   
                                                                                                                                                 

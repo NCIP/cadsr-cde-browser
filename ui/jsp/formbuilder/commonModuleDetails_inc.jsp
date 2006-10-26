@@ -261,10 +261,9 @@ type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues" in
                                       <tr   class="OraTabledata">
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td >
-                                        <% if(question.getDataElement()!=null|| validValue.getInstruction()!=null){%>
+                                        <%-- if(question.getDataElement()!=null|| validValue.getInstruction()!=null){--%>
                                           <table align="center" cellpadding="1" cellspacing="1" border="0" 
 class="OraBGAccentVeryDark" >                          
-                                            <logic:present name="question" property="dataElement">
                                                <tr class="OraTabledata">
                                                  <td  class="OraTableColumnHeader" width="10%" nowrap >
                                                    <bean:message key="cadsr.formbuilder.valueMeaning.text" /></td>
@@ -279,7 +278,6 @@ class="OraBGAccentVeryDark" >
                                                   <bean:write name="validValue" property="formValueMeaningDesc"/></td>             
                              
                                                </tr>  
-                                            </logic:present>
                                               <logic:present name="validValue" property="instruction">                
                                                  <tr class="OraTabledata">
                                                   <td class="OraTableColumnHeader" width="10%" nowrap>
@@ -313,7 +311,7 @@ type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" 
                                        <!-- vv Skip pattern end -->   
                                        
                                            </table>   
-                                          <%}%>
+                                          <%--}--%>
                                         </td>                                        
                                       </tr>   
                                                                                                                            

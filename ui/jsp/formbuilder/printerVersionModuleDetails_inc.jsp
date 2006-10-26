@@ -224,9 +224,8 @@ class="OraBGAccentBlack" >
                                       <tr   class="PrinterOraTabledata">
                                         <td class="PrinterOraFieldText" width="50">&nbsp;</td>
                                         <td >                                      
-                                        <% if(question.getDataElement()!=null|| validValue.getInstruction()!=null){%>
-                                          <table align="center" width="100%" cellpadding="1" cellspacing="1" border="0"  class="OraBGAccentBlack" >                          
-                                            <logic:present name="question" property="dataElement">
+                                        <%--if(question.getDataElement()!=null|| validValue.getInstruction()!=null){--%>
+                                          <table align="center" width="100%" cellpadding="1" cellspacing="1" border="0"  class="OraBGAccentBlack" >
                                                <tr class="PrinterOraTabledata" >
                                                  <td  class="PrinterOraTableColumnHeader" width="10%" nowrap >
                                                    <bean:message key="cadsr.formbuilder.valueMeaning.text" /></td>
@@ -239,7 +238,6 @@ class="OraBGAccentBlack" >
                                                  <td class="PrinterOraFieldText" >
                                                   <bean:write name="validValue" property="formValueMeaningDesc"/></td>                                          
                                                </tr>  
-                                            </logic:present>
                                               <logic:present name="validValue" property="instruction">                
                                                  <tr class="PrinterOraTabledata" >
                                                   <td class="PrinterOraTableColumnHeader" width="10%" nowrap>
@@ -289,7 +287,7 @@ type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" 
 				       </logic:present>                                         
                                               
                                            </table>   
-                                          <%}%>    
+                                          <%--}--%>    
                                         </td>
                                       </tr>                                              
                                     </logic:iterate><!-- valid Value-->

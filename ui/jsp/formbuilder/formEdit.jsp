@@ -675,7 +675,6 @@ class="OraBGAccentVeryDark" >
                                         <td class="OraFieldText" width="50">&nbsp;</td>
                                         <td >
                                           <table align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" >
-                                            <logic:present name="question" property="dataElement">                                          
                                              <tr class="OraTabledata">
                                              <td  class="OraTableColumnHeader" width="10%" nowrap >
                                                  <bean:message key="cadsr.formbuilder.valueMeaning.text" /></td>
@@ -688,7 +687,6 @@ class="OraBGAccentVeryDark" >
                                              <td class="OraFieldText" >
                                                 <bean:write name="validValue" property="formValueMeaningDesc"/></td>                                          
                                             </tr>
-					    </logic:present>                                            
                                              <logic:present name="validValue" property="instruction">                
                                                  <tr class="OraTabledata">
                                                   <td class="OraTableColumnHeader" width="10%" nowrap>

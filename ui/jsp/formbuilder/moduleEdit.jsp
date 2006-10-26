@@ -971,8 +971,29 @@ function clearProtocol() {
 </logic:present>
                                                       
 <logic:notPresent name="question" property="dataElement">   
-						         <html:hidden property='<%=FormConstants.FORM_VALUE_MEANING_TEXT + "[" + vvInstrIndex + "]"%>'/>
+<%--						         <html:hidden property='<%=FormConstants.FORM_VALUE_MEANING_TEXT + "[" + vvInstrIndex + "]"%>'/>
 						         <html:hidden property='<%=FormConstants.FORM_VALUE_MEANING_DESC + "[" + vvInstrIndex + "]"%>'/>
+--%>
+                                                      <tr class="OraTabledata" >
+                                                       <td  class="OraTableColumnHeader" width="30%">
+                                                            <bean:message key="cadsr.formbuilder.valueMeaning.text" />
+                                                       </td>
+                                                       <td class="OraFieldText" >                                                       
+						          <bean:define id="valueMeaning" name="validValue" property="valueMeaning.longName"></bean:define>
+                                                          <html:textarea  styleClass="OraFieldText" rows="2" cols="80" property='<%=FormConstants.FORM_VALUE_MEANING_TEXT + "[" + vvInstrIndex + "]"%>'>
+                                                          </html:textarea>
+                                                       </td>                                          
+                                                      </tr>
+                                                      <%--value meaning description--%>
+                                                      <tr class="OraTabledata" >
+                                                       <td  class="OraTableColumnHeader" width="30%">
+                                                            <bean:message key="cadsr.formbuilder.valueMeaning.description" />
+                                                       </td>
+                                                       <td class="OraFieldText" >                                                       
+                                                          <html:textarea  styleClass="OraFieldText" rows="2" cols="80" property='<%=FormConstants.FORM_VALUE_MEANING_DESC + "[" + vvInstrIndex + "]"%>' >
+                                                          </html:textarea>
+                                                       </td>                                          
+                                                      </tr>
 </logic:notPresent>
 
                                                     <tr class="OraTabledata" >
