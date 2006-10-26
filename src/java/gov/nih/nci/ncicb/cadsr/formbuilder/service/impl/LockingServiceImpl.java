@@ -2,24 +2,13 @@ package gov.nih.nci.ncicb.cadsr.formbuilder.service.impl;
 
 import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormElementLocker;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.LockingService;
-
-import gov.nih.nci.ncicb.cadsr.formbuilder.service.LockingService;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
-
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -82,6 +71,13 @@ public class LockingServiceImpl implements LockingService{
         }
         
         getLockerMap().put(formIdSeq, locker);
+        if (log.isDebugEnabled()){
+            StringBuffer sb = new StringBuffer();
+            sb.append("Form ").append(formIdSeq).append(" is locked by ")
+                .append(nciUser.getUsername()).append(" starting now")
+                .append(" Session id=").append(sessionId);
+            log.debug(sb.toString());
+        }        
         return true;
     }
     
@@ -150,7 +146,8 @@ public class LockingServiceImpl implements LockingService{
         } 
         
         synchronized(formOwnerMap){
-            Iterator it = formOwnerMap.values().iterator();
+            List values = new ArrayList(formOwnerMap.values());
+            Iterator it = values.iterator();            
             while (it.hasNext()){
                 FormElementLocker locker = (FormElementLocker)it.next();
                 if (locker.getSessionId().equals(sessionId)){
