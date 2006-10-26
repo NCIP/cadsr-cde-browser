@@ -163,7 +163,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
 
     //lock the form
     NCIUser user = getApplictionUser(request);
-    boolean result = lockForm(formIdSeq, user, request.getRemoteUser());
+    boolean result = lockForm(formIdSeq, user, request.getSession().getId());
     if (result){
         //saveMessage("cadsr.formbuilder.form.will.be.locked.by.you", request);
         return mapping.findForward(SUCCESS);
