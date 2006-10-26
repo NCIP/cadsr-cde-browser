@@ -40,6 +40,7 @@ public class CDEBrowserParams
     String umlBrowserUrl="";
     String regStatusCsTree="";
     String csTypeRegStatus="";
+    String csTypeContainer="container";
     String sentinalAPIUrl="";
     
     Map evsUrlMap = new HashMap();
@@ -322,6 +323,8 @@ public class CDEBrowserParams
             index++;             
             csTypeRegStatus = properties.getProperty("REG_STATUS_CS_TREE");
             index++;      
+            csTypeContainer = properties.getProperty("CS_TYPE_CONTAINER");
+            index++;      
             sentinalAPIUrl = properties.getProperty("SENTINAL_API_URL");
             index++;                
             umlBrowserUrl = properties.getProperty("UMLBROWSER_URL");
@@ -348,6 +351,10 @@ public class CDEBrowserParams
    public String getCsTypeRegStatus() {
       return csTypeRegStatus;
    }
+
+    public String getCsTypeContainer() {
+       return csTypeContainer;
+    }
 
     public void setSentinalAPIUrl(String sentinalAPIUrl)
     {

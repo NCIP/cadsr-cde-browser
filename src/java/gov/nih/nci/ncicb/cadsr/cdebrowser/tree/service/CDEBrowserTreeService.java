@@ -3,6 +3,7 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeFunctions;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeIdGenerator;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.webtree.CSIRegStatusNode;
+import gov.nih.nci.ncicb.webtree.ClassSchemeContainerNode;
 import gov.nih.nci.ncicb.webtree.ClassSchemeItemNode;
 import gov.nih.nci.ncicb.webtree.ClassSchemeNode;
 import gov.nih.nci.ncicb.webtree.LazyActionTreeNode;
@@ -38,6 +39,7 @@ public interface CDEBrowserTreeService
   public void loadRegStatusCSNodes(LazyActionTreeNode pNode) throws Exception ;
   public void loadCSINodes(ClassSchemeItemNode pNode) throws Exception;
   public void loadCSIRegStatusNodes(CSIRegStatusNode pNode) throws Exception;
+  public void loadCSContainerNodes(ClassSchemeContainerNode pNode, String csId) throws Exception;
   
   
 

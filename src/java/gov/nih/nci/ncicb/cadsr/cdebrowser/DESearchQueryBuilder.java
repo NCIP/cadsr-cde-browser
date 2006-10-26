@@ -476,13 +476,19 @@ public class DESearchQueryBuilder extends Object {
 
       }
       else if (treeParamType.equals("CLASSIFICATION")
-      || treeParamType.equals("REGCS") ){
+      || treeParamType.equals("REGCS") 
+      || treeParamType.equals("CSCONTAINER")){
         if (searchStr5.equals(""))
           csiWhere = "";
         else
           csiWhere = " and acs.cs_csi_idseq = '"+searchStr5+"'";
 
-        String csWhere = this.getCSWhere(this.treeParamIdSeq);
+        String csWhere = "";
+        if (treeParamType.equals("CSCONTAINER")) 
+            csWhere = getCSContainerWhere(this.treeParamIdSeq);
+        else 
+            csWhere = this.getCSWhere(this.treeParamIdSeq);
+        
 
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +
@@ -1070,6 +1076,28 @@ public class DESearchQueryBuilder extends Object {
                       " and   acs.ac_idseq = de_idseq ) ";
     return csWhere;
 
+   }
+   
+   private String getCSContainerWhere (String csId) {
+       String csWhere =  " and de.de_idseq IN ( " +
+                         " select de_idseq " +
+                         " from  sbr.data_elements de , " +
+                         "       sbr.ac_csi acs, " +
+                         "       sbr.cs_csi csc " +
+                         " where csc.cs_idseq IN ( " +
+                         "       select unique(cs.cs_idseq)" + 
+                         "       from   classification_schemes cs" + 
+                         "       where  cs.asl_name = 'RELEASED'" + 
+                         "       and    cs.cstl_name != 'Container'" + 
+                         "       and    cs.cs_idseq in (" + 
+                         "         select c_cs_idseq " + 
+                         "         from sbr.cs_recs_hasa_view " + 
+                         "         start with p_cs_idseq = '" +csId+"'" +
+                         "         connect by Prior c_cs_idseq = p_cs_idseq))" +
+                        " and   csc.cs_csi_idseq = acs.cs_csi_idseq " +
+                         " and   acs.ac_idseq = de_idseq ) ";
+    return csWhere;
+      
    }
 
 }

@@ -22,6 +22,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Protocol;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.webtree.CSIRegStatusNode;
+import gov.nih.nci.ncicb.webtree.ClassSchemeContainerNode;
 import gov.nih.nci.ncicb.webtree.ClassSchemeItemNode;
 import gov.nih.nci.ncicb.webtree.ClassSchemeNode;
 import gov.nih.nci.ncicb.webtree.ClassSchemeRegStatusNode;
@@ -1154,9 +1155,9 @@ public class CDEBrowserTreeServiceImpl
      Collection<ClassificationScheme> rootCS = csDao.getRootClassificationSchemes(contextId);
        for (Iterator csIter=rootCS.iterator(); csIter.hasNext();){
            ClassificationScheme cs = (ClassificationScheme) csIter.next();
-           ClassSchemeNode csNode = getClassificationSchemeNode(cs);
-           pNode.addLeaf(csNode);
            if (cs.getClassSchemeType().equalsIgnoreCase(params.getRegStatusCsTree())){
+               ClassSchemeNode csNode = getClassificationSchemeNode(cs);
+               pNode.addLeaf(csNode);
            //add registration status nodes for registration_status cs type
                String[] regStatusArr = params.getCsTypeRegStatus().split(",");
                for (int i=0; i<regStatusArr.length; i++){
@@ -1165,20 +1166,36 @@ public class CDEBrowserTreeServiceImpl
                  csNode.addLeaf(regNode);
                }
                csNode.markChildrenLoaded();
-           }
+           } else if (cs.getClassSchemeType().equalsIgnoreCase(params.getCsTypeContainer()))
+              pNode.addLeaf(this.getClassificationSchemeContainerNode(cs));
+           else    
+              pNode.addLeaf(getClassificationSchemeNode(cs));
+           
        }
    }   
-   
-    public void loadCSNodes(ClassSchemeNode pNode, String csId) throws Exception {
+
+    public void loadCSContainerNodes(ClassSchemeContainerNode pNode, String csId) throws Exception {
     
+        CDEBrowserParams params = CDEBrowserParams.getInstance();
         // first Add Has_A classification scheme from cs_recs 
         ClassificationSchemeDAO csDao = daoFactory.getClassificationSchemeDAO();
         Collection<ClassificationScheme> childrenCS 
            = csDao.getChildrenClassificationSchemes(csId);
         for (Iterator cIter=childrenCS.iterator(); cIter.hasNext(); ){
             ClassificationScheme cs = (ClassificationScheme) cIter.next();
-            pNode.addLeaf(getClassificationSchemeNode(cs));
+            if (cs.getClassSchemeType().equalsIgnoreCase(params.getCsTypeContainer()))
+                pNode.addLeaf(this.getClassificationSchemeContainerNode(cs));
+            else    
+                pNode.addLeaf(getClassificationSchemeNode(cs));
         }
+      }  
+
+
+   
+    public void loadCSNodes(ClassSchemeNode pNode, String csId) throws Exception {
+    
+        // first Add Has_A classification scheme from cs_recs 
+        ClassificationSchemeDAO csDao = daoFactory.getClassificationSchemeDAO();
         List allCscsi = csDao.getFirstLevelCSIByCS(csId);
         Iterator iter = allCscsi.iterator();
         while (iter.hasNext()) {
@@ -1270,6 +1287,22 @@ public class CDEBrowserTreeServiceImpl
 
     }
      
+    private ClassSchemeContainerNode getClassificationSchemeContainerNode(ClassificationScheme cs)
+    throws Exception {
+      String      extraURLParameters = 
+       "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+
+      ClassSchemeContainerNode csNode = new ClassSchemeContainerNode("Classifications", 
+              cs.getLongName(),  
+              "javascript:performAction"  
+                + "('P_PARAM_TYPE=CSCONTAINER&P_IDSEQ="
+                   + cs.getCsIdseq() + "&P_CONTE_IDSEQ=" + cs.getConteIdseq()
+                   +  extraURLParameters + "')",
+               cs.getCsIdseq(), false);
+     csNode.setToolTip(cs.getPreferredDefinition());
+     return csNode;
+
+    }
    private ClassSchemeRegStatusNode getRegStatusNode(String regStatus,
          String contextIdseq, String csIdseq) throws Exception {
       String      extraURLParameters = 

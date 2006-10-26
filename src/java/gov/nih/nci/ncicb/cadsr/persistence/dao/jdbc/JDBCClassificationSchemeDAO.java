@@ -121,8 +121,7 @@ public class JDBCClassificationSchemeDAO extends JDBCAdminComponentDAO
             super.setSql("SELECT distinct CS_IDSEQ , preferred_name, long_name, " + 
                          "preferred_definition, cstl_name,asl_name,conte_idseq " + 
                          " FROM classification_Schemes" + 
-                         " WHERE  cs_idseq not in (select c_cs_idseq from cs_recs where rl_name = 'HAS_A')  " + 
-                         " and CONTE_IDSEQ = ? " +
+                         " WHERE CONTE_IDSEQ = ? " +
                          " and ASL_NAME = 'RELEASED' " +
                          " and CSTL_NAME != 'Publishing' " +
                          "  order by long_name  ");
