@@ -230,12 +230,9 @@
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormEditAction"
       validate="false">
       <forward name="success"
-        path="/unlockFormAction.do?method=unlockCurrentForm"
-        redirect="false"/>
-<!--      <forward name="success"
         path="/formSearchFramedAction.do?method=getAllForms"
         redirect="false"/>
--->      <forward name="failure"
+      <forward name="failure"
         path="/formbuilder/formEdit.jsp"
         redirect="false"/>
       <forward name="formEdit" path="/formbuilder/formEdit.jsp" redirect="false"/>
