@@ -22,7 +22,9 @@ public class LockingServiceImpl implements LockingService{
     protected Log log = LogFactory.getLog(LockingServiceImpl.class.getName());
     
     public boolean isFormLocked(String acId, String userId) throws ServiceLocatorException{
-        //System.out.println(" this is in LockFormServiceImpl isFormLocked");
+        if (log.isDebugEnabled()){
+            log.debug("Trying to find out if form is locked.");
+        }
         Map<String, FormElementLocker> lockerMap = getLockerMap();
         if (lockerMap==null){
             log.error("lockerMap is null");
@@ -45,6 +47,11 @@ public class LockingServiceImpl implements LockingService{
              }
              return false;
         }    
+        if (log.isDebugEnabled()){
+            log.debug("this form " + acId + " IS locked by " 
+                + locker.getNciUser().getUsername() + " since " + locker.getTimeStamp());
+        }
+        
         return true;
     }
 
