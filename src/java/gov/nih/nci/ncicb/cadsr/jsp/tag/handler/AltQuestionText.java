@@ -20,16 +20,16 @@ import gov.nih.nci.ncicb.cadsr.util.*;
  * This Handler is used to display Alternate Question text from a Dataelement property
  * The text is displayed as hyper link if it not equal to Questions longName.
  * Example Usage
- *   <cde:questionAltText questionBeanId= "question" 
+ *   <cde:questionAltText questionBeanId= "question"
  *                 htmlObjectRef="questionInputText"
  *                 deProperty = "longName"
  *                 questionProperty="longName"
  *                 formIndex="0"
- *                 questionIndex="2" /> 
+ *                 questionIndex="2" />
  *  deProperty and questionPropery are options if both are set question property is used
  *  the property value for the question is from the orgQuestionBeanId bean in session. When
  *  questionProperty is specified orgModuleBeanId,questionBeanId also need to be defined
- *                             
+ *
  */
 public class AltQuestionText extends TagSupport implements CaDSRConstants,FormConstants
 {
@@ -45,7 +45,7 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
   public AltQuestionText()
   {
   }
-  
+
   public int doStartTag() throws javax.servlet.jsp.JspException {
     HttpServletRequest  req;
     JspWriter out;
@@ -58,7 +58,7 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
         if(questionProperty!=null&&orgModuleBeanId!=null)
         {
           // Get the property from the Question in the orgModule
-          // If its a new Question the get the property value from 
+          // If its a new Question the get the property value from
           // the DataElement for deProperty if deProperty is defined
           Module orgModule = (Module)pageContext.getSession().getAttribute(orgModuleBeanId);
           if(orgModule==null)
@@ -78,58 +78,75 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
               propValue = (String)PropertyUtils.getProperty(de,deProperty);
             }
           }
-          
-          if(propValue==null)
-              return Tag.SKIP_BODY;          
-          String script  = generateJavaScript("question",formIndex,questionIndex,questionProperty,propValue);            
+
+          /*if(propValue==null)
+              return Tag.SKIP_BODY;
+            */
+        /* for saved question, use the default question text when CDE does not have preferred question text
+            This is a temporary fix for GF1437 - to keep saved question behavior consistent for CDE 
+            with/without Preferred Question Text
+        */
+          if (  (propValue==null || propValue.length()==0)
+                && "longCDEName".equals(deProperty) && "longName".equals(questionProperty)) {
+                propValue = "Data Element " + de.getLongName() + " does not have Preferred Question Text";
+          }
+          String script  = generateJavaScript("question",formIndex,questionIndex,questionProperty,propValue);
           StringBuffer linkStr = new StringBuffer("<a href=\"javascript:question"+questionIndex+questionProperty+"populate()\">");
           linkStr.append(propValue);
           linkStr.append("</a>");
           out.print(script);
-          out.print(linkStr.toString());              
+          out.print(linkStr.toString());
         }
         else if(de!=null)
           {
             String propValue = (String)PropertyUtils.getProperty(de,deProperty);
-            if(propValue==null)
+            /*if(propValue==null)
               return Tag.SKIP_BODY;
+             */
+             /* for saved question, use the default question text when CDE does not have preferred question text
+                  This is a temporary fix for GF1437 - to keep saved question behavior consistent for CDE 
+                  with/without Preferred Question Text
+              */
+            if (propValue==null && "longCDEName".equals(deProperty) && "longName".equals(questionProperty)) {
+                propValue = "Data Element " + de.getLongName() + " does not have Preferred Question Text";
+            }
             if(propValue.equals(longName))
-            {              
+            {
               out.print(propValue);
             }
             else
             {
-              String script  = generateJavaScript("questionde",formIndex,questionIndex,deProperty,propValue);            
+              String script  = generateJavaScript("questionde",formIndex,questionIndex,deProperty,propValue);
               StringBuffer linkStr = new StringBuffer("<a href=\"javascript:questionde"+questionIndex+deProperty+"populate()\">");
               linkStr.append(propValue);
               linkStr.append("</a>");
               out.print(script);
               out.print(linkStr.toString());
             }
-          }          
+          }
        //out.print(getTableFooter());
       } catch(Exception ioe ) {
           throw new JspException( "I/O Error : " + ioe.getMessage() );
       }//end try/catch
       return Tag.SKIP_BODY;
 
-    }//end doStartTag()  
+    }//end doStartTag()
 
   private String generateJavaScript(String methodPrefix, String formIndex,String questionIndex
                                     , String property, String propValue)
   {
- 
+
     StringBuffer script = new StringBuffer("\n<SCRIPT LANGUAGE=\"JavaScript\"><!--");
     script.append(" \nfunction  "+methodPrefix+questionIndex+property+"populate() \n") ;
     script.append("\n {");
     script.append("\n var objForm"+questionIndex+" = document.forms["+formIndex+"];");
     script.append("\n var objQuestion"+questionIndex+" = objForm"+questionIndex+"['"+htmlObjectRef+"'];");
     script.append("\n objQuestion"+questionIndex+".value = \""+StringUtils.strReplace(propValue,"\"","\\\"")+"\";");
-    script.append("\n}"); 
+    script.append("\n}");
     script.append("\n--> </SCRIPT>\n");
     return script.toString();
   }
-  
+
   private Question getQuestionFromList(
     String questionIdSeq,
     List questions) {
@@ -218,5 +235,5 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
   {
     orgModuleBeanId = newOrgModuleBeanId;
   }
-  
+
 }
