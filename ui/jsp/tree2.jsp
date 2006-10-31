@@ -135,6 +135,21 @@
                     </f:facet>
                     <f:facet name="Classifications">
                         <h:panelGroup style="white-space:nowrap;">
+                           <t:graphicImage alt="Classification" title="Classification"
+                                            value="/i/yellow-folder-open.png"
+                                            border="0"/>
+                            <h:outputLink id="csLink"
+                                          value="#{node.action}">
+                                <h:outputText value="#{node.description}"
+                                 styleClass="treeNode" title="#{node.toolTip}"/>
+                            </h:outputLink>
+                        </h:panelGroup>
+                    </f:facet>
+                    <f:facet name="Container">
+                        <h:panelGroup style="white-space:nowrap;">
+                           <t:graphicImage alt="Container" title="Container"
+                                            value="/i/container.png"
+                                            border="0"/>
                             <h:outputLink id="csLink"
                                           value="#{node.action}">
                                 <h:outputText value="#{node.description}"
@@ -144,6 +159,9 @@
                     </f:facet>
                     <f:facet name="Classification Scheme Item">
                         <h:panelGroup style="white-space:nowrap;">
+                           <t:graphicImage alt="Classification Scheme Item" title="CSI"
+                                            value="/i/csi.png"
+                                            border="0"/>
                             <h:outputLink id="csiLink"
                                           value="#{node.action}">
                                 <h:outputText value="#{node.description}"

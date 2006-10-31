@@ -1292,7 +1292,7 @@ public class CDEBrowserTreeServiceImpl
       String      extraURLParameters = 
        "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
 
-      ClassSchemeContainerNode csNode = new ClassSchemeContainerNode("Classifications", 
+      ClassSchemeContainerNode csNode = new ClassSchemeContainerNode("Container", 
               cs.getLongName(),  
               "javascript:performAction"  
                 + "('P_PARAM_TYPE=CSCONTAINER&P_IDSEQ="
