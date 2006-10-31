@@ -107,10 +107,14 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       //may refactor the following code for better performance 
             refDocs = service.getRreferenceDocuments(de.getDeIdseq());
             de.setReferenceDocs(refDocs);
+      String questionLongName = de.getLongCDEName();
       if (!isValidCDE(de)){
-         saveError("cadsr.formbuilder.form.question.add.badCDE", request, de.getCDEId());
-         return mapping.findForward(FAILURE);
+         saveError("cadsr.formbuilder.form.question.add.badCDE", request, de.getLongName());
+         questionLongName = "Data Element " + de.getLongName() + " does not have Preferred Question Text";         
+          //user can still continue
+         //return mapping.findForward(FAILURE);
       }
+    
       Question q = new QuestionTransferObject();
       module.setForm(crf);
       q.setModule(module);
@@ -122,7 +126,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       q.setQuesIdseq(new Date().getTime() + "" + i);
       q.setValidValues(newValidValues);
       q.setDataElement(de);
-      q.setLongName(de.getLongCDEName());
+      q.setLongName(questionLongName);
 
       q.setVersion(crf.getVersion());
       q.setAslName(crf.getAslName());
@@ -197,8 +201,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       ArrayList al = new ArrayList(col);
 
       de = (DataElement) ((CDECartItem) al.get(deIndex)).getItem();
-      if (newLongName==null || "null".equals(newLongName)){
-          newLongName = "";
+      if (newLongName==null || "null".equals(newLongName) || newLongName.length()==0){
+          //newLongName = "";
+           newLongName = "Data Element " + de.getLongName() + " does not have Preferred Question Text";
       }
 
       //get reference docs
@@ -217,8 +222,9 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
        }       
         
       if (!isValidCDE(de)){
-          saveError("cadsr.formbuilder.form.question.add.badCDE", request, de.getCDEId());
-          return mapping.findForward(FAILURE);
+          saveError("cadsr.formbuilder.form.question.add.badCDE", request, de.getLongName());
+          //return mapping.findForward(FAILURE);
+          //user can still continue
       }
       
       List values = de.getValueDomain().getValidValues();
@@ -236,6 +242,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       }
 */
       q.setLongName(newLongName);
+
       q.setValidValues(newValidValues);
       saveMessage("cadsr.formbuilder.question.changeAssociation.newAssociation",request);
     }
@@ -246,7 +253,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
     q.setDefaultValue("");
 
     // Jump to the update location on the screen
-        request.setAttribute(CaDSRConstants.ANCHOR,"Q"+questionIndex);     
+    request.setAttribute(CaDSRConstants.ANCHOR,"Q"+questionIndex);     
 
     return mapping.findForward("success");
   }
@@ -503,10 +510,8 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
   
   private boolean  isValidCDE(DataElement de){
     if (de.getLongCDEName()==null || de.getLongCDEName().length()==0){
-        //does not allow to add such CDE
          if (log.isDebugEnabled()) {
-           log.debug("CDE without Preferred Question Text is not allowed to add to a form. " +
-                   "the Data Element de Idseq=" + de.getIdseq());
+           log.debug("User is trying to add a CDE without Preferred Question Text. The Data Element deIdseq=" + de.getIdseq());
          }
         return false;
     }
