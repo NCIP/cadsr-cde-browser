@@ -187,7 +187,7 @@ while (csiIter.hasNext()) {
 	<br>
        	<a href="javascript:passBack('<%=altName%>', 'formsValueMeaningTexts')">Select as Value Meaning Text</a>
         </td>
-        <td class="OraFieldText"><%=des.getType()%> </td>
+        <td class="OraFieldText"><%=des.getType()==null?"":des.getType()%> </td>
         <td class="OraFieldText"><%=des.getContext().getName()%> </td>
         <td class="OraFieldText"><%=des.getLanguage()%></td>
       </tr>
@@ -236,7 +236,7 @@ while (csiIter.hasNext()) {
 	<br>
        	<a href="javascript:passBack('<%=altDef%>', 'formsValueMeaningDescs')">Select as Value Meaning Description</a>
         </td>
-        <td class="OraFieldText"><%=def.getType()%> </td>
+        <td class="OraFieldText"><%=def.getType()==null?"":def.getType()%> </td>
         <td class="OraFieldText"><%=def.getContext().getName()%> </td>
         <td class="OraFieldText"><%=def.getLanguage()%> </td>
       </tr>
