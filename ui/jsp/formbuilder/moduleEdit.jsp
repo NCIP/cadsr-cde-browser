@@ -935,8 +935,7 @@ function clearProtocol() {
                                                        <td  class="OraTableColumnHeader" width="30%">
                                                             <bean:message key="cadsr.formbuilder.valueMeaning.text" />
                                                        </td>
-                                                       <td class="OraFieldText" >                                                       
-						          <bean:define id="valueMeaning" name="validValue" property="valueMeaning.longName"></bean:define>
+                                                       <td class="OraFieldText" >      
                                                           <html:textarea  styleClass="OraFieldText" rows="2" cols="80" property='<%=FormConstants.FORM_VALUE_MEANING_TEXT + "[" + vvInstrIndex + "]"%>' readonly="true">
                                                           </html:textarea>
                                                           &nbsp;
@@ -978,8 +977,7 @@ function clearProtocol() {
                                                        <td  class="OraTableColumnHeader" width="30%">
                                                             <bean:message key="cadsr.formbuilder.valueMeaning.text" />
                                                        </td>
-                                                       <td class="OraFieldText" >                                                       
-						          <bean:define id="valueMeaning" name="validValue" property="valueMeaning.longName"></bean:define>
+                                                       <td class="OraFieldText" >      
                                                           <html:textarea  styleClass="OraFieldText" rows="2" cols="80" property='<%=FormConstants.FORM_VALUE_MEANING_TEXT + "[" + vvInstrIndex + "]"%>'>
                                                           </html:textarea>
                                                        </td>                                          
