@@ -1,5 +1,6 @@
             <logic:notEmpty name="<%=FormConstants.MODULE_COPY_FORM%>" property = "modules">
               <logic:iterate id="module" name="<%=FormConstants.MODULE_COPY_FORM%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules" indexId="modIndex" >                            
+              <logic:notPresent name="formLocked">
                <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
                  <tr >
            	    <td align="left" width="18%" >
@@ -20,6 +21,7 @@
            	    </td>                       
          	 </tr>
       		</table>
+              </logic:notPresent>
                 <%@ include file="/formbuilder/commonModuleDetails_inc.jsp"%> 
                 <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         	   <tr class>
