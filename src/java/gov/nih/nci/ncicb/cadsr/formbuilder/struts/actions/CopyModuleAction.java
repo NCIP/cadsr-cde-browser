@@ -32,10 +32,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.ModuleInstructionTransferObject;
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormElementLocker;
 import gov.nih.nci.ncicb.cadsr.resource.Module;
 import gov.nih.nci.ncicb.cadsr.resource.ModuleInstruction;
 import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormActionUtil;
 import gov.nih.nci.ncicb.cadsr.resource.FormValidValue;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.resource.Question;
 
 
@@ -96,6 +98,13 @@ public class CopyModuleAction extends FormBuilderSecureBaseDispatchAction {
          if (formIdSeq==null || formIdSeq.length() == 0){        
              formIdSeq = (String)request.getAttribute("P_IDSEQ");
          }    
+      }
+      
+      if (isFormLocked(formIdSeq, request.getRemoteUser())){                  
+        request.setAttribute("formLocked", true);
+        if (log.isDebugEnabled()){
+            log.debug("This form " + formIdSeq + " is locked by another user");
+        }
       }
          Form crf = null; 
          try {
