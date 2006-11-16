@@ -83,7 +83,7 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
               return Tag.SKIP_BODY;
             */
         /* for saved question, use the default question text when CDE does not have preferred question text
-            This is a temporary fix for GF1437 - to keep saved question behavior consistent for CDE 
+            This is a temporary fix for GF1437 - to keep saved question behavior consistent for CDE
             with/without Preferred Question Text
         */
           if (  (propValue==null || propValue.length()==0)
@@ -104,7 +104,7 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
               return Tag.SKIP_BODY;
              */
              /* for saved question, use the default question text when CDE does not have preferred question text
-                  This is a temporary fix for GF1437 - to keep saved question behavior consistent for CDE 
+                  This is a temporary fix for GF1437 - to keep saved question behavior consistent for CDE
                   with/without Preferred Question Text
               */
             if (propValue==null && "longCDEName".equals(deProperty) && "longName".equals(questionProperty)) {
@@ -141,9 +141,15 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
     script.append("\n {");
     script.append("\n var objForm"+questionIndex+" = document.forms["+formIndex+"];");
     script.append("\n var objQuestion"+questionIndex+" = objForm"+questionIndex+"['"+htmlObjectRef+"'];");
-    script.append("\n objQuestion"+questionIndex+".value = \""+StringUtils.strReplace(propValue,"\"","\\\"")+"\";");
+    String str = StringUtils.getValidJSString(propValue);
+    //to make \n work in JavaScript
+    str = StringUtils.strReplace(str, ""+ (char)13+ (char)10, "\\n"); 
+    script.append("\n objQuestion"+questionIndex+".value = \""+str+"\";");
     script.append("\n}");
     script.append("\n--> </SCRIPT>\n");
+
+    System.out.println("StringUtils.getValidJSString(propValue)=" + StringUtils.getValidJSString(propValue));
+
     return script.toString();
   }
 
