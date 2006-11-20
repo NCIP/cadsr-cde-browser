@@ -1,5 +1,4 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page contentType="text/html;charset=windows-1252"%>
 <%@page import="java.util.*" %>
@@ -14,12 +13,11 @@
   <head>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
     <LINK rel="stylesheet" TYPE="text/css" HREF="/CDEBrowser/css/blaf.css">
-    <title>Select Form Value Meaning Text and Description</title>
+    <title>Value Meaning Details</title>
     
     <SCRIPT LANGUAGE="JavaScript1.1">
     function passBack(alter, columnName) {
 	    var objForm0 = opener.document.forms[0];	    
-	    //var objValueMeaningText = objForm0['formsValueMeaningTexts[' + <%=request.getParameter("vvColumnIndex")%> + ']'];
             var objAlter = objForm0[columnName + '[' + <%=request.getParameter("vvColumnIndex")%> + ']'];	    
 	    objAlter.value = alter;
 	    close();
@@ -107,7 +105,9 @@
 	      	longName = StringUtils.strReplace(longName, "\'",  "&acute;");
 	   }   	
 	%>      		
+        <logic:notPresent name="CDEBrowser">
        	<a href="javascript:passBack('<%=longName%>', 'formsValueMeaningTexts')">Select as Value Meaning Text</a>
+        </logic:notPresent>
        	</td>
 
       </tr>
@@ -121,15 +121,22 @@
 	      	desc = StringUtils.strReplace(desc, "\'",  "&acute;");
 	   }   	
 	%>      		
+        <logic:notPresent name="CDEBrowser">
        	<a href="javascript:passBack('<%=desc%>', 'formsValueMeaningDescs')">Select as Value Meaning Desc.</a>
+        </logic:notPresent>
        	</td>
 
       </tr>
 </table>
 <p>
-
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-<% Iterator csiIter = idToCscsi.keySet().iterator();
+
+<% if (idToCscsi.isEmpty()) {%>
+    <tr class="OraTabledata"> There is not alternate names and definitions
+    </tr>
+    </table>
+<%}else{
+Iterator csiIter = idToCscsi.keySet().iterator();
 while (csiIter.hasNext()) {
     String csiId = (String) csiIter.next();
     ClassSchemeItem currCSI = (ClassSchemeItem) idToCscsi.get(csiId);
@@ -184,8 +191,10 @@ while (csiIter.hasNext()) {
 	      	altName = StringUtils.strReplace(altName, "\'",  "&acute;");
 	   }   	
 	%>      		        
+        <logic:notPresent name="CDEBrowser">        
 	<br>
        	<a href="javascript:passBack('<%=altName%>', 'formsValueMeaningTexts')">Select as Value Meaning Text</a>
+        </logic:notPresent>
         </td>
         <td class="OraFieldText"><%=des.getType()==null?"":des.getType()%> </td>
         <td class="OraFieldText"><%=des.getContext().getName()%> </td>
@@ -232,9 +241,11 @@ while (csiIter.hasNext()) {
 		altDef = StringUtils.strReplace(altDef, "\"","&quot;");
 	      	altDef = StringUtils.strReplace(altDef, "\'",  "&acute;");
 	   }   	
-	%>      		        
-	<br>
+	%>  
+       <logic:notPresent name="CDEBrowser">
+	<br>        
        	<a href="javascript:passBack('<%=altDef%>', 'formsValueMeaningDescs')">Select as Value Meaning Description</a>
+        </logic:notPresent>
         </td>
         <td class="OraFieldText"><%=def.getType()==null?"":def.getType()%> </td>
         <td class="OraFieldText"><%=def.getContext().getName()%> </td>
@@ -246,7 +257,7 @@ while (csiIter.hasNext()) {
   else {
 %>
        <tr class="OraTabledata">
-         <td colspan=4">There are no alternate definitions for the selected Value Meaning.</td>
+         <td colspan="4">There are no alternate definitions for the selected Value Meaning.</td>
        </tr>
 <%
   }
@@ -256,7 +267,8 @@ while (csiIter.hasNext()) {
 </td></tr>
 </table>
 <p>
-<%} %>
+<%} //end of while
+}//end of else%>
 
 </body>
 </html>
