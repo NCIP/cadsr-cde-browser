@@ -703,6 +703,7 @@
            /WEB-INF/formbuilder/struts-config-manageReferenceDocs.xml,/WEB-INF/formbuilder/struts-config-downloadFormToExcel.xml,
            /WEB-INF/cdebrowser/struts-config-browserSearchScreenType.xml,/WEB-INF/formbuilder/struts-config-publish.xml,
            /WEB-INF/cdebrowser/struts-config-cde-search-preferences.xml,/WEB-INF/ocbrowser/struts-config-ocDetails.xml,
+           /WEB-INF/cdebrowser/struts-config-browser-valuemeaning.xml,           
            /WEB-INF/admin/struts-config-admin.xml,/WEB-INF/formbuilder/struts-config-skippattern.xml,
            /WEB-INF/formbuilder/struts-config-moduleRepeats.xml,/WEB-INF/formbuilder/struts-config-setAlert.xml
        </param-value>
