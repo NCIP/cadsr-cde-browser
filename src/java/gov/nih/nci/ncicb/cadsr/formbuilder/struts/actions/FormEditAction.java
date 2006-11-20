@@ -695,7 +695,7 @@ public class FormEditAction extends FormBuilderSecureBaseDispatchAction {
           
           if (request.getParameter(FormConstants.UNLOCK)!=null){
               //unlock the form
-              unlockForm(header.getFormIdseq(), request.getRemoteUser());
+              unlockForm(crf.getFormIdseq(), request.getRemoteUser());
           }    
         }
         catch (FormBuilderException exp) {
