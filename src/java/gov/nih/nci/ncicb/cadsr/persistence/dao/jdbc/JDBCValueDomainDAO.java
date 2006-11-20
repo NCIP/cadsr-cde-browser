@@ -106,7 +106,59 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
         return null;
     }
     
+    public ValueMeaning getValueMeaning(String shortMeaning){
+        ValueMeaningQuery vmQuery = new ValueMeaningQuery(getDataSource());
+        vmQuery.setSql();
+        ValueMeaning vm = vmQuery.getValueMeaning(shortMeaning);
+        
+        vm.setDefinitions(getDefinitions(vm.getIdseq()));
+        vm.setDesignations(getDesignations(vm.getIdseq(), null));
+        return vm;
+    }
+    
+    /**
+     * Inner class to get value meanign
+     * 
+     */
+    class ValueMeaningQuery extends MappingSqlQuery {
+    
+      ValueMeaningQuery(DataSource ds) {
+        super();
+        this.setDataSource(ds);
+      }
 
+      public void setSql() {
+        String sql = " SELECT * from value_meanings where short_meaning = ?" ;
+        setSql(sql);
+        declareParameter(new SqlParameter("short_meaning", Types.VARCHAR));
+        compile();
+      }  
+
+      
+      protected Object mapRow(
+        ResultSet rs,
+        int rownum) throws SQLException {
+
+        // reaches to this point for each record retrieved.
+        ValueMeaning vm = new ValueMeaningTransferObject();
+        vm.setLongName(rs.getString("long_name"));
+        vm.setIdseq(rs.getString("vm_idseq"));
+        vm.setPreferredDefinition(rs.getString("preferred_definition"));
+        return vm;
+      }
+      
+      public ValueMeaning getValueMeaning(String shortMeaning){
+          Object[] obj =
+            new Object[] { shortMeaning };
+          List ret =  execute(obj);
+          if (ret!=null){
+              return (ValueMeaning)(ret.get(0));
+          }else{
+              return null;
+          }
+      }
+    }
+    
   /**
    * Inner class to get all valid values for each value domain
    * 
@@ -223,6 +275,8 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
         return vvMap;
       }
     }
+    
+    
 
 
 

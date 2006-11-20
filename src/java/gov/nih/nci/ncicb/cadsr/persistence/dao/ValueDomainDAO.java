@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.List;
 
 import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
+import gov.nih.nci.ncicb.cadsr.resource.ValueMeaning;
 
 public interface ValueDomainDAO extends AdminComponentDAO {
   /**
@@ -19,5 +20,6 @@ public interface ValueDomainDAO extends AdminComponentDAO {
   public Map getPermissibleValues(Collection vdIdseqs);
   
   public ValueDomain getValueDomainById(String vdId);
-
+  
+  public ValueMeaning getValueMeaning(String shortMeaning);
 }
