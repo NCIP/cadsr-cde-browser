@@ -14,6 +14,8 @@
 <%@page import="java.util.List " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.StringUtils" %>
+<%@page import="java.net.URLEncoder" %>
+
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
@@ -58,6 +60,14 @@ function goPage(pgNum,urlInfo) {
 function listChanged(urlInfo) {
   var pgNum = document.forms[0].vv_pages.options[document.forms[0].vv_pages.selectedIndex].value
   document.location.href= "search?listValidValuesForDataElements=9&tabClicked=2&performQuery=no&vvPageNumber="+pgNum+"<%= pageUrl %>"+urlInfo;
+}
+
+function valueMeaningDetails(shortMeaning)
+{
+  //var urlString="<%=request.getContextPath()%>/search?dataElementDetails=9" + linkParms + "<%= pageUrl %>"+"&queryDE=yes";
+  var urlString="<%=request.getContextPath()%>/valueMeaningAlternates.do?method=showValueMeaningAlternates&id="+shortMeaning;
+  newBrowserWin(urlString,'valueMeaningDetails',800,600)
+  
 }
   
 //-->
@@ -354,7 +364,18 @@ function listChanged(urlInfo) {
 %>
       <tr class="OraTabledata">
         <td class="OraFieldText"><%=validValue.getShortMeaningValue()%> </td>
-        <td class="OraFieldText"><%=validValue.getShortMeaning()%> </td>
+        <td class="OraFieldText">
+        <% String encoded = "";
+        	try{
+        		encoded = URLEncoder.encode(validValue.getShortMeaning(), "UTF-8");
+       	   }catch(Exception e){
+       	   	e.printStackTrace();
+       	   }
+        %>
+          <a href="javascript:valueMeaningDetails('<%=encoded%>')" >
+            <%=validValue.getShortMeaning()%> 
+          </a>                   
+        </td>
        <td class="OraFieldText">
           <%=CDEDetailsUtils.getConceptCodesUrl(validValue.getConceptDerivationRule(),params,"link",",")%>
        </td>
