@@ -128,7 +128,7 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
       }
 
       public void setSql() {
-        String sql = " SELECT * from value_meanings where short_meaning = ?" ;
+        String sql = " SELECT * from sbr.value_meanings where short_meaning = ?" ;
         setSql(sql);
         declareParameter(new SqlParameter("short_meaning", Types.VARCHAR));
         compile();
