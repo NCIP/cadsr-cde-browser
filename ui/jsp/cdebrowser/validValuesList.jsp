@@ -65,7 +65,7 @@ function listChanged(urlInfo) {
 function valueMeaningDetails(shortMeaning)
 {
   //var urlString="<%=request.getContextPath()%>/search?dataElementDetails=9" + linkParms + "<%= pageUrl %>"+"&queryDE=yes";
-  var urlString="<%=request.getContextPath()%>/valueMeaningAlternates.do?method=showValueMeaningAlternates&id="+shortMeaning;
+  var urlString="<%=request.getContextPath()%>/valueMeaningAlternates.do?method=showValueMeaningAlternates&id="+escape(shortMeaning);
   newBrowserWin(urlString,'valueMeaningDetails',800,600)
   
 }
@@ -365,14 +365,7 @@ function valueMeaningDetails(shortMeaning)
       <tr class="OraTabledata">
         <td class="OraFieldText"><%=validValue.getShortMeaningValue()%> </td>
         <td class="OraFieldText">
-        <% String encoded = "";
-        	try{
-        		encoded = URLEncoder.encode(validValue.getShortMeaning(), "UTF-8");
-       	   }catch(Exception e){
-       	   	e.printStackTrace();
-       	   }
-        %>
-          <a href="javascript:valueMeaningDetails('<%=encoded%>')" >
+          <a href="javascript:valueMeaningDetails('<%=validValue.getShortMeaning()%>')" >
             <%=validValue.getShortMeaning()%> 
           </a>                   
         </td>
