@@ -151,7 +151,7 @@ public class JDBCValueDomainDAO extends JDBCAdminComponentDAO implements ValueDo
           Object[] obj =
             new Object[] { shortMeaning };
           List ret =  execute(obj);
-          if (ret!=null){
+          if (ret!=null && (!ret.isEmpty()) ){
               return (ValueMeaning)(ret.get(0));
           }else{
               return null;
