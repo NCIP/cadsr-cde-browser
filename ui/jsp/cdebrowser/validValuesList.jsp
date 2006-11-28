@@ -365,7 +365,15 @@ function valueMeaningDetails(shortMeaning)
       <tr class="OraTabledata">
         <td class="OraFieldText"><%=validValue.getShortMeaningValue()%> </td>
         <td class="OraFieldText">
-          <a href="javascript:valueMeaningDetails('<%=validValue.getShortMeaning()%>')" >
+        <% String encoded = "";
+        	try{
+        		encoded = URLEncoder.encode(validValue.getShortMeaning(), "UTF-8");
+       	   }catch(Exception e){
+       	   	e.printStackTrace();
+       	   }
+        %>
+        
+          <a href="javascript:valueMeaningDetails('<%=encoded%>')" >
             <%=validValue.getShortMeaning()%> 
           </a>                   
         </td>
