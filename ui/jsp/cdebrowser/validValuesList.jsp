@@ -66,7 +66,7 @@ function valueMeaningDetails(shortMeaning)
 {
   //var urlString="<%=request.getContextPath()%>/search?dataElementDetails=9" + linkParms + "<%= pageUrl %>"+"&queryDE=yes";
   var urlString="<%=request.getContextPath()%>/valueMeaningAlternates.do?method=showValueMeaningAlternates&id="+escape(shortMeaning);
-  newBrowserWin(urlString,'valueMeaningDetails',800,600)
+  newWin(urlString,'valueMeaningDetails',800,600)
   
 }
   
