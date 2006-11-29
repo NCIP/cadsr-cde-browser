@@ -227,11 +227,24 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
           //user can still continue
       }
       
-      List values = de.getValueDomain().getValidValues();
-      
-      //should add value meaning to the vaildValue part.
-      //end
-      newValidValues = DTOTransformer.toFormValidValueList(values, q);
+      //set valid values with value meaning
+      List vdIdList = new ArrayList();
+      try{
+          if (de.getValueDomain()!=null && de.getValueDomain().getVdIdseq()!=null ){
+              String vdIdSeq = de.getValueDomain().getVdIdseq();
+              vdIdList.add(vdIdSeq);
+              Map vvMap = service.getValidValues(vdIdList);
+              List vvList = (List)vvMap.get(vdIdSeq);
+              de.getValueDomain().setValidValues(vvList);
+              newValidValues = DTOTransformer.toFormValidValueList(vvList, q);
+          }    
+          
+      }catch (FormBuilderException fbe){
+          log.error("Exception on getting valid values for the Data Element Value Doamin , vdIdSeq=" 
+                                +  de.getValueDomain().getVdIdseq(), fbe);
+          saveError("cadsr.formbuilder.question.changeAssociation.newAssociation.fail", request);
+          return mapping.findForward(FAILURE);
+      }
       
 /*      
       //clear out the form valid value Id
@@ -242,7 +255,7 @@ public class SecureCDECartAction extends FormBuilderSecureBaseDispatchAction {
       }
 */
       q.setLongName(newLongName);
-
+      
       q.setValidValues(newValidValues);
       saveMessage("cadsr.formbuilder.question.changeAssociation.newAssociation",request);
     }
