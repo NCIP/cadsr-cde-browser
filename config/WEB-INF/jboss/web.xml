@@ -252,12 +252,12 @@
          <filter-name>FormBuilderSessionFilter</filter-name>
       <url-pattern>/formbuilder/*</url-pattern>
 </filter-mapping> 
-
+<!--This is for CDE Cart.
  <filter-mapping> 
          <filter-name>FormBuilderSessionFilter</filter-name>
       <url-pattern>/formCDECartAction.do</url-pattern>
 </filter-mapping> 
-
+-->
  <filter-mapping> 
          <filter-name>FormBuilderSessionFilter</filter-name>
       <url-pattern>/formCDECartRedirectAction.do</url-pattern>
@@ -460,6 +460,10 @@
 </filter-mapping> 
  <filter-mapping> 
          <filter-name>FormBuilderSessionFilter</filter-name>
+      <url-pattern>/manageReferenceDocs.do</url-pattern>
+</filter-mapping> 
+ <filter-mapping> 
+         <filter-name>FormBuilderSessionFilter</filter-name>
       <url-pattern>/editReferenceDoc.do</url-pattern>
 </filter-mapping> 
  <filter-mapping> 
@@ -655,10 +659,22 @@
          <filter-name>EditFormFilter</filter-name>
       <url-pattern>/createValidValueSkipAction.do</url-pattern>
 </filter-mapping>
+
+<!--bypass /formbuilder/viewModuleList.do -->
 <filter-mapping> 
          <filter-name>EditFormFilter</filter-name>
-      <url-pattern>/formbuilder/*</url-pattern>
+      <url-pattern>/formbuilder/skipPattern.do</url-pattern>
 </filter-mapping>
+<filter-mapping> 
+         <filter-name>EditFormFilter</filter-name>
+      <url-pattern>/formbuilder/moduleSearch.do</url-pattern>
+</filter-mapping>
+<filter-mapping> 
+         <filter-name>EditFormFilter</filter-name>
+      <url-pattern>/formbuilder/copyFromModuleList.do</url-pattern>
+</filter-mapping>
+
+
 <filter-mapping> 
          <filter-name>EditFormFilter</filter-name>
       <url-pattern>/formHrefDeleteAction.do</url-pattern>
