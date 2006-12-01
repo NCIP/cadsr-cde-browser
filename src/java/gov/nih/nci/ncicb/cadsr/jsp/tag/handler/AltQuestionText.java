@@ -148,8 +148,6 @@ public class AltQuestionText extends TagSupport implements CaDSRConstants,FormCo
     script.append("\n}");
     script.append("\n--> </SCRIPT>\n");
 
-    System.out.println("StringUtils.getValidJSString(propValue)=" + StringUtils.getValidJSString(propValue));
-
     return script.toString();
   }
 
