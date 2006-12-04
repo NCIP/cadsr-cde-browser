@@ -132,7 +132,7 @@
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
 
 <% if (idToCscsi.isEmpty()) {%>
-    <tr class="OraTabledata"> There is not alternate names and definitions
+    <tr class="OraTabledata"> There are no alternate names and definitions
     </tr>
     </table>
 <%}else{
