@@ -476,7 +476,7 @@ public class DESearchQueryBuilder extends Object {
 
       }
       else if (treeParamType.equals("CLASSIFICATION")
-      || treeParamType.equals("REGCS") 
+      || treeParamType.equals("REGCS")
       || treeParamType.equals("CSCONTAINER")){
         if (searchStr5.equals(""))
           csiWhere = "";
@@ -484,11 +484,11 @@ public class DESearchQueryBuilder extends Object {
           csiWhere = " and acs.cs_csi_idseq = '"+searchStr5+"'";
 
         String csWhere = "";
-        if (treeParamType.equals("CSCONTAINER")) 
+        if (treeParamType.equals("CSCONTAINER"))
             csWhere = getCSContainerWhere(this.treeParamIdSeq);
-        else 
+        else
             csWhere = this.getCSWhere(this.treeParamIdSeq);
-        
+
 
         fromWhere = " from  sbr.data_elements de , " +
                                " sbr.reference_documents rd , " +
@@ -747,7 +747,7 @@ public class DESearchQueryBuilder extends Object {
     String docTextSearchWhere =null;
     String docTextTypeWhere =null;
     String umlAltNameWhere = null;
-     
+
 
     newSearchStr = StringReplace.strReplace(text,"*","%");
     newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
@@ -818,25 +818,25 @@ public class DESearchQueryBuilder extends Object {
                    + searchWhere + " ) ";
 
     }
-    
+
     if (StringUtils.containsKey(searchDomain,"ALL") ||
     StringUtils.containsKey(searchDomain,"UML ALT Name") ) {
-      umlAltNameWhere = 
+      umlAltNameWhere =
        " (select de_idseq  from sbr.designations dsn,sbr.data_elements de1  "
        + "where  de1.de_idseq  = dsn.ac_idseq (+)  "
        + "and dsn.detl_name = 'UML Class:UML Attr'  and "
       +  buildSearchString("upper (nvl(dsn.name,'%')) like upper ('SRCSTR')", newSearchStr, searchMode)
       +" )";
-    
+
       if (docWhere == null)
          return  " and de.de_idseq IN " + umlAltNameWhere;
       else {
-         String nameWhere = " and de.de_idseq IN (" + umlAltNameWhere 
-         + " union " + docWhere +") " ;     
+         String nameWhere = " and de.de_idseq IN (" + umlAltNameWhere
+         + " union " + docWhere +") " ;
          return nameWhere;
       }
    }
-   
+
     return " and de.de_idseq IN " + docWhere;
   }
 
@@ -1077,7 +1077,7 @@ public class DESearchQueryBuilder extends Object {
     return csWhere;
 
    }
-   
+
    private String getCSContainerWhere (String csId) {
        String csWhere =  " and de.de_idseq IN ( " +
                          " select de_idseq " +
@@ -1085,19 +1085,19 @@ public class DESearchQueryBuilder extends Object {
                          "       sbr.ac_csi acs, " +
                          "       sbr.cs_csi csc " +
                          " where csc.cs_idseq IN ( " +
-                         "       select unique(cs.cs_idseq)" + 
-                         "       from   classification_schemes cs" + 
-                         "       where  cs.asl_name = 'RELEASED'" + 
-                         "       and    cs.cstl_name != 'Container'" + 
-                         "       and    cs.cs_idseq in (" + 
-                         "         select c_cs_idseq " + 
-                         "         from sbr.cs_recs_hasa_view " + 
+                         "       select unique(cs.cs_idseq)" +
+                         "       from   classification_schemes cs" +
+                         "       where  cs.asl_name = 'RELEASED'" +
+                         "       and    cs.cstl_name != 'Container'" +
+                         "       and    cs.cs_idseq in (" +
+                         "         select c_cs_idseq " +
+                         "         from sbrext.cs_recs_hasa_view " +
                          "         start with p_cs_idseq = '" +csId+"'" +
                          "         connect by Prior c_cs_idseq = p_cs_idseq))" +
                         " and   csc.cs_csi_idseq = acs.cs_csi_idseq " +
                          " and   acs.ac_idseq = de_idseq ) ";
     return csWhere;
-      
+
    }
 
 }
