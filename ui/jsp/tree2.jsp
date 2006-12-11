@@ -53,10 +53,10 @@
     var frm = findFrameByName('body');
     document.body.style.cursor = "wait";
     frm.document.body.style.cursor = "wait";
-    if ("<%=treeName%>" == "deTree")
-     frm.document.location = "<%=request.getContextPath()%>" + "/search?" + urlParams + "<%=callerParams%>";
+    if ("<%=treeName%>" == "formTree")
+     top.document.location = "/CDEBrowser/formDetailsAction.do?method=getFormDetails&"+urlParams;
     else
-     top.document.location = "/CDEBrowser/formDetailsAction.do?method=getFormDetails&"+urlParams;;
+     frm.document.location = "<%=request.getContextPath()%>" + "/search?" + urlParams + "<%=callerParams%>";
    }
 
   //-->
