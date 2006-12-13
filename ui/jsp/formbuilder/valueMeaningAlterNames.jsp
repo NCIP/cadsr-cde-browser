@@ -152,7 +152,7 @@ while (csiIter.hasNext()) {
 </TR>
 <% if (currCSI != null) { %>
       <tr class="OraTabledata">
-        <td class="OraFieldText"><%=currCSI.getClassSchemePrefName()%> </td>
+        <td class="OraFieldText"><%=currCSI.getClassSchemeLongName()%> </td>
         <td class="OraFieldText"><%=currCSI.getClassSchemeDefinition()%> </td>
         <td class="OraFieldText"><%=currCSI.getClassSchemeItemName()%> </td>
         <td class="OraFieldText"><%=currCSI.getClassSchemeItemType()%> </td>
