@@ -1445,7 +1445,8 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         ResultSet rs,
         int rownum) throws SQLException {
         Definition dto = new DefinitionTransferObject();
-
+        //fixing
+        dto.setId(rs.getString(1));
         dto.setDefinition(rs.getString(2));
         dto.setType(rs.getString(3));
         dto.setLanguage(rs.getString(4));
