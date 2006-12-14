@@ -91,7 +91,7 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
                  //create a resource object from the bean
                  for (int j=0; j<cscsis.size(); j++) {
                      ClassSchemeClassSchemeItemBean cscsiBean = (ClassSchemeClassSchemeItemBean) cscsis.get(j);
-                     designation.addCscsi(createCsCsiFromBean(cscsiBean));
+                    designation.addCscsi(createCsCsiFromBean(cscsiBean));
                  }
                  break;
              }
@@ -136,6 +136,7 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
   private ClassSchemeItem createCsCsiFromBean (ClassSchemeClassSchemeItemBean cscsiBean){
     ClassSchemeItem cscsi = new CSITransferObject();
     cscsi.setCsCsiIdseq(cscsiBean.getId());
+    cscsi.setClassSchemeLongName(cscsiBean.getCs().getLongName());
     cscsi.setClassSchemePrefName(cscsiBean.getCs().getPreferredName());   
     cscsi.setClassSchemeDefinition(cscsiBean.getCs().getPreferredDefinition());
     cscsi.setClassSchemeItemName(cscsiBean.getCsi().getName());
