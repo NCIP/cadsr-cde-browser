@@ -4,7 +4,7 @@ CD Browser @cdebrowser.version@ Installation Document for JBOSS
 
 Pre-requisites
 ---------------
-1.  JBOSS 4.0.2 installed. Available from http://www.jboss.org
+1.  JBOSS 4.0.4 installed. Available from http://www.jboss.org
 2.  JDK 1.5  installed
 3.  Ant 1.6.2 or above installed. Available from http://ant.apache.org/
 4.  caDSR @cdebrowser.version@ repository installed. Please refer to caDSR installation document
