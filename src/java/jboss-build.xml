@@ -25,7 +25,7 @@
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
    <property name="cdebrowser.version" value="3.2" />
-   <property name="cdebrowser.build" value="6" />
+   <property name="cdebrowser.build" value="7" />
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="3_2" />
@@ -92,8 +92,8 @@
   <property name="app.setup.jboss.install.out.name" value="Install_CDBrowser_${cdebrowser.version.suffix}_on_Jboss.txt" />  
   <property name="download.file.name.unix" value="CDEBrowser_Unix_${cdebrowser.version.suffix}" />
   <property name="download.file.name.windows" value="CDEBrowser_Windows_${cdebrowser.version.suffix}" />
-  <property name="open.source.file.name.windows" value="CDEBrowser_src_${cdebrowser.version.suffix}(Windows)" />
-  <property name="open.source.file.name.unix" value="CDEBrowser_src_${cdebrowser.version.suffix}(Unix)" />  
+  <property name="open.source.file.name.windows" value="CDEBrowser_Windows_src_${cdebrowser.version.suffix}" />
+  <property name="open.source.file.name.unix" value="CDEBrowser_Unix_src_${cdebrowser.version.suffix}" />  
   
   
     <!-- Open source directoris -->
