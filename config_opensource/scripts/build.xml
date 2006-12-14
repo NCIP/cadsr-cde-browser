@@ -313,6 +313,9 @@
           <include name="WEB-INF/jboss-web.xml"/>
           <include name="WEB-INF/spring/*.xml"/>
           <include name="WEB-INF/ehcache.xml"/>
+          <include name="WEB-INF/tomahawk.taglib.xml"/>
+          <include name="WEB-INF/cdebrowser*.xml"/>
+          
         </patternset>
       </fileset>
       <fileset dir="${classes.build.dir}">
@@ -443,7 +446,11 @@
       	
       	<!-- Tomahawk API  -->
       	<include name="tomahawk-1.1.3.jar"/>
+      	<include name="jsfCompAA-0.1.jar"/>
       	<include name="ajaxanywhere-1.1.0.6.jar"/>
+      	<include name="myfaces-api-1.1.3.jar"/>
+      	<include name="myfaces-impl-1.1.3.jar"/>
+       	
 
       </lib>
        
