@@ -20,11 +20,11 @@
    <!-- Make sure these are correct for your instance -->
    
    
-   <property name="cdebrowser.version" value="3.1" />
-   <property name="cdebrowser.build" value="13" />
+   <property name="cdebrowser.version" value="3.2" />
+   <property name="cdebrowser.build" value="7" />
    
    <!-- used for open source build for file suffix-->
-   <property name="cdebrowser.version.suffix" value="3.1" />
+   <property name="cdebrowser.version.suffix" value="3.2" />
    
    <property name="dev.user.password" value="cdeuser" />
 
@@ -94,66 +94,11 @@
 
    <!--Set the lib classpath-->
    <path id="classpath">
-      <!--browser libs -->
-
-      <pathelement location="${java.lib.dir}/classes12.jar"/>
-      <pathelement location="${java.lib.dir}/cle20.jar"/>
-      <pathelement location="${java.lib.dir}/collections.jar"/>
-      <pathelement location="${java.lib.dir}/healthtoolkit.zip"/>
-      <pathelement location="${java.lib.dir}/jdev-cm.jar"/>
-      <pathelement location="${java.lib.dir}/jdev-rt.jar"/>
-      <pathelement location="${java.lib.dir}/nls_charset12.jar"/>
-      <pathelement location="${java.lib.dir}/ssosdk307.jar"/>
-      <pathelement location="${java.lib.dir}/xmlcomp.jar"/>      
-      <pathelement location="${java.lib.dir}/xmlparserv2.jar"/>    
-      <pathelement location="${java.lib.dir}/xsu12.jar"/> 
-      
-      <!--BC4J libs -->
-      <pathelement location="${java.lib.dir}/bc4jct.jar"/>
-      <pathelement location="${java.lib.dir}/bc4jdatum.jar"/>
-      <pathelement location="${java.lib.dir}/bc4jdomorcl.jar"/>
-      <pathelement location="${java.lib.dir}/bc4jmt.jar"/>   
-      
-      <!-- Struts libs -->
-      <pathelement location="${java.lib.dir}/struts-1.1.jar"/>
-      <pathelement location="${java.lib.dir}/commons-beanutils.jar"/>
-      <pathelement location="${java.lib.dir}/commons-collections.jar"/>
-      <pathelement location="${java.lib.dir}/commons-fileupload.jar"/>
-      <pathelement location="${java.lib.dir}/commons-digester.jar"/>
-      <pathelement location="${java.lib.dir}/commons-lang.jar"/>
-      <pathelement location="${java.lib.dir}/commons-logging.jar"/>
-      <pathelement location="${java.lib.dir}/commons-validator.jar"/>
-      <pathelement location="${java.lib.dir}/jakarta-oro.jar"/> 
-      
-      <!-- Springframework libs -->
-      <pathelement location="${java.lib.dir}/spring-1.2.4.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-context-1.2.4.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-core-1.2.4.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-dao-1.2.4.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-orm-1.2.4.jar"/> 
-      <pathelement location="${java.lib.dir}/spring-context-1.2.4.jar"/>
-      <pathelement location="${java.lib.dir}/spring-web-1.2.4.jar"/>
-            
-      <!--J2EE  libs -->
-      <pathelement location="${java.lib.dir}/servlet.jar"/>
-      <pathelement location="${java.lib.dir}/jndi.jar"/>   
-      <pathelement location="${java.lib.dir}/jta.jar"/>  
-      <pathelement location="${java.lib.dir}/jdbc.jar"/>
-      <pathelement location="${java.lib.dir}/oc4j.jar"/>
-      <pathelement location="${java.lib.dir}/ejb.jar"/>
-      <pathelement location="${java.lib.dir}/jms.jar"/>
-      
-      <!--JBoss JAAS lib -->
-      <pathelement location="${java.lib.dir}/jbosssx.jar"/>
-      
-      <!-- Apache POI  libs -->
-      <pathelement location="${java.lib.dir}/poi-2.5.1-final-20040804.jar"/>
-      
-      <!-- cadsr api lib -->
-      <pathelement location="${java.lib.dir}/cadsr-api.jar"/>
-      
-      <!-- Sentinal tool API -->             
-      <pathelement location="${java.lib.dir}/cadsrsentinelapi.jar"/>
+    <fileset dir="${java.lib.dir}">
+      <include name="*.jar"/>
+      <include name="*.zip"/>
+    </fileset>
+  
    </path>
    
    <path id="srcpath">
@@ -432,6 +377,8 @@
       	<include name="nls_charset12.jar"/>
       	<include name="ssosdk307.jar"/>
       	<include name="xmlcomp.jar"/>         
+      	<include name="xml-apis.jar"/>         
+      	<include name="xercesImpl.jar"/>         
       	<include name="xsu12.jar"/> 
       	
       	<!--BC4J libs -->
@@ -452,14 +399,16 @@
       	<!--include name="bc4jmt.jar"/-->   
       	
       	<!-- Struts libs -->
-      	<include name="struts-1.1.jar"/>
-      	<include name="commons-beanutils.jar"/>
-      	<include name="commons-collections.jar"/>
+      	<include name="struts.jar"/>
+      	<include name="commons-beanutils-1.7.0.jar"/>
+      	<include name="commons-collections-3.1.jar"/>
       	<include name="commons-fileupload.jar"/>
-      	<include name="commons-digester.jar"/>
-      	<include name="commons-lang.jar"/>
-      	<include name="commons-validator.jar"/>
+      	<include name="commons-digester-1.7.jar"/>
+      	<include name="commons-lang-2.1.jar"/>
+      	<include name="commons-logging.jar"/>
+      	<include name="commons-validator-1.2.0.jar"/>
       	<include name="jakarta-oro.jar"/>
+    	
       	
       	<!-- Spring Libs -->
       	
@@ -492,6 +441,10 @@
       	<!-- Sentinal API -->
       	<include name="cadsrsentinelapi.jar"/>
       	
+      	<!-- Tomahawk API  -->
+      	<include name="tomahawk-1.1.3.jar"/>
+      	<include name="ajaxanywhere-1.1.0.6.jar"/>
+
       </lib>
        
       <manifest>
