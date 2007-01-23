@@ -47,7 +47,8 @@ public class CDEBrowserTreeData implements Serializable {
 
       LazyActionTreeNode contextFolder =
          new LazyActionTreeNode("Context Folder", "caDSR Contexts",
-             "javascript:classSearchAction('P_PARAM_TYPE=Context')",
+             "javascript:performAction('P_PARAM_TYPE=CONTEXT" +
+             "&NOT_FIRST_DISPLAY=1&performQuery=yes')",
              false);
       boolean excludeTraining = true;
       boolean excludeTest = true;
