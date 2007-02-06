@@ -19,7 +19,7 @@
   
    <!-- Make sure these are correct for your instance C:\jboss-4.0.4.GA-->
    
-   <property name="jboss.home" value="C:\jboss-4.0.4.GA" />   
+   <property name="jboss.home" value="D:\jboss-4.0.4.GA" />   
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
@@ -33,6 +33,7 @@
    <property name="dev.user.password" value="cdeuser" />
    <property name="qa.user.password" value="cdeuser" />
    <property name="stage.user.password" value="cdeuser" />
+   <property name="umlstage.user.password" value="cdeuser" />
    <property name="prod.user.password" value="cdeuser" />
    <property name="opensource.user.password" value="user_passwd" />
    
@@ -72,6 +73,7 @@
   <property name="config.home" value="${project.home}/config"/>
   <property name="config.qa" value="${project.home}/config_qa"/>
   <property name="config.stage" value="${project.home}/config_stage"/>  
+  <property name="config.umlstage" value="${project.home}/config_umlstg"/>  
   <property name="config.prod" value="${project.home}/config_prod"/>
   <property name="config.opensource" value="${project.home}/config_opensource"/>
   <property name="ejb.descriptor.home" value="${project.home}/config/ejb"/>
@@ -337,6 +339,31 @@
           
     </target>
   <!-- =========== END TEST CONFIG ======================= -->  
+
+ <!-- =========== UML Stage CONFIG ======================= -->
+    <target name="umlstage_config" depends="init,dev_config">    
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.umlstage}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy> 
+     <filter token="user.password" value="${umlstage.user.password}"/>
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
+         <fileset dir="${config.umlstage}/connections">
+           <patternset>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>     
+      
+      <property name="debug.config.home" value="${config.umlstage}" /> 
+          
+    </target>
+  <!-- =========== END UML Stage CONFIG ======================= -->  
+  
+
   
   <!-- =========== PROD CONFIG ======================= -->
     <target name="prod_config" depends="init,dev_config">    
@@ -1025,6 +1052,27 @@
    
       <target  name="deploy_stage_start" depends="deploy_stage,jboss_startdebug"> 
    </target>
+
+   <target  name="deploy_umlstage" depends="clean,clean_jboss,umlstage_config,debug_setting,ear_cdebrowser"> 
+     <copy todir="${jboss.home}/server/default/deploy">      
+         <fileset dir="${build.dir}">
+           <patternset>
+             <include name="${ear.name}.ear"/>
+           </patternset>
+         </fileset> 
+     </copy> 
+     <filter token="user.password" value="${umlstage.user.password}"/>
+     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
+         <fileset dir="${config.umlstage}/connections">
+           <patternset>
+             <include name="oracle-ds.xml"/>
+           </patternset>
+         </fileset>
+      </copy>       
+   </target> 
+   <target  name="deploy_umlstage_start" depends="deploy_umlstage,jboss_startdebug"> 
+   </target>
+
    
    <target  name="deploy_prod" depends="clean,clean_jboss,prod_config,debug_setting,ear_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
@@ -1089,7 +1137,12 @@
        <target name="dist_stage" depends="clean_build_dir,stage_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
         </target>      
   <!-- =========== END STAGE DISTRIBUTION ======================= -->
+  <!-- =========== UML STAGE DISTRIBUTION============== -->
+       <target name="dist_umlstage" depends="clean_build_dir,umlstage_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
+        </target>      
+  <!-- =========== END STAGE DISTRIBUTION ======================= -->
   
+
   <!-- =========== PROD DISTRIBUTION============== -->
         <target name="dist_prod" depends="clean_build_dir,prod_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
         </target>      
