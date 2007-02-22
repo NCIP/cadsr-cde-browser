@@ -8,10 +8,19 @@
 <%@ page import="java.util.*"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
 <%@ page import="net.sf.jsfcomp.aa.tree.AaTreeTag"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeBacker"%>
 <f:view>
     <t:document>
         <t:documentHead>
             <%
+    String refreshIndicator = (String)session.getAttribute(CaDSRConstants.TREE_REFRESH_INDICATOR);
+    session.removeAttribute(CaDSRConstants.TREE_REFRESH_INDICATOR);
+  	if(refreshIndicator!=null && refreshIndicator.equals(CaDSRConstants.YES)) {
+  	  TreeBacker treeBacker = (TreeBacker) session.getAttribute("treeBacker");
+  	  treeBacker.resetTree();
+  	}   
+    
 // get parameters
     String treeParams = (String) request.getParameter("treeParams");
     String treeName = null;

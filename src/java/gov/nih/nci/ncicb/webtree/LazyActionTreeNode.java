@@ -1,8 +1,6 @@
 package gov.nih.nci.ncicb.webtree;
 
-import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTreeData;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
-
 import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 
 import java.util.List;
@@ -39,20 +37,7 @@ public class LazyActionTreeNode extends TreeNodeBase {
      super(type, description, identifier, leaf);
     _action = actionURL;
    }
-/**
-   public List getChildren() {
-        // if there are no children, try and retrieve them
-           if (super.getChildren().size() == 0) {
-              // create dummy tree nodes for example
-              int id = Integer.parseInt(getIdentifier());
-                   for(int i = 0; i < id; i++) {
-                  super.getChildren().add(new LazyActionTreeNode("document","" + id, "" + id,false));
-              }
-           }
 
-           return super.getChildren();
-   }
-*/
    public void setAction(String action) {
       this._action = action;
    }
@@ -71,14 +56,16 @@ public class LazyActionTreeNode extends TreeNodeBase {
    public String getPath() {
       return "";
    }
+   
    public List getChildren() {
         // if there are no children, try and retrieve them
         if (!isChildrenLoaded)
             loadChildren();
        return super.getChildren();
    }
+   
    public void setAppServiceLocator(ApplicationServiceLocator appServiceLocator) {
-      this.appServiceLocator = appServiceLocator;
+      LazyActionTreeNode.appServiceLocator = appServiceLocator;
    }
 
    public ApplicationServiceLocator getAppServiceLocator() {
@@ -113,12 +100,12 @@ public class LazyActionTreeNode extends TreeNodeBase {
    if (!isChildrenLoaded)
       loadChildren();
    
-   List children = super.getChildren();
-      
-   if (children == null)
-     return 0;    
-   else 
-      return children.size(); 
+       List children = super.getChildren();
+          
+       if (children == null)
+         return 0;    
+       else 
+          return children.size(); 
    }
 
 

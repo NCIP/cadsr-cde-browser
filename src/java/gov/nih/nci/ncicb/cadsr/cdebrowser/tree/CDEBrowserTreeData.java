@@ -4,120 +4,185 @@ import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.persistence.dao.ContextDAO;
 import gov.nih.nci.ncicb.cadsr.resource.Context;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.spring.SpringObjectLocatorImpl;
 import gov.nih.nci.ncicb.cadsr.util.SessionHelper;
 import gov.nih.nci.ncicb.webtree.ContextNode;
 import gov.nih.nci.ncicb.webtree.LazyActionTreeNode;
 
 import java.io.Serializable;
-
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.faces.context.FacesContext;
-
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.myfaces.custom.tree2.TreeModelBase;
-
-
-//import org.apache.catalina.connector.Request;
 
 
 public class CDEBrowserTreeData implements Serializable {
+    
    private static final long serialVersionUID = 1L;
 
-   protected Log log = LogFactory.getLog(CDEBrowserTreeData.class.getName());
-   private static AbstractDAOFactory daoFactory = null;
-   private static ApplicationServiceLocator appServiceLocator = null;
-   LazyActionTreeNode treeData = null;
-   TreeModelBase treeModel;
+   private static Log log = LogFactory.getLog(CDEBrowserTreeData.class);
+   
+   private final ReentrantLock refreshLock = new ReentrantLock();
+   
+   private AbstractDAOFactory daoFactory = null;
 
+   private LazyActionTreeNode root;
+   private LazyActionTreeNode rootTest;
+   private LazyActionTreeNode rootTraining;
+   private LazyActionTreeNode rootTestAndTraining;
+   
    public CDEBrowserTreeData() {
    }
-   public CDEBrowserTreeData(TreeModelBase treeMdl) {
-      treeModel = treeMdl;
+   
+   public static CDEBrowserTreeData getInstance() {
+       return (CDEBrowserTreeData)SpringObjectLocatorImpl.getObject("treeData");
    }
-
+   
+   private LazyActionTreeNode createRoot() {
+       return new LazyActionTreeNode("Context Folder", "caDSR Contexts",
+        "javascript:performAction('P_PARAM_TYPE=CONTEXT" +
+        "&NOT_FIRST_DISPLAY=1&performQuery=yes')",
+        false);
+   }
+   
    private LazyActionTreeNode buildTree() {
       log.info("Building CDE Browser tree start ....");
       ContextDAO dao = daoFactory.getContextDAO();
 
-      LazyActionTreeNode contextFolder =
-         new LazyActionTreeNode("Context Folder", "caDSR Contexts",
-             "javascript:performAction('P_PARAM_TYPE=CONTEXT" +
-             "&NOT_FIRST_DISPLAY=1&performQuery=yes')",
-             false);
-      boolean excludeTraining = true;
-      boolean excludeTest = true;
+      LazyActionTreeNode root = createRoot();
+      LazyActionTreeNode rootTest = createRoot();
+      LazyActionTreeNode rootTraining = createRoot();
+      LazyActionTreeNode rootTestAndTraining = createRoot();
              
       Collection contexts = dao.getAllContexts();
       try {
-      FacesContext facesContext = FacesContext.getCurrentInstance();
-      HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-      DataElementSearchBean desb =(DataElementSearchBean) (SessionHelper.getInfoBean(session, "desb"));
-         if (desb != null) {
-            excludeTest = desb.isExcludeTestContext();
-            excludeTraining = desb.isExcludeTrainingContext();
-      }
  
-      //first build a text folder node context.
+          //first build a text folder node context.
+          for (Iterator iter = contexts.iterator(); iter.hasNext(); ) {
+             Context context = (Context)iter.next();
+             
+             LazyActionTreeNode contextNode =
+                new ContextNode("Context Folder", context.getName() + " (" + context.getDescription() + ")",
+                  "javascript:performAction('P_PARAM_TYPE=CONTEXT&P_IDSEQ=" +
+                  context.getConteIdseq() +
+                  "&P_CONTE_IDSEQ=" +  context.getConteIdseq() +
+                  "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes"
+                  +"')", context.getConteIdseq(), false);
+             
+             String desc = context.getName().toLowerCase();
+             if (desc.equals("test")) {
+                 rootTest.addLeaf(contextNode);
+                 rootTestAndTraining.addLeaf(contextNode);
+             }
+             else if (desc.equals("training")) {
+                 rootTraining.addLeaf(contextNode);
+                 rootTestAndTraining.addLeaf(contextNode);
+             }
+             else {
+                 root.addLeaf(contextNode);
+                 rootTest.addLeaf(contextNode);
+                 rootTraining.addLeaf(contextNode);
+                 rootTestAndTraining.addLeaf(contextNode);
+             }
+             
+             log.info("Loading all descendants for "+context.getName());
+             loadDescendants(contextNode);
+           }
 
-      for (Iterator iter = contexts.iterator(); iter.hasNext(); ) {
-         Context context = (Context)iter.next();
-         // if this context is not excluded by user preference
-         if ((context.getName().equalsIgnoreCase("test") && excludeTest)
-         || (context.getName().equalsIgnoreCase("training") && excludeTraining))
-            continue;
-         
-         LazyActionTreeNode contextNode =
-            new ContextNode("Context Folder", context.getName() + " (" + context.getDescription() + ")",
-              "javascript:performAction('P_PARAM_TYPE=CONTEXT&P_IDSEQ=" +
-              context.getConteIdseq() +
-              "&P_CONTE_IDSEQ=" +  context.getConteIdseq() +
-              "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes"
-              +"')",
-              context.getConteIdseq(),  false);
-         contextFolder.addLeaf(contextNode);
-       }
-
-      } catch (Exception e) {
+      } 
+      catch (Exception e) {
          log.error("Exception caught when building the tree", e);
          throw new RuntimeException(e);
       }
-      log.info("Finished Building UML Browser tree");
 
-      return contextFolder;
-
-   }
-   public void setAppServiceLocator(ApplicationServiceLocator appServiceLocator) {
-      this.appServiceLocator = appServiceLocator;
-   }
-
-   public ApplicationServiceLocator getAppServiceLocator() {
-      return appServiceLocator;
+      this.root = root;
+      this.rootTest = rootTest;
+      this.rootTraining = rootTraining;
+      this.rootTestAndTraining = rootTestAndTraining;
+          
+      log.info("Finished Building UML Browser trees");
+      
+      return root;
    }
 
-   public void refreshTree()   {
-      setTreeData(this.buildTree());
+   private void loadDescendants(LazyActionTreeNode node) {
+       List<LazyActionTreeNode> children = node.getChildren();
+       for(LazyActionTreeNode child : children) {
+           loadDescendants(child);
+       }
+   }
+   
+   /**
+    * Completely reload the tree from the persistent storage.
+    */
+   public void refreshTree() {
+      if (refreshLock.tryLock()) {
+          try {
+              buildTree();
+          }
+          finally {
+              refreshLock.unlock();
+          }
+          return;
+      }
+
+      try {
+          // wait for the other thread to refresh the tree
+          refreshLock.lock();
+      }
+      finally {
+          // we didn't really want the lock, so release it
+          refreshLock.unlock();
+      }
    }
 
-   public synchronized  void setTreeData(LazyActionTreeNode treeData) {
-      this.treeData = treeData;
-   }
-
+   /**
+    * Return the root node of the tree which is customized to the
+    * user's preference. 
+    */
    public LazyActionTreeNode getTreeData() {
-      if (treeData == null)
-         setTreeData(buildTree());
-      return treeData;
+       
+       if (root == null) {
+           log.warn("Tree not initialized, trying to init now...");
+           refreshTree();
+       }
+       
+       boolean excludeTraining = true;
+       boolean excludeTest = true;
+       FacesContext facesContext = FacesContext.getCurrentInstance();
+       HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+       DataElementSearchBean desb =(DataElementSearchBean) (SessionHelper.getInfoBean(session, "desb"));
+       if (desb != null) {
+          excludeTest = desb.isExcludeTestContext();
+          excludeTraining = desb.isExcludeTrainingContext();
+       }
+       
+       // TODO: this could be more robust as a map, but for now...
+       if (excludeTest) {
+           if (excludeTraining) {
+               return root;
+           }
+           return rootTraining;
+       }
+       else if (excludeTraining) {
+           return rootTest;
+       }
+       else {
+           return rootTestAndTraining;
+       }
    }
+   
+   /**
+    * Injected by Spring configuration.
+    */
    public void setDaoFactory(AbstractDAOFactory daoFactory) {
      this.daoFactory = daoFactory;
-   }
-
-   public AbstractDAOFactory getDaoFactory() {
-     return daoFactory;
    }
 }
