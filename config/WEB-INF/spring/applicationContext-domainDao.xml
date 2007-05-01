@@ -76,7 +76,7 @@
       <props>
         <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
 
-         <prop key="hibernate.show_sql">True</prop> 
+         <prop key="hibernate.show_sql">False</prop> 
 
       </props>
     </property>

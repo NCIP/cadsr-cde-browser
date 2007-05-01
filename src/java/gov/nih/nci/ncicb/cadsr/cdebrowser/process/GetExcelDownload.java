@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.14 2006-05-24 14:34:24 jiangj Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.15 2007-05-01 17:38:34 aggarwap Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -556,9 +556,9 @@ public class GetExcelDownload extends BasePersistingProcess {
     List csInfo = new ArrayList();
 
     csInfo.add(new ColumnInfo(0, 3, "Short Name", "String"));
-    csInfo.add(new ColumnInfo(0, 2, "Version", "Number"));
+    csInfo.add(new ColumnInfo(0, 4, "Version", "Number"));
     csInfo.add(new ColumnInfo(0, 1, "Context Name", "String"));
-    csInfo.add(new ColumnInfo(0, 4, "Context Version", "Number"));
+    csInfo.add(new ColumnInfo(0, 2, "Context Version", "Number"));
     csInfo.add(new ColumnInfo(1, "Item Name"));
     csInfo.add(new ColumnInfo(2, "Item Type Name"));
 
