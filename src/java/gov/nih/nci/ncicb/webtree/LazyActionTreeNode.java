@@ -71,6 +71,10 @@ public class LazyActionTreeNode extends TreeNodeBase {
    public ApplicationServiceLocator getAppServiceLocator() {
       return appServiceLocator;
    }
+
+   public void addLeafWithoutCrumbs(LazyActionTreeNode leafNode) {
+      super.getChildren().add(leafNode);
+   }
    
    public void addLeaf (LazyActionTreeNode leafNode) {
       super.getChildren().add(leafNode);

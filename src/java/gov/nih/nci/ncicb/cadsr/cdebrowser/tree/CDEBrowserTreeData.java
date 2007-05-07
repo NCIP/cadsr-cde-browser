@@ -79,17 +79,17 @@ public class CDEBrowserTreeData implements Serializable {
              String desc = context.getName().toLowerCase();
              if (desc.equals("test")) {
                  rootTest.addLeaf(contextNode);
-                 rootTestAndTraining.addLeaf(contextNode);
+                 rootTestAndTraining.addLeafWithoutCrumbs(contextNode);
              }
              else if (desc.equals("training")) {
                  rootTraining.addLeaf(contextNode);
-                 rootTestAndTraining.addLeaf(contextNode);
+                 rootTestAndTraining.addLeafWithoutCrumbs(contextNode);
              }
              else {
                  root.addLeaf(contextNode);
-                 rootTest.addLeaf(contextNode);
-                 rootTraining.addLeaf(contextNode);
-                 rootTestAndTraining.addLeaf(contextNode);
+                 rootTest.addLeafWithoutCrumbs(contextNode);
+                 rootTraining.addLeafWithoutCrumbs(contextNode);
+                 rootTestAndTraining.addLeafWithoutCrumbs(contextNode);
              }
              
              log.info("Loading all descendants for "+context.getName());
