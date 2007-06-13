@@ -5,8 +5,7 @@ import oracle.jbo.server.ViewObjectImpl;
 //  ---    Custom code may be added to this class.
 //  ---------------------------------------------------------------------
 
-public class RepresentationViewObjImpl extends ViewObjectImpl 
-{
+public class RepresentationViewObjImpl extends ViewObjectImpl {
   /**
    * 
    *  This is the default constructor (do not remove)

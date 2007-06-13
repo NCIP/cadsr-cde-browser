@@ -11,6 +11,8 @@ public interface ConceptDAO extends AdminComponentDAO
   public ConceptDerivationRule getPropertyConceptDerivationRuleForDEC(String decId);
   
   public ConceptDerivationRule getObjectClassConceptDerivationRuleForDEC(String decId);
+
+  public ConceptDerivationRule getRepresentationDerivationRuleForVD(String vdId);
   
   public Map getAllDerivationRulesForIds(List cdrIdseqs);
   

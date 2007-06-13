@@ -66,6 +66,20 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
      }
      return conceptDr;
    }
+   
+   public ConceptDerivationRule getRepresentationDerivationRuleForVD(String vdId)
+    {
+      VDRepresentationConDrIdseqQuery conDrQuery = new VDRepresentationConDrIdseqQuery(getDataSource());
+      String cdrIdSeq = (String)conDrQuery.findObject(vdId);
+      ConceptDerivationRule conceptDr = null;
+      if(cdrIdSeq!=null)
+      {
+         ConceptQuery query = new ConceptQuery(getDataSource());
+         Collection col = query.execute(cdrIdSeq);
+         conceptDr = query.getConceptDerivationRule();
+      }
+      return conceptDr;
+    }
 
    public ConceptDerivationRule findConceptDerivationRule(String derivationId) {
     ConceptQuery query = new ConceptQuery(getDataSource());
@@ -258,6 +272,28 @@ public class JDBCConceptDAO extends JDBCAdminComponentDAO implements ConceptDAO{
       int rownum) throws SQLException {
      return rs.getString("condr_idseq");
     }
+    
+  }  
+  class VDRepresentationConDrIdseqQuery extends MappingSqlQuery {
+
+        VDRepresentationConDrIdseqQuery(DataSource ds) {
+          String sql = "select rep.condr_idseq "
+                        +" from value_domains vd "
+                        +",representations_ext rep "
+                        +" where vd_idseq=? "
+					          + " and rep.REP_IDSEQ=vd.REP_IDSEQ ";
+
+          this.setDataSource(ds);
+          this.setSql(sql);
+
+          declareParameter(new SqlParameter("vd_idseq", Types.VARCHAR));
+        }
+
+        protected Object mapRow(
+          ResultSet rs,
+          int rownum) throws SQLException {
+         return rs.getString("condr_idseq");
+        }
 
   }
   

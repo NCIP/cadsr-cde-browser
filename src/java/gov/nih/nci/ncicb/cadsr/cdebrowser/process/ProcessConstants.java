@@ -27,6 +27,7 @@ public interface ProcessConstants extends oracle.cle.process.ProcessConstants {
   static final String VD_SHORT_MEANING = "vdshortmeaning";
   static final String VD_SHORT_MEANING_DESC = "vdshortmeaningdescription";
   static final String VD_SHORT_MEANING_VALUE = "vdshortmeaningvalue";
+  static final String VD_SHORT_MEANING_CONCEPT = "vdshortmeaningconcept";
 
   //Related to the Classification Schemes
   static final String CS_DE_IDSEQ = "csdeidseq";

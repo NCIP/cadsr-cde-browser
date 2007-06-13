@@ -27,7 +27,8 @@
   pageContext.setAttribute("de",de);  
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
   ValueDomain vd = de.getValueDomain();
- 
+
+  
   String pageId = infoBean.getPageId();
   String pageName = PageConstants.PAGEID;
   String pageUrl = "&"+pageName+"="+pageId;
@@ -322,7 +323,123 @@ function valueMeaningDetails(shortMeaning)
              </table>      
       </logic:notPresent>      
       
+ <logic:present name="de" property = "valueDomain.representation">    
+    <% Representation rep = vd.getRepresentation(); %>
+    <%
+      String contextPath = request.getContextPath();
+      String repId = rep.getIdseq();
+    
+    %>
+         <br>
+         <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+          <tr  valign="bottom" >
+           <td class="OraHeaderSubSubSub" width="80%">Representation</td>
+          </tr>
+         </table>
+         <table valign="top"  width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+         <tr class="OraTabledata">
+            <td class="TableRowPromptText"  width="20%" >Public ID:</td>
+            <td class="OraFieldText"><%=rep.getPublicId()%></td>
+         </tr>
+         <tr class="OraTabledata">
+            <td class="TableRowPromptText"  width="20%" >Version:</td>
+            <td class="OraFieldText"><%=rep.getVersion()%> </td>
+         </tr>
+         
+         <tr class="OraTabledata"> 
+            <td class="TableRowPromptText"  width="20%" >Long Name:</td>
+            <td class="OraFieldText"><%=rep.getLongName()%> </td>
+         </tr>         
+         <tr class="OraTabledata"> 
+            <td class="TableRowPromptText"  width="20%" >Short Name:</td>
+            <td class="OraFieldText"><%=rep.getPreferredName()%> </td>
+         </tr>
+         <tr class="OraTabledata">
+            <td class="TableRowPromptText"  width="20%" >Context:</td>
+            <td class="OraFieldText"><%=rep.getContext().getName()%></td>
+         </tr>
+
  
+         </table>
+         
+        <logic:present name="de" property = "valueDomain.representation.conceptDerivationRule"> 
+            <% ConceptDerivationRule repdr = rep.getConceptDerivationRule(); %>
+              <logic:present name="de" property = "valueDomain.representation.conceptDerivationRule.componentConcepts">                    
+                  <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                        <tr  valign="bottom" >
+                          <td class="OraHeaderSubSubSub" width="100%">Representation Concepts</td>
+                        </tr>
+                     </table>
+                    <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                        <tr class="OraTabledata">
+                          <td class="OraTableColumnHeader">Concept Name</td>
+                          <td class="OraTableColumnHeader">Concept Code</td>
+                          <td class="OraTableColumnHeader">Public ID</td>                          
+                          <td class="OraTableColumnHeader">Definition Source</td>
+                          <td class="OraTableColumnHeader">EVS Source</td>   
+                          <td class="OraTableColumnHeader">Primary</td>
+                        </tr>   
+                       <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.resource.ComponentConcept" property="valueDomain.representation.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
+                        <tr class="OraTabledata">
+                           <td class="OraFieldText"><%=comp.getConcept().getLongName()%> </td>
+                           <td class="OraFieldText">
+                                <%=CDEDetailsUtils.getConceptCodeUrl(comp.getConcept(),params,"link",",")%>                                  
+                           </td>
+                           <td class="OraFieldText"><%=comp.getConcept().getPublicId()%> </td> 
+                           <td class="OraFieldText"><%=comp.getConcept().getDefinitionSource()%> </td> 
+                           <td class="OraFieldText"><%=comp.getConcept().getEvsSource()%> </td>
+                           <td class="OraFieldText"><%=StringUtils.booleanToStr(comp.getIsPrimary())%> </td>
+                        </tr>
+                       </logic:iterate>
+                    </table>                      
+             </logic:present>
+            <logic:notPresent name="de" property = "valueDomain.representation.conceptDerivationRule.componentConcepts"> 
+                                            
+                       <br>
+                       <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                        <tr  valign="bottom" >
+                         <td class="OraHeaderSubSubSub" width="100%">Representaiton Concepts</td>
+                        </tr>
+                       </table>
+                       <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                         <tr class="OraTabledata">
+                            <td  width="20%" >Representation does not have any Concepts.</td>
+                         </tr>
+                  
+                       </table>    
+              </logic:notPresent >
+  
+        </logic:present>
+        
+        <logic:notPresent name="de" property = "valueDomain.representation.conceptDerivationRule">       
+            <br>
+            <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+                <tr  valign="bottom" >
+                <td class="OraHeaderSubSubSub" width="100%">Reprsentation Concepts</td>
+                </tr>
+            </table>
+            <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+                <tr class="OraTabledata">
+                <td  width="20%" >Representation does not have any Concepts.</td>
+               </tr>               
+            </table>    
+        </logic:notPresent >
+ </logic:present> 
+  <logic:notPresent name="de" property = "valueDomain.representation"> 
+         <br>
+         <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+          <tr  valign="bottom" >
+           <td class="OraHeaderSubSubSub" width="100%">Representation</td>
+          </tr>
+         </table>
+         <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+           <tr class="OraTabledata">
+              <td   width="20%" >Value Domain does not have a Representation.</td>
+           </tr>
+           </tr>                 
+         </table>    
+ </logic:notPresent> 
+
 <br>
 <table cellpadding="0" cellspacing="0" width="80%" align="center" >
   <tr>

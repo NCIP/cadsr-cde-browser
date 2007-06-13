@@ -8,33 +8,34 @@ import oracle.jbo.domain.Date;
 //  ---    Custom code may be added to this class.
 //  ---------------------------------------------------------------------
 
-public class RepresentationViewObjRowImpl extends ViewRowImpl 
-{
+public class RepresentationViewObjRowImpl extends ViewRowImpl {
 
 
-  public static final int REPIDSEQ = 0;
-  public static final int PREFERREDNAME = 1;
-  public static final int LONGNAME = 2;
-  public static final int PREFERREDDEFINITION = 3;
-  public static final int CONTEIDSEQ = 4;
-  public static final int VERSION = 5;
-  public static final int ASLNAME = 6;
-  public static final int LATESTVERSIONIND = 7;
-  public static final int CHANGENOTE = 8;
-  public static final int BEGINDATE = 9;
-  public static final int ENDDATE = 10;
-  public static final int ORIGIN = 11;
-  public static final int DEFINITIONSOURCE = 12;
-  public static final int DATECREATED = 13;
-  public static final int CREATEDBY = 14;
-  public static final int DELETEDIND = 15;
-  public static final int DATEMODIFIED = 16;
-  public static final int MODIFIEDBY = 17;
-  public static final int REPID = 18;
-  public static final int CONDRIDSEQ = 19;
-  public static final int VALUEDOMAINSVIEW = 20;
-  /**
-   * 
+    public static final int REPIDSEQ = 0;
+    public static final int PREFERREDNAME = 1;
+    public static final int LONGNAME = 2;
+    public static final int PREFERREDDEFINITION = 3;
+    public static final int CONTEIDSEQ = 4;
+    public static final int VERSION = 5;
+    public static final int ASLNAME = 6;
+    public static final int LATESTVERSIONIND = 7;
+    public static final int CHANGENOTE = 8;
+    public static final int BEGINDATE = 9;
+    public static final int ENDDATE = 10;
+    public static final int ORIGIN = 11;
+    public static final int DEFINITIONSOURCE = 12;
+    public static final int DATECREATED = 13;
+    public static final int CREATEDBY = 14;
+    public static final int DELETEDIND = 15;
+    public static final int DATEMODIFIED = 16;
+    public static final int MODIFIEDBY = 17;
+    public static final int REPID = 18;
+    public static final int CONDRIDSEQ = 19;
+    public static final int CONTEXTSROW = 20;
+    public static final int VALUEDOMAINSVIEW = 21;
+
+    /**
+   *
    *  This is the default constructor (do not remove)
    */
   public RepresentationViewObjRowImpl()
@@ -374,6 +375,15 @@ public class RepresentationViewObjRowImpl extends ViewRowImpl
     setAttributeInternal(MODIFIEDBY, value);
   }
 
+ /**
+   * 
+   * Gets the associated <code>Row</code> using master-detail link ContextsRow
+   */
+  public oracle.jbo.Row getContextsRow() {
+    return (oracle.jbo.Row)getAttributeInternal(CONTEXTSROW);
+  }
+
+
   /**
    * 
    *  Gets the attribute value for REP_ID using the alias name RepId
@@ -415,125 +425,131 @@ public class RepresentationViewObjRowImpl extends ViewRowImpl
 
   protected Object getAttrInvokeAccessor(int index, AttributeDefImpl attrDef) throws Exception
   {
-    switch (index)
-      {
-      case REPIDSEQ:
-        return getRepIdseq();
-      case PREFERREDNAME:
-        return getPreferredName();
-      case LONGNAME:
-        return getLongName();
-      case PREFERREDDEFINITION:
-        return getPreferredDefinition();
-      case CONTEIDSEQ:
-        return getConteIdseq();
-      case VERSION:
-        return getVersion();
-      case ASLNAME:
-        return getAslName();
-      case LATESTVERSIONIND:
-        return getLatestVersionInd();
-      case CHANGENOTE:
-        return getChangeNote();
-      case BEGINDATE:
-        return getBeginDate();
-      case ENDDATE:
-        return getEndDate();
-      case ORIGIN:
-        return getOrigin();
-      case DEFINITIONSOURCE:
-        return getDefinitionSource();
-      case DATECREATED:
-        return getDateCreated();
-      case CREATEDBY:
-        return getCreatedBy();
-      case DELETEDIND:
-        return getDeletedInd();
-      case DATEMODIFIED:
-        return getDateModified();
-      case MODIFIEDBY:
-        return getModifiedBy();
-      case REPID:
-        return getRepId();
-      case CONDRIDSEQ:
-        return getCondrIdseq();
-      case VALUEDOMAINSVIEW:
-        return getValueDomainsView();
-      default:
-        return super.getAttrInvokeAccessor(index, attrDef);
-      }
+        switch (index) {
+        case REPIDSEQ:
+            return getRepIdseq();
+        case PREFERREDNAME:
+            return getPreferredName();
+        case LONGNAME:
+            return getLongName();
+        case PREFERREDDEFINITION:
+            return getPreferredDefinition();
+        case CONTEIDSEQ:
+            return getConteIdseq();
+        case VERSION:
+            return getVersion();
+        case ASLNAME:
+            return getAslName();
+        case LATESTVERSIONIND:
+            return getLatestVersionInd();
+        case CHANGENOTE:
+            return getChangeNote();
+        case BEGINDATE:
+            return getBeginDate();
+        case ENDDATE:
+            return getEndDate();
+        case ORIGIN:
+            return getOrigin();
+        case DEFINITIONSOURCE:
+            return getDefinitionSource();
+        case DATECREATED:
+            return getDateCreated();
+        case CREATEDBY:
+            return getCreatedBy();
+        case DELETEDIND:
+            return getDeletedInd();
+        case DATEMODIFIED:
+            return getDateModified();
+        case MODIFIEDBY:
+            return getModifiedBy();
+        case REPID:
+            return getRepId();
+        case CONDRIDSEQ:
+            return getCondrIdseq();
+        case CONTEXTSROW:
+            return getContextsRow();
+        case VALUEDOMAINSVIEW:
+            return getValueDomainsView();
+        default:
+            return super.getAttrInvokeAccessor(index, attrDef);
+        }
+    }
+
+ //Custom Methods
+  public String getContextName() {
+    return (String)getContextsRow().getAttribute("Name");
   }
+
   //  Generated method. Do not modify.
 
   protected void setAttrInvokeAccessor(int index, Object value, AttributeDefImpl attrDef) throws Exception
   {
-    switch (index)
-      {
-      case REPIDSEQ:
-        setRepIdseq((String)value);
-        return;
-      case PREFERREDNAME:
-        setPreferredName((String)value);
-        return;
-      case LONGNAME:
-        setLongName((String)value);
-        return;
-      case PREFERREDDEFINITION:
-        setPreferredDefinition((String)value);
-        return;
-      case CONTEIDSEQ:
-        setConteIdseq((String)value);
-        return;
-      case VERSION:
-        setVersion((Number)value);
-        return;
-      case ASLNAME:
-        setAslName((String)value);
-        return;
-      case LATESTVERSIONIND:
-        setLatestVersionInd((String)value);
-        return;
-      case CHANGENOTE:
-        setChangeNote((String)value);
-        return;
-      case BEGINDATE:
-        setBeginDate((Date)value);
-        return;
-      case ENDDATE:
-        setEndDate((Date)value);
-        return;
-      case ORIGIN:
-        setOrigin((String)value);
-        return;
-      case DEFINITIONSOURCE:
-        setDefinitionSource((String)value);
-        return;
-      case DATECREATED:
-        setDateCreated((Date)value);
-        return;
-      case CREATEDBY:
-        setCreatedBy((String)value);
-        return;
-      case DELETEDIND:
-        setDeletedInd((String)value);
-        return;
-      case DATEMODIFIED:
-        setDateModified((Date)value);
-        return;
-      case MODIFIEDBY:
-        setModifiedBy((String)value);
-        return;
-      case REPID:
-        setRepId((Number)value);
-        return;
-      case CONDRIDSEQ:
-        setCondrIdseq((String)value);
-        return;
-      default:
-        super.setAttrInvokeAccessor(index, value, attrDef);
-        return;
-      }
-  }
+        switch (index) {
+        case REPIDSEQ:
+            setRepIdseq((String)value);
+            return;
+        case PREFERREDNAME:
+            setPreferredName((String)value);
+            return;
+        case LONGNAME:
+            setLongName((String)value);
+            return;
+        case PREFERREDDEFINITION:
+            setPreferredDefinition((String)value);
+            return;
+        case CONTEIDSEQ:
+            setConteIdseq((String)value);
+            return;
+        case VERSION:
+            setVersion((Number)value);
+            return;
+        case ASLNAME:
+            setAslName((String)value);
+            return;
+        case LATESTVERSIONIND:
+            setLatestVersionInd((String)value);
+            return;
+        case CHANGENOTE:
+            setChangeNote((String)value);
+            return;
+        case BEGINDATE:
+            setBeginDate((Date)value);
+            return;
+        case ENDDATE:
+            setEndDate((Date)value);
+            return;
+        case ORIGIN:
+            setOrigin((String)value);
+            return;
+        case DEFINITIONSOURCE:
+            setDefinitionSource((String)value);
+            return;
+        case DATECREATED:
+            setDateCreated((Date)value);
+            return;
+        case CREATEDBY:
+            setCreatedBy((String)value);
+            return;
+        case DELETEDIND:
+            setDeletedInd((String)value);
+            return;
+        case DATEMODIFIED:
+            setDateModified((Date)value);
+            return;
+        case MODIFIEDBY:
+            setModifiedBy((String)value);
+            return;
+        case REPID:
+            setRepId((Number)value);
+            return;
+        case CONDRIDSEQ:
+            setCondrIdseq((String)value);
+            return;
+        default:
+            super.setAttrInvokeAccessor(index, value, attrDef);
+            return;
+        }
+    }
 
   /**
    * 

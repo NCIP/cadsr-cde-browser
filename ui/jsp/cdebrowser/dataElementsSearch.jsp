@@ -72,6 +72,11 @@
     pageContextInfo = infoBean.getStringInfo(TreeConstants.TREE_BREADCRUMBS);
   }
   
+  //GForge 3919
+   if (pageContextInfo.equals("") ){
+    pageContextInfo = "caDSR Contexts";
+  }
+  
   
   String firstDisplay = (String)infoBean.getInfo("NOT_FIRST_DISPLAY");
   if (firstDisplay ==null) firstDisplay = "";
@@ -85,6 +90,8 @@
   //String baseQuery = (String)request.getAttribute("baseQuery");
   String baseQuery = (String) pageContext.getSession().getAttribute("baseQuery");
   String searchCrumb = (String) pageContext.getSession().getAttribute("searchCrumb");
+  
+ 
   if (baseQuery == null) baseQuery = "";
 
   String doneURL = "";

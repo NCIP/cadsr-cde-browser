@@ -196,7 +196,7 @@ function goPage(pageInfo) {
  </tr>
  </table>
 
-<logic:present name="de" property = "dataElementConcept.objectClass">    
+<logic:present name="de" property = "dataElementConcept.objectClass">
     <% ObjectClass objClass = dec.getObjectClass(); %>
     <%
       String contextPath = request.getContextPath();

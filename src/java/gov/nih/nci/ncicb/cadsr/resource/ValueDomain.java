@@ -50,5 +50,9 @@ public interface ValueDomain extends AdminComponent , Serializable
    
    public ConceptDerivationRule getConceptDerivationRule();
    public void setConceptDerivationRule(ConceptDerivationRule rule);
+   public String getRepresentationPrefName();
+   public Float  getRepresentationVersion();
+   public String getRepresentationContextName();
+
    
 }

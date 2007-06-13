@@ -53,8 +53,12 @@ public class TreeUtils {
         crumbs.append(currNode.getName()+">>");
       }
     }
-    //remove Context Description
+    
+      if (crumbs==null)
+        crumbs.append("caDSR Context");
 
+    //remove Context Description
+ 
     crumbs  = removeContextDesc(crumbs);
     //remove the extra ">>"
     crumbs.delete(crumbs.length()-2,crumbs.length());

@@ -11,41 +11,36 @@ import oracle.jbo.Key;
 //  ---    Custom code may be added to this class.
 //  ---------------------------------------------------------------------
 
-public class RepresentationImpl extends EntityImpl 
-{
-  public static final int REPIDSEQ = 0;
-  public static final int PREFERREDNAME = 1;
-  public static final int LONGNAME = 2;
-  public static final int PREFERREDDEFINITION = 3;
-  public static final int CONTEIDSEQ = 4;
-  public static final int VERSION = 5;
-  public static final int ASLNAME = 6;
-  public static final int LATESTVERSIONIND = 7;
-  public static final int CHANGENOTE = 8;
-  public static final int BEGINDATE = 9;
-  public static final int ENDDATE = 10;
-  public static final int ORIGIN = 11;
-  public static final int DEFINITIONSOURCE = 12;
-  public static final int DATECREATED = 13;
-  public static final int CREATEDBY = 14;
-  public static final int DELETEDIND = 15;
-  public static final int DATEMODIFIED = 16;
-  public static final int MODIFIEDBY = 17;
-  public static final int REPID = 18;
-  public static final int CONDRIDSEQ = 19;
-  public static final int CONIDSEQ = 20;
-  public static final int CONTEXTS = 21;
-  public static final int CONCEPTSEXT = 22;
-  public static final int CONDERIVATIONRULESEXT = 23;
-  public static final int VALUEDOMAINS = 24;
-  public static final int VALUEDOMAINSVIEW = 25;
+public class RepresentationImpl extends EntityImpl {
+    public static final int REPIDSEQ = 0;
+    public static final int PREFERREDNAME = 1;
+    public static final int LONGNAME = 2;
+    public static final int PREFERREDDEFINITION = 3;
+    public static final int CONTEIDSEQ = 4;
+    public static final int VERSION = 5;
+    public static final int ASLNAME = 6;
+    public static final int LATESTVERSIONIND = 7;
+    public static final int CHANGENOTE = 8;
+    public static final int BEGINDATE = 9;
+    public static final int ENDDATE = 10;
+    public static final int ORIGIN = 11;
+    public static final int DEFINITIONSOURCE = 12;
+    public static final int DATECREATED = 13;
+    public static final int CREATEDBY = 14;
+    public static final int DELETEDIND = 15;
+    public static final int DATEMODIFIED = 16;
+    public static final int MODIFIEDBY = 17;
+    public static final int REPID = 18;
+    public static final int CONDRIDSEQ = 19;
+    public static final int CONIDSEQ = 20;
+    public static final int CONCEPTSEXT = 21;
+    public static final int CONDERIVATIONRULESEXT = 22;
+    public static final int CONTEXTS = 23;
+    public static final int VALUEDOMAINS = 24;
+    public static final int VALUEDOMAINSVIEW = 25;
 
 
-
-
-
-
-  private static EntityDefImpl mDefinitionObject;
+    private static EntityDefImpl mDefinitionObject;
 
   /**
    * 
@@ -55,30 +50,21 @@ public class RepresentationImpl extends EntityImpl
   {
   }
 
-  /**
-   * 
-   *  Retrieves the definition object for this instance class.
-   */
-  public static synchronized EntityDefImpl getDefinitionObject()
-  {
-    if (mDefinitionObject == null)
-    {
-      mDefinitionObject = (EntityDefImpl)EntityDefImpl.findDefObject("gov.nih.nci.ncicb.cadsr.persistence.bc4j.Representation");
+
+    /**Retrieves the definition object for this instance class.
+     */
+    public static synchronized EntityDefImpl getDefinitionObject() {
+        if (mDefinitionObject == null) {
+            mDefinitionObject = (EntityDefImpl)EntityDefImpl.findDefObject("gov.nih.nci.ncicb.cadsr.persistence.bc4j.Representation");
+        }
+        return mDefinitionObject;
     }
-    return mDefinitionObject;
-  }
 
-
-
-
-
-
-
-  /**
-   * 
+    /**
+   *
    *  Gets the attribute value for RepIdseq, using the alias name RepIdseq
    */
-  public String getRepIdseq()
+    public String getRepIdseq()
   {
     return (String)getAttributeInternal(REPIDSEQ);
   }
@@ -455,138 +441,136 @@ public class RepresentationImpl extends EntityImpl
 
   protected Object getAttrInvokeAccessor(int index, AttributeDefImpl attrDef) throws Exception
   {
-    switch (index)
-      {
-      case REPIDSEQ:
-        return getRepIdseq();
-      case PREFERREDNAME:
-        return getPreferredName();
-      case LONGNAME:
-        return getLongName();
-      case PREFERREDDEFINITION:
-        return getPreferredDefinition();
-      case CONTEIDSEQ:
-        return getConteIdseq();
-      case VERSION:
-        return getVersion();
-      case ASLNAME:
-        return getAslName();
-      case LATESTVERSIONIND:
-        return getLatestVersionInd();
-      case CHANGENOTE:
-        return getChangeNote();
-      case BEGINDATE:
-        return getBeginDate();
-      case ENDDATE:
-        return getEndDate();
-      case ORIGIN:
-        return getOrigin();
-      case DEFINITIONSOURCE:
-        return getDefinitionSource();
-      case DATECREATED:
-        return getDateCreated();
-      case CREATEDBY:
-        return getCreatedBy();
-      case DELETEDIND:
-        return getDeletedInd();
-      case DATEMODIFIED:
-        return getDateModified();
-      case MODIFIEDBY:
-        return getModifiedBy();
-      case REPID:
-        return getRepId();
-      case CONDRIDSEQ:
-        return getCondrIdseq();
-      case CONIDSEQ:
-        return getConIdseq();
-      case VALUEDOMAINS:
-        return getValueDomains();
-      case CONTEXTS:
-        return getContexts();
-      case CONCEPTSEXT:
-        return getConceptsExt();
-      case CONDERIVATIONRULESEXT:
-        return getConDerivationRulesExt();
-      case VALUEDOMAINSVIEW:
-        return getValueDomainsView();
-      default:
-        return super.getAttrInvokeAccessor(index, attrDef);
-      }
-  }
+        switch (index) {
+        case REPIDSEQ:
+            return getRepIdseq();
+        case PREFERREDNAME:
+            return getPreferredName();
+        case LONGNAME:
+            return getLongName();
+        case PREFERREDDEFINITION:
+            return getPreferredDefinition();
+        case CONTEIDSEQ:
+            return getConteIdseq();
+        case VERSION:
+            return getVersion();
+        case ASLNAME:
+            return getAslName();
+        case LATESTVERSIONIND:
+            return getLatestVersionInd();
+        case CHANGENOTE:
+            return getChangeNote();
+        case BEGINDATE:
+            return getBeginDate();
+        case ENDDATE:
+            return getEndDate();
+        case ORIGIN:
+            return getOrigin();
+        case DEFINITIONSOURCE:
+            return getDefinitionSource();
+        case DATECREATED:
+            return getDateCreated();
+        case CREATEDBY:
+            return getCreatedBy();
+        case DELETEDIND:
+            return getDeletedInd();
+        case DATEMODIFIED:
+            return getDateModified();
+        case MODIFIEDBY:
+            return getModifiedBy();
+        case REPID:
+            return getRepId();
+        case CONDRIDSEQ:
+            return getCondrIdseq();
+        case CONIDSEQ:
+            return getConIdseq();
+        case VALUEDOMAINS:
+            return getValueDomains();
+        case CONCEPTSEXT:
+            return getConceptsExt();
+        case CONDERIVATIONRULESEXT:
+            return getConDerivationRulesExt();
+        case CONTEXTS:
+            return getContexts();
+        case VALUEDOMAINSVIEW:
+            return getValueDomainsView();
+        default:
+            return super.getAttrInvokeAccessor(index, attrDef);
+        }
+    }
   //  Generated method. Do not modify.
 
   protected void setAttrInvokeAccessor(int index, Object value, AttributeDefImpl attrDef) throws Exception
   {
-    switch (index)
-      {
-      case REPIDSEQ:
-        setRepIdseq((String)value);
-        return;
-      case PREFERREDNAME:
-        setPreferredName((String)value);
-        return;
-      case LONGNAME:
-        setLongName((String)value);
-        return;
-      case PREFERREDDEFINITION:
-        setPreferredDefinition((String)value);
-        return;
-      case CONTEIDSEQ:
-        setConteIdseq((String)value);
-        return;
-      case VERSION:
-        setVersion((Number)value);
-        return;
-      case ASLNAME:
-        setAslName((String)value);
-        return;
-      case LATESTVERSIONIND:
-        setLatestVersionInd((String)value);
-        return;
-      case CHANGENOTE:
-        setChangeNote((String)value);
-        return;
-      case BEGINDATE:
-        setBeginDate((Date)value);
-        return;
-      case ENDDATE:
-        setEndDate((Date)value);
-        return;
-      case ORIGIN:
-        setOrigin((String)value);
-        return;
-      case DEFINITIONSOURCE:
-        setDefinitionSource((String)value);
-        return;
-      case DATECREATED:
-        setDateCreated((Date)value);
-        return;
-      case CREATEDBY:
-        setCreatedBy((String)value);
-        return;
-      case DELETEDIND:
-        setDeletedInd((String)value);
-        return;
-      case DATEMODIFIED:
-        setDateModified((Date)value);
-        return;
-      case MODIFIEDBY:
-        setModifiedBy((String)value);
-        return;
-      case REPID:
-        setRepId((Number)value);
-        return;
-      case CONDRIDSEQ:
-        setCondrIdseq((String)value);
-        return;
-      case CONIDSEQ:
-        setConIdseq((String)value);
-        return;
-      default:
-        super.setAttrInvokeAccessor(index, value, attrDef);
-        return;
-      }
-  }
+        switch (index) {
+        case REPIDSEQ:
+            setRepIdseq((String)value);
+            return;
+        case PREFERREDNAME:
+            setPreferredName((String)value);
+            return;
+        case LONGNAME:
+            setLongName((String)value);
+            return;
+        case PREFERREDDEFINITION:
+            setPreferredDefinition((String)value);
+            return;
+        case CONTEIDSEQ:
+            setConteIdseq((String)value);
+            return;
+        case VERSION:
+            setVersion((Number)value);
+            return;
+        case ASLNAME:
+            setAslName((String)value);
+            return;
+        case LATESTVERSIONIND:
+            setLatestVersionInd((String)value);
+            return;
+        case CHANGENOTE:
+            setChangeNote((String)value);
+            return;
+        case BEGINDATE:
+            setBeginDate((Date)value);
+            return;
+        case ENDDATE:
+            setEndDate((Date)value);
+            return;
+        case ORIGIN:
+            setOrigin((String)value);
+            return;
+        case DEFINITIONSOURCE:
+            setDefinitionSource((String)value);
+            return;
+        case DATECREATED:
+            setDateCreated((Date)value);
+            return;
+        case CREATEDBY:
+            setCreatedBy((String)value);
+            return;
+        case DELETEDIND:
+            setDeletedInd((String)value);
+            return;
+        case DATEMODIFIED:
+            setDateModified((Date)value);
+            return;
+        case MODIFIEDBY:
+            setModifiedBy((String)value);
+            return;
+        case REPID:
+            setRepId((Number)value);
+            return;
+        case CONDRIDSEQ:
+            setCondrIdseq((String)value);
+            return;
+        case CONIDSEQ:
+            setConIdseq((String)value);
+            return;
+        default:
+            super.setAttrInvokeAccessor(index, value, attrDef);
+            return;
+        }
+    }
 
   /**
    * 
@@ -607,25 +591,25 @@ public class RepresentationImpl extends EntityImpl
   }
 
   /**
-   * 
+   *
    *  Gets the associated entity oracle.jbo.RowIterator
    */
-  public RowIterator getValueDomains()
+    public RowIterator getValueDomains()
   {
-    return (RowIterator)getAttributeInternal(VALUEDOMAINS);
-  }
+        return (RowIterator)getAttributeInternal(VALUEDOMAINS);
+    }
 
 
 
 
   /**
-   * 
+   *
    *  Uses the link VDRepViewLink to return rows of RepresentationViewObj
    */
-  public RowIterator getValueDomainsView()
+    public RowIterator getValueDomainsView()
   {
-    return (RowIterator)getAttributeInternal(VALUEDOMAINSVIEW);
-  }
+        return (RowIterator)getAttributeInternal(VALUEDOMAINSVIEW);
+    }
 
 
   /**
@@ -665,15 +649,10 @@ public class RepresentationImpl extends EntityImpl
     setAttributeInternal(CONDERIVATIONRULESEXT, value);
   }
 
-  /**
-   * 
-   *  Creates a Key object based on given key constituents
-   */
-  public static Key createPrimaryKey(String repIdseq)
-  {
-    return new Key(new Object[] {repIdseq});
-  }
 
-
-
+    /**Creates a Key object based on given key constituents
+     */
+    public static Key createPrimaryKey(String repIdseq) {
+        return new Key(new Object[]{repIdseq});
+    }
 }

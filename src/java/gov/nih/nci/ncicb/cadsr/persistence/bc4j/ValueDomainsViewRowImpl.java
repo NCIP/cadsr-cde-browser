@@ -48,6 +48,7 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
   public static final int DATAELEMENTSVIEW = 33;
   public static final int VDPVSVIEW = 34;
   public static final int REPRESENTATIONVIEWOBJ = 35;
+  protected static final int REPRESENTATIONROW = 36;
   private static Log log = LogFactory.getLog(ValueDomainsViewRowImpl.class.getName());
 
   /**
@@ -587,6 +588,8 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
         return getVdPvsView();
       case REPRESENTATIONVIEWOBJ:
         return getRepresentationViewObj();
+     case REPRESENTATIONROW:
+        return getRepresentationRow();
       case CONCEPTUALDOMAINSROW:
         return getConceptualDomainsRow();
       default:
@@ -820,6 +823,14 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
     setAttributeInternal(REPIDSEQ, value);
   }
 
+    /**
+     * Gets the associated <code>Row</code> using master-detail link
+     * RepresentationRow
+     */
+    public oracle.jbo.Row getRepresentationRow() {
+      return (oracle.jbo.Row) getAttributeInternal(REPRESENTATIONROW);
+    }
+
   /**
    * 
    *  Gets the associated <code>Row</code> using master-detail link RepresentationViewObj
@@ -846,6 +857,82 @@ public class ValueDomainsViewRowImpl extends ViewRowImpl  {
   {
     setAttributeInternal(CONDRIDSEQ, value);
   }
+  
+  
+    /**
+     * Gets the associated Representation Preferred Name
+     */
+    public String getRepresentationPrefName() {
+      if (getRepIdseq() != null) {
+        return (String) getRepresentationRow().getAttribute("PreferredName");
+      }
+      else {
+        return "";
+      }
+    }
+    
+    /**
+     * Gets the associated  Representation Long Name
+     */
+    public String getRepresentationLongName() {
+      if (getRepIdseq() != null) {
+        return (String) getRepresentationRow().getAttribute("LongName");
+      }
+      else {
+        return "";
+      }
+    }  
+
+    /**
+     * Gets the associated Representaion Context Name
+     */
+  /*  public String getRepresentationContextName() {
+      if (getRepIdseq() != null) {
+          return ((RepresentationViewObjRowImpl) getRepresentationRow()).getContextName();
+           }
+      else {
+        return "";
+      }
+    }*/
+
+    /**
+     * Gets the associated Representation Version
+     */
+    public Number getRepresentationVersion() {
+    Object test = getRepresentationRow().getAttribute("Version");
+    
+      if (getRepIdseq() != null) {
+        return (Number) getRepresentationRow().getAttribute("Version");
+      }
+      else {
+        return null;
+      }
+    }
+    
+    /**
+     * Gets the associated Property Context Name
+     */
+    public String getRepresentationContextName() {
+      if (getRepIdseq() != null) {
+        return ((RepresentationViewObjRowImpl) getRepresentationRow()).getContextName();
+      }
+      else {
+        return "";
+      }
+    }
+
+    /**
+     * Gets the associated Representation Public ID
+     */
+    public Number getRepresentationPublicId() {
+      if (getRepIdseq() != null) {
+        return (Number) getRepresentationRow().getAttribute("RepId");
+      }
+      else {
+        return null;
+      }
+    }
+
 
 
 }

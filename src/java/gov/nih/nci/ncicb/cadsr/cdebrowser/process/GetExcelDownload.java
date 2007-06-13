@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.15 2007-05-01 17:38:34 aggarwap Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.16 2007-06-13 19:50:01 aggarwap Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -547,6 +547,8 @@ public class GetExcelDownload extends BasePersistingProcess {
     List validValueInfo = new ArrayList();
     validValueInfo.add(new ColumnInfo(0, "Valid Values"));
     validValueInfo.add(new ColumnInfo(1, "Value Meaning"));
+    validValueInfo.add(new ColumnInfo(2, "Meaning Description"));
+    validValueInfo.add(new ColumnInfo(3, "Value Meaning Concepts"));
 
     ColumnInfo validValue = new ColumnInfo("VALID_VALUES", "", "Array");
     validValue.nestedColumns = validValueInfo;
@@ -611,6 +613,32 @@ public class GetExcelDownload extends BasePersistingProcess {
       new ColumnInfo(5, "DE_DERIVATION", "DDE ", "StructArray");
     deDrivation.nestedColumns = dedInfo;
     columnInfo.add(deDrivation);
+    
+      //object class concept
+      columnInfo.add(new ColumnInfo("REP_ID", "Representation Public ID", "String"));
+      columnInfo.add(
+        new ColumnInfo("REP_LONG_NAME", "Representation Long Name", "String"));
+      columnInfo.add(
+        new ColumnInfo(
+          "REP_PREFERRED_NAME", "Representation Short Name", "String"));
+      columnInfo.add(
+        new ColumnInfo("REP_CONTE_NAME", "Representation Context Name", "String"));
+      columnInfo.add(
+        new ColumnInfo("REP_VERSION", "Representation Version", "String"));
+
+      List repConceptInfo = new ArrayList();
+      repConceptInfo.add(new ColumnInfo(1, "Name"));
+      repConceptInfo.add(new ColumnInfo(0, "Code"));
+      repConceptInfo.add(new ColumnInfo(2, "Public ID", "Number"));
+      repConceptInfo.add(new ColumnInfo(3, "Definition Source"));
+      repConceptInfo.add(new ColumnInfo(5, "EVS Source"));
+      repConceptInfo.add(new ColumnInfo(6, "Primary Flag"));
+
+      ColumnInfo repConcepts =
+        new ColumnInfo("rep_concepts", "Representation Concept ", "Array");
+      repConcepts.nestedColumns = repConceptInfo;
+      columnInfo.add(repConcepts);
+
 
     return columnInfo;
   }

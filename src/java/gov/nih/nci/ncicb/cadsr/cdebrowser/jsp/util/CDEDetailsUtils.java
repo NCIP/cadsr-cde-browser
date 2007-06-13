@@ -62,7 +62,7 @@ public class CDEDetailsUtils
           }
           else
           {
-            codes=codes+", "+str;  
+            codes=codes+":"+str;  
           }
         }
       }

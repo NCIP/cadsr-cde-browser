@@ -28,6 +28,10 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   List validValues;
   Representation representation;
   ConceptDerivationRule conceptDerivationRule;
+  protected String representationPrefName;
+  protected String representationContextName;
+  protected Float representationVersion;
+  protected String representationPublicId;
   
   public ValueDomainTransferObject() {
   }
@@ -117,6 +121,8 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
     return cdContextName;
   }
   
+
+  
   public String setCDContextName(String cdContextName) {
     return cdContextName;
   }
@@ -128,6 +134,24 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
   public Float getCDVersion() {
     return cdVersion;
   }
+  
+    public String getRepresentationPrefName() {
+               return representationPrefName;
+       }
+
+    public String getRepresentationContextName() {
+               return representationContextName;
+       }
+       
+    public Float getRepresentationVersion() {
+            return representationVersion;
+    }
+    
+    public String getRepresentationPublicId()
+    {
+      return representationPublicId;
+    }
+
 
   public String getVDType() {
     return vdType;
@@ -165,4 +189,10 @@ public class ValueDomainTransferObject extends AdminComponentTransferObject
    {
      return cdPublicId;
    }
+    public void setRepresentationPublicId(String objClassPublicId)
+    {
+      this.representationPublicId = objClassPublicId;
+    }
+    
+    
 }

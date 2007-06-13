@@ -1,19 +1,29 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 // java imports
-import java.util.*;
+import gov.nih.nci.ncicb.cadsr.base.process.*;
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
+import gov.nih.nci.ncicb.cadsr.resource.*;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
+import gov.nih.nci.ncicb.cadsr.util.*;
+import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
 import java.io.*;
-
-// Framework imports
-import oracle.cle.util.statemachine.TransitionCondition;
-import oracle.cle.util.statemachine.TransitionConditionException;
-import oracle.cle.process.ProcessInfoException;
+import java.util.*;
+import javax.servlet.http.*;
+import oracle.cle.persistence.HandlerFactory;
 import oracle.cle.process.PersistingProcess;
+import oracle.cle.process.ProcessInfo;
+import oracle.cle.process.ProcessInfoException;
 import oracle.cle.process.ProcessParameter;
 import oracle.cle.process.ProcessResult;
-import oracle.cle.process.ProcessInfo;
 import oracle.cle.process.Service;
-import oracle.cle.process.ProcessConstants;
-import oracle.cle.persistence.HandlerFactory;
+import oracle.cle.util.statemachine.TransitionCondition;
+import oracle.cle.util.statemachine.TransitionConditionException;
+
+
 //Constants Imports
 
 
@@ -23,9 +33,10 @@ import oracle.cle.persistence.HandlerFactory;
  *
  * @author Oracle Corporation 
  */
-public class GetValidValueDetails extends PersistingProcess
+public class GetValidValueDetails extends BasePersistingProcess
 {
-
+    TabInfoBean tib = null;
+    private HttpServletRequest myRequest = null;
 	public GetValidValueDetails()
 	{
 		this(null);
@@ -52,24 +63,13 @@ public class GetValidValueDetails extends PersistingProcess
 	*/
 	public void registerInfo()
 	{
-		try
-		{
-			// result info
-			
-
-      
-			// parameter info
-			//Added manually by Amit
-      registerParameter(
-				new ProcessParameter(ProcessConstants.USER,
-				ProcessConstants.USER,
-				"The logged in User",
-				null));
-		} // end try
-		catch(ProcessInfoException pie)
-		{
-			reportException(pie,true);
-		} // end catch    
+	    try {
+	      registerResultObject("tib");
+	      //registerParameterObject("de");
+	    }
+	    catch (ProcessInfoException pie) {
+	      reportException(pie, true);
+	    }  
 	} // end registerInfo
 
 
@@ -90,30 +90,37 @@ public class GetValidValueDetails extends PersistingProcess
 	{
 		try
 		{
-			//local variables for results
-			
+			 tib = new TabInfoBean("cdebrowser_details_tabs");
+			 myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
+			 tib.processRequest(myRequest);
 
- 			//local variables for parameters
-			
+			 int tabNum = tib.getMainTabNum();
 
+			 if (tabNum != 2) {
+			   tib.setMainTabNum(2);
+			 }
+			 DataElement de = (DataElement) getInfoObject("de");
+			 ServiceLocator locator = 
+			 ServiceLocatorFactory.getLocator(CaDSRConstants.CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
+			 AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
+			 ConceptDAO conDAO = daoFactory.getConceptDAO();
+			 Representation rep = de.getValueDomain().getRepresentation();
+			 if(rep!=null)
+			 {
+			   ConceptDerivationRule repRule = conDAO.getRepresentationDerivationRuleForVD(de.getValueDomain().getVdIdseq());
+			   de.getValueDomain().getRepresentation().setConceptDerivationRule(repRule);
+			 }
 
-			//create the handler
-			
+			     
+			 }
+			 catch (Exception e) {
+			 e.printStackTrace();
+			 }
+			 setResult("tib", tib);
 
 			setCondition(SUCCESS);
-			} // end try
-		catch(Exception ex)
-		{
-			try
-			{
-				setCondition(FAILURE);
-			} // end catch
-			catch(TransitionConditionException tce)
-			{
-				reportException(tce,DEBUG);
-			} // end catch
-				reportException(ex,DEBUG);
-			} // end catch
+			
+		
 	} // end persist
 
 

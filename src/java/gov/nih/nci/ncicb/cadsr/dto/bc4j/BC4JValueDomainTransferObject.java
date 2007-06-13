@@ -1,6 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.dto.bc4j;
 
+import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.dto.ConceptDerivationRuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ConceptTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.dto.RepresentationTransferObject;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepresentationViewObjRowImpl;
 import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
@@ -12,7 +15,17 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.io.Serializable;
 import gov.nih.nci.ncicb.cadsr.dto.base.AdminComponentTransferObject;
+import gov.nih.nci.ncicb.cadsr.persistence.bc4j.ComponentConceptsExtImpl;
+import gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExtImpl;
+import gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsViewRowImpl;
 import gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomainsViewRowImpl;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
+
+import oracle.jbo.domain.Number;
 import java.util.List;
 
 public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
@@ -30,6 +43,10 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 	protected String cdPrefName;
 	protected String cdContextName;
 	protected Float cdVersion;
+        protected String repPrefName;
+        protected String repContextName;
+        protected int repPublicId;
+        protected Float repVersion;
   protected int cdPublicId;
 	protected String vdType;
   protected List validValues;
@@ -56,7 +73,7 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 		deletedInd = checkForNull(vdViewRowImpl.getDeletedInd());
 		latestVerInd = vdViewRowImpl.getLatestVersionInd();
 		vdIdseq = vdViewRowImpl.getVdIdseq();
-    idseq = vdIdseq;
+                idseq = vdIdseq;
 		datatype = vdViewRowImpl.getDtlName();
 		uom = checkForNull(vdViewRowImpl.getUomlName());
 		dispFormat = checkForNull(vdViewRowImpl.getFormlName());
@@ -70,26 +87,45 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
 		cdPrefName = vdViewRowImpl.getCDPrefName();
 		cdContextName = vdViewRowImpl.getCDContextName();
 		cdVersion = new Float(vdViewRowImpl.getCDVersion().floatValue());
-    cdPublicId = vdViewRowImpl.getCDPublicId().intValue();
+                cdPublicId = vdViewRowImpl.getCDPublicId().intValue();
     
-    String cdrIdseq = vdViewRowImpl.getCondrIdseq();
-    if(cdrIdseq!=null)
-    {
-      conceptDerivationRule  = new ConceptDerivationRuleTransferObject();
-      conceptDerivationRule.setIdseq(cdrIdseq);
-    }
+            String cdrIdseq = vdViewRowImpl.getCondrIdseq();
+             if(cdrIdseq!=null)
+              {
+                   conceptDerivationRule  = new ConceptDerivationRuleTransferObject();
+                  conceptDerivationRule.setIdseq(cdrIdseq);
+                 }
     
-    if (vdViewRowImpl.getVdId() != null)
-      publicId = vdViewRowImpl.getVdId().intValue();
-    origin = checkForNull(vdViewRowImpl.getOrigin());
-    RepresentationViewObjRowImpl repImpl=  (RepresentationViewObjRowImpl)vdViewRowImpl.getRepresentationViewObj();
-    if(repImpl!=null)
-    {
-      Representation rep = new RepresentationTransferObject();
-      rep.setLongName(repImpl.getLongName());
-      rep.setPreferredName(repImpl.getPreferredName());
-      rep.setIdseq(repImpl.getRepIdseq());
-      setRepresentation(rep);
+            if (vdViewRowImpl.getVdId() != null)
+                  publicId = vdViewRowImpl.getVdId().intValue();
+            origin = checkForNull(vdViewRowImpl.getOrigin());
+           RepresentationViewObjRowImpl repImpl=  (RepresentationViewObjRowImpl)vdViewRowImpl.getRepresentationViewObj();
+           if(repImpl!=null)
+           {
+               Representation rep = new RepresentationTransferObject();
+               rep.setLongName(repImpl.getLongName());
+               rep.setPreferredName(repImpl.getPreferredName());
+               rep.setIdseq(repImpl.getRepIdseq());
+               rep.setPublicId(repImpl.getRepId().intValue());
+      
+               ContextsViewRowImpl conImpl = (ContextsViewRowImpl) repImpl.getContextsRow();
+               Context repContext = new ContextTransferObject();
+               repContext.setName(conImpl.getName());
+               rep.setContext(repContext);
+               ServiceLocator locator = 
+               ServiceLocatorFactory.getLocator(CaDSRConstants.CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
+        
+               AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
+               ConceptDAO conDAO = daoFactory.getConceptDAO();
+               {
+                ConceptDerivationRule repRule;
+                repRule = conDAO.getRepresentationDerivationRuleForVD(vdViewRowImpl.getVdIdseq());
+                rep.setConceptDerivationRule(repRule);
+                }
+      
+               Number repVersion = repImpl.getVersion();
+               rep.setVersion(repVersion.floatValue());
+               setRepresentation(rep);
     }
     
 
@@ -226,4 +262,15 @@ public class BC4JValueDomainTransferObject extends AdminComponentTransferObject
   {
     return cdPublicId;
   }
+  
+    public String getRepresentationPrefName() {
+            return repPrefName;
+    }
+
+    public String getRepresentationContextName() {
+            return repContextName;
+    }
+    public Float getRepresentationVersion() {
+            return repVersion;
+    }
 }
