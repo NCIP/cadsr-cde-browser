@@ -1,29 +1,47 @@
+/**
+ * CompareCDEAction
+ *
+ * This class is the Action class for comparing CDEs side by side
+  *
+ * @release 3.0
+ * @author: <a href=”mailto:jane.jiang@oracle.com”>Shaji Kakkodi</a>
+ * @date: 2/16/2005
+ */
+
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.CDECompareList;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
-import gov.nih.nci.ncicb.cadsr.util.StringUtils;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
 
+import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
+
+
+
+
+import gov.nih.nci.ncicb.cadsr.util.StringUtils;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
+import oracle.cle.process.ProcessInfo;
+import oracle.cle.process.Service;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-/**
- * This action sets user search preferences.
- *
- * @release 3.0
- * @author: <a href="mailto:jane.jiang@oracle.com">Shaji Kakkodi</a>
- * @date: 2/16/2005
- */
-public class CDESearchPrefAction extends BrowserBaseDispatchAction {
+
+public class CDESearchPrefAction
+ extends BrowserBaseDispatchAction {
+
+
 
  /**
  *
@@ -139,6 +157,7 @@ public class CDESearchPrefAction extends BrowserBaseDispatchAction {
  public ActionForward cancelCDESearchPref(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                      HttpServletResponse response) throws IOException, ServletException {
                                      
+  setSessionObject(request,TREE_REFRESH_INDICATOR,YES,true);
   return mapping.findForward("searchPage");
  }
 

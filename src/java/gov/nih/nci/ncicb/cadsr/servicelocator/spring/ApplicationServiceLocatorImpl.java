@@ -2,20 +2,22 @@ package gov.nih.nci.ncicb.cadsr.servicelocator.spring;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
 import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.service.CDEBrowserTreeService;
 import gov.nih.nci.ncicb.cadsr.formbuilder.service.LockingService;
-import gov.nih.nci.ncicb.cadsr.ocbrowser.service.OCBrowserService;
+import gov.nih.nci.ncicb.cadsr.formbuilder.service.LockingService;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
+import gov.nih.nci.ncicb.cadsr.spring.ApplicationContextFactory;
+import gov.nih.nci.ncicb.cadsr.ocbrowser.service.OCBrowserService;
 
 public class ApplicationServiceLocatorImpl implements ApplicationServiceLocator
 {
 
- private OCBrowserService ocBrowserService = null;
+ private  OCBrowserService ocBrowserService = null;
 
- private CDEBrowserTreeService treeService = null;
+ private  CDEBrowserTreeService treeService = null;
 
- private CDEBrowserService cdebrowserService = null;
+ private  CDEBrowserService cdebrowserService = null;
  
- private LockingService lockingService = null;
+ private  LockingService lockingService = null;
 
   public ApplicationServiceLocatorImpl()
   {
@@ -27,7 +29,7 @@ public class ApplicationServiceLocatorImpl implements ApplicationServiceLocator
      {
           try
           {
-            Object obj = SpringObjectLocatorImpl.getObject("OCBrowserService");
+            Object obj = new SpringObjectLocatorImpl().findObject("OCBrowserService");
             ocBrowserService = (OCBrowserService) (obj);
           }
           catch (Exception e)
@@ -43,7 +45,7 @@ public class ApplicationServiceLocatorImpl implements ApplicationServiceLocator
      {
           try
           {
-            Object obj = SpringObjectLocatorImpl.getObject("treeService");
+            Object obj = new SpringObjectLocatorImpl().findObject("treeService");
             treeService = (CDEBrowserTreeService) (obj);
           }
           catch (Exception e)
@@ -60,7 +62,7 @@ public class ApplicationServiceLocatorImpl implements ApplicationServiceLocator
      {
           try
           {
-            Object obj = SpringObjectLocatorImpl.getObject("CDEBrowserService");
+            Object obj = new SpringObjectLocatorImpl().findObject("CDEBrowserService");
             cdebrowserService = (CDEBrowserService) (obj);
           }
           catch (Exception e)
@@ -77,7 +79,7 @@ public class ApplicationServiceLocatorImpl implements ApplicationServiceLocator
         {
              try
              {
-               Object obj = SpringObjectLocatorImpl.getObject("lockingService");
+               Object obj = new SpringObjectLocatorImpl().findObject("lockingService");
                lockingService = (LockingService) (obj);
              }
              catch (Exception e)

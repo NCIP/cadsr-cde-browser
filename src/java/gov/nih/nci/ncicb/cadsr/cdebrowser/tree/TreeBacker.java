@@ -1,9 +1,8 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.tree;
 
 
-import gov.nih.nci.ncicb.cadsr.servicelocator.spring.SpringObjectLocatorImpl;
-
 import java.io.Serializable;
+
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,49 +13,76 @@ import org.apache.myfaces.custom.tree2.TreeState;
 
 /**
  * @author Jane Jiang
- * @version: $Id: TreeBacker.java,v 1.2 2007-02-22 21:45:26 rokickik Exp $
+ * @version: $Id: TreeBacker.java,v 1.3 2007-06-20 22:12:15 bollersj Exp $
  */
+
 public class TreeBacker implements Serializable {
-    
    private static final long serialVersionUID = 1L;
 
-   private final CDEBrowserTreeData treeData = CDEBrowserTreeData.getInstance();
-   
-   private TreeModelBase treeModel;
+   protected Log log = LogFactory.getLog(TreeBacker.class.getName());
 
-   private HtmlTree tree;
+   private TreeModelBase _treeModel;
+
+   private HtmlTree _tree;
 
    private String selectedNode;
+   private TreeState treeState;
+
+   private CDEBrowserTreeData treeData = new CDEBrowserTreeData();
 
    public TreeBacker() {
+      // Initialize the tree with the root node
+      //       String[] path = _tree.getPathInformation("0");
+      //       _tree.expandPath(path);
+
    }
 
    public TreeModel getTreeModel() {
-      if (treeModel == null) {
-          resetTree();
+      if (_treeModel == null) {
+         _treeModel = new TreeModelBase(treeData.getTreeData());
+         _treeModel.getTreeState().toggleExpanded("0");
+         _treeModel.getTreeState().setTransient(true);
       }
-      return treeModel;
+
+      return _treeModel;
    }
 
-   public String resetTree()   {
-       treeModel = new TreeModelBase(treeData.getTreeData());
-       treeModel.getTreeState().toggleExpanded("0");
-       treeModel.getTreeState().setTransient(true);
-       return null;
-   }
-   
    public String refreshTree()   {
        treeData.refreshTree();
-       resetTree();
+       _treeModel = new TreeModelBase(treeData.getTreeData());
+       _treeModel.getTreeState().toggleExpanded("0");
+       _treeModel.getTreeState().setTransient(true);
        return null;
    }
 
+   /**
+   public void selectedNode() {
+           this.selectedNode = this.getTreeModel().getNode().getDescription();
+   }
+*/
+   public String getSelectedNode() {
+      return selectedNode;
+   }
+
+
    public void setTree(HtmlTree tree) {
-      this.tree = tree;
+      this._tree = tree;
    }
 
    public HtmlTree getTree() {
-      return tree;
+      return _tree;
+   }
+
+   public void setTreeData(CDEBrowserTreeData treeData) {
+      this.treeData = treeData;
+   }
+
+   public CDEBrowserTreeData getTreeData() {
+      return treeData;
+   }
+   
+   public void selectedNode() {
+      this.selectedNode = this.getTree().getNode().getDescription();
    }
 
 }

@@ -1,10 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.struts.common;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTreeData;
 import gov.nih.nci.ncicb.cadsr.servicelocator.spring.SpringObjectLocatorImpl;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.PlugIn;
 import org.apache.struts.config.ModuleConfig;
@@ -32,14 +29,9 @@ public class SpringWebContextPlugIn  implements PlugIn
         try {
           ServletContext servletContext = servlet.getServletContext();
           SpringObjectLocatorImpl.applicationContext=WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
-          
-          // now that everything is finally setup, load the tree
-          CDEBrowserTreeData treeData = (CDEBrowserTreeData)
-              SpringObjectLocatorImpl.getObject("treeData");
-          treeData.refreshTree();
 
         } catch (Exception e) {
-            e.printStackTrace();
+
             throw new ServletException("Could not initalize SpringObjectLocatorImpl.applicationContext",e);
         }
 
