@@ -50,7 +50,7 @@ public class TreeUtils {
       WebNode currNode = (WebNode)objArr[i];
       if(currNode!=null)
       {
-        crumbs.append(currNode.getName()+">>");
+        crumbs.append(currNode.getName().replace("&","&amp")+">>");
       }
     }
     
@@ -69,6 +69,8 @@ public class TreeUtils {
     crumbsStr = StringUtils.strReplace(crumbsStr,"'","*??*");
     //This is done to get around " in the names
     crumbsStr = StringUtils.strReplace(crumbsStr,"\"","&quot;");
+    //This is done to get around & in the names
+    crumbsStr = StringUtils.strReplace(crumbsStr,"&","&amp");
 
     //crumbsStr = URLEncoder.encode(crumbsStr);
     String actionValue = webNode.getAction();
