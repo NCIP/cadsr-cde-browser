@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.16 2007-06-13 19:50:01 aggarwap Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.17 2007-07-11 17:02:28 aggarwap Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -241,6 +241,7 @@ public class GetExcelDownload extends BasePersistingProcess {
       boldCellStyle.setFont(font);
       boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
 
+
       // Create a row and put the column header in it
       HSSFRow row = sheet.createRow(rowNumber++);
       short col = 0;
@@ -334,8 +335,9 @@ public class GetExcelDownload extends BasePersistingProcess {
                     Datum[] nestedDatum = nestedStruct.getOracleAttributes();
 
                     if (nestedCol.type.equalsIgnoreCase("Number")) {
+                    //changed the conversion from stringValue from floatValue 07/11/2007 to fix GF7664 Prerna
                       cell.setCellValue(
-                        ((NUMBER) nestedDatum[nestedCol.rsSubIndex]).floatValue());
+                        ((NUMBER) nestedDatum[nestedCol.rsSubIndex]).stringValue());
                     }
                     else if (nestedCol.type.equalsIgnoreCase("String")) {
                       cell.setCellValue(
@@ -558,9 +560,9 @@ public class GetExcelDownload extends BasePersistingProcess {
     List csInfo = new ArrayList();
 
     csInfo.add(new ColumnInfo(0, 3, "Short Name", "String"));
-    csInfo.add(new ColumnInfo(0, 4, "Version", "Number"));
+    csInfo.add(new ColumnInfo(0, 4, "Version","Number"));
     csInfo.add(new ColumnInfo(0, 1, "Context Name", "String"));
-    csInfo.add(new ColumnInfo(0, 2, "Context Version", "Number"));
+    csInfo.add(new ColumnInfo(0, 2, "Context Version","Number"));
     csInfo.add(new ColumnInfo(1, "Item Name"));
     csInfo.add(new ColumnInfo(2, "Item Type Name"));
 
