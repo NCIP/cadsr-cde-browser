@@ -30,4 +30,12 @@ public class ProtocolFormTemplateNode extends LazyActionTreeNode {
       isChildrenLoaded = true;
 
    }
+   
+  @Override
+  public int getChildCount()  {
+    if (!isChildrenLoaded) loadChildren();
+    List childs = super.getChildren();
+    if (childs == null) return 0;    
+    else return childs.size(); 
+  }
 }

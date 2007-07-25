@@ -1157,19 +1157,26 @@ public class CDEBrowserTreeServiceImpl
            ClassificationScheme cs = (ClassificationScheme) csIter.next();
            if (cs.getClassSchemeType().equalsIgnoreCase(params.getRegStatusCsTree())){
                ClassSchemeNode csNode = getClassificationSchemeNode(cs);
-               pNode.addLeaf(csNode);
+               pNode.addChild(csNode);
            //add registration status nodes for registration_status cs type
                String[] regStatusArr = params.getCsTypeRegStatus().split(",");
                for (int i=0; i<regStatusArr.length; i++){
                  ClassSchemeRegStatusNode regNode = getRegStatusNode(regStatusArr[i], 
                  contextId, cs.getCsIdseq());
-                 csNode.addLeaf(regNode);
+//                 csNode.addLeaf(regNode);
+                 csNode.addChild(regNode);
+                 // Don't expose subnodes yet.
+                 regNode.setLoaded(false);
+                 regNode.setExpanded(false);
                }
-               csNode.markChildrenLoaded();
+//               csNode.markChildrenLoaded();
+               // Don't expose subnodes yet.
+               csNode.setLoaded(false);
+               csNode.setExpanded(false);
            } else if (cs.getClassSchemeType().equalsIgnoreCase(params.getCsTypeContainer()))
-              pNode.addLeaf(this.getClassificationSchemeContainerNode(cs));
+              pNode.addChild(this.getClassificationSchemeContainerNode(cs));
            else    
-              pNode.addLeaf(getClassificationSchemeNode(cs));
+              pNode.addChild(getClassificationSchemeNode(cs));
            
        }
    }   
@@ -1184,9 +1191,11 @@ public class CDEBrowserTreeServiceImpl
         for (Iterator cIter=childrenCS.iterator(); cIter.hasNext(); ){
             ClassificationScheme cs = (ClassificationScheme) cIter.next();
             if (cs.getClassSchemeType().equalsIgnoreCase(params.getCsTypeContainer()))
-                pNode.addLeaf(this.getClassificationSchemeContainerNode(cs));
-            else    
-                pNode.addLeaf(getClassificationSchemeNode(cs));
+//                pNode.addLeaf(this.getClassificationSchemeContainerNode(cs));
+                pNode.addChild(this.getClassificationSchemeContainerNode(cs));
+            else
+//                pNode.addLeaf(getClassificationSchemeNode(cs));
+                pNode.addChild(getClassificationSchemeNode(cs));
         }
       }  
 
@@ -1201,16 +1210,24 @@ public class CDEBrowserTreeServiceImpl
         while (iter.hasNext()) {
            ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
            ClassSchemeItemNode csiNode = getClassificationSchemeItemNode(cscsi);
-           pNode.addLeaf(csiNode);
+//           pNode.addLeaf(csiNode);
+           pNode.addChild(csiNode);
             if (cscsi.getClassSchemeItemType().equals("DISEASE_TYPE")) {
               if (cscsi.getClassSchemePrefName().equals("DISEASE")) {
-                csiNode.addLeaf(this.getDiseaseSubNode(cscsi, "Core Data Set"));
+//                csiNode.addLeaf(this.getDiseaseSubNode(cscsi, "Core Data Set"));
+//
+//                csiNode.addLeaf(this.getDiseaseSubNode(cscsi, "Non-Core Data Set"));
+                csiNode.addChild(this.getDiseaseSubNode(cscsi, "Core Data Set"));
 
-                csiNode.addLeaf(this.getDiseaseSubNode(cscsi, "Non-Core Data Set"));
+                csiNode.addChild(this.getDiseaseSubNode(cscsi, "Non-Core Data Set"));
+                // Don't expose sub-nodes yet.
+                csiNode.setLoaded(false);
+                csiNode.setExpanded(false);
               }
-            }        }        
-
-    }  
+            }
+        }        
+    }
+    
     public void loadRegStatusCSNodes(LazyActionTreeNode pNode) throws Exception {
         String csId = pNode.getIdentifier();
         ClassificationSchemeDAO csDao = daoFactory.getClassificationSchemeDAO();
@@ -1219,8 +1236,9 @@ public class CDEBrowserTreeServiceImpl
         while (iter.hasNext()) {
            ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
             if (csDao.hasRegisteredAC(cscsi.getCsCsiIdseq(), pNode.getDescription())) {
-           CSIRegStatusNode csiNode = getRegStatusCSINode(cscsi, pNode.getDescription());;
-           pNode.addLeaf(csiNode);
+           CSIRegStatusNode csiNode = getRegStatusCSINode(cscsi, pNode.getDescription());
+//           pNode.addLeaf(csiNode);
+           pNode.addChild(csiNode);
           }
         }        
     
@@ -1234,7 +1252,8 @@ public class CDEBrowserTreeServiceImpl
         while (iter.hasNext()) {
            ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
            ClassSchemeItemNode csiNode = getClassificationSchemeItemNode(cscsi);
-           pNode.addLeaf(csiNode);
+//           pNode.addLeaf(csiNode);
+           pNode.addChild(csiNode);
        
         }        
     
@@ -1248,7 +1267,8 @@ public class CDEBrowserTreeServiceImpl
         while (iter.hasNext()) {
            ClassSchemeItem cscsi = (ClassSchemeItem)iter.next();
            CSIRegStatusNode csiNode = getRegStatusCSINode(cscsi, pNode.getToolTip());
-           pNode.addLeaf(csiNode);
+//           pNode.addLeaf(csiNode);
+           pNode.addChild(csiNode);
        
         }        
     
@@ -1402,14 +1422,19 @@ public class CDEBrowserTreeServiceImpl
 
          if (protoNode == null) {
            protoNode = getProtocolNode( currForm.getProtocols().get(0), contextIdseq);
-           pNode.addLeaf(protoNode);
+//           pNode.addLeaf(protoNode);
+           pNode.addChild(protoNode);
            protocolHolder.put(currProtoIdSeq, protoNode);
            treeNodeMap.clear();
          }
 
          // check and see if form need to be added to cs tree
          if (currForm.getClassifications() == null || currForm.getClassifications().size() == 0) {
-           protoNode.addLeaf(formNode);
+//           protoNode.addLeaf(formNode);
+           protoNode.addChild(formNode);
+           // Don't expose subnodes yet.
+           protoNode.setLoaded(false);
+           protoNode.setExpanded(false);
          } else {
            //add formNode to csTree
            if (cSMap == null)
@@ -1478,7 +1503,13 @@ public class CDEBrowserTreeServiceImpl
          parentNode = csNode;
 
        if (parentNode != null)
-         parentNode.addLeaf(csiNode);
+       {
+//         parentNode.addLeaf(csiNode);
+           parentNode.addChild(csiNode);
+           // Don't expose subnodes yet.
+           parentNode.setLoaded(false);
+           parentNode.setExpanded(false);
+       }
 
        csiMap.put(cscsi.getCsCsiIdseq(), csiNode);
      }

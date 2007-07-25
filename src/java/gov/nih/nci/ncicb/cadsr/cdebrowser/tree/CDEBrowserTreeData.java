@@ -7,6 +7,7 @@ import gov.nih.nci.ncicb.cadsr.resource.Context;
 import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
 import gov.nih.nci.ncicb.cadsr.util.SessionHelper;
 import gov.nih.nci.ncicb.webtree.ContextNode;
+import gov.nih.nci.ncicb.webtree.LazyActionTreeModel;
 import gov.nih.nci.ncicb.webtree.LazyActionTreeNode;
 
 import java.io.Serializable;
@@ -50,8 +51,11 @@ public class CDEBrowserTreeData implements Serializable {
              "javascript:performAction('P_PARAM_TYPE=CONTEXT" +
              "&NOT_FIRST_DISPLAY=1&performQuery=yes')",
              false);
+      contextFolder.setParent(null);
+      contextFolder.setTreeModel(new LazyActionTreeModel(contextFolder));
       boolean excludeTraining = true;
       boolean excludeTest = true;
+      boolean noBuildException = true;
              
       Collection contexts = dao.getAllContexts();
       try {
@@ -84,9 +88,12 @@ public class CDEBrowserTreeData implements Serializable {
        }
 
       } catch (Exception e) {
+         noBuildException = false;
          log.error("Exception caught when building the tree", e);
          throw new RuntimeException(e);
       }
+      contextFolder.setLoaded(noBuildException);
+      contextFolder.setExpanded(noBuildException);
       log.info("Finished Building UML Browser tree");
 
       return contextFolder;

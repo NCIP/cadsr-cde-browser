@@ -10,10 +10,11 @@ import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.apache.myfaces.custom.tree2.TreeModel;
 import org.apache.myfaces.custom.tree2.TreeModelBase;
 import org.apache.myfaces.custom.tree2.TreeState;
+import gov.nih.nci.ncicb.webtree.LazyActionTreeModel;
 
 /**
  * @author Jane Jiang
- * @version: $Id: TreeBacker.java,v 1.3 2007-06-20 22:12:15 bollersj Exp $
+ * @version: $Id: TreeBacker.java,v 1.4 2007-07-25 18:35:23 bollersj Exp $
  */
 
 public class TreeBacker implements Serializable {
@@ -21,7 +22,7 @@ public class TreeBacker implements Serializable {
 
    protected Log log = LogFactory.getLog(TreeBacker.class.getName());
 
-   private TreeModelBase _treeModel;
+   private LazyActionTreeModel _treeModel;
 
    private HtmlTree _tree;
 
@@ -37,10 +38,10 @@ public class TreeBacker implements Serializable {
 
    }
 
-   public TreeModel getTreeModel() {
+   public LazyActionTreeModel getTreeModel() {
       if (_treeModel == null) {
-         _treeModel = new TreeModelBase(treeData.getTreeData());
-         _treeModel.getTreeState().toggleExpanded("0");
+         _treeModel = new LazyActionTreeModel(treeData.getTreeData());
+//         _treeModel.getTreeState().toggleExpanded("0");
          _treeModel.getTreeState().setTransient(true);
       }
 
@@ -49,8 +50,8 @@ public class TreeBacker implements Serializable {
 
    public String refreshTree()   {
        treeData.refreshTree();
-       _treeModel = new TreeModelBase(treeData.getTreeData());
-       _treeModel.getTreeState().toggleExpanded("0");
+       _treeModel = new LazyActionTreeModel(treeData.getTreeData());
+//       _treeModel.getTreeState().toggleExpanded("0");
        _treeModel.getTreeState().setTransient(true);
        return null;
    }

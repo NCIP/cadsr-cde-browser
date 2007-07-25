@@ -29,6 +29,19 @@ public class ClassSchemeNode extends LazyActionTreeNode {
   public void markChildrenLoaded() {
       isChildrenLoaded = true;      
   }
+  
+  protected List<LazyActionTreeNode> loadChildNodes() {
+    this.loadChildren();
+    return super.getChildrenList();
+  }  
+  
+//  @Override
+//  public int getChildCount() {
+//    if (isLoaded()) return super.getChildCount();
+//    if (isExpanded()) return getChildren().size();
+//    // return 1 to initiate lazy loading
+//    return 1;
+//  }
 }
 
 
