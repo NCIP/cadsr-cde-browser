@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.17 2007-07-11 17:02:28 aggarwap Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.18 2007-08-02 14:07:41 aggarwap Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -549,7 +549,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     List validValueInfo = new ArrayList();
     validValueInfo.add(new ColumnInfo(0, "Valid Values"));
     validValueInfo.add(new ColumnInfo(1, "Value Meaning"));
-    validValueInfo.add(new ColumnInfo(2, "Meaning Description"));
+    validValueInfo.add(new ColumnInfo(2, "Value Meaning Description"));
     validValueInfo.add(new ColumnInfo(3, "Value Meaning Concepts"));
 
     ColumnInfo validValue = new ColumnInfo("VALID_VALUES", "", "Array");
