@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.18 2007-08-02 14:07:41 aggarwap Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.19 2007-08-03 13:42:54 aggarwap Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -544,6 +544,30 @@ public class GetExcelDownload extends BasePersistingProcess {
       new ColumnInfo("vd_concepts", "Value Domain Concept ", "Array");
     vdConcepts.nestedColumns = vdConceptInfo;
     columnInfo.add(vdConcepts);
+      //representation concept
+      columnInfo.add(new ColumnInfo("REP_ID", "Representation Public ID", "String"));
+      columnInfo.add(
+        new ColumnInfo("REP_LONG_NAME", "Representation Long Name", "String"));
+      columnInfo.add(
+        new ColumnInfo(
+          "REP_PREFERRED_NAME", "Representation Short Name", "String"));
+      columnInfo.add(
+        new ColumnInfo("REP_CONTE_NAME", "Representation Context Name", "String"));
+      columnInfo.add(
+        new ColumnInfo("REP_VERSION", "Representation Version", "String"));
+
+      List repConceptInfo = new ArrayList();
+      repConceptInfo.add(new ColumnInfo(1, "Name"));
+      repConceptInfo.add(new ColumnInfo(0, "Code"));
+      repConceptInfo.add(new ColumnInfo(2, "Public ID", "Number"));
+      repConceptInfo.add(new ColumnInfo(3, "Definition Source"));
+      repConceptInfo.add(new ColumnInfo(5, "EVS Source"));
+      repConceptInfo.add(new ColumnInfo(6, "Primary Flag"));
+
+      ColumnInfo repConcepts =
+        new ColumnInfo("rep_concepts", "Representation Concept ", "Array");
+      repConcepts.nestedColumns = repConceptInfo;
+      columnInfo.add(repConcepts);
 
     //Valid Value
     List validValueInfo = new ArrayList();
@@ -616,31 +640,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     deDrivation.nestedColumns = dedInfo;
     columnInfo.add(deDrivation);
     
-      //object class concept
-      columnInfo.add(new ColumnInfo("REP_ID", "Representation Public ID", "String"));
-      columnInfo.add(
-        new ColumnInfo("REP_LONG_NAME", "Representation Long Name", "String"));
-      columnInfo.add(
-        new ColumnInfo(
-          "REP_PREFERRED_NAME", "Representation Short Name", "String"));
-      columnInfo.add(
-        new ColumnInfo("REP_CONTE_NAME", "Representation Context Name", "String"));
-      columnInfo.add(
-        new ColumnInfo("REP_VERSION", "Representation Version", "String"));
-
-      List repConceptInfo = new ArrayList();
-      repConceptInfo.add(new ColumnInfo(1, "Name"));
-      repConceptInfo.add(new ColumnInfo(0, "Code"));
-      repConceptInfo.add(new ColumnInfo(2, "Public ID", "Number"));
-      repConceptInfo.add(new ColumnInfo(3, "Definition Source"));
-      repConceptInfo.add(new ColumnInfo(5, "EVS Source"));
-      repConceptInfo.add(new ColumnInfo(6, "Primary Flag"));
-
-      ColumnInfo repConcepts =
-        new ColumnInfo("rep_concepts", "Representation Concept ", "Array");
-      repConcepts.nestedColumns = repConceptInfo;
-      columnInfo.add(repConcepts);
-
+    
 
     return columnInfo;
   }
