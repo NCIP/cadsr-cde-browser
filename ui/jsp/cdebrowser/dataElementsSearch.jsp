@@ -55,6 +55,7 @@
   //String downloadXMLURL = "javascript:newDownloadWin('search?xmlDownload=9"+pageUrl+"','downloadWin',10,10)";
   String downloadXMLURL = "javascript:fileDownloadWin('" + contextPath + "/downloadXMLPage.jsp?src=deSearch','xmlWin',500,200)";
   //String downloadExcelURL = "javascript:newDownloadWin('search?excelDownload=9"+pageUrl+"','downloadWin',10,10)";
+  String downloadPriorExcelURL = "javascript:fileDownloadWin('" + contextPath + "/downloadExcelPage.jsp?src=deSearchPrior','excelWin',500,200)";
   String downloadExcelURL = "javascript:fileDownloadWin('" + contextPath + "/downloadExcelPage.jsp?src=deSearch','excelWin',500,200)";
   String valueDomainLOVUrl= "javascript:newWin('" + request.getContextPath() + "/search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain"+pageUrl+"','vdLOV',700,600)";
   String decLOVUrl= "javascript:newWin('" + request.getContextPath() + "/search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept"+pageUrl+"','decLOV',700,600)";
@@ -493,8 +494,10 @@ function gotoCDESearchPrefs() {
 
   <tr valign="top">
     <td nowrap>
-      <b><a href="<%=downloadExcelURL%>" >[Download Data Elements to Excel]</a></b> &nbsp;&nbsp;
-      <b><a href="<%=downloadXMLURL%>" >[Download Data Elements as XML]</a></b> &nbsp;&nbsp;
+      <b><a href="<%=downloadPriorExcelURL%>" title="3.2.0.1 Version">[Download Data Elements to Prior Excel]</a></b> &nbsp;&nbsp;
+      <b><a href="<%=downloadExcelURL%>" title="3.2.0.2 Includes new content: Value Meaning Description in column BK, Value Meaning Concept(s) in column BL, Value Domain Representation in columns CJ-CT.">
+      [Download Data Elements to Excel]</a></b> &nbsp;&nbsp;
+      <b><a href="<%=downloadXMLURL%>" title="3.2.0.2 Version">[Download Data Elements as XML]</a></b> &nbsp;&nbsp;
 <%
       if ((paramType!=null)&&(paramType.equals("CRF")||paramType.equals("TEMPLATE"))){
 %>
