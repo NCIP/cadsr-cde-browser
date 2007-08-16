@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.21 2007-08-16 14:45:51 davet Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.22 2007-08-16 17:00:30 davet Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -427,11 +427,11 @@ public class GetExcelDownload extends BasePersistingProcess {
     columnInfo.add(
       new ColumnInfo("CDE_ID", "Data Element Public ID", "Number"));
     columnInfo.add(
-      new ColumnInfo("DE_WK_FLOW_STATUS", "Workflow Status", "String"));
+      new ColumnInfo("DE_WK_FLOW_STATUS", "Data Element Workflow Status", "String"));
     columnInfo.add(
-      new ColumnInfo("REGISTRATION_STATUS", "Registration Status", "Number"));
-    columnInfo.add(new ColumnInfo("BEGIN_DATE", "Begin Date", "Number"));
-    columnInfo.add(new ColumnInfo("ORIGIN", "Source", "String"));
+      new ColumnInfo("REGISTRATION_STATUS", "Data Element Registration Status", "Number"));
+    columnInfo.add(new ColumnInfo("BEGIN_DATE", "Data Element Begin Date", "Number"));
+    columnInfo.add(new ColumnInfo("ORIGIN", "Data Element Source", "String"));
 
     //data element concept
     columnInfo.add(
@@ -548,7 +548,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     //Valid Value
     List validValueInfo = new ArrayList();
     validValueInfo.add(new ColumnInfo(0, "Valid Values"));
-    validValueInfo.add(new ColumnInfo(1, "Value Meaning"));
+    validValueInfo.add(new ColumnInfo(1, "Value Meaning Name"));
     //The deSearch is condition is added to support both the old and the new version of excel files
     if ("deSearch".equals(source)){
     	validValueInfo.add(new ColumnInfo(2, "Value Meaning Description"));
@@ -562,7 +562,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     //Classification Scheme
     List csInfo = new ArrayList();
 
-    csInfo.add(new ColumnInfo(0, 3, "Short Name", "String"));
+    csInfo.add(new ColumnInfo(0, 3, "Preferred Name", "String"));
     csInfo.add(new ColumnInfo(0, 4, "Version","Number"));
     csInfo.add(new ColumnInfo(0, 1, "Context Name", "String"));
     csInfo.add(new ColumnInfo(0, 2, "Context Version","Number"));
@@ -582,7 +582,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     altNameInfo.add(new ColumnInfo(3, "Type"));
 
     ColumnInfo altNames =
-      new ColumnInfo("designations", "Alternate Name ", "Array");
+      new ColumnInfo("designations", "Data Element Alternate Name ", "Array");
     altNames.nestedColumns = altNameInfo;
     columnInfo.add(altNames);
 
