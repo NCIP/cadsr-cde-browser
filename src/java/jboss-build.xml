@@ -19,13 +19,13 @@
   
    <!-- Make sure these are correct for your instance C:\jboss-4.0.4.GA-->
    
-   <property name="jboss.home" value="D:\jboss-4.0.4.GA" />   
+   <property name="jboss.home" value="C:\jboss-4.0.4.GA\" />   
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    
    <property name="cdebrowser.version" value="3.2.0.2" />
-   <property name="cdebrowser.build" value="3" />
+   <property name="cdebrowser.build" value="4" />
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="3_2_0_2" />
@@ -35,6 +35,7 @@
    <property name="stage.user.password" value="cdeuser" />
    <property name="umlstage.user.password" value="cdeuser" />
    <property name="prod.user.password" value="cdeuser" />
+   <property name="load.user.password" value="cdeuser" />
    <property name="opensource.user.password" value="user_passwd" />
    
 
@@ -75,6 +76,7 @@
   <property name="config.stage" value="${project.home}/config_stage"/>  
   <property name="config.umlstage" value="${project.home}/config_umlstg"/>  
   <property name="config.prod" value="${project.home}/config_prod"/>
+  <property name="config.load" value="${project.home}/config_load"/>
   <property name="config.opensource" value="${project.home}/config_opensource"/>
   <property name="ejb.descriptor.home" value="${project.home}/config/ejb"/>
   
@@ -362,8 +364,29 @@
           
     </target>
   <!-- =========== END UML Stage CONFIG ======================= -->  
-  
+  <!-- =========== Load CONFIG ======================= -->
+    <target name="load_config" depends="init,dev_config">    
+       <copy todir="${classes.build.dir}/META-INF" overwrite="Yes">      
+           <fileset dir="${config.load}/META-INF">
+             <patternset>
+               <include name="application.xml"/>
+             </patternset>
+           </fileset>      
+        </copy> 
+     <filter token="user.password" value="${load.user.password}"/>
+     <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
+         <fileset dir="${config.load}/connections">
+           <patternset>
+             <include name="cle-providers.xml"/>
+           </patternset>
+         </fileset>
+      </copy>     
+      
+      <property name="debug.config.home" value="${config.load}" /> 
+          
+    </target>
 
+  <!-- =========== END Load CONFIG ======================= -->  
   
   <!-- =========== PROD CONFIG ======================= -->
     <target name="prod_config" depends="init,dev_config">    
@@ -1049,6 +1072,24 @@
          </fileset>
       </copy>       
    </target> 
+
+  <target  name="deploy_load" depends="clean,clean_jboss,load_config,debug_setting,ear_cdebrowser"> 
+     <copy todir="${jboss.home}/server/default/deploy">      
+         <fileset dir="${build.dir}">
+           <patternset>
+             <include name="${ear.name}.ear"/>
+           </patternset>
+         </fileset> 
+     </copy> 
+     <filter token="user.password" value="${load.user.password}"/>
+     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
+         <fileset dir="${config.load}/connections">
+           <patternset>
+             <include name="oracle-ds.xml"/>
+           </patternset>
+         </fileset>
+      </copy>       
+   </target> 
    
       <target  name="deploy_stage_start" depends="deploy_stage,jboss_startdebug"> 
    </target>
@@ -1136,7 +1177,12 @@
   <!-- =========== STAGE DISTRIBUTION============== -->
        <target name="dist_stage" depends="clean_build_dir,stage_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
         </target>      
-  <!-- =========== END STAGE DISTRIBUTION ======================= -->
+  <!-- =========== END STAGE DISTRIBUTION ======================= -->  
+  <!-- =========== LOAD DISTRIBUTION============== -->
+       <target name="dist_load" depends="clean_build_dir,load_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
+        </target>      
+  <!-- =========== END LOAD DISTRIBUTION ======================= -->
+ 
   <!-- =========== UML STAGE DISTRIBUTION============== -->
        <target name="dist_umlstage" depends="clean_build_dir,umlstage_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
         </target>      
@@ -1207,6 +1253,7 @@
        dist_dev		      - Creates Developement Clean distribution.
        dist_qa		      - Creates QA Clean distribution.
        dist_stage	      - Creates Stage Clean distribution.
+       dist_load		  - testing load	
        dist_prod	      - Creates Prod Clean distribution.
        
        cadsrapi_update	      - Creates a new cadsr-api lib file
