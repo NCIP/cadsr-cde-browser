@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.22 2007-08-16 17:00:30 davet Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.23 2007-09-04 20:15:02 davet Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -425,14 +425,24 @@ public class GetExcelDownload extends BasePersistingProcess {
       new ColumnInfo(
         "DE_CONTE_VERSION", "Data Element Context Version", "Number"));
     columnInfo.add(
-      new ColumnInfo("CDE_ID", "Data Element Public ID", "Number"));
-    columnInfo.add(
-      new ColumnInfo("DE_WK_FLOW_STATUS", "Data Element Workflow Status", "String"));
-    columnInfo.add(
-      new ColumnInfo("REGISTRATION_STATUS", "Data Element Registration Status", "Number"));
-    columnInfo.add(new ColumnInfo("BEGIN_DATE", "Data Element Begin Date", "Number"));
-    columnInfo.add(new ColumnInfo("ORIGIN", "Data Element Source", "String"));
-
+      new ColumnInfo("CDE_ID", "Data Element Public ID", "Number"));    
+    ////The deSearch is condition is added for the new version of excel files
+    if ("deSearch".equals(source)){ 
+    	columnInfo.add(
+    			new ColumnInfo("DE_WK_FLOW_STATUS", "Data Element Workflow Status", "String"));
+    	columnInfo.add(
+    			new ColumnInfo("REGISTRATION_STATUS", "Data Element Registration Status", "Number"));
+    	columnInfo.add(new ColumnInfo("BEGIN_DATE", "Data Element Begin Date", "Number"));
+    	columnInfo.add(new ColumnInfo("ORIGIN", "Data Element Source", "String"));
+    }else {
+    	columnInfo.add(
+    			new ColumnInfo("DE_WK_FLOW_STATUS", "Workflow Status", "String"));
+    	columnInfo.add(
+    			new ColumnInfo("REGISTRATION_STATUS", "Registration Status", "Number"));
+    	columnInfo.add(new ColumnInfo("BEGIN_DATE", "Begin Date", "Number"));
+    	columnInfo.add(new ColumnInfo("ORIGIN", "Source", "String"));
+    }
+    
     //data element concept
     columnInfo.add(
       new ColumnInfo("DEC_ID", "Data Element Concept Public ID", "Number"));
@@ -543,26 +553,57 @@ public class GetExcelDownload extends BasePersistingProcess {
     ColumnInfo vdConcepts =
       new ColumnInfo("vd_concepts", "Value Domain Concept ", "Array");
     vdConcepts.nestedColumns = vdConceptInfo;
-    columnInfo.add(vdConcepts);
-    
+    columnInfo.add(vdConcepts);    
+    //representation concept
+    //The deSearch is condition is added to support both the old and the new version of excel files
+    if ("deSearch".equals(source)){    	
+    	columnInfo.add(new ColumnInfo("REP_ID", "Representation Public ID", "String"));
+        columnInfo.add(
+          new ColumnInfo("REP_LONG_NAME", "Representation Long Name", "String"));
+        columnInfo.add(
+          new ColumnInfo(
+            "REP_PREFERRED_NAME", "Representation Short Name", "String"));
+        columnInfo.add(
+          new ColumnInfo("REP_CONTE_NAME", "Representation Context Name", "String"));
+        columnInfo.add(
+          new ColumnInfo("REP_VERSION", "Representation Version", "String"));
+
+        List repConceptInfo = new ArrayList();
+        repConceptInfo.add(new ColumnInfo(1, "Name"));
+        repConceptInfo.add(new ColumnInfo(0, "Code"));
+        repConceptInfo.add(new ColumnInfo(2, "Public ID", "Number"));
+        repConceptInfo.add(new ColumnInfo(3, "Definition Source"));
+        repConceptInfo.add(new ColumnInfo(5, "EVS Source"));
+        repConceptInfo.add(new ColumnInfo(6, "Primary Flag"));
+
+        ColumnInfo repConcepts =
+          new ColumnInfo("rep_concepts", "Representation Concept ", "Array");
+        repConcepts.nestedColumns = repConceptInfo;
+        columnInfo.add(repConcepts);
+    }    
+        
     //Valid Value
     List validValueInfo = new ArrayList();
     validValueInfo.add(new ColumnInfo(0, "Valid Values"));
-    validValueInfo.add(new ColumnInfo(1, "Value Meaning Name"));
     //The deSearch is condition is added to support both the old and the new version of excel files
     if ("deSearch".equals(source)){
+    	validValueInfo.add(new ColumnInfo(1, "Value Meaning Name"));
     	validValueInfo.add(new ColumnInfo(2, "Value Meaning Description"));
     	validValueInfo.add(new ColumnInfo(3, "Value Meaning Concepts"));
+    }else {
+    	validValueInfo.add(new ColumnInfo(1, "Value Meaning"));
     }
-    //
     ColumnInfo validValue = new ColumnInfo("VALID_VALUES", "", "Array");
     validValue.nestedColumns = validValueInfo;
     columnInfo.add(validValue);
 
     //Classification Scheme
     List csInfo = new ArrayList();
-
-    csInfo.add(new ColumnInfo(0, 3, "Preferred Name", "String"));
+    if ("deSearch".equals(source)){
+    	csInfo.add(new ColumnInfo(0, 3, "Preferred Name", "String"));
+    }else{
+    	csInfo.add(new ColumnInfo(0, 3, "Short Name", "String"));
+    }
     csInfo.add(new ColumnInfo(0, 4, "Version","Number"));
     csInfo.add(new ColumnInfo(0, 1, "Context Name", "String"));
     csInfo.add(new ColumnInfo(0, 2, "Context Version","Number"));
@@ -580,9 +621,12 @@ public class GetExcelDownload extends BasePersistingProcess {
     altNameInfo.add(new ColumnInfo(1, "Context Version", "Number"));
     altNameInfo.add(new ColumnInfo(2, ""));
     altNameInfo.add(new ColumnInfo(3, "Type"));
-
-    ColumnInfo altNames =
-      new ColumnInfo("designations", "Data Element Alternate Name ", "Array");
+    ColumnInfo altNames;
+    if("deSearch".equals(source)){
+    	altNames = new ColumnInfo("designations", "Data Element Alternate Name ", "Array");
+    }else {
+    	altNames = new ColumnInfo("designations", "Alternate Name ", "Array");
+    }
     altNames.nestedColumns = altNameInfo;
     columnInfo.add(altNames);
 
@@ -617,36 +661,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     ColumnInfo deDrivation =
       new ColumnInfo(5, "DE_DERIVATION", "DDE ", "StructArray");
     deDrivation.nestedColumns = dedInfo;
-    columnInfo.add(deDrivation);
-    
-    //representation concept
-    //The deSearch is condition is added to support both the old and the new version of excel files
-    if ("deSearch".equals(source)){    	
-    	columnInfo.add(new ColumnInfo("REP_ID", "Representation Public ID", "String"));
-        columnInfo.add(
-          new ColumnInfo("REP_LONG_NAME", "Representation Long Name", "String"));
-        columnInfo.add(
-          new ColumnInfo(
-            "REP_PREFERRED_NAME", "Representation Short Name", "String"));
-        columnInfo.add(
-          new ColumnInfo("REP_CONTE_NAME", "Representation Context Name", "String"));
-        columnInfo.add(
-          new ColumnInfo("REP_VERSION", "Representation Version", "String"));
-
-        List repConceptInfo = new ArrayList();
-        repConceptInfo.add(new ColumnInfo(1, "Name"));
-        repConceptInfo.add(new ColumnInfo(0, "Code"));
-        repConceptInfo.add(new ColumnInfo(2, "Public ID", "Number"));
-        repConceptInfo.add(new ColumnInfo(3, "Definition Source"));
-        repConceptInfo.add(new ColumnInfo(5, "EVS Source"));
-        repConceptInfo.add(new ColumnInfo(6, "Primary Flag"));
-
-        ColumnInfo repConcepts =
-          new ColumnInfo("rep_concepts", "Representation Concept ", "Array");
-        repConcepts.nestedColumns = repConceptInfo;
-        columnInfo.add(repConcepts);    	
-    }      
-    
+    columnInfo.add(deDrivation);    
 
     return columnInfo;
   }
