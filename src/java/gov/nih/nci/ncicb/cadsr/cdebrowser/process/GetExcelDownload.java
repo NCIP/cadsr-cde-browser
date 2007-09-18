@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.23 2007-09-04 20:15:02 davet Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.24 2007-09-18 20:33:22 davet Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -190,7 +190,7 @@ public class GetExcelDownload extends BasePersistingProcess {
             ProcessConstants.DE_SEARCH_QUERY_BUILDER);
         where = deSearch.getXMLQueryStmt();
       }
-      else if ("cdeCart".equals(source)) {
+      else if ("cdeCart".equals(source)|| "cdeCartPrior".equals(source)) {
         HttpServletRequest myRequest =
           (HttpServletRequest) getInfoObject("HTTPRequest");
 
@@ -426,8 +426,8 @@ public class GetExcelDownload extends BasePersistingProcess {
         "DE_CONTE_VERSION", "Data Element Context Version", "Number"));
     columnInfo.add(
       new ColumnInfo("CDE_ID", "Data Element Public ID", "Number"));    
-    ////The deSearch is condition is added for the new version of excel files
-    if ("deSearch".equals(source)){ 
+    ////The deSearch condition is added for the new version of excel files
+    if ("deSearch".equals(source) || "cdeCart".equals(source)){ 
     	columnInfo.add(
     			new ColumnInfo("DE_WK_FLOW_STATUS", "Data Element Workflow Status", "String"));
     	columnInfo.add(
@@ -555,8 +555,8 @@ public class GetExcelDownload extends BasePersistingProcess {
     vdConcepts.nestedColumns = vdConceptInfo;
     columnInfo.add(vdConcepts);    
     //representation concept
-    //The deSearch is condition is added to support both the old and the new version of excel files
-    if ("deSearch".equals(source)){    	
+    //The deSearch condition is added to support both the old and the new version of excel files
+    if ("deSearch".equals(source)|| "cdeCart".equals(source)){    	
     	columnInfo.add(new ColumnInfo("REP_ID", "Representation Public ID", "String"));
         columnInfo.add(
           new ColumnInfo("REP_LONG_NAME", "Representation Long Name", "String"));
@@ -585,8 +585,8 @@ public class GetExcelDownload extends BasePersistingProcess {
     //Valid Value
     List validValueInfo = new ArrayList();
     validValueInfo.add(new ColumnInfo(0, "Valid Values"));
-    //The deSearch is condition is added to support both the old and the new version of excel files
-    if ("deSearch".equals(source)){
+    //The deSearch condition is added to support both the old and the new version of excel files
+    if ("deSearch".equals(source)|| "cdeCart".equals(source)){
     	validValueInfo.add(new ColumnInfo(1, "Value Meaning Name"));
     	validValueInfo.add(new ColumnInfo(2, "Value Meaning Description"));
     	validValueInfo.add(new ColumnInfo(3, "Value Meaning Concepts"));
@@ -599,7 +599,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 
     //Classification Scheme
     List csInfo = new ArrayList();
-    if ("deSearch".equals(source)){
+    if ("deSearch".equals(source)|| "cdeCart".equals(source)){
     	csInfo.add(new ColumnInfo(0, 3, "Preferred Name", "String"));
     }else{
     	csInfo.add(new ColumnInfo(0, 3, "Short Name", "String"));
@@ -622,7 +622,7 @@ public class GetExcelDownload extends BasePersistingProcess {
     altNameInfo.add(new ColumnInfo(2, ""));
     altNameInfo.add(new ColumnInfo(3, "Type"));
     ColumnInfo altNames;
-    if("deSearch".equals(source)){
+    if("deSearch".equals(source)|| "cdeCart".equals(source)){
     	altNames = new ColumnInfo("designations", "Data Element Alternate Name ", "Array");
     }else {
     	altNames = new ColumnInfo("designations", "Alternate Name ", "Array");

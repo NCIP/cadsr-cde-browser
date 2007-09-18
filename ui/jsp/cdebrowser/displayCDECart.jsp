@@ -76,6 +76,7 @@ function retrieveSavedItems() {
   String urlPrefix = "";
   String downloadXMLURL = "javascript:fileDownloadWin('cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
   String downloadExcelURL = "javascript:fileDownloadWin('cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
+  String downloadPriorExcelURL = "javascript:fileDownloadWin('cdebrowser/downloadExcelPage.jsp?src=cdeCartPrior','excelWin',500,200)";
 %>
 <jsp:include page="../common/common_cdebrowser_header_jsp_inc.jsp" flush="true">
   <jsp:param name="loginDestination" value="formCDECartAction.do?method=displayCDECart"/>
@@ -102,7 +103,9 @@ function retrieveSavedItems() {
     <table cellpadding="0" cellspacing="0" width="80%" align="center">
       <tr>
         <td nowrap>
-          <b><a href="<%=downloadExcelURL%>" >[Download Data Elements to Excel]</a></b> &nbsp;&nbsp;
+          <b><a href="<%=downloadPriorExcelURL%>" title="3.2.0.1 Version">[Download Data Elements to Prior Excel]</a></b> &nbsp;&nbsp;
+          <b><a href="<%=downloadExcelURL%>" title="3.2.0.2 Includes new content: Value Meaning Description in column BV, Value Meaning Concept(s) in column BW, Value Domain Representation in columns BI-BS.">
+          [Download Data Elements to Excel]</a></b> &nbsp;&nbsp;
           <b><a href="<%=downloadXMLURL%>" >[Download Data Elements as XML]</a></b> &nbsp;&nbsp;
         </td>
       </tr>
