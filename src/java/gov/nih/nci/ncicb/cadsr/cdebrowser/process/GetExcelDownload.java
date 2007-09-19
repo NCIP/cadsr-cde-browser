@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.24 2007-09-18 20:33:22 davet Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.25 2007-09-19 17:37:56 davet Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -599,11 +599,11 @@ public class GetExcelDownload extends BasePersistingProcess {
 
     //Classification Scheme
     List csInfo = new ArrayList();
-    if ("deSearch".equals(source)|| "cdeCart".equals(source)){
+    /*if ("deSearch".equals(source)|| "cdeCart".equals(source)){
     	csInfo.add(new ColumnInfo(0, 3, "Preferred Name", "String"));
-    }else{
+    }else{*/
     	csInfo.add(new ColumnInfo(0, 3, "Short Name", "String"));
-    }
+    //}
     csInfo.add(new ColumnInfo(0, 4, "Version","Number"));
     csInfo.add(new ColumnInfo(0, 1, "Context Name", "String"));
     csInfo.add(new ColumnInfo(0, 2, "Context Version","Number"));
