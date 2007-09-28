@@ -133,14 +133,14 @@ public class ReferenceDocumentAction
  public ActionForward viewReferenceDocAttchment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                                 HttpServletResponse response) throws IOException, ServletException {
   OutputStream out = null;
+  out = response.getOutputStream();
 
   InputStream is = null;
-  out = response.getOutputStream();
   String attachmentName = request.getParameter(FormConstants.REFERENCE_DOC_ATTACHMENT_NAME);
-  response.addHeader("Content-Disposition", "attachment; filename=" + attachmentName);
-  response.addHeader("Pragma", "No-cache");
-  response.addHeader("Cache-Control", "private");
-  response.addHeader("Expires", "0");
+  response.addHeader("Content-Disposition", "inline;filename=\"" + attachmentName + "\"");
+//  response.addHeader("Pragma", "No-cache");
+//  response.addHeader("Cache-Control", "public");
+//  response.addHeader("Expires", "0");
 
   // first find out if the attachment is new and saved in the session
 
@@ -196,8 +196,6 @@ public class ReferenceDocumentAction
        }
       }
      response.setStatus(HttpServletResponse.SC_OK);
-    
-
     }
    } catch (Exception ex) {
     log.error("Exception Caught:", ex);
@@ -207,7 +205,10 @@ public class ReferenceDocumentAction
        is.close();
        
       if (out != null) 
+      {
+       out.flush();
        out.close();
+      }
     
      try
      {

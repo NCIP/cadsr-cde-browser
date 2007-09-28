@@ -116,8 +116,8 @@ public class ObjectClassAction extends OCBrowserBaseDispatchAction
     InputStream is = null;
     out = response.getOutputStream();
     String attachmentName = request.getParameter(FormConstants.REFERENCE_DOC_ATTACHMENT_NAME);
-    response.addHeader("Content-Disposition", "attachment; filename=" + attachmentName);
-    response.addHeader("Pragma", "No-cache");
+    response.addHeader("Content-Disposition", "inline;filename=" + attachmentName);
+    response.addHeader("Pragma", "cache");
     response.addHeader("Cache-Control", "private");
     response.addHeader("Expires", "0");
 
