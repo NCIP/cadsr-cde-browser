@@ -19,16 +19,17 @@
   
    <!-- Make sure these are correct for your instance C:\jboss-4.0.4.GA-->
    
-   <property name="jboss.home" value="C:\jboss-4.0.4.GA\" />   
+   <property name="jboss.home" value="C:\jboss-4.0.4.GA\" /> 
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
+   <property name="jboss.deploy" value="${jboss.home}/server/default/deploy" />
    
-   <property name="cdebrowser.version" value="3.2.0.2" />
-   <property name="cdebrowser.build" value="5" />
+   <property name="cdebrowser.version" value="3.2.0.3" />
+   <property name="cdebrowser.build" value="1" />
    
    <!-- used for open source build for file suffix-->
-   <property name="cdebrowser.version.suffix" value="3_2_0_2" />
+   <property name="cdebrowser.version.suffix" value="3_2_0_3" />
    
    <property name="dev.user.password" value="cdeuser" />
    <property name="qa.user.password" value="cdeuser" />
@@ -1162,7 +1163,17 @@
          </fileset>    
       </copy>          
    </target>   
-  <!-- =========== DEV DISTRIBUTION============== -->
+   <!-- =========== LOCAL DISTRIBUTION============== -->
+	   <target name="dist_local" depends="dist_dev">   
+	    <copy todir="${jboss.deploy}"  overwrite="YES" >      
+	        <fileset dir="${build.dir}">
+	          <patternset>
+	            <include name="${ear.name}.ear"/>
+	          </patternset>
+	        </fileset>    
+	     </copy>             	
+	   </target>      
+		  
   
   <!-- =========== DEV DISTRIBUTION============== -->
    <target name="dist_dev" depends="clean_build_dir,dev_config,debug_setting,ear_cdebrowser,dist_ear_copy">      
