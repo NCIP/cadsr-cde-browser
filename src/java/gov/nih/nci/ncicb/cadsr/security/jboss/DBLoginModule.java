@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class DBLoginModule extends AbstractServerLoginModule {
  
-  protected Log log =  LogFactory.getLog(DBLoginModule.class.getName());
+  protected Log logger =  LogFactory.getLog(DBLoginModule.class.getName());
   
   private Principal identity;
   private char[] credential;
@@ -38,24 +38,32 @@ public class DBLoginModule extends AbstractServerLoginModule {
   private UserManagerDAO userManagerDAO = null;
   private ServiceLocator locator = null;
 
-  protected Group[] getRoleSets() throws LoginException {
+  protected Group[] getRoleSets() throws LoginException 
+  {
     /*SimpleGroup grp = new SimpleGroup("Roles");
     Group[] groups = { grp };
     grp.addMember(new SimplePrincipal("CDE MANAGER"));*/
-    
-    Map rolesAndContexts =
-      userManagerDAO.getContextsForAllRoles(
-        this.getUsername(), "QUEST_CONTENT");
-    Set roles = rolesAndContexts.keySet();
     SimpleGroup grp = new SimpleGroup("Roles");
     Group[] groups = { grp };
-    log.debug("Roles for user : "+this.getUsername());
-    for (Iterator it = roles.iterator(); it.hasNext();) {
-      String role = (String)it.next();
-      grp.addMember(new SimplePrincipal(role));
-      log.debug("Role: "+role);
-    }
-    log.debug("Groups : "+groups);
+	try
+	{
+	    Map rolesAndContexts =
+	      userManagerDAO.getContextsForAllRoles(
+	        this.getUsername(), "QUEST_CONTENT");
+	    Set roles = rolesAndContexts.keySet();
+	    //log.debug("Roles for user : "+this.getUsername());
+	    for (Iterator it = roles.iterator(); it.hasNext();) 
+	    {
+	      String role = (String)it.next();
+	      grp.addMember(new SimplePrincipal(role));
+	      logger.debug("Role: "+role);
+	    }
+	    logger.debug("Groups : "+groups);
+	}
+	catch (Exception le)
+	{
+		logger.error("error at getRoleSets : ", le);
+	}
     return groups;
   }
 
@@ -64,60 +72,66 @@ public class DBLoginModule extends AbstractServerLoginModule {
   }
 
   public boolean login() throws LoginException {
-    log.info("In another login");
-    
-        
-    if (super.login()) {
-      Object username = sharedState.get("javax.security.auth.login.name");
-      if (username instanceof Principal) {
-        identity = (Principal) username;
-      }
-      else {
-        String name = username.toString();
-        try {
-          identity = createIdentity(name);
-        }
-        catch (Exception e) {
-          throw new LoginException(
-            "Failed to create principal: " + e.getMessage());
-        }
-      }
-      Object password = sharedState.get("javax.security.auth.login.password");
-      if (password instanceof char[]) {
-        credential = (char[]) password;
-      }
-      else if (password != null) {
-        String tmp = password.toString();
-        credential = tmp.toCharArray();
-      }
-
-      return true;
-    }
-    super.loginOk = false;
-    String[] info = getUsernameAndPassword();
-    String username = info[0];
-    String password = info[1];
-    if ((username == null) && (password == null)) {
-      identity = unauthenticatedIdentity;
-    }
-    if (identity == null) {
-      try {
-        identity = createIdentity(username);
-      }
-      catch (Exception e) {
-        throw new LoginException(
-          "Failed to create principal: " + e.getMessage());
-      }
-      if (!authenticateUser(username, password)) {
-          throw new FailedLoginException("Incorrect username and password");
-      }
-    }
-    if (getUseFirstPass()) {
-      sharedState.put("javax.security.auth.login.name", username);
-      sharedState.put("javax.security.auth.login.password", credential);
-    }
-    super.loginOk = true;
-    log.debug("loginOk="+loginOk);
+	try
+	{
+	    logger.info("In another login");
+	    if (super.login()) {
+	      Object username = sharedState.get("javax.security.auth.login.name");
+	      if (username instanceof Principal) {
+	        identity = (Principal) username;
+	      }
+	      else {
+	        String name = username.toString();
+	        try {
+	          identity = createIdentity(name);
+	        }
+	        catch (Exception e) {
+	          throw new LoginException(
+	            "Failed to create principal: " + e.getMessage());
+	        }
+	      }
+	      Object password = sharedState.get("javax.security.auth.login.password");
+	      if (password instanceof char[]) {
+	        credential = (char[]) password;
+	      }
+	      else if (password != null) {
+	        String tmp = password.toString();
+	        credential = tmp.toCharArray();
+	      }
+	
+	      return true;
+	    }
+	    super.loginOk = false;
+	    String[] info = getUsernameAndPassword();
+	    String username = info[0];
+	    String password = info[1];
+	    if ((username == null) && (password == null)) {
+	      identity = unauthenticatedIdentity;
+	    }
+	    if (identity == null) {
+	      try {
+	        identity = createIdentity(username);
+	      }
+	      catch (Exception e) {
+	        throw new LoginException(
+	          "Failed to create principal: " + e.getMessage());
+	      }
+	      if (!authenticateUser(username, password)) {
+	          throw new FailedLoginException("Incorrect username and password");
+	      }
+	    }
+	    if (getUseFirstPass()) {
+	      sharedState.put("javax.security.auth.login.name", username);
+	      sharedState.put("javax.security.auth.login.password", credential);
+	    }
+	    super.loginOk = true;
+	    logger.debug("loginOk="+loginOk);
+	}
+	catch (LoginException le)
+	{
+		logger.error("error at login : ", le);
+		throw le;
+	}
     return true;
   }
 
@@ -152,9 +166,7 @@ public class DBLoginModule extends AbstractServerLoginModule {
     }
     info[0] = username;
     info[1] = password;
-    log.debug("Username="+username);
-
-
+    logger.debug("Username="+username);
     return info;
   }
   
@@ -164,24 +176,28 @@ public class DBLoginModule extends AbstractServerLoginModule {
   }
 
   public void initialize(Subject p0, CallbackHandler p1, Map p2, Map p3) {
-    super.initialize(p0, p1, p2, p3);
-    for (Iterator it = p3.entrySet().iterator(); it.hasNext();) {
-      log.info("Option: " +it.next().toString());
-    }
-    
-    
-    String serviceLocatorClassName =
-      (String) p3.get(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
-    locator = ServiceLocatorFactory.getLocator(serviceLocatorClassName);
-    log.info("Service Locator class: "+locator);
-    
-    if (daoFactory == null) {
-      setAbstractDAOFactory();
-    }
-    if (userManagerDAO == null) {
-      userManagerDAO = daoFactory.getUserManagerDAO();
-    }
-    
+	try
+	{
+	    super.initialize(p0, p1, p2, p3);
+	    for (Iterator it = p3.entrySet().iterator(); it.hasNext();) {
+	      logger.info("Option: " +it.next().toString());
+	    }
+	    String serviceLocatorClassName =
+	      (String) p3.get(ServiceLocator.SERVICE_LOCATOR_CLASS_KEY);
+	    locator = ServiceLocatorFactory.getLocator(serviceLocatorClassName);
+	    logger.info("Service Locator class: "+locator);
+	    
+	    if (daoFactory == null) {
+	      setAbstractDAOFactory();
+	    }
+	    if (userManagerDAO == null) {
+	      userManagerDAO = daoFactory.getUserManagerDAO();
+	    }
+	}
+	catch (Exception le)
+	{
+		logger.error("error at initialize : ", le);
+	}
   }
   
   protected boolean authenticateUser(
