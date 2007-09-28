@@ -8,12 +8,14 @@
     String treeDirective  = (String) request.getParameter("treeDirective");
     String treeAction     = (String) request.getParameter("treeAction");
     String treeName       = (String) request.getParameter("treeName");
+    request.getSession().setAttribute("paramsTree", treeParams);
     
     // URL encode parameters
     if (treeParams != null) treeParams = java.net.URLEncoder.encode(treeParams);    
     if (skin != null) skin = java.net.URLEncoder.encode(skin);    
     if (treeDirective != null) treeDirective = java.net.URLEncoder.encode(treeDirective);    
     request.getSession().setAttribute("treeTypeName", treeName);
+
 %>
 <script language="JavaScript1.2">
   var now = new Date();

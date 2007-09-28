@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@page contentType="text/html;charset=windows-1252"%>
+<%@ page import="java.util.*"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
@@ -102,10 +103,27 @@
   String browserURL;
   String extraURLParams = "";
   String treeParams = "";
+  //get the source, module and question index
+  String modIndex = "";
+  String quesIndex = "";
   String src = request.getParameter("src");
+  if (src == null || src.equals(""))
+  {	    
+	  Hashtable srcParams = TreeUtils.parseParameters((String)request.getSession().getAttribute("paramsTree"));
+	  if (srcParams.containsKey("src")) 
+	  {
+	    src = (String)srcParams.get("src");
+	    modIndex = (String)srcParams.get("moduleIndex");
+	    quesIndex = (String)srcParams.get("questionIndex");
+	  }
+  }
+  else
+  {
+	modIndex = request.getParameter("moduleIndex");
+	quesIndex = request.getParameter("questionIndex");
+  }
+  
   if (src != null&&!src.equals("")) {
-    String modIndex = request.getParameter("moduleIndex");
-    String quesIndex = request.getParameter("questionIndex");
     extraURLParams += "&src="+src+"&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
     treeParams += treeParams + ";src:"+src + ";" + "questionIndex:" + quesIndex
                   + ";moduleIndex:"+modIndex;

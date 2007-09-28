@@ -399,14 +399,12 @@
     </td>
     <td><a href="javascript:clearForm()"><html:img page="/i/clear.gif" border="0" /></a>
     </td>
+    <% if(deList!=null){    %>
     <td><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a>
     </td>
-    <%
-    if(deList!=null){
-    %>
+    <%}%>
     <td><a href="javascript:done()"><html:img page="/i/backButton.gif" border="0" /></a>
     </td>
-    <%}%>
    </TR>
  </table>
 <%

@@ -13,7 +13,9 @@
         <t:documentHead>
             <%
 // get parameters
-    String treeParams = (String) request.getParameter("treeParams");
+    String treeParams = request.getParameter("treeParams");
+    if (treeParams == null || treeParams.equals(""))
+    	treeParams = (String)request.getSession().getAttribute("paramsTree");
     String treeName = null;
     String callerParams = "";
     Hashtable params = null;

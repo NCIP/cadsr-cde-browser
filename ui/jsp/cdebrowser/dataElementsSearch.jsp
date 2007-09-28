@@ -9,6 +9,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.resource.* "%>
 <%@page import="gov.nih.nci.ncicb.cadsr.html.* " %>
 <%@page import="java.util.List "%>
+<%@ page import="java.util.*"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserNavigationConstants"%>
@@ -97,17 +98,31 @@
 
   String doneURL = "";
 
-  String src = request.getParameter("src");
-  if (src == null)
-    src="";
   String modIndex = "";
   String quesIndex = "";
+  String src = request.getParameter("src");
+  if (src == null || src.equals(""))
+  {
+	  String treeParams = (String)request.getSession().getAttribute("paramsTree"); 
+	  System.out.println(treeParams + " DES - src " + src);
+	  Hashtable params = TreeUtils.parseParameters(treeParams);
+	  if (params.containsKey("src")) 
+	  {
+	    src = (String)params.get("src");
+	    modIndex = (String)params.get("moduleIndex");
+	    quesIndex = (String)params.get("questionIndex");
+	  }
+  }
+  else
+  {
+	modIndex = request.getParameter("moduleIndex");
+	quesIndex = request.getParameter("questionIndex");
+  }
+
   String urlParams = "";
   String newSearchURL = request.getContextPath() + "/cdeBrowse.jsp?performQuery=newSearch&PageId=DataElementsGroup";
-  
-  if ((src != null) && (!"".equals(src))) {
-    modIndex = request.getParameter("moduleIndex");
-    quesIndex = request.getParameter("questionIndex");
+  if (src == null) src = "";
+  if (!"".equals(src)) {
     doneURL= request.getContextPath()+"/"+src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
     urlParams = "&src="+src+"&method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
     newSearchURL += urlParams;
@@ -160,8 +175,8 @@ function redirect1(detailReqType, linkParms )
 }
 function goPage(pageNumber, pageInfo) {
   document.location.href ="<%=request.getContextPath()%>" + "/search?searchDataElements=9&"+pageInfo+"&deSearchPageNum="+pageNumber+ "<%= pageUrl %>"+"<%= urlParams %>";
-    
 }
+
 function clearValueDomain() {
   document.forms[0].jspValueDomain.value = "";
   document.forms[0].txtValueDomain.value = "";
