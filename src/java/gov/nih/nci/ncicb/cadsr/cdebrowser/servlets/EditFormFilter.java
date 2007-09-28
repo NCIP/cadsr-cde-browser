@@ -100,6 +100,7 @@ public class EditFormFilter implements javax.servlet.Filter{
              dispatcher.forward(request,response);
              return;
         }catch (Exception e){
+            log.error("Error in execute ", e);
             throw new javax.servlet.ServletException(e);
         }
     }
