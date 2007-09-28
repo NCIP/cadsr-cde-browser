@@ -66,7 +66,7 @@ function clearForm()
   <table align=center cellspacing="2" cellpadding="3" border="0" onkeypress="if(event.keyCode==13){submitForm()};">
     <% if(request.getAttribute("msg") != null) { %>
     <tr>
-      <b><td colspan=2 class="OraErrorText"><%= request.getAttribute("msg") %></td></b>
+      <td colspan=2 class="OraErrorText"><b><%=request.getAttribute("msg")%></b></td>
     </tr>
     <% } %>
     <tr>
@@ -80,15 +80,21 @@ function clearForm()
         <td class="OraFieldText" nowrap>
           <input type="password" name="j_password" value="" size ="20"> 
         </td>
-  
     </tr>  
 
   </table>
-  <table align=center cellspacing="2" cellpadding="3" border="0">
+  <table width=100% cellspacing="2" cellpadding="3" border="0">
      <TR>
-        
-        <td colspan="1" align="right" nowrap><a href="javascript:submitForm()"><img src=<%=request.getContextPath()%>/i/logon.gif border=0></a></td>
-        <td colspan="1" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=request.getContextPath()%>/i/clear.gif border=0></a></td>
+      	<td width=45%>&nbsp;</td>
+      	<td width=55%>
+      	  <table cellspacing="2" cellpadding="3" border="0">
+		     <TR>
+		        <td colspan="1" align="left" nowrap><a href="javascript:submitForm()"><img src=<%=request.getContextPath()%>/i/logon.gif border=0 alt="Logon"></a></td>
+		        <td colspan="1" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=request.getContextPath()%>/i/clear.gif border=0 alt="Clear"></a></td>
+		        <td colspan="1" align="left" nowrap><a href="<%="cdeBrowse.jsp?PageId=DataElementsGroup"%>"><img src=<%=request.getContextPath()%>/i/return_cdebrowse.gif border=0 alt="Cancel"></a></td>
+		    </TR>  
+		  </table>    
+      	</td>
     </TR>  
     <tr>
       <td>&nbsp;</td>
