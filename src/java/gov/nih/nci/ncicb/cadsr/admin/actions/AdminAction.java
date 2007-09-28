@@ -5,7 +5,7 @@
  * @release 3.0
  * @date: 8/16/2005
  */
-package gov.nih.nci.ncicb.cadsr.admin.struts.actions;
+package gov.nih.nci.ncicb.cadsr.admin.actions;
 
 
 
