@@ -244,7 +244,7 @@ function listChanged(urlInfo) {
             ReferenceDocumentAttachment refDocAtt = (ReferenceDocumentAttachment) attIter.next(); %>
                  <a href='<%=request.getContextPath()+ "/ocbrowser/viewRefDocAttchment.do?"+NavigationConstants.METHOD_PARAM+"=viewReferenceDocAttchment&"
                  +FormConstants.REFERENCE_DOC_ATTACHMENT_NAME+"="+refDocAtt.getName()%>' 
-                   target="_parent" > <%=refDocAtt.getName()%>
+                   target="_blank" > <%=refDocAtt.getName()%>
                  </a>                 
                         <br>
 <%
@@ -321,7 +321,7 @@ function listChanged(urlInfo) {
             ReferenceDocumentAttachment refDocAtt = (ReferenceDocumentAttachment) attIter.next(); %>
                  <a href='<%=request.getContextPath()+ "/ocbrowser/viewRefDocAttchment.do?"+NavigationConstants.METHOD_PARAM+"=viewReferenceDocAttchment&"
                  +FormConstants.REFERENCE_DOC_ATTACHMENT_NAME+"="+refDocAtt.getName()%>' 
-                   target="_parent" > <%=refDocAtt.getName()%>
+                   target="_blank" > <%=refDocAtt.getName()%>
                  </a>                 
                         <br>
 <%

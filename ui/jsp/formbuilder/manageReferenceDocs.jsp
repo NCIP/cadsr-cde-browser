@@ -358,7 +358,7 @@
 			      <html:link action='<%="/viewReferenceDocAttchment.do?"+NavigationConstants.METHOD_PARAM+"=viewReferenceDocAttchment"%>' 
 				paramId = "<%=FormConstants.REFERENCE_DOC_ATTACHMENT_NAME%>"
 				paramName="attachment" paramProperty="name"
-				target="_parent" >
+				target="_blank" >
 				<bean:write name="attachment" property="name"/>
 			      </html:link>   
            <logic:equal name="attachment" property="name" value="<%=(String)request.getSession().getAttribute(FormConstants.REFDOCS_TEMPLATE_ATT_NAME)%>">
