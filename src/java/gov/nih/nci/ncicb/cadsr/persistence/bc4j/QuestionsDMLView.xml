@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding='windows-1252'?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="QuestionsDMLView"
+   SelectList="qc.QC_IDSEQ, 
+       qc.VERSION, 
+       qc.QTL_NAME, 
+       qc.CONTE_IDSEQ, 
+       qc.ASL_NAME, 
+       qc.PREFERRED_NAME, 
+       qc.PREFERRED_DEFINITION, 
+       qc.DE_IDSEQ, 
+       qc.LONG_NAME, 
+       qc.P_MOD_IDSEQ"
+   FromList="SBREXT.QUEST_CONTENTS_EXT qc"
+   Where="qc.QTL_NAME = &#39;QUESTION&#39;"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionsDMLViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionsDMLViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.3.10.62" />
+      <Attr Name="_CodeGenFlagNew" Value="36" />
+   </DesignTime>
+   <EntityUsage
+      Name="qc"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="true" />
+         <Attr Name="_queryWhere" Value="qc.QTL_NAME = &#39;QUESTION&#39;" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="QcIdseq"
+      IsNotNull="true"
+      EntityAttrName="QcIdseq"
+      EntityUsage="qc"
+      AliasName="QC_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsNotNull="true"
+      EntityAttrName="Version"
+      EntityUsage="qc"
+      AliasName="VERSION"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QtlName"
+      IsNotNull="true"
+      EntityAttrName="QtlName"
+      EntityUsage="qc"
+      AliasName="QTL_NAME"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsNotNull="true"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="qc"
+      AliasName="CONTE_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      EntityAttrName="AslName"
+      EntityUsage="qc"
+      AliasName="ASL_NAME"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsNotNull="true"
+      EntityAttrName="PreferredName"
+      EntityUsage="qc"
+      AliasName="PREFERRED_NAME"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="qc"
+      AliasName="PREFERRED_DEFINITION"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeIdseq"
+      EntityAttrName="DeIdseq"
+      EntityUsage="qc"
+      AliasName="DE_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      EntityAttrName="LongName"
+      EntityUsage="qc"
+      AliasName="LONG_NAME"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PModIdseq"
+      EntityAttrName="PModIdseq"
+      EntityUsage="qc"
+      AliasName="P_MOD_IDSEQ"
+      ColumnType="VARCHAR2" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="ModulesDMLView1"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionModuleDMLLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

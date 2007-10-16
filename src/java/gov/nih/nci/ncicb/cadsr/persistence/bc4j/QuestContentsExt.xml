@@ -1,0 +1,886 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
+<Entity
+   Name="QuestContentsExt"
+   DBObjectType="table"
+   DBObjectName="SBREXT.QUEST_CONTENTS_EXT"
+   AliasName="QuestContentsExt"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExtImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Init|Delete|Access|DML|Val" />
+      <AttrArray Name="_publishEvents">
+      </AttrArray>
+   </DesignTime>
+   <Attribute
+      Name="QcIdseq"
+      IsUpdateable="false"
+      Precision="36"
+      ColumnName="QC_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Version"
+      IsNotNull="true"
+      Precision="4"
+      Scale="2"
+      ColumnName="VERSION"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="QUEST_CONTENTS_EXT" >
+   </Attribute>
+   <Attribute
+      Name="QtlName"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="QTL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ConteIdseq"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="CONTE_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="AslName"
+      IsNotNull="true"
+      Precision="20"
+      ColumnName="ASL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PreferredName"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="PREFERRED_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      Precision="2000"
+      ColumnName="PREFERRED_DEFINITION"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ProtoIdseq"
+      Precision="36"
+      ColumnName="PROTO_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DeIdseq"
+      Precision="36"
+      ColumnName="DE_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="VpIdseq"
+      Precision="36"
+      ColumnName="VP_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="QcMatchIdseq"
+      Precision="36"
+      ColumnName="QC_MATCH_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="QcIdentifier"
+      Precision="30"
+      ColumnName="QC_IDENTIFIER"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="QcdlName"
+      Precision="20"
+      ColumnName="QCDL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LongName"
+      Precision="255"
+      ColumnName="LONG_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LatestVersionInd"
+      Precision="3"
+      ColumnName="LATEST_VERSION_IND"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DeletedInd"
+      Precision="3"
+      ColumnName="DELETED_IND"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="BeginDate"
+      ColumnName="BEGIN_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="QUEST_CONTENTS_EXT" >
+   </Attribute>
+   <Attribute
+      Name="EndDate"
+      ColumnName="END_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="QUEST_CONTENTS_EXT" >
+   </Attribute>
+   <Attribute
+      Name="MatchInd"
+      Precision="1"
+      ColumnName="MATCH_IND"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="NewQcInd"
+      Precision="3"
+      ColumnName="NEW_QC_IND"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="HighlightInd"
+      Precision="3"
+      ColumnName="HIGHLIGHT_IND"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ReviewerFeedbackAction"
+      Precision="240"
+      ColumnName="REVIEWER_FEEDBACK_ACTION"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ReviewerFeedbackInternal"
+      Precision="240"
+      ColumnName="REVIEWER_FEEDBACK_INTERNAL"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ReviewerFeedbackExternal"
+      Precision="240"
+      ColumnName="REVIEWER_FEEDBACK_EXTERNAL"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="SystemMsgs"
+      Precision="2000"
+      ColumnName="SYSTEM_MSGS"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ReviewedBy"
+      Precision="30"
+      ColumnName="REVIEWED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ReviewedDate"
+      ColumnName="REVIEWED_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="QUEST_CONTENTS_EXT" >
+   </Attribute>
+   <Attribute
+      Name="ApprovedBy"
+      Precision="30"
+      ColumnName="APPROVED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ApprovedDate"
+      ColumnName="APPROVED_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="QUEST_CONTENTS_EXT" >
+   </Attribute>
+   <Attribute
+      Name="CdeDictionaryId"
+      Precision="10"
+      Scale="0"
+      ColumnName="CDE_DICTIONARY_ID"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="QUEST_CONTENTS_EXT" >
+   </Attribute>
+   <Attribute
+      Name="DateCreated"
+      IsUpdateable="false"
+      ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnInsert="true" >
+   </Attribute>
+   <Attribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      Precision="30"
+      ColumnName="CREATED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateModified"
+      ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true" >
+   </Attribute>
+   <Attribute
+      Name="ModifiedBy"
+      Precision="30"
+      ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ChangeNote"
+      Precision="2000"
+      ColumnName="CHANGE_NOTE"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="SubmittedLongCdeName"
+      Precision="4000"
+      ColumnName="SUBMITTED_LONG_CDE_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="GroupComments"
+      Precision="4000"
+      ColumnName="GROUP_COMMENTS"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="SrcName"
+      Precision="100"
+      ColumnName="SRC_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PModIdseq"
+      Precision="36"
+      ColumnName="P_MOD_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PQstIdseq"
+      Precision="36"
+      ColumnName="P_QST_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PValIdseq"
+      Precision="36"
+      ColumnName="P_VAL_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DnCrfIdseq"
+      Precision="36"
+      ColumnName="DN_CRF_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DnVdIdseq"
+      Precision="36"
+      ColumnName="DN_VD_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DisplayInd"
+      Precision="3"
+      ColumnName="DISPLAY_IND"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="GroupAction"
+      Precision="240"
+      ColumnName="GROUP_ACTION"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DeLongName"
+      Precision="255"
+      ColumnName="DE_LONG_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="VdLongName"
+      Precision="255"
+      ColumnName="VD_LONG_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DecLongName"
+      Precision="255"
+      ColumnName="DEC_LONG_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DisplayOrder"
+      Precision="5"
+      Scale="0"
+      ColumnName="DISPLAY_ORDER"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="QUEST_CONTENTS_EXT" >
+   </Attribute>
+   <Attribute
+      Name="Origin"
+      Precision="240"
+      ColumnName="ORIGIN"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="SBREXT.QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="QcId"
+      ColumnName="QC_ID"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="SBREXT.QUEST_CONTENTS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="Contexts"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcCotFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcCotFkAssoc.Contexts"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcCotFkAssoc.QuestContentsExt"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="DataElements"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcDetFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcDetFkAssoc.DataElements"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcDetFkAssoc.QuestContentsExt"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="VdPvs"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcVpvFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcVpvFkAssoc.VdPvs"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcVpvFkAssoc.QuestContentsExt"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Protocol"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkAssoc.Protocol"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkAssoc.QuestContentsExt"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="QcRecsExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk1Assoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk1Assoc.QcRecsExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk1Assoc.QuestContentsExt"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="QcRecsExt1"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk2Assoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk2Assoc.QcRecsExt1"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk2Assoc.QuestContentsExt1"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="QcePk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QcIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="QCE_PK" />
+         <Attr Name="_isPrimary" Value="true" />
+         <Attr Name="_isDisabledConstraint" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062317" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QcIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062317" />
+         <Attr Name="_checkCondition" Value="&#34;QC_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062319" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.Version" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062319" />
+         <Attr Name="_checkCondition" Value="&#34;VERSION&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062321" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QtlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062321" />
+         <Attr Name="_checkCondition" Value="&#34;QTL_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062323" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062323" />
+         <Attr Name="_checkCondition" Value="&#34;CONTE_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062325" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.AslName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062325" />
+         <Attr Name="_checkCondition" Value="&#34;ASL_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062327" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.PreferredName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062327" />
+         <Attr Name="_checkCondition" Value="&#34;PREFERRED_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062329" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.PreferredDefinition" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062329" />
+         <Attr Name="_checkCondition" Value="&#34;PREFERRED_DEFINITION&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062331" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.DateCreated" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062331" />
+         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062332" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062332" />
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="QcAsvFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.AslName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="QC_ASV_FK" />
+         <Attr Name="_referencedKey" Value="ASL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="QcCotFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="QC_COT_FK" />
+         <Attr Name="_referencedKey" Value="CONTE_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="QcDetFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.DeIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="QC_DET_FK" />
+         <Attr Name="_referencedKey" Value="DE_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="QcProtoFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.ProtoIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="QC_PROTO_FK" />
+         <Attr Name="_referencedKey" Value="PRO_PK" />
+         <Attr Name="_isForeign" Value="true" />
+         <Attr Name="_isDisabledConstraint" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="QcQdlFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QcdlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="QC_QDL_FK" />
+         <Attr Name="_referencedKey" Value="QCDL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+         <Attr Name="_isDisabledConstraint" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="QcQtlFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QtlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="QC_QTL_FK" />
+         <Attr Name="_referencedKey" Value="QTL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+         <Attr Name="_isDisabledConstraint" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="QcRflFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.ReviewerFeedbackAction" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="QC_RFL_FK" />
+         <Attr Name="_referencedKey" Value="RFL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+         <Attr Name="_isDisabledConstraint" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="QcVpvFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.VpIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="QC_VPV_FK" />
+         <Attr Name="_referencedKey" Value="VP_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+</Entity>

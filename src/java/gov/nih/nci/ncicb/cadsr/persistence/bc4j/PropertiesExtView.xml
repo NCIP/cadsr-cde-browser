@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="PropertiesExtView"
+   SelectList="PropertiesExt.PROP_IDSEQ, 
+       PropertiesExt.PREFERRED_NAME, 
+
+       PropertiesExt.LONG_NAME, 
+       PropertiesExt.PREFERRED_DEFINITION, 
+
+       PropertiesExt.CONTE_IDSEQ, 
+       PropertiesExt.VERSION, 
+
+       PropertiesExt.ASL_NAME, 
+       PropertiesExt.LATEST_VERSION_IND, 
+
+       PropertiesExt.CHANGE_NOTE, 
+       PropertiesExt.BEGIN_DATE, 
+
+       PropertiesExt.END_DATE, 
+       PropertiesExt.DATE_CREATED, 
+
+       PropertiesExt.CREATED_BY, 
+       PropertiesExt.DELETED_IND, 
+
+       PropertiesExt.DATE_MODIFIED, 
+       PropertiesExt.MODIFIED_BY, 
+
+       PropertiesExt.ORIGIN, 
+       PropertiesExt.DEFINITION_SOURCE, 
+
+       PropertiesExt.PROP_ID"
+   FromList="SBREXT.PROPERTIES_EXT PropertiesExt"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropertiesExtViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropertiesExtViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="PropertiesExt"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropertiesExt" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="PropIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PropIdseq"
+      EntityUsage="PropertiesExt"
+      AliasName="PROP_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredName"
+      EntityUsage="PropertiesExt"
+      AliasName="PREFERRED_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      PrecisionRule="false"
+      EntityAttrName="LongName"
+      EntityUsage="PropertiesExt"
+      AliasName="LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="PropertiesExt"
+      AliasName="PREFERRED_DEFINITION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="PropertiesExt"
+      AliasName="CONTE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Version"
+      EntityUsage="PropertiesExt"
+      AliasName="VERSION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AslName"
+      EntityUsage="PropertiesExt"
+      AliasName="ASL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      PrecisionRule="false"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="PropertiesExt"
+      AliasName="LATEST_VERSION_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNote"
+      PrecisionRule="false"
+      EntityAttrName="ChangeNote"
+      EntityUsage="PropertiesExt"
+      AliasName="CHANGE_NOTE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      PrecisionRule="false"
+      EntityAttrName="BeginDate"
+      EntityUsage="PropertiesExt"
+      AliasName="BEGIN_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      PrecisionRule="false"
+      EntityAttrName="EndDate"
+      EntityUsage="PropertiesExt"
+      AliasName="END_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="PropertiesExt"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="PropertiesExt"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      PrecisionRule="false"
+      EntityAttrName="DeletedInd"
+      EntityUsage="PropertiesExt"
+      AliasName="DELETED_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="PropertiesExt"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="PropertiesExt"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      PrecisionRule="false"
+      EntityAttrName="Origin"
+      EntityUsage="PropertiesExt"
+      AliasName="ORIGIN" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DefinitionSource"
+      PrecisionRule="false"
+      EntityAttrName="DefinitionSource"
+      EntityUsage="PropertiesExt"
+      AliasName="DEFINITION_SOURCE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PropId"
+      PrecisionRule="false"
+      EntityAttrName="PropId"
+      EntityUsage="PropertiesExt"
+      AliasName="PROP_ID" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="ContextsRow"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProConteFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="DataElementConceptRows"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecProFKLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

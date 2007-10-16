@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewLink SYSTEM "jbo_03_01.dtd">
+
+<ViewLink
+   Name="PvVmvFkLink"
+   EntityAssociation="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PvVmvFkAssoc" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+   </DesignTime>
+   <ViewLinkDefEnd
+      Name="ValueMeaningsLovView"
+      Cardinality="0"
+      Owner="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLovView"
+      Source="true" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLovView.ShortMeaning" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_isUpdateable" Value="true" />
+      </DesignTime>
+   </ViewLinkDefEnd>
+   <ViewLinkDefEnd
+      Name="PermissibleValuesView"
+      Cardinality="-1"
+      Owner="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PermissibleValuesView" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PermissibleValuesView.ShortMeaning" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_isUpdateable" Value="true" />
+         <Attr Name="_finderName" Value="PermissibleValuesView" />
+      </DesignTime>
+   </ViewLinkDefEnd>
+</ViewLink>

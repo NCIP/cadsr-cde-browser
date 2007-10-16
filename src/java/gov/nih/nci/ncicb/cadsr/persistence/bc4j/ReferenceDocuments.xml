@@ -1,0 +1,419 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
+<Entity
+   Name="ReferenceDocuments"
+   DBObjectType="table"
+   DBObjectName="REFERENCE_DOCUMENTS"
+   AliasName="ReferenceDocuments"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocumentsImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <AttrArray Name="_publishEvents">
+      </AttrArray>
+   </DesignTime>
+   <Attribute
+      Name="RdIdseq"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="RD_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Name"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="OrgIdseq"
+      Precision="36"
+      ColumnName="ORG_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DctlName"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="60"
+      ColumnName="DCTL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="60" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="AcIdseq"
+      IsUnique="true"
+      Precision="36"
+      ColumnName="AC_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="AchIdseq"
+      Precision="36"
+      ColumnName="ACH_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ArIdseq"
+      Precision="36"
+      ColumnName="AR_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="RdtlName"
+      Precision="20"
+      ColumnName="RDTL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DocText"
+      Precision="4000"
+      ColumnName="DOC_TEXT"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateCreated"
+      IsNotNull="true"
+      ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="REFERENCE_DOCUMENTS" >
+   </Attribute>
+   <Attribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="CREATED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateModified"
+      ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="REFERENCE_DOCUMENTS" >
+   </Attribute>
+   <Attribute
+      Name="ModifiedBy"
+      Precision="30"
+      ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Url"
+      Precision="240"
+      ColumnName="URL"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LaeName"
+      Precision="30"
+      ColumnName="LAE_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="REFERENCE_DOCUMENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DisplayOrder"
+      Precision="2"
+      Scale="0"
+      ColumnName="DISPLAY_ORDER"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="REFERENCE_DOCUMENTS" >
+   </Attribute>
+   <Attribute
+      Name="ConteIdseq"
+      Precision="36"
+      ColumnName="CONTE_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="REFERENCE_DOCUMENTS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="AdministeredComponents"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc.AdministeredComponents"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc.ReferenceDocuments"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponentsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="AcRegistrations"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc.AcRegistrations"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc.ReferenceDocuments"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Contexts"
+      Association="RdConteFkAssoc"
+      AssociationEnd="RdConteFkAssoc.Contexts"
+      AssociationOtherEnd="RdConteFkAssoc.ReferenceDocuments"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ReferenceBlobs"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RbRdFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RbRdFkAssoc.ReferenceBlobs"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RbRdFkAssoc.ReferenceDocuments"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="RdPk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.RdIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="RD_PK" />
+         <Attr Name="_isPrimary" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="RdUk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.AcIdseq" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.Name" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.DctlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="RD_UK" />
+         <Attr Name="_isUnique" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="RefDocArc" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.AcIdseq" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.AchIdseq" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.ArIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="REF_DOC_ARC" />
+         <Attr Name="_checkCondition" Value="(AC_IDSEQ is not null and ACH_IDSEQ is null and AR_IDSEQ is null) or (AC_IDSEQ is null and ACH_IDSEQ is not null and AR_IDSEQ is null) or (AC_IDSEQ is null and ACH_IDSEQ is null and AR_IDSEQ is not null)" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062577" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.RdIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062577" />
+         <Attr Name="_checkCondition" Value="&#34;RD_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062578" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.Name" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062578" />
+         <Attr Name="_checkCondition" Value="&#34;NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062579" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.DctlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062579" />
+         <Attr Name="_checkCondition" Value="&#34;DCTL_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062580" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.DateCreated" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062580" />
+         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062581" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062581" />
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="RdAcFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.AcIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="RD_AC_FK" />
+         <Attr Name="_referencedKey" Value="AC_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="RdAchFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.AchIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="RD_ACH_FK" />
+         <Attr Name="_referencedKey" Value="AH_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="RdArFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.ArIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="RD_AR_FK" />
+         <Attr Name="_referencedKey" Value="CRA_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="RdConteFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="RD_CONTE_FK" />
+         <Attr Name="_referencedKey" Value="CONTE_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="RdDctlFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.DctlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="RD_DCTL_FK" />
+         <Attr Name="_referencedKey" Value="DCTL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="RdLaeFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments.LaeName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="RD_LAE_FK" />
+         <Attr Name="_referencedKey" Value="LAE_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+</Entity>

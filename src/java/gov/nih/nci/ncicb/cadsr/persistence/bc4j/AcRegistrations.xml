@@ -1,0 +1,388 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
+<Entity
+   Name="AcRegistrations"
+   DBObjectType="table"
+   DBObjectName="AC_REGISTRATIONS"
+   AliasName="AcRegistrations"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <AttrArray Name="_publishEvents">
+      </AttrArray>
+   </DesignTime>
+   <Attribute
+      Name="ArIdseq"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="AR_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="AC_REGISTRATIONS"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="AcIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="AC_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="AC_REGISTRATIONS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="OrgIdseq"
+      IsUnique="true"
+      Precision="36"
+      ColumnName="ORG_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="AC_REGISTRATIONS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="SubIdseq"
+      IsUnique="true"
+      Precision="36"
+      ColumnName="SUB_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="AC_REGISTRATIONS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="RegisIdseq"
+      Precision="36"
+      ColumnName="REGIS_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="AC_REGISTRATIONS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="RegistrationStatus"
+      Precision="50"
+      ColumnName="REGISTRATION_STATUS"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="50" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="UnresolvedIssue"
+      Precision="240"
+      ColumnName="UNRESOLVED_ISSUE"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Origin"
+      Precision="240"
+      ColumnName="ORIGIN"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LastChange"
+      Precision="2000"
+      ColumnName="LAST_CHANGE"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DataIdentifier"
+      Precision="240"
+      ColumnName="DATA_IDENTIFIER"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="VersionIdentifier"
+      Precision="240"
+      ColumnName="VERSION_IDENTIFIER"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Irdi"
+      Precision="50"
+      ColumnName="IRDI"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="50" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateCreated"
+      IsNotNull="true"
+      ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="TIMESTAMP"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="CREATED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateModified"
+      ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="TIMESTAMP"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ModifiedBy"
+      Precision="30"
+      ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="AC_REGISTRATIONS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="AdministeredComponents"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc.AdministeredComponents"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc.AcRegistrations"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponentsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ReferenceDocuments"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc.ReferenceDocuments"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc.AcRegistrations"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="CraPk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.ArIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="CRA_PK" />
+         <Attr Name="_isPrimary" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="CraUk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.AcIdseq" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.OrgIdseq" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.SubIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="CRA_UK" />
+         <Attr Name="_isUnique" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0060966" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.ArIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0060966" />
+         <Attr Name="_checkCondition" Value="&#34;AR_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0060967" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.AcIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0060967" />
+         <Attr Name="_checkCondition" Value="&#34;AC_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0060968" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.OrgIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0060968" />
+         <Attr Name="_checkCondition" Value="&#34;ORG_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_isDisabledConstraint" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0060969" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.SubIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0060969" />
+         <Attr Name="_checkCondition" Value="&#34;SUB_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_isDisabledConstraint" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0060970" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.DateCreated" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0060970" />
+         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0060971" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0060971" />
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="ArAcFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.AcIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AR_AC_FK" />
+         <Attr Name="_referencedKey" Value="AC_PK" />
+         <Attr Name="_isForeign" Value="true" />
+         <Attr Name="_isCascadeDelete" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="ArOrgFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.OrgIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AR_ORG_FK" />
+         <Attr Name="_referencedKey" Value="ORGAN_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="ArRegisFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.RegisIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AR_REGIS_FK" />
+         <Attr Name="_referencedKey" Value="REGIS_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="ArRslFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.RegistrationStatus" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AR_RSL_FK" />
+         <Attr Name="_referencedKey" Value="RSL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="ArSubFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations.SubIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AR_SUB_FK" />
+         <Attr Name="_referencedKey" Value="SUBMI_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+</Entity>

@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="PermissibleValuesView"
+   SelectList="PermissibleValues.PV_IDSEQ, 
+       PermissibleValues.VALUE, 
+
+       PermissibleValues.SHORT_MEANING, 
+       PermissibleValues.MEANING_DESCRIPTION, 
+
+       PermissibleValues.BEGIN_DATE, 
+       PermissibleValues.END_DATE, 
+
+       PermissibleValues.HIGH_VALUE_NUM, 
+       PermissibleValues.LOW_VALUE_NUM, 
+
+       PermissibleValues.DATE_CREATED, 
+       PermissibleValues.CREATED_BY, 
+
+       PermissibleValues.DATE_MODIFIED, 
+       PermissibleValues.MODIFIED_BY"
+   FromList="PERMISSIBLE_VALUES PermissibleValues"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PermissibleValuesViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="PermissibleValues"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PermissibleValues" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="PvIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PvIdseq"
+      EntityUsage="PermissibleValues"
+      AliasName="PV_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Value"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Value"
+      EntityUsage="PermissibleValues"
+      AliasName="VALUE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ShortMeaning"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ShortMeaning"
+      EntityUsage="PermissibleValues"
+      AliasName="SHORT_MEANING" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MeaningDescription"
+      PrecisionRule="false"
+      EntityAttrName="MeaningDescription"
+      EntityUsage="PermissibleValues"
+      AliasName="MEANING_DESCRIPTION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="BeginDate"
+      EntityUsage="PermissibleValues"
+      AliasName="BEGIN_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      PrecisionRule="false"
+      EntityAttrName="EndDate"
+      EntityUsage="PermissibleValues"
+      AliasName="END_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="HighValueNum"
+      PrecisionRule="false"
+      EntityAttrName="HighValueNum"
+      EntityUsage="PermissibleValues"
+      AliasName="HIGH_VALUE_NUM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LowValueNum"
+      PrecisionRule="false"
+      EntityAttrName="LowValueNum"
+      EntityUsage="PermissibleValues"
+      AliasName="LOW_VALUE_NUM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="PermissibleValues"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="PermissibleValues"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="PermissibleValues"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="PermissibleValues"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="VdPvsView"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpPvFkLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

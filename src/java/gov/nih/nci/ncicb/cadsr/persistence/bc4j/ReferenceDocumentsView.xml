@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="ReferenceDocumentsView"
+   SelectList="ReferenceDocuments.RD_IDSEQ, 
+       ReferenceDocuments.NAME, 
+
+       ReferenceDocuments.ORG_IDSEQ, 
+       ReferenceDocuments.DCTL_NAME, 
+
+       ReferenceDocuments.AC_IDSEQ, 
+       ReferenceDocuments.ACH_IDSEQ, 
+
+       ReferenceDocuments.AR_IDSEQ, 
+       ReferenceDocuments.RDTL_NAME, 
+
+       ReferenceDocuments.DOC_TEXT, 
+       ReferenceDocuments.DATE_CREATED, 
+
+       ReferenceDocuments.CREATED_BY, 
+       ReferenceDocuments.DATE_MODIFIED, 
+
+       ReferenceDocuments.MODIFIED_BY, 
+       ReferenceDocuments.URL, 
+
+       ReferenceDocuments.LAE_NAME, 
+       ReferenceDocuments.DISPLAY_ORDER, 
+
+       ReferenceDocuments.CONTE_IDSEQ"
+   FromList="REFERENCE_DOCUMENTS ReferenceDocuments"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocumentsViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocumentsViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="ReferenceDocuments"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="RdIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="RdIdseq"
+      EntityUsage="ReferenceDocuments"
+      AliasName="RD_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Name"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Name"
+      EntityUsage="ReferenceDocuments"
+      AliasName="NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OrgIdseq"
+      PrecisionRule="false"
+      EntityAttrName="OrgIdseq"
+      EntityUsage="ReferenceDocuments"
+      AliasName="ORG_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DctlName"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DctlName"
+      EntityUsage="ReferenceDocuments"
+      AliasName="DCTL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AcIdseq"
+      IsUnique="true"
+      PrecisionRule="false"
+      EntityAttrName="AcIdseq"
+      EntityUsage="ReferenceDocuments"
+      AliasName="AC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AchIdseq"
+      PrecisionRule="false"
+      EntityAttrName="AchIdseq"
+      EntityUsage="ReferenceDocuments"
+      AliasName="ACH_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ArIdseq"
+      PrecisionRule="false"
+      EntityAttrName="ArIdseq"
+      EntityUsage="ReferenceDocuments"
+      AliasName="AR_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RdtlName"
+      PrecisionRule="false"
+      EntityAttrName="RdtlName"
+      EntityUsage="ReferenceDocuments"
+      AliasName="RDTL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DocText"
+      PrecisionRule="false"
+      EntityAttrName="DocText"
+      EntityUsage="ReferenceDocuments"
+      AliasName="DOC_TEXT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="ReferenceDocuments"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="ReferenceDocuments"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="ReferenceDocuments"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="ReferenceDocuments"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Url"
+      PrecisionRule="false"
+      EntityAttrName="Url"
+      EntityUsage="ReferenceDocuments"
+      AliasName="URL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LaeName"
+      PrecisionRule="false"
+      EntityAttrName="LaeName"
+      EntityUsage="ReferenceDocuments"
+      AliasName="LAE_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayOrder"
+      PrecisionRule="false"
+      EntityAttrName="DisplayOrder"
+      EntityUsage="ReferenceDocuments"
+      AliasName="DISPLAY_ORDER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      PrecisionRule="true"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="ReferenceDocuments"
+      AliasName="CONTE_IDSEQ" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="ReferenceBlobsView"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RbRdFkLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

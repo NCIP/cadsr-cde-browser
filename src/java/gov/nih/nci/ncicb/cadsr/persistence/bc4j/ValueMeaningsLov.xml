@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
+<Entity
+   Name="ValueMeaningsLov"
+   DBObjectType="table"
+   DBObjectName="VALUE_MEANINGS_LOV"
+   AliasName="ValueMeaningsLov"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLovImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <AttrArray Name="_publishEvents">
+      </AttrArray>
+   </DesignTime>
+   <Attribute
+      Name="ShortMeaning"
+      IsNotNull="true"
+      Precision="255"
+      ColumnName="SHORT_MEANING"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_MEANINGS_LOV"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Description"
+      Precision="2000"
+      ColumnName="DESCRIPTION"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_MEANINGS_LOV" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Comments"
+      Precision="2000"
+      ColumnName="COMMENTS"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_MEANINGS_LOV" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="BeginDate"
+      ColumnName="BEGIN_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="VALUE_MEANINGS_LOV" >
+   </Attribute>
+   <Attribute
+      Name="EndDate"
+      ColumnName="END_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="VALUE_MEANINGS_LOV" >
+   </Attribute>
+   <Attribute
+      Name="DateCreated"
+      IsNotNull="true"
+      ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="VALUE_MEANINGS_LOV" >
+   </Attribute>
+   <Attribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="CREATED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_MEANINGS_LOV" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateModified"
+      ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="VALUE_MEANINGS_LOV" >
+   </Attribute>
+   <Attribute
+      Name="ModifiedBy"
+      Precision="30"
+      ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_MEANINGS_LOV" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CondrIdseq"
+      Precision="36"
+      ColumnName="CONDR_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="VALUE_MEANINGS_LOV"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="ConDerivationRulesExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc.ConDerivationRulesExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc.ValueMeaningsLov"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExtImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="PermissibleValues"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PvVmvFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PvVmvFkAssoc.PermissibleValues"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PvVmvFkAssoc.ValueMeaningsLov"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="SysC0062875" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov.ShortMeaning" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062875" />
+         <Attr Name="_checkCondition" Value="&#34;SHORT_MEANING&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062876" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov.DateCreated" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062876" />
+         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062877" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062877" />
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VmvPk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov.ShortMeaning" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VMV_PK" />
+         <Attr Name="_isPrimary" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VmCondrFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov.CondrIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VM_CONDR_FK" />
+         <Attr Name="_referencedKey" Value="CONDR_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+</Entity>

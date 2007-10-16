@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewLink SYSTEM "jbo_03_01.dtd">
+
+<ViewLink
+   Name="AcRdFkLink"
+   EntityAssociation="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+   </DesignTime>
+   <ViewLinkDefEnd
+      Name="AdministeredComponentsView"
+      Cardinality="0"
+      Owner="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponentsView"
+      Source="true" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponentsView.AcIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_isUpdateable" Value="true" />
+         <Attr Name="_finderName" Value="AdministeredComponentsView" />
+         <Attr Name="_accessor" Value="false" />
+      </DesignTime>
+   </ViewLinkDefEnd>
+   <ViewLinkDefEnd
+      Name="ReferenceDocumentsView"
+      Cardinality="-1"
+      Owner="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocumentsView" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocumentsView.AcIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_isUpdateable" Value="true" />
+         <Attr Name="_finderName" Value="ReferenceDocumentsView" />
+         <Attr Name="_accessor" Value="true" />
+      </DesignTime>
+   </ViewLinkDefEnd>
+</ViewLink>

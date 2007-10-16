@@ -1,0 +1,345 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
+<Entity
+   Name="CsCsi"
+   DBObjectType="table"
+   DBObjectName="CS_CSI"
+   AliasName="CsCsi"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <AttrArray Name="_publishEvents">
+      </AttrArray>
+   </DesignTime>
+   <Attribute
+      Name="CsCsiIdseq"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="CS_CSI_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="CS_CSI"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CsIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="CS_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="CS_CSI"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CsiIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="CSI_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="CS_CSI"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PCsCsiIdseq"
+      IsUnique="true"
+      Precision="36"
+      ColumnName="P_CS_CSI_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="CS_CSI"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LinkCsCsiIdseq"
+      Precision="36"
+      ColumnName="LINK_CS_CSI_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="CS_CSI"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Label"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="LABEL"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="CS_CSI" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DisplayOrder"
+      Precision="2"
+      Scale="0"
+      ColumnName="DISPLAY_ORDER"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="CS_CSI" >
+   </Attribute>
+   <Attribute
+      Name="DateCreated"
+      IsNotNull="true"
+      ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="CS_CSI" >
+   </Attribute>
+   <Attribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="CREATED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="CS_CSI" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateModified"
+      ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="CS_CSI" >
+   </Attribute>
+   <Attribute
+      Name="ModifiedBy"
+      Precision="30"
+      ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="CS_CSI" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="LinkCsCsiIdseqCsCsi"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.LinkCsCsiFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.LinkCsCsiFkAssoc.LinkCsCsiIdseqCsCsi"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.LinkCsCsiFkAssoc.CsCsi"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="PCsCsiIdseqCsCsi"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PCsCsiFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PCsCsiFkAssoc.PCsCsiIdseqCsCsi"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PCsCsiFkAssoc.CsCsi1"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ClassSchemeItems"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsiFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsiFkAssoc.ClassSchemeItems"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsiFkAssoc.CsCsi"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassSchemeItemsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ClassificationSchemes"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFkAssoc.ClassificationSchemes"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFkAssoc.CsCsi"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationSchemesImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="CsCsi"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.LinkCsCsiFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.LinkCsCsiFkAssoc.CsCsi"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.LinkCsCsiFkAssoc.LinkCsCsiIdseqCsCsi"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="CsCsi1"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PCsCsiFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PCsCsiFkAssoc.CsCsi1"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PCsCsiFkAssoc.PCsCsiIdseqCsCsi"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="AcCsi"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiCsCsiFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiCsCsiFkAssoc.AcCsi"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiCsCsiFkAssoc.CsCsi"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="CsCsiPk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsCsiIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="CS_CSI_PK" />
+         <Attr Name="_isPrimary" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="CsCsiUk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsIdseq" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsiIdseq" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.PCsCsiIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="CS_CSI_UK" />
+         <Attr Name="_isUnique" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061425" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsCsiIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061425" />
+         <Attr Name="_checkCondition" Value="&#34;CS_CSI_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061426" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061426" />
+         <Attr Name="_checkCondition" Value="&#34;CS_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061427" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsiIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061427" />
+         <Attr Name="_checkCondition" Value="&#34;CSI_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061428" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.Label" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061428" />
+         <Attr Name="_checkCondition" Value="&#34;LABEL&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061429" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.DateCreated" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061429" />
+         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061430" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061430" />
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="CsCsiCsFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="CS_CSI_CS_FK" />
+         <Attr Name="_referencedKey" Value="CS_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="CsCsiCsiFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsiIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="CS_CSI_CSI_FK" />
+         <Attr Name="_referencedKey" Value="CSI_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="LinkCsCsiFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.LinkCsCsiIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="LINK_CS_CSI_FK" />
+         <Attr Name="_referencedKey" Value="CS_CSI_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="PCsCsiFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.PCsCsiIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="P_CS_CSI_FK" />
+         <Attr Name="_referencedKey" Value="CS_CSI_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+</Entity>

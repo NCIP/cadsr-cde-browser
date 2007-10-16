@@ -1,0 +1,708 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
+<Entity
+   Name="ValueDomains"
+   DBObjectType="table"
+   DBObjectName="VALUE_DOMAINS"
+   AliasName="ValueDomains"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomainsImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <AttrArray Name="_publishEvents">
+      </AttrArray>
+   </DesignTime>
+   <Attribute
+      Name="VdIdseq"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="VD_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="4"
+      Scale="2"
+      ColumnName="VERSION"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="VALUE_DOMAINS" >
+   </Attribute>
+   <Attribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="PREFERRED_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="CONTE_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      Precision="2000"
+      ColumnName="PREFERRED_DEFINITION"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DtlName"
+      IsNotNull="true"
+      Precision="20"
+      ColumnName="DTL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="BeginDate"
+      ColumnName="BEGIN_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="VALUE_DOMAINS" >
+   </Attribute>
+   <Attribute
+      Name="CdIdseq"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="CD_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="EndDate"
+      ColumnName="END_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="VALUE_DOMAINS" >
+   </Attribute>
+   <Attribute
+      Name="VdTypeFlag"
+      IsNotNull="true"
+      Precision="1"
+      ColumnName="VD_TYPE_FLAG"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="AslName"
+      IsNotNull="true"
+      Precision="20"
+      ColumnName="ASL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ChangeNote"
+      Precision="2000"
+      ColumnName="CHANGE_NOTE"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="UomlName"
+      Precision="20"
+      ColumnName="UOML_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LongName"
+      Precision="255"
+      ColumnName="LONG_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="FormlName"
+      Precision="20"
+      ColumnName="FORML_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="MaxLengthNum"
+      Precision="8"
+      Scale="0"
+      ColumnName="MAX_LENGTH_NUM"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="VALUE_DOMAINS" >
+   </Attribute>
+   <Attribute
+      Name="MinLengthNum"
+      Precision="8"
+      Scale="0"
+      ColumnName="MIN_LENGTH_NUM"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="VALUE_DOMAINS" >
+   </Attribute>
+   <Attribute
+      Name="DecimalPlace"
+      Precision="2"
+      Scale="0"
+      ColumnName="DECIMAL_PLACE"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="VALUE_DOMAINS" >
+   </Attribute>
+   <Attribute
+      Name="LatestVersionInd"
+      Precision="3"
+      ColumnName="LATEST_VERSION_IND"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DeletedInd"
+      Precision="3"
+      ColumnName="DELETED_IND"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateCreated"
+      IsNotNull="true"
+      ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="VALUE_DOMAINS" >
+   </Attribute>
+   <Attribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="CREATED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateModified"
+      ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="VALUE_DOMAINS" >
+   </Attribute>
+   <Attribute
+      Name="ModifiedBy"
+      Precision="30"
+      ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CharSetName"
+      Precision="20"
+      ColumnName="CHAR_SET_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="HighValueNum"
+      Precision="255"
+      ColumnName="HIGH_VALUE_NUM"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LowValueNum"
+      Precision="255"
+      ColumnName="LOW_VALUE_NUM"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="RepIdseq"
+      Precision="36"
+      ColumnName="REP_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="QualifierName"
+      Precision="30"
+      ColumnName="QUALIFIER_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Origin"
+      Precision="240"
+      ColumnName="ORIGIN"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="VdId"
+      ColumnName="VD_ID"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="VALUE_DOMAINS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CondrIdseq"
+      Precision="36"
+      ColumnName="CONDR_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      TableName="VALUE_DOMAINS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="Contexts"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdConteFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdConteFkAssoc.Contexts"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdConteFkAssoc.ValueDomains"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ConceptualDomains"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCdFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCdFkAssoc.ConceptualDomains"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCdFkAssoc.ValueDomains"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConceptualDomainsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Representation"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc.Representation"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc.ValueDomains"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepresentationImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ConDerivationRulesExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc.ConDerivationRulesExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc.ValueDomains"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExtImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="DataElements"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeVdFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeVdFkAssoc.DataElements"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeVdFkAssoc.ValueDomains"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="VdPvs"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkAssoc.VdPvs"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkAssoc.ValueDomains"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <ViewLinkAccessor
+      Name="RepresentationViewObj"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VDRepViewLink"
+      ViewLinkEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VDRepViewLink.RepresentationViewObj"
+      ViewLinkOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VDRepViewLink.ValueDomainsView"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <Key
+      Name="SysC0062859" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.VdIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062859" />
+         <Attr Name="_checkCondition" Value="&#34;VD_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062860" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.Version" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062860" />
+         <Attr Name="_checkCondition" Value="&#34;VERSION&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062861" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.PreferredName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062861" />
+         <Attr Name="_checkCondition" Value="&#34;PREFERRED_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062862" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062862" />
+         <Attr Name="_checkCondition" Value="&#34;CONTE_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062863" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.PreferredDefinition" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062863" />
+         <Attr Name="_checkCondition" Value="&#34;PREFERRED_DEFINITION&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062864" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.DtlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062864" />
+         <Attr Name="_checkCondition" Value="&#34;DTL_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062865" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.CdIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062865" />
+         <Attr Name="_checkCondition" Value="&#34;CD_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062866" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.VdTypeFlag" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062866" />
+         <Attr Name="_checkCondition" Value="&#34;VD_TYPE_FLAG&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062867" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.AslName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062867" />
+         <Attr Name="_checkCondition" Value="&#34;ASL_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062868" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.DateCreated" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062868" />
+         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062869" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062869" />
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdPk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.VdIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_PK" />
+         <Attr Name="_isPrimary" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdUk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.Version" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.PreferredName" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_UK" />
+         <Attr Name="_isUnique" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdAslFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.AslName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_ASL_FK" />
+         <Attr Name="_referencedKey" Value="ASL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdCdFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.CdIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_CD_FK" />
+         <Attr Name="_referencedKey" Value="CD_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdCondrFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.CondrIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_CONDR_FK" />
+         <Attr Name="_referencedKey" Value="CONDR_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdConteFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_CONTE_FK" />
+         <Attr Name="_referencedKey" Value="CONTE_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdCsvFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.CharSetName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_CSV_FK" />
+         <Attr Name="_referencedKey" Value="CSV_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdDtlFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.DtlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_DTL_FK" />
+         <Attr Name="_referencedKey" Value="DTL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdFormlFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.FormlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_FORML_FK" />
+         <Attr Name="_referencedKey" Value="FORML_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdQlvFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.QualifierName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_QLV_FK" />
+         <Attr Name="_referencedKey" Value="QLV_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdRepFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.RepIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_REP_FK" />
+         <Attr Name="_referencedKey" Value="REP_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="VdUomlFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.UomlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="VD_UOML_FK" />
+         <Attr Name="_referencedKey" Value="UOML_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+</Entity>

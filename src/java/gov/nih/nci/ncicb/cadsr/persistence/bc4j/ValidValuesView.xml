@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="ValidValuesView"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValidValuesViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValidValuesViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   FetchMode="FETCH_AS_NEEDED"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT ValueMeaningsLov.SHORT_MEANING, 
+       nvl(ValueMeaningsLov.DESCRIPTION,'&nbsp;'), 
+       PermissibleValues.VALUE, 
+       PermissibleValues.PV_IDSEQ, 
+       ValueDomains.VD_IDSEQ ,
+   nvl(PermissibleValues.MEANING_DESCRIPTION,'&nbsp;'),
+   VdPvs.VP_IDSEQ , ValueMeaningsLov.CONDR_IDSEQ,
+  sbrext_common_routines.RETURN_NUMBER( PermissibleValues.VALUE ) display_order
+FROM VD_PVS VdPvs, VALUE_MEANINGS_LOV ValueMeaningsLov, VALUE_DOMAINS ValueDomains, PERMISSIBLE_VALUES PermissibleValues
+WHERE (ValueDomains.VD_IDSEQ = VdPvs.VD_IDSEQ) AND (VdPvs.PV_IDSEQ = PermissibleValues.PV_IDSEQ) AND (ValueMeaningsLov.SHORT_MEANING = PermissibleValues.SHORT_MEANING)
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <EntityUsage
+      Name="VdPvs"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvs" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="ValueMeaningsLov"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov"
+      SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValidValuesView.VdPvs"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+         <AttrArray Name="_srcAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvs.DateCreated" />
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvs.CreatedBy" />
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvs.DateModified" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov.DateCreated" />
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov.CreatedBy" />
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov.DateModified" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="ValueDomains"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkAssoc.ValueDomains"
+      SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValidValuesView.VdPvs"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+         <AttrArray Name="_srcAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvs.VdIdseq" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains.VdIdseq" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="PermissibleValues"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PermissibleValues"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpPvFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpPvFkAssoc.PermissibleValues"
+      SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValidValuesView.VdPvs"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+         <AttrArray Name="_srcAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvs.PvIdseq" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PermissibleValues.PvIdseq" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="ShortMeaning"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ShortMeaning"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="SHORT_MEANING" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Description"
+      IsUpdateable="false"
+      PrecisionRule="false"
+      EntityAttrName="Description"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="DESCRIPTION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Value"
+      IsUpdateable="false"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Value"
+      EntityUsage="PermissibleValues"
+      AliasName="VALUE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PvIdseq"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PvIdseq"
+      EntityUsage="PermissibleValues"
+      AliasName="PV_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VdIdseq"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="VdIdseq"
+      EntityUsage="ValueDomains"
+      AliasName="VD_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MeaningDescription"
+      IsUpdateable="false"
+      PrecisionRule="false"
+      EntityAttrName="MeaningDescription"
+      EntityUsage="PermissibleValues"
+      AliasName="MEANING_DESCRIPTION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VpIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="VpIdseq"
+      EntityUsage="VdPvs"
+      AliasName="VP_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CondrIdseq"
+      PrecisionRule="true"
+      EntityAttrName="CondrIdseq"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="CONDR_IDSEQ" >
+   </ViewAttribute>
+</ViewObject>

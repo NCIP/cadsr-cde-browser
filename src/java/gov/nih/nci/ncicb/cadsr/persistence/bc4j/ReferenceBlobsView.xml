@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="ReferenceBlobsView"
+   SelectList="ReferenceBlobs.RD_IDSEQ, 
+       ReferenceBlobs.NAME, 
+      
+ ReferenceBlobs.MIME_TYPE, 
+       ReferenceBlobs.DOC_SIZE, 
+ 
+      ReferenceBlobs.DAD_CHARSET, 
+       ReferenceBlobs.LAST_UPDATED, 
+
+       ReferenceBlobs.CONTENT_TYPE, 
+       ReferenceBlobs.BLOB_CONTENT, 
+
+       ReferenceBlobs.CREATED_BY, 
+       ReferenceBlobs.DATE_CREATED, 
+
+       ReferenceBlobs.MODIFIED_BY, 
+       ReferenceBlobs.DATE_MODIFIED"
+   FromList="REFERENCE_BLOBS ReferenceBlobs"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceBlobsViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceBlobsViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="ReferenceBlobs"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceBlobs" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="RdIdseq"
+      PrecisionRule="false"
+      EntityAttrName="RdIdseq"
+      EntityUsage="ReferenceBlobs"
+      AliasName="RD_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Name"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Name"
+      EntityUsage="ReferenceBlobs"
+      AliasName="NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MimeType"
+      PrecisionRule="false"
+      EntityAttrName="MimeType"
+      EntityUsage="ReferenceBlobs"
+      AliasName="MIME_TYPE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DocSize"
+      PrecisionRule="false"
+      EntityAttrName="DocSize"
+      EntityUsage="ReferenceBlobs"
+      AliasName="DOC_SIZE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DadCharset"
+      PrecisionRule="false"
+      EntityAttrName="DadCharset"
+      EntityUsage="ReferenceBlobs"
+      AliasName="DAD_CHARSET" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdated"
+      PrecisionRule="false"
+      EntityAttrName="LastUpdated"
+      EntityUsage="ReferenceBlobs"
+      AliasName="LAST_UPDATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContentType"
+      PrecisionRule="false"
+      EntityAttrName="ContentType"
+      EntityUsage="ReferenceBlobs"
+      AliasName="CONTENT_TYPE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BlobContent"
+      IsQueriable="false"
+      PrecisionRule="false"
+      EntityAttrName="BlobContent"
+      EntityUsage="ReferenceBlobs"
+      AliasName="BLOB_CONTENT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="ReferenceBlobs"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="ReferenceBlobs"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="ReferenceBlobs"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="ReferenceBlobs"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+</ViewObject>

@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="CsCsiView"
+   SelectList="CsCsi.CS_CSI_IDSEQ, 
+       CsCsi.CS_IDSEQ, 
+       CsCsi.CSI_IDSEQ, 
+
+       CsCsi.P_CS_CSI_IDSEQ, 
+       CsCsi.LINK_CS_CSI_IDSEQ, 
+
+       CsCsi.LABEL, 
+       CsCsi.DISPLAY_ORDER, 
+       CsCsi.DATE_CREATED, 
+
+       CsCsi.CREATED_BY, 
+       CsCsi.DATE_MODIFIED, 
+     
+  CsCsi.MODIFIED_BY"
+   FromList="CS_CSI CsCsi"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="CsCsi"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="CsCsiIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CsCsiIdseq"
+      EntityUsage="CsCsi"
+      AliasName="CS_CSI_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CsIdseq"
+      EntityUsage="CsCsi"
+      AliasName="CS_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsiIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CsiIdseq"
+      EntityUsage="CsCsi"
+      AliasName="CSI_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PCsCsiIdseq"
+      IsUnique="true"
+      PrecisionRule="false"
+      EntityAttrName="PCsCsiIdseq"
+      EntityUsage="CsCsi"
+      AliasName="P_CS_CSI_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LinkCsCsiIdseq"
+      PrecisionRule="false"
+      EntityAttrName="LinkCsCsiIdseq"
+      EntityUsage="CsCsi"
+      AliasName="LINK_CS_CSI_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Label"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Label"
+      EntityUsage="CsCsi"
+      AliasName="LABEL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayOrder"
+      PrecisionRule="false"
+      EntityAttrName="DisplayOrder"
+      EntityUsage="CsCsi"
+      AliasName="DISPLAY_ORDER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="CsCsi"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="CsCsi"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="CsCsi"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="CsCsi"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="ClassificationSchemesView"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="ClassSchemeItemsView"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsiFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

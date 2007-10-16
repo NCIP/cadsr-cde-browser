@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="Classifications"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationsRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationsImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT AdministeredComponents.AC_IDSEQ,
+       AdministeredComponents.ACTL_NAME,
+       AdministeredComponents.VERSION,
+       AdministeredComponents.CONTE_IDSEQ,
+       ClassSchemeItems.CSI_IDSEQ,
+       ClassSchemeItems.CSI_NAME, 
+       ClassSchemeItems.CSITL_NAME, 
+       ClassificationSchemes.CS_IDSEQ,
+       ClassificationSchemes.PREFERRED_NAME, 
+       ClassificationSchemes.PREFERRED_DEFINITION,
+       ClassificationSchemes.CS_ID
+FROM AC_CSI AcCsi, ADMINISTERED_COMPONENTS AdministeredComponents, 
+CLASSIFICATION_SCHEMES ClassificationSchemes, CLASS_SCHEME_ITEMS ClassSchemeItems, CS_CSI CsCsi
+WHERE 
+(((AcCsi.AC_IDSEQ = AdministeredComponents.AC_IDSEQ)AND (CsCsi.CS_IDSEQ = ClassificationSchemes.CS_IDSEQ))AND 
+(CsCsi.CSI_IDSEQ = ClassSchemeItems.CSI_IDSEQ))AND (AcCsi.CS_CSI_IDSEQ = CsCsi.CS_CSI_IDSEQ)
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <EntityUsage
+      Name="AcCsi"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsi" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="AdministeredComponents"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc.AdministeredComponents"
+      SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Classifications.AcCsi"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+         <AttrArray Name="_srcAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsi.AcIdseq" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.AcIdseq" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="ClassificationSchemes"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationSchemes"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFkAssoc.ClassificationSchemes"
+      SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Classifications.CsCsi"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+         <AttrArray Name="_srcAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsIdseq" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationSchemes.CsIdseq" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="ClassSchemeItems"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassSchemeItems"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsiFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsiFkAssoc.ClassSchemeItems"
+      SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Classifications.CsCsi"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+         <AttrArray Name="_srcAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsiIdseq" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassSchemeItems.CsiIdseq" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="CsCsi"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiCsCsiFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiCsCsiFkAssoc.CsCsi"
+      SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Classifications.AcCsi"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+         <AttrArray Name="_srcAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsi.CsCsiIdseq" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsCsiIdseq" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="AcIdseq"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AcIdseq"
+      EntityUsage="AdministeredComponents"
+      AliasName="AC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ActlName"
+      IsUpdateable="false"
+      PrecisionRule="false"
+      EntityAttrName="ActlName"
+      EntityUsage="AdministeredComponents"
+      AliasName="ActlName" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsUpdateable="false"
+      PrecisionRule="false"
+      EntityAttrName="Version"
+      EntityUsage="AdministeredComponents"
+      AliasName="Version" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsUpdateable="false"
+      PrecisionRule="false"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="AdministeredComponents"
+      AliasName="ConteIdseq" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsiIdseq"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CsiIdseq"
+      EntityUsage="ClassSchemeItems"
+      AliasName="CSI_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsiName"
+      IsUpdateable="false"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CsiName"
+      EntityUsage="ClassSchemeItems"
+      AliasName="CSI_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsitlName"
+      IsUpdateable="false"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CsitlName"
+      EntityUsage="ClassSchemeItems"
+      AliasName="CSITL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsIdseq"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CsIdseq"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CS_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsUpdateable="false"
+      PrecisionRule="false"
+      EntityAttrName="PreferredName"
+      EntityUsage="ClassificationSchemes"
+      AliasName="PreferredName" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsUpdateable="false"
+      PrecisionRule="false"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="ClassificationSchemes"
+      AliasName="PreferredDefinition" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsId"
+      PrecisionRule="true"
+      EntityAttrName="CsId"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CS_ID" >
+   </ViewAttribute>
+</ViewObject>

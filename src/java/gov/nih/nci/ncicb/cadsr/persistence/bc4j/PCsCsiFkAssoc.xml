@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Association SYSTEM "jbo_03_01.dtd">
+
+<Association
+   Name="PCsCsiFkAssoc" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+   </DesignTime>
+   <AssociationEnd
+      Name="PCsCsiIdseqCsCsi"
+      Cardinality="0"
+      Source="true"
+      Owner="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsCsiIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_aggregation" Value="0" />
+         <Attr Name="_isUpdateable" Value="true" />
+         <Attr Name="_finderName" Value="PCsCsiIdseqCsCsi" />
+         <Attr Name="_foreignKey" Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.CsCsiPk" />
+      </DesignTime>
+   </AssociationEnd>
+   <AssociationEnd
+      Name="CsCsi1"
+      Cardinality="-1"
+      Owner="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.PCsCsiIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_aggregation" Value="0" />
+         <Attr Name="_isUpdateable" Value="true" />
+         <Attr Name="_finderName" Value="CsCsi1" />
+         <Attr Name="_foreignKey" Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi.PCsCsiFk" />
+      </DesignTime>
+   </AssociationEnd>
+</Association>

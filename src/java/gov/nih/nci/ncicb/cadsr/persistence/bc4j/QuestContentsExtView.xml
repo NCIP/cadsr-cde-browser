@@ -1,0 +1,486 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="QuestContentsExtView"
+   SelectList="QuestContentsExt.QC_IDSEQ, 
+       QuestContentsExt.VERSION, 
+
+       QuestContentsExt.QTL_NAME, 
+       QuestContentsExt.CONTE_IDSEQ, 
+
+       QuestContentsExt.ASL_NAME, 
+       QuestContentsExt.PREFERRED_NAME, 
+
+       QuestContentsExt.PREFERRED_DEFINITION, 
+       QuestContentsExt.PROTO_IDSEQ, 
+
+       QuestContentsExt.DE_IDSEQ, 
+       QuestContentsExt.VP_IDSEQ, 
+
+       QuestContentsExt.QC_MATCH_IDSEQ, 
+       QuestContentsExt.QC_IDENTIFIER, 
+
+       QuestContentsExt.QCDL_NAME, 
+       QuestContentsExt.LONG_NAME, 
+
+       QuestContentsExt.LATEST_VERSION_IND, 
+       QuestContentsExt.DELETED_IND, 
+
+       QuestContentsExt.BEGIN_DATE, 
+       QuestContentsExt.END_DATE, 
+
+       QuestContentsExt.MATCH_IND, 
+       QuestContentsExt.NEW_QC_IND, 
+
+       QuestContentsExt.HIGHLIGHT_IND, 
+       QuestContentsExt.REVIEWER_FEEDBACK_ACTION, 
+
+       QuestContentsExt.REVIEWER_FEEDBACK_INTERNAL, 
+       
+QuestContentsExt.REVIEWER_FEEDBACK_EXTERNAL, 
+       QuestContentsExt.SYSTEM_MSGS, 
+
+       QuestContentsExt.REVIEWED_BY, 
+       QuestContentsExt.REVIEWED_DATE, 
+
+       QuestContentsExt.APPROVED_BY, 
+       QuestContentsExt.APPROVED_DATE, 
+
+       QuestContentsExt.CDE_DICTIONARY_ID, 
+       QuestContentsExt.DATE_CREATED, 
+
+       QuestContentsExt.CREATED_BY, 
+       QuestContentsExt.DATE_MODIFIED, 
+
+       QuestContentsExt.MODIFIED_BY, 
+       QuestContentsExt.CHANGE_NOTE, 
+
+       QuestContentsExt.SUBMITTED_LONG_CDE_NAME, 
+       QuestContentsExt.GROUP_COMMENTS, 
+
+       QuestContentsExt.SRC_NAME, 
+       QuestContentsExt.P_MOD_IDSEQ, 
+
+       QuestContentsExt.P_QST_IDSEQ, 
+       QuestContentsExt.P_VAL_IDSEQ, 
+
+       QuestContentsExt.DN_CRF_IDSEQ, 
+       QuestContentsExt.DN_VD_IDSEQ, 
+
+       QuestContentsExt.DISPLAY_IND, 
+       QuestContentsExt.GROUP_ACTION, 
+
+       QuestContentsExt.DE_LONG_NAME, 
+       QuestContentsExt.VD_LONG_NAME, 
+
+       QuestContentsExt.DEC_LONG_NAME, 
+       QuestContentsExt.DISPLAY_ORDER, 
+
+       QuestContentsExt.ORIGIN, 
+       QuestContentsExt.QC_ID"
+   FromList="SBREXT.QUEST_CONTENTS_EXT QuestContentsExt"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExtViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExtViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="QuestContentsExt"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="QcIdseq"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="QcIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="QC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Version"
+      EntityUsage="QuestContentsExt"
+      AliasName="VERSION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QtlName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="QtlName"
+      EntityUsage="QuestContentsExt"
+      AliasName="QTL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="CONTE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AslName"
+      EntityUsage="QuestContentsExt"
+      AliasName="ASL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredName"
+      EntityUsage="QuestContentsExt"
+      AliasName="PREFERRED_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="QuestContentsExt"
+      AliasName="PREFERRED_DEFINITION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ProtoIdseq"
+      PrecisionRule="false"
+      EntityAttrName="ProtoIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="PROTO_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeIdseq"
+      PrecisionRule="false"
+      EntityAttrName="DeIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="DE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VpIdseq"
+      PrecisionRule="false"
+      EntityAttrName="VpIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="VP_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QcMatchIdseq"
+      PrecisionRule="false"
+      EntityAttrName="QcMatchIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="QC_MATCH_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QcIdentifier"
+      PrecisionRule="false"
+      EntityAttrName="QcIdentifier"
+      EntityUsage="QuestContentsExt"
+      AliasName="QC_IDENTIFIER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QcdlName"
+      PrecisionRule="false"
+      EntityAttrName="QcdlName"
+      EntityUsage="QuestContentsExt"
+      AliasName="QCDL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      PrecisionRule="false"
+      EntityAttrName="LongName"
+      EntityUsage="QuestContentsExt"
+      AliasName="LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      PrecisionRule="false"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="LATEST_VERSION_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      PrecisionRule="false"
+      EntityAttrName="DeletedInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="DELETED_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      PrecisionRule="false"
+      EntityAttrName="BeginDate"
+      EntityUsage="QuestContentsExt"
+      AliasName="BEGIN_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      PrecisionRule="false"
+      EntityAttrName="EndDate"
+      EntityUsage="QuestContentsExt"
+      AliasName="END_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MatchInd"
+      PrecisionRule="false"
+      EntityAttrName="MatchInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="MATCH_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NewQcInd"
+      PrecisionRule="false"
+      EntityAttrName="NewQcInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="NEW_QC_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="HighlightInd"
+      PrecisionRule="false"
+      EntityAttrName="HighlightInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="HIGHLIGHT_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewerFeedbackAction"
+      PrecisionRule="false"
+      EntityAttrName="ReviewerFeedbackAction"
+      EntityUsage="QuestContentsExt"
+      AliasName="REVIEWER_FEEDBACK_ACTION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewerFeedbackInternal"
+      PrecisionRule="false"
+      EntityAttrName="ReviewerFeedbackInternal"
+      EntityUsage="QuestContentsExt"
+      AliasName="REVIEWER_FEEDBACK_INTERNAL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewerFeedbackExternal"
+      PrecisionRule="false"
+      EntityAttrName="ReviewerFeedbackExternal"
+      EntityUsage="QuestContentsExt"
+      AliasName="REVIEWER_FEEDBACK_EXTERNAL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SystemMsgs"
+      PrecisionRule="false"
+      EntityAttrName="SystemMsgs"
+      EntityUsage="QuestContentsExt"
+      AliasName="SYSTEM_MSGS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewedBy"
+      PrecisionRule="false"
+      EntityAttrName="ReviewedBy"
+      EntityUsage="QuestContentsExt"
+      AliasName="REVIEWED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewedDate"
+      PrecisionRule="false"
+      EntityAttrName="ReviewedDate"
+      EntityUsage="QuestContentsExt"
+      AliasName="REVIEWED_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ApprovedBy"
+      PrecisionRule="false"
+      EntityAttrName="ApprovedBy"
+      EntityUsage="QuestContentsExt"
+      AliasName="APPROVED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ApprovedDate"
+      PrecisionRule="false"
+      EntityAttrName="ApprovedDate"
+      EntityUsage="QuestContentsExt"
+      AliasName="APPROVED_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CdeDictionaryId"
+      PrecisionRule="false"
+      EntityAttrName="CdeDictionaryId"
+      EntityUsage="QuestContentsExt"
+      AliasName="CDE_DICTIONARY_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="QuestContentsExt"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="QuestContentsExt"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="QuestContentsExt"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="QuestContentsExt"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNote"
+      PrecisionRule="false"
+      EntityAttrName="ChangeNote"
+      EntityUsage="QuestContentsExt"
+      AliasName="CHANGE_NOTE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SubmittedLongCdeName"
+      PrecisionRule="false"
+      EntityAttrName="SubmittedLongCdeName"
+      EntityUsage="QuestContentsExt"
+      AliasName="SUBMITTED_LONG_CDE_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="GroupComments"
+      PrecisionRule="false"
+      EntityAttrName="GroupComments"
+      EntityUsage="QuestContentsExt"
+      AliasName="GROUP_COMMENTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SrcName"
+      PrecisionRule="false"
+      EntityAttrName="SrcName"
+      EntityUsage="QuestContentsExt"
+      AliasName="SRC_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PModIdseq"
+      PrecisionRule="false"
+      EntityAttrName="PModIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="P_MOD_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PQstIdseq"
+      PrecisionRule="false"
+      EntityAttrName="PQstIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="P_QST_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PValIdseq"
+      PrecisionRule="false"
+      EntityAttrName="PValIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="P_VAL_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DnCrfIdseq"
+      PrecisionRule="false"
+      EntityAttrName="DnCrfIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="DN_CRF_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DnVdIdseq"
+      PrecisionRule="false"
+      EntityAttrName="DnVdIdseq"
+      EntityUsage="QuestContentsExt"
+      AliasName="DN_VD_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayInd"
+      PrecisionRule="false"
+      EntityAttrName="DisplayInd"
+      EntityUsage="QuestContentsExt"
+      AliasName="DISPLAY_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="GroupAction"
+      PrecisionRule="false"
+      EntityAttrName="GroupAction"
+      EntityUsage="QuestContentsExt"
+      AliasName="GROUP_ACTION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeLongName"
+      PrecisionRule="false"
+      EntityAttrName="DeLongName"
+      EntityUsage="QuestContentsExt"
+      AliasName="DE_LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VdLongName"
+      PrecisionRule="false"
+      EntityAttrName="VdLongName"
+      EntityUsage="QuestContentsExt"
+      AliasName="VD_LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DecLongName"
+      PrecisionRule="false"
+      EntityAttrName="DecLongName"
+      EntityUsage="QuestContentsExt"
+      AliasName="DEC_LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayOrder"
+      PrecisionRule="false"
+      EntityAttrName="DisplayOrder"
+      EntityUsage="QuestContentsExt"
+      AliasName="DISPLAY_ORDER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      PrecisionRule="false"
+      EntityAttrName="Origin"
+      EntityUsage="QuestContentsExt"
+      AliasName="ORIGIN" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QcId"
+      PrecisionRule="false"
+      EntityAttrName="QcId"
+      EntityUsage="QuestContentsExt"
+      AliasName="QC_ID" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="ContextsRow"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcConteFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Protocol"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

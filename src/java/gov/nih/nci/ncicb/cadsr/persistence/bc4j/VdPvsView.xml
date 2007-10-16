@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="VdPvsView"
+   SelectList="VdPvs.VP_IDSEQ, 
+       VdPvs.VD_IDSEQ, 
+       VdPvs.PV_IDSEQ, 
+       VdPvs.CONTE_IDSEQ, 
+       VdPvs.DATE_CREATED, 
+       VdPvs.CREATED_BY, 
+       VdPvs.DATE_MODIFIED, 
+       VdPvs.MODIFIED_BY"
+   FromList="VD_PVS VdPvs"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvsViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="VdPvs"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvs" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="VpIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="VpIdseq"
+      EntityUsage="VdPvs"
+      AliasName="VP_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VdIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="VdIdseq"
+      EntityUsage="VdPvs"
+      AliasName="VD_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PvIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PvIdseq"
+      EntityUsage="VdPvs"
+      AliasName="PV_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      PrecisionRule="false"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="VdPvs"
+      AliasName="CONTE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="VdPvs"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="VdPvs"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="VdPvs"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="VdPvs"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+</ViewObject>

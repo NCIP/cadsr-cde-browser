@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="FormUsagesForACdeView"
+   OrderBy="protocol_number,crf_long_name,que_long_name"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormUsagesForACdeViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormUsagesForACdeViewImpl"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+select  NVL(proto.long_name,'N/A') protocol_number,
+       NVL(proto.lead_org,'N/A') lead_org,
+	   crf.long_name crf_long_name,
+	   crf.qtl_name usage_type,
+	   crf.qc_idseq crf_idseq,
+	   proto.proto_idseq,
+	   que.de_idseq,
+       que.long_name que_long_name,
+	   que.de_idseq que_de_idseq
+from   sbrext.protocols_ext proto,
+       sbrext.quest_contents_ext crf,
+       sbrext.quest_contents_ext que,
+       sbrext.protocol_qc_ext proto_qc
+where  crf.qc_idseq = proto_qc.qc_idseq(+)
+and    proto.proto_idseq(+) = proto_qc.proto_idseq
+and    crf.qc_idseq = que.dn_crf_idseq
+and	   crf.qtl_name IN ('CRF','TEMPLATE')
+and    que.qtl_name = 'QUESTION'
+and	   crf.deleted_ind = 'No'
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_version" Value="10.1.3.34.12" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+   </DesignTime>
+   <ViewAttribute
+      Name="ProtocolNumber"
+      IsQueriable="false"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PROTOCOL_NUMBER"
+      Expression="PROTOCOL_NUMBER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LeadOrg"
+      IsQueriable="false"
+      IsPersistent="false"
+      Precision="30"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LEAD_ORG"
+      Expression="LEAD_ORG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CrfLongName"
+      IsQueriable="false"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CRF_LONG_NAME"
+      Expression="CRF_LONG_NAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="UsageType"
+      IsQueriable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="30"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="USAGE_TYPE"
+      Expression="USAGE_TYPE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CrfIdseq"
+      IsQueriable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="36"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CRF_IDSEQ"
+      Expression="CRF_IDSEQ"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ProtoIdseq"
+      IsQueriable="false"
+      IsPersistent="false"
+      Precision="36"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PROTO_IDSEQ"
+      Expression="PROTO_IDSEQ"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeIdseq"
+      IsQueriable="false"
+      IsPersistent="false"
+      Precision="36"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DE_IDSEQ"
+      Expression="DE_IDSEQ"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QueLongName"
+      IsQueriable="false"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="QUE_LONG_NAME"
+      Expression="QUE_LONG_NAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QueDeIdseq"
+      IsQueriable="false"
+      IsPersistent="false"
+      Precision="36"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="QUE_DE_IDSEQ"
+      Expression="QUE_DE_IDSEQ"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

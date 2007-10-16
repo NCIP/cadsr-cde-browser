@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="DataElementsView"
+   SelectList="DataElements.DE_IDSEQ, 
+       DataElements.VERSION, 
+       
+DataElements.CONTE_IDSEQ, 
+       DataElements.PREFERRED_NAME, 
+
+       DataElements.VD_IDSEQ, 
+       DataElements.DEC_IDSEQ, 
+
+       DataElements.PREFERRED_DEFINITION, 
+       DataElements.ASL_NAME, 
+
+       DataElements.LONG_NAME, 
+       DataElements.LATEST_VERSION_IND, 
+
+       DataElements.DELETED_IND, 
+       DataElements.DATE_CREATED, 
+
+       DataElements.BEGIN_DATE, 
+       DataElements.CREATED_BY, 
+
+       DataElements.END_DATE, 
+       DataElements.DATE_MODIFIED, 
+
+       DataElements.MODIFIED_BY, 
+       DataElements.CHANGE_NOTE, 
+
+       DataElements.ORIGIN, 
+       DataElements.CDE_ID, 
+  
+     DataElements.QUESTION"
+   FromList="DATA_ELEMENTS DataElements"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   FetchMode="FETCH_AS_NEEDED"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="DataElements"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElements" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="DeIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DeIdseq"
+      EntityUsage="DataElements"
+      AliasName="DE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Version"
+      EntityUsage="DataElements"
+      AliasName="VERSION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="DataElements"
+      AliasName="CONTE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredName"
+      EntityUsage="DataElements"
+      AliasName="PREFERRED_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VdIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="VdIdseq"
+      EntityUsage="DataElements"
+      AliasName="VD_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DecIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DecIdseq"
+      EntityUsage="DataElements"
+      AliasName="DEC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="DataElements"
+      AliasName="PREFERRED_DEFINITION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AslName"
+      EntityUsage="DataElements"
+      AliasName="ASL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      PrecisionRule="false"
+      EntityAttrName="LongName"
+      EntityUsage="DataElements"
+      AliasName="LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      PrecisionRule="false"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="DataElements"
+      AliasName="LATEST_VERSION_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      PrecisionRule="false"
+      EntityAttrName="DeletedInd"
+      EntityUsage="DataElements"
+      AliasName="DELETED_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="DataElements"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      PrecisionRule="false"
+      EntityAttrName="BeginDate"
+      EntityUsage="DataElements"
+      AliasName="BEGIN_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="DataElements"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      PrecisionRule="false"
+      EntityAttrName="EndDate"
+      EntityUsage="DataElements"
+      AliasName="END_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="DataElements"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="DataElements"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNote"
+      PrecisionRule="false"
+      EntityAttrName="ChangeNote"
+      EntityUsage="DataElements"
+      AliasName="CHANGE_NOTE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      PrecisionRule="false"
+      EntityAttrName="Origin"
+      EntityUsage="DataElements"
+      AliasName="ORIGIN" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CdeId"
+      PrecisionRule="false"
+      EntityAttrName="CdeId"
+      EntityUsage="DataElements"
+      AliasName="CDE_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Question"
+      PrecisionRule="false"
+      EntityAttrName="Question"
+      EntityUsage="DataElements"
+      AliasName="QUESTION" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="DataElementConceptsRow"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeDecFkLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

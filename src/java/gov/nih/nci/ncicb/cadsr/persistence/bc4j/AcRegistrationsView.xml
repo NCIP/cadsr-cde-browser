@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="AcRegistrationsView"
+   SelectList="AcRegistrations.AR_IDSEQ, 
+       AcRegistrations.AC_IDSEQ, 
+ 
+      AcRegistrations.ORG_IDSEQ, 
+       AcRegistrations.SUB_IDSEQ, 
+
+       AcRegistrations.REGIS_IDSEQ, 
+       AcRegistrations.REGISTRATION_STATUS, 
+
+       AcRegistrations.UNRESOLVED_ISSUE, 
+       AcRegistrations.ORIGIN, 
+
+       AcRegistrations.LAST_CHANGE, 
+       AcRegistrations.DATA_IDENTIFIER, 
+
+       AcRegistrations.VERSION_IDENTIFIER, 
+       AcRegistrations.IRDI, 
+
+       AcRegistrations.DATE_CREATED, 
+       AcRegistrations.CREATED_BY, 
+
+       AcRegistrations.DATE_MODIFIED, 
+       AcRegistrations.MODIFIED_BY"
+   FromList="AC_REGISTRATIONS AcRegistrations"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="AcRegistrations"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="ArIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ArIdseq"
+      EntityUsage="AcRegistrations"
+      AliasName="AR_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AcIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AcIdseq"
+      EntityUsage="AcRegistrations"
+      AliasName="AC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OrgIdseq"
+      IsUnique="true"
+      PrecisionRule="false"
+      EntityAttrName="OrgIdseq"
+      EntityUsage="AcRegistrations"
+      AliasName="ORG_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SubIdseq"
+      IsUnique="true"
+      PrecisionRule="false"
+      EntityAttrName="SubIdseq"
+      EntityUsage="AcRegistrations"
+      AliasName="SUB_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RegisIdseq"
+      PrecisionRule="false"
+      EntityAttrName="RegisIdseq"
+      EntityUsage="AcRegistrations"
+      AliasName="REGIS_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RegistrationStatus"
+      PrecisionRule="false"
+      EntityAttrName="RegistrationStatus"
+      EntityUsage="AcRegistrations"
+      AliasName="REGISTRATION_STATUS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="UnresolvedIssue"
+      PrecisionRule="false"
+      EntityAttrName="UnresolvedIssue"
+      EntityUsage="AcRegistrations"
+      AliasName="UNRESOLVED_ISSUE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      PrecisionRule="false"
+      EntityAttrName="Origin"
+      EntityUsage="AcRegistrations"
+      AliasName="ORIGIN" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastChange"
+      PrecisionRule="false"
+      EntityAttrName="LastChange"
+      EntityUsage="AcRegistrations"
+      AliasName="LAST_CHANGE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataIdentifier"
+      PrecisionRule="false"
+      EntityAttrName="DataIdentifier"
+      EntityUsage="AcRegistrations"
+      AliasName="DATA_IDENTIFIER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VersionIdentifier"
+      PrecisionRule="false"
+      EntityAttrName="VersionIdentifier"
+      EntityUsage="AcRegistrations"
+      AliasName="VERSION_IDENTIFIER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Irdi"
+      PrecisionRule="false"
+      EntityAttrName="Irdi"
+      EntityUsage="AcRegistrations"
+      AliasName="IRDI" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="AcRegistrations"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="AcRegistrations"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="AcRegistrations"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="AcRegistrations"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+</ViewObject>

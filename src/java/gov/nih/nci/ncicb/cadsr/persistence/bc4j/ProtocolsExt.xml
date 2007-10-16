@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding='windows-1252'?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
+<Entity
+   Name="ProtocolsExt"
+   TimeStamp="1029430269854"
+   DBObjectType="table"
+   DBObjectName="SBREXT.PROTOCOLS_EXT"
+   AliasName="ProtocolsExt"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   CodeGenFlag="79"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExtImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.2.7.99" />
+      <AttrArray Name="_publishEvents">
+      </AttrArray>
+   </DesignTime>
+   <Attribute
+      Name="ProtoIdseq"
+      IsNotNull="true"
+      Type="java.lang.String"
+      ColumnName="PROTO_IDSEQ"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      Precision="36"
+      TableName="PROTOCOLS_EXT"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Number"
+      ColumnName="VERSION"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      Precision="4"
+      Scale="2"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      Type="java.lang.String"
+      ColumnName="CONTE_IDSEQ"
+      ColumnType="CHAR"
+      SQLType="CHAR"
+      Precision="36"
+      TableName="PROTOCOLS_EXT"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      Type="java.lang.String"
+      ColumnName="PREFERRED_NAME"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="30"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      Type="java.lang.String"
+      ColumnName="PREFERRED_DEFINITION"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="2000"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="AslName"
+      IsNotNull="true"
+      Type="java.lang.String"
+      ColumnName="ASL_NAME"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="20"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LongName"
+      Type="java.lang.String"
+      ColumnName="LONG_NAME"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="255"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LatestVersionInd"
+      Type="java.lang.String"
+      ColumnName="LATEST_VERSION_IND"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="3"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DeletedInd"
+      Type="java.lang.String"
+      ColumnName="DELETED_IND"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="3"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="BeginDate"
+      Type="oracle.jbo.domain.Date"
+      ColumnName="BEGIN_DATE"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="EndDate"
+      Type="oracle.jbo.domain.Date"
+      ColumnName="END_DATE"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ProtocolId"
+      Type="java.lang.String"
+      ColumnName="PROTOCOL_ID"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="50"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="50" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Type"
+      Type="java.lang.String"
+      ColumnName="TYPE"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="240"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Phase"
+      Type="java.lang.String"
+      ColumnName="PHASE"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="3"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LeadOrg"
+      Type="java.lang.String"
+      ColumnName="LEAD_ORG"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="30"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ChangeType"
+      Type="java.lang.String"
+      ColumnName="CHANGE_TYPE"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="10"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ChangeNumber"
+      Type="oracle.jbo.domain.Number"
+      ColumnName="CHANGE_NUMBER"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ReviewedDate"
+      Type="oracle.jbo.domain.Date"
+      ColumnName="REVIEWED_DATE"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ReviewedBy"
+      Type="java.lang.String"
+      ColumnName="REVIEWED_BY"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="30"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ApprovedDate"
+      Type="oracle.jbo.domain.Date"
+      ColumnName="APPROVED_DATE"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ApprovedBy"
+      Type="java.lang.String"
+      ColumnName="APPROVED_BY"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="30"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateCreated"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnName="DATE_CREATED"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      Type="java.lang.String"
+      ColumnName="CREATED_BY"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="30"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateModified"
+      Type="oracle.jbo.domain.Date"
+      ColumnName="DATE_MODIFIED"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="0" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ModifiedBy"
+      Type="java.lang.String"
+      ColumnName="MODIFIED_BY"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="30"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ChangeNote"
+      Type="java.lang.String"
+      ColumnName="CHANGE_NOTE"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      Precision="2000"
+      TableName="PROTOCOLS_EXT" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="Contexts"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtoCotFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtoCotFkAssoc.Contexts"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtoCotFkAssoc.ProtocolsExt"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="QuestContentsExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkAssoc.QuestContentsExt"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkAssoc.ProtocolsExt"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="Avcon1013618862Type000" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.Type" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AVCON_1013618862_TYPE_000" />
+         <Attr Name="_checkCondition" Value="TYPE IN (&#39;Treatment trials&#39;, &#39;Prevention trials&#39;, &#39;Screening trials&#39;, &#39;Quality of Life trials&#39;)" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="Avcon1019059520Lates000" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.LatestVersionInd" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AVCON_1019059520_LATES_000" />
+         <Attr Name="_checkCondition" Value="LATEST_VERSION_IND IN (&#39;Yes&#39;, &#39;No&#39;)" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_isDisabledConstraint" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="Avcon1019059712Delet000" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.DeletedInd" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AVCON_1019059712_DELET_000" />
+         <Attr Name="_checkCondition" Value="DELETED_IND IN (&#39;Yes&#39;, &#39;No&#39;)" />
+         <Attr Name="_isCheck" Value="true" />
+         <Attr Name="_isDisabledConstraint" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="Avcon1019241047Delet000" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.DeletedInd" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AVCON_1019241047_DELET_000" />
+         <Attr Name="_checkCondition" Value="DELETED_IND IN (&#39;Yes&#39;, &#39;No&#39;)" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="Avcon1019241047Lates000" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.LatestVersionInd" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AVCON_1019241047_LATES_000" />
+         <Attr Name="_checkCondition" Value="LATEST_VERSION_IND IN (&#39;Yes&#39;, &#39;No&#39;)" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="ProtoUk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.Version" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.ConteIdseq" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.PreferredName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PROTO_UK" />
+         <Attr Name="_isUnique" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="ProPk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.ProtoIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PRO_PK" />
+         <Attr Name="_isPrimary" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062115" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.ProtoIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062115" />
+         <Attr Name="_checkCondition" Value="&#34;PROTO_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062116" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.Version" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062116" />
+         <Attr Name="_checkCondition" Value="&#34;VERSION&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062117" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062117" />
+         <Attr Name="_checkCondition" Value="&#34;CONTE_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062118" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.PreferredName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062118" />
+         <Attr Name="_checkCondition" Value="&#34;PREFERRED_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062119" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.PreferredDefinition" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062119" />
+         <Attr Name="_checkCondition" Value="&#34;PREFERRED_DEFINITION&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062120" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.AslName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062120" />
+         <Attr Name="_checkCondition" Value="&#34;ASL_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062121" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.DateCreated" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062121" />
+         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0062122" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0062122" />
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="ProtoAsvFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.AslName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PROTO_ASV_FK" />
+         <Attr Name="_referencedKey" Value="ASL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="ProtoCotFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PROTO_COT_FK" />
+         <Attr Name="_referencedKey" Value="CONTE_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+</Entity>

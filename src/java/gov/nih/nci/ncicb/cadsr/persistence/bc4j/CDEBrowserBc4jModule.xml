@@ -1,0 +1,363 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+
+<AppModule
+   Name="CDEBrowserBc4jModule"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModuleImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_deployType" Value="0" />
+      <Attr Name="_ejbAppModule" Value="false" />
+   </DesignTime>
+   <ViewUsage
+      Name="ContextsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DataElementsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DataElementConceptsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementConceptsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="PermissibleValuesView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PermissibleValuesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ReferenceDocumentsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocumentsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ValueDomainsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomainsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ValueMeaningsLovView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLovView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="VdPvsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DataElementsView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DataElementsView2"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DataElementConceptsView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementConceptsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DataElementsView3"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ValueDomainsView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomainsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="PermissibleValuesView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PermissibleValuesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="VdPvsView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="VdPvsView2"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="VdPvsView3"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="AdministeredComponentsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponentsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ValidValuesView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValidValuesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="CsCsiView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ClassSchemeItemsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassSchemeItemsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ClassificationSchemesView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationSchemesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="AcCsiView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ClassificationsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DeCdeIdView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeCdeIdView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ReferenceBlobsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceBlobsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="QuestContentsExtView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExtView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ObjectClassesExtView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ObjectClassesExtView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="PropertiesExtView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropertiesExtView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="PropertiesExtView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropertiesExtView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ObjectClassesExtView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ObjectClassesExtView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="QuestContentsExtView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExtView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ClassificationSchemesView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationSchemesView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ConceptualDomainsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConceptualDomainsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ConceptualDomainsView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConceptualDomainsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DataElementConceptsView2"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementConceptsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ValueDomainsView2"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomainsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DesignationsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesignationsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DesignationsView1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesignationsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="DataElementSearchView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementSearchView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="ProtocolsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="FormUsagesForACdeView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormUsagesForACdeView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="HistoricalCdeIdsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.HistoricalCdeIdsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="AcRegistrationsView"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsView" >
+   </ViewUsage>
+   <ViewUsage
+      Name="RepresentationViewObj1"
+      ViewObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepresentationViewObj" >
+   </ViewUsage>
+   <ViewLinkUsage
+      Name="DeConteFkLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeConteFkLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ContextsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementsView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="DeDecFkLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeDecFkLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementConceptsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementsView2" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="DecConteFkLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecConteFkLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ContextsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementConceptsView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="DeVdFkLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeVdFkLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ValueDomainsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementsView3" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="VdConteFkLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdConteFkLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ContextsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ValueDomainsView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="PvVmvFkLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PvVmvFkLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ValueMeaningsLovView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.PermissibleValuesView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="VpConteFkLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpConteFkLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ContextsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.VdPvsView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="VpPvFkLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpPvFkLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.PermissibleValuesView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.VdPvsView2" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="VpVdFkLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ValueDomainsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.VdPvsView3" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="ProConteFKLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProConteFKLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ContextsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.PropertiesExtView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="OcConteFKLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.OcConteFKLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ContextsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ObjectClassesExtView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="QcConteFKLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcConteFKLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ContextsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.QuestContentsExtView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="CsConteFKLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsConteFKLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ContextsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ClassificationSchemesView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="CdConteFKLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CdConteFKLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ContextsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ConceptualDomainsView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="DecCdFKLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecCdFKLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ConceptualDomainsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DataElementConceptsView2" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="VdCdFKLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCdFKLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ConceptualDomainsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ValueDomainsView2" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+   <ViewLinkUsage
+      Name="DesigConteFkLink"
+      ViewLinkObjectName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesigConteFkLink"
+      SrcViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.ContextsView"
+      DstViewUsageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule.DesignationsView1" >
+      <DesignTime>
+         <Attr Name="_isCodegen" Value="true" />
+         <Attr Name="_version" Value="9.0.5.16.0" />
+      </DesignTime>
+   </ViewLinkUsage>
+</AppModule>

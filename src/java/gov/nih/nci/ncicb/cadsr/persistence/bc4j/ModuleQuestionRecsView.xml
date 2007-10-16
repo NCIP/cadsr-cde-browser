@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="ModuleQuestionRecsView"
+   SelectList="qr.QR_IDSEQ, 
+       qr.P_QC_IDSEQ, 
+       qr.C_QC_IDSEQ, 
+       qr.DISPLAY_ORDER, 
+       qr.RL_NAME"
+   FromList="QC_RECS_EXT qr"
+   Where="RL_NAME = &#39;MODULE_ELEMENT&#39;"
+   OrderBy="DISPLAY_ORDER"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModuleQuestionRecsViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModuleQuestionRecsViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="qr"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcRecsExt" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="true" />
+         <Attr Name="_queryWhere" Value="RL_NAME = &#39;MODULE_ELEMENT&#39;" />
+         <Attr Name="_queryOrderBy" Value="DISPLAY_ORDER" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="QrIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="QrIdseq"
+      EntityUsage="qr"
+      AliasName="QR_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PQcIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PQcIdseq"
+      EntityUsage="qr"
+      AliasName="P_QC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CQcIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CQcIdseq"
+      EntityUsage="qr"
+      AliasName="C_QC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayOrder"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DisplayOrder"
+      EntityUsage="qr"
+      AliasName="DISPLAY_ORDER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RlName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="RlName"
+      EntityUsage="qr"
+      AliasName="RL_NAME" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="Module"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModuleQuestionRecLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

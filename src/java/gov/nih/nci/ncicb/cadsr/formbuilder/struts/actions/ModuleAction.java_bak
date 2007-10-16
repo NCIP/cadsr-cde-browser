@@ -1,0 +1,224 @@
+package gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions;
+
+import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderException;
+import gov.nih.nci.ncicb.cadsr.formbuilder.service.FormBuilderServiceDelegate;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean;
+import gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean;
+import gov.nih.nci.ncicb.cadsr.resource.Form;
+import gov.nih.nci.ncicb.cadsr.resource.Module;
+import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
+import gov.nih.nci.ncicb.cadsr.util.StringPropertyComparator;
+import gov.nih.nci.ncicb.cadsr.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.ListIterator;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import org.apache.struts.Globals;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+import org.apache.struts.action.DynaActionForm;
+
+import java.io.IOException;
+
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import gov.nih.nci.ncicb.cadsr.dto.FormTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ContextTransferObject;
+import gov.nih.nci.ncicb.cadsr.dto.ProtocolTransferObject;
+import gov.nih.nci.ncicb.cadsr.resource.Context;
+import gov.nih.nci.ncicb.cadsr.resource.Protocol;
+
+
+public class ModuleAction extends FormBuilderSecureBaseDispatchAction {
+
+
+  /**
+   * Returns all forms for the given criteria.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward getAllForms(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    //Set the lookup values in the session
+    setInitLookupValues(request);
+
+    FormBuilderServiceDelegate service = getFormBuilderService();
+    DynaActionForm searchForm = (DynaActionForm) form;
+    String formLongName = (String) searchForm.get(this.FORM_LONG_NAME);
+    String protocolIdSeq = (String) searchForm.get(this.PROTOCOL_ID_SEQ);
+    String proptocolName = (String)searchForm.get(this.PROTOCOLS_LOV_NAME_FIELD);
+    String contextIdSeq = (String) searchForm.get(this.CONTEXT_ID_SEQ);
+    String workflow = (String) searchForm.get(this.WORKFLOW);
+    String categoryName = (String) searchForm.get(this.CATEGORY_NAME);
+    String type = (String) searchForm.get(this.FORM_TYPE);
+    String classificationIdSeq = (String) searchForm.get(this.CS_CSI_ID);
+
+
+   //Set the Context Name
+
+   List contexts = (List)this.getSessionObject(request,this.ALL_CONTEXTS);
+   Context currContext = getContextForId(contexts,contextIdSeq);
+   if(currContext!=null)
+    searchForm.set(this.CONTEXT_NAME,currContext.getName());
+
+   Collection forms = null;
+
+    forms =
+      service.getAllForms(
+        formLongName, protocolIdSeq, contextIdSeq, workflow, categoryName, type,
+        classificationIdSeq,(NCIUser)getSessionObject(request,this.USER_KEY));
+    setSessionObject(request, this.FORM_SEARCH_RESULTS, forms,true);
+
+    //Initialize and add the PagenationBean to the Session
+    PaginationBean pb = new PaginationBean();
+
+    if (forms != null) {
+      pb.setListSize(forms.size());
+    }
+    Form aForm = null;
+    if(forms.size()>0)
+    {
+      Object[] formArr = forms.toArray();
+      aForm=(Form)formArr[0];
+      StringPropertyComparator comparator = new StringPropertyComparator(aForm.getClass());
+      comparator.setPrimary("longName");
+      comparator.setOrder(comparator.ASCENDING);
+      Collections.sort((List)forms,comparator);
+      setSessionObject(request,FORM_SEARCH_RESULT_COMPARATOR,comparator);
+    }
+
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);
+
+
+
+    return mapping.findForward(SUCCESS);
+  }
+
+  /**
+   * Clear the cache for a new search.
+   *
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward moduleSearch(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    //Set the lookup values in the session
+    setInitLookupValues(request);
+    DynaActionForm searchForm = (DynaActionForm) form;
+    FormBuilderBaseDynaFormBean formBean  = (FormBuilderBaseDynaFormBean)form;
+    formBean.clear();
+    removeSessionObject(request, this.FORM_SEARCH_RESULTS);
+    removeSessionObject(request, this.FORM_SEARCH_RESULTS_PAGINATION);
+    return mapping.findForward(SUCCESS);
+  }
+
+    /**
+   * Sorts search results by fieldName
+   * @param mapping The ActionMapping used to select this instance.
+   * @param form The optional ActionForm bean for this request.
+   * @param request The HTTP Request we are processing.
+   * @param response The HTTP Response we are processing.
+   *
+   * @return
+   *
+   * @throws IOException
+   * @throws ServletException
+   */
+  public ActionForward sortResult(
+    ActionMapping mapping,
+    ActionForm form,
+    HttpServletRequest request,
+    HttpServletResponse response) throws IOException, ServletException {
+    //Set the lookup values in the session
+    setInitLookupValues(request);
+    DynaActionForm searchForm = (DynaActionForm) form;
+    String sortField = (String) searchForm.get("sortField");
+    Integer sortOrder = (Integer) searchForm.get("sortOrder");
+    List forms = (List)getSessionObject(request,FORM_SEARCH_RESULTS);
+    StringPropertyComparator comparator = (StringPropertyComparator)getSessionObject(request,FORM_SEARCH_RESULT_COMPARATOR);
+    comparator.setRelativePrimary(sortField);
+    comparator.setOrder(sortOrder.intValue());
+    //Initialize and add the PagenationBean to the Session
+    PaginationBean pb = new PaginationBean();
+    if (forms != null) {
+      pb.setListSize(forms.size());
+    }
+    Collections.sort(forms,comparator);
+    setSessionObject(request, FORM_SEARCH_RESULTS_PAGINATION, pb,true);
+    return mapping.findForward(SUCCESS);
+  }
+
+
+  private void setDummyModules(HttpServletRequest request)
+  {
+   try
+   {
+     Collection forms = null;
+     FormBuilderServiceDelegate service = getFormBuilderService();
+      forms =
+        service.getAllForms(
+          "Adverse%", "", "", "", "", FormConstants.SEARCH_ALL,
+          "",(NCIUser)getSessionObject(request,this.USER_KEY));
+      List moduleList = new ArrayList();
+      Iterator it = forms.iterator();
+      while(it.hasNext())
+      {
+        Form form = (Form)it.next();
+        Form formDetail = service.getFormDetails(form.getFormIdseq());
+        List newModuleList = formDetail.getModules();
+        Iterator moduleIt = newModuleList.iterator();
+        while(moduleIt.hasNext())
+        {
+          Module module = (Module)moduleIt.next();
+          module.setForm(form);
+        }        
+        moduleList.addAll(newModuleList);
+
+      }
+      setSessionObject(request, this.MODULE_SEARCH_RESULTS, moduleList,true);    
+   }
+   catch (FormBuilderException e)
+   {
+     
+   }
+  }
+}
+

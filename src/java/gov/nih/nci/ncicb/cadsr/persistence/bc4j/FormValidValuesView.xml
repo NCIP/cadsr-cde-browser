@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="FormValidValuesView"
+   SelectList="qc.QC_IDSEQ, 
+       qc.VERSION, 
+       qc.QTL_NAME, 
+      
+ qc.CONTE_IDSEQ, 
+       qc.ASL_NAME, 
+       qc.PREFERRED_NAME, 
+
+       qc.PREFERRED_DEFINITION, 
+       qc.VP_IDSEQ, 
+      
+ qc.LONG_NAME, 
+       qc.LATEST_VERSION_IND, 
+       qc.DELETED_IND, 
+
+       qc.P_QST_IDSEQ, 
+       qr.QR_IDSEQ, 
+       qr.P_QC_IDSEQ, 
+
+       qr.C_QC_IDSEQ, 
+       qr.DISPLAY_ORDER"
+   FromList="SBREXT.QUEST_CONTENTS_EXT qc, QC_RECS_EXT qr"
+   Where="qc.QTL_NAME = &#39;VALID_VALUE&#39; AND   qr.C_QC_IDSEQ = qc.QC_IDSEQ AND   rl_name = &#39;ELEMENT_VALUE&#39;"
+   OrderBy="qr.DISPLAY_ORDER"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormValidValuesViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormValidValuesViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="qc"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="true" />
+         <Attr Name="_queryWhere" Value="qc.QTL_NAME = &#39;VALID_VALUE&#39; AND   qr.C_QC_IDSEQ = qc.QC_IDSEQ AND   rl_name = &#39;ELEMENT_VALUE&#39;" />
+         <Attr Name="_queryOrderBy" Value="qr.DISPLAY_ORDER" />
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="qr"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcRecsExt"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk1Assoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk1Assoc.QcRecsExt"
+      SourceUsage="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormValidValuesView.qc"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+         <AttrArray Name="_srcAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt.QcIdseq" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcRecsExt.PQcIdseq" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="QcIdseq"
+      IsUpdateable="false"
+      PrecisionRule="false"
+      EntityAttrName="QcIdseq"
+      EntityUsage="qc"
+      AliasName="QC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Version"
+      EntityUsage="qc"
+      AliasName="VERSION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QtlName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="QtlName"
+      EntityUsage="qc"
+      AliasName="QTL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="qc"
+      AliasName="CONTE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AslName"
+      EntityUsage="qc"
+      AliasName="ASL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredName"
+      EntityUsage="qc"
+      AliasName="PREFERRED_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="qc"
+      AliasName="PREFERRED_DEFINITION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VpIdseq"
+      PrecisionRule="false"
+      EntityAttrName="VpIdseq"
+      EntityUsage="qc"
+      AliasName="VP_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      PrecisionRule="false"
+      EntityAttrName="LongName"
+      EntityUsage="qc"
+      AliasName="LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      PrecisionRule="false"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="qc"
+      AliasName="LATEST_VERSION_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      PrecisionRule="false"
+      EntityAttrName="DeletedInd"
+      EntityUsage="qc"
+      AliasName="DELETED_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PQstIdseq"
+      PrecisionRule="false"
+      EntityAttrName="PQstIdseq"
+      EntityUsage="qc"
+      AliasName="P_QST_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QrIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="QrIdseq"
+      EntityUsage="qr"
+      AliasName="QR_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PQcIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PQcIdseq"
+      EntityUsage="qr"
+      AliasName="P_QC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CQcIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CQcIdseq"
+      EntityUsage="qr"
+      AliasName="C_QC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayOrder"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DisplayOrder"
+      EntityUsage="qr"
+      AliasName="DISPLAY_ORDER" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="Question"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormVVQuestionLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Context"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormValueContextFkLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

@@ -1,0 +1,511 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
+<Entity
+   Name="AdministeredComponents"
+   DBObjectType="table"
+   DBObjectName="ADMINISTERED_COMPONENTS"
+   AliasName="AdministeredComponents"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponentsImpl" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Init|Delete|Access|DML|Val" />
+      <AttrArray Name="_publishEvents">
+      </AttrArray>
+   </DesignTime>
+   <Attribute
+      Name="AcIdseq"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="AC_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ActlName"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="20"
+      ColumnName="ACTL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="4"
+      Scale="2"
+      ColumnName="VERSION"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      SQLType="NUMERIC"
+      TableName="ADMINISTERED_COMPONENTS" >
+   </Attribute>
+   <Attribute
+      Name="BeginDate"
+      ColumnName="BEGIN_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="ADMINISTERED_COMPONENTS" >
+   </Attribute>
+   <Attribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="PREFERRED_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="EndDate"
+      ColumnName="END_DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="ADMINISTERED_COMPONENTS" >
+   </Attribute>
+   <Attribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="36"
+      ColumnName="CONTE_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      Precision="2000"
+      ColumnName="PREFERRED_DEFINITION"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="StewaIdseq"
+      Precision="36"
+      ColumnName="STEWA_IDSEQ"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="36" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="CmslName"
+      Precision="20"
+      ColumnName="CMSL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ChangeNote"
+      Precision="2000"
+      ColumnName="CHANGE_NOTE"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="AslName"
+      IsNotNull="true"
+      Precision="20"
+      ColumnName="ASL_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LongName"
+      Precision="255"
+      ColumnName="LONG_NAME"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="UnresolvedIssue"
+      Precision="200"
+      ColumnName="UNRESOLVED_ISSUE"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Origin"
+      Precision="240"
+      ColumnName="ORIGIN"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="LatestVersionInd"
+      Precision="3"
+      ColumnName="LATEST_VERSION_IND"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DeletedInd"
+      Precision="3"
+      ColumnName="DELETED_IND"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateCreated"
+      IsNotNull="true"
+      ColumnName="DATE_CREATED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="ADMINISTERED_COMPONENTS" >
+   </Attribute>
+   <Attribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      Precision="30"
+      ColumnName="CREATED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="DateModified"
+      ColumnName="DATE_MODIFIED"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      SQLType="DATE"
+      TableName="ADMINISTERED_COMPONENTS" >
+   </Attribute>
+   <Attribute
+      Name="ModifiedBy"
+      Precision="30"
+      ColumnName="MODIFIED_BY"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      SQLType="VARCHAR"
+      TableName="ADMINISTERED_COMPONENTS" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="Contexts"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcConteFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcConteFkAssoc.Contexts"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcConteFkAssoc.AdministeredComponents"
+      Type="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsImpl" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="ReferenceDocuments"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc.ReferenceDocuments"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc.AdministeredComponents"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="AcCsi"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc.AcCsi"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc.AdministeredComponents"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Designations"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesigAcFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesigAcFkAssoc.Designations"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesigAcFkAssoc.AdministeredComponents"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="AcRegistrations"
+      Association="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc"
+      AssociationEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc.AcRegistrations"
+      AssociationOtherEnd="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc.AdministeredComponents"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="AcPk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.AcIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AC_PK" />
+         <Attr Name="_isPrimary" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="AcUk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.Version" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.PreferredName" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.ConteIdseq" />
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.ActlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AC_UK" />
+         <Attr Name="_isUnique" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="Avcon985893623Delet004" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.DeletedInd" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AVCON_985893623_DELET_004" />
+         <Attr Name="_checkCondition" Value="DELETED_IND IN (&#39;Yes&#39;, &#39;No&#39;)" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="Avcon985893623Lates002" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.LatestVersionInd" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AVCON_985893623_LATES_002" />
+         <Attr Name="_checkCondition" Value="LATEST_VERSION_IND IN (&#39;Yes&#39;, &#39;No&#39;)" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061006" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.AcIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061006" />
+         <Attr Name="_checkCondition" Value="&#34;AC_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061007" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.ActlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061007" />
+         <Attr Name="_checkCondition" Value="&#34;ACTL_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061008" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.Version" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061008" />
+         <Attr Name="_checkCondition" Value="&#34;VERSION&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061009" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.PreferredName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061009" />
+         <Attr Name="_checkCondition" Value="&#34;PREFERRED_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061010" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061010" />
+         <Attr Name="_checkCondition" Value="&#34;CONTE_IDSEQ&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061011" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.PreferredDefinition" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061011" />
+         <Attr Name="_checkCondition" Value="&#34;PREFERRED_DEFINITION&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061012" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.AslName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061012" />
+         <Attr Name="_checkCondition" Value="&#34;ASL_NAME&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061013" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.DateCreated" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061013" />
+         <Attr Name="_checkCondition" Value="&#34;DATE_CREATED&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="SysC0061014" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.CreatedBy" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="SYS_C0061014" />
+         <Attr Name="_checkCondition" Value="&#34;CREATED_BY&#34; IS NOT NULL" />
+         <Attr Name="_isCheck" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="AcActlFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.ActlName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AC_ACTL_FK" />
+         <Attr Name="_referencedKey" Value="ACTL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="AcAslFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.AslName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AC_ASL_FK" />
+         <Attr Name="_referencedKey" Value="ASL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="AcConteFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.ConteIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AC_CONTE_FK" />
+         <Attr Name="_referencedKey" Value="CONTE_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="AcCslFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.CmslName" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AC_CSL_FK" />
+         <Attr Name="_referencedKey" Value="CSL_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+   <Key
+      Name="AcStewaFk" >
+      <AttrArray Name="Attributes">
+         <Item Value="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents.StewaIdseq" />
+      </AttrArray>
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="AC_STEWA_FK" />
+         <Attr Name="_referencedKey" Value="STEWA_PK" />
+         <Attr Name="_isForeign" Value="true" />
+      </DesignTime>
+   </Key>
+</Entity>

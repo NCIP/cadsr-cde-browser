@@ -1,0 +1,293 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="ProtocolsView"
+   SelectList="Protocol.PROTO_IDSEQ, 
+       Protocol.VERSION, 
+       Protocol.CONTE_IDSEQ, 
+
+       Protocol.PREFERRED_NAME, 
+       Protocol.PREFERRED_DEFINITION, 
+
+       Protocol.ASL_NAME, 
+       Protocol.LONG_NAME, 
+     
+  Protocol.LATEST_VERSION_IND, 
+       Protocol.DELETED_IND, 
+
+       Protocol.BEGIN_DATE, 
+       Protocol.END_DATE, 
+    
+   Protocol.PROTOCOL_ID, 
+       Protocol.TYPE, 
+       Protocol.PHASE, 
+
+       Protocol.LEAD_ORG, 
+       Protocol.CHANGE_TYPE, 
+   
+    Protocol.CHANGE_NUMBER, 
+       Protocol.REVIEWED_DATE, 
+ 
+      Protocol.REVIEWED_BY, 
+       Protocol.APPROVED_DATE, 
+ 
+      Protocol.APPROVED_BY, 
+       Protocol.DATE_CREATED, 
+ 
+      Protocol.CREATED_BY, 
+       Protocol.DATE_MODIFIED, 
+ 
+      Protocol.MODIFIED_BY, 
+       Protocol.CHANGE_NOTE, 
+  
+     Protocol.ORIGIN, 
+       Protocol.PROTO_ID"
+   FromList="SBREXT.PROTOCOLS_EXT Protocol"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="Protocol"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Protocol" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="ProtoIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ProtoIdseq"
+      EntityUsage="Protocol"
+      AliasName="PROTO_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Version"
+      EntityUsage="Protocol"
+      AliasName="VERSION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="Protocol"
+      AliasName="CONTE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredName"
+      EntityUsage="Protocol"
+      AliasName="PREFERRED_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="Protocol"
+      AliasName="PREFERRED_DEFINITION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AslName"
+      EntityUsage="Protocol"
+      AliasName="ASL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      PrecisionRule="false"
+      EntityAttrName="LongName"
+      EntityUsage="Protocol"
+      AliasName="LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      PrecisionRule="false"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="Protocol"
+      AliasName="LATEST_VERSION_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      PrecisionRule="false"
+      EntityAttrName="DeletedInd"
+      EntityUsage="Protocol"
+      AliasName="DELETED_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      PrecisionRule="false"
+      EntityAttrName="BeginDate"
+      EntityUsage="Protocol"
+      AliasName="BEGIN_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      PrecisionRule="false"
+      EntityAttrName="EndDate"
+      EntityUsage="Protocol"
+      AliasName="END_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ProtocolId"
+      PrecisionRule="false"
+      EntityAttrName="ProtocolId"
+      EntityUsage="Protocol"
+      AliasName="PROTOCOL_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Type"
+      PrecisionRule="false"
+      EntityAttrName="Type"
+      EntityUsage="Protocol"
+      AliasName="TYPE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Phase"
+      PrecisionRule="false"
+      EntityAttrName="Phase"
+      EntityUsage="Protocol"
+      AliasName="PHASE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LeadOrg"
+      PrecisionRule="false"
+      EntityAttrName="LeadOrg"
+      EntityUsage="Protocol"
+      AliasName="LEAD_ORG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeType"
+      PrecisionRule="false"
+      EntityAttrName="ChangeType"
+      EntityUsage="Protocol"
+      AliasName="CHANGE_TYPE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNumber"
+      PrecisionRule="false"
+      EntityAttrName="ChangeNumber"
+      EntityUsage="Protocol"
+      AliasName="CHANGE_NUMBER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewedDate"
+      PrecisionRule="false"
+      EntityAttrName="ReviewedDate"
+      EntityUsage="Protocol"
+      AliasName="REVIEWED_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReviewedBy"
+      PrecisionRule="false"
+      EntityAttrName="ReviewedBy"
+      EntityUsage="Protocol"
+      AliasName="REVIEWED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ApprovedDate"
+      PrecisionRule="false"
+      EntityAttrName="ApprovedDate"
+      EntityUsage="Protocol"
+      AliasName="APPROVED_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ApprovedBy"
+      PrecisionRule="false"
+      EntityAttrName="ApprovedBy"
+      EntityUsage="Protocol"
+      AliasName="APPROVED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="Protocol"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="Protocol"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="Protocol"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="Protocol"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNote"
+      PrecisionRule="false"
+      EntityAttrName="ChangeNote"
+      EntityUsage="Protocol"
+      AliasName="CHANGE_NOTE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      PrecisionRule="false"
+      EntityAttrName="Origin"
+      EntityUsage="Protocol"
+      AliasName="ORIGIN" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ProtoId"
+      PrecisionRule="false"
+      EntityAttrName="ProtoId"
+      EntityUsage="Protocol"
+      AliasName="PROTO_ID" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="Context"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtoConteFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="CRFs"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Forms"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormProtocolFkLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

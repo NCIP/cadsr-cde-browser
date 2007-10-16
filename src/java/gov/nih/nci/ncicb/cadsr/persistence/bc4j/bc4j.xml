@@ -1,0 +1,787 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE JboPackage SYSTEM "jbo_03_01.dtd">
+
+<JboPackage
+   Name="bc4j"
+   SeparateXMLFiles="true"
+   PackageName="gov.nih.nci.ncicb.cadsr.persistence.bc4j" >
+   <DesignTime>
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_ejbPackage" Value="false" />
+   </DesignTime>
+   <Containee
+      Name="Contexts"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Contexts"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="ContextsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ContextsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="DataElements"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElements"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="DeConteFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeConteFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="DataElementsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="DataElementConcepts"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementConcepts"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="DeDecFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeDecFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="DecConteFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecConteFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="DataElementConceptsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementConceptsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="PermissibleValues"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PermissibleValues"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="PermissibleValuesView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PermissibleValuesView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ReferenceDocuments"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocuments"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="ReferenceDocumentsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceDocumentsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ValueDomains"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomains"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="DeVdFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeVdFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="VdConteFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdConteFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ValueDomainsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueDomainsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ValueMeaningsLov"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="PvVmvFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PvVmvFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ValueMeaningsLovView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLovView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="VdPvs"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvs"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="VpConteFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpConteFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="VpPvFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpPvFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="VpVdFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="VdPvsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdPvsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="DeConteFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeConteFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="DeDecFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeDecFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="DecConteFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecConteFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="DeVdFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeVdFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="VdConteFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdConteFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="PvVmvFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PvVmvFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="VpConteFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpConteFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="VpPvFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpPvFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="VpVdFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VpVdFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="CDEBrowserBc4jModule"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule"
+      ObjectType="AppModule" >
+   </Containee>
+   <Containee
+      Name="AdministeredComponents"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponents"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="RdAcFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdAcFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="AcConteFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcConteFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="AdministeredComponentsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AdministeredComponentsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ValidValuesView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValidValuesView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="AcCsi"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsi"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="AcCsiAcFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiAcFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="AcCsiView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ClassificationSchemes"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationSchemes"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="CsConteFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsConteFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ClassificationSchemesView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationSchemesView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ClassSchemeItems"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassSchemeItems"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="ClassSchemeItemsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassSchemeItemsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="CsCsi"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsi"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="LinkCsCsiFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.LinkCsCsiFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="PCsCsiFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PCsCsiFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="AcCsiCsCsiFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiCsCsiFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="CsCsiCsiFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsiFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="CsCsiCsFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="CsCsiView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ClassificationsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="DeCdeId"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeCdeId"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="DeCdeIdView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeCdeIdView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ReferenceBlobs"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceBlobs"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="RbRdFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RbRdFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ReferenceBlobsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ReferenceBlobsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="RbRdFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RbRdFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="AcRdFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRdFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="CsConteFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsConteFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="CsCsiCsFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="CsCsiCsiFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsiFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="QuestContentsExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="QcCotFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcCotFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="QcDetFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcDetFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="QcVpvFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcVpvFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="QuestContentsExtView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExtView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="QcConteFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcConteFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="ObjectClassesExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ObjectClassesExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="OctCotFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.OctCotFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ObjectClassesExtView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ObjectClassesExtView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="DecOctFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecOctFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="PropertiesExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropertiesExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="DecProFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecProFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="PropCotFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropCotFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="PropertiesExtView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PropertiesExtView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="DecProFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecProFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="OcConteFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.OcConteFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="ProConteFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProConteFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="DecOcFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecOcFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="ConceptualDomains"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConceptualDomains"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="DecCdFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecCdFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="VdCdFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCdFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="CdConteFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CdConteFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ConceptualDomainsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConceptualDomainsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="CdConteFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CdConteFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="DecCdFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecCdFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="VdCdFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCdFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="Designations"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Designations"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="DesigAcFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesigAcFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="DesigConteFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesigConteFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="DesignationsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesignationsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="DesigConteFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DesigConteFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="DataElementSearchView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementSearchView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="Protocol"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Protocol"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="QcProtoFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ProtoCotFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtoCotFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ProtocolsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="QcProtoFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcProtoFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="ProtoConteFKLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtoConteFKLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="FormsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="QcRecsExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcRecsExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="QrsQcFk1Assoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk1Assoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="QrsQcFk2Assoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QrsQcFk2Assoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="QcRecsExtView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QcRecsExtView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ModulesView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModulesView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ModuleFormLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModuleFormLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="QuestionsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="QuestionModuleLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionModuleLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="FormModuleRelView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormModuleRelView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ModuleFormRelLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModuleFormRelLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="ModuleQuestionRecsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModuleQuestionRecsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ModuleQuestionRecLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModuleQuestionRecLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="FormValidValuesView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormValidValuesView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="FormVVQuestionLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormVVQuestionLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="QuestionFormVVRecsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionFormVVRecsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="FormVVQuesRecsLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormVVQuesRecsLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="formConteFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.formConteFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="moduleConteFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.moduleConteFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="QuestionConteFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionConteFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="FormValueContextFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormValueContextFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="FormProtocolFkLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormProtocolFkLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="FormUsagesForACdeView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormUsagesForACdeView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="HistoricalCdeIdsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.HistoricalCdeIdsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="AcRegistrations"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrations"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="RdArFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdArFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ArAcFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ArAcFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="AcRegistrationsView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcRegistrationsView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="CdeIdView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CdeIdView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="Classifications"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Classifications"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ModulesForAFormView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModulesForAFormView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ProtocolsExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="ProtocolsExtView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ProtocolsExtView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="QuestionsDMLView"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestionsDMLView"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="Representation"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.Representation"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="VdRepFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdRepFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="RepCotFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCotFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="RepresentationViewObj"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepresentationViewObj"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="VDRepViewLink"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VDRepViewLink"
+      ObjectType="ViewLink" >
+   </Containee>
+   <Containee
+      Name="ConceptsExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConceptsExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="RepCetFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCetFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ConCotFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConCotFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="ComponentConceptsExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ComponentConceptsExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="CctCetFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CctCetFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="CompConceptsViewObj"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CompConceptsViewObj"
+      ObjectType="ViewObject" >
+   </Containee>
+   <Containee
+      Name="ConDerivationRulesExt"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ConDerivationRulesExt"
+      ObjectType="Entity" >
+   </Containee>
+   <Containee
+      Name="CctCondrFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CctCondrFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="VmCondrFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VmCondrFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="RepCondrFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RepCondrFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="VdCondrFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.VdCondrFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+   <Containee
+      Name="RdConteFkAssoc"
+      FullName="gov.nih.nci.ncicb.cadsr.persistence.bc4j.RdConteFkAssoc"
+      ObjectType="Association" >
+   </Containee>
+</JboPackage>

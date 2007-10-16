@@ -1,0 +1,212 @@
+package gov.nih.nci.ncicb.cadsr.ocbrowser.util;
+import gov.nih.nci.ncicb.cadsr.domain.AlternateName;
+import gov.nih.nci.ncicb.cadsr.domain.Concept;
+import gov.nih.nci.ncicb.cadsr.domain.ObjectClass;
+import gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship;
+import gov.nih.nci.ncicb.cadsr.jsp.bean.OCRNavigationBean;
+import gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserFormConstants;
+import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+
+public class OCUtils implements OCBrowserFormConstants
+{
+
+  public OCUtils()
+  {
+  }
+
+  /**
+   * Groups the ocrs into outgoing, incoming and bidirectionl
+   */
+  public static Map sortByOCRTypes(List ocrList,String ocId)
+  {
+
+
+    List outgoing = new ArrayList();
+    List ingoing = new ArrayList();
+    List bidirectional = new ArrayList();
+    Map ocrMap = new HashMap();
+    ocrMap.put(OUT_GOING_OCRS,outgoing);
+    ocrMap.put(IN_COMMING_OCRS,ingoing);
+    ocrMap.put(BIDIRECTIONAL_OCRS,bidirectional);
+    if(ocrList==null)
+      return ocrMap;
+
+   ListIterator it = ocrList.listIterator();
+
+    ListIterator uit = ocrList.listIterator();
+    while(uit.hasNext())
+    {
+      ObjectClassRelationship obcr = (ObjectClassRelationship)uit.next();
+      if(obcr.getDirection()==null)
+        continue;
+      else if(obcr.getDirection().equalsIgnoreCase(obcr.DIRECTION_BOTH))
+        bidirectional.add(obcr);
+      else if((obcr.getDirection().equalsIgnoreCase(obcr.DIRECTION_SINGLE))&&
+          ocId.equals(obcr.getSource().getId()))
+        outgoing.add(obcr);
+      else if((obcr.getDirection().equalsIgnoreCase(obcr.DIRECTION_SINGLE))&&
+          ocId.equals(obcr.getTarget().getId()))
+        ingoing.add(obcr);
+    }
+
+    return ocrMap;
+  }
+
+  /**
+   * Replace the -1 with * since caDSR store multiplicity many as -1
+   */
+  public static String getSourceMultiplicityDisplayString(ObjectClassRelationship ocr)
+  {
+    int low = ocr.getSourceLowCardinality();
+    int high =  ocr.getSourceHighCardinality();
+    String highStr = String.valueOf(high);
+    if(high==-1)
+      highStr = "*";
+
+    return String.valueOf(low)+". ."+highStr;
+  }
+
+  /**
+   * Returns false if the Current OCR has already been navigated by the user.
+   * Checks the Navigation bread crumbs for this information
+   */
+  public static boolean isNavigationAllowed(HttpServletRequest req,String navigationListId,ObjectClassRelationship currentOcr)
+  {
+    LinkedList navigationList = (LinkedList)req.getSession().getAttribute(navigationListId);
+
+      if(navigationList==null)
+        return true;
+      if(navigationList.isEmpty())
+        return true;
+      if(navigationList.size()<2)
+        return true;
+      ListIterator it = navigationList.listIterator();
+      while(it.hasNext())
+      {
+        OCRNavigationBean currBean = (OCRNavigationBean)it.next();
+        ObjectClassRelationship ocr = currBean.getOcr();
+        if(ocr!=null&&currentOcr!=null)
+        {
+          if(ocr.getId().equals(currentOcr.getId()))
+            return false;
+        }
+      }
+      return true;
+  }
+
+  /**
+   * Since in bidirectional ocr target and source could be interchangable
+   */
+  public static ObjectClass getBiderectionalTarget(ObjectClassRelationship ocr,ObjectClass currObject)
+  {
+     if(ocr.getTarget().getId().equals(currObject.getId()))
+     {
+       return ocr.getSource();
+     }
+     else
+     {
+       return ocr.getTarget();
+     }
+  }
+
+  /**
+   * Check if an oc is source for this bidirectional ocr
+   */
+  public static boolean isOCSourceForBidirectionalOCR(ObjectClassRelationship ocr,ObjectClass currObject)
+  {
+     if(ocr.getSource().getId().equals(currObject.getId()))
+     {
+       return true;
+     }
+     else
+     {
+       return false;
+     }
+  }
+
+    /**
+   * Check if an oc is source for this bidirectional ocr
+   */
+  public static String getCurrentRoleStringForBidirectionalOCRForDisplay(ObjectClassRelationship ocr,ObjectClass currObject)
+  {
+     if(isOCSourceForBidirectionalOCR(ocr,currObject))
+     {
+       return "Source";
+     }
+     else
+     {
+       return "Target";
+     }
+  }
+  /**
+   * Since in bidirectional ocr target and source could be interchangable
+   */
+  public static String getBiderectionalTargetAttributeName(ObjectClassRelationship ocr,ObjectClass currObject)
+  {
+     if(ocr.getTarget().getId().equals(currObject.getId()))
+     {
+       return "source";
+     }
+     else
+     {
+       return "target";
+     }
+  }
+  /**
+   * Replace the -1 with * since caDSR store multiplicity many as -1
+   */
+  public static String getTargetMultiplicityDisplayString(ObjectClassRelationship ocr)
+  {
+    int low = ocr.getTargetLowCardinality();
+    int high =  ocr.getTargetHighCardinality();
+    String highStr = String.valueOf(high);
+    if(high==-1)
+      highStr = "*";
+
+    return String.valueOf(low)+". ."+highStr;
+  }
+
+  public static String getConceptCodeUrl(Concept concept, CDEBrowserParams params, String anchorClass)
+  {
+    String codeUrl = "";
+    String hrefBegin1 = "";
+    String hrefBegin2 = "";
+    String hrefClose = "";
+
+        if(concept!=null)
+        {
+           String code = concept.getPreferredName();
+           String evsStr = getEvsUrlForConcept(concept,params);
+           if(evsStr!=null)
+             {
+              hrefBegin1  = "<a class=\""+anchorClass+"\" TARGET=\"_blank\"  href=\""+evsStr;
+              hrefBegin2 = "\">";
+              hrefClose = "</a>";
+              codeUrl = hrefBegin1+code+hrefBegin2+code+hrefClose;
+             }
+           else
+           {
+             hrefBegin1 = "";
+             hrefBegin2 = "";
+             hrefClose = "";
+             codeUrl = code;
+           }
+
+        }
+
+    return codeUrl;
+  }
+  public static String getEvsUrlForConcept(Concept concept, CDEBrowserParams params)
+  {
+    String evsSource = concept.getEvsSource();
+    Map urlMap = params.getEvsUrlMap();
+    return (String)urlMap.get(evsSource);
+  }
+}

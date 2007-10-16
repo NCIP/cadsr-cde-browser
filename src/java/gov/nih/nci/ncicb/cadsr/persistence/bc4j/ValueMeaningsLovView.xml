@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="ValueMeaningsLovView"
+   SelectList="ValueMeaningsLov.SHORT_MEANING, 
+       ValueMeaningsLov.DESCRIPTION, 
+
+       ValueMeaningsLov.COMMENTS, 
+       ValueMeaningsLov.BEGIN_DATE, 
+
+       ValueMeaningsLov.END_DATE, 
+       ValueMeaningsLov.DATE_CREATED, 
+
+       ValueMeaningsLov.CREATED_BY, 
+       ValueMeaningsLov.DATE_MODIFIED, 
+
+       ValueMeaningsLov.MODIFIED_BY"
+   FromList="VALUE_MEANINGS_LOV ValueMeaningsLov"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLovViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="ValueMeaningsLov"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ValueMeaningsLov" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="ShortMeaning"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ShortMeaning"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="SHORT_MEANING" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Description"
+      PrecisionRule="false"
+      EntityAttrName="Description"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="DESCRIPTION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Comments"
+      PrecisionRule="false"
+      EntityAttrName="Comments"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="COMMENTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      PrecisionRule="false"
+      EntityAttrName="BeginDate"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="BEGIN_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      PrecisionRule="false"
+      EntityAttrName="EndDate"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="END_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="ValueMeaningsLov"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="PermissibleValuesView"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.PvVmvFkLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="FormsView"
+   SelectList="form.QC_IDSEQ, 
+       form.VERSION, 
+       form.QTL_NAME, 
+ 
+      form.CONTE_IDSEQ, 
+       form.ASL_NAME, 
+       form.PREFERRED_NAME, 
+
+       form.PREFERRED_DEFINITION, 
+       form.PROTO_IDSEQ, 
+
+       form.QCDL_NAME, 
+       form.LONG_NAME, 
+       form.LATEST_VERSION_IND, 
+
+       form.DELETED_IND, 
+       form.BEGIN_DATE, 
+       form.END_DATE, 
+
+       form.ORIGIN"
+   FromList="SBREXT.QUEST_CONTENTS_EXT form"
+   Where="form.QTL_NAME IN (&#39;CRF&#39;,&#39;TEMPLATE&#39;)"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormsViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormsViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="form"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.QuestContentsExt" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="true" />
+         <Attr Name="_queryWhere" Value="form.QTL_NAME IN (&#39;CRF&#39;,&#39;TEMPLATE&#39;)" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="QcIdseq"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="QcIdseq"
+      EntityUsage="form"
+      AliasName="QC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Version"
+      EntityUsage="form"
+      AliasName="VERSION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QtlName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="QtlName"
+      EntityUsage="form"
+      AliasName="QTL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="form"
+      AliasName="CONTE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AslName"
+      EntityUsage="form"
+      AliasName="ASL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredName"
+      EntityUsage="form"
+      AliasName="PREFERRED_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="form"
+      AliasName="PREFERRED_DEFINITION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ProtoIdseq"
+      PrecisionRule="false"
+      EntityAttrName="ProtoIdseq"
+      EntityUsage="form"
+      AliasName="PROTO_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="QcdlName"
+      PrecisionRule="false"
+      EntityAttrName="QcdlName"
+      EntityUsage="form"
+      AliasName="QCDL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      PrecisionRule="false"
+      EntityAttrName="LongName"
+      EntityUsage="form"
+      AliasName="LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      PrecisionRule="false"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="form"
+      AliasName="LATEST_VERSION_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      PrecisionRule="false"
+      EntityAttrName="DeletedInd"
+      EntityUsage="form"
+      AliasName="DELETED_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      PrecisionRule="false"
+      EntityAttrName="BeginDate"
+      EntityUsage="form"
+      AliasName="BEGIN_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      PrecisionRule="false"
+      EntityAttrName="EndDate"
+      EntityUsage="form"
+      AliasName="END_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      PrecisionRule="false"
+      EntityAttrName="Origin"
+      EntityUsage="form"
+      AliasName="ORIGIN" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="Context"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.formConteFkLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Protocol"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormProtocolFkLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Modules"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModuleFormLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="FormModuleRecs"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ModuleFormRelLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="ClassificationSchemesView"
+   SelectList="ClassificationSchemes.CS_IDSEQ, 
+       ClassificationSchemes.VERSION, 
+
+       ClassificationSchemes.PREFERRED_NAME, 
+       ClassificationSchemes.PREFERRED_DEFINITION, 
+
+       ClassificationSchemes.CONTE_IDSEQ, 
+       ClassificationSchemes.ASL_NAME, 
+
+       ClassificationSchemes.CSTL_NAME, 
+       ClassificationSchemes.LABEL_TYPE_FLAG, 
+
+       ClassificationSchemes.CMSL_NAME, 
+       ClassificationSchemes.LONG_NAME, 
+
+       ClassificationSchemes.LATEST_VERSION_IND, 
+       ClassificationSchemes.DELETED_IND, 
+
+       ClassificationSchemes.BEGIN_DATE, 
+       ClassificationSchemes.END_DATE, 
+
+       ClassificationSchemes.CHANGE_NOTE, 
+       ClassificationSchemes.DATE_CREATED, 
+
+       ClassificationSchemes.CREATED_BY, 
+       ClassificationSchemes.DATE_MODIFIED, 
+
+       ClassificationSchemes.MODIFIED_BY, 
+       ClassificationSchemes.ORIGIN, 
+
+       ClassificationSchemes.CS_ID"
+   FromList="CLASSIFICATION_SCHEMES ClassificationSchemes"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationSchemesViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationSchemesViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="ClassificationSchemes"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.ClassificationSchemes" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="CsIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CsIdseq"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CS_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Version"
+      EntityUsage="ClassificationSchemes"
+      AliasName="VERSION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredName"
+      EntityUsage="ClassificationSchemes"
+      AliasName="PREFERRED_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="ClassificationSchemes"
+      AliasName="PREFERRED_DEFINITION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CONTE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AslName"
+      EntityUsage="ClassificationSchemes"
+      AliasName="ASL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CstlName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CstlName"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CSTL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LabelTypeFlag"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="LabelTypeFlag"
+      EntityUsage="ClassificationSchemes"
+      AliasName="LABEL_TYPE_FLAG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CmslName"
+      PrecisionRule="false"
+      EntityAttrName="CmslName"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CMSL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      PrecisionRule="false"
+      EntityAttrName="LongName"
+      EntityUsage="ClassificationSchemes"
+      AliasName="LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      PrecisionRule="false"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="ClassificationSchemes"
+      AliasName="LATEST_VERSION_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      PrecisionRule="false"
+      EntityAttrName="DeletedInd"
+      EntityUsage="ClassificationSchemes"
+      AliasName="DELETED_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      PrecisionRule="false"
+      EntityAttrName="BeginDate"
+      EntityUsage="ClassificationSchemes"
+      AliasName="BEGIN_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      PrecisionRule="false"
+      EntityAttrName="EndDate"
+      EntityUsage="ClassificationSchemes"
+      AliasName="END_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNote"
+      PrecisionRule="false"
+      EntityAttrName="ChangeNote"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CHANGE_NOTE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="ClassificationSchemes"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="ClassificationSchemes"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="ClassificationSchemes"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      PrecisionRule="false"
+      EntityAttrName="Origin"
+      EntityUsage="ClassificationSchemes"
+      AliasName="ORIGIN" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsId"
+      PrecisionRule="false"
+      EntityAttrName="CsId"
+      EntityUsage="ClassificationSchemes"
+      AliasName="CS_ID" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="ContextsView"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsConteFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="CsCsiView"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.CsCsiCsFKLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

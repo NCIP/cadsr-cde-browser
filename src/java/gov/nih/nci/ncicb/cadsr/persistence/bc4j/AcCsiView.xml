@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="AcCsiView"
+   SelectList="AcCsi.AC_CSI_IDSEQ, 
+       AcCsi.CS_CSI_IDSEQ, 
+       AcCsi.AC_IDSEQ, 
+       AcCsi.DATE_CREATED, 
+       AcCsi.CREATED_BY, 
+       AcCsi.DATE_MODIFIED, 
+       AcCsi.MODIFIED_BY"
+   FromList="AC_CSI AcCsi"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsiViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="AcCsi"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.AcCsi" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="AcCsiIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AcCsiIdseq"
+      EntityUsage="AcCsi"
+      AliasName="AC_CSI_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CsCsiIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CsCsiIdseq"
+      EntityUsage="AcCsi"
+      AliasName="CS_CSI_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AcIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AcIdseq"
+      EntityUsage="AcCsi"
+      AliasName="AC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="AcCsi"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="AcCsi"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="AcCsi"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="AcCsi"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+</ViewObject>

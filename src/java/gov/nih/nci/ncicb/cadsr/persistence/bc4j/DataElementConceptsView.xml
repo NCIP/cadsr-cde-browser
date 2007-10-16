@@ -1,0 +1,285 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   Name="DataElementConceptsView"
+   SelectList="DataElementConcepts.DEC_IDSEQ, 
+       DataElementConcepts.VERSION, 
+
+       DataElementConcepts.PREFERRED_NAME, 
+       DataElementConcepts.CONTE_IDSEQ, 
+
+       DataElementConcepts.CD_IDSEQ, 
+       DataElementConcepts.PROPL_NAME, 
+
+       DataElementConcepts.OCL_NAME, 
+       DataElementConcepts.PREFERRED_DEFINITION, 
+
+       DataElementConcepts.ASL_NAME, 
+       DataElementConcepts.LONG_NAME, 
+
+       DataElementConcepts.LATEST_VERSION_IND, 
+       DataElementConcepts.DELETED_IND, 
+
+       DataElementConcepts.DATE_CREATED, 
+       DataElementConcepts.BEGIN_DATE, 
+
+       DataElementConcepts.CREATED_BY, 
+       DataElementConcepts.END_DATE, 
+
+       DataElementConcepts.DATE_MODIFIED, 
+       DataElementConcepts.MODIFIED_BY, 
+
+       DataElementConcepts.OBJ_CLASS_QUALIFIER, 
+       DataElementConcepts.PROPERTY_QUALIFIER, 
+
+       DataElementConcepts.CHANGE_NOTE, 
+       DataElementConcepts.OC_IDSEQ, 
+
+       DataElementConcepts.PROP_IDSEQ, 
+       DataElementConcepts.ORIGIN, 
+
+       DataElementConcepts.DEC_ID"
+   FromList="DATA_ELEMENT_CONCEPTS DataElementConcepts"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementConceptsViewRowImpl"
+   ComponentClass="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementConceptsViewImpl"
+   MsgBundleClass="oracle.jbo.common.JboResourceBundle"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="9.0.5.16.0" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="false" />
+   </DesignTime>
+   <EntityUsage
+      Name="DataElementConcepts"
+      Entity="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DataElementConcepts" >
+      <DesignTime>
+         <Attr Name="_EntireObjectTable" Value="false" />
+         <Attr Name="_queryClause" Value="false" />
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="DecIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DecIdseq"
+      EntityUsage="DataElementConcepts"
+      AliasName="DEC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Version"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="Version"
+      EntityUsage="DataElementConcepts"
+      AliasName="VERSION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredName"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredName"
+      EntityUsage="DataElementConcepts"
+      AliasName="PREFERRED_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ConteIdseq"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="ConteIdseq"
+      EntityUsage="DataElementConcepts"
+      AliasName="CONTE_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CdIdseq"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CdIdseq"
+      EntityUsage="DataElementConcepts"
+      AliasName="CD_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ProplName"
+      PrecisionRule="false"
+      EntityAttrName="ProplName"
+      EntityUsage="DataElementConcepts"
+      AliasName="PROPL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OclName"
+      PrecisionRule="false"
+      EntityAttrName="OclName"
+      EntityUsage="DataElementConcepts"
+      AliasName="OCL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PreferredDefinition"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="PreferredDefinition"
+      EntityUsage="DataElementConcepts"
+      AliasName="PREFERRED_DEFINITION" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AslName"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="AslName"
+      EntityUsage="DataElementConcepts"
+      AliasName="ASL_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongName"
+      PrecisionRule="false"
+      EntityAttrName="LongName"
+      EntityUsage="DataElementConcepts"
+      AliasName="LONG_NAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LatestVersionInd"
+      PrecisionRule="false"
+      EntityAttrName="LatestVersionInd"
+      EntityUsage="DataElementConcepts"
+      AliasName="LATEST_VERSION_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeletedInd"
+      PrecisionRule="false"
+      EntityAttrName="DeletedInd"
+      EntityUsage="DataElementConcepts"
+      AliasName="DELETED_IND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateCreated"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="DateCreated"
+      EntityUsage="DataElementConcepts"
+      AliasName="DATE_CREATED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BeginDate"
+      PrecisionRule="false"
+      EntityAttrName="BeginDate"
+      EntityUsage="DataElementConcepts"
+      AliasName="BEGIN_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsNotNull="true"
+      PrecisionRule="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="DataElementConcepts"
+      AliasName="CREATED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      PrecisionRule="false"
+      EntityAttrName="EndDate"
+      EntityUsage="DataElementConcepts"
+      AliasName="END_DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DateModified"
+      PrecisionRule="false"
+      EntityAttrName="DateModified"
+      EntityUsage="DataElementConcepts"
+      AliasName="DATE_MODIFIED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ModifiedBy"
+      PrecisionRule="false"
+      EntityAttrName="ModifiedBy"
+      EntityUsage="DataElementConcepts"
+      AliasName="MODIFIED_BY" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ObjClassQualifier"
+      PrecisionRule="false"
+      EntityAttrName="ObjClassQualifier"
+      EntityUsage="DataElementConcepts"
+      AliasName="OBJ_CLASS_QUALIFIER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PropertyQualifier"
+      PrecisionRule="false"
+      EntityAttrName="PropertyQualifier"
+      EntityUsage="DataElementConcepts"
+      AliasName="PROPERTY_QUALIFIER" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ChangeNote"
+      PrecisionRule="false"
+      EntityAttrName="ChangeNote"
+      EntityUsage="DataElementConcepts"
+      AliasName="CHANGE_NOTE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OcIdseq"
+      PrecisionRule="false"
+      EntityAttrName="OcIdseq"
+      EntityUsage="DataElementConcepts"
+      AliasName="OC_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PropIdseq"
+      PrecisionRule="false"
+      EntityAttrName="PropIdseq"
+      EntityUsage="DataElementConcepts"
+      AliasName="PROP_IDSEQ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Origin"
+      PrecisionRule="false"
+      EntityAttrName="Origin"
+      EntityUsage="DataElementConcepts"
+      AliasName="ORIGIN" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DecId"
+      PrecisionRule="false"
+      EntityAttrName="DecId"
+      EntityUsage="DataElementConcepts"
+      AliasName="DEC_ID" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="ContextsRow"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecConteFkLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="PropertiesExtRow"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecProFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="ObjectClassesExtRow"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecOcFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="ConceptualDomainsRow"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DecCdFKLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="DataElementsRows"
+      ViewLink="gov.nih.nci.ncicb.cadsr.persistence.bc4j.DeDecFkLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>
