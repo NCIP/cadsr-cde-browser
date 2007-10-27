@@ -104,7 +104,6 @@
   if (src == null || src.equals(""))
   {
 	  String treeParams = (String)request.getSession().getAttribute("paramsTree"); 
-	  System.out.println(treeParams + " DES - src " + src);
 	  Hashtable params = TreeUtils.parseParameters(treeParams);
 	  if (params.containsKey("src")) 
 	  {
