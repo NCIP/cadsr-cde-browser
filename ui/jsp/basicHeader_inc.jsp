@@ -2,6 +2,16 @@
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/jsLib/helpWinJS.js"/>'></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/jsLib/newWinJS.js"/>'></SCRIPT>
 <%@ include  file="../common/topHeader.jsp" %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+
+<%
+	String preSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
+    String forwardPage = "cdeBrowse.jsp";
+  if(preSessionId!=null)
+	  forwardPage=forwardPage+"?PageId=DataElementsGroup&"+CaDSRConstants.PREVIOUS_SESSION_ID+"="+preSessionId;
+  else
+	  forwardPage=forwardPage+"?PageId=DataElementsGroup";  
+%>
 <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
   <tr>
     <td align="left" nowrap>
@@ -12,7 +22,7 @@
     <td align=right valign=top nowrap>
       <TABLE Cellpadding=0 Cellspacing=0 border=0>
         <TR>
-          <TD valign="TOP" align="center" width="1%" colspan=1><A HREF="<%="cdeBrowse.jsp?PageId=DataElementsGroup"%>" TARGET="_top"><IMG SRC="i/icon_cdebrowser.gif" alt="CDE Browser" border=0  width=32 height=32></A></TD>
+          <TD valign="TOP" align="center" width="1%" colspan=1><A HREF="<%=forwardPage%>" TARGET="_top"><IMG SRC="i/icon_cdebrowser.gif" alt="CDE Browser" border=0  width=32 height=32></A></TD>
           <TD valign="TOP" align="left" width="1%" colspan=1><A HREF="javascript:newBrowserWin('<%=request.getContextPath()%>/common/help/cdeBrowserHelp.html','helpWin',700,600)"><IMG SRC="i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A></TD>
         </TR>
         <TR>
