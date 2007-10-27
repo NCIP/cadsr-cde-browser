@@ -46,7 +46,10 @@ public class SessionUtils {
           {
             String key = (String)keyIt.next();
             Object obj = objectMap.get(key);
-            request.getSession().setAttribute(key,obj);
+            if (!key.equals("paramsTree"))
+            {
+                request.getSession().setAttribute(key,obj);
+            }
           }
         }
         log.error("SessionUtil.setPreviousSessionValues(synchronized End) at :"+TimeUtils.getEasternTime());
