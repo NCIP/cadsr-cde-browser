@@ -46,7 +46,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.27 2007-10-16 15:36:30 hegdes Exp $
+ * @version: $Id: GetDataElements.java,v 1.28 2007-11-08 21:27:37 davet Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -210,7 +210,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
       if (performQuery == null) {
           desb = new DataElementSearchBean(myRequest);
-        dePageIterator = new BC4JPageIterator(40);
+        dePageIterator = new BC4JPageIterator(100);
          desb.initSearchPreferences(dbUtil);
       }
       else if (performQuery.equals("yes")) {
@@ -227,7 +227,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         //dePageIterator.setCurrentPage(0);
         if (dePageIterator == null) {
           log.info("- Unable to retrieve PageIterator from session. Creating a new PageIterator..");
-          dePageIterator = new BC4JPageIterator(40);
+          dePageIterator = new BC4JPageIterator(100);
         }
         else {
           log.info("- Retrieved PageIterator from session successfully");
@@ -378,7 +378,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         //dePageIterator.setCurrentPage(0);
         if (dePageIterator == null) {
           log.info("- Unable to retrieve PageIterator from session. Creating a new PageIterator..");
-          dePageIterator = new BC4JPageIterator(40);
+          dePageIterator = new BC4JPageIterator(100);
         }
         else {
           log.info("- Retrieved PageIterator from session successfully");
