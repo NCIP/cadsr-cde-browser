@@ -19,17 +19,17 @@
   
    <!-- Make sure these are correct for your instance C:\jboss-4.0.4.GA-->
    
-   <property name="jboss.home" value="D:\jboss-4.0.2" />   <!--"C:\jboss-4.0.4.GA\" />   -->
+   <property name="jboss.home" value="C:\Tools\jboss-4.0.4.GA" />   <!--"C:\jboss-4.0.4.GA\" />   -->
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    <property name="jboss.deploy" value="${jboss.home}/server/default/deploy" />
    
-   <property name="cdebrowser.version" value="3.2.0.3" />
-   <property name="cdebrowser.build" value="2" />
+   <property name="cdebrowser.version" value="3.2.0.4" />
+   <property name="cdebrowser.build" value="1" />
    
    <!-- used for open source build for file suffix-->
-   <property name="cdebrowser.version.suffix" value="3_2_0_3" />
+   <property name="cdebrowser.version.suffix" value="3_2_0_4" />
    
    <property name="dev.user.password" value="cdeuser" />
    <property name="qa.user.password" value="cdeuser" />
