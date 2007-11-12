@@ -19,7 +19,7 @@
   
    <!-- Make sure these are correct for your instance C:\jboss-4.0.4.GA-->
    
-   <property name="jboss.home" value="C:\Tools\jboss-4.0.4.GA" />   <!--"C:\jboss-4.0.4.GA\" />   -->
+   <property name="jboss.home" value="C:\jboss-4.0.4.GA" />   <!--"C:\jboss-4.0.4.GA\" />   -->
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
