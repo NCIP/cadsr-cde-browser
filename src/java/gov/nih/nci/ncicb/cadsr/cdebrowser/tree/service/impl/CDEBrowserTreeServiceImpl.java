@@ -1407,8 +1407,7 @@ public class CDEBrowserTreeServiceImpl
      Iterator iter = forms.iterator();
 
      while (iter.hasNext()) {
-       Form currForm = (Form)iter.next();
-
+       Form currForm = (Form)iter.next();       
        String currProtoIdSeq = null;
        
        if (currForm.getProtocols() != null && currForm.getProtocols().size()>0)
@@ -1422,7 +1421,7 @@ public class CDEBrowserTreeServiceImpl
 
          if (protoNode == null) {
            protoNode = getProtocolNode( currForm.getProtocols().get(0), contextIdseq);
-//           pNode.addLeaf(protoNode);
+           //pNode.addLeaf(protoNode);
            pNode.addChild(protoNode);
            protocolHolder.put(currProtoIdSeq, protoNode);
            treeNodeMap.clear();
@@ -1430,7 +1429,7 @@ public class CDEBrowserTreeServiceImpl
 
          // check and see if form need to be added to cs tree
          if (currForm.getClassifications() == null || currForm.getClassifications().size() == 0) {
-//           protoNode.addLeaf(formNode);
+           protoNode.addLeaf(formNode);
            protoNode.addChild(formNode);
            // Don't expose subnodes yet.
            protoNode.setLoaded(false);
@@ -1448,7 +1447,7 @@ public class CDEBrowserTreeServiceImpl
         * code to display them
        //forms do not have protocol
         DefaultMutableTreeNode noProtocolNode = (DefaultMutableTreeNode)allFormsWithNoProtocol.get(currContextId);
-    
+     
         if (noProtocolNode == null) {
          noProtocolNode=getWebNode("No Protocol", idGen.getNewId());
          allFormsWithNoProtocol.put(currContextId, noProtocolNode);
@@ -1465,6 +1464,7 @@ public class CDEBrowserTreeServiceImpl
         */
        }
      }
+     
 
    }
    

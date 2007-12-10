@@ -1278,8 +1278,9 @@ public class JDBCFormDAO extends JDBCAdminComponentDAO implements FormDAO {
                 + CaDSRConstants.FORM_CSI_TYPE + "')) accs"
         + " where PROTO_IDSEQ = '"+ protocolIdSeq +"'"
         + " and published.QC_IDSEQ = formview.QC_IDSEQ "
-        +  "and formview.QC_IDSEQ = accs.AC_IDSEQ(+) "
-        + " ORDER BY upper(protocol_long_name), upper(context_name)";
+        + "and formview.QC_IDSEQ = accs.AC_IDSEQ(+) "
+        + "and formview.proto_idseq = published.protocol_idseq "
+        + " ORDER BY upper(protocol_long_name), upper(context_name), upper (formview.long_name), published.qc_idseq";
       super.setSql(querySql);
     }
 
