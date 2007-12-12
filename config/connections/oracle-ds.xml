@@ -4,14 +4,14 @@
 <!--  JBoss Server Configuration                                           -->
 <!--                                                                       -->
 <!-- ===================================================================== -->
-<!-- $Id: oracle-ds.xml,v 1.8 2006-06-06 20:26:46 marwahah Exp $ -->
+<!-- $Id: oracle-ds.xml,v 1.9 2007-12-12 16:04:14 davet Exp $ -->
 <!-- ==================================================================== -->
 <!--  Datasource config for Oracle originally from Steven Coy             -->
 <!-- ==================================================================== -->
 <datasources>
 	<local-tx-datasource>
 		<jndi-name>jdbc/CDEBrowserDS</jndi-name>
-		<connection-url>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV</connection-url>
+		<connection-url>jdbc:oracle:thin:@cbiodb540.nci.nih.gov:1521:DSRDEV</connection-url>
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<user-name>cdebrowser</user-name>
 		<password>@user.password@</password>

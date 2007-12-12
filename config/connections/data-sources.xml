@@ -14,7 +14,7 @@
      location="jdbc/FormBuilderCoreDS" 
      name="SBREXT_FB_CBDEVDS" password="jjuser" 
      pooled-location="jdbc/pooled/CDEBrowserDS"
-     url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV" 
+     url="jdbc:oracle:thin:@cbiodb540.nci.nih.gov:1521:DSRDEV" 
      username="sbrext" xa-location="jdbc/xa/SBREXT_FB_CBDEVXADS"
      max-connections="5" 
      min-connections="1" 
@@ -32,7 +32,7 @@
      name="jdev-connection:SBR_CBDEV"
      password="jjsbr"
      pooled-location="jdbc/SBR_CBDEVPooledDS"
-     url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV"
+     url="jdbc:oracle:thin:@cbiodb540.nci.nih.gov:1521:DSRDEV"
      username="sbr" 
      xa-location="jdbc/xa/SBR_CBDEVXADS"
      />
@@ -46,7 +46,7 @@
      name="jdev-connection:SBREXT_CBDEV" 
      password="jjuser" 
      pooled-location="jdbc/SBREXT_CBDEVPooledDS"
-     url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV"
+     url="jdbc:oracle:thin:@cbiodb540.nci.nih.gov:1521:DSRDEV"
      username="sbrext" xa-location="jdbc/xa/SBREXT_CBDEVXADS"
      />
    
