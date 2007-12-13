@@ -13,7 +13,7 @@
               </table> 
               <br>
               <br>
-              <logic:iterate id="module" name="<%=FormConstants.MODULE_LIST%>" type="gov.nih.nci.ncicb.cadsr.resource.Module"  indexId="modIndex" >
+              <logic:iterate id="module" name="<%=FormConstants.MODULE_LIST%>" type="gov.nih.nci.ncicb.cadsr.common.resource.Module"  indexId="modIndex" >
  		<table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >               
                  <tr> 
                 

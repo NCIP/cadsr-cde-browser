@@ -5,7 +5,7 @@
 <struts-config>
   <form-beans>
     <form-bean name="searchForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="formLongName" type="java.lang.String"/>
       <form-property name="protocolIdSeq" type="java.lang.String"/>
@@ -27,12 +27,12 @@
       <form-property name="cdePublicId" type="java.lang.String"/>   
     </form-bean>
     <form-bean name="hrefCRFForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
     </form-bean>
     <form-bean name="protocolLOVForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="protocolLongName" type="java.lang.String"/>
       <form-property name="contextIdSeq" type="java.lang.String"/>
@@ -42,7 +42,7 @@
       <form-property name="SEARCH" type="java.lang.String"/>
     </form-bean>
     <form-bean name="formEditForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="formLongName" type="java.lang.String"/>
@@ -60,7 +60,7 @@
       <form-property name="moduleIndex" type="java.lang.Integer"/>
       <form-property name="deletedModuleIndex" type="java.lang.Integer"/>
     </form-bean>
-    <form-bean name="moduleEditForm" type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean" dynamic="true">
+    <form-bean name="moduleEditForm" type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean" dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="moduleLongName" type="java.lang.String"/>
       <form-property name="moduleInstruction" type="java.lang.String"/>
@@ -90,7 +90,7 @@
     <form-bean name="displayCartForm"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.CDECartFormBean"/>
     <form-bean name="changeAssociationForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="questionIndex" type="java.lang.String"/>
       <form-property name="moduleIndex" type="java.lang.Integer"/>
@@ -98,10 +98,10 @@
     </form-bean>
   </form-beans>
   <global-exceptions>
-    <exception type="gov.nih.nci.ncicb.cadsr.exception.FatalException"
+    <exception type="gov.nih.nci.ncicb.cadsr.common.exception.FatalException"
       scope="request" path="/common/systemError.jsp"
       key="error.system.message"/>
-    <exception type="gov.nih.nci.ncicb.cadsr.exception.InvalidUserException"
+    <exception type="gov.nih.nci.ncicb.cadsr.common.exception.InvalidUserException"
       scope="request" path="/cdeBrowse.jsp"
       key="error.system.message"/>      
   </global-exceptions>
@@ -322,7 +322,7 @@
       scope="session"
       type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.CDECartAction"
       validate="false">
-      <forward name="success" path="/cdebrowser/displayCDECart.jsp"/>
+      <forward name="success" path="/formbuilder/displayCDECart.jsp"/>
       <forward name="saveSuccess" path="/formCDECartRedirectAction.do?method=addItems" redirect="true"/>
     </action>
     <action name="displayCartForm" path="/formCDECartRedirectAction" parameter="method"
@@ -359,11 +359,11 @@
       <forward name="success" path="/formbuilder/valueMeaningAlterNames.jsp" redirect="false"/>
     </action>
   </action-mappings>
- 
-  <message-resources parameter="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.ApplicationResources"/>
+  <message-resources parameter="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.ApplicationResources"/>
+<!--  
   <plug-in className="gov.nih.nci.ncicb.cadsr.formbuilder.service.ServiceDelegateFactory"/>
-  
-  <plug-in className="gov.nih.nci.ncicb.cadsr.struts.common.SpringWebContextPlugIn">  
+ -->  
+  <plug-in className="gov.nih.nci.ncicb.cadsr.common.struts.common.SpringWebContextPlugIn">  
   </plug-in> 
   
   <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

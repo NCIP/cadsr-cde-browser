@@ -11,15 +11,15 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.cdebrowser.CDECompareList;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 
-import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
-
-
+import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 
 
-import gov.nih.nci.ncicb.cadsr.util.StringUtils;
+
+
+import gov.nih.nci.ncicb.cadsr.common.util.StringUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

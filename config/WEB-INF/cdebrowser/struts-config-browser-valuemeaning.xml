@@ -3,11 +3,11 @@
 <struts-config>
   <form-beans>
     <form-bean name="valueMeaningForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="id" type="java.lang.String"/>
     </form-bean>
-</form-beans>
+  </form-beans>
   <action-mappings>
     <action name="valueMeaningForm" path="/valueMeaningAlternates" parameter="method"
       scope="request"
@@ -16,5 +16,5 @@
       <forward name="success" path="/formbuilder/valueMeaningAlterNames.jsp"/>
       <forward name="failure" path="/cdebrowser/validValuesList.jsp"/>       
     </action>    
-   </action-mappings>
+  </action-mappings>
 </struts-config>

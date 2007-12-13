@@ -3,15 +3,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@ page import="oracle.clex.process.jsp.GetInfoBean "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.html.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <%@ page import="java.util.*"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils"%>
 
 <HTML>
@@ -131,7 +130,7 @@
         </tr>
       </table>      
             <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
-              <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules">
+              <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.common.resource.Module" property="modules">
             <% 
              pageContext.setAttribute("firstModule","firstModule"); 
             %>
@@ -144,7 +143,7 @@
             %>
             <logic:present name="repeats" >
             <logic:notEmpty name="repeats" >
-              <logic:iterate id="module" name="repeats" type="gov.nih.nci.ncicb.cadsr.resource.Module" indexId="modIndex" >                                                        
+              <logic:iterate id="module" name="repeats" type="gov.nih.nci.ncicb.cadsr.common.resource.Module" indexId="modIndex" >                                                        
                  <%@ include file="/formbuilder/printerVersionModuleDetails_inc.jsp"%> 
       		<table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
         	   <tr class>

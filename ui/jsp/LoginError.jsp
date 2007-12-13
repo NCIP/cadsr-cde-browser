@@ -25,7 +25,7 @@ You are not authenticated to use this web application
 <br>
 <br>
 
-<a href="<%= "formSearchAction.do"%>"> Retry Login </a>
+<a href="<%= "formSearchAction.do"%>"> Retry Login again</a>
 
 </body>
 </html>

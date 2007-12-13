@@ -4,11 +4,11 @@
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@page import="javax.servlet.http.* " %>
 <%@page import="javax.servlet.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
+<%//@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="oracle.clex.process.PageConstants " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.resource.* " %>
 <%@page import="java.util.*" %>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>

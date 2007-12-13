@@ -1,5 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.servlets;
-import gov.nih.nci.ncicb.cadsr.util.ConnectionHelper;
+import gov.nih.nci.ncicb.cadsr.common.util.ConnectionHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,8 +19,8 @@ import oracle.jdbc.OracleResultSet;
 
 import oracle.sql.BLOB;
 
-import gov.nih.nci.ncicb.cadsr.util.logging.Log;
-import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
 
 public class DownloadTemplateServlet extends HttpServlet  {
   private static Log log = LogFactory.getLog(DownloadTemplateServlet.class.getName());

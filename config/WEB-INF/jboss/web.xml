@@ -690,9 +690,10 @@
   <listener>
      <listener-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.CDEBrowserSessionListener</listener-class>
    </listener>  
-  <listener>
+<!--   <listener>
      <listener-class>gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormLockerSessionListener</listener-class>
     </listener>  
+-->
   <listener>
     <listener-class>oracle.clex.util.ServletEventListener</listener-class>
      </listener>  
@@ -709,7 +710,7 @@
     <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
     <init-param>
       <param-name>config</param-name>
-      <param-value>/WEB-INF/formbuilder/struts-config.xml,/WEB-INF/formbuilder/struts-config-copy.xml,
+       <param-value>/WEB-INF/formbuilder/struts-config.xml,/WEB-INF/formbuilder/struts-config-copy.xml,
            /WEB-INF/formbuilder/struts-config-addQuestion.xml,/WEB-INF/formbuilder/struts-config-cancel.xml,
            /WEB-INF/formbuilder/struts-config-manageClassifications.xml,
 	   /WEB-INF/formbuilder/struts-config-manageProtocols.xml,           
@@ -738,11 +739,11 @@
     </init-param>
     <init-param>
       <param-name>ServiceLocatorClassName</param-name>
-      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</param-value>
+      <param-value>gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl</param-value>
     </init-param>
     <init-param>
       <param-name>ApplicationServiceLocatorClassName</param-name>
-      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.spring.ApplicationServiceLocatorImpl</param-value>
+      <param-value>gov.nih.nci.ncicb.cadsr.common.servicelocator.spring.ApplicationServiceLocatorImpl</param-value>
     </init-param>    
     
     <load-on-startup>1</load-on-startup>
@@ -761,7 +762,7 @@
   </servlet>
   <servlet>
     <servlet-name>LogoutServlet</servlet-name>
-    <servlet-class>gov.nih.nci.ncicb.cadsr.security.LogoutServlet</servlet-class>
+    <servlet-class>gov.nih.nci.ncicb.cadsr.common.security.LogoutServlet</servlet-class>
     <init-param>
       <param-name>LogoutHome</param-name>
       <param-value>cdeBrowse.jsp</param-value>
@@ -992,21 +993,22 @@
     <description>The Secure Role</description>
     <role-name>CONTEXT ADMIN</role-name>
   </security-role>   
- 
+<!-- 
   <env-entry>
     <description>Specifies the implementation class of FormBuilderServiceDelegate that should be used.</description>
     <env-entry-name>FormBuilderServiceDelegate</env-entry-name>
     <env-entry-value>gov.nih.nci.ncicb.cadsr.formbuilder.service.ejb.FormBuilderDynamicRemoteServiceDelegateImpl</env-entry-value>
     <env-entry-type>java.lang.String</env-entry-type>
   </env-entry>
+  --> 
   <env-entry>
     <description>Class name of the DAOFactory that FormBuilderEJB will use.</description>
     <env-entry-name>DAOFactoryClassName</env-entry-name>
-    <env-entry-value>gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
+    <env-entry-value>gov.nih.nci.ncicb.cadsr.common.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
     <env-entry-type>java.lang.String</env-entry-type>
   </env-entry>
   
-  
+ <!--  
   <ejb-ref>
     <ejb-ref-name>ejb/FormBuilder</ejb-ref-name>
     <ejb-ref-type>Session</ejb-ref-type>
@@ -1014,6 +1016,6 @@
     <remote>gov.nih.nci.ncicb.cadsr.formbuilder.ejb.FormBuilder</remote>
     <ejb-link>FormBuilder</ejb-link>
   </ejb-ref>
-
+ -->
   
 </web-app>

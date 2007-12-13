@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.servlets;
 
-import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;

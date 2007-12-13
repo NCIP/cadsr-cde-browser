@@ -3,18 +3,18 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 
-<%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.html.* "%>
 
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormJspUtil"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.common.FormBuilderConstants" %>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.common.FormBuilderConstants" %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.resource.Form"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.resource.Form"%>
 <%@ page import="java.util.*"%>
  
  <HTML>
@@ -240,7 +240,7 @@ function populateDefaultValue(defaultValidValue,defaultValidValueId, index){
                <%
                             int defaultIndex = 0; //used for default Index
                 %>
-              <logic:iterate id="module" name="<%=FormConstants.MODULE_REPETITIONS%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" indexId="modIndex" >                            
+              <logic:iterate id="module" name="<%=FormConstants.MODULE_REPETITIONS%>" type="gov.nih.nci.ncicb.cadsr.common.resource.Module" indexId="modIndex" >                            
  		<table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >               
                  <tr> 
                 

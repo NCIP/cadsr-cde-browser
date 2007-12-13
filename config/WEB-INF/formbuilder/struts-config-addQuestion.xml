@@ -3,7 +3,7 @@
 <struts-config>
   <form-beans>
     <form-bean name="addQuestionForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="selectedItems" type="java.lang.String[]"/>
       <form-property name="toggleAll" type="java.lang.String"/>

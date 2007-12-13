@@ -1,25 +1,25 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.dto.ConceptDerivationRuleTransferObject;
-import gov.nih.nci.ncicb.cadsr.html.HTMLPageScroller;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.AdminComponentDAO;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
-import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
-import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
-import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
-import gov.nih.nci.ncicb.cadsr.resource.handler.ValidValueHandler;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
-import gov.nih.nci.ncicb.cadsr.util.BC4JPageIterator;
-import gov.nih.nci.ncicb.cadsr.util.GenericPopListBean;
-import gov.nih.nci.ncicb.cadsr.util.PageIterator;
-import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
+import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.dto.ConceptDerivationRuleTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.html.HTMLPageScroller;
+import gov.nih.nci.ncicb.cadsr.common.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.common.persistence.dao.AdminComponentDAO;
+import gov.nih.nci.ncicb.cadsr.common.persistence.dao.ConceptDAO;
+import gov.nih.nci.ncicb.cadsr.common.persistence.dao.ValueDomainDAO;
+import gov.nih.nci.ncicb.cadsr.common.resource.ConceptDerivationRule;
+import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.common.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.common.resource.ValueDomain;
+import gov.nih.nci.ncicb.cadsr.common.resource.handler.ValidValueHandler;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorFactory;
+import gov.nih.nci.ncicb.cadsr.common.util.BC4JPageIterator;
+import gov.nih.nci.ncicb.cadsr.common.util.GenericPopListBean;
+import gov.nih.nci.ncicb.cadsr.common.util.PageIterator;
+import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
 
 import oracle.cle.persistence.HandlerFactory;
 

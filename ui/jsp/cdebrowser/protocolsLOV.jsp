@@ -4,14 +4,14 @@
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@page import="javax.servlet.http.* " %>
 <%@page import="javax.servlet.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
+<%//@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="oracle.clex.process.PageConstants " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.lov.ProtocolsLOVBean " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.resource.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.ProcessConstants " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.lov.ProtocolsLOVBean " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants" %>
 
 <%@include  file="cdebrowserCommon_html/SessionAuth.html"%>
 

@@ -4,15 +4,15 @@
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@page import="javax.servlet.http.* " %>
 <%@page import="javax.servlet.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
+<%//@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="oracle.clex.process.PageConstants " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.resource.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils" %>
-<%@page import="gov.nih.nci.ncicb.cadsr.util.StringUtils" %>
-<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserFormConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.StringUtils" %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserFormConstants"%>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
@@ -289,7 +289,7 @@ function goPage(pageInfo) {
                           <td class="OraTableColumnHeader">EVS Source</td>   
                           <td class="OraTableColumnHeader">Primary</td>
                         </tr>   
-                       <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.resource.ComponentConcept" property="dataElementConcept.objectClass.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
+                       <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.common.resource.ComponentConcept" property="dataElementConcept.objectClass.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
                         <tr class="OraTabledata">
                            <td class="OraFieldText"><%=comp.getConcept().getLongName()%> </td>
                            <td class="OraFieldText">
@@ -432,7 +432,7 @@ function goPage(pageInfo) {
                            <td class="OraTableColumnHeader">EVS Source</td>
                            <td class="OraTableColumnHeader">Primary</td>
                          </tr>   
-                        <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.resource.ComponentConcept" property="dataElementConcept.property.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
+                        <logic:iterate id="comp" name="de" type="gov.nih.nci.ncicb.cadsr.common.resource.ComponentConcept" property="dataElementConcept.property.conceptDerivationRule.componentConcepts" indexId="ccIndex" >                                 
                          <tr class="OraTabledata">
                             <td class="OraFieldText"><%=comp.getConcept().getLongName()%> </td>
                             <td class="OraFieldText">

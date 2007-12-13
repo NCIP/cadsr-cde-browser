@@ -2,9 +2,9 @@
 <%@ page import="java.util.*" %>
 <%@ page import="gov.nih.nci.ncicb.webtree.*" %>
 <%@ page import="java.io.*"%>
-<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.util.TreeUtils " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.TreeUtils " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%@ page import="java.net.URLEncoder" %>
 
 <%
@@ -117,7 +117,7 @@
       //      "&skin=" + skin + "&treeDirective=" + 
       //      treeDirective;
 
-      String treeURL = "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.cdebrowser.tree.CDEBrowserTree"+
+      String treeURL = "WebTreeLoader.jsp?treeClass=gov.nih.nci.ncicb.cadsr.contexttree.CDEBrowserTree"+
             "&treeName=" + treeName +
             "&treeAction=refresh" + 
             "&treeParams="+ treeParams + 

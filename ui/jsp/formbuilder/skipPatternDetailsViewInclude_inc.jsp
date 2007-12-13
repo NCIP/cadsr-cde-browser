@@ -4,7 +4,7 @@
                         
                                      
                                              <logic:equal value="<%=FormJspUtil.MODULE%>" name="currSkipTargetType">
-                                             <bean:define id="targetModule" name="currTriggerAction" property="actionTarget" type="gov.nih.nci.ncicb.cadsr.resource.Module" />                                              
+                                             <bean:define id="targetModule" name="currTriggerAction" property="actionTarget" type="gov.nih.nci.ncicb.cadsr.common.resource.Module" />                                              
                                               <tr class="OraTabledata">
                                               <td class="OraTableColumnHeader" width="20%" nowrap>
                                                 Module Name
@@ -16,7 +16,7 @@
                                              </logic:equal>   
                                      
                                              <logic:equal value="<%=FormJspUtil.QUESTION%>" name="currSkipTargetType">                                           
-                                               <bean:define id="targetQuestion" name="currTriggerAction" property="actionTarget" type="gov.nih.nci.ncicb.cadsr.resource.Question" />
+                                               <bean:define id="targetQuestion" name="currTriggerAction" property="actionTarget" type="gov.nih.nci.ncicb.cadsr.common.resource.Question" />
                                                
                                               <tr class="OraTabledata">
                                               <td class="OraTableColumnHeader" width="20%" nowrap>

@@ -1,33 +1,33 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.CollectionUtil;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants;
-import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
-import gov.nih.nci.ncicb.cadsr.html.HTMLPageScroller;
-import gov.nih.nci.ncicb.cadsr.resource.CDECart;
-import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
-import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
-import gov.nih.nci.ncicb.cadsr.resource.ValueDomain;
-import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
-import gov.nih.nci.ncicb.cadsr.resource.handler.ValidValueHandler;
-import gov.nih.nci.ncicb.cadsr.resource.impl.CDECartImpl;
-import gov.nih.nci.ncicb.cadsr.util.BC4JPageIterator;
-import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
-import gov.nih.nci.ncicb.cadsr.util.DBUtil;
-import gov.nih.nci.ncicb.cadsr.util.PageIterator;
-import gov.nih.nci.ncicb.cadsr.util.SortableColumnHeader;
-import gov.nih.nci.ncicb.cadsr.util.StringUtils;
-import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
-import gov.nih.nci.ncicb.cadsr.util.UserErrorMessage;
-import gov.nih.nci.ncicb.cadsr.util.logging.Log;
-import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.CollectionUtil;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants;
+import gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants;
+import gov.nih.nci.ncicb.cadsr.common.dto.CDECartItemTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.html.HTMLPageScroller;
+import gov.nih.nci.ncicb.cadsr.common.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.common.resource.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.common.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.common.resource.ValueDomain;
+import gov.nih.nci.ncicb.cadsr.common.resource.handler.DataElementHandler;
+import gov.nih.nci.ncicb.cadsr.common.resource.handler.ValidValueHandler;
+import gov.nih.nci.ncicb.cadsr.common.resource.impl.CDECartImpl;
+import gov.nih.nci.ncicb.cadsr.common.util.BC4JPageIterator;
+import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.common.util.PageIterator;
+import gov.nih.nci.ncicb.cadsr.common.util.SortableColumnHeader;
+import gov.nih.nci.ncicb.cadsr.common.util.StringUtils;
+import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
+import gov.nih.nci.ncicb.cadsr.common.util.UserErrorMessage;
+import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
 
 import java.text.DateFormat;
 
@@ -46,7 +46,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.28 2007-11-08 21:27:37 davet Exp $
+ * @version: $Id: GetDataElements.java,v 1.29 2007-12-13 19:35:54 hegdes Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -210,7 +210,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
       if (performQuery == null) {
           desb = new DataElementSearchBean(myRequest);
-        dePageIterator = new BC4JPageIterator(100);
+        dePageIterator = new BC4JPageIterator(40);
          desb.initSearchPreferences(dbUtil);
       }
       else if (performQuery.equals("yes")) {
@@ -227,7 +227,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         //dePageIterator.setCurrentPage(0);
         if (dePageIterator == null) {
           log.info("- Unable to retrieve PageIterator from session. Creating a new PageIterator..");
-          dePageIterator = new BC4JPageIterator(100);
+          dePageIterator = new BC4JPageIterator(40);
         }
         else {
           log.info("- Retrieved PageIterator from session successfully");
@@ -378,7 +378,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
         //dePageIterator.setCurrentPage(0);
         if (dePageIterator == null) {
           log.info("- Unable to retrieve PageIterator from session. Creating a new PageIterator..");
-          dePageIterator = new BC4JPageIterator(100);
+          dePageIterator = new BC4JPageIterator(40);
         }
         else {
           log.info("- Retrieved PageIterator from session successfully");

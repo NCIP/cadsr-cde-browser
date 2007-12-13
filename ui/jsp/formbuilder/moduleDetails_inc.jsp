@@ -1,5 +1,5 @@
             <logic:notEmpty name="<%=FormConstants.CRF%>" property = "modules">
-              <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules" indexId="modIndex" >                            
+              <logic:iterate id="module" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.common.resource.Module" property="modules" indexId="modIndex" >                            
                <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
                  <tr >
            	    <td align="left" width="18%" >
@@ -28,7 +28,7 @@
                  <logic:present name="module" property = "triggerActions" >
                    <logic:notEmpty name="module" property = "triggerActions">
                             <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                              <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+                              <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.common.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
                              	<%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
                               </logic:iterate>
                             </table>

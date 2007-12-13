@@ -8,7 +8,7 @@
   
 
     <form-bean name="createReferenceDocForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="docName" type="java.lang.String"/>
       <form-property name="contextIdSeq" type="java.lang.String"/>

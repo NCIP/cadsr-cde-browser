@@ -3,7 +3,7 @@
 <struts-config>
   <form-beans>
     <form-bean name="moduleRepeatForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="moduleIndex" type="java.lang.Integer"/>
       <form-property name="numberOfModuleRepetitions" type="java.lang.Integer"/>      

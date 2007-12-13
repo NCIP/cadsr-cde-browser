@@ -3,13 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@ page import="oracle.clex.process.jsp.GetInfoBean "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.resource.Form"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.html.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.resource.Form"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <HTML>
   <HEAD>
     <TITLE>Manage Protocols</TITLE>
@@ -147,7 +147,7 @@
           <logic:present name="<%=FormConstants.CRF%>" property="protocols">
 
           <logic:equal name="<%=FormConstants.CRF%>" property="protocols.empty" value="false">
-          <logic:iterate id="protocol" indexId="protocolIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.resource.Protocol" property="protocols">          
+          <logic:iterate id="protocol" indexId="protocolIndex" name="<%=FormConstants.CRF%>" type="gov.nih.nci.ncicb.cadsr.common.resource.Protocol" property="protocols">          
             <tr class="OraTabledata">
               <td class="OraFieldText">
                 <bean:write name="protocol" property="longName"/>

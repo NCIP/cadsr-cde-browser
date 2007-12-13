@@ -6,31 +6,31 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.16 2007-10-16 15:36:22 hegdes Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.17 2007-12-13 19:35:57 hegdes Exp $
  */
 
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.cdebrowser.CDECompareList;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.DerivedDataElementDAO;
-import gov.nih.nci.ncicb.cadsr.resource.CDECart;
-import gov.nih.nci.ncicb.cadsr.resource.Classification;
-import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
-import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.DerivedDataElement;
-import gov.nih.nci.ncicb.cadsr.resource.ObjectClass;
-import gov.nih.nci.ncicb.cadsr.resource.Property;
-import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
-import gov.nih.nci.ncicb.cadsr.resource.handler.ClassificationHandler;
-import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
-import gov.nih.nci.ncicb.cadsr.resource.handler.ValidValueHandler;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
-import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
-import gov.nih.nci.ncicb.cadsr.util.ContentTypeHelper;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.common.persistence.dao.ConceptDAO;
+import gov.nih.nci.ncicb.cadsr.common.persistence.dao.DerivedDataElementDAO;
+import gov.nih.nci.ncicb.cadsr.common.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.common.resource.Classification;
+import gov.nih.nci.ncicb.cadsr.common.resource.ConceptDerivationRule;
+import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.common.resource.DerivedDataElement;
+import gov.nih.nci.ncicb.cadsr.common.resource.ObjectClass;
+import gov.nih.nci.ncicb.cadsr.common.resource.Property;
+import gov.nih.nci.ncicb.cadsr.common.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.common.resource.handler.ClassificationHandler;
+import gov.nih.nci.ncicb.cadsr.common.resource.handler.DataElementHandler;
+import gov.nih.nci.ncicb.cadsr.common.resource.handler.ValidValueHandler;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorFactory;
+import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.cadsr.common.util.ContentTypeHelper;
 
 import java.io.File;
 import java.io.FileInputStream;

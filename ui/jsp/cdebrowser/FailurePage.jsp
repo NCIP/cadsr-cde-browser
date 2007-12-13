@@ -5,8 +5,8 @@
 
 <%@page import="javax.servlet.http.* " %>
 <%@page import="javax.servlet.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
+<%//@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="oracle.clex.process.PageConstants " %>
 

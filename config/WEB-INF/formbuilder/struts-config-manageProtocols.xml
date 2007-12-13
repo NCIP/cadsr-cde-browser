@@ -3,7 +3,7 @@
 <struts-config>
   <form-beans>
     <form-bean name="manageProtocolsForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="protocolIdSeq" type="java.lang.String"/>
       <form-property name="protocolLongName" type="java.lang.String"/>
@@ -15,7 +15,7 @@
       <form-property name="protocolId" type="java.lang.String"/>
     </form-bean>
     <form-bean name="updateSkipPatternForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="removedProtocolId" type="java.lang.String"/>
       <form-property name="choice" type="java.lang.String"/>

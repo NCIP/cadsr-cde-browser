@@ -15,7 +15,7 @@
     <!-- Managed Beans for tree2.jsp -->
     <managed-bean>
         <managed-bean-name>treeBacker</managed-bean-name>
-        <managed-bean-class>gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeBacker</managed-bean-class>
+        <managed-bean-class>gov.nih.nci.ncicb.cadsr.contexttree.TreeBacker</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 

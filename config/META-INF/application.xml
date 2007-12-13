@@ -8,7 +8,8 @@
          <context-root>CDEBrowser</context-root>
       </web>
    </module>
-   <module>
+<!--   <module>
       <ejb>formbuilder-ejb.jar</ejb>
-   </module>      
+   </module>  
+ -->     
 </application>

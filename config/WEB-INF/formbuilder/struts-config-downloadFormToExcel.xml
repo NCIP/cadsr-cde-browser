@@ -4,7 +4,7 @@
 <struts-config>
  <form-beans> 
     <form-bean name="downloadForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
        

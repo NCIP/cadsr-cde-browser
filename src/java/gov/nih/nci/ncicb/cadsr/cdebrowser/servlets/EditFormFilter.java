@@ -1,13 +1,13 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.servlets;
 
-import gov.nih.nci.ncicb.cadsr.formbuilder.common.FormElementLocker;
-import gov.nih.nci.ncicb.cadsr.formbuilder.service.LockingService;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
-import gov.nih.nci.ncicb.cadsr.resource.Form;
-import gov.nih.nci.ncicb.cadsr.resource.NCIUser;
+import gov.nih.nci.ncicb.cadsr.common.formbuilder.common.FormElementLocker;
+import gov.nih.nci.ncicb.cadsr.common.formbuilder.service.LockingService;
+import gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.common.resource.Form;
+import gov.nih.nci.ncicb.cadsr.common.resource.NCIUser;
 
-import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ApplicationServiceLocator;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorException;
 
 import java.util.Date;
 

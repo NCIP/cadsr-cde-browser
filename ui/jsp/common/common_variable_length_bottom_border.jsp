@@ -1,4 +1,4 @@
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams"%>
 <%
 	String width = pageContext.getRequest().getParameter("width");
 %>

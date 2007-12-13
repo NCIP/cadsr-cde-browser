@@ -3,10 +3,10 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa" %>
 <%@ taglib uri="http://jsf-comp.sourceforge.net/aa" prefix="jcaa" %>
-<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
+<%//@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.* "%>
 <%@ page import="java.util.*"%>
-<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants " %>
 <%@ page import="net.sf.jsfcomp.aa.tree.AaTreeTag"%>
 <f:view>
     <t:document>

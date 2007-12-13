@@ -3,12 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@ page import="oracle.clex.process.jsp.GetInfoBean "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.html.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <HTML>
   <HEAD>
     <TITLE>Add Classifications</TITLE>
@@ -45,7 +45,7 @@
       String contextPath = request.getContextPath();
       String[] csLOVUrl = new String[3];
 
-      String contextId = ((gov.nih.nci.ncicb.cadsr.resource.Form)session.getAttribute(FormConstants.CRF)).getContext().getConteIdseq();
+      String contextId = ((gov.nih.nci.ncicb.cadsr.common.resource.Form)session.getAttribute(FormConstants.CRF)).getContext().getConteIdseq();
 
       for(int i=0; i<nbOfClassifications; i++) 
       csLOVUrl[i] = "javascript:newWin('"+contextPath+"/search?chkContext=always&classificationsLOV=1&P_CONTE_IDSEQ=" + contextId +"&idVar=jspClassification[" + i + "]&nameVar=txtClassSchemeItem" + i + pageUrl + "','csLOV',700,600)";

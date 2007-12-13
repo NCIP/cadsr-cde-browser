@@ -2,20 +2,21 @@
 <%@page import="javax.servlet.http.* " %>
 <%@page import="javax.servlet.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.cdebrowser.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="oracle.clex.process.PageConstants " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants"%>
-<%@page import="gov.nih.nci.ncicb.cadsr.resource.* "%>
-<%@page import="gov.nih.nci.ncicb.cadsr.html.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.ProcessConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.resource.* "%>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.html.* " %>
 <%@page import="java.util.List "%>
 <%@ page import="java.util.*"%>
-<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserNavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserNavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.CDECompareList"%>
-<%@ page import= "gov.nih.nci.ncicb.cadsr.cdebrowser.tree.*"%>
+<%@ page import= "gov.nih.nci.ncicb.cadsr.contexttree.*"%>
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 

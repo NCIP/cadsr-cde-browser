@@ -3,7 +3,7 @@
 <struts-config>
   <form-beans> 
     <form-bean name="versionForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="formMaxVersion" type="java.lang.String"/>
       <form-property name="newVersionNumber" type="java.lang.Float"/>
@@ -11,7 +11,7 @@
       <form-property name="changeNote" type="java.lang.String"/>
     </form-bean>
     <form-bean name="latestVersionForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="formMaxVersion" type="java.lang.String"/>
       <form-property name="id" type="java.lang.String[]"/>

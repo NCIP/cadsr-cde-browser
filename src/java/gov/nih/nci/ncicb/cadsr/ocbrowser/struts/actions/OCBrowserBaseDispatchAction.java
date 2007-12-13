@@ -1,5 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.ocbrowser.struts.actions;
-import gov.nih.nci.ncicb.cadsr.struts.common.BaseDispatchAction;
+import gov.nih.nci.ncicb.cadsr.common.struts.common.BaseDispatchAction;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

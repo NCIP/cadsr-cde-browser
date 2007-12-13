@@ -61,7 +61,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>LogoutServlet</servlet-name>
-    <servlet-class>gov.nih.nci.ncicb.cadsr.security.LogoutServlet</servlet-class>
+    <servlet-class>gov.nih.nci.ncicb.cadsr.common.security.LogoutServlet</servlet-class>
     <init-param>
       <param-name>LogoutHome</param-name>
       <param-value>cdeBrowse.jsp</param-value>
@@ -101,7 +101,7 @@
     </init-param>
     <init-param>
       <param-name>ServiceLocatorClassName</param-name>
-      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</param-value>
+      <param-value>gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl</param-value>
     </init-param>
     
     <load-on-startup>1</load-on-startup>
@@ -119,11 +119,11 @@
     	</init-param> 
     <init-param>
       <param-name>debugServiceLocatorClassName</param-name>
-      <param-value>gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</param-value>
+      <param-value>gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl</param-value>
     </init-param>
     <init-param>
       <param-name>debugLoginManagerClassName</param-name>
-      <param-value>gov.nih.nci.ncicb.cadsr.security.oc4j.DBUserManager</param-value>
+      <param-value>gov.nih.nci.ncicb.cadsr.common.security.oc4j.DBUserManager</param-value>
     </init-param>  
     <init-param>
       <param-name>debugUsername</param-name>
@@ -176,18 +176,21 @@
     <remote>gov.nih.nci.ncicb.cadsr.formbuilder.ejb.FormBuilder</remote>
     <ejb-link>FormBuilder</ejb-link>
   </ejb-ref>
+<!-- 
   <env-entry>
     <description>Specifies the implementation class of FormBuilderServiceDelegate that should be used.</description>
     <env-entry-name>FormBuilderServiceDelegate</env-entry-name>
     <env-entry-value>gov.nih.nci.ncicb.cadsr.formbuilder.service.ejb.FormBuilderDynamicRemoteServiceDelegateImpl</env-entry-value>
     <env-entry-type>java.lang.String</env-entry-type>
   </env-entry>
+
   <env-entry>
     <description>Class name of the DAOFactory that FormBuilderEJB will use.</description>
     <env-entry-name>DAOFactoryClassName</env-entry-name>
-    <env-entry-value>gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
+    <env-entry-value>gov.nih.nci.ncicb.cadsr.common.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
     <env-entry-type>java.lang.String</env-entry-type>
   </env-entry>
+ -->
   <security-role>
     <description>The Only Secure Role</description>
     <role-name>FORMBUILDER_USERS</role-name>

@@ -1,11 +1,11 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-import gov.nih.nci.ncicb.cadsr.base.process.*;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.database.*;
-import gov.nih.nci.ncicb.cadsr.lov.DataElementConceptsLOVBean;
+import gov.nih.nci.ncicb.cadsr.common.base.process.*;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.database.*;
+import gov.nih.nci.ncicb.cadsr.common.lov.DataElementConceptsLOVBean;
 
-import gov.nih.nci.ncicb.cadsr.util.*;
+import gov.nih.nci.ncicb.cadsr.common.util.*;
 
 import oracle.cle.persistence.HandlerFactory;
 

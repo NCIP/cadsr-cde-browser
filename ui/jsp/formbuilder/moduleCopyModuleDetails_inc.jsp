@@ -1,5 +1,5 @@
             <logic:notEmpty name="<%=FormConstants.MODULE_COPY_FORM%>" property = "modules">
-              <logic:iterate id="module" name="<%=FormConstants.MODULE_COPY_FORM%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules" indexId="modIndex" >                            
+              <logic:iterate id="module" name="<%=FormConstants.MODULE_COPY_FORM%>" type="gov.nih.nci.ncicb.cadsr.common.resource.Module" property="modules" indexId="modIndex" >                            
               <logic:notPresent name="formLocked">
                <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
                  <tr >

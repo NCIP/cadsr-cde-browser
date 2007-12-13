@@ -1,12 +1,12 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.lov.ClassificationsLOVBean;
-import gov.nih.nci.ncicb.cadsr.resource.Context;
-import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
-import gov.nih.nci.ncicb.cadsr.util.DBUtil;
-import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
+import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.lov.ClassificationsLOVBean;
+import gov.nih.nci.ncicb.cadsr.common.resource.Context;
+import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -26,7 +26,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetClassificationsLOV.java,v 1.6 2007-10-16 15:36:30 hegdes Exp $
+ * @version: $Id: GetClassificationsLOV.java,v 1.7 2007-12-13 19:35:54 hegdes Exp $
  */
 public class GetClassificationsLOV extends BasePersistingProcess {
   public GetClassificationsLOV() {

@@ -3,16 +3,16 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@ page import="oracle.clex.process.jsp.GetInfoBean "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.html.* "%>
 <%@ page import="java.util.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%> 
-<%@ page import="gov.nih.nci.ncicb.cadsr.resource.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.* "%> 
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.resource.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.jsp.tag.handler.AvailableValidValue"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.resource.ReferenceDocument"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.AvailableValidValue"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.resource.ReferenceDocument"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils"%>
 
 <HTML>
@@ -470,7 +470,7 @@ function clearProtocol() {
              <%
                int vvInstrIndex = 0; //used for instruction Index
              %>
-            <logic:iterate id="question" name="module" indexId="questionIndex" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">
+            <logic:iterate id="question" name="module" indexId="questionIndex" type="gov.nih.nci.ncicb.cadsr.common.resource.Question" property="questions">
              <bean:size id="questionSize" name="module" property="questions"/>
             <!-- and anchor -->
             <A NAME="<%="Q"+questionIndex%>"></A>            
@@ -844,7 +844,7 @@ function clearProtocol() {
                                         </tr>
                                       </table>
                                     </td>                               
-                                <logic:iterate id="validValue" name="question" indexId="validValueIndex" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
+                                <logic:iterate id="validValue" name="question" indexId="validValueIndex" type="gov.nih.nci.ncicb.cadsr.common.resource.FormValidValue" property="validValues">
                                 <bean:size id="validValueSize" name="question" property="validValues"/>                                  
                                   <tr class="OraTabledata">
                                     <td class="OraTabledata" >&nbsp;</td>
@@ -1016,7 +1016,7 @@ function clearProtocol() {
 								
 								 <logic:present name="validValue" property = "triggerActions" >
 								   <logic:notEmpty name="validValue" property = "triggerActions">
-									      <logic:iterate id="currTriggerAction" name="validValue" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+									      <logic:iterate id="currTriggerAction" name="validValue" type="gov.nih.nci.ncicb.cadsr.common.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
 											<%@ include file="/formbuilder/skipPatternDetailsEditVV_inc.jsp"%>
 									      </logic:iterate>
 								    </logic:notEmpty>
@@ -1149,7 +1149,7 @@ function clearProtocol() {
                  <logic:present name="module" property = "triggerActions" >
                    <logic:notEmpty name="module" property = "triggerActions">
                             <table width="84%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                              <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+                              <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.common.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
 					<%@ include file="/formbuilder/skipPatternDetailsEditModule_inc.jsp"%>
                                              
                               </logic:iterate>

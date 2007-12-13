@@ -3,7 +3,7 @@
 <struts-config>
   <form-beans>
     <form-bean name="createForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="formLongName" type="java.lang.String"/>
       <form-property name="formIdSeq" type="java.lang.String"/>

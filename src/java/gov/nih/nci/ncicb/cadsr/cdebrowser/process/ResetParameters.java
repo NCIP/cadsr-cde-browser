@@ -1,10 +1,10 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
 import oracle.cle.process.GenericProcess;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.base.process.BaseGenericProcess;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.base.process.BaseGenericProcess;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
+import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
 import oracle.cle.process.ProcessInfo;
 import oracle.cle.process.ProcessInfoException;
 import oracle.cle.process.ProcessParameter;

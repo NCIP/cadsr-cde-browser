@@ -3,13 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.html.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
-<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants" %>
-<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.html.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormCreateAction" %>
-<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants" %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants" %>
 <%@page import="java.util.*" %>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
 <HTML>

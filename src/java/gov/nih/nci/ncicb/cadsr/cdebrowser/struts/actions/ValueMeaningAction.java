@@ -1,17 +1,17 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
-import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
+import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
 
-import gov.nih.nci.ncicb.cadsr.dto.ValueMeaningTransferObject;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.AbstractDAOFactory;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.ConceptDAO;
-import gov.nih.nci.ncicb.cadsr.persistence.dao.ValueDomainDAO;
-import gov.nih.nci.ncicb.cadsr.resource.ValueMeaning;
+import gov.nih.nci.ncicb.cadsr.common.dto.ValueMeaningTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.common.persistence.dao.AbstractDAOFactory;
+import gov.nih.nci.ncicb.cadsr.common.persistence.dao.ConceptDAO;
+import gov.nih.nci.ncicb.cadsr.common.persistence.dao.ValueDomainDAO;
+import gov.nih.nci.ncicb.cadsr.common.resource.ValueMeaning;
 
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocator;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorFactory;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocator;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorFactory;
 
 import java.io.IOException;
 
@@ -43,7 +43,7 @@ public class ValueMeaningAction extends BrowserBaseDispatchAction{
        ValueMeaning vm = dao.getValueMeaning(shortMeaning);
 
        request.setAttribute(FormConstants.VALUE_MEANING_OBJ, vm);
-       request.setAttribute("CDEBrowser", true);
+       request.setAttribute("CDEBrowser", "true");
 
        return mapping.findForward(SUCCESS);
     }

@@ -1,4 +1,4 @@
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html>
 <head>
@@ -15,11 +15,12 @@ if (parent.frames[1])
 <%
 	//clear the session attribute so not to display done button which would take you back to form builder
 	request.getSession().removeAttribute("paramsTree");	
-	//retain the session id
+	//reload session attributes
 	String previousSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
   String forwardUrl = "cdeBrowse.jsp";
   if(previousSessionId!=null)
     forwardUrl=forwardUrl+"?PageId=DataElementsGroup&"+CaDSRConstants.PREVIOUS_SESSION_ID+"="+previousSessionId;
+	
 %>
 <body text="#000000" topmargin="0">
 

@@ -11,7 +11,7 @@
   <action-mappings>
     <action name="adminform" path="/admin/adminAction" parameter="method"
       scope="request"
-      type="gov.nih.nci.ncicb.cadsr.admin.struts.actions.AdminAction"
+      type="gov.nih.nci.ncicb.cadsr.common.admin.struts.actions.AdminAction"
       validate="false"
       >
       <forward name="success" path="/admin/admin.jsp"/>

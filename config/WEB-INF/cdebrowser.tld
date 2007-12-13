@@ -12,7 +12,7 @@
 
   <tag>
     <name>secureIcon</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.SecureIconDisplay</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.SecureIconDisplay</tagclass>
     <bodycontent>empty</bodycontent>
     <info>SecureIconDisplay</info>
     <attribute>
@@ -83,7 +83,7 @@
   </tag> 
   <tag>
     <name>pagination</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.Pagination</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.Pagination</tagclass>
     <bodycontent>empty</bodycontent>
     <info>pagenation</info>  
     <attribute>
@@ -150,7 +150,7 @@
   
   <tag>
     <name>questionAltText</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.AltQuestionText</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.AltQuestionText</tagclass>
     <bodycontent>empty</bodycontent>
     <info>questionAltText</info>  
     <attribute>
@@ -192,7 +192,7 @@
   
   <tag>
     <name>availableValidValues</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.AvailableValidValue</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.AvailableValidValue</tagclass>
     <bodycontent>empty</bodycontent>
     <info>AvailableValidValue</info>  
     <attribute>
@@ -218,7 +218,7 @@
   </tag>  
   <tag>
     <name>checkAccess</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.CheckAccess</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.CheckAccess</tagclass>
     <bodycontent>empty</bodycontent>
     <info>Check User Access</info>  
     <attribute>
@@ -239,7 +239,7 @@
   </tag> 
   <tag>
     <name>sortableColumnHeader</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.SortableColumnHeaderDisplay</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.SortableColumnHeaderDisplay</tagclass>
     <bodycontent>empty</bodycontent>
     <info>
        This Tag is used to display Columnn header which is displayed
@@ -310,7 +310,7 @@
   </tag>
   <tag>
     <name>enumeratedVDIcon</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.EnumeratedVDIconDisplay</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.EnumeratedVDIconDisplay</tagclass>
     <bodycontent>empty</bodycontent>
     <info>SecureIconDisplay</info>
     <attribute>
@@ -346,7 +346,7 @@
   </tag>  
   <tag>
     <name>sorableColumnHeaderBreadcrumb</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.SorableColumnHeaderBreadcrumb</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.SorableColumnHeaderBreadcrumb</tagclass>
     <bodycontent>empty</bodycontent>
     <info>
        This Tag is used to display Columnn header which is displayed
@@ -402,7 +402,7 @@
   </tag>  
   <tag>
     <name>displayOrderSelection</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.DisplayOrderSelection</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.DisplayOrderSelection</tagclass>
     <bodycontent>empty</bodycontent>
     <info>Dropdown for display order</info>  
     <attribute>
@@ -428,7 +428,7 @@
   </tag>   
   <tag>
     <name>ocrNavigation</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.OCRNavigationDisplay</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.OCRNavigationDisplay</tagclass>
     <bodycontent>empty</bodycontent>
     <info>Display OCR Navigation</info>  
     <attribute>
@@ -464,7 +464,7 @@
   </tag> 
   <tag>
     <name>DefineNavigationCrumbs</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.DefineNavigationCrumbs</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.DefineNavigationCrumbs</tagclass>
     <bodycontent>empty</bodycontent>
     <info>Difine a new Navigation crumbs based on current OCR in pageContext</info>  
     <attribute>
@@ -485,7 +485,7 @@
   </tag>
   <tag>
     <name>RefDocAltQuestionTextDisplay</name>
-    <tagclass>gov.nih.nci.ncicb.cadsr.jsp.tag.handler.RefDocAltQuestionTextDisplay</tagclass>
+    <tagclass>gov.nih.nci.ncicb.cadsr.common.jsp.tag.handler.RefDocAltQuestionTextDisplay</tagclass>
     <bodycontent>empty</bodycontent>
     <info>used to display Reference Document of type Alternate Question text and
           Preferred question text. Depending on the  ref doc type;

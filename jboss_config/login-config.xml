@@ -23,7 +23,7 @@ The outline of the application-policy is:
   </authentication>
 </application-policy>
 
-$Revision: 1.4 $
+$Revision: 1.5 $
 -->
 
 <policy>
@@ -34,8 +34,8 @@ $Revision: 1.4 $
 
     <application-policy name="FormbuilderDomain">
 	<authentication>
-	  <login-module code="gov.nih.nci.ncicb.cadsr.security.jboss.DBLoginModule" flag="required">
-            <module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.servicelocator.ejb.ServiceLocatorImpl</module-option>
+	  <login-module code="gov.nih.nci.ncicb.cadsr.common.security.jboss.DBLoginModule" flag="required">
+            <module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl</module-option>
           </login-module>
 	</authentication>
     </application-policy>

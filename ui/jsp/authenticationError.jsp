@@ -1,4 +1,4 @@
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html>
 <head>

@@ -2,14 +2,13 @@
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/jsLib/helpWinJS.js"/>'></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/jsLib/newWinJS.js"/>'></SCRIPT>
 <%@ include  file="../common/topHeader.jsp" %>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%
-	String preSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
-    String forwardPage = "cdeBrowse.jsp";
-  if(preSessionId!=null)
+String preSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
+    	String forwardPage = "cdeBrowse.jsp";
+  	if(preSessionId!=null)
 	  forwardPage=forwardPage+"?PageId=DataElementsGroup&"+CaDSRConstants.PREVIOUS_SESSION_ID+"="+preSessionId;
-  else
+  	else
 	  forwardPage=forwardPage+"?PageId=DataElementsGroup";  
 %>
 <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>

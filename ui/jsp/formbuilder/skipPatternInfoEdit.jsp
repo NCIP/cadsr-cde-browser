@@ -4,14 +4,13 @@
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 
 <%@ page import="oracle.clex.process.jsp.GetInfoBean "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.html.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.* "%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.NavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.html.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.* "%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.resource.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.resource.*"%>
 <HTML>
   <HEAD>
     <TITLE>Formbuilder: Skip Pattern.</TITLE>
@@ -244,7 +243,7 @@ function submitForm(methodName) {
           <tr>
             <td>
               <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" >
-                <logic:iterate id="protocol" name="<%=FormConstants.CRF%>" property="protocols" type="gov.nih.nci.ncicb.cadsr.resource.Protocol" >
+                <logic:iterate id="protocol" name="<%=FormConstants.CRF%>" property="protocols" type="gov.nih.nci.ncicb.cadsr.common.resource.Protocol" >
                     <tr class="OraTabledata">
                        <td class="OraTableColumnHeader" width="5%" nowrap>
                             <html:multibox property="<%=FormConstants.SELECTED_SKIP_PROTOCOL_IDS%>">
@@ -284,7 +283,7 @@ function submitForm(methodName) {
                   <th scope="col">CSI* Type</th>
                 </tr>
                 
-                   <logic:iterate id="csi" name="<%=FormConstants.CRF%>" property="classifications" type="gov.nih.nci.ncicb.cadsr.resource.ClassSchemeItem" >
+                   <logic:iterate id="csi" name="<%=FormConstants.CRF%>" property="classifications" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem" >
 
                         <tr class="OraTabledata">
                            <td class="OraTableColumnHeader" width="5%" nowrap>

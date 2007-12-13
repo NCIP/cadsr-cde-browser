@@ -54,7 +54,7 @@ class="OraBGAccentVeryDark" >
                       <td>
                         <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" 
 class="OraTabledata">      
-                          <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" 
+                          <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.common.resource.Question" 
 property="questions" indexId="questionIndex" >                           
                             <bean:size id="questionSize" name="module" property="questions" />
                             <tr class="OraTabledata">
@@ -248,7 +248,7 @@ class="OraBGAccentVeryDark" >
                                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" 
 class="OraBGAccentVeryDark">
                                     <logic:iterate id="validValue" name="question" 
-type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues" indexId="vvIndex">
+type="gov.nih.nci.ncicb.cadsr.common.resource.FormValidValue" property="validValues" indexId="vvIndex">
                                       <tr   class="OraTabledata">
                                         <td COLSPAN="2" class="OraFieldText" >&nbsp;</td>
                                       </tr>
@@ -299,7 +299,7 @@ class="OraBGAccentVeryDark" >
 				          <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" 
 class="OraBGAccentVeryDark">
 					    <logic:iterate id="currTriggerAction" name="validValue" 
-type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+type="gov.nih.nci.ncicb.cadsr.common.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
 						<%@ include file="/formbuilder/skipPatternDetailsView_inc.jsp"%>
 					    </logic:iterate>
 					  </table>

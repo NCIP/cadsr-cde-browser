@@ -1,6 +1,6 @@
             <bean:define id="currentModuleIndex" name="moduleEditForm" property="moduleIndex" scope="session"/>
             <logic:notEmpty name="<%=FormConstants.SKIP_TARGET_FORM%>" property = "modules">
-              <logic:iterate id="module" name="<%=FormConstants.SKIP_TARGET_FORM%>" type="gov.nih.nci.ncicb.cadsr.resource.Module" property="modules" indexId="modIndex" >                            
+              <logic:iterate id="module" name="<%=FormConstants.SKIP_TARGET_FORM%>" type="gov.nih.nci.ncicb.cadsr.common.resource.Module" property="modules" indexId="modIndex" >                            
                <table width="80%" align="center" cellpadding="0" cellspacing="0" border="0" >
                  <tr >
            	    <td align="left" width="100%">
@@ -46,7 +46,7 @@
                     <tr class="OraTabledata">
                       <td>
                         <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraTabledata">      
-                          <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions" indexId="questionIndex" >                           
+                          <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.common.resource.Question" property="questions" indexId="questionIndex" >                           
                             <bean:size id="questionSize" name="module" property="questions" />
                             <tr class="OraTabledata">
                               <td class="OraFieldText" width="50">&nbsp;</td>
@@ -206,7 +206,7 @@ class="OraBGAccentVeryDark" >
                                 <td class="OraFieldText" width="50">&nbsp;</td>
                                 <td colspan="2">
                                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentVeryDark">
-                                    <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues" indexId="vvIndex">
+                                    <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.common.resource.FormValidValue" property="validValues" indexId="vvIndex">
                                       <tr   class="OraTabledata">
                                         <td COLSPAN="2" class="OraFieldText" >&nbsp;</td>
                                       </tr>

@@ -43,7 +43,7 @@
                     <tr class="PrinterOraTabledata">
                       <td>
                         <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" >      
-                          <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.resource.Question" property="questions">                           
+                          <logic:iterate id="question" name="module" type="gov.nih.nci.ncicb.cadsr.common.resource.Question" property="questions">                           
                             <tr class="PrinterOraTabledata">
                               <td class="PrinterOraFieldText" width="50">&nbsp;</td>
                               <td class="PrinterOraFieldText" height="1"  >                               
@@ -214,7 +214,7 @@ class="OraBGAccentBlack" >
                                 <td class="PrinterOraFieldText" width="50">&nbsp;</td>
                                 <td>
                                   <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="OraBGAccentBlack">
-                                    <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.resource.FormValidValue" property="validValues">
+                                    <logic:iterate id="validValue" name="question" type="gov.nih.nci.ncicb.cadsr.common.resource.FormValidValue" property="validValues">
                                       <tr COLSPAN="3" class="PrinterOraTabledata">
                                         <td class="PrinterOraFieldText" width="50">&nbsp;</td>
                                         <td class="PrinterOraFieldText">
@@ -258,7 +258,7 @@ class="OraBGAccentBlack" >
 				          <table width="100%" align="center" cellpadding="0" cellspacing="1" border="0" 
 class="OraBGAccentVeryDark">
 					    <logic:iterate id="currTriggerAction" name="validValue" 
-type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+type="gov.nih.nci.ncicb.cadsr.common.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
                              
                              <%
                                String currSkipTargetType = FormJspUtil.getFormElementType(currTriggerAction.getActionTarget());
@@ -306,7 +306,7 @@ type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" 
                  <logic:present name="module" property = "triggerActions" >
                    <logic:notEmpty name="module" property = "triggerActions">
                             <table width="80%" align="center" cellpadding="0" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-                              <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
+                              <logic:iterate id="currTriggerAction" name="module" type="gov.nih.nci.ncicb.cadsr.common.resource.TriggerAction" property="triggerActions" indexId="triggerIndex" >
                             
                              <%
                                String currSkipTargetType = FormJspUtil.getFormElementType(currTriggerAction.getActionTarget());

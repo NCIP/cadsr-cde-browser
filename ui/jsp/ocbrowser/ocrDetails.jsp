@@ -3,10 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserFormConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.util.OCUtils"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserFormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.util.OCUtils"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.util.ObjectExtractor"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Collection"%>
@@ -332,16 +332,16 @@ function navigateOCR(ocId,ocrIndex,direction) {
                   <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                    <TR class=OraTabledata>
                     <td class="OraFieldText">                         
-                         <logic:iterate id="currProject" name="projects" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="prIndex" >
+                         <logic:iterate id="currProject" name="projects" type="gov.nih.nci.ncicb.cadsr.common.resource.Project" indexId="prIndex" >
                            <UL>
                                  <li class="OraFieldText"><bean:write name="currProject" property="name"/>(Project)</li>
                                  <logic:notEmpty  name="currProject" property="children">
-                                  <logic:iterate id="currSubProject" name="currProject" property="children" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="subIndex" >
+                                  <logic:iterate id="currSubProject" name="currProject" property="children" type="gov.nih.nci.ncicb.cadsr.common.resource.Project" indexId="subIndex" >
                                      <ul>
                                        <li  class="OraFieldText"><bean:write name="currSubProject" property="name"/>(SubProject)</li>
                                        <logic:notEmpty  name="currSubProject" property="packages">
                                         <ul>
-                                        <logic:iterate id="currPackage" name="currSubProject" property="packages" type="gov.nih.nci.ncicb.cadsr.resource.OCRPackage" indexId="pkIndex" >
+                                        <logic:iterate id="currPackage" name="currSubProject" property="packages" type="gov.nih.nci.ncicb.cadsr.common.resource.OCRPackage" indexId="pkIndex" >
                                              <li class="OraFieldText"> <bean:write name="currPackage" property="name"/>(Package)</li>                                                  
                                         </logic:iterate>
                                         </ul>
@@ -555,16 +555,16 @@ function navigateOCR(ocId,ocrIndex,direction) {
                   <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                    <TR class=OraTabledata>
                     <td class="OraFieldText">                         
-                         <logic:iterate id="currProject" name="projects" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="prIndex" >
+                         <logic:iterate id="currProject" name="projects" type="gov.nih.nci.ncicb.cadsr.common.resource.Project" indexId="prIndex" >
                            <UL>
                                  <li class="OraFieldText"><bean:write name="currProject" property="name"/>(Project)</li>
                                  <logic:notEmpty  name="currProject" property="children">
-                                  <logic:iterate id="currSubProject" name="currProject" property="children" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="subIndex" >
+                                  <logic:iterate id="currSubProject" name="currProject" property="children" type="gov.nih.nci.ncicb.cadsr.common.resource.Project" indexId="subIndex" >
                                      <ul>
                                        <li  class="OraFieldText"><bean:write name="currSubProject" property="name"/>(SubProject)</li>
                                        <logic:notEmpty  name="currSubProject" property="packages">
                                         <ul>
-                                        <logic:iterate id="currPackage" name="currSubProject" property="packages" type="gov.nih.nci.ncicb.cadsr.resource.OCRPackage" indexId="pkIndex" >
+                                        <logic:iterate id="currPackage" name="currSubProject" property="packages" type="gov.nih.nci.ncicb.cadsr.common.resource.OCRPackage" indexId="pkIndex" >
                                              <li class="OraFieldText"> <bean:write name="currPackage" property="name"/>(Package)</li>                                                  
                                         </logic:iterate>
                                         </ul>
@@ -783,16 +783,16 @@ function navigateOCR(ocId,ocrIndex,direction) {
                   <table vAlign=top cellSpacing=1 cellPadding=1  width="100%" align=center border=0 class="OraBGAccentVeryDark">
                    <TR class=OraTabledata>
                     <td class="OraFieldText">                         
-                         <logic:iterate id="currProject" name="projects" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="prIndex" >
+                         <logic:iterate id="currProject" name="projects" type="gov.nih.nci.ncicb.cadsr.common.resource.Project" indexId="prIndex" >
                            <UL>
                                  <li class="OraFieldText"><bean:write name="currProject" property="name"/>(Project)</li>
                                  <logic:notEmpty  name="currProject" property="children">
-                                  <logic:iterate id="currSubProject" name="currProject" property="children" type="gov.nih.nci.ncicb.cadsr.resource.Project" indexId="subIndex" >
+                                  <logic:iterate id="currSubProject" name="currProject" property="children" type="gov.nih.nci.ncicb.cadsr.common.resource.Project" indexId="subIndex" >
                                      <ul>
                                        <li  class="OraFieldText"><bean:write name="currSubProject" property="name"/>(SubProject)</li>
                                        <logic:notEmpty  name="currSubProject" property="packages">
                                         <ul>
-                                        <logic:iterate id="currPackage" name="currSubProject" property="packages" type="gov.nih.nci.ncicb.cadsr.resource.OCRPackage" indexId="pkIndex" >
+                                        <logic:iterate id="currPackage" name="currSubProject" property="packages" type="gov.nih.nci.ncicb.cadsr.common.resource.OCRPackage" indexId="pkIndex" >
                                              <li class="OraFieldText"> <bean:write name="currPackage" property="name"/>(Package)</li>                                                  
                                         </logic:iterate>
                                         </ul>

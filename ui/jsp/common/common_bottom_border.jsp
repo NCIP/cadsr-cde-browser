@@ -1,4 +1,4 @@
-<%@ page import="gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams"%>
 <TABLE width=100% cellspacing=0 cellpadding=0 border=0>
 <TR>
 <TD valign=bottom width=99%><html:img page="/i/bottom_shade.gif" height="6" width="100%" /></TD>

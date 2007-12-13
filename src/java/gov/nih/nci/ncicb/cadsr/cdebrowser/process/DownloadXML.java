@@ -18,7 +18,7 @@ import oracle.clex.process.*;
 import oracle.cle.process.ProcessParameter;
 
 //Application imports
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 
 public class DownloadXML extends CreateGenericBinaryPage  {
   

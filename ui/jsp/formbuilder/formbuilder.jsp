@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=windows-1252"%>
-<%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
-<%@page import="gov.nih.nci.ncicb.cadsr.resource.Context"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.resource.Context"%>
 <%@page import="java.util.HashMap " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.tree.TreeConstants " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants " %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>

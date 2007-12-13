@@ -3,18 +3,19 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
 // java imports
 //CDE Browser Application Imports
-import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
-import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.resource.CDECart;
-import gov.nih.nci.ncicb.cadsr.resource.CDECartItem;
-import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
-import gov.nih.nci.ncicb.cadsr.util.ApplicationParameters;
-import gov.nih.nci.ncicb.cadsr.util.DBUtil;
-import gov.nih.nci.ncicb.cadsr.util.logging.Log;
-import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
+import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
+import gov.nih.nci.ncicb.cadsr.common.resource.CDECart;
+import gov.nih.nci.ncicb.cadsr.common.resource.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.common.resource.handler.DataElementHandler;
+import gov.nih.nci.ncicb.cadsr.common.util.ApplicationParameters;
+import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 
 import oracle.cle.persistence.HandlerFactory;
 
@@ -58,7 +59,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.27 2007-10-16 15:36:30 hegdes Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.28 2007-12-13 19:35:54 hegdes Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
   private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -177,7 +178,7 @@ public class GetExcelDownload extends BasePersistingProcess {
       //String dataSource = getStringInfo("SBREXT_DSN");
       //cn = dbUtil.getConnection(); -- Commented for JBoss deployment
       //ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
-      dbUtil.getOracleConnectionFromContainer();
+      dbUtil.getOracleConnectionFromContainer();  //getConnectionFromContainer(); went back to original call
       cn = dbUtil.getConnection();
       st = cn.createStatement();
 

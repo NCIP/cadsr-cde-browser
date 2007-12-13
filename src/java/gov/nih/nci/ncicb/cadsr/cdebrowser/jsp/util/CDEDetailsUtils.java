@@ -1,9 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util;
-import gov.nih.nci.ncicb.cadsr.resource.ComponentConcept;
-import gov.nih.nci.ncicb.cadsr.resource.Concept;
-import gov.nih.nci.ncicb.cadsr.resource.ConceptDerivationRule;
-import gov.nih.nci.ncicb.cadsr.resource.ValidValue;
-import gov.nih.nci.ncicb.cadsr.util.CDEBrowserParams;
+import gov.nih.nci.ncicb.cadsr.common.resource.ComponentConcept;
+import gov.nih.nci.ncicb.cadsr.common.resource.Concept;
+import gov.nih.nci.ncicb.cadsr.common.resource.ConceptDerivationRule;
+import gov.nih.nci.ncicb.cadsr.common.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;

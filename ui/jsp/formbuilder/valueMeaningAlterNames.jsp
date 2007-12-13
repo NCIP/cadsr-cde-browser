@@ -4,9 +4,9 @@
 <%@page import="java.util.*" %>
 <%@page import="javax.servlet.http.* " %>
 <%@page import="javax.servlet.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.util.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.resource.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.*"%>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.resource.* " %>
+<%@page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.*"%>
 
 
 <html>

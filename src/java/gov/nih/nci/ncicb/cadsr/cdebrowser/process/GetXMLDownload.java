@@ -1,20 +1,20 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-import gov.nih.nci.ncicb.cadsr.base.process.*;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DESearchQueryBuilder;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.process.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.database.*;
-import gov.nih.nci.ncicb.cadsr.resource.*;
-import gov.nih.nci.ncicb.cadsr.dto.CDECartItemTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.CDECartTransferObject;
-import gov.nih.nci.ncicb.cadsr.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.common.base.process.*;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.database.*;
+import gov.nih.nci.ncicb.cadsr.common.resource.*;
+import gov.nih.nci.ncicb.cadsr.common.dto.CDECartItemTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.dto.CDECartTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
 
 //CDE Browser Application Imports
-import gov.nih.nci.ncicb.cadsr.util.*;
-import gov.nih.nci.ncicb.cadsr.util.logging.Log;
-import gov.nih.nci.ncicb.cadsr.util.logging.LogFactory;
-import gov.nih.nci.ncicb.cadsr.xml.XMLGeneratorBean;
+import gov.nih.nci.ncicb.cadsr.common.util.*;
+import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
+import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
+import gov.nih.nci.ncicb.cadsr.common.xml.XMLGeneratorBean;
 
 //import oracle.cle.process.ProcessConstants;
 import java.sql.Connection;
@@ -184,7 +184,7 @@ public class GetXMLDownload extends BasePersistingProcess {
       //ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
       //cn = DBUtil.createOracleConnection(ap.getDBUrl(),ap.getUser(),ap.getPassword());
       dbUtil = new DBUtil();
-      dbUtil.getOracleConnectionFromContainer();
+      dbUtil.getOracleConnectionFromContainer();  //getConnectionFromContainer();  went back to original
 
       //Get Oracle Native Connection
       cn = dbUtil.getConnection();

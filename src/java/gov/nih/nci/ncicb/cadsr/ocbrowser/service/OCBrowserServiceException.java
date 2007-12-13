@@ -1,5 +1,5 @@
 package gov.nih.nci.ncicb.cadsr.ocbrowser.service;
-import gov.nih.nci.ncicb.cadsr.exception.NestedCheckedException;
+import gov.nih.nci.ncicb.cadsr.common.exception.NestedCheckedException;
 
 public class OCBrowserServiceException extends NestedCheckedException
 {

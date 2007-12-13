@@ -1,14 +1,14 @@
 package gov.nih.nci.ncicb.cadsr.ocbrowser.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.domain.ObjectClass;
-import gov.nih.nci.ncicb.cadsr.dto.AttachmentTransferObject;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.common.FormConstants;
-import gov.nih.nci.ncicb.cadsr.ocbrowser.service.OCBrowserService;
-import gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserFormConstants;
-import gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserNavigationConstants;
-import gov.nih.nci.ncicb.cadsr.resource.Attachment;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
-import gov.nih.nci.ncicb.cadsr.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.common.dto.AttachmentTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants;
+import gov.nih.nci.ncicb.cadsr.common.ocbrowser.service.OCBrowserService;
+import gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserFormConstants;
+import gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserNavigationConstants;
+import gov.nih.nci.ncicb.cadsr.common.resource.Attachment;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorException;
+import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

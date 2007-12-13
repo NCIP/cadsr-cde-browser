@@ -1,6 +1,7 @@
 <?xml version = '1.0' encoding = 'windows-1252'?>
 <!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
 <ejb-jar>
+<!--
   <enterprise-beans>
     <session>
       <description>Session Bean ( Stateless )</description>
@@ -15,7 +16,7 @@
         <description>Class name of the DAOFactory that FormBuilderEJB will use.</description>
         <env-entry-name>DAOFactoryClassName</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>gov.nih.nci.ncicb.cadsr.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
+        <env-entry-value>gov.nih.nci.ncicb.cadsr.common.persistence.dao.jdbc.JDBCDAOFactory</env-entry-value>
       </env-entry> 
       <resource-ref>      
 	<res-ref-name>jdbc/CDEBrowserDS</res-ref-name>     
@@ -75,4 +76,5 @@
           <trans-attribute>Supports</trans-attribute>
     </container-transaction>      
   </assembly-descriptor>
+-->
 </ejb-jar>

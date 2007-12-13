@@ -1,14 +1,14 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-import gov.nih.nci.ncicb.cadsr.base.process.BasePersistingProcess;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.service.CDEBrowserService;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.userexception.DataElementNotFoundException;
-import gov.nih.nci.ncicb.cadsr.cdebrowser.userexception.IllegalURLParametersException;
-import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.handler.DataElementHandler;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ApplicationServiceLocator;
-import gov.nih.nci.ncicb.cadsr.util.TabInfoBean;
-import gov.nih.nci.ncicb.cadsr.util.UserErrorMessage;
+import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.service.CDEBrowserService;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.userexception.DataElementNotFoundException;
+import gov.nih.nci.ncicb.cadsr.common.cdebrowser.userexception.IllegalURLParametersException;
+import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.common.resource.handler.DataElementHandler;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ApplicationServiceLocator;
+import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
+import gov.nih.nci.ncicb.cadsr.common.util.UserErrorMessage;
 
 import javax.servlet.http.HttpServletRequest;
 

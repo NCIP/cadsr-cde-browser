@@ -1,7 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser;
-import gov.nih.nci.ncicb.cadsr.dto.DataElementTransferObject;
-import gov.nih.nci.ncicb.cadsr.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.resource.DerivedDataElement;
+import gov.nih.nci.ncicb.cadsr.common.dto.DataElementTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.common.resource.DerivedDataElement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;

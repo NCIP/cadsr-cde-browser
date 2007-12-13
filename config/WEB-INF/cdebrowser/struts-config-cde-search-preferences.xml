@@ -3,7 +3,7 @@
 <struts-config>
   <form-beans>
     <form-bean name="searchPrefForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="src" type="java.lang.String"/> 
       <form-property name="moduleIndex" type="java.lang.String"/>

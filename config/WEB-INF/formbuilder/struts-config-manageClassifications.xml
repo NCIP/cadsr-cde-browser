@@ -3,14 +3,14 @@
 <struts-config>
   <form-beans>
     <form-bean name="manageClassificationsForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="formIdSeq" type="java.lang.String"/>
       <form-property name="jspClassification" type="java.lang.String[]" size="3"/> 
       <form-property name="classifyCDEOnForm" type="java.lang.String" />       
     </form-bean>
     <form-bean name="updateSkipPatternFormForCSI"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.FormBuilderBaseDynaFormBean"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
       <form-property name="removedClassificationId" type="java.lang.String"/>
       <form-property name="accs" type="java.lang.String"/>

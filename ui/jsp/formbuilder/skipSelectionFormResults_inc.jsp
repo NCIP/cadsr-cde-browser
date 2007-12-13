@@ -30,7 +30,7 @@ if(confirm(message)) location.href = url;
         </table>     
         
         <bean:define id="pageBean" name="<%=FormConstants.SKIP_FORM_SEARCH_RESULTS_PAGINATION%>" 
-        	type="gov.nih.nci.ncicb.cadsr.jsp.bean.PaginationBean"/>
+        	type="gov.nih.nci.ncicb.cadsr.common.jsp.bean.PaginationBean"/>
         <cde:pagination name="top" textClassName="OraFieldText" selectClassName="LOVField" formIndex="0" pageSize="40" 
                      beanId = "<%=FormConstants.SKIP_FORM_SEARCH_RESULTS_PAGINATION%>" 
                      actionURL="pageAction.do"
@@ -111,7 +111,7 @@ if(confirm(message)) location.href = url;
             </th>            
           </tr>        
           <logic:iterate id="form" name="<%=FormConstants.SKIP_FORM_SEARCH_RESULTS%>" 
-          	type="gov.nih.nci.ncicb.cadsr.resource.Form"
+          	type="gov.nih.nci.ncicb.cadsr.common.resource.Form"
                 offset="<%=Integer.toString(pageBean.getOffset())%>"
                 length="<%=Integer.toString(pageBean.getPageSize())%>">
             <tr class="OraTabledata">  

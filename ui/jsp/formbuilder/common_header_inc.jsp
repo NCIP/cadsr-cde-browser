@@ -1,6 +1,6 @@
 
 
-<%@ page import="gov.nih.nci.ncicb.cadsr.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.*"%>
 <%
 	String dest = pageContext.getRequest().getParameter("loginDestination");
 

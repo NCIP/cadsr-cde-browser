@@ -2,11 +2,11 @@ package gov.nih.nci.ncicb.cadsr.ocbrowser.util;
 import gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship;
 import gov.nih.nci.ncicb.cadsr.domain.AdminComponentClassSchemeClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.domain.ClassSchemeClassSchemeItem;
-import gov.nih.nci.ncicb.cadsr.dto.OCRPackageTransferObject;
-import gov.nih.nci.ncicb.cadsr.dto.ProjectTransferObject;
-import gov.nih.nci.ncicb.cadsr.resource.OCRPackage;
+import gov.nih.nci.ncicb.cadsr.common.dto.OCRPackageTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.dto.ProjectTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.resource.OCRPackage;
 
-import gov.nih.nci.ncicb.cadsr.resource.Project;
+import gov.nih.nci.ncicb.cadsr.common.resource.Project;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

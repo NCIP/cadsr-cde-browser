@@ -1,15 +1,15 @@
 package gov.nih.nci.ncicb.cadsr.ocbrowser.struts.actions;
 import gov.nih.nci.ncicb.cadsr.domain.ObjectClass;
 import gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship;
-import gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction;
-import gov.nih.nci.ncicb.cadsr.jsp.bean.OCRNavigationBean;
-import gov.nih.nci.ncicb.cadsr.servicelocator.ServiceLocatorException;
-import gov.nih.nci.ncicb.cadsr.ocbrowser.service.OCBrowserService;
+//import gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction;
+import gov.nih.nci.ncicb.cadsr.common.jsp.bean.OCRNavigationBean;
+import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorException;
+import gov.nih.nci.ncicb.cadsr.common.ocbrowser.service.OCBrowserService;
 import gov.nih.nci.ncicb.cadsr.ocbrowser.service.OCBrowserServiceException;
-import gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserFormConstants;
-import gov.nih.nci.ncicb.cadsr.ocbrowser.struts.common.OCBrowserNavigationConstants;
+import gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserFormConstants;
+import gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserNavigationConstants;
 
-import gov.nih.nci.ncicb.cadsr.ocbrowser.util.OCUtils;
+import gov.nih.nci.ncicb.cadsr.common.ocbrowser.util.OCUtils;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;

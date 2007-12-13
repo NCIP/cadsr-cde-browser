@@ -9,7 +9,7 @@
  */
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
-import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.common.BrowserFormConstants;
+import gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants;
 
 import java.io.IOException;
 
