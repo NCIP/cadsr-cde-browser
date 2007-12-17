@@ -1,7 +1,7 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
 import gov.nih.nci.ncicb.cadsr.common.base.process.*;
-import gov.nih.nci.ncicb.cadsr.common.cdebrowser.ProtocolsForCdeBean;
+import gov.nih.nci.ncicb.cadsr.cdebrowser.ProtocolsForCdeBean;
 import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.common.database.*;
 import gov.nih.nci.ncicb.cadsr.common.html.HTMLPageScroller;

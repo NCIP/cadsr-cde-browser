@@ -25,11 +25,11 @@
    <property name="jboss.stop.script.name" value="shutdown.bat" />
    <property name="jboss.deploy" value="${jboss.home}/server/default/deploy" />
    
-   <property name="cdebrowser.version" value="3.2.0.3" />
+   <property name="cdebrowser.version" value="4.0.0.0" />
    <property name="cdebrowser.build" value="1" />
    
    <!-- used for open source build for file suffix-->
-   <property name="cdebrowser.version.suffix" value="3_2_0_3" />
+   <property name="cdebrowser.version.suffix" value="4_0_0_0" />
    
    <property name="dev.user.password" value="cdeuser" />
    <property name="qa.user.password" value="cdeuser" />
@@ -169,7 +169,7 @@
          <classpath refid="classpath"/>
          <src refid="srcpath"/>
        </javac> 
-	   <unzip src="${java.lib.dir}/contexttree.jar" dest="${classes.build.dir}"  overwrite="No"/>   	
+	   <unzip src="${java.lib.dir}/cadsrutil.jar" dest="${classes.build.dir}"  overwrite="No"/>   	
    	   <copy todir="${build.dir}">
 	     <fileset dir="${java.lib.dir}">
 	      <patternset>
