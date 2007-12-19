@@ -25,10 +25,10 @@ function subTabClicked(tabNum,urlParams) {
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/jsLib/newWinJS.js"/>'></SCRIPT>
 
 <%
-String fbPath = "http://localhost:8080/FormBuilder";
 System.out.println("tab_include_search " + request.getContextPath());
   pageContext.setAttribute("deList",deList);
   CDEBrowserParams params = CDEBrowserParams.getInstance();
+  String fbPath = params.getFormBuilderUrl();  //"http://localhost:8080/FormBuilder";
 %>
 <TABLE valign="top" width=100% Cellpadding=0 Cellspacing=0 border=0>
   <tr>
