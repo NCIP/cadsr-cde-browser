@@ -25,7 +25,7 @@ function subTabClicked(tabNum,urlParams) {
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/jsLib/newWinJS.js"/>'></SCRIPT>
 
 <%
-System.out.println("tab_include_search " + request.getContextPath());
+//System.out.println("tab_include_search " + request.getContextPath());
   pageContext.setAttribute("deList",deList);
   CDEBrowserParams params = CDEBrowserParams.getInstance();
   String fbPath = params.getFormBuilderUrl();  //"http://localhost:8080/FormBuilder";
@@ -41,20 +41,21 @@ System.out.println("tab_include_search " + request.getContextPath());
     <td align=right valign=top colspan=2 nowrap>
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top"><html:img page="/i/cde_cart.gif" alt="CDE Cart" border="0" /></html:link><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
  <!--  
 		<logic:notPresent name="nciUser">
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="/cdeCartAction.do?method=displayCDECart" target="_top"><html:img page="/i/cde_cart.gif" alt="CDE Cart" border="0" /></html:link><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
 		</logic:notPresent>
         <logic:present name="nciUser">
- 		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="<%=\"/formCDECartAction.do?method=displayCDECart\" + urlParams%>" target="_top"><html:img page="/i/cde_cart.gif" alt="CDE Cart" border="0" /></html:link><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
+ 		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="<%=fbPath+\"/formCDECartAction.do?method=displayCDECart\" + urlParams%>" target="_top"><html:img page="/i/cde_cart.gif" alt="CDE Cart" border="0" /></html:link><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
       </logic:present>   
- --> 
  		<TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link href="<%=fbPath+\"/formCDECartAction.do?method=displayCDECart\" + urlParams%>" target="_blank"><html:img page="/i/cde_cart.gif" alt="CDE Cart" border="0" /></html:link><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
+ --> 
         <%
 		  if ("".equals(src)) {
 		 %>
 		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="/" target="_top"><html:img page="/i/icon_home.gif" alt="Home" border="0"  width="32" height="32"/></html:link><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font></TD>
-		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link href="<%=fbPath+\"/formSearchAction.do\"%>" target="_top"><html:img page="/i/formicon.gif" alt="FormBuilder" border="0"  width="32" height="32" /></html:link><br><font color=brown face=verdana size=1>&nbsp;FormBuilder&nbsp;</font></TD>
+		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link href="<%=fbPath+\"/formSearchAction.do\"%>" target="_blank"><html:img page="/i/formicon.gif" alt="FormBuilder" border="0"  width="32" height="32" /></html:link><br><font color=brown face=verdana size=1>&nbsp;FormBuilder&nbsp;</font></TD>
 		  <%
 			 }
           %>

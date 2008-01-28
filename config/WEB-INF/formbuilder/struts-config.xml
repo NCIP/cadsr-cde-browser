@@ -88,7 +88,7 @@
       
     </form-bean>       
     <form-bean name="displayCartForm"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.formbeans.CDECartFormBean"/>
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.CDECartFormBean"/>
     <form-bean name="changeAssociationForm"
       type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
       dynamic="true">
@@ -320,9 +320,9 @@
     </action>
     <action name="displayCartForm" path="/cdeCartAction" parameter="method"
       scope="session"
-      type="gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.CDECartAction"
+      type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CDECartAction"
       validate="false">
-      <forward name="success" path="/formbuilder/displayCDECart.jsp"/>
+      <forward name="success" path="/cdebrowser/displayCDECart.jsp"/>
       <forward name="saveSuccess" path="/formCDECartRedirectAction.do?method=addItems" redirect="true"/>
     </action>
     <action name="displayCartForm" path="/formCDECartRedirectAction" parameter="method"

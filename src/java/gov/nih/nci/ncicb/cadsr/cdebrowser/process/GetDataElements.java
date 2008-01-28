@@ -46,7 +46,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.30 2007-12-16 09:36:07 hegdes Exp $
+ * @version: $Id: GetDataElements.java,v 1.31 2008-01-28 15:18:31 hegdes Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -347,7 +347,6 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
           cdeItem.setItem(de);
           cart.setDataElement(cdeItem);
         }
-
         myRequest.setAttribute(
           ProcessConstants.CDE_CART_ADD_SUCCESS,
           "Data Element(s) added to your CDE Cart Successfully.");

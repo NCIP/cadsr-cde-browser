@@ -106,6 +106,10 @@
     
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <servlet-mapping>
+    <servlet-name>action</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
    <filter> 
        <filter-name>SessionFilter</filter-name>
        <filter-class>gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.SessionFilter</filter-class>   
@@ -138,10 +142,6 @@
       <param-value>N</param-value>
     </init-param>         	
    </filter>   
-  <servlet-mapping>
-    <servlet-name>action</servlet-name>
-    <url-pattern>*.do</url-pattern>
-  </servlet-mapping>
   <filter-mapping> 
          <filter-name>SessionFilter</filter-name>
          <url-pattern>/search*</url-pattern> 

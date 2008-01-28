@@ -23,11 +23,13 @@ function submitForm() {
 }
 
 function saveItems() {
-  if (validateSelection('selectedItems','Please select atleast one data element to save to your CDE Cart.')) {
-   document.forms[0].method.value = 'addItems'
-   submitForm();
-   return true;
-  }
+  alert('Saving to CDE Cart items will be available when Object Cart is ready to use');
+  
+ // if (validateSelection('selectedItems','Please select atleast one data element to save to your CDE Cart.')) {
+ //  document.forms[0].method.value = 'addItems'
+ //  submitForm();
+ //  return true;
+ // }
 }
 
 function deleteItems() {
@@ -63,7 +65,8 @@ function details(linkParms ){
 }
 
 function retrieveSavedItems() {
-  document.location.href = "formCDECartAction.do?method=displayCDECart";
+  alert('Retrieve CDE Cart items for the user will be available when Object Cart is ready to use');
+  //document.location.href = "formCDECartAction.do?method=displayCDECart";
 }
 
 -->
@@ -73,7 +76,7 @@ function retrieveSavedItems() {
 <BODY bgcolor="#ffffff" topmargin="0">
 
 <% 
-System.out.println("cdebrowser contextpath: " + request.getContextPath());
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
   String urlPrefix = "";
   String downloadXMLURL = "javascript:fileDownloadWin('cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
   String downloadExcelURL = "javascript:fileDownloadWin('cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
