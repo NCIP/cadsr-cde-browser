@@ -6,7 +6,8 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%
 	//String dest = pageContext.getRequest().getParameter("loginDestination");
-	String dest = "javascript:alert('Displaying of CDE Cart for the user will be available when Object Cart is ready to use');";
+	String dest = "javascript:alert('Displaying of CDE Cart for the user will be available when Object Cart is ready to use')";
+	String frmURL = pageContext.getRequest().getParameter("urlPrefix");
 %>
 
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/jsLib/newWinJS.js"/>'></SCRIPT>
@@ -24,7 +25,7 @@
     <td align=right valign=top colspan=2 nowrap>
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>
-          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=params.getFormBuilderUrl() + "formSearchAction.do"%>" TARGET="_top"><html:img page="/i/formicon.gif" alt="FormBuilder" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;FormBuilder&nbsp;</font></TD>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=frmURL%> + formSearchAction.do" TARGET="_top"><html:img page="/i/formicon.gif" alt="FormBuilder" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;FormBuilder&nbsp;</font></TD>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('<%=request.getContextPath()%>/common/help/cdeBrowserHelp.html','helpWin',700,600)">
           <html:img page="/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
          <logic:present name="nciUser">
