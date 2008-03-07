@@ -23,11 +23,13 @@
                <html:img page="/i/icon_home.gif" alt="Home" border="0"  width="32" height="32" />
              </A><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font>
           </TD>
+        <!--  Is this needed here 
           <TD valign="TOP" align="CENTER" width="1%" colspan=1>
              <A HREF='<%=request.getContextPath()%>/formSearchAction.do' TARGET="_top">
                <html:img page="/i/formicon.gif" alt="FormBuilder" border="0"  width="32" height="32" />
              </A><br><font color=brown face=verdana size=1>&nbsp;Form&nbsp;Builder&nbsp;</font>
            </TD>
+          -->
           <TD valign="TOP" align="CENTER" width="1%" colspan=1>
           <A HREF="javascript:newBrowserWin('<%=request.getContextPath()%>/common/help/cdeBrowserHelp.html','helpWin',700,600)">
             <html:img page="/i/icon_help.gif" alt="Help" border="0"  width="32" height="32" />
