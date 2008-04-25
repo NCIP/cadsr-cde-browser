@@ -25,7 +25,7 @@
 <%@include  file="cdebrowserCommon_html/SessionAuth.html"%>
 
 <%
-  Vector classificationVector = (Vector)infoBean.getInfo(ProcessConstants.CLASSIFICATION_VECTOR);
+  List classificationVector = (List)infoBean.getInfo(ProcessConstants.CLASSIFICATION_VECTOR);
   DataElement de = (DataElement)infoBean.getInfo("de");
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
   Map csRefDocs = (Map) infoBean.getInfo("csRefDocs");
@@ -154,32 +154,33 @@ function listChanged(urlInfo) {
   <tr class="OraTableColumnHeader">
     <th>CS* Long Name</th>
     <th>CS* Definition</th>
-    <th>CS* Public ID</th>
-    <th>CS* Version</th>
+    <th>CS* Public ID/Version</th>
+    <%-- <th>CS* Version</th> changed for 4.0--%>
     <th>CSI* Name</th>
     <th>CSI* Type</th>
+    <th>CSI* Public ID/Version</th>
   </tr>
 <%
   Classification classification;
   int classificationCount = classificationVector.size();
   if (classificationCount > 0) {
     for (int i=0;i<classificationCount; i++) {
-      classification = (Classification)classificationVector.elementAt(i);
+      classification = (Classification)classificationVector.get(i);
   %>
       <tr class="OraTabledata">
         <td class="OraFieldText" onmouseout="popUp(event,'<%=classification.getCsIdseq()%>')" onmouseover="popUp(event,'<%=classification.getCsIdseq()%>')" onclick="return false"><%=classification.getClassSchemeLongName()%> </td>
         <td class="OraFieldText"><%=classification.getClassSchemeDefinition()%> </td>
         <td class="OraFieldText">
-          <%= classification.getClassSchemePublicId()%>
+          <%= classification.getClassSchemePublicId()+"v"+classification.getCsVersion()%>
          </td>
-        <td class="OraFieldText"><%=classification.getCsVersion()%> </td>
+        <%-- <td class="OraFieldText"><%=classification.getCsVersion()%> </td> changed for 4.0--%>
         <td class="OraFieldText"><%=classification.getClassSchemeItemName()%> </td>
         <td class="OraFieldText"><%=classification.getClassSchemeItemType()%> </td>
+        <td class="OraFieldText"><%=classification.getClassSchemeItemId()+"v"+classification.getClassSchemeItemVersion()%> </td>
       </tr>
 <%
     }
-  }
-  else {
+  }else {
 %>
        <tr class="OraTabledata">
          <td colspan="6">There are no classifications for the selected CDE.</td>

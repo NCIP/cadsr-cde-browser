@@ -468,10 +468,14 @@ function valueMeaningDetails(shortMeaning)
 %>
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
   <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Value</th>
-    <th class="OraTableColumnHeader">Value Meaning</th>
-    <th class="OraTableColumnHeader">Value Meaning Concept Codes</th>
-    <th class="OraTableColumnHeader">Value Meaning Description</th>
+    <th class="OraTableColumnHeader">PV</th>
+    <th class="OraTableColumnHeader">PV Meaning</th>
+    <th class="OraTableColumnHeader">PV Meaning Concept Codes</th>
+    <th class="OraTableColumnHeader">PV Meaning Description</th>
+    <th class="OraTableColumnHeader">PV Begin Date</th>
+    <th class="OraTableColumnHeader">PV End   Date</th>
+    <th class="OraTableColumnHeader">VM Public ID</th>
+    <th class="OraTableColumnHeader">VM Version</th>
   </tr>
 <%
   ValidValue validValue;
@@ -497,7 +501,11 @@ function valueMeaningDetails(shortMeaning)
        <td class="OraFieldText">
           <%=CDEDetailsUtils.getConceptCodesUrl(validValue.getConceptDerivationRule(),params,"link",",")%>
        </td>
-        <td class="OraFieldText"><%=validValue.getDescription()%> </td>        
+        <td class="OraFieldText"><%=validValue.getDescription()%> </td>
+        <td class="OraFieldText"><%=validValue.getBeginDate()%></td>
+        <td class="OraFieldText"><%=validValue.getEndDate()%></td>
+        <td class="OraFieldText"><%=validValue.getVmId()%></td>
+        <td class="OraFieldText"><%=validValue.getVmVersion()%></td>        
       </tr>
 <%
     }

@@ -96,7 +96,19 @@
 <p>
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
       <tr class="OraTabledata">
-        <td class="OraTableColumnHeader" width="20%">Value Meaning Text</td>
+        <td class="OraTableColumnHeader" width="20%">VM Public Id</td>
+        <td class="OraFieldText"><%=vm.getPublicId()%></td>
+      </tr>
+      <tr class="OraTabledata">
+        <td class="OraTableColumnHeader" width="20%">VM Version</td>
+        <td class="OraFieldText"><%=vm.getVersion()%></td>
+      </tr>
+      <tr class="OraTabledata">
+        <td class="OraTableColumnHeader" width="20%">VM Context</td>
+        <td class="OraFieldText"><%=vm.getContext().getName()%></td>
+      </tr>
+      <tr class="OraTabledata">
+        <td class="OraTableColumnHeader" width="20%">VM Long Name</td>
         <td class="OraFieldText"><%=vm.getLongName()%>
 	<br>
         <% String longName = vm.getLongName();
@@ -112,7 +124,7 @@
 
       </tr>
       <tr class="OraTabledata">
-        <td class="OraTableColumnHeader">Value Meaning Definition</td>
+        <td class="OraTableColumnHeader">VM Preferred Definition</td>
         <td class="OraFieldText"><%=vm.getPreferredDefinition()%>
 	<br>
         <% String desc = vm.getPreferredDefinition();
@@ -126,6 +138,10 @@
         </logic:notPresent>
        	</td>
 
+      </tr>
+      <tr class="OraTabledata">
+        <td class="OraTableColumnHeader" width="20%">VM Workflow Status</td>
+        <td class="OraFieldText"><%=vm.getAslName()%></td>
       </tr>
 </table>
 <p>
@@ -149,6 +165,8 @@ while (csiIter.hasNext()) {
  <th class="OraTableColumnHeader">CS* Definition</th>
  <th class="OraTableColumnHeader">CSI* Name</th>
  <th class="OraTableColumnHeader">CSI* Type</th>
+ <th class="OraTableColumnHeader">CSI* Publid Id</th>
+ <th class="OraTableColumnHeader">CSI* Version</th>
 </TR>
 <% if (currCSI != null) { %>
       <tr class="OraTabledata">
@@ -156,6 +174,8 @@ while (csiIter.hasNext()) {
         <td class="OraFieldText"><%=currCSI.getClassSchemeDefinition()%> </td>
         <td class="OraFieldText"><%=currCSI.getClassSchemeItemName()%> </td>
         <td class="OraFieldText"><%=currCSI.getClassSchemeItemType()%> </td>
+        <td class="OraFieldText"><%=currCSI.getCsiId()%> </td>
+        <td class="OraFieldText"><%=currCSI.getCsiVersion()%> </td>
       </tr>
 <%}else {%>
       <tr class="OraTabledata">

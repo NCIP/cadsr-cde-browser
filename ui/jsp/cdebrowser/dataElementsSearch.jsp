@@ -59,6 +59,7 @@
   //String downloadExcelURL = "javascript:newDownloadWin('search?excelDownload=9"+pageUrl+"','downloadWin',10,10)";
   String downloadPriorExcelURL = "javascript:fileDownloadWin('" + contextPath + "/downloadExcelPage.jsp?src=deSearchPrior','excelWin',500,200)";
   String downloadExcelURL = "javascript:fileDownloadWin('" + contextPath + "/downloadExcelPage.jsp?src=deSearch','excelWin',500,200)";
+  String downloadDTDURL = "javascript:newWin('http://ncicb.nci.nih.gov/xml/dtds/cadsr','dtdWin',500,200)";
   String valueDomainLOVUrl= "javascript:newWin('" + request.getContextPath() + "/search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain"+pageUrl+"','vdLOV',700,600)";
   String decLOVUrl= "javascript:newWin('" + request.getContextPath() + "/search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept"+pageUrl+"','decLOV',700,600)";
   String csLOVUrl= "javascript:newBrowserWin('" + request.getContextPath() + "/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
@@ -513,6 +514,15 @@ function gotoCDESearchPrefs() {
       <b><a href="<%=downloadExcelURL%>" title="3.2.0.2 Includes new content: Value Meaning Description in column BV, Value Meaning Concept(s) in column BW, Value Domain Representation in columns BI-BS.">
       [Download Data Elements to Excel]</a></b> &nbsp;&nbsp;
       <b><a href="<%=downloadXMLURL%>" title="3.2.0.2 Version">[Download Data Elements as XML]</a></b> &nbsp;&nbsp;
+	  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  &nbsp;&nbsp;
+	  <b><a href="<%=downloadDTDURL%>" title="DTD Download Link">[Download CDE Browser DTDs]</a></b><br>
 <%
       if ((paramType!=null)&&(paramType.equals("CRF")||paramType.equals("TEMPLATE"))){
 %>

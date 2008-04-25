@@ -1,13 +1,11 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
 import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.CollectionUtil;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants;
-import gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants;
 import gov.nih.nci.ncicb.cadsr.common.dto.CDECartItemTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.html.HTMLPageScroller;
 import gov.nih.nci.ncicb.cadsr.common.resource.CDECart;
@@ -18,6 +16,8 @@ import gov.nih.nci.ncicb.cadsr.common.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.common.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.common.resource.handler.ValidValueHandler;
 import gov.nih.nci.ncicb.cadsr.common.resource.impl.CDECartImpl;
+import gov.nih.nci.ncicb.cadsr.common.resource.impl.CDECartOCImpl;
+import gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants;
 import gov.nih.nci.ncicb.cadsr.common.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
@@ -28,9 +28,10 @@ import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
 import gov.nih.nci.ncicb.cadsr.common.util.UserErrorMessage;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
+import gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants;
+import gov.nih.nci.objectCart.client.CartManager;
 
 import java.text.DateFormat;
-
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.31 2008-01-28 15:18:31 hegdes Exp $
+ * @version: $Id: GetDataElements.java,v 1.32 2008-04-25 20:32:21 davet Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -332,7 +333,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
             ProcessConstants.DE_SEARCH_QUERY_BUILDER);
         queryResults = (List) getInfoObject(ProcessConstants.ALL_DATA_ELEMENTS);
 
-        CDECart cart = this.findCart(userSession);
+        CDECart cart = this.findCart(userSession);        
         String[] itemsList = getInfoStringArray(ProcessConstants.SELECT_DE);
         CDECartItem cdeItem = null;
         DataElement de = null;
@@ -600,13 +601,27 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
 
   private CDECart findCart(HttpSession mySession) {
-    CDECart cart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
+	  CDECart cart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
 
-    if (cart == null) {
-      cart = new CDECartImpl();
-    }
+	  if (cart == null) {
+		  cart = new CDECartImpl();    	
+		  //CartManager cartManager = CartManager.getInstance();
+		  
+		  /*if (cartManager != null){
+			  cart = new CDECartOCImpl(cartManager,"tejas","cdeCart","cdeCartSchemes" );    	  	
+		  } else{
+			  String[] cdeCartSchemes = {"cdeCartSchemes", "", ""};
+			  try{
+				  cartManager.initClients(cdeCartSchemes);  
+			  }catch(Exception e){
+				  e.printStackTrace();
+			  }
+			  cart = new CDECartOCImpl(cartManager,"tejas","cdeCart","cdeCartSchemes" );
+		  }*/
+		  //TODO: remove the hard coded values    	
+	  }
 
-    return cart;
+	  return cart;
   }
 
 

@@ -87,7 +87,7 @@ public class GetValidValues extends BasePersistingProcess {
    * condition returned by <code>getPersistSuccessCondition()</code> is set.
    */
   public void persist() throws Exception {
-    Vector validValues = new Vector();
+    //Vector validValues = new Vector();
     TabInfoBean tib = null;
     ValueDomain vd = null;
     String performQuery = null;

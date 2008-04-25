@@ -177,12 +177,12 @@ public class GetClassificationSchemes extends BasePersistingProcess
             }
             csNames.add(cs.getClassSchemeName());
          }
-         if (!csiNames.contains(cs.getClassSchemeItemName())) {
+         /*if (!csiNames.contains(cs.getClassSchemeItemName())) {
             List refDocs = cdeBrowserService.getReferenceDocumentsForCSI(cs.getCsiIdseq());
             if (refDocs != null && refDocs.size()>0)
                csiRefDocs.put(cs.getClassSchemeItemName(), refDocs);
             csiNames.add(cs.getClassSchemeItemName());
-         }
+         }*/
          
          //get contact information
          if (!csContacts.containsKey(cs.getCsIdseq())) {
