@@ -19,7 +19,7 @@
   
    <!-- Make sure these are correct for your instance C:\jboss-4.0.4.GA-->
    
-   <property name="jboss.home" value="C:\Tools\jboss-4.0.4.GA" />   <!--"C:\jboss-4.0.4.GA\" />   -->   
+   <property name="jboss.home" value="C:\Tools\jboss-4.0.5.GA" />   <!--"C:\jboss-4.0.4.GA\" />   -->   
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
@@ -173,10 +173,10 @@
    	   <copy todir="${build.dir}">
 	     <fileset dir="${java.lib.dir}">
 	      <patternset>
-	      	<include name="gov/nih/nci/objectCart/applicationService/*.*"/>
+	      	<!-- <include name="gov/nih/nci/objectCart/applicationService/*.*"/>
 	      	<include name="gov/nih/nci/objectCart/applicationService/impl/*.*"/>
 	      	<include name="gov/nih/nci/objectCart/client/*.*"/>   	
-	      	<include name="gov/nih/nci/objectCart/domain/*.*"/>
+	      	<include name="gov/nih/nci/objectCart/domain/*.*"/> -->
 	        <include name="persistence_form.jar"/>
 	        <include name="common.jar"/>
 	    <!--    remove ejb jar -->
@@ -457,8 +457,8 @@
             <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/struts/**"/> 
             <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/service/**"/>
             <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/util/**"/>
-           	<include name="gov/nih/nci/objectCart/**/*.*"/>
-           	<include name="gov/nih/nci/objectCart/domain/*.*"/>
+           	<!-- <include name="gov/nih/nci/objectCart/**/*.*"/>
+           	<include name="gov/nih/nci/objectCart/domain/*.*"/> -->
               </patternset>
         </fileset>       
      </copy>
