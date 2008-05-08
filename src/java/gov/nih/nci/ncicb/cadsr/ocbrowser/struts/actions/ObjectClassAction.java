@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.ocbrowser.struts.actions;
 
-import gov.nih.nci.ncicb.cadsr.domain.ObjectClass;
+import gov.nih.nci.cadsr.domain.ObjectClass;
 import gov.nih.nci.ncicb.cadsr.common.dto.AttachmentTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.common.ocbrowser.service.OCBrowserService;

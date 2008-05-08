@@ -1,6 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.ocbrowser.struts.actions;
-import gov.nih.nci.ncicb.cadsr.domain.ObjectClass;
-import gov.nih.nci.ncicb.cadsr.domain.ObjectClassRelationship;
+import gov.nih.nci.cadsr.domain.ObjectClass;
+import gov.nih.nci.cadsr.domain.ObjectClassRelationship;
 //import gov.nih.nci.ncicb.cadsr.formbuilder.struts.actions.FormAction;
 import gov.nih.nci.ncicb.cadsr.common.jsp.bean.OCRNavigationBean;
 import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorException;
