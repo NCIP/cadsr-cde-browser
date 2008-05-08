@@ -169,20 +169,15 @@
          <classpath refid="classpath"/>
          <src refid="srcpath"/>
        </javac> 
-	   <unzip src="${java.lib.dir}/cadsrutil.jar" dest="${classes.build.dir}"  overwrite="No"/>   	
+   	<unzip src="${java.lib.dir}/cadsrutil.jar" dest="${classes.build.dir}"  overwrite="No"/>   	
    	   <copy todir="${build.dir}">
 	     <fileset dir="${java.lib.dir}">
 	      <patternset>
-	      	<!-- <include name="gov/nih/nci/objectCart/applicationService/*.*"/>
-	      	<include name="gov/nih/nci/objectCart/applicationService/impl/*.*"/>
-	      	<include name="gov/nih/nci/objectCart/client/*.*"/>   	
-	      	<include name="gov/nih/nci/objectCart/domain/*.*"/> -->
 	        <include name="persistence_form.jar"/>
-	        <include name="common.jar"/>
-	    <!--    remove ejb jar -->
+	        <include name="common.jar"/>	    
 	      </patternset>
 	     </fileset>
-	   </copy>
+	   </copy> 
    </target>
    	   
   <!-- =========== DEV CONFIG ======================= -->
@@ -220,7 +215,8 @@
      <copy todir="${classes.build.dir}/WEB-INF/classes">      
          <fileset dir="${config.home}/services">
            <patternset>
-             <include name="cdeBrowser.xml"/>
+             <!--<include name="cdeBrowser.xml"/> -->
+           	 <include name="*.xml"/>
            </patternset>
          </fileset>      
       </copy>  
@@ -457,9 +453,7 @@
             <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/struts/**"/> 
             <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/service/**"/>
             <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/util/**"/>
-           	<!-- <include name="gov/nih/nci/objectCart/**/*.*"/>
-           	<include name="gov/nih/nci/objectCart/domain/*.*"/> -->
-              </patternset>
+            </patternset>
         </fileset>       
      </copy>
      
@@ -477,8 +471,8 @@
           <include name="WEB-INF/jboss-web.xml"/>
           <include name="WEB-INF/spring/*.xml"/>
           <include name="WEB-INF/ehcache.xml"/>
-          <include name="WEB-INF/cdebrowser-faces-config.xml"/>
-          <include name="WEB-INF/*.taglib.xml"/>
+          <include name="WEB-INF/cdebrowser-faces-config.xml"/>          
+          <include name="WEB-INF/*.taglib.xml"/>	
         </patternset>
       </fileset>
       <fileset dir="${classes.build.dir}">
@@ -571,7 +565,7 @@
        	<include name="jakarta-oro.jar"/>
        	
        	<!-- Spring Libs -->
-       	
+      	<include name="spring.jar"/>
        	<include name="spring-1.2.4.jar"/>
        	<include name="spring-context-1.2.4.jar"/>
        	<include name="spring-core-1.2.4.jar"/>
@@ -583,12 +577,15 @@
        	<include name="spring-beans-1.2.4.jar"/>
        	
        	<include name="hibernate3.jar"/>
-       	<include name="ehcache-0.7.jar"/>
+       	<!--<include name="ehcache-0.7.jar"/> -->
+		<include name="ehcache-1.2.2.jar"/>
        	
        	<include name="aopalliance.jar"/>
        	
        	<!-- cadsr api lib -->
-       	<include name="cadsr-api.jar"/>
+       	<!--<include name="cadsr-api.jar"/> -->
+      	<include name="caDSR-beans.jar"/>
+      	<include name="xercesImpl.jar"/>
        	
        	<!-- POI libs -->
        	<include name="poi-2.5.1-final-20040804.jar"/>
@@ -603,8 +600,18 @@
          <!-- AJAX libs -->
         <include name="jsfCompAA-0.1.jar"/>
        	<include name="ajaxanywhere-1.1.0.6.jar"/>
+      	
+      	<!-- Object Cart libs -->      	
+      	<include name="extension-client-framework.jar"/>
+      	<include name="objectCart-beans.jar"/>
+      	<include name="sdk-client-framework.jar"/>
+      	<include name="acegi-security-1.0.4.jar"/>
+      	<include name="antlr-2.7.6.jar"/>
+      	<include name="asm.jar"/>
+      	<include name="castor-1.0.2.jar"/>
+      	<include name="cglib-2.1.3.jar"/>    	
         
-      </lib>
+       </lib>
        
       <manifest>
         <attribute name="Built-By" value="${user.name}"/>
