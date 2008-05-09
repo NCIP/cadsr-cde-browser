@@ -127,7 +127,7 @@
 	</application-policy>
    <!--  Form Builder
     -->
-	<application-policy name="FormbuilderDomain">
+	<application-policy name="CDEBrowserDomain">
 		<authentication>
 			<login-module code="gov.nih.nci.ncicb.cadsr.common.security.jboss.DBLoginModule" flag="required">
 				<module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl</module-option>
