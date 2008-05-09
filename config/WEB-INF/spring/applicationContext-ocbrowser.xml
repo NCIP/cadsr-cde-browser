@@ -5,10 +5,11 @@
 <beans>
 
   <bean id="OCBrowserService" class="gov.nih.nci.ncicb.cadsr.ocbrowser.service.impl.OCBrowserServiceImpl">
-    <property name="domainObjectsDaoFactory"><ref local="domainObjectsDaoFactory"/></property>
-  </bean>
+    <!--<property name="domainObjectsDaoFactory"><ref local="domainObjectsDaoFactory"/></property>
+  --></bean>
 	
-  <bean id="domainObjectsDaoFactory" class="gov.nih.nci.ncicb.cadsr.common.persistence.dao.domain.hibernate.DomainObjectsDAOFactory">
+  <!--<bean id="domainObjectsDaoFactory" class="gov.nih.nci.ncicb.cadsr.common.persistence.dao.domain.hibernate.DomainObjectsDAOFactory">
+    <property name="alternateNameDAO"><ref bean="alternateNameDAO"/></property>
     <property name="adminComponentDAO"><ref bean="adminComponentDAO"/></property>
     <property name="dataElementDAO"><ref bean="dataElementDAO"/></property>
     <property name="dataElementConceptDAO"><ref bean="dataElementConceptDAO"/></property>
@@ -25,4 +26,4 @@
   </bean>	
 
   
-</beans>
+--></beans>

@@ -38,49 +38,88 @@
     <property name="dataSource"><ref local="dataSource"/></property>
     
     <!-- Must references all OR mapping files. -->
-    <property name="mappingResources">
+    <!--<property name="mappingResources">
       <list>
-        <value>gov/nih/nci/ncicb/cadsr/domain/bean/AdminComponentClassSchemeClassSchemeItemBean.hbm.xml</value>
+      	<value>gov/nih/nci/ncicb/cadsr/domain/bean/AdminComponentClassSchemeClassSchemeItemBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/AttributeClassSchemeClassSchemeItemBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ContextBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ConceptualDomainBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ConceptualDomainValueMeaningBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/DataElementBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/DataElementConceptBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/DataElementConceptRelationshipBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/AlternateNameBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/DefinitionBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/PermissibleValueBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ValueDomainBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ValueDomainPermissibleValueBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ValueMeaningBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ObjectClassBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/PropertyBean.hbm.xml</value> 
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/QualifierBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ReferenceDocumentBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ReferenceDocumentAttachmentBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/RepresentationBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ClassificationSchemeBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ClassificationSchemeItemBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ClassSchemeClassSchemeItemBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/LoaderDefaultBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ObjectClassRelationshipBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ConceptBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ComponentConceptBean.hbm.xml</value>
+
         <value>gov/nih/nci/ncicb/cadsr/domain/bean/ConceptDerivationRuleBean.hbm.xml</value>
+        
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/AdminComponentContactBean.hbm.xml</value>
+        
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/PersonBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/OrganizationBean.hbm.xml</value>
+        
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ContactCommunicationBean.hbm.xml</value>
+        
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/AdminComponentRegistrationBean.hbm.xml</value>
+        
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/RegistrarBean.hbm.xml</value>
 
       </list>
     </property>
 		
-    <property name="hibernateProperties">
+    --><property name="hibernateProperties">
       <props>
         <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
-
-         <prop key="hibernate.show_sql">False</prop> 
+		<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>		
+        <prop key="hibernate.show_sql">False</prop> 
 
       </props>
     </property>
-  </bean>
+  </bean><!--
 
   <bean id="adminComponentDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.AdminComponentDAOImpl">
     <property name="sessionFactory"><ref local="sessionFactory"/></property>
@@ -334,4 +373,4 @@
   </bean>
   
 	
-</beans>
+--></beans>
