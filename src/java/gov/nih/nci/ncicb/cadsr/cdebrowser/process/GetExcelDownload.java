@@ -4,35 +4,40 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 //java imports
 //CDE Browser Application Imports
 import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.common.resource.CDECart;
-import gov.nih.nci.ncicb.cadsr.common.resource.CDECartItem;
-import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
-import gov.nih.nci.ncicb.cadsr.common.resource.handler.DataElementHandler;
-import gov.nih.nci.ncicb.cadsr.common.util.ApplicationParameters;
 import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
-import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
+import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem;
 
-import oracle.cle.persistence.HandlerFactory;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import oracle.cle.process.ProcessInfoException;
 import oracle.cle.process.Service;
-
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
-
 import oracle.jdbc.OracleResultSet;
-
 import oracle.sql.ARRAY;
 import oracle.sql.CHAR;
+import oracle.sql.DATE;
 import oracle.sql.Datum;
 import oracle.sql.NUMBER;
 import oracle.sql.STRUCT;
-import oracle.sql.DATE;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -41,26 +46,10 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.29 2008-04-25 20:32:21 davet Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.30 2008-05-29 20:45:39 davet Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
 	private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());

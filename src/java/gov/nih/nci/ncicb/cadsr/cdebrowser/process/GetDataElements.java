@@ -8,14 +8,12 @@ import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.common.dto.CDECartItemTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.html.HTMLPageScroller;
-import gov.nih.nci.ncicb.cadsr.common.resource.CDECart;
-import gov.nih.nci.ncicb.cadsr.common.resource.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.common.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.common.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.common.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.common.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.common.resource.handler.ValidValueHandler;
-import gov.nih.nci.ncicb.cadsr.common.resource.impl.CDECartOCImpl;
 import gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants;
 import gov.nih.nci.ncicb.cadsr.common.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
@@ -28,7 +26,10 @@ import gov.nih.nci.ncicb.cadsr.common.util.UserErrorMessage;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
 import gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants;
-import gov.nih.nci.objectCart.client.CartManager;
+import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
+import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.objectCart.impl.CDECartOCImpl;
+import gov.nih.nci.objectCart.client.ClientManager;
 import gov.nih.nci.objectCart.client.ObjectCartException;
 
 import java.text.DateFormat;
@@ -47,7 +48,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.34 2008-05-09 14:05:12 davet Exp $
+ * @version: $Id: GetDataElements.java,v 1.35 2008-05-29 20:45:39 davet Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -273,9 +274,7 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 
         log.trace("Obtained DataElementHandler using HandlerFactory successfully");
 
-        queryResults =
-          dh.findDataElementsFromQueryClause(
-            queryStmt, orderBy, getSessionId(), dePageIterator);
+        queryResults = dh.findDataElementsFromQueryClause(queryStmt, orderBy, getSessionId(), dePageIterator);
 
         log.trace("Query executed successfully");
 
@@ -332,8 +331,11 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
           (DESearchQueryBuilder) getInfoObject(
             ProcessConstants.DE_SEARCH_QUERY_BUILDER);
         queryResults = (List) getInfoObject(ProcessConstants.ALL_DATA_ELEMENTS);
-
-        CDECart cart = this.findCart(userSession);        
+        
+        CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
+        if (cart == null){
+        	cart = this.findCart(userSession);
+        }
         String[] itemsList = getInfoStringArray(ProcessConstants.SELECT_DE);
         CDECartItem cdeItem = null;
         DataElement de = null;
@@ -343,8 +345,9 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
           cdeItem = new CDECartItemTransferObject();
           de = CollectionUtil.locateDataElement(queryResults, itemsList[i]);
           vd = de.getValueDomain();          
-          vd.setValidValues(valueHandler.getValidValues(vd.getVdIdseq(), getSessionId()));
+          vd.setValidValues(valueHandler.getValidValues(vd.getVdIdseq().trim(), getSessionId()));
           cdeItem.setItem(de);
+          cdeItem.setPersistedInd(false);
           cart.setDataElement(cdeItem);          
         }
         myRequest.setAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS,"Data Element(s) added to your CDE Cart Successfully.");
@@ -595,28 +598,32 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
     return ts;
   }
 
-
-
   private CDECart findCart(HttpSession mySession) {
-	  CDECart cart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);
-	  String uid = null ;
-	  String id = mySession.getId();
+	  CDECart cart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);	  
+	  NCIUser user = (NCIUser) mySession.getAttribute(CaDSRConstants.USER_KEY);
+	  String sessionId = mySession.getId();
+	  String uid = null ;	    	  
+	  
 	  if (cart == null) {
 		  //cart = new CDECartImpl(); 
-		  CartManager cartManager = CartManager.getInstance();
+		  ClientManager cManager = ClientManager.getInstance();
 		  String[] cdeCartSchemes = {CaDSRConstants.CDE_CARTSCHEME};
-		  try{			  		  
-			  cartManager.initClients(cdeCartSchemes);				    
-		  }catch(ObjectCartException oce){
-			  oce.printStackTrace();
+		  if(!cManager.isInitialized()){
+			  try{			  		  
+				  cManager.initClients(cdeCartSchemes);				    
+			  }catch(ObjectCartException oce){
+				  oce.printStackTrace();
+			  }  
 		  }
-		  if (uid == null){
-			  uid = "guest";			  			  
+		  
+		  if(user!= null){
+			  uid = user.getUsername();	
+		  }	else {
+			  uid = "PublicUser" + sessionId;			  
 		  }
-		  cart = new CDECartOCImpl(cartManager,uid,CaDSRConstants.CDE_CART,CaDSRConstants.CDE_CARTSCHEME);
-		  			  
-	  }	  
-		  //TODO: remove the hard coded values
+		  cart = new CDECartOCImpl(cManager,uid,CaDSRConstants.CDE_CART,CaDSRConstants.CDE_CARTSCHEME);		  			  
+	  }
+	  
 	  return cart;
   }
 

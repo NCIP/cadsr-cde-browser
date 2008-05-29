@@ -1,45 +1,42 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-import gov.nih.nci.ncicb.cadsr.common.base.process.*;
+import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.common.database.*;
-import gov.nih.nci.ncicb.cadsr.common.resource.*;
-import gov.nih.nci.ncicb.cadsr.common.dto.CDECartItemTransferObject;
-import gov.nih.nci.ncicb.cadsr.common.dto.CDECartTransferObject;
-import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
-
-//CDE Browser Application Imports
-import gov.nih.nci.ncicb.cadsr.common.util.*;
+import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
+import gov.nih.nci.ncicb.cadsr.common.util.UserErrorMessage;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
 import gov.nih.nci.ncicb.cadsr.common.xml.XMLGeneratorBean;
+import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
+import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem;
 
-//import oracle.cle.process.ProcessConstants;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.sql.Connection;
-import oracle.cle.persistence.HandlerFactory;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Vector;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-import oracle.cle.process.PersistingProcess;
-import oracle.cle.process.ProcessInfo;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.ProcessParameter;
-import oracle.cle.process.ProcessResult;
 import oracle.cle.process.Service;
-
-// Framework imports
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
-
 import oracle.xml.sql.OracleXMLSQLNoRowsException;
-
-import java.io.*;
-
-// java imports
-import java.util.*;
-import java.util.zip.*;
-
-import javax.servlet.http.*;
 
 
 /**

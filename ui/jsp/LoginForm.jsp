@@ -24,8 +24,13 @@ function clearForm()
 
 <body text="#000000" topmargin="0">
 
-   <%@ include file="basicHeader_inc.jsp"%>
-   
+		<jsp:include page="/common/common_cdebrowser_header_jsp_inc.jsp"
+			flush="true">
+			<jsp:param name="loginDestination"
+				value="formCDECartAction.do?method=displayCDECart" />
+			<jsp:param name="urlPrefix" value="" />
+		</jsp:include>
+		<%--<%@ include file="basicHeader_inc.jsp"%>--%>
 <br>
 <br>
   
@@ -93,8 +98,8 @@ function clearForm()
 		     <TR>
 		        <td colspan="1" align="left" nowrap><a href="javascript:submitForm()"><img src=<%=request.getContextPath()%>/i/logon.gif border=0 alt="Logon"></a></td>
 		        <td colspan="1" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=request.getContextPath()%>/i/clear.gif border=0 alt="Clear"></a></td>
-		        <td colspan="1" align="left" nowrap><a href="<%="cdeBrowse.jsp?PageId=DataElementsGroup"%>"><img src=<%=request.getContextPath()%>/i/return_cdebrowse.gif border=0 alt="Cancel"></a></td>
-		    </TR>  
+		        <%--<td colspan="1" align="left" nowrap><a href="<%="cdeBrowse.jsp?PageId=DataElementsGroup"%>"><img src=<%=request.getContextPath()%>/i/return_cdebrowse.gif border=0 alt="Cancel"></a></td>
+		    --%></TR>  
 		  </table>    
       	</td>
     </TR>  
@@ -107,13 +112,13 @@ function clearForm()
   <SCRIPT>
     document.forms[0].elements[0].focus();
   </SCRIPT>
-<TABLE width=100% cellspacing=0 cellpadding=0 border=0>
+<%--<TABLE width=100% cellspacing=0 cellpadding=0 border=0>
 <TR>
 <TD valign=bottom width=99%><img src="<%=request.getContextPath()%>/i/bottom_shade.gif" height=6 width="100%"></TD>
 <TD valign=bottom width="1%" align=right><IMG src="<%=request.getContextPath()%>/i/bottomblueright.gif"></TD>
 </TR>
 </TABLE>
-<TABLE width=100% cellspacing=0 cellpadding=0 bgcolor="#336699" border=0>
+--%><%--<TABLE width=100% cellspacing=0 cellpadding=0 bgcolor="#336699" border=0>
 <TR>
 <TD width="60%" align="LEFT">
 <FONT face="Arial" color="WHITE" size="-2"></FONT>
@@ -125,9 +130,7 @@ function clearForm()
 </TD>
 
 </TR>
-<TR>
-<TD colspan=2><IMG src="<%=request.getContextPath()%>/i/bottom_middle.gif" height=6 width="100%"></TD>
-</TR>
 </TABLE>
+--%><%@ include file="/common/common_bottom_border.jsp"%>
 </body>
 </html>

@@ -125,13 +125,12 @@
 			<login-module code="org.jboss.security.auth.spi.UsersRolesLoginModule" flag="required"/>
 		</authentication>
 	</application-policy>
-   <!--  Form Builder
+   <!--  CDE Browser
     -->
 	<application-policy name="CDEBrowserDomain">
-		<authentication>
+		<authentication>			
 			<login-module code="gov.nih.nci.ncicb.cadsr.common.security.jboss.DBLoginModule" flag="required">
 				<module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl</module-option>
-				<module-option name="ClassName">test</module-option>
 			</login-module>
 		</authentication>
 	</application-policy>
