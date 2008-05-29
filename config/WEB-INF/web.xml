@@ -206,12 +206,12 @@
 		<url-pattern>*.jsf</url-pattern>
 	</filter-mapping>
 
-	<filter-mapping>
+	<!--<filter-mapping>
 		<filter-name>SessionFilter</filter-name>
 		<url-pattern>/formbuilder/*</url-pattern>
 	</filter-mapping>
 
-	<filter-mapping>
+	--><filter-mapping>
 		<filter-name>SessionFilter</filter-name>
 		<url-pattern>/formCDECartAction.do</url-pattern>
 	</filter-mapping>
@@ -253,7 +253,7 @@
 		<init-param>
 			<param-name>config</param-name>
 			<param-value>
-				/WEB-INF/formbuilder/struts-config.xml,
+				/WEB-INF/cdebrowser/struts-config.xml,
 				/WEB-INF/cdebrowser/struts-config-cdeSideBySide.xml,
 				/WEB-INF/cdebrowser/struts-config-browserSearchScreenType.xml,
 				/WEB-INF/cdebrowser/struts-config-cde-search-preferences.xml,
@@ -298,13 +298,7 @@
 			<param-name>cle-service-descriptor</param-name>
 			<param-value>cdeBrowser.xml</param-value>
 		</init-param>
-	</servlet>
-	<servlet>
-		<servlet-name>DownloadTemplateServlet</servlet-name>
-		<servlet-class>
-			gov.nih.nci.ncicb.cadsr.cdebrowser.servlets.DownloadTemplateServlet
-		</servlet-class>
-	</servlet>
+	</servlet>	
 	<servlet>
 		<servlet-name>LogoutServlet</servlet-name>
 		<servlet-class>
@@ -322,11 +316,7 @@
 	<servlet-mapping>
 		<servlet-name>CDEBrowserServletController</servlet-name>
 		<url-pattern>/search</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DownloadTemplateServlet</servlet-name>
-		<url-pattern>/downloadtemplate</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>	
 	<servlet-mapping>
 		<servlet-name>LogoutServlet</servlet-name>
 		<url-pattern>/logout</url-pattern>
@@ -391,29 +381,8 @@
 
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>Secure Services</web-resource-name>
-			<url-pattern>/formbuilder/*</url-pattern>
-		</web-resource-collection>
-		<web-resource-collection>
-			<web-resource-name>Secure Services</web-resource-name>
-			<url-pattern>/formCDECartAction.do</url-pattern>
-		</web-resource-collection>
-		<web-resource-collection>
-			<web-resource-name>Secure Services</web-resource-name>
-			<url-pattern>/formCDECartRedirectAction.do</url-pattern>
-		</web-resource-collection>
-		
-		<auth-constraint>
-			<description>Authorized Users Group</description>
-			<role-name>CDE MANAGER</role-name>
-			<role-name>CONTEXT ADMIN</role-name>
-		</auth-constraint>
-	</security-constraint>
-
-	<security-constraint>
-		<web-resource-collection>
 			<web-resource-name>Secure Services</web-resource-name>			
-			<url-pattern>/formbuilder/*</url-pattern>
+			<url-pattern>/CDEBrowser/*</url-pattern>
 			<url-pattern>/formCDECartAction.do</url-pattern>
 			<url-pattern>/formCDECartRedirectAction.do</url-pattern>			
 		</web-resource-collection>
@@ -428,14 +397,10 @@
 	<!-- authentication -->
 	<login-config>
 		<auth-method>FORM</auth-method>
-		<CDEBrowser-login-config>
-			<CDEBrowser-login-page>
-				/LoginForm.jsp
-			</CDEBrowser-login-page>
-			<CDEBrowser-error-page>
-				/authenticationError.jsp
-			</CDEBrowser-error-page>
-		</CDEBrowser-login-config>
+		<form-login-config>
+			<form-login-page>/LoginForm.jsp</form-login-page>
+			<form-error-page>/authenticationError.jsp</form-error-page>
+		</form-login-config>
 	</login-config>
 
 	<security-role>

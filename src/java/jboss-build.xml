@@ -453,6 +453,7 @@
             <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/struts/**"/> 
             <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/service/**"/>
             <include name="gov/nih/nci/ncicb/cadsr/ocbrowser/util/**"/>
+           	<include name="gov/nih/nci/ncicb/cadsr/objectCart/**/**"/>
             </patternset>
         </fileset>       
      </copy>
@@ -560,7 +561,7 @@
        	<!--include name="bc4jmt.jar"/-->   
        	
        	<!-- Struts libs -->
-       	<include name="struts.jar"/>
+       	<include name="struts-*.jar"/>
        	<include name="commons-*.jar"/>
        	<include name="jakarta-oro.jar"/>
        	
