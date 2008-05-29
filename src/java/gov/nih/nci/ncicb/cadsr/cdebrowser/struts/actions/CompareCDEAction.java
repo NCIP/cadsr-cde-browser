@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.17 2007-12-13 19:35:57 hegdes Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.18 2008-05-29 20:24:25 davet Exp $
  */
 
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
@@ -16,7 +16,6 @@ import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.ConceptDAO;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.DerivedDataElementDAO;
-import gov.nih.nci.ncicb.cadsr.common.resource.CDECart;
 import gov.nih.nci.ncicb.cadsr.common.resource.Classification;
 import gov.nih.nci.ncicb.cadsr.common.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
@@ -31,6 +30,7 @@ import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorFactory;
 import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.common.util.ContentTypeHelper;
+import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,7 +38,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -99,13 +98,13 @@ public class CompareCDEAction
   }
 
   if (cdeList.getCdeList().size() == 0) {
-   saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
+	  saveMessage("cadsr.cdebrowser.cdecompare.list.empty", request);
 
    return mapping.findForward("search");
   }
 
   if (cdeList.getCdeList().size() < 2) {
-   saveError("cadsr.cdebrowser.cdecompare.list.oneelement", request);
+	  saveMessage("cadsr.cdebrowser.cdecompare.list.oneelement", request);
 
    return mapping.findForward("search");
   }
@@ -124,7 +123,7 @@ public class CompareCDEAction
   } catch (Exception e) {
    Exception ex = e;
 
-   saveError("cadsr.cdebrowser.cdecompare.compare.failed", request);
+   saveMessage("cadsr.cdebrowser.cdecompare.compare.failed", request);
    return mapping.findForward(FAILURE);
   }
 
@@ -163,7 +162,7 @@ public class CompareCDEAction
     saveMessage("cadsr.cdebrowser.cdecompare.list.add.duplicate", request);
    }
   } else {
-   saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
+	  saveMessage("cadsr.cdebrowser.cdecompare.list.empty", request);
   }
 
   return mapping.findForward(SUCCESS);
@@ -194,11 +193,11 @@ public class CompareCDEAction
     if (!cdeList.isEmpty() && cdeList.getCdeList().size() > 1)
      saveMessage("cadsr.cdebrowser.cdecompare.list.remove.success", request);
    } else {
-    saveError("cadsr.cdebrowser.cdecompare.list.remove.failed", request);
+	   saveMessage("cadsr.cdebrowser.cdecompare.list.remove.failed", request);
    }
   } else {
    //go back to homepage
-   saveError("cadsr.cdebrowser.cdecompare.list.empty", request);
+	  saveMessage("cadsr.cdebrowser.cdecompare.list.empty", request);
 
    return mapping.findForward(FAILURE);
   }

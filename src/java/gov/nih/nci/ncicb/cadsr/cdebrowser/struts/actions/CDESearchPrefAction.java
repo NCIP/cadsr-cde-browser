@@ -133,7 +133,7 @@ public class CDESearchPrefAction
         catch(Exception exp)
         {
         //Add message later
-            saveError("cadsr.cdebrowser.cde.search.pref.save.error", request);
+        	saveMessage("cadsr.cdebrowser.cde.search.pref.save.error", request);
             return mapping.findForward("prefPage");
         }
         
@@ -186,7 +186,7 @@ public class CDESearchPrefAction
   }
   catch(Exception exp)
   {
-      saveError("cadsr.cdebrowser.cde.search.pref.default.error", request);
+	  saveMessage("cadsr.cdebrowser.cde.search.pref.default.error", request);
       return mapping.findForward("prefPage");
   }
   prefForm.set("excludeTestContext",new Boolean(searchBean.isExcludeTestContext()).toString());
