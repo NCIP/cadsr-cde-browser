@@ -567,7 +567,7 @@
        	
        	<!-- Spring Libs -->
       	<include name="spring.jar"/>
-       	<include name="spring-1.2.4.jar"/>
+      	<!--<include name="spring-1.2.4.jar"/>
        	<include name="spring-context-1.2.4.jar"/>
        	<include name="spring-core-1.2.4.jar"/>
        	<include name="spring-dao-1.2.4.jar"/>
@@ -575,7 +575,7 @@
        	<include name="spring-context-1.2.4.jar"/>
        	<include name="spring-web-1.2.4.jar"/>
        	<include name="spring-hibernate-1.2.4.jar"/>
-       	<include name="spring-beans-1.2.4.jar"/>
+       	<include name="spring-beans-1.2.4.jar"/>-->
        	
        	<include name="hibernate3.jar"/>
        	<!--<include name="ehcache-0.7.jar"/> -->
