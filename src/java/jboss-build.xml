@@ -640,19 +640,7 @@
           <patternset>
             <include name="properties/log4j.properties"/>
           </patternset>
-        </fileset>
-        
-        <fileset dir="${java.lib.dir}">
-          <patternset>
-            <include name="spring-1.2.4.jar"/>
-            <include name="spring-context-1.2.4.jar"/>
-            <include name="spring-core-1.2.4.jar"/>
-            <include name="spring-dao-1.2.4.jar"/>
-            <include name="spring-orm-1.2.4.jar"/>
-            <include name="spring-hibernate-1.2.4.jar"/>
-            <include name="spring-beans-1.2.4.jar"/>
-          </patternset>
-        </fileset>
+        </fileset>       
 
         <patternset>
           <exclude name="*.*"/>
@@ -936,7 +924,19 @@
              <include name="oracle-ds.xml"/>
            </patternset>
          </fileset>
-      </copy>       
+     	<fileset dir="${config.home}/security">
+     	       <patternset>
+     	             <include name="cdebrowser-login-config-service.xml"/>
+     	       </patternset>
+     	</fileset>
+      </copy>
+    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
+            <fileset dir="${config.home}/security">
+        	       <patternset>
+        	             <include name="cdebrowser-login-config.xml"/>
+        	       </patternset>
+        	</fileset>
+         </copy>
    </target> 
    
    <target  name="deploy_dev_start" depends="deploy_dev,jboss_startdebug"> 
@@ -952,13 +952,25 @@
          </fileset> 
      </copy>  
      <filter token="user.password" value="${qa.user.password}"/>
-     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
-         <fileset dir="${config.qa}/connections">
-           <patternset>
-             <include name="oracle-ds.xml"/>
-           </patternset>
-         </fileset>
-      </copy>       
+   	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
+   	         <fileset dir="${config.home}/connections">
+   	           <patternset>
+   	             <include name="oracle-ds.xml"/>
+   	           </patternset>
+   	         </fileset>
+   	     	<fileset dir="${config.home}/security">
+   	     	       <patternset>
+   	     	             <include name="cdebrowser-login-config-service.xml"/>
+   	     	       </patternset>
+   	     	</fileset>
+   	      </copy>
+   	    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
+   	            <fileset dir="${config.home}/security">
+   	        	       <patternset>
+   	        	             <include name="cdebrowser-login-config.xml"/>
+   	        	       </patternset>
+   	        	</fileset>
+   	         </copy>   	           
    </target> 
    
       <target  name="deploy_qa_start" depends="deploy_qa,jboss_startdebug"> 
@@ -973,14 +985,26 @@
          </fileset> 
      </copy> 
      <filter token="user.password" value="${stage.user.password}"/>
-     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
-         <fileset dir="${config.stage}/connections">
-           <patternset>
-             <include name="oracle-ds.xml"/>
-           </patternset>
-         </fileset>
-      </copy>       
-   </target> 
+   	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
+   	         <fileset dir="${config.home}/connections">
+   	           <patternset>
+   	             <include name="oracle-ds.xml"/>
+   	           </patternset>
+   	         </fileset>
+   	     	<fileset dir="${config.home}/security">
+   	     	       <patternset>
+   	     	             <include name="cdebrowser-login-config-service.xml"/>
+   	     	       </patternset>
+   	     	</fileset>
+   	      </copy>
+   	    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
+   	            <fileset dir="${config.home}/security">
+   	        	       <patternset>
+   	        	             <include name="cdebrowser-login-config.xml"/>
+   	        	       </patternset>
+   	        	</fileset>
+   	         </copy>
+   	   </target>  
 
   <target  name="deploy_load" depends="clean,clean_jboss,load_config,debug_setting,ear_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
@@ -991,14 +1015,26 @@
          </fileset> 
      </copy> 
      <filter token="user.password" value="${load.user.password}"/>
-     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
-         <fileset dir="${config.load}/connections">
-           <patternset>
-             <include name="oracle-ds.xml"/>
-           </patternset>
-         </fileset>
-      </copy>       
-   </target> 
+  	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
+  	         <fileset dir="${config.home}/connections">
+  	           <patternset>
+  	             <include name="oracle-ds.xml"/>
+  	           </patternset>
+  	         </fileset>
+  	     	<fileset dir="${config.home}/security">
+  	     	       <patternset>
+  	     	             <include name="cdebrowser-login-config-service.xml"/>
+  	     	       </patternset>
+  	     	</fileset>
+  	      </copy>
+  	    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
+  	            <fileset dir="${config.home}/security">
+  	        	       <patternset>
+  	        	             <include name="cdebrowser-login-config.xml"/>
+  	        	       </patternset>
+  	        	</fileset>
+  	         </copy>
+  	   </target>  
    
       <target  name="deploy_stage_start" depends="deploy_stage,jboss_startdebug"> 
    </target>
@@ -1012,14 +1048,26 @@
          </fileset> 
      </copy> 
      <filter token="user.password" value="${umlstage.user.password}"/>
-     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
-         <fileset dir="${config.umlstage}/connections">
-           <patternset>
-             <include name="oracle-ds.xml"/>
-           </patternset>
-         </fileset>
-      </copy>       
-   </target> 
+   	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
+   	         <fileset dir="${config.home}/connections">
+   	           <patternset>
+   	             <include name="oracle-ds.xml"/>
+   	           </patternset>
+   	         </fileset>
+   	     	<fileset dir="${config.home}/security">
+   	     	       <patternset>
+   	     	             <include name="cdebrowser-login-config-service.xml"/>
+   	     	       </patternset>
+   	     	</fileset>
+   	      </copy>
+   	    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
+   	            <fileset dir="${config.home}/security">
+   	        	       <patternset>
+   	        	             <include name="cdebrowser-login-config.xml"/>
+   	        	       </patternset>
+   	        	</fileset>
+   	         </copy>
+   	   </target>  
    <target  name="deploy_umlstage_start" depends="deploy_umlstage,jboss_startdebug"> 
    </target>
 
@@ -1033,14 +1081,26 @@
          </fileset> 
      </copy> 
      <filter token="user.password" value="${prod.user.password}"/>
-     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
-         <fileset dir="${config.prod}/connections">
-           <patternset>
-             <include name="oracle-ds.xml"/>
-           </patternset>
-         </fileset>
-      </copy>       
-   </target> 
+   	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
+   	         <fileset dir="${config.home}/connections">
+   	           <patternset>
+   	             <include name="oracle-ds.xml"/>
+   	           </patternset>
+   	         </fileset>
+   	     	<fileset dir="${config.home}/security">
+   	     	       <patternset>
+   	     	             <include name="cdebrowser-login-config-service.xml"/>
+   	     	       </patternset>
+   	     	</fileset>
+   	      </copy>
+   	    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
+   	            <fileset dir="${config.home}/security">
+   	        	       <patternset>
+   	        	             <include name="cdebrowser-login-config.xml"/>
+   	        	       </patternset>
+   	        	</fileset>
+   	         </copy>
+   	   </target>   
    
       <target  name="deploy_prod_start" depends="deploy_prod,jboss_startdebug"> 
    </target>   
