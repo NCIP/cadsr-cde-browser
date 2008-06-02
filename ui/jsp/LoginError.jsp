@@ -2,7 +2,7 @@
 <%  
 
   request.setAttribute("msg", "Login Failed, please try again. ");
-  request.getRequestDispatcher("formSearchAction.do").forward(request, response);
+  request.getRequestDispatcher("formCDECartAction.do?method=displayCDECart").forward(request, response);
 
   if(true)
     return;
@@ -25,7 +25,7 @@ You are not authenticated to use this web application
 <br>
 <br>
 
-<a href="<%= "formSearchAction.do"%>"> Retry Login again</a>
+<a href="<%= "formCDECartAction.do?method=displayCDECart"%>"> Retry Login again</a>
 
 </body>
 </html>

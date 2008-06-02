@@ -1,0 +1,18 @@
+<?xml version='1.0'?>
+<!DOCTYPE policy PUBLIC "-//JBoss//DTD JBOSS Security Config 3.0//EN" "http://www.jboss.org/j2ee/dtd/security_config.dtd">
+
+    <!-- ============================ -->
+    <!-- Applicaiton policy for the CDEBrowser to be added to jboss login-config.xml file-->
+    <!-- ============================ -->
+
+<policy>
+	<!-- CDEBrowser policy -->
+    <application-policy name="CDEBrowserDomain">
+		<authentication>			
+			<login-module code="gov.nih.nci.ncicb.cadsr.common.security.jboss.DBLoginModule" flag="required">
+				<module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl</module-option>				
+			</login-module>
+		</authentication>
+	</application-policy>    
+</policy>
+

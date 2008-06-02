@@ -41,11 +41,9 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 			ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
+			HttpServletResponse response) throws IOException, ServletException {	
 
-		CDECart userCart = null;
-
-		try {
+		try {			
 			String userName = getLoggedInUsername(request);			
 
 			NCIUser user = (NCIUser) this.getSessionObject(request, CaDSRConstants.USER_KEY);
@@ -54,7 +52,7 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 			CDECartOCImpl tempSessionCart = (CDECartOCImpl)sessionCart;
 
 			ClientManager cManager = ClientManager.getInstance();
-
+			CDECart userCart = null;
 			if(cManager.isInitialized()){
 				userCart = new CDECartOCImpl(cManager,userName,CaDSRConstants.CDE_CART,CaDSRConstants.CDE_CARTSCHEME);
 			}

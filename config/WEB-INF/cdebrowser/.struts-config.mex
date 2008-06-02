@@ -12,13 +12,6 @@
       <AbsolutePoint location="295,376" />
     </AutomaticBendpoints>
   </StrutsTransition>
-  <StrutsTransition id="/cdeCartAction.do,addDeleteSuccess,/formCDECartAction.do,1" routingType="0">
-    <AutomaticBendpoints>
-      <AbsolutePoint location="534,88" />
-      <AbsolutePoint location="534,420" />
-      <AbsolutePoint location="385,420" />
-    </AutomaticBendpoints>
-  </StrutsTransition>
   <StrutsTransition id="/formCDECartAction.do,addDeleteSuccess,/formCDECartAction.do,1" routingType="0">
     <AutomaticBendpoints>
       <AbsolutePoint location="118,376" />
@@ -58,11 +51,10 @@
       <AbsolutePoint location="402,564" />
     </AutomaticBendpoints>
   </StrutsTransition>
-  <StrutsTransition id="/cdeCartAction.do,secureSuccess,/formCDECartAction.do,1" routingType="0">
-    <AutomaticBendpoints>
-      <AbsolutePoint location="399,44" />
-      <AbsolutePoint location="207,420" />
-    </AutomaticBendpoints>
+  <StrutsTransition id="/cdeCartAction.do,secureSuccess,/formCDECartAction.do,1" routingType="1">
+    <Bendpoints>
+      <Point rDim1="-294,16" rDim2="-102,-360" />
+    </Bendpoints>
   </StrutsTransition>
   <StrutsTransition id="/cdeCartAction.do,deleteSuccess,/formCDECartRedirectAction.do,1" routingType="0">
     <AutomaticBendpoints>
