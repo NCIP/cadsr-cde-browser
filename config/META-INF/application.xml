@@ -7,5 +7,9 @@
          <web-uri>cdebrowser-web.war</web-uri>
          <context-root>CDEBrowser</context-root>
       </web>
-   </module>     
+   </module>
+   <security-role>
+   	<role-name>CDE MANAGER</role-name>
+	<description>The Only Secure Role</description>
+   </security-role>     
 </application>

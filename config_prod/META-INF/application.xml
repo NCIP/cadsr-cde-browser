@@ -8,11 +8,8 @@
          <context-root>CDEBrowser</context-root>
       </web>
    </module>
-   <module>
-      <ejb>formbuilder-ejb.jar</ejb>
-   </module>   
-   <security-role>
-	<role-name>FORMBUILDER_USERS</role-name>
+   <security-role>  
+	<role-name>CDE MANAGER</role-name>
 	<description>The Only Secure Role</description>
    </security-role>   
 </application>
