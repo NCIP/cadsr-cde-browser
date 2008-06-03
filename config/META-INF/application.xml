@@ -7,9 +7,5 @@
          <web-uri>cdebrowser-web.war</web-uri>
          <context-root>CDEBrowser</context-root>
       </web>
-   </module>
-<!--   <module>
-      <ejb>formbuilder-ejb.jar</ejb>
-   </module>  
- -->     
+   </module>     
 </application>
