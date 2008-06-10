@@ -8,6 +8,8 @@ import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.objectCart.impl.CDECartOCImpl;
 import gov.nih.nci.objectCart.client.ClientManager;
+import gov.nih.nci.objectCart.client.ObjectCartClient;
+import gov.nih.nci.objectCart.client.ObjectCartException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,21 +52,22 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 
 			CDECart sessionCart = (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 			CDECartOCImpl tempSessionCart = (CDECartOCImpl)sessionCart;
-
-			ClientManager cManager = ClientManager.getInstance();
+			
+			ObjectCartClient ocClient = new ObjectCartClient();
+			//ClientManager cManager = ClientManager.getInstance();
 			CDECart userCart = null;
-			if(cManager.isInitialized()){
-				userCart = new CDECartOCImpl(cManager,userName,CaDSRConstants.CDE_CART,CaDSRConstants.CDE_CARTSCHEME);
-			}
+			//if(cManager.isInitialized()){
+				userCart = new CDECartOCImpl(ocClient,userName,CaDSRConstants.CDE_CART);
+			//}
 			if(userCart != null){
 				sessionCart.mergeCart(userCart);   	  
 			}      
 			this.setSessionObject(request, CaDSRConstants.CDE_CART, sessionCart);
-		}catch (ServiceLocatorException exp) {
+		}catch (ObjectCartException oce) {
 			if (log.isErrorEnabled()) {
-				log.error("Exception on displayCDECart", exp);
+				log.error("Exception on SecudeCDECartAction", oce);
 			}
-			saveMessage(exp.getErrorCode(), request);      
+			//saveMessage(oce.getMessage()ErrorCode(), request);      
 		}
 		return mapping.findForward(SUCCESS);
 	}
@@ -95,12 +98,13 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 			String[] selectedSaveItems = myForm.getSelectedSaveItems();
 			Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
 
-			ClientManager cManager = ClientManager.getInstance();
+			ObjectCartClient ocClient = new ObjectCartClient();
+			//ClientManager cManager = ClientManager.getInstance();
 			CDECart userCart = null;
 
-			if(cManager.isInitialized()){
-				userCart = new CDECartOCImpl(cManager,userName,CaDSRConstants.CDE_CART,CaDSRConstants.CDE_CARTSCHEME);
-			}
+			//if(cManager.isInitialized()){
+				userCart = new CDECartOCImpl(ocClient,userName,CaDSRConstants.CDE_CART);
+			//}
 
 			for (int i = 0; i < selectedSaveItems.length; i++) {
 				CDECartItem cartItem = sessionCart.findDataElement(selectedSaveItems[i]);
@@ -111,12 +115,12 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 			//sessionCart.mergeDataElements(items);      
 			userCart.mergeDataElements(items);
 
-			saveMessage("cadsr.cdecart.save.success",request);
-		}catch (ServiceLocatorException exp) {
+			//saveMessage("cadsr.cdecart.save.success",request);
+		}catch (ObjectCartException oce) {
 			if (log.isErrorEnabled()) {
-				log.error("Exception on addItems " , exp);
+				log.error("Exception on addItems " , oce);
 			}
-			saveMessage(exp.getErrorCode(), request);      
+			//saveMessage(exp.getErrorCode(), request);      
 		}
 
 		return mapping.findForward("addDeleteSuccess");
@@ -150,12 +154,13 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 			//Get the cart in the session
 			CDECart sessionCart = (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 			CDECartItem item = null;
-
-			ClientManager cManager = ClientManager.getInstance();
+			
+			ObjectCartClient ocClient = new ObjectCartClient();
+			//ClientManager cManager = ClientManager.getInstance();
 			CDECart userCart = null;      
-			if(cManager.isInitialized()){
-				userCart = new CDECartOCImpl(cManager,userName,CaDSRConstants.CDE_CART,CaDSRConstants.CDE_CARTSCHEME);
-			}
+			//if(cManager.isInitialized()){
+				userCart = new CDECartOCImpl(ocClient,userName,CaDSRConstants.CDE_CART);
+			//}
 
 			for (int i = 0; i < selectedDeleteItems.length; i++) {
 				item = sessionCart.findDataElement(selectedDeleteItems[i]);        
@@ -165,13 +170,13 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 			sessionCart.removeDataElements(items);      
 			userCart.removeDataElements(items);
 
-			saveMessage("cadsr.cdecart.delete.success",request);
+			//saveMessage("cadsr.cdecart.delete.success",request);
 		}
-		catch (ServiceLocatorException exp) {
+		catch (ObjectCartException oce) {
 			if (log.isErrorEnabled()) {
-				log.error("Exception on removeItems " , exp);
+				log.error("Exception on removeItems " , oce);
 			}
-			saveMessage(exp.getErrorCode(), request);      
+			//saveMessage(exp.getErrorCode(), request);      
 		}    
 		return mapping.findForward("addDeleteSuccess");
 	} 

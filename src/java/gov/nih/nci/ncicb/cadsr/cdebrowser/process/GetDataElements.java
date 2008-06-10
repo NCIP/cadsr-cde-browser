@@ -29,8 +29,10 @@ import gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.objectCart.impl.CDECartOCImpl;
-import gov.nih.nci.objectCart.client.ClientManager;
+import gov.nih.nci.objectCart.client.ObjectCartClient;
 import gov.nih.nci.objectCart.client.ObjectCartException;
+import gov.nih.nci.system.applicationservice.ApplicationService;
+import gov.nih.nci.system.client.ApplicationServiceProvider;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -48,7 +50,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.35 2008-05-29 20:45:39 davet Exp $
+ * @version: $Id: GetDataElements.java,v 1.36 2008-06-10 19:29:16 davet Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -603,27 +605,32 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 	  NCIUser user = (NCIUser) mySession.getAttribute(CaDSRConstants.USER_KEY);
 	  String sessionId = mySession.getId();
 	  String uid = null ;	    	  
-	  
-	  if (cart == null) {
-		  //cart = new CDECartImpl(); 
-		  ClientManager cManager = ClientManager.getInstance();
-		  String[] cdeCartSchemes = {CaDSRConstants.CDE_CARTSCHEME};
-		  if(!cManager.isInitialized()){
+	  try{
+		  if (cart == null) {
+			  //cart = new CDECartImpl(); 
+			  //ClientManager cManager = ClientManager.getInstance();		  
+			  ObjectCartClient ocClient = new ObjectCartClient();		  
+			  /*String[] cdeCartSchemes = {CaDSRConstants.CDE_CARTSCHEME};
+			  if(!cManager.isInitialized()){
 			  try{			  		  
 				  cManager.initClients(cdeCartSchemes);				    
 			  }catch(ObjectCartException oce){
 				  oce.printStackTrace();
 			  }  
+		  }*/
+
+			  if(user!= null){
+				  uid = user.getUsername();	
+			  }	else {
+				  uid = "PublicUser" + sessionId;
+				  //System.out.println(" Public User Cart:  "+uid);
+			  }
+			  cart = new CDECartOCImpl(ocClient,uid,CaDSRConstants.CDE_CART);		  			  
 		  }
-		  
-		  if(user!= null){
-			  uid = user.getUsername();	
-		  }	else {
-			  uid = "PublicUser" + sessionId;			  
-		  }
-		  cart = new CDECartOCImpl(cManager,uid,CaDSRConstants.CDE_CART,CaDSRConstants.CDE_CARTSCHEME);		  			  
+	  }catch (ObjectCartException oce){
+		  log.error("Exception on GetDataElements", oce);
 	  }
-	  
+
 	  return cart;
   }
 
