@@ -50,7 +50,7 @@
 						&lt;bean class=&quot;gov.nih.nci.system.client.proxy.ProxyHelperImpl&quot;/&gt;
 					&lt;/property&gt;
 				&lt;/bean&gt;
-				&lt;bean id=&quot;objectCartApplicationService&quot; class=&quot;org.springframework.aop.framework.ProxyFactoryBean&quot;&gt;
+				&lt;bean id=&quot;applicationService&quot; class=&quot;org.springframework.aop.framework.ProxyFactoryBean&quot;&gt;
 					&lt;property name=&quot;target&quot;&gt;
 						&lt;bean class=&quot;org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean&quot;&gt;
 							&lt;property name=&quot;serviceUrl&quot; value=&quot;URL_KEY/http/applicationService&quot;/&gt;
@@ -63,14 +63,16 @@
 					&lt;property name=&quot;interceptorNames&quot; value=&quot;interceptor&quot;/&gt;
 					&lt;property name=&quot;interfaces&quot; value=&quot;gov.nih.nci.objectCart.applicationService.ObjectCartService&quot;/&gt;
 				&lt;/bean&gt;
-				&lt;bean id=&quot;objectCartAuthenticationProvider&quot; class=&quot;org.acegisecurity.providers.rcp.RemoteAuthenticationProvider&quot;&gt;
+				&lt;bean id=&quot;authenticationProvider&quot; class=&quot;org.acegisecurity.providers.rcp.RemoteAuthenticationProvider&quot;&gt;
 					&lt;property name=&quot;remoteAuthenticationManager&quot;&gt;
 							&lt;bean class=&quot;org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean&quot;&gt;
 								&lt;property name=&quot;serviceUrl&quot; value=&quot;URL_KEY/http/remoteAuthenticationManager&quot;/&gt;
 								&lt;property name=&quot;serviceInterface&quot; value=&quot;org.acegisecurity.providers.rcp.RemoteAuthenticationManager&quot;/&gt;
 							&lt;/bean&gt;
 					&lt;/property&gt;
-				&lt;/bean&gt;
+				&lt;/bean&gt;				
+				&lt;alias alias=&quot;objectCartApplicationService&quot; name=&quot;applicationService&quot;/&gt;
+				&lt;alias alias=&quot;objectCartAuthenticationProvider&quot; name=&quot;authenticationProvider&quot;/&gt;
 			</value>
 		</constructor-arg>
 	</bean>
