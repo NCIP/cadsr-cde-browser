@@ -422,7 +422,7 @@ function gotoCDESearchPrefs() {
 <%@ include  file="cdebrowserCommon_html/tab_include_search.html" %>
 
 
-<%@ include file="../formbuilder/showMessages.jsp" %>   
+<%@ include file="../cdebrowser/showMessages.jsp" %>   
 <table>
 
 

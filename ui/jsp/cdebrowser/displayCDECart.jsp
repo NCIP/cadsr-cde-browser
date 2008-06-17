@@ -111,7 +111,7 @@ function retrieveSavedItems() {
 			</tr>
 		</table>
 
-		<%@ include file="../formbuilder/showMessages.jsp"%>		
+		<%@ include file="../cdebrowser/showMessages.jsp"%>		
 		<html:form action="/cdeCartAction.do">				
 			<html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>" />			
 			<logic:present name="<%=CaDSRConstants.CDE_CART%>">			

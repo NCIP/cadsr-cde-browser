@@ -88,7 +88,7 @@ function setDefaults() {
    </tr> 
  </table> 
  
-      <%@ include file="../formbuilder/showMessages.jsp" %>     
+      <%@ include file="../cdebrowser/showMessages.jsp" %>     
   <table width="80%" align="center">
     <tr>
          <td valign="top" width="100%" >
@@ -118,7 +118,7 @@ function setDefaults() {
           <table width="100%" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark" >
             <tr>
              <td width="50%" align="center" class="OraTableColumnHeaderNoBG" nowrap>Exclude Workflow Status(es) </td>
-              <td width="50%" class="OraTabledata"><%=desb.getWorkflowFullList()%></td>
+             <td width="50%" class="OraTabledata"><%=desb.getWorkflowFullList()%></td>
             </tr>          
           </table>
          </td>

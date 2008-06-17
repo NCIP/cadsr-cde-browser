@@ -15,7 +15,7 @@ String preSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSI
   <tr>
     <td align="left" nowrap>
 
-    <img src=i/cde_form_builder_banner_full.gif border=0>
+    <img src=i/cde_browser_banner_full.gif border=0>
     </td>
 
     <td align=right valign=top nowrap>

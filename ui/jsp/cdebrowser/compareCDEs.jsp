@@ -117,7 +117,7 @@ function done() {
       </jsp:include>
      
       <%@ include file="compareCDEs_inc.jsp"%>
-      <%@ include file="../formbuilder/showMessages.jsp" %>     
+      <%@ include file="../cdebrowser/showMessages.jsp" %>     
      
  
       <table cellpadding="0" cellspacing="0" width="90%" align="center" border=0>
