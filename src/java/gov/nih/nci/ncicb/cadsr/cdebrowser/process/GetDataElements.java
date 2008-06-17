@@ -6,7 +6,6 @@ import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.CollectionUtil;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
-import gov.nih.nci.ncicb.cadsr.common.dto.CDECartItemTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.html.HTMLPageScroller;
 import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.common.resource.NCIUser;
@@ -28,11 +27,10 @@ import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
 import gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem;
+import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItemTransferObject;
 import gov.nih.nci.ncicb.cadsr.objectCart.impl.CDECartOCImpl;
 import gov.nih.nci.objectCart.client.ObjectCartClient;
 import gov.nih.nci.objectCart.client.ObjectCartException;
-import gov.nih.nci.system.applicationservice.ApplicationService;
-import gov.nih.nci.system.client.ApplicationServiceProvider;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -50,7 +48,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.36 2008-06-10 19:29:16 davet Exp $
+ * @version: $Id: GetDataElements.java,v 1.37 2008-06-17 17:37:33 davet Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -608,22 +606,21 @@ private static Log log = LogFactory.getLog(GetDataElements.class.getName());
 	  try{
 		  if (cart == null) {
 			  //cart = new CDECartImpl(); 
-			  //ClientManager cManager = ClientManager.getInstance();		  
-			  ObjectCartClient ocClient = new ObjectCartClient();		  
-			  /*String[] cdeCartSchemes = {CaDSRConstants.CDE_CARTSCHEME};
-			  if(!cManager.isInitialized()){
-			  try{			  		  
-				  cManager.initClients(cdeCartSchemes);				    
-			  }catch(ObjectCartException oce){
-				  oce.printStackTrace();
-			  }  
-		  }*/
+			  //ClientManager cManager = ClientManager.getInstance();	
+			  CDEBrowserParams params = CDEBrowserParams.getInstance();
+		      String ocURL = params.getObjectCartUrl();		      
+		      ObjectCartClient ocClient = null;
+		      
+			  if (!ocURL.equals(""))
+				  ocClient = new ObjectCartClient(ocURL);
+			  else
+		    	  ocClient = new ObjectCartClient();			  
 
 			  if(user!= null){
 				  uid = user.getUsername();	
 			  }	else {
 				  uid = "PublicUser" + sessionId;
-				  //System.out.println(" Public User Cart:  "+uid);
+				  log.debug(" Public User Cart:  "+uid);
 			  }
 			  cart = new CDECartOCImpl(ocClient,uid,CaDSRConstants.CDE_CART);		  			  
 		  }

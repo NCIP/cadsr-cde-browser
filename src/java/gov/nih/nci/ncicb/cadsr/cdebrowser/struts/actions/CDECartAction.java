@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.common.resource.NCIUser;
 import gov.nih.nci.ncicb.cadsr.common.struts.formbeans.CDECartFormBean;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
+import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +45,17 @@ public class CDECartAction extends BrowserBaseDispatchAction {
 				return mapping.findForward("secureSuccess");
 			}			
 			//Get the cart in the session
-			CDECart sessionCart = (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);			
+			CDECart sessionCart = (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+			Collection<CDECartItem> cartItems = sessionCart.getDataElements();
+			Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
+			
+			for(Object o:cartItems){
+				CDECartItem item = (CDECartItem)o;
+				item.setPersistedInd(false);
+				items.add(item);
+			}
+			sessionCart.mergeDataElements(items);
+			
 			this.setSessionObject(request, CaDSRConstants.CDE_CART, sessionCart);			
 		}catch (Exception exp) {
 			if (log.isErrorEnabled()) {

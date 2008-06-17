@@ -2,12 +2,11 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.common.resource.NCIUser;
-import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorException;
 import gov.nih.nci.ncicb.cadsr.common.struts.formbeans.CDECartFormBean;
+import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem;
 import gov.nih.nci.ncicb.cadsr.objectCart.impl.CDECartOCImpl;
-import gov.nih.nci.objectCart.client.ClientManager;
 import gov.nih.nci.objectCart.client.ObjectCartClient;
 import gov.nih.nci.objectCart.client.ObjectCartException;
 
@@ -52,13 +51,18 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 
 			CDECart sessionCart = (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 			CDECartOCImpl tempSessionCart = (CDECartOCImpl)sessionCart;
-			
-			ObjectCartClient ocClient = new ObjectCartClient();
-			//ClientManager cManager = ClientManager.getInstance();
-			CDECart userCart = null;
-			//if(cManager.isInitialized()){
-				userCart = new CDECartOCImpl(ocClient,userName,CaDSRConstants.CDE_CART);
-			//}
+
+			CDEBrowserParams params = CDEBrowserParams.getInstance();
+			String ocURL = params.getObjectCartUrl();			
+			ObjectCartClient ocClient = null;
+			CDECart userCart = null;  
+			if (!ocURL.equals(""))
+				ocClient = new ObjectCartClient(ocURL);
+			else
+				ocClient = new ObjectCartClient();
+
+			userCart = new CDECartOCImpl(ocClient,userName,CaDSRConstants.CDE_CART);
+
 			if(userCart != null){
 				sessionCart.mergeCart(userCart);   	  
 			}      
@@ -98,13 +102,16 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 			String[] selectedSaveItems = myForm.getSelectedSaveItems();
 			Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
 
-			ObjectCartClient ocClient = new ObjectCartClient();
-			//ClientManager cManager = ClientManager.getInstance();
-			CDECart userCart = null;
+			CDEBrowserParams params = CDEBrowserParams.getInstance();
+			String ocURL = params.getObjectCartUrl();			
+			ObjectCartClient ocClient = null;
+			CDECart userCart = null;  
+			if (!ocURL.equals(""))
+				ocClient = new ObjectCartClient(ocURL);
+			else
+				ocClient = new ObjectCartClient();
 
-			//if(cManager.isInitialized()){
-				userCart = new CDECartOCImpl(ocClient,userName,CaDSRConstants.CDE_CART);
-			//}
+			userCart = new CDECartOCImpl(ocClient,userName,CaDSRConstants.CDE_CART);			
 
 			for (int i = 0; i < selectedSaveItems.length; i++) {
 				CDECartItem cartItem = sessionCart.findDataElement(selectedSaveItems[i]);
@@ -154,13 +161,18 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 			//Get the cart in the session
 			CDECart sessionCart = (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 			CDECartItem item = null;
-			
-			ObjectCartClient ocClient = new ObjectCartClient();
-			//ClientManager cManager = ClientManager.getInstance();
-			CDECart userCart = null;      
-			//if(cManager.isInitialized()){
-				userCart = new CDECartOCImpl(ocClient,userName,CaDSRConstants.CDE_CART);
-			//}
+
+			CDEBrowserParams params = CDEBrowserParams.getInstance();
+			String ocURL = params.getObjectCartUrl();			
+			ObjectCartClient ocClient = null;
+			CDECart userCart = null;  
+			if (!ocURL.equals(""))
+				ocClient = new ObjectCartClient(ocURL);
+			else
+				ocClient = new ObjectCartClient();
+
+			userCart = new CDECartOCImpl(ocClient,userName,CaDSRConstants.CDE_CART);
+
 
 			for (int i = 0; i < selectedDeleteItems.length; i++) {
 				item = sessionCart.findDataElement(selectedDeleteItems[i]);        
