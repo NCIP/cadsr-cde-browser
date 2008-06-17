@@ -26,7 +26,7 @@
    <property name="jboss.deploy" value="${jboss.home}/server/default/deploy" />
    
    <property name="cdebrowser.version" value="4.0.0.0" />
-   <property name="cdebrowser.build" value="1" />
+   <property name="cdebrowser.build" value="2" />
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="4_0_0_0" />
@@ -53,11 +53,11 @@
   
   <property name="project.home" value="${basedir}/../.."/>
   
-  <property name="app.name" value="cdebrowser" />
+  <property name="app.name" value="CDEBrowser" />
   <property name="web.app.name" value="${app.name}-web" />
   <property name="ear.name" value="${app.name}" />
-  <property name="war.name" value="${app.name}-web" />
-  <property name="ejb.name" value="formbuilder-ejb" />  
+  <property name="war.name" value="${app.name}" />
+    
     
   <!-- Java Source Directories -->
   <property name="java.src.dir" value="${project.home}/src/java"/>
@@ -473,7 +473,8 @@
           <include name="WEB-INF/spring/*.xml"/>
           <include name="WEB-INF/ehcache.xml"/>
           <include name="WEB-INF/cdebrowser-faces-config.xml"/>          
-          <include name="WEB-INF/*.taglib.xml"/>	
+          <include name="WEB-INF/*.taglib.xml"/>
+          <include name="WEB-INF/META-INF/application.xml"/>
         </patternset>
       </fileset>
       <fileset dir="${classes.build.dir}">
@@ -614,10 +615,10 @@
         
        </lib>
        
-      <manifest>
+    	<!-- <manifest>
         <attribute name="Built-By" value="${user.name}"/>
-        <attribute name="Class-Path" value="persistence_form.jar common.jar"/>
-      </manifest>  
+         <attribute name="Class-Path" value="persistence_form.jar common.jar"/> 
+      </manifest> -->
     </war>
   </target>
    
@@ -906,14 +907,15 @@
   
    <target  name="clean_jboss" depends="init" >       
 	<delete dir="${jboss.home}/server/default/tmp/deploy" failonerror="true"  verbose="true" />
-	<delete file="${jboss.home}/server/default/deploy/${ear.name}.ear" failonerror="true" verbose="true" />
+   	<delete file="${jboss.home}/server/default/deploy/${ear.name}.ear" failonerror="true" verbose="true" />
+   	<delete file="${jboss.home}/server/default/deploy/${war.name}.war" failonerror="true" verbose="true" />
    </target>    
    
-   <target  name="deploy_dev" depends="clean,clean_jboss,dev_config,debug_setting,ear_cdebrowser"> 
+   <target  name="deploy_dev" depends="clean,clean_jboss,dev_config,debug_setting,war_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
-             <include name="${ear.name}.ear"/>
+             <include name="${war.name}.war"/>
            </patternset>
          </fileset> 
      </copy>

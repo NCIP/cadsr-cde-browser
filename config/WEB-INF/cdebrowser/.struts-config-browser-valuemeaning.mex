@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowViewLayout Version="1.2">
+  <StrutsActivity path="/valueMeaningAlternates.do" location="77,0" dimension="380,88" />
+  <StrutsActivity path="/formbuilder/valueMeaningAlterNames.jsp" location="0,188" dimension="230,49" />
+  <StrutsActivity path="/cdebrowser/validValuesList.jsp" location="330,188" dimension="180,49" />
+  <StrutsTransition id="/valueMeaningAlternates.do,success,/formbuilder/valueMeaningAlterNames.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="172,88" />
+      <AbsolutePoint location="172,138" />
+      <AbsolutePoint location="115,138" />
+      <AbsolutePoint location="115,188" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/valueMeaningAlternates.do,failure,/cdebrowser/validValuesList.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="362,88" />
+      <AbsolutePoint location="362,138" />
+      <AbsolutePoint location="420,138" />
+      <AbsolutePoint location="420,188" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+</FlowViewLayout>
+

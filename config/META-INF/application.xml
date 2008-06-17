@@ -4,7 +4,7 @@
    <display-name>CDEBrowser</display-name>
    <module>
       <web>
-         <web-uri>cdebrowser-web.war</web-uri>
+         <web-uri>cdebrowser.war</web-uri>
          <context-root>CDEBrowser</context-root>
       </web>
    </module>
