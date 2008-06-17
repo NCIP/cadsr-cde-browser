@@ -4,6 +4,7 @@ import gov.nih.nci.cadsr.domain.ClassSchemeClassSchemeItem;
 import gov.nih.nci.cadsr.domain.ObjectClass;
 import gov.nih.nci.cadsr.domain.ObjectClassRelationship;
 import gov.nih.nci.ncicb.cadsr.common.ocbrowser.service.OCBrowserService;
+import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 import gov.nih.nci.system.applicationservice.ApplicationException;
 import gov.nih.nci.system.applicationservice.ApplicationService;
 import gov.nih.nci.system.client.ApplicationServiceProvider;
@@ -19,16 +20,25 @@ import org.hibernate.criterion.Restrictions;
 public class OCBrowserServiceImpl implements OCBrowserService
 {
 	private ApplicationService appService = null;
-
+	
+	public OCBrowserServiceImpl()
 	{
+	}
+	
+	private void getCadsrService(){
 		try {
-			appService = ApplicationServiceProvider.getApplicationService("CaDsrServiceInfo");
+			if (appService == null)
+			{
+				CDEBrowserParams params = CDEBrowserParams.getInstance();
+				String url = params.getCadsrAPIUrl();
+				if (!url.equals(""))
+					appService = ApplicationServiceProvider.getApplicationServiceFromUrl(url, "CaDsrServiceInfo");
+				else
+					appService = ApplicationServiceProvider.getApplicationService("CaDsrServiceInfo");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();			
 		}
-	}
-	public OCBrowserServiceImpl()
-	{
 	}
 
 	/**
@@ -43,6 +53,7 @@ public class OCBrowserServiceImpl implements OCBrowserService
 
 		List result;
 		try {
+			this.getCadsrService();
 			result = appService.query(criteria);
 		} catch (ApplicationException e1) {
 			throw new RuntimeException(e1);
@@ -63,6 +74,7 @@ public class OCBrowserServiceImpl implements OCBrowserService
 
 		List result;
 		try {
+			this.getCadsrService();
 			result = appService.search(searchOc.getClass(), searchOc);
 		} catch (ApplicationException e) {
 			throw new RuntimeException(e);
@@ -84,6 +96,7 @@ public class OCBrowserServiceImpl implements OCBrowserService
 		criteria.add(Expression.eq("name", "IS_A"));
 		List result;
 		try {
+			this.getCadsrService();
 			result = appService.query(criteria);
 		} catch (ApplicationException e1) {
 			throw new RuntimeException(e1);
@@ -102,6 +115,7 @@ public class OCBrowserServiceImpl implements OCBrowserService
 			criteria.createCriteria("sourceObjectClass").add(Expression.eq("id", ocr.getTargetObjectClass().getId()));
 			criteria.add(Expression.eq("name", "IS_A"));
 			try {
+				this.getCadsrService();
 				result = appService.query(criteria);
 			} catch (ApplicationException e) {
 				throw new RuntimeException(e);
@@ -124,6 +138,7 @@ public class OCBrowserServiceImpl implements OCBrowserService
 
 		List result = null;
 		try {
+			this.getCadsrService();
 			result = appService.query(criteria);
 		} catch (ApplicationException e) {
 			throw new RuntimeException(e);
