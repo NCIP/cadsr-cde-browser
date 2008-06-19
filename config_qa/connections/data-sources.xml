@@ -7,7 +7,7 @@
                ejb-location="jdbc/ejb/FormBuilderDS" inactivity-timeout="30"
                location="jdbc/FormBuilderCoreDS" name="SBREXT_FB_DS"
                password="i1sn0w" pooled-location="jdbc/pooled/FormBuilderDS"
-               url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest"
+               url="jdbc:oracle:thin:@cbiodb530.nci.nih.gov:1521:DSRQA"
                username="sbrext" xa-location="jdbc/xa/SBREXT_FB_XADS"
                min-connections="5">
     <property name="cacheScheme" value="1"/>
@@ -19,7 +19,7 @@
                location="jdbc/SBR_CBTESTCoreDS"
                name="jdev-connection:SBR_CBTEST" password="i1sn0w"
                pooled-location="jdbc/SBR_CBTESTPooledDS"
-               url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest"
+               url="jdbc:oracle:thin:@cbiodb530.nci.nih.gov:1521:DSRQA"
                username="SBR" xa-location="jdbc/xa/SBR_CBTESTXADS"/>
   <data-source class="com.evermind.sql.DriverManagerDataSource"
                connection-driver="oracle.jdbc.driver.OracleDriver"
@@ -27,6 +27,6 @@
                location="jdbc/SBREXT_CBTESTCoreDS"
                name="jdev-connection:SBREXT_CBTEST" password="i1sn0w"
                pooled-location="jdbc/SBREXT_CBTESTPooledDS"
-               url="jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest"
+               url="jdbc:oracle:thin:@cbiodb530.nci.nih.gov:1521:DSRQA"
                username="sbrext" xa-location="jdbc/xa/SBREXT_CBTESTXADS"/>
 </data-sources>
