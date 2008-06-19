@@ -13,7 +13,7 @@ if (parent.frames[1])
 </SCRIPT>
 </head>
 <%
-	String previousSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
+  String previousSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
   String forwardUrl = "cdeBrowse.jsp";
   if(previousSessionId!=null)
     forwardUrl=forwardUrl+"?PageId=DataElementsGroup&"+CaDSRConstants.PREVIOUS_SESSION_ID+"="+previousSessionId;
@@ -56,7 +56,7 @@ if (parent.frames[1])
                 <table width="80%" align="center">
                   <tr align="center" >
                      <td  align="left" class="OraErrorText" nowrap> <b>
-                      Your user account is not authorized to use Form Builder.
+                      Your user account is not authorized to use.
                       Click <a target="_top" href="<%=forwardUrl%>">here</a> to return to CDEBrowser. </b>
                     </td>
                   </tr>
