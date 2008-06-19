@@ -10,7 +10,9 @@
     <application-policy name="CDEBrowserDomain">
 		<authentication>			
 			<login-module code="gov.nih.nci.ncicb.cadsr.common.security.jboss.DBLoginModule" flag="required">
-				<module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl</module-option>				
+				<module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl</module-option>
+				<module-option name="applicationUserName">cdebrowser</module-option>
+		      	<module-option name="applicationPassword">cdeuser</module-option>				
 			</login-module>
 		</authentication>
 	</application-policy>    

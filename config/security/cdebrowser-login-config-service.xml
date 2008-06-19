@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: cdebrowser-login-config-service.xml,v 1.1 2008-06-02 13:39:26 davet Exp $ -->
+<!-- $Id: cdebrowser-login-config-service.xml,v 1.2 2008-06-19 15:40:04 davet Exp $ -->
 
 <!-- ===================================================================== -->
 <!--  JBoss Server Configuration                                           -->
@@ -9,7 +9,7 @@
 <server>
    <classpath codebase="${jboss.server.lib.url:lib}" archives="*"/>
 
-   <mbean code="org.jboss.security.auth.login.DynamicLoginConfig" name="jboss:service=DynamicLoginConfig">
+   <mbean code="org.jboss.security.auth.login.DynamicLoginConfig" name="jboss:service=CDEBrowserDynamicLoginConfig">
       <attribute name="AuthConfig">cdebrowser-login-config.xml</attribute>
       <!-- The service which supports dynamic processing of login-config.xml configurations. -->
       <depends optional-attribute-name="LoginConfigService">
