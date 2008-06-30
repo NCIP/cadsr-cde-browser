@@ -533,7 +533,7 @@
       </fileset>
 
       <lib dir="${java.lib.dir}">
-        <include name="classes12.jar"/>
+        <!--<include name="classes12.jar"/> -->
        	<include name="cle20.jar"/>
  
         <include name="xml-apis.jar"/>
@@ -945,17 +945,17 @@
    </target> 
    
   
-   <target  name="deploy_qa" depends="clean,clean_jboss,qa_config,debug_setting,ear_cdebrowser"> 
+   <target  name="deploy_qa" depends="clean,clean_jboss,qa_config,debug_setting,war_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
-             <include name="${ear.name}.ear"/>
+             <include name="${war.name}.war"/>
            </patternset>
          </fileset> 
      </copy>  
      <filter token="user.password" value="${qa.user.password}"/>
    	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
-   	         <fileset dir="${config.home}/connections">
+   	         <fileset dir="${config.qa}/connections">
    	           <patternset>
    	             <include name="oracle-ds.xml"/>
    	           </patternset>
@@ -978,17 +978,17 @@
       <target  name="deploy_qa_start" depends="deploy_qa,jboss_startdebug"> 
    </target>
 
-   <target  name="deploy_stage" depends="clean,clean_jboss,stage_config,debug_setting,ear_cdebrowser"> 
+   <target  name="deploy_stage" depends="clean,clean_jboss,stage_config,debug_setting,war_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
-             <include name="${ear.name}.ear"/>
+             <include name="${war.name}.war"/>
            </patternset>
          </fileset> 
      </copy> 
      <filter token="user.password" value="${stage.user.password}"/>
    	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
-   	         <fileset dir="${config.home}/connections">
+   	         <fileset dir="${config.stage}/connections">
    	           <patternset>
    	             <include name="oracle-ds.xml"/>
    	           </patternset>
@@ -1008,17 +1008,17 @@
    	         </copy>
    	   </target>  
 
-  <target  name="deploy_load" depends="clean,clean_jboss,load_config,debug_setting,ear_cdebrowser"> 
+  <target  name="deploy_load" depends="clean,clean_jboss,load_config,debug_setting,war_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
-             <include name="${ear.name}.ear"/>
+             <include name="${war.name}.war"/>
            </patternset>
          </fileset> 
      </copy> 
      <filter token="user.password" value="${load.user.password}"/>
   	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
-  	         <fileset dir="${config.home}/connections">
+  	         <fileset dir="${config.load}/connections">
   	           <patternset>
   	             <include name="oracle-ds.xml"/>
   	           </patternset>
@@ -1041,17 +1041,17 @@
       <target  name="deploy_stage_start" depends="deploy_stage,jboss_startdebug"> 
    </target>
 
-   <target  name="deploy_umlstage" depends="clean,clean_jboss,umlstage_config,debug_setting,ear_cdebrowser"> 
+   <target  name="deploy_umlstage" depends="clean,clean_jboss,umlstage_config,debug_setting,war_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
-             <include name="${ear.name}.ear"/>
+             <include name="${war.name}.war"/>
            </patternset>
          </fileset> 
      </copy> 
      <filter token="user.password" value="${umlstage.user.password}"/>
    	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
-   	         <fileset dir="${config.home}/connections">
+   	         <fileset dir="${config.umlstage}/connections">
    	           <patternset>
    	             <include name="oracle-ds.xml"/>
    	           </patternset>
@@ -1074,17 +1074,17 @@
    </target>
 
    
-   <target  name="deploy_prod" depends="clean,clean_jboss,prod_config,debug_setting,ear_cdebrowser"> 
+   <target  name="deploy_prod" depends="clean,clean_jboss,prod_config,debug_setting,war_cdebrowser"> 
      <copy todir="${jboss.home}/server/default/deploy">      
          <fileset dir="${build.dir}">
            <patternset>
-             <include name="${ear.name}.ear"/>
+             <include name="${war.name}.war"/>
            </patternset>
          </fileset> 
      </copy> 
      <filter token="user.password" value="${prod.user.password}"/>
    	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
-   	         <fileset dir="${config.home}/connections">
+   	         <fileset dir="${config.prod}/connections">
    	           <patternset>
    	             <include name="oracle-ds.xml"/>
    	           </patternset>
@@ -1123,12 +1123,12 @@
   </target>
 <!-- =========== End Test Targets ====================== -->
 
-<!-- =========== Copy DISTRIBUTION EAR============== -->
-  <target name="dist_ear_copy" depends="dev_config,ear_cdebrowser">  
+<!-- =========== Copy DISTRIBUTION WAR============== -->
+  <target name="dist_war_copy" depends="dev_config,war_cdebrowser">  
      <copy todir="${dist.dir}">      
          <fileset dir="${build.dir}">
            <patternset>
-             <include name="${ear.name}.ear"/>
+             <include name="${war.name}.war"/>
            </patternset>
          </fileset>    
       </copy>          
@@ -1138,39 +1138,39 @@
 	    <copy todir="${jboss.deploy}"  overwrite="YES" >      
 	        <fileset dir="${build.dir}">
 	          <patternset>
-	            <include name="${ear.name}.ear"/>
+	            <include name="${war.name}.war"/>
 	          </patternset>
 	        </fileset>    
 	     </copy>             	
 	   </target>      		  
   
   <!-- =========== DEV DISTRIBUTION============== -->
-   <target name="dist_dev" depends="clean_build_dir,dev_config,debug_setting,ear_cdebrowser,dist_ear_copy">      
+   <target name="dist_dev" depends="clean_build_dir,dev_config,debug_setting,war_cdebrowser,dist_war_copy">      
    </target>      
   <!-- =========== END DEV DISTRIBUTION ======================= -->
   
   <!-- =========== QA DISTRIBUTION============== -->
-        <target name="dist_qa" depends="clean_build_dir,qa_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
+        <target name="dist_qa" depends="clean_build_dir,qa_config,debug_setting,war_cdebrowser,dist_war_copy">  
         </target>      
   <!-- =========== END TEST DISTRIBUTION ======================= -->
   
   <!-- =========== STAGE DISTRIBUTION============== -->
-       <target name="dist_stage" depends="clean_build_dir,stage_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
+       <target name="dist_stage" depends="clean_build_dir,stage_config,debug_setting,war_cdebrowser,dist_war_copy">  
         </target>      
   <!-- =========== END STAGE DISTRIBUTION ======================= -->  
   <!-- =========== LOAD DISTRIBUTION============== -->
-       <target name="dist_load" depends="clean_build_dir,load_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
+       <target name="dist_load" depends="clean_build_dir,load_config,debug_setting,war_cdebrowser,dist_war_copy">  
         </target>      
   <!-- =========== END LOAD DISTRIBUTION ======================= -->
  
   <!-- =========== UML STAGE DISTRIBUTION============== -->
-       <target name="dist_umlstage" depends="clean_build_dir,umlstage_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
+       <target name="dist_umlstage" depends="clean_build_dir,umlstage_config,debug_setting,war_cdebrowser,dist_war_copy">  
         </target>      
   <!-- =========== END STAGE DISTRIBUTION ======================= -->
   
 
   <!-- =========== PROD DISTRIBUTION============== -->
-        <target name="dist_prod" depends="clean_build_dir,prod_config,debug_setting,ear_cdebrowser,dist_ear_copy">  
+        <target name="dist_prod" depends="clean_build_dir,prod_config,debug_setting,war_cdebrowser,dist_war_copy">  
         </target>      
   <!-- =========== END PROD DISTRIBUTION ======================= -->
   
