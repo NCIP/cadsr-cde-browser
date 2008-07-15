@@ -1,6 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
+
 <%
   	// get parameters
     String treeParams     = (String) request.getParameter("treeParams");
@@ -21,6 +23,6 @@
   var now = new Date();
   var glob = now.getHours()+now.getSeconds()+now.getMilliseconds();
   window.document.write("Building tree, please wait...");  
-  var targetURL = "tree2.jsf?treeName=<%= request.getParameter("treeName") %>&treeParams=<%=treeParams%>&skin=<%=skin%>&treeDirective=<%=treeDirective%>&glob="+glob + "&treeName=<%=treeName%>";
+  var targetURL = "tree2.jsf?treeName=<%= StringEscapeUtils.escapeJavaScript(request.getParameter("treeName")) %>&treeParams=<%=StringEscapeUtils.escapeJavaScript(treeParams)%>&skin=<%=skin%>&treeDirective=<%=treeDirective%>&glob="+glob + "&treeName=<%=StringEscapeUtils.escapeJavaScript(treeName)%>";
   window.location.href = targetURL;     
 </script>
