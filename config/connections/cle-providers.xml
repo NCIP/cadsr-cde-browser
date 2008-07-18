@@ -5,9 +5,9 @@
     <property name="user" value="cdebrowser"/>
     <property name="password" value="@user.password@"/>
     <property name="modulename" value="gov.nih.nci.ncicb.cadsr.common.persistence.bc4j.CDEBrowserBc4jModule"/>
-    <property name="connectionstring" value="jdbc:oracle:thin:cdebrowser/@user.password@@cbiodb540.nci.nih.gov:1521:dsrdev"/>
+    <property name="connectionstring" value="jdbc:oracle:thin:cdebrowser/@user.password@@cbiodb540.nci.nih.gov:1521:DSRDEV"/>
     <property name="host" value="cbiodb540.nci.nih.gov"/>
-    <property name="sid" value="dsrdev"/>
+    <property name="sid" value="DSRDEV"/>
     <property name="persistencebase" value="gov.nih.nci.ncicb.cadsr.common.persistence.bc4j"/>
     <property name="failover" value=""/>
   </provider>

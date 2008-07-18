@@ -1,10 +1,10 @@
 <?xml version = '1.0' encoding = 'windows-1252'?>
 <!DOCTYPE application PUBLIC "-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN" "http://java.sun.com/dtd/application_1_3.dtd">
 <application>
-   <display-name>cdebrowser</display-name>
+   <display-name>CDEBrowser</display-name>
    <module>
       <web>
-         <web-uri>cdebrowser-web.war</web-uri>
+         <web-uri>cdebrowser.war</web-uri>
          <context-root>CDEBrowser</context-root>
       </web>
    </module>      

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowViewLayout Version="1.2">
+  <StrutsActivity path="/cdebrowser/compareCDEAction.do" location="477,0" dimension="377,88" />
+  <StrutsActivity path="/cdebrowser/CDECompareExcelDownload.do" location="0,584" dimension="377,88" />
+  <StrutsActivity path="/cdebrowser/changeCompareOrder.do" location="1431,0" dimension="377,88" />
+  <StrutsActivity path="/cdebrowser/addToCompareListAction.do" location="0,0" dimension="377,88" />
+  <StrutsActivity path="/cdebrowser/removeFromCompareListAction.do" location="954,0" dimension="377,88" />
+  <StrutsActivity path="/cdebrowser/doneCompareListAction.do" location="0,302" dimension="377,88" />
+  <StrutsActivity path="/cdebrowser/dataElementsSearch.jsp" location="151,208" dimension="209,49" />
+  <StrutsActivity path="/cdebrowser/compareCDEs.jsp" location="1179,208" dimension="177,49" />
+  <StrutsActivity path="/cdebrowser/cdeCompareFailure.jsp" location="614,208" dimension="203,49" />
+  <StrutsActivity path="/cdeBrowse.jsp" location="137,490" dimension="103,49" />
+  <StrutsTransition id="/cdebrowser/removeFromCompareListAction.do,success,/cdebrowser/compareCDEs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1142,88" />
+      <AbsolutePoint location="1142,118" />
+      <AbsolutePoint location="1232,118" />
+      <AbsolutePoint location="1232,208" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/compareCDEAction.do,success,/cdebrowser/compareCDEs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="791,88" />
+      <AbsolutePoint location="791,148" />
+      <AbsolutePoint location="1197,148" />
+      <AbsolutePoint location="1197,208" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/removeFromCompareListAction.do,lessThanTwo,/cdebrowser/cdeCompareFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1016,88" />
+      <AbsolutePoint location="1016,178" />
+      <AbsolutePoint location="767,178" />
+      <AbsolutePoint location="767,208" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/doneCompareListAction.do,success,/cdeBrowse.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="94,390" />
+      <AbsolutePoint location="94,440" />
+      <AbsolutePoint location="162,440" />
+      <AbsolutePoint location="162,490" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/changeCompareOrder.do,success,/cdebrowser/compareCDEs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1525,88" />
+      <AbsolutePoint location="1525,118" />
+      <AbsolutePoint location="1303,118" />
+      <AbsolutePoint location="1303,208" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/addToCompareListAction.do,success,/cdebrowser/dataElementsSearch.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="94,88" />
+      <AbsolutePoint location="94,118" />
+      <AbsolutePoint location="186,118" />
+      <AbsolutePoint location="186,208" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/changeCompareOrder.do,failure,/cdebrowser/compareCDEs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1713,88" />
+      <AbsolutePoint location="1713,148" />
+      <AbsolutePoint location="1338,148" />
+      <AbsolutePoint location="1338,208" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/removeFromCompareListAction.do,failure,/cdebrowser/compareCDEs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1268,88" />
+      <AbsolutePoint location="1268,208" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/compareCDEAction.do,search,/cdebrowser/dataElementsSearch.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="539,88" />
+      <AbsolutePoint location="539,118" />
+      <AbsolutePoint location="325,118" />
+      <AbsolutePoint location="325,208" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/doneCompareListAction.do,failure,/cdeBrowse.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="282,390" />
+      <AbsolutePoint location="282,440" />
+      <AbsolutePoint location="214,440" />
+      <AbsolutePoint location="214,490" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/addToCompareListAction.do,failure,/cdebrowser/dataElementsSearch.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="282,88" />
+      <AbsolutePoint location="282,118" />
+      <AbsolutePoint location="255,118" />
+      <AbsolutePoint location="255,208" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/compareCDEAction.do,failure,/cdebrowser/cdeCompareFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="665,88" />
+      <AbsolutePoint location="665,208" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+</FlowViewLayout>
+
