@@ -26,7 +26,7 @@
    <property name="jboss.deploy" value="${jboss.home}/server/default/deploy" />
    
    <property name="cdebrowser.version" value="4.0.0.0" />
-   <property name="cdebrowser.build" value="3" />
+   <property name="cdebrowser.build" value="4" />
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="4_0_0_0" />
@@ -126,7 +126,8 @@
     
     <target name="clean_build_dir">
           <delete dir="${classes.build.dir}" quiet="false"/>
-          <delete dir="${build.dir}" quiet="false"/>           
+          <delete dir="${build.dir}" quiet="false"/>
+    	  <delete dir="${dist.dir}" quiet="false"/>
     </target>
  <!-- =========== END CLEAN BUILD AREA ======================= -->
  
@@ -173,8 +174,8 @@
    	   <copy todir="${build.dir}">
 	     <fileset dir="${java.lib.dir}">
 	      <patternset>
-	        <include name="persistence_form.jar"/>
-	        <include name="common.jar"/>	    
+	        <!--<include name="persistence_form.jar"/>
+	        <include name="common.jar"/> -->	    
 	      </patternset>
 	     </fileset>
 	   </copy> 
@@ -301,7 +302,7 @@
       <property name="debug.config.home" value="${config.stage}" /> 
           
     </target>
-  <!-- =========== END TEST CONFIG ======================= -->  
+  <!-- =========== END Stage CONFIG ======================= -->  
 
  <!-- =========== UML Stage CONFIG ======================= -->
     <target name="umlstage_config" depends="init,dev_config">    
@@ -463,10 +464,10 @@
       <fileset dir="${config.home}">
         <patternset>
           <include name="WEB-INF/*.tld"/>
-          <include name="WEB-INF/struts-config*.xml"/>
+          <!--<include name="WEB-INF/struts-config*.xml"/>-->
           <include name="WEB-INF/cdebrowser/struts-config*.xml"/>
           <include name="WEB-INF/ocbrowser/struts-config*.xml"/>
-          <include name="WEB-INF/formbuilder/struts-config*.xml"/>
+          <!--<include name="WEB-INF/formbuilder/struts-config*.xml"/>-->
           <include name="WEB-INF/formbuilder/validat*.xml"/>
           <include name="WEB-INF/admin/struts-config*.xml"/>
           <include name="WEB-INF/jboss-web.xml"/>
@@ -486,7 +487,7 @@
       <fileset dir="${jsp.dir}/">
         <patternset>
          <!-- release 3.0, reorganze ui directory -->
-          <include name="formbuilder/**/*.*"/>  
+          <!--<include name="formbuilder/**/*.*"/>-->  
           <include name="cdebrowser/**/*.*"/>  
           <include name="ocbrowser/**/*.*"/>  
           <include name="admin/**/*.*"/>  
@@ -498,7 +499,7 @@
       <fileset dir="${jsp.dir}/">
               <patternset>
                 <include name="common/**/*.*"/>  
-                <include name="*.jsp"/>
+                <!--<include name="*.jsp"/>-->
                 <exclude name="common_variable_length_bottom_border.jsp"/>
                 <exclude name="common_bottom_border.jsp"/>                
               </patternset>
@@ -511,7 +512,7 @@
       </fileset>
            
       
-  <!-- release 3.0, reorganze ui directory -->
+  <!-- release 3.0, reorganize ui directory -->
       <fileset dir="${html.dir}/">
         <patternset>
           <include name="common/**/*.*"/>   
@@ -539,53 +540,34 @@
         <include name="xml-apis.jar"/>
        	<include name="xercesImpl.jar"/>
        	<include name="healthtoolkit.zip"/>
-       	<include name="nls_charset12.jar"/>
+       	<include name="nls_charset12.jar"/>      	
         <include name="ssosdk307.jar"/>
        	<include name="xmlcomp.jar"/>         
        	<include name="xsu12.jar"/> 
        	
        	<!--BC4J libs -->
        	<include name="xmlparserv2.jar"/>       	
-       	<include name="collections.jar"/>
-       	<include name="bc4jmt.jar"/>
+       	<include name="collections.jar"/>       	
        	<include name="jdev-cm.jar"/>
        	<include name="jdev-rt.jar"/>
-       	<include name="bc4jct.jar"/>
-       	<include name="bc4jdatum.jar"/>
-       	<include name="bc4jdomorcl.jar"/>
-       	     	
-       
-       	<!-- old bc4j -->
-       	<!--include name="bc4jct.jar"/-->
-       	<!--include name="bc4jdatum.jar"/-->
-       	<!--include name="bc4jdomorcl.jar"/-->
-       	<!--include name="bc4jmt.jar"/-->   
-       	
+      	<include name="bc4jmt.jar"/>
+       	<include name="bc4jct.jar"/>        
+       	<include name="bc4jdomorcl.jar"/>     	
+     	      	      	
        	<!-- Struts libs -->
        	<include name="struts-*.jar"/>
        	<include name="commons-*.jar"/>
        	<include name="jakarta-oro.jar"/>
        	
        	<!-- Spring Libs -->
-      	<include name="spring.jar"/>
-      	<!--<include name="spring-1.2.4.jar"/>
-       	<include name="spring-context-1.2.4.jar"/>
-       	<include name="spring-core-1.2.4.jar"/>
-       	<include name="spring-dao-1.2.4.jar"/>
-       	<include name="spring-orm-1.2.4.jar"/>
-       	<include name="spring-context-1.2.4.jar"/>
-       	<include name="spring-web-1.2.4.jar"/>
-       	<include name="spring-hibernate-1.2.4.jar"/>
-       	<include name="spring-beans-1.2.4.jar"/>-->
+      	<include name="spring.jar"/>      	
        	
-       	<include name="hibernate3.jar"/>
-       	<!--<include name="ehcache-0.7.jar"/> -->
+       	<include name="hibernate3.jar"/>       	
 		<include name="ehcache-1.2.2.jar"/>
        	
        	<include name="aopalliance.jar"/>
        	
-       	<!-- cadsr api lib -->
-       	<!--<include name="cadsr-api.jar"/> -->
+       	<!-- cadsr api lib -->       	
       	<include name="caDSR-beans.jar"/>
       	<include name="xercesImpl.jar"/>
        	
@@ -613,43 +595,12 @@
       	<include name="castor-1.0.2.jar"/>
       	<include name="cglib-2.1.3.jar"/>    	
         
-       </lib>
-       
-    	<!-- <manifest>
-        <attribute name="Built-By" value="${user.name}"/>
-         <attribute name="Class-Path" value="persistence_form.jar common.jar"/> 
-      </manifest> -->
+       </lib>   
+    	
     </war>
   </target>
    
   <!-- =========== END CREATE WAR FILE ======================= -->
-   
-  
-  <!-- =========== CREATE EAR FILE ======================= -->
-    <target name="ear_cdebrowser" depends="war_cdebrowser">
-            
-      <!-- Create ear file -->      
-      <ear earfile="${build.dir}/${ear.name}.ear" appxml="${classes.build.dir}/META-INF/application.xml">
-        <fileset dir="${build.dir}">
-          <patternset>
-            <include name="*.war"/>
-            <include name="*.jar"/>
-          </patternset>
-        </fileset>
-
-        <fileset dir="${classes.build.dir}/META-INF">
-          <patternset>
-            <include name="properties/log4j.properties"/>
-          </patternset>
-        </fileset>       
-
-        <patternset>
-          <exclude name="*.*"/>
-        </patternset>
-      </ear>
-    </target>
-  <!-- =========== END CREATE EAR FILE ======================= -->
-
 
  <!-- ===========  OPEN SOURCE ======================= -->
    <target name="opensource_init" depends="init">
@@ -1130,7 +1081,17 @@
            <patternset>
              <include name="${war.name}.war"/>
            </patternset>
-         </fileset>    
+         </fileset>
+     	<fileset dir="${config.home}/security">
+     	    <patternset>
+     	       <include name="cdebrowser-login-config-service.xml"/>
+     	    </patternset>
+     	</fileset>
+     	<fileset dir="${config.home}/security">
+     	    <patternset>
+     	        <include name="cdebrowser-login-config.xml"/>
+     	    </patternset>
+     	 </fileset>
       </copy>          
    </target>   
    <!-- =========== LOCAL DISTRIBUTION============== -->
@@ -1181,36 +1142,12 @@
   <!-- =========== END PROD DISTRIBUTION ======================= -->
 
   <!-- =========== PROD DISTRIBUTION Complete============== -->
-        <target name="dist_opensource" depends="opensource_windows,
-                opensource_unix">  
+        <target name="dist_opensource" depends="opensource_windows, opensource_unix">  
                <native2ascii src="${build.docs.setup.dir}" dest="${dist.dir}"
                includes="${app.docs.setup.distribution.src.readme.name}.txt"               
                />        
         </target>      
   <!-- =========== END PROD DISTRIBUTION ======================= --> 
-  
-
-  
-  <!-- ===========cadsr api ========================== -->
-
- <target name="cadsrapi_build">
-   <ant antfile="${cadsrapi.location.build}/${cadsrapi.buildfile.name}"
-       inheritAll= "false" target="clean"/>
-   <ant antfile="${cadsrapi.location.build}/${cadsrapi.buildfile.name}"
-       inheritAll= "false" target="dist_ext"/>
- </target> 
- 
- <target name="cadsrapi_update" depends="cadsrapi_build" >
-   <copy todir="${java.lib.dir}">      
-        <fileset dir="${cadsrapi.home}/${cadsrapi.dist.dir}">
-           <patternset>
-             <include name="${cadsrapi.lib.name}"/>
-           </patternset>
-         </fileset>    
-    </copy>  
- </target>  
- 
- <!-- ===========cadsr api end ========================== -->
  
  <!-- =========== BUILD HELPERS ======================= -->
    <target name="help" depends="init">
