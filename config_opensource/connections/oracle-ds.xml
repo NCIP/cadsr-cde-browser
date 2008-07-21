@@ -5,9 +5,9 @@
 <!--                                                                       -->
 <!-- ===================================================================== -->
 <<<<<<< oracle-ds.xml
-<!-- $Id: oracle-ds.xml,v 1.9 2006-06-06 20:26:46 marwahah Exp $ -->
+<!-- $Id: oracle-ds.xml,v 1.10 2008-07-21 15:40:39 davet Exp $ -->
 =======
-<!-- $Id: oracle-ds.xml,v 1.9 2006-06-06 20:26:46 marwahah Exp $ -->
+<!-- $Id: oracle-ds.xml,v 1.10 2008-07-21 15:40:39 davet Exp $ -->
 >>>>>>> 1.6.2.2
 <!-- ==================================================================== -->
 <!--  Datasource config for Oracle originally from Steven Coy             -->
@@ -21,9 +21,9 @@
 		<password>password</password>
 		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
    		<blocking-timeout-millis>10000</blocking-timeout-millis>
-   		<idle-timeout-minutes>1</idle-timeout-minutes>
+   		<idle-timeout-minutes>10</idle-timeout-minutes>
    		<max-pool-size>85</max-pool-size>
-   		<min-pool-size>10</min-pool-size>
+   		<min-pool-size>1</min-pool-size>
    		<application-managed-security/>
 	</local-tx-datasource>
 </datasources>
