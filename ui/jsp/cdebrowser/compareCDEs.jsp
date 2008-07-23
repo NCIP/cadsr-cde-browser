@@ -106,7 +106,7 @@ function done() {
       
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>
-          <TD valign="TOP" align="right" width="1%" colspan=1><A HREF="javascript:newBrowserWin('<%=request.getContextPath()%>/common/help/cdeBrowserHelp.html','helpWin',700,600)"><IMG SRC="<%=request.getContextPath()%>/i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>         
+          <TD valign="TOP" align="right" width="1%" colspan=1><A HREF="javascript:newBrowserWin('/help/','helpWin',700,600)"><IMG SRC="<%=request.getContextPath()%>/i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>         
         </TR>
       </TABLE>
       <bean:size id="listSize" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" property="cdeList"/> 

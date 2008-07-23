@@ -540,7 +540,7 @@
         <include name="xml-apis.jar"/>
        	<include name="xercesImpl.jar"/>
        	<include name="healthtoolkit.zip"/>
-       	<include name="nls_charset12.jar"/>      	
+       	<!--<include name="nls_charset12.jar"/> -->      	
         <include name="ssosdk307.jar"/>
        	<include name="xmlcomp.jar"/>         
        	<include name="xsu12.jar"/> 
