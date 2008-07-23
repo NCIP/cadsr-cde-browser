@@ -130,7 +130,8 @@ public class CDECartAction extends BrowserBaseDispatchAction {
 		CDECartFormBean myForm = (CDECartFormBean) form;
 		String[] selectedSaveItems = {};
 		if(myForm.getSelectedItems()!= null && myForm.getSelectedItems().length > 0){
-			selectedSaveItems = myForm.getSelectedItems();
+			selectedSaveItems = myForm.getSelectedItems();			
+			myForm.setSelectedItems(null);
 		}else{
 			selectedSaveItems = myForm.getSelectedSaveItems();
 		}		

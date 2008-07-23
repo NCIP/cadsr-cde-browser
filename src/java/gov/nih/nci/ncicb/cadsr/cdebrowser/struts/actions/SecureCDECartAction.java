@@ -99,7 +99,9 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 			String userName = getLoggedInUsername(request);
 			CDECart sessionCart = (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 			CDECartFormBean myForm = (CDECartFormBean) form;
-			String[] selectedSaveItems = myForm.getSelectedSaveItems();
+			String[] selectedSaveItems = myForm.getSelectedSaveItems();			
+			myForm.setSelectedSaveItems(null);
+			
 			Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
 
 			CDEBrowserParams params = CDEBrowserParams.getInstance();

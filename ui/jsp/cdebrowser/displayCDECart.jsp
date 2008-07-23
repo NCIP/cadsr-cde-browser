@@ -264,8 +264,7 @@ function retrieveSavedItems() {
 											src='<%=urlPrefix + "i/deleteButton.gif"%>' border="0"
 											alt="Remove Data Elements from CDE Cart " /> </a>
 								</td>
-								<%--</logic:notPresent>
-								--%><td>
+								<td>
 									<html:link href="cdeBrowse.jsp?PageId=DataElementsGroup">
 										<html:img src='<%=urlPrefix + "i/backButton.gif"%>' border="0"
 											alt="Back to Data Element Search" />
@@ -275,9 +274,7 @@ function retrieveSavedItems() {
 						</table>
 					</logic:notEmpty>
 			</logic:present>
-			<%--<logic:notPresent name="<%=CaDSRConstants.CDE_CART%>">
-			</logic:notPresent>
-			--%>			
+						
 			<table width="20%" align="center" cellpadding="1" cellspacing="1"
 				border="0">
 				<tr>
