@@ -125,8 +125,7 @@ public class GetXMLDownload extends BasePersistingProcess {
         where = deSearch.getXMLQueryStmt();
 
         where = "DE_IDSEQ IN (" + where + ")";
-      }
-      else if ("cdeCart".equals(source)) {
+      }else if ("cdeCart".equals(source)) {
         HttpServletRequest myRequest =
           (HttpServletRequest) getInfoObject("HTTPRequest");
         HttpSession userSession = myRequest.getSession(false);
@@ -137,18 +136,17 @@ public class GetXMLDownload extends BasePersistingProcess {
         StringBuffer whereBuffer = new StringBuffer("");
         Iterator itemsIt = items.iterator();
         while (itemsIt.hasNext()) {
-          item = (CDECartItem)itemsIt.next();
-          if (firstOne) {
-            whereBuffer.append("'" +item.getId()+"'");
-            firstOne = false;
-          }
-          else
-            whereBuffer.append(",'" +item.getId()+"'");
+        	item = (CDECartItem)itemsIt.next();
+        	if (firstOne) {
+        		whereBuffer.append("'" +item.getId()+"'");
+        		firstOne = false;
+        	}else{
+        		whereBuffer.append(",'" +item.getId()+"'");
+        	}
         }
         where = "DE_IDSEQ IN (" + whereBuffer.toString() + ")";
 
-      }
-      else {
+      }else {
         throw new Exception("No result set to download");
       }
 
@@ -226,9 +224,8 @@ public class GetXMLDownload extends BasePersistingProcess {
           writeToFile(xmlString, filename);
           zipFileVec.addElement(filename);
         }
-      }
-      else {
-        xmlString = xmlBean.getXMLString();
+      }else {
+        xmlString = xmlBean.getXMLString(cn);
         fileSuffix = dbUtil.getUniqueId("SBREXT.XML_FILE_SEQ.NEXTVAL");
 
         if (fileSuffix == null) {
