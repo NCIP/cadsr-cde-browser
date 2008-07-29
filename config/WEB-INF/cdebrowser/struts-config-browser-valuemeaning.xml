@@ -13,7 +13,7 @@
       scope="request"
       type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.ValueMeaningAction"
       validate="false">
-      <forward name="success" path="/formbuilder/valueMeaningAlterNames.jsp"/>
+      <forward name="success" path="/cdebrowser/valueMeaningAlterNames.jsp"/>
       <forward name="failure" path="/cdebrowser/validValuesList.jsp"/>       
     </action>    
   </action-mappings>

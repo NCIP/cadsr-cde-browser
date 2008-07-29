@@ -488,6 +488,7 @@
         <patternset>
          <!-- release 3.0, reorganze ui directory -->
           <!--<include name="formbuilder/**/*.*"/>-->  
+          <include name="common/**/*.*"/>
           <include name="cdebrowser/**/*.*"/>  
           <include name="ocbrowser/**/*.*"/>  
           <include name="admin/**/*.*"/>  
@@ -496,14 +497,14 @@
         </patternset>
       </fileset>
       
-      <fileset dir="${jsp.dir}/">
+      <!--<fileset dir="${jsp.dir}/">
               <patternset>
                 <include name="common/**/*.*"/>  
-                <!--<include name="*.jsp"/>-->
+                <include name="*.jsp"/>
                 <exclude name="common_variable_length_bottom_border.jsp"/>
                 <exclude name="common_bottom_border.jsp"/>                
               </patternset>
-      </fileset>
+      </fileset>-->
 
       <fileset dir="${classes.build.dir}/jsp/">
               <patternset>
