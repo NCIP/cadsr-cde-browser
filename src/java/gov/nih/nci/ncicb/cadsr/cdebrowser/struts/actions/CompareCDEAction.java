@@ -6,7 +6,7 @@
  * @release 3.0
  * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
  * @date: 8/16/2005
- * @version: $Id: CompareCDEAction.java,v 1.18 2008-05-29 20:24:25 davet Exp $
+ * @version: $Id: CompareCDEAction.java,v 1.19 2008-07-30 14:21:46 davet Exp $
  */
 
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
@@ -429,12 +429,12 @@ public class CompareCDEAction
   String ctype = ContentTypeHelper.getContentType(f.getName());
 
   response.setContentType(ctype);
-  response.setContentLength((int)f.length());
-  response.addHeader("Content-Disposition", "attachment; filename=" + f.getName());
-  response.addHeader("Pragma", "No-cache");
-  response.addHeader("Cache-Control", "no-cache");
-  response.addHeader("Expires", "0");
-
+  response.setContentLength((int)f.length());  
+  response.setHeader("Content-Disposition", "attachment;filename=\"" + f.getName() + "\"");
+  response.setHeader("Pragma", "public");
+  response.setHeader("Expires", "0");
+  response.setHeader("Cache-Control", "max-age=0"); 
+ 
   try {
    // create buffer
    byte [] buffer = new byte[1024];
