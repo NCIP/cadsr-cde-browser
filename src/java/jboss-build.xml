@@ -569,7 +569,7 @@
        	<include name="aopalliance.jar"/>
        	
        	<!-- cadsr api lib -->       	
-      	<include name="caDSR-beans.jar"/>
+      	<include name="cadsrapi40-beans.jar"/>
       	<include name="xercesImpl.jar"/>
        	
        	<!-- POI libs -->
