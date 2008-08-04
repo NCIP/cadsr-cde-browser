@@ -18,8 +18,8 @@ if (parent.frames[1])
 	//reload session attributes
 	String previousSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
   String forwardUrl = "cdeBrowse.jsp";
-  //if(previousSessionId!=null)
-    //forwardUrl=forwardUrl+"?PageId=DataElementsGroup&"+CaDSRConstants.PREVIOUS_SESSION_ID+"="+previousSessionId;
+  if(previousSessionId!=null)  
+    forwardUrl=forwardUrl+"?PageId=DataElementsGroup&"+CaDSRConstants.PREVIOUS_SESSION_ID+"="+previousSessionId;
 	
 %>
 <body text="#000000" topmargin="0">
