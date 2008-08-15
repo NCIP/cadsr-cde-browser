@@ -165,7 +165,7 @@ while (csiIter.hasNext()) {
  <th class="OraTableColumnHeader">CS* Definition</th>
  <th class="OraTableColumnHeader">CSI* Name</th>
  <th class="OraTableColumnHeader">CSI* Type</th>
- <th class="OraTableColumnHeader">CSI* Publid Id</th>
+ <th class="OraTableColumnHeader">CSI* Public Id</th>
  <th class="OraTableColumnHeader">CSI* Version</th>
 </TR>
 <% if (currCSI != null) { %>
