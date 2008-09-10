@@ -4,17 +4,21 @@
 <!--  JBoss Server Configuration                                           -->
 <!--                                                                       -->
 <!-- ===================================================================== -->
-<!-- $Id: oracle-ds.xml,v 1.13 2008-07-21 15:40:38 davet Exp $           -->
+<<<<<<< oracle-ds.xml
+<!-- $Id: cdebrowser-oracle-ds.xml,v 1.1 2008-09-10 19:42:03 davet Exp $ -->
+=======
+<!-- $Id: cdebrowser-oracle-ds.xml,v 1.1 2008-09-10 19:42:03 davet Exp $ -->
+>>>>>>> 1.6.2.2
 <!-- ==================================================================== -->
 <!--  Datasource config for Oracle originally from Steven Coy             -->
 <!-- ==================================================================== -->
 <datasources>
 	<local-tx-datasource>
 		<jndi-name>jdbc/CDEBrowserDS</jndi-name>
-		<connection-url>jdbc:oracle:thin:@cbiodb530.nci.nih.gov:1521:DSRQA</connection-url>
+		<connection-url>jdbc:oracle:thin:@@CADSR.DS.URL@</connection-url>
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
-		<user-name>cdebrowser</user-name>
-		<password>@user.password@</password>
+		<user-name>@CADSR.DS.USER@</user-name>
+		<password>@CADSR.DS.PSWD@</password>
 		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
    		<new-connection-sql>select 1 from dual</new-connection-sql>
    		<check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
@@ -25,3 +29,4 @@
    		<application-managed-security/>
 	</local-tx-datasource>
 </datasources>
+

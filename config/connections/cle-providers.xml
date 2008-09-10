@@ -2,12 +2,12 @@
 <!DOCTYPE cle-providers SYSTEM "http://xmlns.oracle.com/ias/mvc/cle-providers.dtd">
 <cle-providers>
   <provider name="cdebrowser_bc4j" class="oracle.clex.persistence.bc4j.ApplicationModuleProvider">
-    <property name="user" value="cdebrowser"/>
-    <property name="password" value="@user.password@"/>
+    <property name="user" value="@CADSR.DS.USER@"/>
+    <property name="password" value="@CADSR.DS.PSWD@"/>
     <property name="modulename" value="gov.nih.nci.ncicb.cadsr.common.persistence.bc4j.CDEBrowserBc4jModule"/>
-    <property name="connectionstring" value="jdbc:oracle:thin:cdebrowser/@user.password@@cbiodb540.nci.nih.gov:1521:DSRDEV"/>
-    <property name="host" value="cbiodb540.nci.nih.gov"/>
-    <property name="sid" value="DSRDEV"/>
+    <property name="connectionstring" value="jdbc:oracle:thin:@CADSR.DS.USER@/@CADSR.DS.PSWD@@@CADSR.DS.URL@"/>
+    <property name="host" value="@CADSR.DS.TNS.HOST@"/>
+    <property name="sid" value="@CADSR.DS.TNS.ENTRY@"/>
     <property name="persistencebase" value="gov.nih.nci.ncicb.cadsr.common.persistence.bc4j"/>
     <property name="failover" value=""/>
   </provider>

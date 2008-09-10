@@ -17,9 +17,9 @@
        -->
   <property file="build.properties"/>
   
-   <!-- Make sure these are correct for your instance C:\jboss-4.0.4.GA-->
+   <!-- Make sure these are correct for your instance -->
    
-   <property name="jboss.home" value="C:\Tools\jboss-4.0.5.GA" />   <!--"C:\jboss-4.0.4.GA\" />   -->   
+   <property name="jboss.home" value="${JBOSS.HOME.DIR}" />   
    <property name="jboss.start.script.name" value="run.bat" />
    <property name="jboss.start.debug.script.name" value="rundebug.bat" />
    <property name="jboss.stop.script.name" value="shutdown.bat" />
@@ -30,14 +30,9 @@
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="4_0_0_0" />
-   
-   <property name="dev.user.password" value="cdeuser" />
-   <property name="qa.user.password" value="cdeuser" />
-   <property name="stage.user.password" value="cdeuser" />
-   <property name="umlstage.user.password" value="cdeuser" />
-   <property name="prod.user.password" value="cdeuser" />
-   <property name="load.user.password" value="cdeuser" />
-   <property name="opensource.user.password" value="user_passwd" />
+   <property name="CADSR.DS.USER" value="${CADSR.DS.USER}" />
+   <property name="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}" />   
+   <property name="opensource.CADSR.DS.PSWD" value="${CADSR.DS.PSWD}" />
    
 
    
@@ -90,7 +85,7 @@
   <property name="build.docs.setup.dir" value="${build.dir}/docs" />  
   
   <property name="app.setup.jboss.install.name" value="Install_CDBrowser_on_JBOSS" />
-  <property name="app.setup.jboss.oracle.datasource.filename" value="oracle-ds.xml" />
+  <property name="app.setup.jboss.oracle.datasource.filename" value="cdebrowser-oracle-ds.xml" />
 
   
    <!-- Open Source file names This need to updated by release-->
@@ -204,7 +199,11 @@
               </fileset>
      </copy>     
    
-     <filter token="user.password" value="${dev.user.password}"/>
+    <filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+    <filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+    <filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>
+    <filter token="CADSR.DS.TNS.HOST" value="${CADSR.DS.TNS.HOST}"/>
+    <filter token="CADSR.DS.TNS.ENTRY" value="${CADSR.DS.TNS.ENTRY}"/>
      <copy todir="${classes.build.dir}/WEB-INF/classes" filtering="true">    
          <fileset dir="${config.home}/connections">
            <patternset>
@@ -267,7 +266,12 @@
              </patternset>
            </fileset>      
         </copy> 
-     <filter token="user.password" value="${qa.user.password}"/>
+    	
+     <filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+     <filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+     <filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>
+     <filter token="CADSR.DS.TNS.HOST" value="${CADSR.DS.TNS.HOST}"/>
+     <filter token="CADSR.DS.TNS.ENTRY" value="${CADSR.DS.TNS.ENTRY}"/>
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
          <fileset dir="${config.qa}/connections">
            <patternset>
@@ -290,7 +294,11 @@
              </patternset>
            </fileset>      
         </copy> 
-     <filter token="user.password" value="${stage.user.password}"/>
+    	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+    	    <filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+    	    <filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>
+    	    <filter token="CADSR.DS.TNS.HOST" value="${CADSR.DS.TNS.HOST}"/>
+    	    <filter token="CADSR.DS.TNS.ENTRY" value="${CADSR.DS.TNS.ENTRY}"/>
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
          <fileset dir="${config.stage}/connections">
            <patternset>
@@ -313,7 +321,11 @@
              </patternset>
            </fileset>      
         </copy> 
-     <filter token="user.password" value="${umlstage.user.password}"/>
+    	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+    	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+    	<filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>
+    	<filter token="CADSR.DS.TNS.HOST" value="${CADSR.DS.TNS.HOST}"/>
+    	<filter token="CADSR.DS.TNS.ENTRY" value="${CADSR.DS.TNS.ENTRY}"/>
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
          <fileset dir="${config.umlstage}/connections">
            <patternset>
@@ -335,7 +347,11 @@
              </patternset>
            </fileset>      
         </copy> 
-     <filter token="user.password" value="${load.user.password}"/>
+    <filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+    <filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+    <filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>
+    <filter token="CADSR.DS.TNS.HOST" value="${CADSR.DS.TNS.HOST}"/>
+    <filter token="CADSR.DS.TNS.ENTRY" value="${CADSR.DS.TNS.ENTRY}"/>
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
          <fileset dir="${config.load}/connections">
            <patternset>
@@ -359,7 +375,11 @@
              </patternset>
            </fileset>      
         </copy>
-     <filter token="user.password" value="${prod.user.password}"/>
+    <filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+    <filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+    <filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>
+    <filter token="CADSR.DS.TNS.HOST" value="${CADSR.DS.TNS.HOST}"/>
+    <filter token="CADSR.DS.TNS.ENTRY" value="${CADSR.DS.TNS.ENTRY}"/>
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
          <fileset dir="${config.prod}/connections">
            <patternset>
@@ -385,7 +405,11 @@
            </fileset>      
         </copy> 
         
-    <filter token="user.password" value="${opensource.user.password}"/>
+    <filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+    <filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+    <filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>
+    <filter token="CADSR.DS.TNS.HOST" value="${CADSR.DS.TNS.HOST}"/>
+    <filter token="CADSR.DS.TNS.ENTRY" value="${CADSR.DS.TNS.ENTRY}"/>
      <copy todir="${classes.build.dir}/WEB-INF/classes" overwrite="Yes" filtering="true">    
          <fileset dir="${config.opensource}/connections">
            <patternset>
@@ -615,7 +639,7 @@
 
      
      <!-- Copy doc to build dir -->
-     <filter token="user.password" value="${opensource.user.password}"/>
+     <filter token="CADSR.DS.PSWD" value="${opensource.CADSR.DS.PSWD}"/>
      <filter token="cdebrowser.version" value="${cdebrowser.version}"/>
      <filter token="cdebrowser.version.suffix" value="${cdebrowser.version.suffix}"/>
      <copy todir="${build.docs.setup.dir}/" filtering="true">      
@@ -796,7 +820,7 @@
     <delete file="${open.source.dir}/ascii/${open.source.dir.base.name}/${open.source.readme.name}.txt"/>
     
      <!-- Copy doc to build dir -->
-    <filter token="user.password" value="${dev.user.password}"/>
+    <filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
     <filter token="cdebrowser.version" value="${cdebrowser.version}"/>
     <filter token="cdebrowser.version.suffix" value="${cdebrowser.version.suffix}"/>
     
@@ -864,18 +888,21 @@
    </target>    
    
    <target  name="deploy_dev" depends="clean,clean_jboss,dev_config,debug_setting,war_cdebrowser"> 
-     <copy todir="${jboss.home}/server/default/deploy">      
+     <copy todir="${jboss.deploy}">      
          <fileset dir="${build.dir}">
            <patternset>
              <include name="${war.name}.war"/>
            </patternset>
          </fileset> 
      </copy>
-     <filter token="user.password" value="${dev.user.password}"/>
-     <copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
+   	
+   	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+   	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+   	<filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>    
+     <copy todir="${jboss.deploy}" overwrite="Yes" filtering="true">    
          <fileset dir="${config.home}/connections">
            <patternset>
-             <include name="oracle-ds.xml"/>
+             <include name="cdebrowser-oracle-ds.xml"/>
            </patternset>
          </fileset>
      	<fileset dir="${config.home}/security">
@@ -904,12 +931,15 @@
              <include name="${war.name}.war"/>
            </patternset>
          </fileset> 
-     </copy>  
-     <filter token="user.password" value="${qa.user.password}"/>
+     </copy>
+   	
+   	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+   	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+   	<filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>   	    
    	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
    	         <fileset dir="${config.qa}/connections">
    	           <patternset>
-   	             <include name="oracle-ds.xml"/>
+   	             <include name="cdebrowser-oracle-ds.xml"/>
    	           </patternset>
    	         </fileset>
    	     	<fileset dir="${config.home}/security">
@@ -937,12 +967,15 @@
              <include name="${war.name}.war"/>
            </patternset>
          </fileset> 
-     </copy> 
-     <filter token="user.password" value="${stage.user.password}"/>
+     </copy>
+   	
+   	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+   	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+   	<filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>   	    
    	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
    	         <fileset dir="${config.stage}/connections">
    	           <patternset>
-   	             <include name="oracle-ds.xml"/>
+   	             <include name="cdebrowser-oracle-ds.xml"/>
    	           </patternset>
    	         </fileset>
    	     	<fileset dir="${config.home}/security">
@@ -968,11 +1001,14 @@
            </patternset>
          </fileset> 
      </copy> 
-     <filter token="user.password" value="${load.user.password}"/>
+     
+  	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+  	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+  	<filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>  	    
   	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
   	         <fileset dir="${config.load}/connections">
   	           <patternset>
-  	             <include name="oracle-ds.xml"/>
+  	             <include name="cdebrowser-oracle-ds.xml"/>
   	           </patternset>
   	         </fileset>
   	     	<fileset dir="${config.home}/security">
@@ -1001,11 +1037,14 @@
            </patternset>
          </fileset> 
      </copy> 
-     <filter token="user.password" value="${umlstage.user.password}"/>
+    
+   	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+   	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+   	<filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>   	    
    	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
    	         <fileset dir="${config.umlstage}/connections">
    	           <patternset>
-   	             <include name="oracle-ds.xml"/>
+   	             <include name="cdebrowser-oracle-ds.xml"/>
    	           </patternset>
    	         </fileset>
    	     	<fileset dir="${config.home}/security">
@@ -1034,11 +1073,14 @@
            </patternset>
          </fileset> 
      </copy> 
-     <filter token="user.password" value="${prod.user.password}"/>
+    
+   	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+   	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+   	<filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/>   	    
    	<copy todir="${jboss.home}/server/default/deploy" overwrite="Yes" filtering="true">    
    	         <fileset dir="${config.prod}/connections">
    	           <patternset>
-   	             <include name="oracle-ds.xml"/>
+   	             <include name="cdebrowser-oracle-ds.xml"/>
    	           </patternset>
    	         </fileset>
    	     	<fileset dir="${config.home}/security">
