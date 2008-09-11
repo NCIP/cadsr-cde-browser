@@ -911,6 +911,8 @@
      	       </patternset>
      	</fileset>
       </copy>
+   	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+    <filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
     <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
             <fileset dir="${config.home}/security">
         	       <patternset>
@@ -948,6 +950,8 @@
    	     	       </patternset>
    	     	</fileset>
    	      </copy>
+   	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+   	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
    	    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
    	            <fileset dir="${config.home}/security">
    	        	       <patternset>
@@ -983,8 +987,10 @@
    	     	             <include name="cdebrowser-login-config-service.xml"/>
    	     	       </patternset>
    	     	</fileset>
-   	      </copy>
-   	    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
+   	</copy>
+   	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+   	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>   
+   	<copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
    	            <fileset dir="${config.home}/security">
    	        	       <patternset>
    	        	             <include name="cdebrowser-login-config.xml"/>
@@ -1017,7 +1023,9 @@
   	     	       </patternset>
   	     	</fileset>
   	      </copy>
-  	    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
+  	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+  	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>    
+  	<copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
   	            <fileset dir="${config.home}/security">
   	        	       <patternset>
   	        	             <include name="cdebrowser-login-config.xml"/>
@@ -1053,7 +1061,9 @@
    	     	       </patternset>
    	     	</fileset>
    	      </copy>
-   	    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
+   	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+    <filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>    
+   	<copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
    	            <fileset dir="${config.home}/security">
    	        	       <patternset>
    	        	             <include name="cdebrowser-login-config.xml"/>
@@ -1089,7 +1099,9 @@
    	     	       </patternset>
    	     	</fileset>
    	      </copy>
-   	    <copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
+   	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+    <filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>    
+   	<copy todir="${jboss.home}/server/default/conf" overwrite="Yes" filtering="true">    
    	            <fileset dir="${config.home}/security">
    	        	       <patternset>
    	        	             <include name="cdebrowser-login-config.xml"/>
@@ -1118,18 +1130,29 @@
 <!-- =========== End Test Targets ====================== -->
 
 <!-- =========== Copy DISTRIBUTION WAR============== -->
-  <target name="dist_war_copy" depends="dev_config,war_cdebrowser">  
-     <copy todir="${dist.dir}">      
+  <target name="dist_war_copy" depends="dev_config,war_cdebrowser"> 	
+  	<copy todir="${dist.dir}">      
          <fileset dir="${build.dir}">
            <patternset>
              <include name="${war.name}.war"/>
            </patternset>
          </fileset>
-     	<fileset dir="${config.home}/security">
-     	    <patternset>
-     	       <include name="cdebrowser-login-config-service.xml"/>
-     	    </patternset>
-     	</fileset>
+  		<fileset dir="${config.home}/security">
+  		    <patternset>
+  		       <include name="cdebrowser-login-config-service.xml"/>
+  		    </patternset>
+  		</fileset>
+  	</copy>
+  	
+	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}"/>
+	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}"/>
+	<filter token="CADSR.DS.URL" value="${CADSR.DS.URL}"/> 
+	<copy todir="${dist.dir}" filtering="true">
+     	<fileset dir="${config.home}/connections">
+     		<patternset>
+     	    	<include name="cdebrowser-oracle-ds.xml"/>
+     	   	</patternset>
+     	</fileset>    
      	<fileset dir="${config.home}/security">
      	    <patternset>
      	        <include name="cdebrowser-login-config.xml"/>
