@@ -127,20 +127,41 @@ implements OCBrowserFormConstants,OCBrowserNavigationConstants
 			}
 			setSessionObject(request,OBJECT_CLASS,objClass,true);
 
-			List superClasses = service.getInheritenceRelationships(objClass);
+			List<ObjectClass> superClasses = service.getInheritenceRelationships(objClass);
 			//
 			if(!(cscsiIdSeq == null || ("").equals(cscsiIdSeq.trim()))){
 				//System.out.println("---Size of superClasses List: "+superClasses.size());
+				List<ObjectClass> superClassRemoveList = new ArrayList<ObjectClass>();
+				int count = 0;
 				for(Object superClassesObj: superClasses){
 					ObjectClass sObj = (ObjectClass)superClassesObj;
-					//Collection sacCSICollection = new ArrayList();    	  
-					for (Object o: sObj.getAdministeredComponentClassSchemeItemCollection()){
-						AdministeredComponentClassSchemeItem accsiSObj = (AdministeredComponentClassSchemeItem)o;
-						if(!(cscsiIdSeq.equalsIgnoreCase(accsiSObj.getClassSchemeClassSchemeItem().getId()))){
-							superClasses.remove(sObj);
+					//
+					sObj = service.getObjectClass(sObj.getId());
+					//					
+					Collection sacCSICollection = new ArrayList();					
+					if(sObj.getAdministeredComponentClassSchemeItemCollection() != null && !sObj.getAdministeredComponentClassSchemeItemCollection().isEmpty()){
+						for (Object o: sObj.getAdministeredComponentClassSchemeItemCollection()){
+							AdministeredComponentClassSchemeItem accsiSObj = (AdministeredComponentClassSchemeItem)o;
+							if(!(cscsiIdSeq.equalsIgnoreCase(accsiSObj.getClassSchemeClassSchemeItem().getId()))){
+								superClassRemoveList.add(sObj);								
+							}
 						}
 					}    		     	  
 				}
+				if(superClassRemoveList != null && !superClassRemoveList.isEmpty()){					
+					for (Object sCObj: superClassRemoveList){
+						ObjectClass removeSCobj = (ObjectClass)sCObj;
+						int scsize = superClasses.size();
+						for (int i = 0; i< scsize; i++){
+							if(superClasses.iterator().hasNext()){
+								ObjectClass soc = (ObjectClass)superClasses.iterator().next();							
+								if(soc.getId().equalsIgnoreCase(removeSCobj.getId())){
+									superClasses.remove(soc);									
+								}
+							}
+						}					
+					}
+				}				
 				//System.out.println("----Modified Size of superClasses List: "+superClasses.size());
 			}
 			//
