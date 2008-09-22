@@ -22,6 +22,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.commons.lang.StringEscapeUtils;
 
 public class ScreenTypeAction extends BrowserBaseDispatchAction { 
   
@@ -68,10 +69,10 @@ public class ScreenTypeAction extends BrowserBaseDispatchAction {
       this.setSessionObject(request, BrowserFormConstants.BROWSER_SEARCH_SCOPE, BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS,true);
       DynaActionForm searchForm = (DynaActionForm) form;
       String baseQuery = (String) searchForm.get("baseQuery");    
-      String searchMode = request.getParameter("jspNameSearchMode");
-      String searchType = request.getParameter("jspBasicSearchType");
-      String searchStr = request.getParameter("jspSimpleKeyword");
-      
+      String searchMode = StringEscapeUtils.escapeHtml(request.getParameter("jspNameSearchMode"));
+      String searchType = StringEscapeUtils.escapeHtml(request.getParameter("jspBasicSearchType"));
+      String searchStr = StringEscapeUtils.escapeHtml(request.getParameter("jspSimpleKeyword"));
+      System.out.println(" In the ScreenTrypAction class, search String :"+searchStr);
       String searchCrumb = "Search Criteria>>"+ searchMode + " (" + searchType + "=" + searchStr + ")";
       this.setSessionObject(request, "searchCrumb", searchCrumb, true);
 
