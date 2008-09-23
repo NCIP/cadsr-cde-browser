@@ -103,12 +103,12 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
 </table>    
     </td>
     <td width="40%" align="left" nowrap >
-      <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" size ="60"> 
+      <input type="text" name="jspSimpleKeyword" value="<%=StringEscapeUtils.escapeHtml(desb.getSimpleSearchStr())%>" size ="60"> 
     </td>
     <td width="20%" align="left" nowrap >
       <select  name="jspBasicSearchType" class="Dropdown" name="contextIdSeq" >
-        <option value="name" <%=basicSearchTypeName%> >Name</option> 
-        <option value="publicId" <%=basicSearchTypePublicId%> >Public ID</option> 
+        <option value="name" <%=StringEscapeUtils.escapeHtml(basicSearchTypeName)%> >Name</option> 
+        <option value="publicId" <%=StringEscapeUtils.escapeHtml(basicSearchTypePublicId)%> >Public ID</option> 
       </select>
     </td>
  </tr>

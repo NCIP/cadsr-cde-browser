@@ -19,6 +19,7 @@ function clearForm()
   document.form[0].reset();
 }
 -->
+
 </SCRIPT>
 </head>
 
@@ -29,8 +30,7 @@ function clearForm()
 			<jsp:param name="loginDestination"
 				value="formCDECartAction.do?method=displayCDECart" />
 			<jsp:param name="urlPrefix" value="" />
-		</jsp:include>
-		<%--<%@ include file="basicHeader_inc.jsp"%>--%>
+		</jsp:include>		
 <br>
 <br>
   
@@ -60,35 +60,30 @@ function clearForm()
    <br> If you require an account with curator privileges to a specific context other than Test, please contact NCICB Application Support Email: <a href='mailto:ncicb@pop.nci.nih.gov'>ncicb@pop.nci.nih.gov</a>
       </td>
     </tr>  
-  </table>  
+  </table> 
   
-  <%
-  
-  %>
-  
-  <form method="POST" action="j_security_check">
+  <form method="post" action="<%= response.encodeURL("j_security_check") %>">
 
   <table align=center cellspacing="2" cellpadding="3" border="0" onkeypress="if(event.keyCode==13){submitForm()};">
-    <% if(request.getAttribute("msg") != null) { 
-    	System.out.println("msg " + request.getAttribute("msg"));
-    %>
+    <% if(request.getParameter("failed") != null && ((String)request.getParameter("failed")).equalsIgnoreCase("y")) {%>
     <tr>
-      <td colspan=2 class="OraErrorText"><b><%=request.getAttribute("msg")%></b></td>
+      <td colspan=2 class="OraErrorText" nowrap>
+      <b>Invalid username/password combination. Please Retry Login </b>
+      </td>
     </tr>
-    <% } %>
+    <% } %>    
     <tr>
         <td class="OraFieldtitlebold" nowrap>Username:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="j_username" value="" size ="20"> 
+          <input type="text" name="j_username" value="" size ="20" /> 
         </td>
     </tr>
     <tr>
         <td class="OraFieldtitlebold" nowrap>Password:</td>
         <td class="OraFieldText" nowrap>
-          <input type="password" name="j_password" value="" size ="20"> 
+          <input type="password" name="j_password" value="" size ="20" autocomplete="off" /> 
         </td>
-    </tr>  
-
+    </tr>
   </table>
   <table width=100% cellspacing="2" cellpadding="3" border="0">
      <TR>
@@ -98,8 +93,7 @@ function clearForm()
 		     <TR>
 		        <td colspan="1" align="left" nowrap><a href="javascript:submitForm()"><img src=<%=request.getContextPath()%>/i/logon.gif border=0 alt="Logon"></a></td>
 		        <td colspan="1" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=request.getContextPath()%>/i/clear.gif border=0 alt="Clear"></a></td>
-		        <%--<td colspan="1" align="left" nowrap><a href="<%="cdeBrowse.jsp?PageId=DataElementsGroup"%>"><img src=<%=request.getContextPath()%>/i/return_cdebrowse.gif border=0 alt="Cancel"></a></td>
-		    --%></TR>  
+		     </TR>  
 		  </table>    
       	</td>
     </TR>  
@@ -112,25 +106,6 @@ function clearForm()
   <SCRIPT>
     document.forms[0].elements[0].focus();
   </SCRIPT>
-<%--<TABLE width=100% cellspacing=0 cellpadding=0 border=0>
-<TR>
-<TD valign=bottom width=99%><img src="<%=request.getContextPath()%>/i/bottom_shade.gif" height=6 width="100%"></TD>
-<TD valign=bottom width="1%" align=right><IMG src="<%=request.getContextPath()%>/i/bottomblueright.gif"></TD>
-</TR>
-</TABLE>
---%><%--<TABLE width=100% cellspacing=0 cellpadding=0 bgcolor="#336699" border=0>
-<TR>
-<TD width="60%" align="LEFT">
-<FONT face="Arial" color="WHITE" size="-2"></FONT>
-<FONT face="Arial" size="-1" color="#CCCC99"></FONT>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<FONT color="white" size=-2 face=arial></FONT>
-</TD>
-
-</TR>
-</TABLE>
---%><%@ include file="/common/common_bottom_border.jsp"%>
+<%@ include file="/common/common_bottom_border.jsp"%>
 </body>
 </html>

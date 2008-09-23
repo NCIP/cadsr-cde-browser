@@ -4,19 +4,16 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@page contentType="text/html;charset=windows-1252"%>
-<%@ page import="java.util.*"%>
+<%@page import="java.util.*"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.ProcessConstants"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
-<%//@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.cdebrowser.* " %>
-<!--Publish ChangeOrder_-->
 <%@page import="gov.nih.nci.ncicb.cadsr.common.resource.Context"%>
-
-<%@ page import="java.util.List" %>
+<%@page import="java.util.List" %>
 
 <cde:checkAccess
   role="<%=CaDSRConstants.CDE_MANAGER%>"
