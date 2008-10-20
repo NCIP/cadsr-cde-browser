@@ -15,7 +15,7 @@
   <!-- Use your own build.properties 
        Properties in build.properties overide properties in build.xml
        -->
-  <property file="local_build.properties"/>
+  <property file="build.properties"/>
   
    <!-- Make sure these are correct for your instance -->
    
