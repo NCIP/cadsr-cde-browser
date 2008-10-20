@@ -12,6 +12,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.common.resource.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.ProcessConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.lov.ClassificationsLOVBean " %>
+<%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
@@ -23,9 +24,9 @@
   ClassificationsLOVBean cslb = (ClassificationsLOVBean)infoBean.getInfo(ProcessConstants.CS_LOV);
   CommonLOVBean clb = cslb.getCommonLOVBean();
     
-  String pageId = infoBean.getPageId();
-  String pageName = PageConstants.PAGEID;
-  String pageUrl = "&"+pageName+"="+pageId;
+  String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
+  String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
+  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
 
 %>
 
@@ -79,10 +80,10 @@ function validate() {
 <p class="OraHeaderSubSub">Classifications </p>
 </center>
 <form method="POST" onSubmit="return validate()" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
-<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= clb.getJsId() %>">
-<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= clb.getJsName() %>">
+<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>">
+<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>">
 <INPUT TYPE="HIDDEN" NAME="classificationsLOV" VALUE="9">
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">
@@ -91,11 +92,10 @@ function validate() {
 </p>
 <center>
 <table>
-<%= clb.getSearchFields() %>
+<%= StringEscapeUtils.escapeJavaScript(clb.getSearchFields()) %>
 <tr>
   <% 
-    String chkContext = (String)request.getAttribute("chkContext");
-    System.out.println(chkContext);
+    String chkContext = StringEscapeUtils.escapeJavaScript((String)request.getAttribute("chkContext"));    
     if((chkContext == null) || (!chkContext.equals("always"))) {
   %>
   <td class="fieldtitlebold">Restrict Search to Current Context</td>
@@ -133,11 +133,11 @@ function validate() {
 <% 
   if (clb.getTotalRecordCount() != 0) {
 %>
-<%= clb.getHitList() %>
+<%= StringEscapeUtils.escapeJavaScript(clb.getHitList()) %>
 
 <p class="OraFieldText">Total Record Count:<B> <%= clb.getTotalRecordCount() %></B></p>
 <P>
-<%= clb.getPageInfo() %>
+<%= StringEscapeUtils.escapeJavaScript(clb.getPageInfo()) %>
 <%
   }
   else {

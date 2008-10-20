@@ -13,6 +13,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.cdebrowser.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.resource.Context"%>
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="java.util.List" %>
 
 <cde:checkAccess
@@ -27,9 +28,9 @@
 <%
 
   //Publish Change Order
-  String ctepUser = (String)pageContext.getAttribute("accessValue");
+  String ctepUser = StringEscapeUtils.escapeJavaScript((String)pageContext.getAttribute("accessValue"));
 
-  String performQuery = request.getParameter("performQuery");
+  String performQuery = StringEscapeUtils.escapeJavaScript(request.getParameter("performQuery"));
   SessionUtils.setPreviousSessionValues(request);
   List cachedDeList = null;
   Boolean showCached = null;
@@ -70,7 +71,7 @@
     excludeTestContext = searchBean.isExcludeTestContext();
     excludeTrainingContext = searchBean.isExcludeTrainingContext();
   }
-   String contextToExclude = "";
+   String contextToExclude = StringEscapeUtils.escapeJavaScript("");
  
     if(excludeTestContext)
     {
@@ -96,29 +97,29 @@
   }
 
 
-  String pageId = request.getParameter("PageId");
+  String pageId = StringEscapeUtils.escapeJavaScript(request.getParameter("PageId"));
   String treeURL;
   String browserURL;
-  String extraURLParams = "";
-  String treeParams = "";
+  String extraURLParams = StringEscapeUtils.escapeJavaScript("");
+  String treeParams = StringEscapeUtils.escapeJavaScript("");
   //get the source, module and question index
-  String modIndex = "";
-  String quesIndex = "";
-  String src = request.getParameter("src");
+  String modIndex = StringEscapeUtils.escapeJavaScript("");
+  String quesIndex = StringEscapeUtils.escapeJavaScript("");
+  String src = StringEscapeUtils.escapeJavaScript(request.getParameter("src"));
   if (src == null || src.equals(""))
   {	    
-	  Hashtable srcParams = TreeUtils.parseParameters((String)request.getSession().getAttribute("paramsTree"));
+	  Hashtable srcParams = TreeUtils.parseParameters(StringEscapeUtils.escapeJavaScript((String)request.getSession().getAttribute("paramsTree")));
 	  if (srcParams.containsKey("src")) 
 	  {
 	    src = (String)srcParams.get("src");
-	    modIndex = (String)srcParams.get("moduleIndex");
-	    quesIndex = (String)srcParams.get("questionIndex");
+	    modIndex = StringEscapeUtils.escapeJavaScript((String)srcParams.get("moduleIndex"));
+	    quesIndex = StringEscapeUtils.escapeJavaScript((String)srcParams.get("questionIndex"));
 	  }
   }
   else
   {
-	modIndex = request.getParameter("moduleIndex");
-	quesIndex = request.getParameter("questionIndex");
+	modIndex = StringEscapeUtils.escapeJavaScript(request.getParameter("moduleIndex"));
+	quesIndex = StringEscapeUtils.escapeJavaScript(request.getParameter("questionIndex"));
   }
   
   if (src != null&&!src.equals("")) {
@@ -168,9 +169,9 @@ CDE Browser
   <frameset cols="25%,*">
     <frameset rows="15%,*">
        <html:frame page="/common/tree_hdr.html" frameborder="0" scrolling = "no" frameName="tree_header"/>
-       <html:frame page="<%=treeURL%>" frameborder="0"  frameName="tree"/>
+       <html:frame page="<%=StringEscapeUtils.escapeJavaScript(treeURL)%>" frameborder="0"  frameName="tree"/>
     </frameset>    
-      <html:frame page="<%=browserURL%>" frameborder="0" frameName="body"/>
+      <html:frame page="<%=StringEscapeUtils.escapeJavaScript(browserURL)%>" frameborder="0" frameName="body"/>
    </frameset>   
  </frameset>
 </HTML>

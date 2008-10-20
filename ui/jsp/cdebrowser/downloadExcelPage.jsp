@@ -1,3 +1,4 @@
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%
   String source = request.getParameter("src");
 %>
@@ -11,7 +12,7 @@
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function goPage() {
-  document.location.href ="<%=request.getContextPath()%>" +  "/search?excelDownload=9&PageId=DataElementsGroup&src=" + "<%= source %>";
+  document.location.href ="<%=request.getContextPath()%>" + "<%=StringEscapeUtils.escapeJavaScript("/search?xmlDownload=9&PageId=DataElementsGroup&src=")%>" + "<%= StringEscapeUtils.escapeJavaScript(source) %>";
   
 }
 function closeWindow() {

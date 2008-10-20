@@ -12,7 +12,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.common.resource.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.ProcessConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.lov.ValueDomainsLOVBean " %>
-
+<%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 
@@ -23,9 +23,9 @@
   ValueDomainsLOVBean vlb = (ValueDomainsLOVBean)infoBean.getInfo(ProcessConstants.VD_LOV);
   CommonLOVBean clb = vlb.getCommonLOVBean();
     
-  String pageId = infoBean.getPageId();
-  String pageName = PageConstants.PAGEID;
-  String pageUrl = "&"+pageName+"="+pageId;
+  String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
+  String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
+  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
   
 %>
 
@@ -55,7 +55,7 @@ function closeOnClick() {
 }
 
 function goPage(pageInfo) {
-  document.location.href = "search?valueDomainsLOV=9&"+pageInfo + "<%= pageUrl %>";
+  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?valueDomainsLOV=9&")%>"+pageInfo+"<%=pageUrl%>";
 }
 
 
@@ -67,10 +67,10 @@ function goPage(pageInfo) {
 <p class="OraHeaderSubSub">Value Domains </p>
 </center>
 <form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
-<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= clb.getJsId() %>">
-<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= clb.getJsName() %>">
+<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>">
+<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>">
 <INPUT TYPE="HIDDEN" NAME="valueDomainsLOV" VALUE="9">
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">

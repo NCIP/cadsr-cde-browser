@@ -7,6 +7,8 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.util.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
+
 <HTML>
 	<HEAD>
 		<TITLE>Display CDE Cart</TITLE>
@@ -65,7 +67,7 @@ function ToggleAll(e){
 }
 
 function details(linkParms ){
-  var urlString="search?dataElementDetails=9" + linkParms + "&PageId=DataElementsGroup"+"&queryDE=yes";
+  var urlString="<%=StringEscapeUtils.escapeJavaScript("search?dataElementDetails=9")%>" + linkParms + "<%=StringEscapeUtils.escapeJavaScript("&PageId=DataElementsGroup"+"&queryDE=yes")%>";
   newBrowserWin(urlString,'deDetails',800,600)
   
 }

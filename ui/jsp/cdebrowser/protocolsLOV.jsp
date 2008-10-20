@@ -12,7 +12,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.common.ProcessConstants " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.lov.ProtocolsLOVBean " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants" %>
-
+<%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@include  file="cdebrowserCommon_html/SessionAuth.html"%>
 
 <%
@@ -24,7 +24,7 @@
     
   String pageName = "PageId";
   String pageId = "DataElementsGroup";
-  String pageUrl = "&"+pageName+"="+pageId;
+  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
 
 %>
 
@@ -67,10 +67,10 @@ function goPage(pageInfo) {
 
 <form method="POST" action="formLOVAction.do">
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
-<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= clb.getJsId() %>">
-<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= clb.getJsName() %>">
+<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>">
+<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>">
 <INPUT TYPE="HIDDEN" NAME="method" VALUE="getProtocolsLOV">
-<INPUT TYPE="HIDDEN" NAME="contextIdSeq" value="<%= request.getAttribute("contextIdSeq") %>">
+<INPUT TYPE="HIDDEN" NAME="contextIdSeq" value="<%= StringEscapeUtils.escapeJavaScript((String)request.getAttribute("contextIdSeq")) %>">
 
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">
@@ -84,7 +84,7 @@ function goPage(pageInfo) {
 <tr>
 
   <% 
-    String chkContext = (String)request.getAttribute("chkContext");
+    String chkContext = StringEscapeUtils.escapeJavaScript((String)request.getAttribute("chkContext"));
     if((chkContext == null) || (!chkContext.equals("true"))) {
   %>
   <td class="fieldtitlebold">Restrict Search to Current Context</td>

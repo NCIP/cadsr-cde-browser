@@ -1,3 +1,4 @@
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=WINDOWS-1252">
@@ -14,11 +15,11 @@ Data Element Details
 <!--
 function redirect1(detailReqType, linkParms )
 {
-  document.location.href="search?dataElementDetails=" + linkParms;
+  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?dataElementDetails=")%>" + linkParms;
   
 }
 function goPage(pageInfo) {
-  document.location.href = "search?searchDataElements=&"+pageInfo;
+  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=&")%>"+pageInfo;
   
 }
   

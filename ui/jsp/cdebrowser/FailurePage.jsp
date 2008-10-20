@@ -9,7 +9,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="oracle.clex.process.PageConstants " %>
-
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
@@ -19,9 +19,9 @@
 <%
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
   UserErrorMessage uem = (UserErrorMessage)infoBean.getInfo("uem");
-  String pageId = infoBean.getPageId();
-  String pageName = PageConstants.PAGEID;
-  String pageUrl = "&"+pageName+"="+pageId;
+  String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
+  String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
+  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
 %>
 
 <%
@@ -43,7 +43,7 @@
 
 <CENTER>
 <FORM>
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
 <TABLE WIDTH="90%">
 <TR>
 <TD ALIGN="<%= msgAlign %>">

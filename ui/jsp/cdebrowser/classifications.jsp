@@ -16,7 +16,7 @@
 	import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants"%>
 <%@ page
 	import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
-
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean" />
@@ -33,12 +33,12 @@
 	Map csRefDocs = (Map) infoBean.getInfo("csRefDocs");
 	Map csiRefDocs = (Map) infoBean.getInfo("csiRefDocs");
 	Map csContacts = (Map) infoBean.getInfo("csContacts");
-	String pageId = infoBean.getPageId();
-	String pageName = PageConstants.PAGEID;
-	String pageUrl = "&" + pageName + "=" + pageId;
+	String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
+	String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
+	String pageUrl = StringEscapeUtils.escapeJavaScript("&" + pageName + "=" + pageId);
 	HTMLPageScroller scroller = (HTMLPageScroller) infoBean
 			.getInfo(ProcessConstants.DE_CS_PAGE_SCROLLER);
-	String scrollerHTML = scroller.getScrollerHTML();
+	String scrollerHTML = StringEscapeUtils.escapeJavaScript(scroller.getScrollerHTML());
 %>
 
 
@@ -85,8 +85,8 @@ function listChanged(urlInfo) {
 		<%@ include file="cdebrowserCommon_html/tab_include.html"%>
 		<form method="POST" ENCTYPE="application/x-www-form-urlencoded"
 			action="<%=infoBean.getStringInfo("controller")%>">
-			<input type="HIDDEN" name="<%=PageConstants.PAGEID%>"
-				value="<%=infoBean.getPageId()%>" />
+			<input type="HIDDEN" name="<%=StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID)%>"
+				value="<%=StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>" />
 			<table cellpadding="0" cellspacing="0" width="80%" align="center">
 				<tr>
 					<td class="OraHeaderSubSub" width="100%">

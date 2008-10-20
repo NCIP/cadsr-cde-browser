@@ -14,7 +14,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.common.ProcessConstants " %>
 <%@page import="java.util.List " %>
 <%@page import="java.util.Iterator " %>
-
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 
@@ -23,9 +23,9 @@
 <%
   DataElement de = (DataElement)infoBean.getInfo("de");
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
-  String pageId = infoBean.getPageId();
-  String pageName = PageConstants.PAGEID;
-  String pageUrl = "&"+pageName+"="+pageId;
+  String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
+  String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
+  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
 %>
 
 <HTML>
@@ -57,8 +57,8 @@ function listChanged(urlInfo) {
 //-->
 </SCRIPT>
 <%@ include  file="cdebrowserCommon_html/tab_include.html" %>
-<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= StringEscapeUtils.escapeJavaScript(infoBean.getStringInfo("controller")) %>">
+<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
 
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>

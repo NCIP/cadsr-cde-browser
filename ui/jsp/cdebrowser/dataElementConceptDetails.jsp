@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/cdebrowser.tld" prefix="cde"%>
 <%@page import="javax.servlet.http.* " %>
 <%@page import="javax.servlet.* " %>
-<%//@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
 <%@page import="oracle.clex.process.PageConstants " %>
@@ -13,7 +12,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.common.util.StringUtils" %>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserFormConstants"%>
-
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 
@@ -24,9 +23,9 @@
   pageContext.setAttribute("de",de);
   DataElementConcept dec = de.getDataElementConcept();
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
-  String pageId = infoBean.getPageId();
-  String pageName = PageConstants.PAGEID;
-  String pageUrl = "&"+pageName+"="+pageId;
+  String pageId = StringEscapeUtils.escapeHtml(infoBean.getPageId());
+  String pageName = StringEscapeUtils.escapeHtml(PageConstants.PAGEID);
+  String pageUrl = StringEscapeUtils.escapeHtml("&"+pageName+"="+pageId);
   CDEBrowserParams params = CDEBrowserParams.getInstance();
 
   String socVersion="";
@@ -66,15 +65,15 @@ function redirect1(detailReqType, linkParms )
   
 }
 function goPage(pageInfo) {
-  document.location.href = "search?searchDataElements=&"+pageInfo;
+  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=&")%>"+pageInfo;
   
 }
   
 //-->
 </SCRIPT>
 <%@ include  file="cdebrowserCommon_html/tab_include.html" %>
-<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= StringEscapeUtils.escapeHtml(infoBean.getStringInfo("controller")) %>">
+<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeHtml(infoBean.getPageId())%>"/>
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
     <td class="OraHeaderSubSub" width="100%">Selected Data Element</td>

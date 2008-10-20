@@ -14,16 +14,16 @@
 <%@page import="java.util.Iterator" %>
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
-
+<%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@include  file="cdebrowserCommon_html/SessionAuth.html"%>
 
 <%
   DataElement de = (DataElement)infoBean.getInfo("de");
   DerivedDataElement dde = (DerivedDataElement)infoBean.getInfo("derivedDe");
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
-  String pageId = infoBean.getPageId();
-  String pageName = PageConstants.PAGEID;
-  String pageUrl = "&"+pageName+"="+pageId;
+  String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
+  String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
+  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
 
 %>
 
@@ -47,7 +47,7 @@ function redirect1(detailReqType, linkParms )
   
 }
 function goPage(pageInfo) {
-  document.location.href = "search?searchDataElements=&"+pageInfo;
+  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=&")%>"+pageInfo;
   
 }
   
@@ -55,7 +55,7 @@ function goPage(pageInfo) {
 </SCRIPT>
 <%@ include  file="cdebrowserCommon_html/tab_include.html" %>
 <form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
     <td class="OraHeaderSubSub" width="100%">Selected Data Element</td>

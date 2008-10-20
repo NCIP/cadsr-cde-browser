@@ -15,7 +15,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.util.StringUtils" %>
 <%@page import="java.net.URLEncoder" %>
-
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
@@ -29,9 +29,9 @@
   ValueDomain vd = de.getValueDomain();
 
   
-  String pageId = infoBean.getPageId();
-  String pageName = PageConstants.PAGEID;
-  String pageUrl = "&"+pageName+"="+pageId;
+  String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
+  String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
+  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
   HTMLPageScroller scroller = (HTMLPageScroller)
                 infoBean.getInfo(ProcessConstants.VALID_VALUES_PAGE_SCROLLER);
   CDEBrowserParams params = CDEBrowserParams.getInstance();
@@ -74,8 +74,8 @@ function valueMeaningDetails(shortMeaning)
 //-->
 </SCRIPT>
 <%@ include  file="cdebrowserCommon_html/tab_include.html" %>
-<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= infoBean.getPageId()%>"/>
+<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= StringEscapeUtils.escapeJavaScript(infoBean.getStringInfo("controller")) %>">
+<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
 
 <table cellpadding="0" cellspacing="0" width="80%" align="center">
   <tr>
@@ -457,7 +457,7 @@ function valueMeaningDetails(shortMeaning)
     if (numberOfValidValues > 0) {
       /*StringBuffer vvPageList = (StringBuffer)
                       infoBean.getInfo(ProcessConstants.VALID_VALUES_PAGE_LIST);*/
-        String vvPageList = scroller.getScrollerHTML();
+        String vvPageList = StringEscapeUtils.escapeJavaScript(scroller.getScrollerHTML());
 %>
 
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0">
