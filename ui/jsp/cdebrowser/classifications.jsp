@@ -38,7 +38,7 @@
 	String pageUrl = StringEscapeUtils.escapeJavaScript("&" + pageName + "=" + pageId);
 	HTMLPageScroller scroller = (HTMLPageScroller) infoBean
 			.getInfo(ProcessConstants.DE_CS_PAGE_SCROLLER);
-	String scrollerHTML = StringEscapeUtils.escapeJavaScript(scroller.getScrollerHTML());
+	String scrollerHTML = scroller.getScrollerHTML();
 %>
 
 
