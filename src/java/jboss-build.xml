@@ -15,7 +15,7 @@
   <!-- Use your own build.properties 
        Properties in build.properties overide properties in build.xml
        -->
-  <property file="build.properties"/>
+  <property file="local_build.properties"/>
   
    <!-- Make sure these are correct for your instance -->
    
@@ -26,7 +26,7 @@
    <property name="jboss.deploy" value="${jboss.home}/server/default/deploy" />
    
    <property name="cdebrowser.version" value="4.0.0.0" />
-   <property name="cdebrowser.build" value="7" />
+   <property name="cdebrowser.build" value="8" />
    
    <!-- used for open source build for file suffix-->
    <property name="cdebrowser.version.suffix" value="4_0_0_0" />
