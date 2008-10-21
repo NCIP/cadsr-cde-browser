@@ -457,7 +457,7 @@ function valueMeaningDetails(shortMeaning)
     if (numberOfValidValues > 0) {
       /*StringBuffer vvPageList = (StringBuffer)
                       infoBean.getInfo(ProcessConstants.VALID_VALUES_PAGE_LIST);*/
-        String vvPageList = StringEscapeUtils.escapeJavaScript(scroller.getScrollerHTML());
+        String vvPageList = scroller.getScrollerHTML();
 %>
 
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0">
