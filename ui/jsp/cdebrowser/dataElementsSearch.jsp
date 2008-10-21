@@ -511,9 +511,9 @@ function gotoCDESearchPrefs() {
   <tr valign="top">
     <td nowrap>
       <b><a href="<%=downloadPriorExcelURL%>" title="3.2.0.1 Version">[Download Data Elements to Prior Excel]</a></b> &nbsp;&nbsp;
-      <b><a href="<%=downloadExcelURL%>" title="3.2.0.2 Includes new content: Value Meaning Description in column BV, Value Meaning Concept(s) in column BW, Value Domain Representation in columns BI-BS.">
+      <b><a href="<%=downloadExcelURL%>" title="4.0.0.0 Includes new content: Value Meaning Description in column BV, Value Meaning Concept(s) in column BW, Value Domain Representation in columns BI-BS.">
       [Download Data Elements to Excel]</a></b> &nbsp;&nbsp;
-      <b><a href="<%=downloadXMLURL%>" title="3.2.0.2 Version">[Download Data Elements as XML]</a></b> &nbsp;&nbsp;
+      <b><a href="<%=downloadXMLURL%>" title="4.0.0.0 Version">[Download Data Elements as XML]</a></b> &nbsp;&nbsp;
 	  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
