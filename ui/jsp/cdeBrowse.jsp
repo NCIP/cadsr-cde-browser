@@ -128,28 +128,28 @@
                   + ";moduleIndex:"+modIndex);
   }
 
-  treeURL = StringEscapeUtils.escapeJavaScript("/treeLoader.jsp?&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" +TreeConstants.DE_SEARCH_TREE + ";"+
+  treeURL = "/treeLoader.jsp?&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" +TreeConstants.DE_SEARCH_TREE + ";"+
       brContextExcludeListParamStr +
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
       TreeConstants.DE_SEARCH_FUNCTION + treeParams +
-      "&treeName=deTree");
+      "&treeName=deTree";
 
 
   if (performQuery != null ) {
-    extraURLParams += "&performQuery="+performQuery; 
+    extraURLParams += StringEscapeUtils.escapeJavaScript("&performQuery="+performQuery); 
   }
       
   if (pageId == null) {
-   browserURL = StringEscapeUtils.escapeJavaScript("/search?FirstTimer=0"+extraURLParams);
+   browserURL = "/search?FirstTimer=0"+extraURLParams;
   }
   else {
-    treeURL = StringEscapeUtils.escapeJavaScript(treeURL + "&PageId="+pageId);
-    browserURL = StringEscapeUtils.escapeJavaScript("/search?PageId="+pageId+"&FirstTimer=0"+extraURLParams);
+    treeURL = treeURL + StringEscapeUtils.escapeJavaScript("&PageId="+pageId);
+    browserURL = "/search?"+StringEscapeUtils.escapeJavaScript("PageId="+pageId+"&FirstTimer=0"+extraURLParams);
   }
 
   if((cachedDeList!=null||showCached!=null) && (performQuery == null)) {
     pageContext.setAttribute("resultsPresent",new Boolean("true"));
-    browserURL = StringEscapeUtils.escapeJavaScript("/cdebrowser/dataElementsSearch.jsp?performQuery=cached"+"&FirstTimer=0"+extraURLParams);
+    browserURL = "/cdebrowser/dataElementsSearch.jsp?"+StringEscapeUtils.escapeJavaScript("performQuery=cached"+"&FirstTimer=0"+extraURLParams);
   }
 %>
 <HTML>
