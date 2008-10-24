@@ -13,10 +13,9 @@
 	<t:document>
 		<t:documentHead>
 			<%
-				String treeParams = request.getParameter("treeParams");
+				String treeParams = StringEscapeUtils.escapeJavaScript(request.getParameter("treeParams"));
 							if (treeParams == null || treeParams.equals(""))
-								treeParams = (String) request.getSession()
-										.getAttribute("paramsTree");
+								treeParams = StringEscapeUtils.escapeJavaScript((String) request.getSession().getAttribute("paramsTree"));
 							String treeName = null;
 							String callerParams = "";
 							Hashtable params = null;
@@ -24,34 +23,20 @@
 								params = TreeUtils.parseParameters(treeParams);
 								String src = null;
 								if (params.containsKey("src")) {
-									src = StringEscapeUtils
-											.escapeJavaScript((String) params
-													.get("src"));
-									String modIndex = StringEscapeUtils
-											.escapeJavaScript((String) params
-													.get("moduleIndex"));
-									String quesIndex = StringEscapeUtils
-											.escapeJavaScript((String) params
-													.get("questionIndex"));
-									callerParams += "&src=" + src + "&moduleIndex="
-											+ modIndex + "&questionIndex="
-											+ quesIndex;
-									callerParams = StringEscapeUtils
-											.escapeJavaScript(callerParams);
+									src = StringEscapeUtils.escapeJavaScript((String) params.get("src"));
+									String modIndex = StringEscapeUtils.escapeJavaScript((String) params.get("moduleIndex"));
+									String quesIndex = StringEscapeUtils.escapeJavaScript((String) params.get("questionIndex"));
+									callerParams += "&src=" + src + "&moduleIndex="+ modIndex + "&questionIndex="+ quesIndex;
+									callerParams = StringEscapeUtils.escapeJavaScript(callerParams);
 								}
 
-								treeName = StringEscapeUtils
-										.escapeJavaScript((String) request
-												.getSession().getAttribute(
-														"treeTypeName"));
+								treeName = StringEscapeUtils.escapeJavaScript((String) request.getSession().getAttribute("treeTypeName"));
 							} catch (Exception ex) {
-								System.out.println("Error: " + ex.getMessage());
-								;
+								System.out.println("Error: " + ex.getMessage());								;
 							}
 			%>
 			<link rel="stylesheet" type="text/css" href="css/TreeBrowser.css" />
-			<script language="JavaScript1.2"
-				src="common/skins/CDEBrowser1/JavaScript.js"></script>
+			<script language="JavaScript1.2" src="common/skins/CDEBrowser1/JavaScript.js"></script>
 			<script src="jsLib/aa/aa.js"></script>
 			<script language="JavaScript1.2">
   <!--
@@ -59,19 +44,19 @@
     var frm = findFrameByName('body');
     document.body.style.cursor = "wait";
     frm.document.body.style.cursor = "wait";
-    if ("<%=StringEscapeUtils.escapeJavaScript(treeName)%>" == "formTree")
-     frm.document.location = "/CDEBrowser/formSearchAction.do?method=getAllFormsForTreeNode&"+urlParams;
+    if ("<%=treeName%>" == "formTree")
+     frm.document.location = "/CDEBrowser/"+"<%=StringEscapeUtils.escapeJavaScript("formSearchAction.do?method=getAllFormsForTreeNode&")%>"+urlParams;
     else
-     frm.document.location = "<%=request.getContextPath()%>" + "/search?" + urlParams + "<%=callerParams%>";
+     frm.document.location = "<%=request.getContextPath()%>" + "<%=StringEscapeUtils.escapeJavaScript("/search?")%>" + urlParams + "<%=StringEscapeUtils.escapeJavaScript(callerParams)%>";
    }
   function performFormAction(urlParams){
     var frm = findFrameByName('body');
     document.body.style.cursor = "wait";
     frm.document.body.style.cursor = "wait";
     if ("<%=treeName%>" == "formTree")
-     top.document.location = "/CDEBrowser/formDetailsAction.do?method=getFormDetails&"+urlParams;
+     top.document.location = "/CDEBrowser/"+"<%=StringEscapeUtils.escapeJavaScript("formDetailsAction.do?method=getFormDetails&")%>" + urlParams;
     else
-     frm.document.location = "<%=request.getContextPath()%>" + "/search?" + urlParams + "<%=callerParams%>";
+     frm.document.location = "<%=request.getContextPath()%>" + "<%=StringEscapeUtils.escapeJavaScript("/search?")%>" + urlParams + "<%=StringEscapeUtils.escapeJavaScript(callerParams)%>";
    }
 
   //-->
@@ -194,14 +179,14 @@
 					</jcaa:aaTree>
 				</aa:zoneJSF>
 			</h:form>
-			<script type="text/javascript"> 
-ajaxAnywhere.getZonesToReload = function(url, submitButton) {
-  return "treeZone"
-}
 
-ajaxAnywhere.formName = "cdeBrowserTree"; 
-ajaxAnywhere.bindById();
-</script>
+			<script type="text/javascript"> 
+				ajaxAnywhere.getZonesToReload = function(url, submitButton) {
+  					return "treeZone"
+				}
+				ajaxAnywhere.formName = "cdeBrowserTree"; 
+				ajaxAnywhere.bindById();
+			</script>
 		</t:documentBody>
 	</t:document>
 </f:view>
@@ -228,7 +213,7 @@ ajaxAnywhere.bindById();
     if (autoScroll != null && !"".equals(autoScroll)) {
         %>
 	    addLoadEvent(function() {
-  			parent.frames['tree'].scrollTo(<%=autoScroll%>);
+  			parent.frames['tree'].scrollTo(<%=StringEscapeUtils.escapeJavaScript(autoScroll)%>);
   		});
         <%
     }

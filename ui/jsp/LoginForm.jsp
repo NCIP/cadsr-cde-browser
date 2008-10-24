@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
 <html>
 <head>
 <title>Login</title>
@@ -28,7 +29,7 @@ function clearForm()
 		<jsp:include page="/common/common_cdebrowser_header_jsp_inc.jsp"
 			flush="true">
 			<jsp:param name="loginDestination"
-				value="formCDECartAction.do?method=displayCDECart" />
+				value="<%=StringEscapeUtils.escapeSql("formCDECartAction.do?method=displayCDECart") %>" />
 			<jsp:param name="urlPrefix" value="" />
 		</jsp:include>		
 <br>
@@ -62,7 +63,7 @@ function clearForm()
     </tr>  
   </table> 
   
-  <form method="post" action="<%= response.encodeURL("j_security_check") %>">
+  <form method="post" action="<%= StringEscapeUtils.escapeHtml(response.encodeURL("j_security_check")) %>">
 
   <table align=center cellspacing="2" cellpadding="3" border="0" onkeypress="if(event.keyCode==13){submitForm()};">
     <% if(request.getParameter("failed") != null && ((String)request.getParameter("failed")).equalsIgnoreCase("y")) {%>
@@ -75,13 +76,13 @@ function clearForm()
     <tr>
         <td class="OraFieldtitlebold" nowrap>Username:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="j_username" value="" size ="20" /> 
+          <input type="text" name="j_username" value="<%=StringEscapeUtils.escapeHtml("")%>" size ="20" /> 
         </td>
     </tr>
     <tr>
         <td class="OraFieldtitlebold" nowrap>Password:</td>
         <td class="OraFieldText" nowrap>
-          <input type="password" name="j_password" value="" size ="20" autocomplete="off" /> 
+          <input type="password" name="j_password" value="<%=StringEscapeUtils.escapeHtml("")%>" size ="20" autocomplete="off" /> 
         </td>
     </tr>
   </table>

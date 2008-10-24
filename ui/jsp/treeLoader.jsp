@@ -5,24 +5,24 @@
 
 <%
   	// get parameters
-    String treeParams     = (String) request.getParameter("treeParams");
-    String skin           = (String) request.getParameter("skin");
-    String treeDirective  = (String) request.getParameter("treeDirective");
-    String treeAction     = (String) request.getParameter("treeAction");
-    String treeName       = (String) request.getParameter("treeName");
+    String treeParams     = StringEscapeUtils.escapeHtml((String) request.getParameter("treeParams"));
+    String skin           = StringEscapeUtils.escapeHtml((String) request.getParameter("skin"));
+    String treeDirective  = StringEscapeUtils.escapeHtml((String) request.getParameter("treeDirective"));
+    String treeAction     = StringEscapeUtils.escapeHtml((String) request.getParameter("treeAction"));
+    String treeName       = StringEscapeUtils.escapeHtml((String) request.getParameter("treeName"));
     request.getSession().setAttribute("paramsTree", treeParams);
     
     // URL encode parameters
-    if (treeParams != null) treeParams = java.net.URLEncoder.encode(treeParams);    
-    if (skin != null) skin = java.net.URLEncoder.encode(skin);    
-    if (treeDirective != null) treeDirective = java.net.URLEncoder.encode(treeDirective);    
+    if (treeParams != null) treeParams = StringEscapeUtils.escapeJavaScript(java.net.URLEncoder.encode(treeParams));    
+    if (skin != null) skin = StringEscapeUtils.escapeJavaScript(java.net.URLEncoder.encode(skin));    
+    if (treeDirective != null) treeDirective = StringEscapeUtils.escapeJavaScript(java.net.URLEncoder.encode(treeDirective));    
     request.getSession().setAttribute("treeTypeName", treeName);
 
 %>
 <script language="JavaScript1.2">
-  var now = new Date();
-  var glob = now.getHours()+now.getSeconds()+now.getMilliseconds();
+  var now = new Date();    
+  var glob = now.getHours()+now.getSeconds()+now.getMilliseconds();    
   window.document.write("Building tree, please wait...");  
-  var targetURL = "tree2.jsf?treeName=<%= StringEscapeUtils.escapeJavaScript(request.getParameter("treeName")) %>&treeParams=<%=StringEscapeUtils.escapeJavaScript(treeParams)%>&skin=<%=skin%>&treeDirective=<%=treeDirective%>&glob="+glob + "&treeName=<%=StringEscapeUtils.escapeJavaScript(treeName)%>";
+  var targetURL = "tree2.jsf?treeName=<%=treeName%>&treeParams=<%=treeParams%>&skin=<%=skin%>&treeDirective=<%=treeDirective%>&treeName=<%=treeName%>";
   window.location.href = targetURL;     
 </script>

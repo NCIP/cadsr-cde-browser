@@ -18,6 +18,8 @@ import oracle.cle.process.Service;
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 //CDE Browser Application Imports
 //import oracle.cle.process.ProcessConstants;
 // Framework imports
@@ -26,7 +28,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetClassificationsLOV.java,v 1.7 2007-12-13 19:35:54 hegdes Exp $
+ * @version: $Id: GetClassificationsLOV.java,v 1.8 2008-10-24 21:11:04 davet Exp $
  */
 public class GetClassificationsLOV extends BasePersistingProcess {
   public GetClassificationsLOV() {
@@ -106,20 +108,20 @@ public class GetClassificationsLOV extends BasePersistingProcess {
         int numberOfSearchFields = searchParam.length;
       }
 
-      performQuery = getStringInfo("performQuery");
+      performQuery = StringEscapeUtils.escapeHtml(getStringInfo("performQuery"));
 
       if (performQuery == null) {
         //dbUtil = (DBUtil) getInfoObject("dbUtil");
         //dsName = getStringInfo("SBR_DSN");
         dbUtil.getConnectionFromContainer();
 
-        String contextIdSeq = getStringInfo("P_CONTE_IDSEQ");
+        String contextIdSeq = StringEscapeUtils.escapeHtml(getStringInfo("P_CONTE_IDSEQ"));
 
 //         if (conteIdseq == null) {
 //           conteIdseq = "";
 //         }
 
-	String chk = getStringInfo("chkContext");
+	String chk = StringEscapeUtils.escapeHtml(getStringInfo("chkContext"));
 
 	String[] contexts = null;
 

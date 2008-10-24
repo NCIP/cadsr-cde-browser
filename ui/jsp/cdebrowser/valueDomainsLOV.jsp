@@ -66,12 +66,12 @@ function goPage(pageInfo) {
 <center>
 <p class="OraHeaderSubSub">Value Domains </p>
 </center>
-<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
+<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= StringEscapeUtils.escapeJavaScript(infoBean.getStringInfo("controller")) %>">
 <input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
-<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
+<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE= "<%=StringEscapeUtils.escapeJavaScript("1")%>" >
 <INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>">
 <INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>">
-<INPUT TYPE="HIDDEN" NAME="valueDomainsLOV" VALUE="9">
+<INPUT TYPE="HIDDEN" NAME="valueDomainsLOV" VALUE="<%=StringEscapeUtils.escapeJavaScript("9")%>">
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">
   Please enter a keyword. This search will display all value domains which have

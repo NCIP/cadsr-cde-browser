@@ -53,16 +53,16 @@
   if (paramIdseq == null) paramIdseq = "";
   String paramType = StringEscapeUtils.escapeHtml((String)infoBean.getInfo("P_PARAM_TYPE"));
   if (paramType == null) paramType = "";
-  String templateURL = request.getContextPath()+"/search?viewTemplate=9&templateIdseq="+paramIdseq+pageUrl;
+  String templateURL = request.getContextPath()+StringEscapeUtils.escapeJavaScript("/search?viewTemplate=9&templateIdseq=")+paramIdseq+pageUrl;
   //String downloadXMLURL = "javascript:newDownloadWin('search?xmlDownload=9"+pageUrl+"','downloadWin',10,10)";
-  String downloadXMLURL = "javascript:fileDownloadWin('" + contextPath + "/downloadXMLPage.jsp?src=deSearch','xmlWin',500,200)";
+  String downloadXMLURL = "javascript:fileDownloadWin('" + contextPath + StringEscapeUtils.escapeJavaScript("/downloadXMLPage.jsp?src=deSearch','xmlWin',500,200)");
   //String downloadExcelURL = "javascript:newDownloadWin('search?excelDownload=9"+pageUrl+"','downloadWin',10,10)";
-  String downloadPriorExcelURL = "javascript:fileDownloadWin('" + contextPath + "/downloadExcelPage.jsp?src=deSearchPrior','excelWin',500,200)";
-  String downloadExcelURL = "javascript:fileDownloadWin('" + contextPath + "/downloadExcelPage.jsp?src=deSearch','excelWin',500,200)";
+  String downloadPriorExcelURL = "javascript:fileDownloadWin('" + contextPath + StringEscapeUtils.escapeJavaScript("/downloadExcelPage.jsp?src=deSearchPrior','excelWin',500,200)");
+  String downloadExcelURL = "javascript:fileDownloadWin('" + contextPath + StringEscapeUtils.escapeJavaScript("/downloadExcelPage.jsp?src=deSearch','excelWin',500,200)");
   String downloadDTDURL = "javascript:newWin('http://ncicb.nci.nih.gov/xml/dtds/cadsr','dtdWin',500,200)";
-  String valueDomainLOVUrl= "javascript:newWin('" + request.getContextPath() + "/search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain"+pageUrl+"','vdLOV',700,600)";
-  String decLOVUrl= "javascript:newWin('" + request.getContextPath() + "/search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept"+pageUrl+"','decLOV',700,600)";
-  String csLOVUrl= "javascript:newBrowserWin('" + request.getContextPath() + "/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem"+pageUrl+"','csLOV',700,600)";
+  String valueDomainLOVUrl= "javascript:newWin('" + request.getContextPath() + StringEscapeUtils.escapeJavaScript("/search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain")+pageUrl+"','vdLOV',700,600)";
+  String decLOVUrl= "javascript:newWin('" + request.getContextPath() + StringEscapeUtils.escapeJavaScript("/search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept")+pageUrl+"','decLOV',700,600)";
+  String csLOVUrl= "javascript:newBrowserWin('" + request.getContextPath() + StringEscapeUtils.escapeJavaScript("/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem")+pageUrl+"','csLOV',700,600)";
 
   
   String txtDataElementConcept = StringEscapeUtils.escapeHtml(desb.getDECPrefName());
@@ -73,7 +73,7 @@
   if (!paramIdseq.equals("") && !paramType.equals("")){
     //CDEBrowserPageContext pg = (CDEBrowserPageContext)infoBean.getInfo(ProcessConstants.PAGE_CONTEXT);
     //pageContextInfo = pg.getPageContextDisplayText();
-    pageContextInfo = infoBean.getStringInfo(TreeConstants.TREE_BREADCRUMBS);
+    pageContextInfo = StringEscapeUtils.escapeHtml(infoBean.getStringInfo(TreeConstants.TREE_BREADCRUMBS));
   }
   
   //GForge 3919
@@ -139,11 +139,11 @@
 //        cdeCompareSizeStr = (new Integer(list.size())).toString();
 //  }
 
-  String submitFunction ="submitForm()";
+  String submitFunction =StringEscapeUtils.escapeHtml("submitForm()");
   Object advancedSearch = (pageContext.getSession().getAttribute(BrowserFormConstants.BROWSER_SCREEN_TYPE_ADVANCED));
   if(advancedSearch==null)
     { 
-  	submitFunction = "submitSimpleForm()";
+  	submitFunction = StringEscapeUtils.escapeHtml("submitSimpleForm()");
     }
   
     
@@ -170,12 +170,12 @@ Data Elements Search - Data Elements
 <!--
 function redirect1(detailReqType, linkParms )
 {
-  var urlString="<%=StringEscapeUtils.escapeJavaScript(request.getContextPath()+"/search?dataElementDetails=9")%>" + linkParms + "<%=StringEscapeUtils.escapeJavaScript(pageUrl) %>"+"<%=StringEscapeUtils.escapeJavaScript("&queryDE=yes")%>";
+  var urlString="<%=request.getContextPath()%>"+"<%=StringEscapeUtils.escapeJavaScript("/search?dataElementDetails=9")%>" + linkParms + "<%=StringEscapeUtils.escapeJavaScript(pageUrl) %>"+"<%=StringEscapeUtils.escapeJavaScript("&queryDE=yes")%>";
   newBrowserWin(urlString,'deDetails',800,600)
   
 }
 function goPage(pageNumber, pageInfo) {
-  document.location.href ="<%=StringEscapeUtils.escapeJavaScript(request.getContextPath()+"/search?dataElementDetails=9")%>"+pageInfo+"&deSearchPageNum="+pageNumber+ "<%= StringEscapeUtils.escapeJavaScript(pageUrl) %>"+"<%= StringEscapeUtils.escapeHtml(urlParams) %>";
+  document.location.href ="<%=request.getContextPath()%>"+"<%=StringEscapeUtils.escapeJavaScript("/search?dataElementDetails=9")%>"+ pageInfo +"<%=StringEscapeUtils.escapeJavaScript("&deSearchPageNum=")%>"+ pageNumber + "<%= StringEscapeUtils.escapeJavaScript(pageUrl) %>"+"<%= StringEscapeUtils.escapeHtml(urlParams) %>";
 }
 
 function clearValueDomain() {
@@ -404,12 +404,12 @@ function gotoCDESearchPrefs() {
 //-->
 </SCRIPT>
 
-<form action="<%= infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=submitFunction%>};">
+<form action="<%=StringEscapeUtils.escapeHtml(infoBean.getStringInfo("controller")) %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=StringEscapeUtils.escapeHtml(submitFunction)%>};">
 <INPUT TYPE="HIDDEN" NAME="<%=NavigationConstants.METHOD_PARAM%>" > 
-<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
-<INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
-<INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="1">
-<INPUT TYPE="HIDDEN" NAME="performQuery" VALUE="yes">
+<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
+<INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
+<INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
+<INPUT TYPE="HIDDEN" NAME="performQuery" VALUE="<%=StringEscapeUtils.escapeHtml("yes")%>">
 <INPUT TYPE="HIDDEN" NAME="src" VALUE="<%=StringEscapeUtils.escapeHtml(src)%>">
 <INPUT TYPE="HIDDEN" NAME="moduleIndex" VALUE="<%=StringEscapeUtils.escapeHtml(modIndex)%>">
 <INPUT TYPE="HIDDEN" NAME="questionIndex" VALUE="<%=StringEscapeUtils.escapeHtml(quesIndex)%>">

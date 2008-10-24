@@ -123,18 +123,16 @@
   }
   
   if (src != null&&!src.equals("")) {
-    extraURLParams += "&src="+src+"&moduleIndex="+modIndex+"&questionIndex="+quesIndex;
-    treeParams += treeParams + ";src:"+src + ";" + "questionIndex:" + quesIndex
-                  + ";moduleIndex:"+modIndex;
+    extraURLParams += StringEscapeUtils.escapeJavaScript("&src="+src+"&moduleIndex="+modIndex+"&questionIndex="+quesIndex);
+    treeParams += StringEscapeUtils.escapeJavaScript(treeParams + ";src:"+src + ";" + "questionIndex:" + quesIndex
+                  + ";moduleIndex:"+modIndex);
   }
 
-  treeURL = "/treeLoader.jsp?&treeParams="+
-      TreeConstants.TREE_TYPE_URL_PARAM +":" + 
-      TreeConstants.DE_SEARCH_TREE + ";"+
+  treeURL = StringEscapeUtils.escapeJavaScript("/treeLoader.jsp?&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" +TreeConstants.DE_SEARCH_TREE + ";"+
       brContextExcludeListParamStr +
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
       TreeConstants.DE_SEARCH_FUNCTION + treeParams +
-      "&treeName=deTree";
+      "&treeName=deTree");
 
 
   if (performQuery != null ) {
@@ -142,16 +140,16 @@
   }
       
   if (pageId == null) {
-   browserURL = "/search?FirstTimer=0"+extraURLParams;
+   browserURL = StringEscapeUtils.escapeJavaScript("/search?FirstTimer=0"+extraURLParams);
   }
   else {
-    treeURL = treeURL + "&PageId="+pageId;
-    browserURL = "/search?PageId="+pageId+"&FirstTimer=0"+extraURLParams;
+    treeURL = StringEscapeUtils.escapeJavaScript(treeURL + "&PageId="+pageId);
+    browserURL = StringEscapeUtils.escapeJavaScript("/search?PageId="+pageId+"&FirstTimer=0"+extraURLParams);
   }
 
   if((cachedDeList!=null||showCached!=null) && (performQuery == null)) {
     pageContext.setAttribute("resultsPresent",new Boolean("true"));
-    browserURL = "/cdebrowser/dataElementsSearch.jsp?performQuery=cached"+"&FirstTimer=0"+extraURLParams;
+    browserURL = StringEscapeUtils.escapeJavaScript("/cdebrowser/dataElementsSearch.jsp?performQuery=cached"+"&FirstTimer=0"+extraURLParams);
   }
 %>
 <HTML>
@@ -169,9 +167,9 @@ CDE Browser
   <frameset cols="25%,*">
     <frameset rows="15%,*">
        <html:frame page="/common/tree_hdr.html" frameborder="0" scrolling = "no" frameName="tree_header"/>
-       <html:frame page="<%=StringEscapeUtils.escapeJavaScript(treeURL)%>" frameborder="0"  frameName="tree"/>
+       <html:frame page="<%=treeURL%>" frameborder="0"  frameName="tree"/>
     </frameset>    
-      <html:frame page="<%=StringEscapeUtils.escapeJavaScript(browserURL)%>" frameborder="0" frameName="body"/>
+      <html:frame page="<%=browserURL%>" frameborder="0" frameName="body"/>
    </frameset>   
  </frameset>
 </HTML>
