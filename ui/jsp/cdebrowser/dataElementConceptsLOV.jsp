@@ -42,9 +42,9 @@ List of Values - Data Element Concepts
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function passback(P_ID, P_NAME) {
-   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>.value = P_NAME;
-   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>.value = P_ID;
-   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>.focus();
+   opener.document.forms[0].<%= clb.getJsName() %>.value = P_NAME;
+   opener.document.forms[0].<%= clb.getJsId() %>.value = P_ID;
+   opener.document.forms[0].<%= clb.getJsName() %>.focus();
    close();
 }
 
@@ -112,11 +112,11 @@ function goPage(pageInfo) {
 <% 
   if (clb.getTotalRecordCount() != 0) {
 %>
-<%= StringEscapeUtils.escapeJavaScript(clb.getHitList()) %>
+<%= clb.getHitList() %>
 
 <p class="OraFieldText">Total Record Count:<B> <%= clb.getTotalRecordCount() %></B></p>
 <P>
-<%= StringEscapeUtils.escapeJavaScript(clb.getPageInfo()) %>
+<%= clb.getPageInfo() %>
 <%
   }
   else {

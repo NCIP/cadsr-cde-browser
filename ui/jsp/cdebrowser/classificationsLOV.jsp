@@ -92,7 +92,7 @@ function validate() {
 </p>
 <center>
 <table>
-<%= StringEscapeUtils.escapeJavaScript(clb.getSearchFields()) %>
+<%= clb.getSearchFields() %>
 <tr>
   <% 
     String chkContext = StringEscapeUtils.escapeJavaScript((String)request.getAttribute("chkContext"));    
@@ -133,11 +133,11 @@ function validate() {
 <% 
   if (clb.getTotalRecordCount() != 0) {
 %>
-<%= StringEscapeUtils.escapeJavaScript(clb.getHitList()) %>
+<%= clb.getHitList() %>
 
 <p class="OraFieldText">Total Record Count:<B> <%= clb.getTotalRecordCount() %></B></p>
 <P>
-<%= StringEscapeUtils.escapeJavaScript(clb.getPageInfo()) %>
+<%= clb.getPageInfo() %>
 <%
   }
   else {

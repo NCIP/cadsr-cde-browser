@@ -175,7 +175,7 @@ function redirect1(detailReqType, linkParms )
   
 }
 function goPage(pageNumber, pageInfo) {
-  document.location.href ="<%=request.getContextPath()%>"+"<%=StringEscapeUtils.escapeJavaScript("/search?dataElementDetails=9")%>"+ pageInfo +"<%=StringEscapeUtils.escapeJavaScript("&deSearchPageNum=")%>"+ pageNumber + "<%= StringEscapeUtils.escapeJavaScript(pageUrl) %>"+"<%= StringEscapeUtils.escapeHtml(urlParams) %>";
+  document.location.href ="<%=request.getContextPath()%>" + "<%=StringEscapeUtils.escapeJavaScript("/search?searchDataElements=9&")%>"+pageInfo+"<%=StringEscapeUtils.escapeJavaScript("&deSearchPageNum=")%>"+pageNumber+ "<%= StringEscapeUtils.escapeJavaScript(pageUrl) %>"+"<%= StringEscapeUtils.escapeJavaScript(urlParams) %>";  
 }
 
 function clearValueDomain() {

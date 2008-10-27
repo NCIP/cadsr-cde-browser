@@ -84,7 +84,7 @@
 
           </td>
           <td>
-           <input type="text" name="jspKeyword" value="<%=StringEscapeUtils.escapeHtml(desb.getSearchText())%>" size ="45"> 
+           <input type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="45"> 
            </td>
            </tr>
            </table>
@@ -139,7 +139,7 @@
             <table  width="100%" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">  
              <tr >
                <td width="40%" class="OraTableColumnHeaderNoBG" nowrap>Concept Name</td>
-               <td width="60%" class="OraTabledata"><input type="text"  name="jspConceptName" value="<%=StringEscapeUtils.escapeHtml(desb.getConceptName())%>"  size="30" ></td>
+               <td width="60%" class="OraTabledata"><input type="text"  name="jspConceptName" value="<%=desb.getConceptName()%>"  size="30" ></td>
              </tr>               
             </table>           
            </td>
@@ -148,7 +148,7 @@
              <tr >
               <td width="40%" class="OraTableColumnHeaderNoBG" nowrap>Concept Code </td>
               <td  width="60%" class="OraTabledata" nowrap>
-               <input type="text"  name="jspConceptCode" value="<%=StringEscapeUtils.escapeHtml(desb.getConceptCode())%>"  size="20"> 
+               <input type="text"  name="jspConceptCode" value="<%=desb.getConceptCode()%>"  size="20"> 
               </td>
              </tr>                
             </table>  
@@ -177,7 +177,7 @@
             <tr >
                 <td class="OraTableColumnHeaderNoBG" nowrap>Public ID</td>
                 <td class="OraTabledata" nowrap>
-                   <input type="text" name="jspCdeId" value="<%=StringEscapeUtils.escapeHtml(desb.getCdeId())%>" > 
+                   <input type="text" name="jspCdeId" value="<%=desb.getCdeId()%>" > 
                  </td>
             </tr>
             <tr >
@@ -191,40 +191,40 @@
                     >
                   &nbsp;<a href="<%=StringEscapeUtils.escapeHtml(decLOVUrl)%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Data Element Concepts" /></a>&nbsp;
                   <a href="javascript:clearDataElementConcept()"><i>Clear</i></a>
-                  <input type="hidden" name="jspDataElementConcept" value="<%=StringEscapeUtils.escapeHtml(desb.getDecIdseq())%>" >
+                  <input type="hidden" name="jspDataElementConcept" value="<%=desb.getDecIdseq()%>" >
                 </td>
             </tr>
             <tr >
                <td class="OraTableColumnHeaderNoBG" nowrap>Classification</td>
                <td class="OraTabledata" nowrap>
                   <input type="text" name="txtClassSchemeItem" 
-                    value="<%=StringEscapeUtils.escapeHtml(txtClassSchemeItem)%>" 
+                    value="<%=txtClassSchemeItem%>" 
                     readonly onFocus="this.blur();"
                     class="LOVField"
                     size ="18"
                   >
                 &nbsp;<a href="<%=StringEscapeUtils.escapeHtml(csLOVUrl)%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Classification Scheme Items" /></a>&nbsp;
                 <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
-                <input type="hidden" name="jspClassification" value="<%=StringEscapeUtils.escapeHtml(desb.getCsCsiIdseq())%>" >
+                <input type="hidden" name="jspClassification" value="<%=desb.getCsCsiIdseq()%>" >
               </td>
             </tr>            
             <tr >
               <td class="OraTableColumnHeaderNoBG" nowrap>Value Domain</td>
               <td class="OraTabledata" nowrap>
                 <input type="text" name="txtValueDomain" 
-                    value="<%=StringEscapeUtils.escapeHtml(txtValueDomain)%>" readonly onFocus="this.blur();"
+                    value="<%=txtValueDomain%>" readonly onFocus="this.blur();"
                     class="LOVField"
                     size ="18"
                  >
                  &nbsp;<a href="<%=StringEscapeUtils.escapeHtml(valueDomainLOVUrl)%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Value Domains" /></a>&nbsp;
                 <a href="javascript:clearValueDomain()"><i>Clear</i></a>
-                  <input type="hidden" name="jspValueDomain" value="<%=StringEscapeUtils.escapeHtml(desb.getVdIdseq())%>" >
+                  <input type="hidden" name="jspValueDomain" value="<%=desb.getVdIdseq()%>" >
               </td>
             </tr>
             <tr>
                 <td class="OraTableColumnHeaderNoBG" nowrap>Permissible Value</td>
                 <td class="OraTabledata" nowrap>
-                <input type="text" name="jspValidValue" value="<%=StringEscapeUtils.escapeHtml(desb.getValidValue())%>" size ="20"> 
+                <input type="text" name="jspValidValue" value="<%=desb.getValidValue()%>" size ="20"> 
                </td>
             </tr>
             <tr>
@@ -258,7 +258,7 @@
                         <tr >
                          <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Alternate Name</td>
                          <td width="70%" class="OraTabledata" nowrap>
-                           <input type="text" name="jspAltName" value="<%=StringEscapeUtils.escapeHtml(desb.getAltName())%>" size ="20"> 
+                           <input type="text" name="jspAltName" value="<%=desb.getAltName()%>" size ="20"> 
                          </td>
                         </tr>    
                         <tr >
@@ -268,13 +268,13 @@
                         <tr >
                          <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Object Class</td>
                          <td width="70%" class="OraTabledata" nowrap>
-                           <input type="text" name="jspObjectClass" value="<%=StringEscapeUtils.escapeHtml(desb.getObjectClass())%>" size ="20"> 
+                           <input type="text" name="jspObjectClass" value="<%=desb.getObjectClass()%>" size ="20"> 
                          </td>
                         </tr>    
                         <tr >
                          <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Property</td>
                          <td width="70%" class="OraTabledata" nowrap>
-                           <input type="text" name="jspProperty" value="<%=StringEscapeUtils.escapeHtml(desb.getProperty())%>" size ="20"> 
+                           <input type="text" name="jspProperty" value="<%=desb.getProperty()%>" size ="20"> 
                          </td>
                         </tr>    
                         </table>
