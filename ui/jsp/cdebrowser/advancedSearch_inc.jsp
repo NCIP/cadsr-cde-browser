@@ -189,7 +189,7 @@
                       class="LOVField"
                       size ="18"
                     >
-                  &nbsp;<a href="<%=StringEscapeUtils.escapeHtml(decLOVUrl)%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Data Element Concepts" /></a>&nbsp;
+                  &nbsp;<a href="<%=decLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Data Element Concepts" /></a>&nbsp;
                   <a href="javascript:clearDataElementConcept()"><i>Clear</i></a>
                   <input type="hidden" name="jspDataElementConcept" value="<%=desb.getDecIdseq()%>" >
                 </td>
@@ -203,7 +203,7 @@
                     class="LOVField"
                     size ="18"
                   >
-                &nbsp;<a href="<%=StringEscapeUtils.escapeHtml(csLOVUrl)%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Classification Scheme Items" /></a>&nbsp;
+                &nbsp;<a href="<%=csLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Classification Scheme Items" /></a>&nbsp;
                 <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
                 <input type="hidden" name="jspClassification" value="<%=desb.getCsCsiIdseq()%>" >
               </td>
@@ -216,7 +216,7 @@
                     class="LOVField"
                     size ="18"
                  >
-                 &nbsp;<a href="<%=StringEscapeUtils.escapeHtml(valueDomainLOVUrl)%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Value Domains" /></a>&nbsp;
+                 &nbsp;<a href="<%=valueDomainLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Value Domains" /></a>&nbsp;
                 <a href="javascript:clearValueDomain()"><i>Clear</i></a>
                   <input type="hidden" name="jspValueDomain" value="<%=desb.getVdIdseq()%>" >
               </td>

@@ -60,9 +60,9 @@
   String downloadPriorExcelURL = "javascript:fileDownloadWin('" + contextPath + "/downloadExcelPage.jsp?"+StringEscapeUtils.escapeJavaScript("src=deSearchPrior")+"','excelWin',500,200)";
   String downloadExcelURL = "javascript:fileDownloadWin('" + contextPath + "/downloadExcelPage.jsp?"+StringEscapeUtils.escapeJavaScript("src=deSearch")+"','excelWin',500,200)";
   String downloadDTDURL = "javascript:newWin('http://ncicb.nci.nih.gov/xml/dtds/cadsr','dtdWin',500,200)";
-  String valueDomainLOVUrl= "javascript:newWin('" + request.getContextPath() + StringEscapeUtils.escapeJavaScript("/search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain")+pageUrl+"','vdLOV',700,600)";
-  String decLOVUrl= "javascript:newWin('" + request.getContextPath() + StringEscapeUtils.escapeJavaScript("/search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept")+pageUrl+"','decLOV',700,600)";
-  String csLOVUrl= "javascript:newBrowserWin('" + request.getContextPath() + StringEscapeUtils.escapeJavaScript("/search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem")+pageUrl+"','csLOV',700,600)";
+  String valueDomainLOVUrl= "javascript:newWin('" + request.getContextPath()+"/" + StringEscapeUtils.escapeJavaScript("search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain")+pageUrl+"','vdLOV',700,600)";
+  String decLOVUrl= "javascript:newWin('" + request.getContextPath()+"/" + StringEscapeUtils.escapeJavaScript("search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept")+pageUrl+"','decLOV',700,600)";
+  String csLOVUrl= "javascript:newBrowserWin('" + request.getContextPath()+"/" + StringEscapeUtils.escapeJavaScript("search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem")+pageUrl+"','csLOV',700,600)";
 
   
   String txtDataElementConcept = StringEscapeUtils.escapeHtml(desb.getDECPrefName());

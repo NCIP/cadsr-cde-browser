@@ -66,7 +66,7 @@ function goPage(pageInfo) {
 <center>
 <p class="OraHeaderSubSub">Value Domains </p>
 </center>
-<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= StringEscapeUtils.escapeJavaScript(infoBean.getStringInfo("controller")) %>">
+<form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
 <input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE= "<%=StringEscapeUtils.escapeJavaScript("1")%>" >
 <INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>">
