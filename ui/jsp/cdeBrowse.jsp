@@ -140,7 +140,7 @@
   }
       
   if (pageId == null) {
-   browserURL = "/search?FirstTimer=0"+extraURLParams;
+   browserURL = "/search?"+StringEscapeUtils.escapeJavaScript("FirstTimer=0")+extraURLParams;
   }
   else {
     treeURL = treeURL + StringEscapeUtils.escapeJavaScript("&PageId="+pageId);

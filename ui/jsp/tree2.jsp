@@ -47,7 +47,7 @@
     if ("<%=treeName%>" == "formTree")
      frm.document.location = "/CDEBrowser/"+"<%=StringEscapeUtils.escapeJavaScript("formSearchAction.do?method=getAllFormsForTreeNode&")%>"+urlParams;
     else
-     frm.document.location = "<%=request.getContextPath()%>" + "<%=StringEscapeUtils.escapeJavaScript("/search?")%>" + urlParams + "<%=StringEscapeUtils.escapeJavaScript(callerParams)%>";
+     frm.document.location = "<%=request.getContextPath()%>" + "/" + "<%=StringEscapeUtils.escapeJavaScript("search?")%>" + urlParams + "<%=StringEscapeUtils.escapeJavaScript(callerParams)%>";
    }
   function performFormAction(urlParams){
     var frm = findFrameByName('body');
@@ -56,7 +56,7 @@
     if ("<%=treeName%>" == "formTree")
      top.document.location = "/CDEBrowser/"+"<%=StringEscapeUtils.escapeJavaScript("formDetailsAction.do?method=getFormDetails&")%>" + urlParams;
     else
-     frm.document.location = "<%=request.getContextPath()%>" + "<%=StringEscapeUtils.escapeJavaScript("/search?")%>" + urlParams + "<%=StringEscapeUtils.escapeJavaScript(callerParams)%>";
+     frm.document.location = "<%=request.getContextPath()%>" + "/" + "<%=StringEscapeUtils.escapeJavaScript("search?")%>" + urlParams + "<%=StringEscapeUtils.escapeJavaScript(callerParams)%>";
    }
 
   //-->
@@ -184,7 +184,7 @@
 				ajaxAnywhere.getZonesToReload = function(url, submitButton) {
   					return "treeZone"
 				}
-				ajaxAnywhere.formName = "cdeBrowserTree"; 
+				ajaxAnywhere.formName = StringEscapeUtils.escapeJavaScript("cdeBrowserTree"); 
 				ajaxAnywhere.bindById();
 			</script>
 		</t:documentBody>
@@ -192,7 +192,6 @@
 </f:view>
 
 <script type="text/javascript"> 
-
 	function addLoadEvent(func) {
 	  var oldonload = window.onload;
 	  if (typeof window.onload != 'function') {
@@ -207,7 +206,7 @@
 	  }
 	}
 
-  // Fix autoscroll for frame
+  // Fix autoscroll for frame, AutoScroll filtered
   <%
     String autoScroll = StringEscapeUtils.escapeJavaScript(request.getParameter("autoScroll"));
     if (autoScroll != null && !"".equals(autoScroll)) {
