@@ -42,9 +42,9 @@ List of Values - Data Element Concepts
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function passback(P_ID, P_NAME) {
-   opener.document.forms[0].<%= clb.getJsName() %>.value = P_NAME;
-   opener.document.forms[0].<%= clb.getJsId() %>.value = P_ID;
-   opener.document.forms[0].<%= clb.getJsName() %>.focus();
+   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>.value = P_NAME;
+   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>.value = P_ID;
+   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>.focus();
    close();
 }
 
@@ -52,9 +52,8 @@ function closeOnClick() {
     close();
 }
 
-function goPage(pageInfo) {
-  document.location.href = "search?dataElementConceptsLOV=9&"+pageInfo + "<%= pageUrl %>";
-    
+function goPage(pageInfo) {  
+  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?dataElementConceptsLOV=9&")%>"+pageInfo+"<%=pageUrl%>";    
 }
   
 //-->
@@ -84,18 +83,18 @@ function goPage(pageInfo) {
 <%
   if (clb.isFirstDisplay()) {
 %>
-  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="yes" CHECKED /></td>
+  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeJavaScript("yes")%>" CHECKED /></td>
 <%
   }
   else {
     if (declb.getIsContextSpecific()) {
 %>
-  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="yes" CHECKED /></td>
+  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeJavaScript("yes")%>" CHECKED /></td>
 <%
     }
     else if (!declb.getIsContextSpecific()) {
 %>
-  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="yes" /></td>
+  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeJavaScript("yes")%>" /></td>
 <%
     }
   }
@@ -104,7 +103,7 @@ function goPage(pageInfo) {
 
 <TR>
   <TD></TD>
-  <TD><input type=submit name="submit" value="Find">&nbsp;
+  <TD><input type=submit name="submit" value="<%=StringEscapeUtils.escapeJavaScript("Find")%>">&nbsp;
   <INPUT type="button" value="Close" onclick="javascript:closeOnClick()"></TD>
 </TR>
 </table>

@@ -45,9 +45,9 @@ List of Values - Classifications
 <SCRIPT LANGUAGE="JavaScript">
 //<!--
 function passback(P_ID, P_NAME) {
-   opener.document.forms[0].<%= clb.getJsName() %>.value = P_NAME+' ';
-   opener.document.forms[0]['<%= clb.getJsId() %>'].value = P_ID;
-   opener.document.forms[0].<%= clb.getJsName() %>.focus();
+   opener.document.forms[0].<%=StringEscapeUtils.escapeJavaScript(clb.getJsName())%>.value = P_NAME+' ';
+   opener.document.forms[0]['<%=StringEscapeUtils.escapeJavaScript(clb.getJsId())%>'].value = P_ID;
+   opener.document.forms[0].<%=StringEscapeUtils.escapeJavaScript(clb.getJsName())%>.focus();
    window.close();
 }
 
@@ -55,8 +55,8 @@ function closeOnClick() {
     close();
 }
 
-function goPage(pageInfo) {
-  document.location.href = "search?classificationsLOV=9&"+pageInfo + "<%= pageUrl %>";
+function goPage(pageInfo) {  
+  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?classificationsLOV=9&")%>"+pageInfo+"<%=pageUrl%>";
 }
 
 var reFloat = /^((\d+(\.\d*)?)|((\d*\.)?\d+))$/
@@ -102,30 +102,30 @@ function validate() {
 <%
   if (clb.isFirstDisplay()) {
 %>
-  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="yes" CHECKED /></td>
+  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeJavaScript("yes")%>" CHECKED /></td>
 <%
   }
   else {
     if (cslb.getIsContextSpecific()) {
 %>
-  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="yes" CHECKED /></td>
+  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeJavaScript("yes")%>" CHECKED /></td>
 <%
     }
     else if (!cslb.getIsContextSpecific()) {
 %>
-  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="yes" /></td>
+  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeJavaScript("yes")%>" /></td>
 <%
     }
   }
 } else {
 %>
-<INPUT type="HIDDEN" NAME="chkContext" value="always"/>
+<INPUT type="HIDDEN" NAME="chkContext" value="<%=StringEscapeUtils.escapeJavaScript("always")%>"/>
 <% } %>
 </tr>
 
 <TR>
   <TD></TD>
-  <TD><input type="submit" name="submit"  value="Find">&nbsp;
+  <TD><input type="submit" name="submit"  value="<%=StringEscapeUtils.escapeJavaScript("Find")%>">&nbsp;
   <INPUT type="button" value="Close" onclick="javascript:closeOnClick()"></TD>
 </TR>
 </table>
