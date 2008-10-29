@@ -184,7 +184,7 @@
 				ajaxAnywhere.getZonesToReload = function(url, submitButton) {
   					return "treeZone"
 				}
-				ajaxAnywhere.formName = StringEscapeUtils.escapeJavaScript("cdeBrowserTree"); 
+				ajaxAnywhere.formName = "cdeBrowserTree"; 
 				ajaxAnywhere.bindById();
 			</script>
 		</t:documentBody>
