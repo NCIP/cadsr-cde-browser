@@ -208,11 +208,11 @@
 
   // Fix autoscroll for frame, AutoScroll filtered
   <%
-    String autoScroll = StringEscapeUtils.escapeJavaScript(request.getParameter("autoScroll"));
+    String autoScroll = StringEscapeUtils.escapeJavaScript(request.getParameter("autoScroll"));        
     if (autoScroll != null && !"".equals(autoScroll)) {
         %>
 	    addLoadEvent(function() {
-  			parent.frames['tree'].scrollTo(<%=StringEscapeUtils.escapeJavaScript(autoScroll)%>);
+  			parent.frames['tree'].scrollTo(<%=StringEscapeUtils.escapeHtml(autoScroll)%>);
   		});
         <%
     }

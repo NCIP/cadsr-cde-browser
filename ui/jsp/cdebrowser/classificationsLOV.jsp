@@ -82,8 +82,8 @@ function validate() {
 <form method="POST" onSubmit="return validate()" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
 <input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeJavaScript("1")%>">
-<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>">
-<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>">
+<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsId()) %>">
+<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsName()) %>">
 <INPUT TYPE="HIDDEN" NAME="classificationsLOV" VALUE="<%=StringEscapeUtils.escapeJavaScript("9") %>">
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">
@@ -102,18 +102,18 @@ function validate() {
 <%
   if (clb.isFirstDisplay()) {
 %>
-  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeJavaScript("yes")%>" CHECKED /></td>
+  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeHtml("yes")%>" CHECKED /></td>
 <%
   }
   else {
     if (cslb.getIsContextSpecific()) {
 %>
-  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeJavaScript("yes")%>" CHECKED /></td>
+  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeHtml("yes")%>" CHECKED /></td>
 <%
     }
     else if (!cslb.getIsContextSpecific()) {
 %>
-  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeJavaScript("yes")%>" /></td>
+  <td class="OraFieldText"><input type="checkbox" name="chkContext" value="<%=StringEscapeUtils.escapeHtml("yes")%>" /></td>
 <%
     }
   }
