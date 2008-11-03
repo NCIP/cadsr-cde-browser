@@ -1,6 +1,6 @@
 <!-- Copyright 2006 ScenPro, Inc.
 
-    $Header: /cvsshare/content/cvsroot/cdebrowser/config/connections/cadsr-oracle-ds.xml,v 1.1 2008-06-19 15:40:18 davet Exp $
+    $Header: /cvsshare/content/cvsroot/cdebrowser/config/connections/cadsr-oracle-ds.xml,v 1.2 2008-11-03 20:32:19 davet Exp $
     $Names$
     
     This is the datasource shard by all caDSR tools to verify login credentials.
@@ -10,7 +10,7 @@
 <datasources>
     <local-tx-datasource>
         <jndi-name>jdbc/caDSR</jndi-name>
-        <connection-url>jdbc:oracle:thin:@cbiodb540.nci.nih.gov:1521:DSRDEV</connection-url>
+        <connection-url>jdbc:oracle:thin:@cbiodb540.nci.nih.gov:1551:DSRDEV</connection-url>
         <driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
         <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
         <check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
