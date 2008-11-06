@@ -45,8 +45,8 @@ List of Values - Classifications
 <SCRIPT LANGUAGE="JavaScript">
 //<!--
 function passback(P_ID, P_NAME) {
-   opener.document.forms[0].<%=StringEscapeUtils.escapeJavaScript(clb.getJsName())%>.value = P_NAME+' ';
-   opener.document.forms[0]['<%=StringEscapeUtils.escapeJavaScript(clb.getJsId())%>'].value = P_ID;
+   opener.document.forms[0].<%=StringEscapeUtils.escapeJavaScript(clb.getJsName())%>.value = P_NAME;
+   opener.document.forms[0].<%=StringEscapeUtils.escapeJavaScript(clb.getJsId())%>.value = P_ID;
    opener.document.forms[0].<%=StringEscapeUtils.escapeJavaScript(clb.getJsName())%>.focus();
    window.close();
 }
@@ -56,7 +56,7 @@ function closeOnClick() {
 }
 
 function goPage(pageInfo) {  
-  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?classificationsLOV=9&")%>"+pageInfo+"<%=pageUrl%>";
+  document.location.href = "<%=StringEscapeUtils.escapeHtml("search?classificationsLOV=9&")%>"+pageInfo+"<%=pageUrl%>";
 }
 
 var reFloat = /^((\d+(\.\d*)?)|((\d*\.)?\d+))$/
@@ -80,11 +80,11 @@ function validate() {
 <p class="OraHeaderSubSub">Classifications </p>
 </center>
 <form method="POST" onSubmit="return validate()" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
-<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeJavaScript("1")%>">
-<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsId()) %>">
-<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsName()) %>">
-<INPUT TYPE="HIDDEN" NAME="classificationsLOV" VALUE="<%=StringEscapeUtils.escapeJavaScript("9") %>">
+<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeHtml(infoBean.getPageId())%>"/>
+<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>"/>
+<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsId()) %>"/>
+<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsName()) %>"/>
+<INPUT TYPE="HIDDEN" NAME="classificationsLOV" VALUE="<%=StringEscapeUtils.escapeHtml("9") %>"/>
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">
   Please enter the search criteria. Wildcard character is *.
@@ -92,7 +92,7 @@ function validate() {
 </p>
 <center>
 <table>
-<%= clb.getSearchFields() %>
+<%= StringEscapeUtils.escapeHtml(clb.getSearchFields()) %>
 <tr>
   <% 
     String chkContext = StringEscapeUtils.escapeJavaScript((String)request.getAttribute("chkContext"));    
@@ -125,8 +125,8 @@ function validate() {
 
 <TR>
   <TD></TD>
-  <TD><input type="submit" name="submit"  value="<%=StringEscapeUtils.escapeJavaScript("Find")%>">&nbsp;
-  <INPUT type="button" value="Close" onclick="javascript:closeOnClick()"></TD>
+  <TD><input type="submit" name="submit"  value="<%=StringEscapeUtils.escapeJavaScript("Find")%>"/>&nbsp;
+  <INPUT type="button" value="Close" onclick="javascript:closeOnClick()"/></TD>
 </TR>
 </table>
 

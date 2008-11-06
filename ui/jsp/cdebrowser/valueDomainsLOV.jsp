@@ -55,7 +55,7 @@ function closeOnClick() {
 }
 
 function goPage(pageInfo) {
-  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?valueDomainsLOV=9&")%>"+pageInfo+"<%=pageUrl%>";
+  document.location.href = "<%=StringEscapeUtils.escapeHtml("search?valueDomainsLOV=9&")%>"+pageInfo+"<%=pageUrl%>";
 }
 
 
@@ -67,11 +67,11 @@ function goPage(pageInfo) {
 <p class="OraHeaderSubSub">Value Domains </p>
 </center>
 <form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
-<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE= "<%=StringEscapeUtils.escapeJavaScript("1")%>" >
-<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>">
-<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>">
-<INPUT TYPE="HIDDEN" NAME="valueDomainsLOV" VALUE="<%=StringEscapeUtils.escapeJavaScript("9")%>">
+<INPUT type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeHtml(infoBean.getPageId())%>"/>
+<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE= "<%=StringEscapeUtils.escapeHtml("1")%>" />
+<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsId()) %>"/>
+<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsName()) %>" />
+<INPUT TYPE="HIDDEN" NAME="valueDomainsLOV" VALUE="<%=StringEscapeUtils.escapeHtml("9")%>"/>
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">
   Please enter a keyword. This search will display all value domains which have
@@ -80,7 +80,7 @@ function goPage(pageInfo) {
 </p>
 <center>
 <table>
-<%= clb.getSearchFields() %>
+<%= StringEscapeUtils.escapeHtml(clb.getSearchFields()) %>
 <tr>
   <td class="fieldtitlebold">Restrict Search to Current Context</td>
 <%
@@ -105,8 +105,8 @@ function goPage(pageInfo) {
 </tr>
 <TR>
   <TD></TD>
-  <TD><input type=submit name="submit" value="<%=StringEscapeUtils.escapeJavaScript("Find")%>">&nbsp;
-  <INPUT type="button" value="Close" onclick="javascript:closeOnClick()"></TD>
+  <TD><input type=submit name="submit" value="<%=StringEscapeUtils.escapeJavaScript("Find")%>"/>&nbsp;
+  <INPUT type="button" value="Close" onclick="javascript:closeOnClick()"/></TD>
 </TR>
 </table>
 
