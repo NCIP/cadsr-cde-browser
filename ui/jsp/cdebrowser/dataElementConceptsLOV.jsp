@@ -77,7 +77,7 @@ function goPage(pageInfo) {
 </p>
 <center>
 <table>
-<%= StringEscapeUtils.escapeHtml(clb.getSearchFields()) %>
+<%= clb.getSearchFields() %>
 <tr>
   <td class="fieldtitlebold">Restrict Search to Current Context</td>
 <%

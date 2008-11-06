@@ -92,7 +92,7 @@ function validate() {
 </p>
 <center>
 <table>
-<%= StringEscapeUtils.escapeHtml(clb.getSearchFields()) %>
+<%= clb.getSearchFields() %>
 <tr>
   <% 
     String chkContext = StringEscapeUtils.escapeJavaScript((String)request.getAttribute("chkContext"));    
