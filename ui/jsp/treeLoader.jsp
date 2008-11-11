@@ -13,9 +13,9 @@
     request.getSession().setAttribute("paramsTree", treeParams);
     
     // URL encode parameters
-    if (treeParams != null) treeParams = StringEscapeUtils.escapeJavaScript(java.net.URLEncoder.encode(treeParams));    
-    if (skin != null) skin = StringEscapeUtils.escapeJavaScript(java.net.URLEncoder.encode(skin));    
-    if (treeDirective != null) treeDirective = StringEscapeUtils.escapeJavaScript(java.net.URLEncoder.encode(treeDirective));    
+    if (treeParams != null) treeParams = StringEscapeUtils.escapeHtml(java.net.URLEncoder.encode(treeParams));    
+    if (skin != null) skin = StringEscapeUtils.escapeHtml(java.net.URLEncoder.encode(skin));    
+    if (treeDirective != null) treeDirective = StringEscapeUtils.escapeHtml(java.net.URLEncoder.encode(treeDirective));    
     request.getSession().setAttribute("treeTypeName", treeName);
 
 %>

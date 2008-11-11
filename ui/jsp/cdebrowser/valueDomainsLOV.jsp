@@ -44,9 +44,9 @@ List of Values - Value Domains
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function passback(P_ID, P_NAME) {
-   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsName())%>.value = P_NAME;   
-   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsId())%>.value = P_ID;
-   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsName())%>.focus();
+   opener.document.forms[0].txtValueDomain.value = P_NAME;   
+   opener.document.forms[0].jspValueDomain.value = P_ID;
+   opener.document.forms[0].txtValueDomain.focus();
    close();
 }
 
@@ -69,8 +69,8 @@ function goPage(pageInfo) {
 <form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
 <INPUT type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeHtml(infoBean.getPageId())%>"/>
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE= "<%=StringEscapeUtils.escapeHtml("1")%>" />
-<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsId()) %>"/>
-<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsName()) %>" />
+<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml("jspValueDomain") %>"/>
+<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml("txtValueDomain") %>" />
 <INPUT TYPE="HIDDEN" NAME="valueDomainsLOV" VALUE="<%=StringEscapeUtils.escapeHtml("9")%>"/>
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">

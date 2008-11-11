@@ -45,9 +45,9 @@ List of Values - Classifications
 <SCRIPT LANGUAGE="JavaScript">
 //<!--
 function passback(P_ID, P_NAME) {
-   opener.document.forms[0].<%=StringEscapeUtils.escapeJavaScript(clb.getJsName())%>.value = P_NAME;
-   opener.document.forms[0].<%=StringEscapeUtils.escapeJavaScript(clb.getJsId())%>.value = P_ID;
-   opener.document.forms[0].<%=StringEscapeUtils.escapeJavaScript(clb.getJsName())%>.focus();
+   opener.document.forms[0].txtClassSchemeItem.value = P_NAME;
+   opener.document.forms[0].jspClassification.value = P_ID;
+   opener.document.forms[0].txtClassSchemeItem.focus();
    window.close();
 }
 
@@ -82,8 +82,8 @@ function validate() {
 <form method="POST" onSubmit="return validate()" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
 <input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeHtml(infoBean.getPageId())%>"/>
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>"/>
-<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsId()) %>"/>
-<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsName()) %>"/>
+<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml("jspClassification") %>"/>
+<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml("txtClassSchemeItem") %>"/>
 <INPUT TYPE="HIDDEN" NAME="classificationsLOV" VALUE="<%=StringEscapeUtils.escapeHtml("9") %>"/>
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">

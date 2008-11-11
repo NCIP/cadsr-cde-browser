@@ -43,9 +43,9 @@ List of Values - Protocols
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function passback(P_ID, P_NAME) {
-   opener.document.forms[0].<%= clb.getJsName() %>.value = P_NAME;
-   opener.document.forms[0].<%= clb.getJsId() %>.value = P_ID;
-   opener.document.forms[0].<%= clb.getJsName() %>.focus();
+   opener.document.forms[0].<%= StringEscapeUtils.escapeHtml(clb.getJsName()) %>.value = P_NAME;
+   opener.document.forms[0].<%= StringEscapeUtils.escapeHtml(clb.getJsId()) %>.value = P_ID;
+   opener.document.forms[0].<%= StringEscapeUtils.escapeHtml(clb.getJsName()) %>.focus();
    close();
 }
 
@@ -54,7 +54,7 @@ function closeOnClick() {
 }
 
 function goPage(pageInfo) {
-  document.location.href = "formLOVAction.do?method=getProtocolsLOV&"+pageInfo + "<%= pageUrl %>";
+  document.location.href = "formLOVAction.do?method=getProtocolsLOV&"+pageInfo + "<%= StringEscapeUtils.escapeHtml(pageUrl) %>";
     
 }
   
@@ -67,10 +67,10 @@ function goPage(pageInfo) {
 
 <form method="POST" action="formLOVAction.do">
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="1">
-<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>">
-<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>">
+<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsId()) %>">
+<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsName()) %>">
 <INPUT TYPE="HIDDEN" NAME="method" VALUE="getProtocolsLOV">
-<INPUT TYPE="HIDDEN" NAME="contextIdSeq" value="<%= StringEscapeUtils.escapeJavaScript((String)request.getAttribute("contextIdSeq")) %>">
+<INPUT TYPE="HIDDEN" NAME="contextIdSeq" value="<%= StringEscapeUtils.escapeHtml((String)request.getAttribute("contextIdSeq")) %>">
 
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">

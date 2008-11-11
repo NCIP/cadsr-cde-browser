@@ -42,9 +42,9 @@ List of Values - Data Element Concepts
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function passback(P_ID, P_NAME) {
-   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>.value = P_NAME;
-   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsId()) %>.value = P_ID;
-   opener.document.forms[0].<%= StringEscapeUtils.escapeJavaScript(clb.getJsName()) %>.focus();
+   opener.document.forms[0].txtDataElementConcept.value = P_NAME;
+   opener.document.forms[0].jspDataElementConcept.value = P_ID;
+   opener.document.forms[0].txtDataElementConcept.focus();
    close();
 }
 
@@ -66,8 +66,8 @@ function goPage(pageInfo) {
 <form method="POST" ENCTYPE="application/x-www-form-urlencoded" action="<%= infoBean.getStringInfo("controller") %>">
 <input type="HIDDEN" name="<%= StringEscapeUtils.escapeHtml(PageConstants.PAGEID) %>" value="<%= StringEscapeUtils.escapeHtml(infoBean.getPageId())%>"/>
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>"/>
-<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsId()) %>"/>
-<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml(clb.getJsName()) %>"/>
+<INPUT TYPE="HIDDEN" NAME="idVar" VALUE="<%= StringEscapeUtils.escapeHtml("jspDataElementConcept") %>"/>
+<INPUT TYPE="HIDDEN" NAME="nameVar" VALUE="<%= StringEscapeUtils.escapeHtml("txtDataElementConcept") %>"/>
 <INPUT TYPE="HIDDEN" NAME="dataElementConceptsLOV" VALUE="<%=StringEscapeUtils.escapeHtml("9")%>"/>
 <p align="left">
 <font face="Arial, Helvetica, sans-serif" size="-1" color="#336699">
