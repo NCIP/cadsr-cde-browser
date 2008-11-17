@@ -97,34 +97,34 @@
   }
 
 
-  String pageId = StringEscapeUtils.escapeJavaScript(request.getParameter("PageId"));
+  String pageId = StringEscapeUtils.escapeHtml(request.getParameter("PageId"));
   String treeURL;
   String browserURL;
-  String extraURLParams = StringEscapeUtils.escapeJavaScript("");
-  String treeParams = StringEscapeUtils.escapeJavaScript("");
+  String extraURLParams = StringEscapeUtils.escapeHtml("");
+  String treeParams = StringEscapeUtils.escapeHtml("");
   //get the source, module and question index
-  String modIndex = StringEscapeUtils.escapeJavaScript("");
-  String quesIndex = StringEscapeUtils.escapeJavaScript("");
-  String src = StringEscapeUtils.escapeJavaScript(request.getParameter("src"));
+  String modIndex = StringEscapeUtils.escapeHtml("");
+  String quesIndex = StringEscapeUtils.escapeHtml("");
+  String src = StringEscapeUtils.escapeHtml(request.getParameter("src"));
   if (src == null || src.equals(""))
   {	    
-	  Hashtable srcParams = TreeUtils.parseParameters(StringEscapeUtils.escapeJavaScript((String)request.getSession().getAttribute("paramsTree")));
+	  Hashtable srcParams = TreeUtils.parseParameters(StringEscapeUtils.escapeHtml((String)request.getSession().getAttribute("paramsTree")));
 	  if (srcParams.containsKey("src")) 
 	  {
 	    src = (String)srcParams.get("src");
-	    modIndex = StringEscapeUtils.escapeJavaScript((String)srcParams.get("moduleIndex"));
-	    quesIndex = StringEscapeUtils.escapeJavaScript((String)srcParams.get("questionIndex"));
+	    modIndex = StringEscapeUtils.escapeHtml((String)srcParams.get("moduleIndex"));
+	    quesIndex = StringEscapeUtils.escapeHtml((String)srcParams.get("questionIndex"));
 	  }
   }
   else
   {
-	modIndex = StringEscapeUtils.escapeJavaScript(request.getParameter("moduleIndex"));
-	quesIndex = StringEscapeUtils.escapeJavaScript(request.getParameter("questionIndex"));
+	modIndex = StringEscapeUtils.escapeHtml(request.getParameter("moduleIndex"));
+	quesIndex = StringEscapeUtils.escapeHtml(request.getParameter("questionIndex"));
   }
   
   if (src != null&&!src.equals("")) {
-    extraURLParams += StringEscapeUtils.escapeJavaScript("&src="+src+"&moduleIndex="+modIndex+"&questionIndex="+quesIndex);
-    treeParams += StringEscapeUtils.escapeJavaScript(treeParams + ";src:"+src + ";" + "questionIndex:" + quesIndex
+    extraURLParams += StringEscapeUtils.escapeHtml("&src="+src+"&moduleIndex="+modIndex+"&questionIndex="+quesIndex);
+    treeParams += StringEscapeUtils.escapeHtml(treeParams + ";src:"+src + ";" + "questionIndex:" + quesIndex
                   + ";moduleIndex:"+modIndex);
   }
 
@@ -136,20 +136,20 @@
 
 
   if (performQuery != null ) {
-    extraURLParams += StringEscapeUtils.escapeJavaScript("&performQuery="+performQuery); 
+    extraURLParams += StringEscapeUtils.escapeHtml("&performQuery="+performQuery); 
   }
       
   if (pageId == null) {
-   browserURL = "/search?"+StringEscapeUtils.escapeJavaScript("FirstTimer=0")+extraURLParams;
+   browserURL = "/search?"+StringEscapeUtils.escapeHtml("FirstTimer=0")+extraURLParams;
   }
   else {
-    treeURL = treeURL + StringEscapeUtils.escapeJavaScript("&PageId="+pageId);
-    browserURL = "/search?"+StringEscapeUtils.escapeJavaScript("PageId="+pageId+"&FirstTimer=0"+extraURLParams);
+    treeURL = treeURL + StringEscapeUtils.escapeHtml("&PageId="+pageId);
+    browserURL = "/search?"+StringEscapeUtils.escapeHtml("PageId="+pageId+"&FirstTimer=0"+extraURLParams);
   }
 
   if((cachedDeList!=null||showCached!=null) && (performQuery == null)) {
     pageContext.setAttribute("resultsPresent",new Boolean("true"));
-    browserURL = "/cdebrowser/dataElementsSearch.jsp?"+StringEscapeUtils.escapeJavaScript("performQuery=cached"+"&FirstTimer=0"+extraURLParams);
+    browserURL = "/cdebrowser/dataElementsSearch.jsp?"+StringEscapeUtils.escapeHtml("performQuery=cached"+"&FirstTimer=0"+extraURLParams);
   }
 %>
 <HTML>
