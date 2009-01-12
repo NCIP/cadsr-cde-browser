@@ -6,8 +6,8 @@ import gov.nih.nci.cadsr.domain.DefinitionClassSchemeItem;
 import gov.nih.nci.cadsr.domain.Designation;
 import gov.nih.nci.cadsr.domain.DesignationClassSchemeItem;
 import gov.nih.nci.cadsr.domain.ObjectClass;
+import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.common.dto.AttachmentTransferObject;
-import gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.common.ocbrowser.service.OCBrowserService;
 import gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserFormConstants;
 import gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserNavigationConstants;
@@ -202,7 +202,7 @@ implements OCBrowserFormConstants,OCBrowserNavigationConstants
 
 		InputStream is = null;
 		out = response.getOutputStream();
-		String attachmentName = request.getParameter(FormConstants.REFERENCE_DOC_ATTACHMENT_NAME);
+		String attachmentName = request.getParameter(CaDSRConstants.REFERENCE_DOC_ATTACHMENT_NAME);
 		response.addHeader("Content-Disposition", "inline;filename=" + attachmentName);
 		response.addHeader("Pragma", "cache");
 		response.addHeader("Cache-Control", "private");
@@ -210,7 +210,7 @@ implements OCBrowserFormConstants,OCBrowserNavigationConstants
 
 		// first find out if the attachment is new and saved in the session
 
-		Map attMap = (Map)getSessionObject(request, FormConstants.REFDOC_ATTACHMENT_MAP);
+		Map attMap = (Map)getSessionObject(request, CaDSRConstants.REFDOC_ATTACHMENT_MAP);
 		Attachment attachment = getAttachmentFromSession(attMap, attachmentName);
 
 		if (attachment != null) {

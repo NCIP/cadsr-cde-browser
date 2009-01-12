@@ -1,15 +1,9 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;
 
 import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
-import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
-
-import gov.nih.nci.ncicb.cadsr.common.dto.ValueMeaningTransferObject;
-import gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.AbstractDAOFactory;
-import gov.nih.nci.ncicb.cadsr.common.persistence.dao.ConceptDAO;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.ValueDomainDAO;
 import gov.nih.nci.ncicb.cadsr.common.resource.ValueMeaning;
-
 import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorFactory;
 
@@ -42,7 +36,7 @@ public class ValueMeaningAction extends BrowserBaseDispatchAction{
        ValueDomainDAO dao = daoFactory.getValueDomainDAO();
        ValueMeaning vm = dao.getValueMeaning(shortMeaning);
 
-       request.setAttribute(FormConstants.VALUE_MEANING_OBJ, vm);
+       request.setAttribute(CaDSRConstants.VALUE_MEANING_OBJ, vm);
        request.setAttribute("CDEBrowser", "true");
 
        return mapping.findForward(SUCCESS);
