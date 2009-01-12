@@ -1,0 +1,34 @@
+BODY 
+{
+	font-family:Arial, Helvetica, Geneva, sans-serif;
+	font-size: 8pt;
+  font-weight: bold;
+	background-color: #f7f7e7;
+	
+}
+
+A:link {
+  font-family:Arial, Helvetica, Geneva, sans-serif; 
+  font-size:8pt; 
+  color:#663300; 
+  font-weight: bold;
+}
+A:visited {
+  font-family:Arial, Helvetica, Geneva, sans-serif; 
+  font-size:8pt; 
+  font-weight:bold;
+  color:#996633
+}
+
+.highlightNode 
+{
+	background-color: #6495ED;
+}
+
+.treeNode
+{
+  font-family:Arial, Helvetica, Geneva, sans-serif; 
+  font-size:8pt; 
+  font-weight: bold;
+  color:#336699;
+}

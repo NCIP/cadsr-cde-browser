@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+     - Application context definition for Express on Hibernate.
+     -->
+<beans> 
+  <!-- Use the following def if you want to use apache DS -->     
+  <!--
+       <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+         <property name="driverClassName"><value>oracle.jdbc.driver.OracleDriver</value></property>
+         <property name="url"><value>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV</value></property>
+         <property name="username"><value>sbrext</value></property>
+         <property name="password"><value>jjuser</value></property>
+       </bean>
+  -->
+  <!-- use the following for Oracle DS -->    
+  <!--bean id="dataSource" class="oracle.jdbc.pool.OracleConnectionPoolDataSource">
+    <property name="driverType"><value>oracle.jdbc.driver.OracleDriver</value></property>
+    <property name="URL"><value>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV</value></property>
+    <property name="user"><value>sbrext</value></property>
+    <property name="password"><value>jjuser</value></property>
+  </bean-->  
+  <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+      <property name="jndiName"><value>java:comp/env/jdbc/CDEBrowserDS</value></property>
+   </bean>
+  <!-- Hibernate SessionFactory -->
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <property name="dataSource"><ref local="dataSource"/></property>    
+    <property name="hibernateProperties">
+      <props>
+        <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+		<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>		
+        <prop key="hibernate.show_sql">True</prop>
+      </props>
+    </property>
+  </bean>  
+ </beans>

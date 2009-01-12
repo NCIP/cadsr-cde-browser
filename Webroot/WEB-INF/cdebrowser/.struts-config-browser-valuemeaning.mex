@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowViewLayout Version="1.2">
+  <StrutsActivity path="/valueMeaningAlternates.do" location="77,0" dimension="380,88" />
+  <StrutsActivity path="/cdebrowser/valueMeaningAlterNames.jsp" location="650,50" dimension="232,49" />
+  <StrutsActivity path="/cdebrowser/validValuesList.jsp" location="330,188" dimension="180,49" />
+  <StrutsActivity path="/formbuilder/valueMeaningAlterNames.jsp" location="0,188" dimension="230,49" />
+  <StrutsActivity path="/jsp/cdebrowser/valueMeaningAlterNames.jsp" />
+  <StrutsActivity path="/jsp/cdebrowser/validValuesList.jsp" />
+  <StrutsTransition id="/valueMeaningAlternates.do,failure,/jsp/cdebrowser/validValuesList.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="267,44" />
+      <AbsolutePoint location="0,0" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/valueMeaningAlternates.do,failure,/cdebrowser/validValuesList.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="362,88" />
+      <AbsolutePoint location="362,138" />
+      <AbsolutePoint location="420,138" />
+      <AbsolutePoint location="420,188" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/valueMeaningAlternates.do,success,/cdebrowser/valueMeaningAlterNames.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="267,44" />
+      <AbsolutePoint location="0,0" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/valueMeaningAlternates.do,success,/jsp/cdebrowser/valueMeaningAlterNames.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="267,44" />
+      <AbsolutePoint location="0,0" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+</FlowViewLayout>
+

@@ -1,0 +1,19 @@
+
+    <!-- ======================= -->
+    <!-- Setup the cadsrutil category -->
+    <!-- ======================= -->
+    
+    <category name="gov.nih.nci.ncicb.cadsr.common" additivity="false">
+        <priority value="DEBUG" />
+        <appender-ref ref="CADSRUTIL_FILE" />
+    </category>
+
+    <category name="gov.nih.nci.ncicb.oracle" additivity="false">
+        <priority value="DEBUG" />
+        <appender-ref ref="CADSRUTIL_FILE" />
+    </category>
+
+    <category name="gov.nih.nci.ncicb.webtree" additivity="false">
+        <priority value="DEBUG" />
+        <appender-ref ref="CADSRUTIL_FILE" />
+    </category>

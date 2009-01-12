@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<!-- simple web app -->
+
+<faces-config>
+
+
+
+    <!-- Managed Beans for tree2.jsp -->
+    <managed-bean>
+        <managed-bean-name>treeBacker</managed-bean-name>
+        <managed-bean-class>gov.nih.nci.ncicb.cadsr.contexttree.TreeBacker</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+
+
+    <!-- NAVIGATION RULES -->
+ 	
+   <component>
+    <component-type>net.sf.jsfcomp.AaTree</component-type>
+    <component-class>net.sf.jsfcomp.aa.tree.HtmlAaTree</component-class>
+  </component>
+  <render-kit>
+    <renderer>
+      <component-family>net.sf.jsfcomp.AjaxAnywhere</component-family>
+      <renderer-type>org.apache.myfaces.HtmlTree2</renderer-type>
+      <renderer-class>org.apache.myfaces.custom.tree2.HtmlTreeRenderer</renderer-class>
+    </renderer>
+  </render-kit>
+ <component>
+    <component-type>org.ajaxanywhere.ZoneUIComponent</component-type>
+    <component-class>org.ajaxanywhere.jsf.ZoneUIComponent</component-class>
+    <property>
+        <property-name>name</property-name>
+        <property-class>java.lang.String</property-class>
+    </property>
+
+  </component>
+
+</faces-config>

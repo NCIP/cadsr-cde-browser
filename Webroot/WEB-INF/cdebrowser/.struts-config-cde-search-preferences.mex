@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowViewLayout Version="1.2">
+  <StrutsActivity path="/cdebrowser/cdeSearchPrefAction.do" location="46,0" dimension="387,88" />
+  <StrutsActivity path="/cdebrowser/cdeSearchPreferences.jsp" location="0,188" dimension="219,49" />
+  <StrutsActivity path="/cdeBrowse.jsp" location="319,188" dimension="103,49" />
+  <StrutsActivity path="/jsp/cdebrowser/cdeSearchPreferences.jsp" location="950,50" dimension="237,49" />
+  <StrutsActivity path="/jsp/cdeBrowse.jsp" />
+  <StrutsTransition id="/cdebrowser/cdeSearchPrefAction.do,prefPage,/cdebrowser/cdeSearchPreferences.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="143,88" />
+      <AbsolutePoint location="143,138" />
+      <AbsolutePoint location="109,138" />
+      <AbsolutePoint location="109,188" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/cdeSearchPrefAction.do,prefPage,/jsp/cdebrowser/cdeSearchPreferences.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="433,65" />
+      <AbsolutePoint location="950,65" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/cdeSearchPrefAction.do,searchPage,/jsp/cdeBrowse.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="239,44" />
+      <AbsolutePoint location="0,0" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cdebrowser/cdeSearchPrefAction.do,searchPage,/cdeBrowse.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="336,88" />
+      <AbsolutePoint location="336,138" />
+      <AbsolutePoint location="370,138" />
+      <AbsolutePoint location="370,188" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+</FlowViewLayout>
+

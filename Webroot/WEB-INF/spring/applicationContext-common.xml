@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+  <bean id="treeCache" class="gov.nih.nci.ncicb.cadsr.contexttree.CDEBrowserTreeCache">
+    <property name="appServiceLocator"><ref local="appServiceLocator"/></property>
+  </bean>
+
+  <bean id="treeService" class="gov.nih.nci.ncicb.cadsr.contexttree.service.impl.CDEBrowserTreeServiceImpl">
+     <property name="locator"><ref local="serviceLocator"/></property>
+     <property name="daoFactory"><ref local="daoFactory"/></property>
+  </bean>
+
+  <bean id="CDEBrowserService" class="gov.nih.nci.ncicb.cadsr.common.cdebrowser.service.impl.CDEBrowserServiceImpl">
+     <property name="daoFactory"><ref local="daoFactory"/></property>
+  </bean>  
+
+  <bean id="appServiceLocator" class="gov.nih.nci.ncicb.cadsr.common.servicelocator.spring.ApplicationServiceLocatorImpl">
+  </bean>
+
+  <bean id="daoFactory" class="gov.nih.nci.ncicb.cadsr.common.persistence.dao.AbstractDAOFactory"
+  	factory-method="getDAOFactory">
+     <constructor-arg> <ref bean="serviceLocator"/></constructor-arg>
+  </bean>  
+
+  <bean id="serviceLocator" class="gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl">
+  </bean>  
+
+  <bean id="treeData" class="gov.nih.nci.ncicb.cadsr.contexttree.CDEBrowserTreeData">
+     <property name="daoFactory"><ref local="daoFactory"/></property>
+    <property name="appServiceLocator"><ref local="appServiceLocator"/></property>
+  </bean>
+   
+  <bean id="treeNode" class="gov.nih.nci.ncicb.webtree.LazyActionTreeNode">
+    <property name="appServiceLocator"><ref local="appServiceLocator"/></property>
+  </bean>    
+    <!--end of move to formlocker context xml-->
+</beans>
+
