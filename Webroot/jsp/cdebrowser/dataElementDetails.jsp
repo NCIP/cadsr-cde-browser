@@ -176,7 +176,7 @@ function anotherDataElementDetails(linkParms, version )
         <td class="OraFieldText">
          <% if (rd.getContext() != null) {
          %><%=rd.getContext().getName()%> <% } %></td>
-        <td class="OraFieldText"><a href="<%=StringEscapeUtils.escapeJavaScript(rd.getUrl())%>" target="AuxWindow"> <%=StringEscapeUtils.escapeJavaScript(rd.getUrl())%> </a></td>
+        <td class="OraFieldText"><a href="<%=rd.getUrl()%>" target="AuxWindow"> <%=rd.getUrl()%> </a></td>
       </tr>
 <%
     }
