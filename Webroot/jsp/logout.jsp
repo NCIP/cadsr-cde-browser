@@ -17,7 +17,7 @@ if (parent.frames[1])
 	request.getSession().removeAttribute("paramsTree");	
 	//reload session attributes
 	String previousSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
-  String forwardUrl = "/jsp/cdeBrowse.jsp";
+  String forwardUrl = request.getContextPath()+"/jsp/cdeBrowse.jsp";
   if(previousSessionId!=null)  
     forwardUrl=forwardUrl+"?PageId=DataElementsGroup&"+CaDSRConstants.PREVIOUS_SESSION_ID+"="+previousSessionId;
 	

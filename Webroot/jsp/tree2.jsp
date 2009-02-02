@@ -32,7 +32,7 @@
 
 								treeName = StringEscapeUtils.escapeHtml((String) request.getSession().getAttribute("treeTypeName"));
 							} catch (Exception ex) {
-								System.out.println("Error: " + ex.getMessage());								;
+								ex.printStackTrace();								;
 							}
 			%>
 			<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/TreeBrowser.css" />
@@ -205,7 +205,7 @@
    String autoScroll= StringEscapeUtils.escapeHtml(request.getParameter("autoScroll"));      
    if (autoScroll != null && ! "".equals(autoScroll)){
    int sampleLength = autoScroll.length();
-   String reg = "[0-9]{1,3},[0-9]{1,3}" ;
+   String reg = "[0-9]{1,3},[0-9]{1,5}" ;
    String[] regtest = autoScroll.split(reg);
    StringBuffer sb = new StringBuffer(autoScroll);
    for (int j = 0; j<regtest.length; j++){			
@@ -215,7 +215,7 @@
 			sb.delete((sampleLength-removeLength), (sampleLength));			
 		}			
 	}
-		autoScroll = sb.toString();  
+		autoScroll = sb.toString();
    %>
 	    addLoadEvent(function() {
   			parent.frames['tree'].scrollTo(<%=autoScroll%>);

@@ -17,7 +17,7 @@ function submitForm() {
 
 function clearForm()
 {
-  document.form[0].reset();
+  document.forms[0].reset();
 }
 -->
 

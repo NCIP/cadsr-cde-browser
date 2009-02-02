@@ -31,7 +31,7 @@
            </TD>
           -->
           <TD valign="TOP" align="CENTER" width="1%" colspan=1>
-          <A HREF="javascript:newBrowserWin('/help/','helpWin',700,600)">
+          <A HREF="javascript:newBrowserWin('/help/','helpWin')">
             <html:img page="/i/icon_help.gif" alt="Help" border="0"  width="32" height="32" />
           </A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
         </TR>
