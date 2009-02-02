@@ -48,7 +48,7 @@ import oracle.cle.util.statemachine.TransitionConditionException;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetDataElements.java,v 1.38 2008-11-12 18:40:26 davet Exp $
+ * @version: $Id: GetDataElements.java,v 1.39 2009-02-02 18:41:36 davet Exp $
  */
 public class GetDataElements extends BasePersistingProcess {
 	private static Log log = LogFactory.getLog(GetDataElements.class.getName());
@@ -215,6 +215,8 @@ public class GetDataElements extends BasePersistingProcess {
 				desb.initSearchPreferences(dbUtil);
 			}else if (performQuery.equals("yes")) {
 				desb = new DataElementSearchBean(myRequest);
+				//TODO: After creating the bean it is set with default values : GF 18442
+				desb.initSearchPreferences(dbUtil);				 
 				// Need to the session Preference which is per session
 				setValuesFromOldSearchBean(desb);
 				desb.setLOVLists(dbUtil);
@@ -354,8 +356,9 @@ public class GetDataElements extends BasePersistingProcess {
 				paramIdSeq = null;
 				queryResults = null;
 				paramRegStatus = null;
-				desb =
-					new DataElementSearchBean(myRequest);
+				desb = new DataElementSearchBean(myRequest);
+				//TODO: After creating the bean it is set with default values : GF 18442
+				desb.initSearchPreferences(dbUtil);
 				// Set search preference  from old Search Bean to the new one
 				setValuesFromOldSearchBean(desb);
 				desb.setLOVLists(dbUtil);
@@ -490,14 +493,11 @@ public class GetDataElements extends BasePersistingProcess {
 				setResult("uem", uem);
 				setCondition(FAILURE);
 				dbUtil.returnConnection();
-			}
-			catch (TransitionConditionException tce) {
+			}catch (TransitionConditionException tce) {
 				reportException(tce, DEBUG);
-			}
-			catch (Exception e) {
+			}catch (Exception e) {
 				reportException(e, DEBUG);
 			}
-
 			reportException(ex, DEBUG);
 			throw ex;
 		}
@@ -516,7 +516,7 @@ public class GetDataElements extends BasePersistingProcess {
 		return getCondition(FAILURE);
 	}
 
-	private void initialize(HttpSession mySession) {
+	private void initialize(HttpSession mySession) throws Exception {
 		if (getStringInfo("INITIALIZED") == null) {
 			CDEBrowserParams params = CDEBrowserParams.getInstance();
 			//setResult("SBREXT_DSN", params.getSbrextDSN());
@@ -527,9 +527,13 @@ public class GetDataElements extends BasePersistingProcess {
 			setResult("XML_FILE_MAX_RECORDS", params.getXMLFileMaxRecords());
 			setResult("TREE_URL", params.getTreeURL());
 			setResult("INITIALIZED", "yes");
-
-			CDECart cart = this.findCart(mySession);
-			mySession.setAttribute(CaDSRConstants.CDE_CART, cart);
+			try{
+				CDECart cart = this.findCart(mySession);
+				mySession.setAttribute(CaDSRConstants.CDE_CART, cart);
+			}catch (Exception e){
+				e.printStackTrace();
+				throw e;
+			}
 		}
 		else {
 			setResult("SBREXT_DSN", getStringInfo("SBREXT_DSN"));
@@ -595,11 +599,11 @@ public class GetDataElements extends BasePersistingProcess {
 		return ts;
 	}
 
-	private CDECart findCart(HttpSession mySession) {
+	private CDECart findCart(HttpSession mySession) throws Exception{
 		CDECart cart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);	  
 		NCIUser user = (NCIUser) mySession.getAttribute(CaDSRConstants.USER_KEY);
 		String sessionId = mySession.getId();
-		String uid = null ;	    	  
+		String uid = null ;
 		try{
 			if (cart == null) {
 				//cart = new CDECartImpl(); 
@@ -623,8 +627,8 @@ public class GetDataElements extends BasePersistingProcess {
 			}
 		}catch (ObjectCartException oce){
 			log.error("Exception on GetDataElements", oce);
+			throw oce;
 		}
-
 		return cart;
 	}
 
@@ -639,6 +643,8 @@ public class GetDataElements extends BasePersistingProcess {
 			desb.setExcludeTestContext(oldDesb.isExcludeTestContext());
 			desb.setExcludeTrainingContext(oldDesb.isExcludeTrainingContext());
 			desb.setRegStatusExcludeList(oldDesb.getRegStatusExcludeList());
+		}else {
+			log.debug("GetDataElements.java setValuesFromOldSearchBean oldDesb is null");
 		}
 	}
 }
