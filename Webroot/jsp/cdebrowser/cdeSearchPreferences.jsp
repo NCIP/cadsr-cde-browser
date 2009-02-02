@@ -14,6 +14,7 @@
 <%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.cdebrowser.* " %>
 <%@page import="oracle.clex.process.jsp.GetInfoBean " %>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.html.*"%>
 <jsp:useBean id="infoBean" class="oracle.clex.process.jsp.GetInfoBean"/>
 <jsp:setProperty name="infoBean" property="session" value="<%=session %>"/>
 <HTML>
@@ -21,6 +22,7 @@
 <TITLE>CDEBrowser  Search Preferences</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
 <LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
+<SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/js/newWinJS.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/js/checkbox.js"></SCRIPT>
 
 <SCRIPT LANGUAGE="JavaScript">
@@ -57,7 +59,7 @@ function setDefaults() {
       
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>
-          <TD valign="TOP" align="right" width="1%" colspan=1><A HREF="javascript:newBrowserWin('/help/','helpWin',700,600)"><IMG SRC="<%=request.getContextPath()%>/i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>         
+          <TD valign="TOP" align="right" width="1%" colspan=1><A HREF="javascript:newBrowserWin('/help/','helpWin')"><IMG SRC="<%=request.getContextPath()%>/i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>         
         </TR>
       </TABLE>
       
