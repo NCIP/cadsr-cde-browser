@@ -49,7 +49,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetExcelDownload.java,v 1.30 2008-05-29 20:45:39 davet Exp $
+ * @version: $Id: GetExcelDownload.java,v 1.31 2009-02-02 18:42:42 davet Exp $
  */
 public class GetExcelDownload extends BasePersistingProcess {
 	private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
@@ -608,8 +608,10 @@ public class GetExcelDownload extends BasePersistingProcess {
 		csInfo.add(new ColumnInfo(1, "Item Name"));
 		csInfo.add(new ColumnInfo(2, "Item Type Name"));
 		//	Added for 4.0 
-		csInfo.add(new ColumnInfo(3, "CsiPublicId","Item Public Id", "Number"));
-		csInfo.add(new ColumnInfo(4, "CsiVersion","Item Version", "Number"));
+		if ("deSearch".equals(source)|| "cdeCart".equals(source)){
+			csInfo.add(new ColumnInfo(3, "CsiPublicId","Item Public Id", "Number"));
+			csInfo.add(new ColumnInfo(4, "CsiVersion","Item Version", "Number"));
+		}
 		//	Added for 4.0	
 		ColumnInfo classification =
 			new ColumnInfo("CLASSIFICATIONS", "Classification Scheme ", "Array");
