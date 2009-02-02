@@ -2,9 +2,11 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/tld/cdebrowser.tld" prefix="cde"%>
+<%@ page import="oracle.clex.process.jsp.GetInfoBean"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.html.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
-<%@ page
-	import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
 
 <HTML>
@@ -13,7 +15,7 @@
 		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache" />
 		<LINK REL=STYLESHEET TYPE="text/css"
 			HREF="<%=request.getContextPath()%>/css/blaf.css">
-		<SCRIPT LANGUAGE="JavaScript1.1" SRC="/js/checkbox.js"></SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/js/checkbox.js"></SCRIPT>
 		<SCRIPT LANGUAGE="JavaScript">
 
 var sItems = "selectedItems"; 
@@ -65,10 +67,7 @@ function ToggleAll(e){
 }
 
 function details(linkParms ){
-  var urlString="<%=StringEscapeUtils
-							.escapeJavaScript("search?dataElementDetails=9")%>" + linkParms + "<%=StringEscapeUtils
-							.escapeJavaScript("&PageId=DataElementsGroup"
-									+ "&queryDE=yes")%>";
+  var urlString="<%=StringEscapeUtils.escapeHtml("search?dataElementDetails=9")%>" + linkParms + "<%=StringEscapeUtils.escapeHtml("&PageId=DataElementsGroup"+ "&queryDE=yes")%>";
   newBrowserWin(urlString,'deDetails',800,600)
   
 }
@@ -84,11 +83,11 @@ function retrieveSavedItems() {
 	<BODY bgcolor="#ffffff" topmargin="0">
 
 		<%
-			CDEBrowserParams params = CDEBrowserParams.getInstance();			
+			String contextPath = StringEscapeUtils.escapeHtml(request.getContextPath());
 			String urlPrefix = "";
-			String downloadXMLURL = "javascript:fileDownloadWin('/jsp/cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
-			String downloadExcelURL = "javascript:fileDownloadWin('/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
-			String downloadPriorExcelURL = "javascript:fileDownloadWin('/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCartPrior','excelWin',500,200)";
+			String downloadXMLURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
+			String downloadExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
+			String downloadPriorExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCartPrior','excelWin',500,200)";
 		%>
 		<jsp:include page="/jsp/common/common_cdebrowser_header_jsp_inc.jsp"
 			flush="true">
@@ -205,7 +204,7 @@ function retrieveSavedItems() {
 								</TR>
 								<tr>
 									<td>
-										<a href="javascript:retrieveSavedItems()()"> <html:img
+										<a href="javascript:retrieveSavedItems()"> <html:img
 												src='<%=request.getContextPath() + "/i/retrieve.gif"%>' border="0"
 												alt="Retrieve Saved Data Elements" /> </a>
 									</td>

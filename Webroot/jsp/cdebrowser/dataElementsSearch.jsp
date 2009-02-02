@@ -82,14 +82,14 @@
   }
   
   
-  String firstDisplay = StringEscapeUtils.escapeJavaScript((String)infoBean.getInfo("NOT_FIRST_DISPLAY"));
-  if (firstDisplay ==null) firstDisplay = StringEscapeUtils.escapeJavaScript("");
+  String firstDisplay = StringEscapeUtils.escapeHtml((String)infoBean.getInfo("NOT_FIRST_DISPLAY"));
+  if (firstDisplay ==null) firstDisplay = StringEscapeUtils.escapeHtml("");
 
-  String queryFlag = StringEscapeUtils.escapeJavaScript(request.getParameter("performQuery"));
-  if (queryFlag == null) queryFlag = StringEscapeUtils.escapeJavaScript("");
+  String queryFlag = StringEscapeUtils.escapeHtml(request.getParameter("performQuery"));
+  if (queryFlag == null) queryFlag = StringEscapeUtils.escapeHtml("");
 
   String loadAnchor = (String)request.getAttribute(CaDSRConstants.ANCHOR);
-  if (loadAnchor == null) loadAnchor = StringEscapeUtils.escapeJavaScript("");
+  if (loadAnchor == null) loadAnchor = StringEscapeUtils.escapeHtml("");
 
   //String baseQuery = (String)request.getAttribute("baseQuery");
   String baseQuery = (String) pageContext.getSession().getAttribute("baseQuery");
@@ -121,7 +121,7 @@
   }
 
   String urlParams = "";
-  String newSearchURL = contextPath + "/"+StringEscapeUtils.escapeHtml("/jsp/cdeBrowse.jsp?performQuery=newSearch&PageId=DataElementsGroup");
+  String newSearchURL = contextPath + StringEscapeUtils.escapeHtml("/jsp/cdeBrowse.jsp?performQuery=newSearch&PageId=DataElementsGroup");
   if (src == null) src = "";
   if (!"".equals(src)) {
     doneURL= contextPath + "/"+StringEscapeUtils.escapeHtml(src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex);
@@ -143,7 +143,7 @@
   Object advancedSearch = (pageContext.getSession().getAttribute(BrowserFormConstants.BROWSER_SCREEN_TYPE_ADVANCED));
   if(advancedSearch==null)
     { 
-  	submitFunction = StringEscapeUtils.escapeHtml("submitSimpleForm()");
+  	submitFunction = "submitSimpleForm()";
     }
   
     
@@ -170,12 +170,12 @@ Data Elements Search - Data Elements
 <!--
 function redirect1(detailReqType, linkParms )
 {
-  var urlString="<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeJavaScript("search?dataElementDetails=9")%>" + linkParms + "<%=StringEscapeUtils.escapeJavaScript(pageUrl) %>"+"<%=StringEscapeUtils.escapeJavaScript("&queryDE=yes")%>";
+  var urlString="<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?dataElementDetails=9")%>" + linkParms + "<%=StringEscapeUtils.escapeHtml(pageUrl) %>"+"<%=StringEscapeUtils.escapeHtml("&queryDE=yes")%>";
   newBrowserWin(urlString,'deDetails',800,600)
   
 }
 function goPage(pageNumber, pageInfo) {
-  document.location.href ="<%=contextPath%>" + "/"+"<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=9&")%>"+pageInfo+"<%=StringEscapeUtils.escapeJavaScript("&deSearchPageNum=")%>"+pageNumber+ "<%= StringEscapeUtils.escapeJavaScript(pageUrl) %>"+"<%= StringEscapeUtils.escapeJavaScript(urlParams) %>";  
+  document.location.href ="<%=contextPath%>" + "/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9&")%>"+pageInfo+"<%=StringEscapeUtils.escapeHtml("&deSearchPageNum=")%>"+pageNumber+ "<%= StringEscapeUtils.escapeHtml(pageUrl) %>"+"<%= StringEscapeUtils.escapeHtml(urlParams) %>";  
 }
 
 function clearValueDomain() {
@@ -313,12 +313,12 @@ function findFrame(doc, strName) {
 
 function listChanged(urlInfo) {
   var pgNum = document.forms[0].dePages.options[document.forms[0].dePages.selectedIndex].value
-  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=9&performQuery=no&deSearchPageNum=")%>"+pgNum+"<%=StringEscapeUtils.escapeJavaScript(pageUrl)%>"+urlInfo;
+  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9&performQuery=no&deSearchPageNum=")%>"+pgNum+"<%=StringEscapeUtils.escapeHtml(pageUrl)%>"+urlInfo;
 }
 
 function topListChanged(urlInfo) {
   var pgNum = document.forms[0].dePagesTop.options[document.forms[0].dePagesTop.selectedIndex].value
-  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=9&performQuery=no&deSearchPageNum=")%>"+pgNum+"<%=StringEscapeUtils.escapeJavaScript(pageUrl)%>"+urlInfo;
+  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9&performQuery=no&deSearchPageNum=")%>"+pgNum+"<%=StringEscapeUtils.escapeHtml(pageUrl)%>"+urlInfo;
 }
 
 function ToggleAll(e){
@@ -386,11 +386,11 @@ function searchWithinResults() {
 }
 
 function done() {
-  top.location.href = "<%=StringEscapeUtils.escapeJavaScript(doneURL)%>";
+  top.location.href = "<%=StringEscapeUtils.escapeHtml(doneURL)%>";
 }
 
 function newSearch(){
-  top.location.href= "<%=StringEscapeUtils.escapeJavaScript(newSearchURL)%>";
+  top.location.href= "<%=StringEscapeUtils.escapeHtml(newSearchURL)%>";
 }
 
 
@@ -404,7 +404,7 @@ function gotoCDESearchPrefs() {
 //-->
 </SCRIPT>
 
-<form action="<%=infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=StringEscapeUtils.escapeJavaScript(submitFunction)%>};">
+<form action="<%=infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=StringEscapeUtils.escapeHtml(submitFunction)%>};">
 <INPUT TYPE="HIDDEN" NAME="<%=StringEscapeUtils.escapeHtml(NavigationConstants.METHOD_PARAM)%>" > 
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
@@ -415,7 +415,7 @@ function gotoCDESearchPrefs() {
 <INPUT TYPE="HIDDEN" NAME="questionIndex" VALUE="<%=StringEscapeUtils.escapeHtml(quesIndex)%>">
 <input type="HIDDEN" name="<%=PageConstants.PAGEID%>" value="<%=StringEscapeUtils.escapeHtml(infoBean.getPageId())%>"/>
 <!--screenType-->
-<INPUT TYPE="HIDDEN" NAME="<%=StringEscapeUtils.escapeHtml(BrowserFormConstants.BROWSER_SEARCH_SCREEN_TYPE)%>" >
+<INPUT TYPE="HIDDEN" NAME="<%=BrowserFormConstants.BROWSER_SEARCH_SCREEN_TYPE%>" >
 <INPUT TYPE="HIDDEN" NAME="browserSearchScope" value="<%=StringEscapeUtils.escapeHtml(searchMode)%>">
 <INPUT TYPE="HIDDEN" NAME="baseQuery" value="<%=StringEscapeUtils.escapeHtml(baseQuery)%>">
  
@@ -578,7 +578,7 @@ function gotoCDESearchPrefs() {
   	 <th class="OraTableColumnHeader" nowrap>
  		        <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeJavaScript("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+ 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
      	   	  columnHeader="Long Name" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -588,7 +588,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader">
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeJavaScript("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+ 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
      	   	  columnHeader="Preferred Question Text" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -599,7 +599,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader">
      	      <cde:sortableColumnHeader
                   sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-     	       	  actionUrl='<%="/"+StringEscapeUtils.escapeJavaScript("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+     	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
          	   	  columnHeader="Owned By" 
                   orderParamId="sortOrder" 
          	   	  sortFieldId="sortField"
@@ -609,7 +609,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader">
          	      <cde:sortableColumnHeader
                       sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-         	       	  actionUrl='<%="/"+StringEscapeUtils.escapeJavaScript("search?performQuery=sortResults" + pageUrl + urlParams)%>'
+         	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams)%>'
              	   	  columnHeader="Used By Context" 
                       orderParamId="sortOrder" 
              	   	  sortFieldId="sortField"
@@ -621,7 +621,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeJavaScript("search?performQuery=sortResults" + pageUrl + urlParams)%>'
+ 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams)%>'
      	   	  columnHeader="Registration Status" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -631,7 +631,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeJavaScript("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+ 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
      	   	  columnHeader="Workflow Status" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -641,7 +641,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader">
   	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeJavaScript("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+ 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
      	   	  columnHeader="Public ID" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -652,7 +652,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader">
   	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeJavaScript("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+ 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
      	   	  columnHeader="Version" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"

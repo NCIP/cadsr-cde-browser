@@ -51,50 +51,56 @@
   //Preferences
   String brContextExcludeTestStr = null;
   CDEBrowserParams params = CDEBrowserParams.getInstance();
-  DataElementSearchBean searchBean = null;
-  try{
+  //DataElementSearchBean searchBean = null;
+  //try{
   
-    searchBean = (DataElementSearchBean)currInfoBean.getInfo("desb");
-  }
-  catch(Exception ex){}
+    //searchBean = (DataElementSearchBean)currInfoBean.getInfo("desb");
+        
+  //}
+  //catch(Exception ex){}
   
   //Search Pref
-  boolean excludeTestContext = false;
-  boolean excludeTrainingContext = false;
-  if(searchBean==null)
-  {
-    excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
-    excludeTrainingContext = new Boolean(params.getExcludeTrainingContext()).booleanValue();
-  }
-  else
-  {
-    excludeTestContext = searchBean.isExcludeTestContext();
-    excludeTrainingContext = searchBean.isExcludeTrainingContext();
-  }
-   String contextToExclude = StringEscapeUtils.escapeJavaScript("");
+  //boolean excludeTestContext = false;
+  //boolean excludeTrainingContext = false;
+  //if(searchBean==null)
+  //{
+    //excludeTestContext = new Boolean(params.getExcludeTestContext()).booleanValue();
+    //System.out.println(">>> cdeBrowse.jsp: from params excludeTestContext is  "+excludeTestContext);   
+    //excludeTrainingContext = new Boolean(params.getExcludeTrainingContext()).booleanValue();
+    //System.out.println(">>> cdeBrowse.jsp: from params excludeTrainingContext is  "+excludeTrainingContext);
+  //}
+  //else
+  //{
+    //excludeTestContext = searchBean.isExcludeTestContext();
+    //System.out.println(">>> cdeBrowse.jsp: from searchBean excludeTestContext is  "+excludeTestContext);
+    //excludeTrainingContext = searchBean.isExcludeTrainingContext();
+    //System.out.println(">>> cdeBrowse.jsp: from seaerchBean excludeTrainingContext is  "+excludeTrainingContext);
+  //}
+   //String contextToExclude = StringEscapeUtils.escapeJavaScript("");
  
-    if(excludeTestContext)
-    {
-      contextToExclude=" '"+CaDSRConstants.CONTEXT_TEST+"'";
-    }
-    if(excludeTrainingContext)
-    {
-       if(contextToExclude.equals(""))
-       {
-         contextToExclude=" '"+CaDSRConstants.CONTEXT_TRAINING+"'";
-       }
-       else
-       {
-         contextToExclude = contextToExclude+", '"+CaDSRConstants.CONTEXT_TRAINING+"' ";
-       }
-    }  
-  
-  String brContextExcludeListParamStr = "";
-  if(excludeTestContext||excludeTrainingContext)
-  {
-     brContextExcludeListParamStr =  TreeConstants.BR_CONTEXT_EXCLUDE_LIST_STR+":" 
-                     + contextToExclude+";" ;
-  }
+    //if(excludeTestContext)
+    //{
+      //contextToExclude=" '"+CaDSRConstants.CONTEXT_TEST+"'";
+    //}
+    //if(excludeTrainingContext)
+    //{
+       //if(contextToExclude.equals(""))
+       //{
+         //contextToExclude=" '"+CaDSRConstants.CONTEXT_TRAINING+"'";
+       //}
+       //else
+       //{
+         //contextToExclude = contextToExclude+", '"+CaDSRConstants.CONTEXT_TRAINING+"' ";
+       //}
+    //}  
+  //System.out.println(">>> cdeBrowse.jsp: contextToExclude : "+contextToExclude);
+  //String brContextExcludeListParamStr = "";
+  //if(excludeTestContext||excludeTrainingContext)
+  //{
+     //brContextExcludeListParamStr =  TreeConstants.BR_CONTEXT_EXCLUDE_LIST_STR+":" 
+       //              + contextToExclude+";" ;
+      //System.out.println(">>> cdeBrowse.jsp: brContextExcludeListParamStr is  "+brContextExcludeListParamStr);
+  //}
 
 
   String pageId = StringEscapeUtils.escapeHtml(request.getParameter("PageId"));
@@ -129,7 +135,7 @@
   }
 
   treeURL = "/jsp/treeLoader.jsp?&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" +TreeConstants.DE_SEARCH_TREE + ";"+
-      brContextExcludeListParamStr +
+      //brContextExcludeListParamStr +
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
       TreeConstants.DE_SEARCH_FUNCTION + treeParams +
       "&treeName=deTree";
@@ -168,7 +174,7 @@ CDE Browser
     <frameset rows="15%,*">
        <html:frame page="/jsp/common/tree_hdr.jsp" frameborder="0" scrolling = "no" frameName="tree_header"/>       
        <html:frame page="<%=treeURL%>" frameborder="0"  frameName="tree"/>
-    </frameset>   	
+    </frameset>    	   	
       <html:frame page="<%=browserURL%>" frameborder="0" frameName="body"/>
    </frameset>   
  </frameset>
