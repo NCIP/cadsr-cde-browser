@@ -1,5 +1,5 @@
 <!-- Copyright NCI/NCICB, Inc. 2005
-    $Header: /cvsshare/content/cvsroot/cdebrowser/build.xml,v 1.2 2009-02-02 19:17:28 davet Exp $
+    $Header: /cvsshare/content/cvsroot/cdebrowser/build.xml,v 1.3 2009-02-03 15:20:51 davet Exp $
     $Name: not supported by cvs2svn $
 -->
 <project name="CDEBrowser Tool" default="init" basedir=".">
@@ -78,7 +78,7 @@
 	<condition property="remote.deploy">
 		<equals arg1="${DEPLOY.LOCATION}" arg2="remote" />
 	</condition>
-	<property name="root.dir" location="${basedir}/WebRoot" />
+	<property name="root.dir" location="${basedir}/Webroot" />
 	<property name="artifacts.dir" location="${basedir}/deployment-artifacts" />
 	<property name="doc.dir" location="${artifacts.dir}/javadoc" />
 	<property name="temp.dir" location="${basedir}/tmp" />
@@ -329,9 +329,9 @@
         <copy todir="${odi.dir}/src">
             <fileset dir="src"/>
         </copy>
-        <mkdir dir="${odi.dir}/WebRoot"/>
-        <copy todir="${odi.dir}/WebRoot">
-            <fileset dir="WebRoot">
+        <mkdir dir="${odi.dir}/Webroot"/>
+        <copy todir="${odi.dir}/Webroot">
+            <fileset dir="Webroot">
                 <exclude name="**/classes/**"/>
                 <exclude name="**/web.xml"/>
             </fileset>
