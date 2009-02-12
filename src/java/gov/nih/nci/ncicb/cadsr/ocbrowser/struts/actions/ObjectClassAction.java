@@ -129,7 +129,7 @@ implements OCBrowserFormConstants,OCBrowserNavigationConstants
 
 			List<ObjectClass> superClasses = service.getInheritenceRelationships(objClass);
 			//
-			if(!(cscsiIdSeq == null || ("").equals(cscsiIdSeq.trim()))){
+			/*if(!(cscsiIdSeq == null || ("").equals(cscsiIdSeq.trim()))){
 				//System.out.println("---Size of superClasses List: "+superClasses.size());
 				List<ObjectClass> superClassRemoveList = new ArrayList<ObjectClass>();
 				int count = 0;
@@ -163,7 +163,7 @@ implements OCBrowserFormConstants,OCBrowserNavigationConstants
 					}
 				}				
 				//System.out.println("----Modified Size of superClasses List: "+superClasses.size());
-			}
+			}*///Filter taken off GF#18627 Object Class Browser does not display correct inheritance
 			//
 			setSessionObject(request,SUPER_OBJECT_CLASSES,superClasses,true);
 
