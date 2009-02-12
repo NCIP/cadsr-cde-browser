@@ -4,21 +4,21 @@
     <tr>
         <TD valign="TOP" align="CENTER"  colspan=1>
           <a href="javascript:done()">
-             <img src="/i/backButton.gif" border=0 alt="Done">
+             <img src="<%=request.getContextPath()%>/i/backButton.gif" border=0 alt="Done">
           </a>            
        <td align="left">
           <a href="javascript:removeFromCompareList()">
-             <img src="/i/remove_from_cde_comparelist.gif" border=0 alt="Remove CDEs from the compare list">
+             <img src="<%=request.getContextPath()%>/i/remove_from_cde_comparelist.gif" border=0 alt="Remove CDEs from the compare list">
           </a>              
         </td> 
        <td align="left">
           <a href="javascript:changeDisplayOrder()">
-             <img src="/i/changeCompareOrder.gif" border=0 alt="Change the order in which the CDEs are compared">
+             <img src="<%=request.getContextPath()%>/i/changeCompareOrder.gif" border=0 alt="Change the order in which the CDEs are compared">
           </a>          
         </td>
         <TD valign="TOP" align="CENTER"  colspan=1>
 		  <html:link action='<%="/cdebrowser/CDECompareExcelDownload.do?"+BrowserNavigationConstants.METHOD_PARAM+"=downloadToExcel"%>'>
-		    <img src="/i/excelDownload.gif" border=0>
+		    <img src="<%=request.getContextPath()%>/i/excelDownload.gif" border=0>
 		  </html:link>          
         </TD>
         
