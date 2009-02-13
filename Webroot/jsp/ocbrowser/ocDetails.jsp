@@ -12,7 +12,10 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.util.OCUtils"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.util.*"%>
 
-
+<%
+			String contextPath = request.getContextPath();
+			CDEBrowserParams params = CDEBrowserParams.getInstance();
+%>
 <html>
 	<head>
 		<TITLE>Object Class Details</TITLE>
@@ -26,12 +29,10 @@
 	</head>
 
 	<body topmargin="0">
+		
 		<%@ include file="/jsp/ocbrowser/common_header_inc.jsp"%>
 
-		<%
-			String contextPath = request.getContextPath();
-			CDEBrowserParams params = CDEBrowserParams.getInstance();
-		%>
+		
 
 
 

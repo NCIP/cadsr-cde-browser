@@ -1,11 +1,10 @@
-
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/js/helpWinJS.js"/>'></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/js/newWinJS.js"/>'></SCRIPT>
 <%@ include  file="/jsp/common/topHeader.jsp" %>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%
-String preSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
-    	String forwardPage = "/jsp/cdeBrowse.jsp";
+	String preSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
+    String forwardPage = request.getContextPath()+"/jsp/cdeBrowse.jsp";
   	if(preSessionId!=null)
 	  forwardPage=forwardPage+"?PageId=DataElementsGroup&"+CaDSRConstants.PREVIOUS_SESSION_ID+"="+preSessionId;
   	else
@@ -15,14 +14,13 @@ String preSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSI
   <tr>
     <td align="left" nowrap>
 
-    <img src=i/cde_browser_banner_full.gif border=0>
+    <img src="<%=request.getContextPath()%>/i/cde_browser_banner_full.gif" border=0>
     </td>
-
     <td align=right valign=top nowrap>
       <TABLE Cellpadding=0 Cellspacing=0 border=0>
         <TR>
-          <TD valign="TOP" align="center" width="1%" colspan=1><A HREF="<%=forwardPage%>" TARGET="_top"><IMG SRC="i/icon_cdebrowser.gif" alt="CDE Browser" border=0  width=32 height=32></A></TD>
-          <TD valign="TOP" align="left" width="1%" colspan=1><A HREF="javascript:newBrowserWin('/help/','helpWin')"><IMG SRC="i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A></TD>
+          <TD valign="TOP" align="center" width="1%" colspan=1><A HREF="<%=forwardPage%>" TARGET="_top"><IMG SRC="<%=request.getContextPath()%>/i/icon_cdebrowser.gif" alt="CDE Browser" border=0  width=32 height=32></A></TD>
+          <TD valign="TOP" align="left" width="1%" colspan=1><A HREF="<%=params.getCdeBrowserHelpUrl()%>" target="_blank"><IMG SRC="<%=request.getContextPath()%>/i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A></TD>
         </TR>
         <TR>
           <TD valign="TOP" align="center" colspan=1><font color=brown face=verdana size=1>&nbsp;CDE Browser&nbsp;</font></TD>

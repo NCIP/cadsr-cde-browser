@@ -66,7 +66,7 @@ function clearForm()
   <form method="post" action="<%= StringEscapeUtils.escapeHtml(response.encodeURL("j_security_check")) %>">
 
   <table align=center cellspacing="2" cellpadding="3" border="0" onkeypress="if(event.keyCode==13){submitForm()};">
-    <% if(request.getParameter("failed") != null && ((String)request.getParameter("failed")).equalsIgnoreCase("y")) {%>
+    <%	if(request.getParameter("failed") != null && (("y").equalsIgnoreCase((String)request.getParameter("failed")))) {%>
     <tr>
       <td colspan=2 class="OraErrorText" nowrap>
       <b>Invalid username/password combination. Please Retry Login </b>

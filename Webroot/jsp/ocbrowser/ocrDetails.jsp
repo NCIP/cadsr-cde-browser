@@ -7,6 +7,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.util.OCUtils"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.ocbrowser.util.ObjectExtractor"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.*"%>
 <%@ page import="gov.nih.nci.cadsr.domain.ObjectClass"%>
 <%@ page import="java.util.Collection"%>
 
@@ -41,7 +42,8 @@ function navigateOCR(ocId,ocrIndex,direction) {
 </SCRIPT>
 
 		<% String contextPath = request.getContextPath();
-  String clearurl = contextPath+"/ocbrowser/clearNavigationPathAction.do?"+OCBrowserNavigationConstants.METHOD_PARAM+"="+OCBrowserNavigationConstants.CLEAR_NAVIGATION_PATH;
+  		   String clearurl = contextPath+"/ocbrowser/clearNavigationPathAction.do?"+OCBrowserNavigationConstants.METHOD_PARAM+"="+OCBrowserNavigationConstants.CLEAR_NAVIGATION_PATH;
+  		   CDEBrowserParams params = CDEBrowserParams.getInstance();
 %>
 
 		<html:form action="/ocbrowser/navigateOCRAction.do">
