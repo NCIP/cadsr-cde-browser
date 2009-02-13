@@ -1,10 +1,43 @@
 WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK;
 
 SET SCAN OFF;
+
 /*
-   database values owned by CDEBrowser
+   Database values owned by CDEBrowser
+*/      
+MERGE INTO sbrext.tool_options_view_ext s
+   USING (SELECT 'CDEBrowser' AS tool_name, 'HELP.ROOT' AS property,
+                    'https://cdebrowser@TIER@.nci.nih.gov/help' AS value,
+                 'Help URL for CDEBrowser.' AS description
+            FROM DUAL) t
+   ON (s.tool_name = t.tool_name AND s.property = t.property)
+   WHEN MATCHED THEN
+      UPDATE
+         SET s.value = t.value, s.description = t.description
+   WHEN NOT MATCHED THEN
+      INSERT (tool_name, property, value, description, locale)
+      VALUES (t.tool_name, t.property, t.value, t.description, 'US');
+
+/*
+    Database values used by FreeStyle Search 
 */
 MERGE INTO sbrext.tool_options_view_ext s
+   USING (SELECT 'CDEBrowser' AS tool_name, 'VIEWDE.URL' AS property,
+                 'search'||CHR(63)||'dataElementDetails=9'||CHR(38)||'cdeId='||CHR(36)||'PID'||CHR(36)||CHR(38)||'version='||CHR(36)||'VERS'||CHR(36)||CHR(38)||'PageId=DataElementsGroup'||CHR(38)||'queryDE=yes'||CHR(38)||'FirstTimer=yes' AS value,
+                 'DataElements Details URL for CDEBrowser.' AS description
+            FROM DUAL) t
+   ON (s.tool_name = t.tool_name AND s.property = t.property)
+   WHEN MATCHED THEN
+      UPDATE
+         SET s.value = t.value, s.description = t.description
+   WHEN NOT MATCHED THEN
+      INSERT (tool_name, property, value, description, locale)
+      VALUES (t.tool_name, t.property, t.value, t.description, 'US');
+	
+/*
+   Database values owned by CDEBrowser
+*/
+/*MERGE INTO sbrext.tool_options_view_ext s
    USING (SELECT 'CDEBrowser' AS tool_name, 'URL' AS property,
                     'https://cdebrowser@TIER@.nci.nih.gov/CDEBrowser/' AS value,
                  'URL for CDEBrowser.' AS description
@@ -15,15 +48,12 @@ MERGE INTO sbrext.tool_options_view_ext s
          SET s.value = t.value, s.description = t.description
    WHEN NOT MATCHED THEN
       INSERT (tool_name, property, value, description, locale)
-      VALUES (t.tool_name, t.property, t.value, t.description, 'US');
-
-commit;
+      VALUES (t.tool_name, t.property, t.value, t.description, 'US');*/
 
 /*
    EVS code url update
 */
-
-MERGE INTO sbrext.tool_options_view_ext s
+/* MERGE INTO sbrext.tool_options_view_ext s
    USING (SELECT 'CDEBrowser' AS tool_name, 'GO_CODE' AS property,
                     'http://bioportal.nci.nih.gov/ncbo/faces/pages/ontology_visualize.xhtml?ontology_display_name=GO&ontology_node_id=' AS value,
                  'URL for EVS GO code.' AS description
@@ -85,6 +115,8 @@ MERGE INTO sbrext.tool_options_view_ext s
    WHEN NOT MATCHED THEN
       INSERT (tool_name, property, value, description, locale)
       VALUES (t.tool_name, t.property, t.value, t.description, 'US');
+*/
+      
 /*
     Commit changes.
 */
