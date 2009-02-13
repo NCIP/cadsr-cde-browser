@@ -8,7 +8,8 @@
 	String dest = pageContext.getRequest().getParameter("loginDestination");	
 	String frmURL = CDEBrowserParams.getInstance().getFormBuilderUrl();
 	String previousSessionId = (String)request.getParameter(CaDSRConstants.PREVIOUS_SESSION_ID);
-  String forwardCDEUrl = request.getContextPath()+"/jsp/cdeBrowse.jsp";
+    String forwardCDEUrl = request.getContextPath()+"/jsp/cdeBrowse.jsp";
+    CDEBrowserParams params = CDEBrowserParams.getInstance();
   //if(previousSessionId!=null)
     //forwardCDEUrl=forwardCDEUrl+"?PageId=DataElementsGroup&"+CaDSRConstants.PREVIOUS_SESSION_ID+"="+previousSessionId;
 %>
@@ -30,7 +31,7 @@
         <TR>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=forwardCDEUrl%>" TARGET="_top"><IMG SRC="<%=request.getContextPath()%>/i/icon_home.gif" alt="Home" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font></TD>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=frmURL%>/FormBuilder/formSearchAction.do" TARGET="_blank"><html:img page="/i/formicon.gif" alt="FormBuilder" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;FormBuilder&nbsp;</font></TD>
-          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('/help/','helpWin')">
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=params.getCdeBrowserHelpUrl()%>" target="_blank">
           <html:img page="/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
          <logic:present name="nciUser">
             <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=request.getContextPath()%>/logout?FirstTimer=0" TARGET="_top"><html:img page="/i/logout.gif" alt="Logout" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Logout&nbsp;</font></TD>

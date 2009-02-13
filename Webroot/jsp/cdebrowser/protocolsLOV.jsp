@@ -24,7 +24,7 @@
   String pageName = "PageId";
   String pageId = "DataElementsGroup";
   String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
-
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
 %>
 
 <HTML>

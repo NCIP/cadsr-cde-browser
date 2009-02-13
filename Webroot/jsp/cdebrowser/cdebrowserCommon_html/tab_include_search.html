@@ -59,7 +59,7 @@ function subTabClicked(tabNum,urlParams) {
 		  <%
 			 }
           %>
-          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="javascript:newBrowserWin('/help/','helpWin')"><html:img page="/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=params.getCdeBrowserHelpUrl()%>" target="_blank"><html:img page="/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
 		<logic:present name="nciUser">
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="/logout?FirstTimer=0" target="_top"><html:img page="/i/logout.gif" alt="Logout" border="0"  width="32" height="32" /></html:link><br><font color=brown face=verdana size=1>&nbsp;Logout&nbsp;</font></TD>
         </logic:present>
@@ -105,7 +105,7 @@ function subTabClicked(tabNum,urlParams) {
     <TABLE align ="right" width="100%" Cellpadding=0 Cellspacing=0 border=0 >
           <tr>
            <td  align="right"   height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-                <A HREF="javascript:newBrowserWin('/help/','helpWin')">
+                <A HREF="<%=params.getCdeBrowserHelpUrl()%>" target="_blank">
                       What's new</a>&nbsp;&nbsp;</span>
             </td>
         </tr>

@@ -67,7 +67,7 @@ function ToggleAll(e){
 }
 
 function details(linkParms ){
-  var urlString="<%=StringEscapeUtils.escapeHtml("search?dataElementDetails=9")%>" + linkParms + "<%=StringEscapeUtils.escapeHtml("&PageId=DataElementsGroup"+ "&queryDE=yes")%>";
+  var urlString="search?dataElementDetails=9" + linkParms + "&PageId=DataElementsGroup"+"&queryDE=yes";  
   newBrowserWin(urlString,'deDetails',800,600)
   
 }
@@ -221,24 +221,22 @@ function retrieveSavedItems() {
 						<logic:iterate id="de" name="<%=CaDSRConstants.CDE_CART%>"
 							type="gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem"
 							property="dataElements">
-							<%								
-								String deId = de.getId();
-								String detailsURL = "javascript:details('&p_de_idseq=" + deId + "')";
+							<% String deId = de.getId();
+							   String detailsURL = "javascript:details('&p_de_idseq="+deId +"')";
 							%>
 							<tr class="OraTabledata">
 								<logic:present name="nciUser">
-									<script>
+								<script>
 									sItems = "selectedSaveItems";
 									dItems = "selectedDeleteItems";
-									</script>
-									<td>
-										<logic:equal name="de" property="persistedInd" value="true">
+								</script>
+								<td>
+									<logic:equal name="de" property="persistedInd" value="true">
               							&nbsp;       
-            							</logic:equal>
-										<logic:notEqual name="de" property="persistedInd" value="true">
-											<input type="checkbox" name="selectedSaveItems"
-												value="<%=de.getId()%>" />
-										</logic:notEqual>
+            						</logic:equal>
+									<logic:notEqual name="de" property="persistedInd" value="true">
+										<input type="checkbox" name="selectedSaveItems" value="<%=de.getId()%>" />
+									</logic:notEqual>
 									</td>
 									<td>
 										<input type="checkbox" name="selectedDeleteItems" value="<%=de.getId()%>" />
@@ -316,6 +314,6 @@ function retrieveSavedItems() {
 						</tr>
 					</table>
 		</html:form>
-					<%@ include file="/jsp/common/common_bottom_border.jsp"%>
+		<%@ include file="/jsp/common/common_bottom_border.jsp"%>
 	</body>
 </html>

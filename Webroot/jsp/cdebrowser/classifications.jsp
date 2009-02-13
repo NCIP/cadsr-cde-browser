@@ -38,6 +38,7 @@
 	HTMLPageScroller scroller = (HTMLPageScroller) infoBean
 			.getInfo(ProcessConstants.DE_CS_PAGE_SCROLLER);
 	String scrollerHTML = scroller.getScrollerHTML();
+	CDEBrowserParams params = CDEBrowserParams.getInstance();
 %>
 
 

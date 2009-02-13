@@ -106,12 +106,12 @@
   if (src == null || src.equals(""))
   {
 	  String treeParams = StringEscapeUtils.escapeHtml((String)request.getSession().getAttribute("paramsTree")); 
-	  Hashtable params = TreeUtils.parseParameters(treeParams);
-	  if (params.containsKey("src")) 
+	  Hashtable tparams = TreeUtils.parseParameters(treeParams);
+	  if (tparams.containsKey("src")) 
 	  {
-	    src = StringEscapeUtils.escapeHtml((String)params.get("src"));
-	    modIndex = StringEscapeUtils.escapeHtml((String)params.get("moduleIndex"));
-	    quesIndex = StringEscapeUtils.escapeHtml((String)params.get("questionIndex"));
+	    src = StringEscapeUtils.escapeHtml((String)tparams.get("src"));
+	    modIndex = StringEscapeUtils.escapeHtml((String)tparams.get("moduleIndex"));
+	    quesIndex = StringEscapeUtils.escapeHtml((String)tparams.get("questionIndex"));
 	  }
   }
   else
@@ -175,7 +175,7 @@ function redirect1(detailReqType, linkParms )
   
 }
 function goPage(pageNumber, pageInfo) {
-  document.location.href ="<%=contextPath%>" + "/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9&")%>"+pageInfo+"<%=StringEscapeUtils.escapeHtml("&deSearchPageNum=")%>"+pageNumber+ "<%= StringEscapeUtils.escapeHtml(pageUrl) %>"+"<%= StringEscapeUtils.escapeHtml(urlParams) %>";  
+  document.location.href ="<%=contextPath%>" + "/"+"<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=9&")%>"+pageInfo+"<%=StringEscapeUtils.escapeJavaScript("&deSearchPageNum=")%>"+pageNumber+ "<%= StringEscapeUtils.escapeJavaScript(pageUrl) %>"+"<%= StringEscapeUtils.escapeJavaScript(urlParams) %>";  
 }
 
 function clearValueDomain() {
@@ -578,7 +578,7 @@ function gotoCDESearchPrefs() {
   	 <th class="OraTableColumnHeader" nowrap>
  		        <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+ 	       	  actionUrl='<%="/"+"search?performQuery=sortResults" + pageUrl + urlParams %>'
      	   	  columnHeader="Long Name" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -588,7 +588,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader">
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+ 	       	  actionUrl='<%="/"+"search?performQuery=sortResults" + pageUrl + urlParams %>'
      	   	  columnHeader="Preferred Question Text" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -599,7 +599,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader">
      	      <cde:sortableColumnHeader
                   sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-     	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+     	       	  actionUrl='<%="/"+"search?performQuery=sortResults" + pageUrl + urlParams %>'
          	   	  columnHeader="Owned By" 
                   orderParamId="sortOrder" 
          	   	  sortFieldId="sortField"
@@ -609,7 +609,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader">
          	      <cde:sortableColumnHeader
                       sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
-         	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams)%>'
+         	       	  actionUrl='<%="/"+"search?performQuery=sortResults" + pageUrl + urlParams%>'
              	   	  columnHeader="Used By Context" 
                       orderParamId="sortOrder" 
              	   	  sortFieldId="sortField"
@@ -621,7 +621,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams)%>'
+ 	       	  actionUrl='<%="/"+"search?performQuery=sortResults" + pageUrl + urlParams%>'
      	   	  columnHeader="Registration Status" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -631,7 +631,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader" nowrap>
  	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+ 	       	  actionUrl='<%="/"+"search?performQuery=sortResults" + pageUrl + urlParams %>'
      	   	  columnHeader="Workflow Status" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -641,7 +641,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader">
   	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+ 	       	  actionUrl='<%="/"+"search?performQuery=sortResults" + pageUrl + urlParams %>'
      	   	  columnHeader="Public ID" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"
@@ -652,7 +652,7 @@ function gotoCDESearchPrefs() {
     <th class="OraTableColumnHeader">
   	      <cde:sortableColumnHeader
               sortableColumnHeaderBeanId="<%=ProcessConstants.CDE_SEARCH_RESULT_COMPARATOR%>" 
- 	       	  actionUrl='<%="/"+StringEscapeUtils.escapeHtml("search?performQuery=sortResults" + pageUrl + urlParams) %>'
+ 	       	  actionUrl='<%="/"+"search?performQuery=sortResults" + pageUrl + urlParams %>'
      	   	  columnHeader="Version" 
               orderParamId="sortOrder" 
      	   	  sortFieldId="sortField"

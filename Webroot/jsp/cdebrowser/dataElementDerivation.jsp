@@ -24,6 +24,7 @@
   String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
   String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
   String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
 
 %>
 

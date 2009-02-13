@@ -1,7 +1,8 @@
-
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%
 	String dest = pageContext.getRequest().getParameter("loginDestination");
+	CDEBrowserParams params1 = CDEBrowserParams.getInstance();
 %>
 
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/js/newWinJS.js"/>'></SCRIPT>
@@ -31,7 +32,7 @@
            </TD>
           -->
           <TD valign="TOP" align="CENTER" width="1%" colspan=1>
-          <A HREF="javascript:newBrowserWin('/help/','helpWin')">
+          <A HREF="<%=params1.getCdeBrowserHelpUrl()%>" target="_blank">
             <html:img page="/i/icon_help.gif" alt="Help" border="0"  width="32" height="32" />
           </A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
         </TR>
