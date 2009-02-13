@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="yes"?>
 <!-- NOTE!  Adjust the following path to match your server installation... -->
 <!DOCTYPE service SYSTEM ""[
-<!ENTITY docpath "/cdebrowser/">
+<!ENTITY docpath "/jsp/cdebrowser/">
 ]>
 <service name="CDEBrowser" class="oracle.cle.process.Service"
 	initial="SearchRouter">
@@ -47,11 +47,11 @@
 		<process name="DataElementsPage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
 			<argument type="String"
-				value="/jsp&docpath;dataElementsSearch.jsp" />
+				value="&docpath;dataElementsSearch.jsp" />
 		</process>
 		<process name="FailurePage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;FailurePage.jsp" />
+			<argument type="String" value="&docpath;FailurePage.jsp" />
 		</process>
 		<transition src="ResetParameters" condition="failure"
 			dest="FailurePage" />
@@ -80,7 +80,7 @@
 		</process>
 		<process name="FailurePage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;FailurePage.jsp" />
+			<argument type="String" value="&docpath;failurePage.jsp" />
 		</process>
 		<transition src="FailurePageRouter" condition="success"
 			dest="FailurePage" />
@@ -100,7 +100,7 @@
 		</process>
 		<process name="FailurePage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;FailurePage.jsp" />
+			<argument type="String" value="&docpath;FailurePage.jsp" />
 		</process>
 		<process name="GetValidValues"
 			class="gov.nih.nci.ncicb.cadsr.cdebrowser.process.GetValidValues"
@@ -109,7 +109,7 @@
 		<process name="ListValidValuesPage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
 			<argument type="String"
-				value="/jsp&docpath;validValuesList.jsp" />
+				value="&docpath;validValuesList.jsp" />
 		</process>
 		<transition src="ValidValuesRouter" condition="tc1"
 			dest="GetValidValues" />
@@ -130,7 +130,7 @@
 		<process name="DataElementDetailsPage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
 			<argument type="String"
-				value="/jsp&docpath;dataElementDetails.jsp" />
+				value="&docpath;dataElementDetails.jsp" />
 		</process>
 		<process name="GetDetailsRouter"
 			class="oracle.clex.process.ProcessRouter" end="false">
@@ -141,7 +141,7 @@
 		</process>
 		<process name="FailurePage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;FailurePage.jsp" />
+			<argument type="String" value="&docpath;FailurePage.jsp" />
 		</process>
 		<transition src="GetDataElementDetails" condition="success"
 			dest="DataElementDetailsPage" />
@@ -165,7 +165,7 @@
 		</process>
 		<process name="FailurePage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;FailurePage.jsp" />
+			<argument type="String" value="&docpath;FailurePage.jsp" />
 		</process>
 		<process name="GetClassificationSchemes"
 			class="gov.nih.nci.ncicb.cadsr.cdebrowser.process.GetClassificationSchemes"
@@ -174,7 +174,7 @@
 		<process name="ClassificationSchemesListPage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
 			<argument type="String"
-				value="/jsp&docpath;classifications.jsp" />
+				value="&docpath;classifications.jsp" />
 		</process>
 		<transition src="ClassificationSchemesRouter" condition="tc1"
 			dest="GetClassificationSchemes" />
@@ -221,7 +221,7 @@
 		</process>
 		<process name="FailurePage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;FailurePage.jsp" />
+			<argument type="String" value="&docpath;FailurePage.jsp" />
 		</process>
 		<transition src="FileDownloadRouter" condition="tc1"
 			dest="ExcelDownload" />
@@ -263,11 +263,11 @@
 		<process name="ClassificationsLovPage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
 			<argument type="String"
-				value="/jsp&docpath;classificationsLOV.jsp" />
+				value="&docpath;classificationsLOV.jsp" />
 		</process>
 		<process name="FailurePage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;FailurePage.jsp" />
+			<argument type="String" value="&docpath;FailurePage.jsp" />
 		</process>
 		<process name="GetValueDomainsLOV"
 			class="gov.nih.nci.ncicb.cadsr.cdebrowser.process.GetValueDomainsLOV"
@@ -280,12 +280,12 @@
 		<process name="ValueDomainsLovPage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
 			<argument type="String"
-				value="/jsp&docpath;valueDomainsLOV.jsp" />
+				value="&docpath;valueDomainsLOV.jsp" />
 		</process>
 		<process name="DataElementConceptsLovPage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
 			<argument type="String"
-				value="/jsp&docpath;dataElementConceptsLOV.jsp" />
+				value="&docpath;dataElementConceptsLOV.jsp" />
 		</process>
 		<transition src="GetLovRouter" condition="tc1"
 			dest="GetClassificationsLov" />
@@ -322,11 +322,11 @@
 		</process>
 		<process name="FailurePage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;FailurePage.jsp" />
+			<argument type="String" value="&docpath;FailurePage.jsp" />
 		</process>
 		<process name="ProtocolsListPage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;protocolsList.jsp" />
+			<argument type="String" value="&docpath;protocolsList.jsp" />
 		</process>
 		<transition src="ProtocolsRouter" condition="tc1"
 			dest="GetProtocols" />
@@ -345,11 +345,11 @@
 		<process name="DataElementConceptDetailsPage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
 			<argument type="String"
-				value="/jsp&docpath;dataElementConceptDetails.jsp" />
+				value="&docpath;dataElementConceptDetails.jsp" />
 		</process>
 		<process name="FailurePage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;FailurePage.jsp" />
+			<argument type="String" value="&docpath;FailurePage.jsp" />
 		</process>
 		<process name="DataElementConceptDetailsRouter"
 			class="oracle.clex.process.ProcessRouter" end="false">
@@ -375,11 +375,11 @@
 		<process name="DataElementDerivationPage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
 			<argument type="String"
-				value="/jsp&docpath;dataElementDerivation.jsp" />
+				value="&docpath;dataElementDerivation.jsp" />
 		</process>
 		<process name="FailurePage"
 			class="oracle.clex.process.CreateJSPPage" end="true">
-			<argument type="String" value="/jsp&docpath;FailurePage.jsp" />
+			<argument type="String" value="&docpath;FailurePage.jsp" />
 		</process>
 		<process name="DataElementDerivationRouter"
 			class="oracle.clex.process.ProcessRouter" end="false">
