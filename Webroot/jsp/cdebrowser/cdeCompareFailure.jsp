@@ -12,11 +12,11 @@
 
 <HTML>
 <%
-  String urlPrefix = "";
-
+  String urlPrefix = request.getContextPath();
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
 %>
 <HEAD>
-<TITLE>Form Builder- Compare CDEs</TITLE>
+<TITLE>CDEBrowser Compare CDEs</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <LINK rel="stylesheet" TYPE="text/css" HREF="<html:rewrite page='/css/blaf.css' />">
     <SCRIPT LANGUAGE="JavaScript">
@@ -33,7 +33,8 @@ function submitForm(methodName) {
 </HEAD>
 <BODY topmargin=0 bgcolor="#ffffff">
 
-<%@ include file="/jsp/common/in_process_common_header_inc.jsp"%>
+	<%@ include file="/jsp/basicHeader_inc.jsp"%>
+<%--<%@ include file="/jsp/common/in_process_common_header_inc.jsp"%>--%>
 
 <jsp:include page="/jsp/common/tab_inc.jsp" flush="true">
 	<jsp:param name="label" value="CDE&nbsp;Compare" />

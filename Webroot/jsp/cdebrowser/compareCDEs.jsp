@@ -12,7 +12,7 @@
 
 <HTML>
 <HEAD>
-<TITLE>CDEBrowser  Compare CDEs</TITLE>
+<TITLE>CDEBrowser Compare CDEs</TITLE>
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
 <LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/js/checkbox.js"></SCRIPT>
@@ -95,12 +95,12 @@ function done() {
     <html:form action="/cdebrowser/doneCompareListAction">
       <html:hidden value="" property="<%=BrowserNavigationConstants.METHOD_PARAM%>"/>
       <html:hidden property="src"/>      
-      
-      <TABLE Cellpadding=0 Cellspacing=0 border=0 >
+      <%@ include file="/jsp/basicHeader_inc.jsp"%>
+      <!--  <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>
-          <TD valign="TOP" align="right" width="1%" colspan=1><A HREF="javascript:newBrowserWin('/help/','helpWin')"><IMG SRC="<%=request.getContextPath()%>/i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>         
+          <TD valign="TOP" align="right" width="1%" colspan=1><A HREF="<%=params.getCdeBrowserHelpUrl()%>" target="_blank"><IMG SRC="<%=request.getContextPath()%>/i/icon_help.gif" alt="Task Help" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>         
         </TR>
-      </TABLE>
+      </TABLE>-->
       <bean:size id="listSize" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" property="cdeList"/> 
       
       <jsp:include page="/jsp/common/tab_variable_length_inc.jsp" flush="true">

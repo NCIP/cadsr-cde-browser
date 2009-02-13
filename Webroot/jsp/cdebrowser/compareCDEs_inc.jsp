@@ -1,5 +1,3 @@
-
-
 <table align="center" width=15% Cellpadding=0 Cellspacing=4 border=0>
     <tr>
         <TD valign="TOP" align="CENTER"  colspan=1>
@@ -20,7 +18,6 @@
 		  <html:link action='<%="/cdebrowser/CDECompareExcelDownload.do?"+BrowserNavigationConstants.METHOD_PARAM+"=downloadToExcel"%>'>
 		    <img src="<%=request.getContextPath()%>/i/excelDownload.gif" border=0>
 		  </html:link>          
-        </TD>
-        
+        </TD>        
     </tr>
 </table>

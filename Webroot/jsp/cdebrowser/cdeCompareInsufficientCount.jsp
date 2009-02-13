@@ -13,7 +13,7 @@
 <HTML>
 <%
   String urlPrefix = "";
-
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
 %>
 <HEAD>
 <TITLE>Form Builder- Compare CDEs</TITLE>
