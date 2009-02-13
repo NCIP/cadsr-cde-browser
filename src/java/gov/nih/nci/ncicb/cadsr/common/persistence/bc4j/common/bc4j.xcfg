@@ -1,0 +1,32 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig>
+   <AppModuleConfigBag>
+      <AppModuleConfig name="CDEBrowserBc4jModuleLocal">
+         <DeployPlatform>LOCAL</DeployPlatform>
+         <DBconnection>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbdev</DBconnection>
+         <JDBCName>SBR_D</JDBCName>
+         <jbo.project>CDEBrowser</jbo.project>
+         <AppModuleJndiName>gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule</AppModuleJndiName>
+         <ApplicationName>gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule</ApplicationName>
+      </AppModuleConfig>
+      <AppModuleConfig name="CDEBrowserBc4jModuleCBTEST">
+         <DeployPlatform>LOCAL</DeployPlatform>
+         <DBconnection>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbtest</DBconnection>
+         <JDBCName>SBR_CBTEST</JDBCName>
+         <jbo.project>CDEBrowser</jbo.project>
+         <AppModuleJndiName>gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule</AppModuleJndiName>
+         <ApplicationName>gov.nih.nci.ncicb.cadsr.persistence.bc4j.CDEBrowserBc4jModule</ApplicationName>
+      </AppModuleConfig>
+      <AppModuleConfig name="FormBuilderServiceLocal">
+         <DeployPlatform>LOCAL</DeployPlatform>
+         <DBconnection>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:cbdev</DBconnection>
+         <jbo.ampool.initpoolsize>3</jbo.ampool.initpoolsize>
+         <password>jjsbr</password>
+         <JDBCName>SBR_D</JDBCName>
+         <jbo.project>CDEBrowser</jbo.project>
+         <AppModuleJndiName>gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService</AppModuleJndiName>
+         <user>sbr</user>
+         <ApplicationName>gov.nih.nci.ncicb.cadsr.persistence.bc4j.FormBuilderService</ApplicationName>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>
