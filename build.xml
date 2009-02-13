@@ -1,5 +1,5 @@
 <!-- Copyright NCI/NCICB, Inc. 2005
-    $Header: /cvsshare/content/cvsroot/cdebrowser/build.xml,v 1.3 2009-02-03 15:20:51 davet Exp $
+    $Header: /cvsshare/content/cvsroot/cdebrowser/build.xml,v 1.4 2009-02-13 18:24:29 davet Exp $
     $Name: not supported by cvs2svn $
 -->
 <project name="CDEBrowser Tool" default="init" basedir=".">
@@ -121,7 +121,7 @@
 	<!-- these values that replaces some tags in the tool, are needed at the build time -->
 	<filter token="Tool.ds.jndi.Name" value="CDEBrowserDS"/>
 	<filter token="Tool.Version" value="4.0.0.1"/>
-	<filter token="Tool.Build" value="1"/>
+	<filter token="Tool.Build" value="2"/>
 	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
 	<filter token="Tool.Version.Suffix" value="4_0_0_1"/>
 	
@@ -160,7 +160,7 @@
 			<classpath refid="libpath"/>
 		</javac>	
 		
-		<unzip src="${lib.dir}/cadsrutil.jar" dest="${temp.classes.dir}" overwrite="No"/>
+		<!--<unzip src="${lib.dir}/cadsrutil.jar" dest="${temp.classes.dir}" overwrite="No"/>-->
 		<copy tofile="${classes.dir}/gov/nih/nci/ncicb/cadsr/common/jndi.properties" filtering="true" overwrite="Yes">
 			<fileset file="conf/template.jndi.properties"/>
 		</copy>
@@ -172,11 +172,12 @@
 		</copy>
 		<copy tofile="${classes.dir}/deployment.properties" filtering="true" overwrite="Yes">
 			<fileset file="conf/template.deployment.properties"/>
-		</copy>				
+		</copy>
 	    <copy todir="${classes.dir}">      
 	      <fileset dir="${src.dir}">
             <patternset>
                <include name="gov/nih/nci/ncicb/cadsr/cdebrowser/struts/common/*.properties"/>
+               <include name="gov/nih/nci/ncicb/cadsr/common/persistence/**/*.xml"/>
             </patternset>
 	      </fileset>      
 	    </copy>
