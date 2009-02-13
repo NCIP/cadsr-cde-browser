@@ -993,9 +993,8 @@ function done() {
             </table>   
             
     <%@ include file="/jsp/cdebrowser/compareCDEs_inc.jsp"%>
-      <jsp:include page="/jsp/common/common_variable_length_bottom_border.jsp" flush="true">
-        <jsp:param name="width" value="100" />
-      </jsp:include>       
+    
+    <%@ include file="/jsp/common/common_bottom_border.jsp"%>     
     </html:form>
 
 </body>
