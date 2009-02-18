@@ -12,7 +12,6 @@
 <%@ page import="java.util.List "%>
 <%@ page import="java.util.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserNavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.CDECompareList"%>
@@ -340,7 +339,7 @@ function updateCart() {
 
 function updateCompareList() {
   if (validateSelection('selectDE','Please select at least one data element to add to the Compare Cart')) {
-    document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.ADD_TO_CDE_COMPARE_LIST%>";    
+    document.forms[0].<%=BrowserNavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.ADD_TO_CDE_COMPARE_LIST%>";    
     document.forms[0].action='<%=contextPath%>/cdebrowser/addToCompareListAction.do';    
     document.forms[0].submit();
     return true;
@@ -351,7 +350,7 @@ function updateCompareList() {
 
 function compareCDEs(size) {
 
-    document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.COMPARE_CDE%>";    
+    document.forms[0].<%=BrowserNavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.COMPARE_CDE%>";    
     document.forms[0].action='<%=contextPath%>/cdebrowser/compareCDEAction.do';      
     document.forms[0].target="_self";
     var cdeCompareSizeStr = size;
@@ -375,7 +374,7 @@ function compareCDEs(size) {
 
 function changeScreenType(type) {
   document.forms[0].<%=BrowserFormConstants.BROWSER_SEARCH_SCREEN_TYPE%>.value = type;
-  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.CHANGE_SCREEN_TYPE%>";
+  document.forms[0].<%=BrowserNavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.CHANGE_SCREEN_TYPE%>";
   document.forms[0].action='<%=contextPath%>/cdebrowser/screenTypeAction.do?method=changeScreenType';        
   document.forms[0].submit();
 }
@@ -395,7 +394,7 @@ function newSearch(){
 
 
 function gotoCDESearchPrefs() {
-  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.GOTO_CDE_SEARCH_PREF%>";
+  document.forms[0].<%=BrowserNavigationConstants.METHOD_PARAM%>.value="<%=BrowserNavigationConstants.GOTO_CDE_SEARCH_PREF%>";
   document.forms[0].action='<%=contextPath%>/cdebrowser/cdeSearchPrefAction.do';        
   document.forms[0].target="_parent";
   document.forms[0].submit();
@@ -405,7 +404,7 @@ function gotoCDESearchPrefs() {
 </SCRIPT>
 
 <form action="<%=infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=StringEscapeUtils.escapeHtml(submitFunction)%>};">
-<INPUT TYPE="HIDDEN" NAME="<%=StringEscapeUtils.escapeHtml(NavigationConstants.METHOD_PARAM)%>" > 
+<INPUT TYPE="HIDDEN" NAME="<%=StringEscapeUtils.escapeHtml(BrowserNavigationConstants.METHOD_PARAM)%>" > 
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
 <INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
