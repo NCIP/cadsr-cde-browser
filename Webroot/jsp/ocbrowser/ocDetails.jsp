@@ -3,14 +3,11 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/tld/cdebrowser.tld" prefix="cde"%>
-<%@ page
-	import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants"%>
-<%@ page
-	import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserFormConstants"%>
-<%@ page
-	import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserFormConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.struts.common.OCBrowserNavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.ocbrowser.util.OCUtils"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.util.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 
 <%
 			String contextPath = request.getContextPath();
@@ -773,7 +770,7 @@
 																	+ "/ocbrowser/viewRefDocAttchment.do?"
 																	+ OCBrowserNavigationConstants.METHOD_PARAM
 																	+ "=viewReferenceDocAttchment"%>'
-																		paramId="<%=FormConstants.REFERENCE_DOC_ATTACHMENT_NAME%>"
+																		paramId="<%=CaDSRConstants.REFERENCE_DOC_ATTACHMENT_NAME%>"
 																		paramName="attachment" paramProperty="name"
 																		target="_parent">
 																		<bean:write name="attachment" property="name" />

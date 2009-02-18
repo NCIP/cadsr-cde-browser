@@ -6,7 +6,7 @@
 <%@page import="javax.servlet.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.resource.* " %>
-<%@page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.*"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 
 
 <html>
@@ -28,7 +28,7 @@
 
     <% 
     
-    ValueMeaning vm = (ValueMeaning)request.getAttribute(FormConstants.VALUE_MEANING_OBJ);
+    ValueMeaning vm = (ValueMeaning)request.getAttribute(CaDSRConstants.VALUE_MEANING_OBJ);
 
     List altNames = vm.getDesignations();
     List altDefs = vm.getDefinitions();

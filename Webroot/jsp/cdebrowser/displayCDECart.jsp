@@ -6,7 +6,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.html.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.util.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserNavigationConstants"%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
 
 <HTML>
@@ -118,7 +118,7 @@ function retrieveSavedItems() {
 		<%@ include file="/jsp/cdebrowser/showMessages.jsp"%>
 		<html:form action="/cdeCartAction.do">
 			<html:hidden value=""
-				property="<%=NavigationConstants.METHOD_PARAM%>" />
+				property="<%=BrowserNavigationConstants.METHOD_PARAM%>" />
 			<logic:present name="<%=CaDSRConstants.CDE_CART%>">
 				<logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>"
 					property="dataElements">

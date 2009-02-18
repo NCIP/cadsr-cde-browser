@@ -11,10 +11,9 @@
 <%@page import="java.util.*"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.ProcessConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserNavigationConstants"%>
 <%@page import="gov.nih.nci.cadsr.domain.ReferenceDocument"%>
 <%@page import="gov.nih.nci.cadsr.domain.ReferenceDocumentAttachment"%>
-<%@ page
-	import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 
@@ -345,7 +344,7 @@ function listChanged(urlInfo) {
 						<a
 							href='<%=request.getContextPath()
 											+ "/ocbrowser/viewRefDocAttchment.do?"
-											+ NavigationConstants.METHOD_PARAM
+											+ BrowserNavigationConstants.METHOD_PARAM
 											+ "=viewReferenceDocAttchment&"
 											+ CaDSRConstants.REFERENCE_DOC_ATTACHMENT_NAME
 											+ "=" + refDocAtt.getName()%>'
@@ -463,7 +462,7 @@ function listChanged(urlInfo) {
 						<a
 							href='<%=request.getContextPath()
 											+ "/ocbrowser/viewRefDocAttchment.do?"
-											+ NavigationConstants.METHOD_PARAM
+											+ BrowserNavigationConstants.METHOD_PARAM
 											+ "=viewReferenceDocAttchment&"
 											+ CaDSRConstants.REFERENCE_DOC_ATTACHMENT_NAME
 											+ "=" + refDocAtt.getName()%>'

@@ -54,4 +54,7 @@ public interface CaDSRConstants {
   public static final String PROTOCOLS_LOV_TAB_BEAN = "protocolLOVTabBean";
   public static final String PROTOCOLS_LOV_BEAN = "protocolLOVBean";
   
+  public static final String MODULE_INDEX = "moduleIndex";
+  public static final String QUESTION_INDEX = "questionIndex";
+  
 }

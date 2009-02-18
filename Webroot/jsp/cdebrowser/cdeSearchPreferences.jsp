@@ -4,11 +4,8 @@
 <%@ taglib uri="/WEB-INF/tld/cdebrowser.tld" prefix="cde"%>
 
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.FormConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.common.formbuilder.struts.common.NavigationConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserNavigationConstants"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDECompareJspUtils" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.cdebrowser.jsp.util.CDEDetailsUtils" %>
 <%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
@@ -34,16 +31,16 @@
 %>
 
 function save() {
-  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="saveCDESearchPref";
+  document.forms[0].<%=BrowserNavigationConstants.METHOD_PARAM%>.value="saveCDESearchPref";
   document.forms[0].submit();
 }
 function cancel() {
-  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="cancelCDESearchPref";
+  document.forms[0].<%=BrowserNavigationConstants.METHOD_PARAM%>.value="cancelCDESearchPref";
   document.forms[0].submit();
 }
 
 function setDefaults() {
-  document.forms[0].<%=NavigationConstants.METHOD_PARAM%>.value="setDefaultCDESearchPref";
+  document.forms[0].<%=BrowserNavigationConstants.METHOD_PARAM%>.value="setDefaultCDESearchPref";
   document.forms[0].submit();
 }
 -->
@@ -52,10 +49,10 @@ function setDefaults() {
 </HEAD>
 <BODY bgcolor="#ffffff" topmargin="0">
     <html:form action="/cdebrowser/cdeSearchPrefAction">
-      <html:hidden value="" property="<%=NavigationConstants.METHOD_PARAM%>"/>
+      <html:hidden value="" property="<%=BrowserNavigationConstants.METHOD_PARAM%>"/>
       <html:hidden property="src"/>
-      <html:hidden property="<%=FormConstants.MODULE_INDEX%>"/>
-      <html:hidden property="<%=FormConstants.QUESTION_INDEX%>"/>
+      <html:hidden property="<%=CaDSRConstants.MODULE_INDEX%>"/>
+      <html:hidden property="<%=CaDSRConstants.QUESTION_INDEX%>"/>
       
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>
