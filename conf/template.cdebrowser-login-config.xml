@@ -11,8 +11,8 @@
 		<authentication>			
 			<login-module code="gov.nih.nci.ncicb.cadsr.common.security.jboss.DBLoginModule" flag="required">
 				<module-option name="ServiceLocatorClassName">gov.nih.nci.ncicb.cadsr.common.servicelocator.ejb.ServiceLocatorImpl</module-option>
-				<module-option name="applicationUserName">cdebrowser</module-option>
-		      	<module-option name="applicationPassword">cdeuser</module-option>				
+				<module-option name="applicationUserName">@CADSR.DS.USER@</module-option>
+		      	<module-option name="applicationPassword">@CADSR.DS.PSWD@</module-option>				
 			</login-module>
 		</authentication>
 	</application-policy>    
