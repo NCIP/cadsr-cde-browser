@@ -6,15 +6,19 @@ package gov.nih.nci.ncicb.cadsr.common.lov;
  * @author Oracle Corporation
  */
 import gov.nih.nci.ncicb.cadsr.common.resource.Context;
-import gov.nih.nci.ncicb.cadsr.common.util.*;
+import gov.nih.nci.ncicb.cadsr.common.util.CommonLOVBean;
+import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.common.util.StringReplace;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
 
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringEscapeUtils;
 //import healthtoolkit.beans.dbservice.*;
 //import healthtoolkit.utils.*;
 
@@ -150,8 +154,8 @@ public class ClassificationsLOVBean extends Object {
 			clb.setShowRowNum(40);
 			// clb.setPerformQueryToFalse();
 
-			clb.setJsId(request.getParameter("idVar"));
-			clb.setJsName(request.getParameter("nameVar"));
+			clb.setJsId(StringEscapeUtils.escapeHtml(request.getParameter("idVar")));
+			clb.setJsName(StringEscapeUtils.escapeHtml(request.getParameter("nameVar")));
 			if (isContextSpecific)
 				clb.setExtraURLInfo("&performQuery=false&ckhContext=yes");
 			else

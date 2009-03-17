@@ -1,14 +1,16 @@
 package gov.nih.nci.ncicb.cadsr.common.lov;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.sql.*;
-import java.util.*;
-import java.io.*;
-import gov.nih.nci.ncicb.cadsr.common.database.*;
-import gov.nih.nci.ncicb.cadsr.common.util.*;
+import gov.nih.nci.ncicb.cadsr.common.util.CommonLOVBean;
+import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.common.util.StringReplace;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
+
+import java.sql.SQLException;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 public class ProtocolsLOVBean extends Object {
   private static Log log = LogFactory.getLog(ProtocolsLOVBean.class.getName());
@@ -85,8 +87,8 @@ public class ProtocolsLOVBean extends Object {
       clb.setLinkCol(0);          // set detail page link column, 0-> first; 1->second
       clb.setDetailReq_Type("protocols_ext"); //set req_type for detail page
       clb.setShowRowNum(40);
-      clb.setJsId(request.getParameter("idVar"));
-      clb.setJsName(request.getParameter("nameVar"));
+      clb.setJsId(StringEscapeUtils.escapeHtml(request.getParameter("idVar")));
+      clb.setJsName(StringEscapeUtils.escapeHtml(request.getParameter("nameVar")));
       if (isContextSpecific)
         clb.setExtraURLInfo("&performQuery=false&ckhContext=yes");
       else

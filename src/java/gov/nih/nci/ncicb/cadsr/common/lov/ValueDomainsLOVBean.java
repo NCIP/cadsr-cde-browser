@@ -4,12 +4,12 @@ package gov.nih.nci.ncicb.cadsr.common.lov;
  * A Bean class.
  * <P>
  * @author Oracle Corporation
- * @version: $Id: ValueDomainsLOVBean.java,v 1.1 2009-02-13 17:53:59 davet Exp $
+ * @version: $Id: ValueDomainsLOVBean.java,v 1.2 2009-03-17 19:03:56 davet Exp $
  */
 import gov.nih.nci.ncicb.cadsr.common.util.*;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.LogFactory;
-
+import org.apache.commons.lang.StringEscapeUtils;
 import java.sql.*;
 
 import javax.servlet.http.*;
@@ -97,8 +97,8 @@ public class ValueDomainsLOVBean extends Object {
       clb.setDetailReq_Type("value_domains"); //set req_type for detail page
       clb.setShowRowNum(40);
       //clb.setPerformQueryToFalse();
-      clb.setJsId(request.getParameter("idVar"));
-      clb.setJsName(request.getParameter("nameVar"));
+      clb.setJsId(StringEscapeUtils.escapeHtml(request.getParameter("idVar")));
+      clb.setJsName(StringEscapeUtils.escapeHtml(request.getParameter("nameVar")));
       if (isContextSpecific)
         clb.setExtraURLInfo("&performQuery=false&ckhContext=yes");
       else
