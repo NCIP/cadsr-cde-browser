@@ -359,6 +359,7 @@ public class DESearchQueryBuilder extends Object {
                          //" and de.de_idseq = dc.ac_idseq (+) " +
                          " and pt.proto_idseq = ptfrm.proto_idseq " +
                          " and frm.qc_idseq = ptfrm.qc_idseq " +
+                         " and frm.latest_version_ind = 'Yes' " +  //GF 19701
                          " and frm.qtl_name = 'CRF' " +
                          " and qc.dn_crf_idseq = frm.qc_idseq " +
                          " and qc.qtl_name = 'QUESTION' " +
