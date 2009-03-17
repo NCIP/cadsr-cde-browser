@@ -1,5 +1,5 @@
 <!-- Copyright NCI/NCICB, Inc. 2005
-    $Header: /cvsshare/content/cvsroot/cdebrowser/build.xml,v 1.4 2009-02-13 18:24:29 davet Exp $
+    $Header: /cvsshare/content/cvsroot/cdebrowser/build.xml,v 1.5 2009-03-17 19:44:53 davet Exp $
     $Name: not supported by cvs2svn $
 -->
 <project name="CDEBrowser Tool" default="init" basedir=".">
@@ -120,10 +120,10 @@
 
 	<!-- these values that replaces some tags in the tool, are needed at the build time -->
 	<filter token="Tool.ds.jndi.Name" value="CDEBrowserDS"/>
-	<filter token="Tool.Version" value="4.0.0.1"/>
-	<filter token="Tool.Build" value="2"/>
+	<filter token="Tool.Version" value="4.0.1.0"/>
+	<filter token="Tool.Build" value="1"/>
 	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
-	<filter token="Tool.Version.Suffix" value="4_0_0_1"/>
+	<filter token="Tool.Version.Suffix" value="4_0_1_0"/>
 	
 	<path id="libpath">
 		<fileset dir="${lib.dir}">
@@ -214,7 +214,7 @@
 		<copy tofile="${web.dir}/jboss-web.xml" filtering="true">
 			<fileset file="conf/template.jboss-web.xml" />
 		</copy>
-		<copy tofile="${jsp.dir}/common/common_bottom_border.jsp" filtering="true">
+		<copy tofile="${jsp.dir}/common/common_bottom_border.jsp" overwrite="true" filtering="true">
 			<fileset file="conf/template.common_bottom_border.jsp" />
 		</copy>
 		<copy tofile="${web.dir}/spring/applicationContext-domainDao.xml" filtering="true">
