@@ -126,7 +126,7 @@ public class GetDataElementConceptsLOV extends BasePersistingProcess {
     catch (Exception ex) {
       try {
         setCondition(FAILURE);
-        dbUtil.returnConnection();
+        //dbUtil.returnConnection();
       }
       catch (TransitionConditionException tce) {
         reportException(tce, DEBUG);
@@ -135,6 +135,10 @@ public class GetDataElementConceptsLOV extends BasePersistingProcess {
         reportException(e, DEBUG);
       }
       reportException(ex, DEBUG);
+    }finally{
+    	if (dbUtil != null) {
+			dbUtil.returnConnection();
+		}
     }
   }
 

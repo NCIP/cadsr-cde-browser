@@ -122,7 +122,7 @@ public class GetValueDomainsLOV extends BasePersistingProcess {
     catch (Exception ex) {
       try {
         setCondition(FAILURE);
-        dbUtil.returnConnection();
+        //dbUtil.returnConnection();
       }
       catch (TransitionConditionException tce) {
         reportException(tce, DEBUG);
@@ -132,6 +132,10 @@ public class GetValueDomainsLOV extends BasePersistingProcess {
       }
 
       reportException(ex, DEBUG);
+    }finally{
+    	if (dbUtil != null) {
+			dbUtil.returnConnection();
+		}
     }
   }
 

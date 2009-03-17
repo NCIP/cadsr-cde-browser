@@ -28,7 +28,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * @author Ram Chilukuri
- * @version: $Id: GetClassificationsLOV.java,v 1.8 2008-10-24 21:11:04 davet Exp $
+ * @version: $Id: GetClassificationsLOV.java,v 1.9 2009-03-17 19:04:47 davet Exp $
  */
 public class GetClassificationsLOV extends BasePersistingProcess {
   public GetClassificationsLOV() {
@@ -176,7 +176,7 @@ public class GetClassificationsLOV extends BasePersistingProcess {
     catch (Exception ex) {
       try {
         setCondition(FAILURE);
-        dbUtil.returnConnection();
+        //dbUtil.returnConnection();
       }
       catch (TransitionConditionException tce) {
         reportException(tce, DEBUG);
@@ -186,6 +186,10 @@ public class GetClassificationsLOV extends BasePersistingProcess {
       }
 
       reportException(ex, DEBUG);
+    }finally{
+    	if (dbUtil != null) {
+			dbUtil.returnConnection();
+		}
     }
   }
 
