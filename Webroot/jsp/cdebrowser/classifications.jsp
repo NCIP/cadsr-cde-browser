@@ -24,8 +24,7 @@
 <%@include file="/jsp/cdebrowser/cdebrowserCommon_html/SessionAuth.html"%>
 
 <%
-	List classificationVector = (List) infoBean
-			.getInfo(ProcessConstants.CLASSIFICATION_VECTOR);
+	List classificationVector = (List) infoBean.getInfo(ProcessConstants.CLASSIFICATION_VECTOR);
 	DataElement de = (DataElement) infoBean.getInfo("de");
 	TabInfoBean tib = (TabInfoBean) infoBean.getInfo("tib");
 	Map csRefDocs = (Map) infoBean.getInfo("csRefDocs");
@@ -33,9 +32,8 @@
 	Map csContacts = (Map) infoBean.getInfo("csContacts");
 	String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
 	String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
-	String pageUrl = StringEscapeUtils.escapeJavaScript("&" + pageName + "=" + pageId);
-	HTMLPageScroller scroller = (HTMLPageScroller) infoBean
-			.getInfo(ProcessConstants.DE_CS_PAGE_SCROLLER);
+	String pageUrl = "&"+StringEscapeUtils.escapeJavaScript(pageName)+ "=" + StringEscapeUtils.escapeJavaScript(pageId);
+	HTMLPageScroller scroller = (HTMLPageScroller) infoBean.getInfo(ProcessConstants.DE_CS_PAGE_SCROLLER);
 	String scrollerHTML = scroller.getScrollerHTML();
 	CDEBrowserParams params = CDEBrowserParams.getInstance();
 %>

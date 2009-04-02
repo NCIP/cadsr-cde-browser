@@ -1,4 +1,3 @@
-
 <%@ page import="javax.servlet.http.* " %>
 <%@ page import="javax.servlet.* " %>
 <%@ page import="gov.nih.nci.ncicb.cadsr.cdebrowser.* " %>
@@ -43,7 +42,7 @@
     }
   String pageId = StringEscapeUtils.escapeHtml(infoBean.getPageId());
   String pageName = StringEscapeUtils.escapeHtml(PageConstants.PAGEID);
-  String pageUrl = StringEscapeUtils.escapeHtml("&"+pageName+"="+pageId);  
+  String pageUrl = "&"+StringEscapeUtils.escapeHtml(pageName)+"="+StringEscapeUtils.escapeHtml(pageId);  
   String latestVer = StringEscapeUtils.escapeHtml(desb.getLatVersionInd());
   String paramIdseq = StringEscapeUtils.escapeHtml((String)infoBean.getInfo("P_IDSEQ"));
   //release 3.0, change URL for cde browser jsp
@@ -52,16 +51,16 @@
   if (paramIdseq == null) paramIdseq = "";
   String paramType = StringEscapeUtils.escapeHtml((String)infoBean.getInfo("P_PARAM_TYPE"));
   if (paramType == null) paramType = "";
-  String templateURL = contextPath + StringEscapeUtils.escapeHtml("/search?viewTemplate=9&templateIdseq=")+paramIdseq+pageUrl;
+  String templateURL = contextPath + StringEscapeUtils.escapeHtml("/search?viewTemplate=9")+"&"+StringEscapeUtils.escapeHtml("templateIdseq=")+paramIdseq+pageUrl;
   //String downloadXMLURL = "javascript:newDownloadWin('search?xmlDownload=9"+pageUrl+"','downloadWin',10,10)";
   String downloadXMLURL = "javascript:fileDownloadWin('" + contextPath + "/jsp/cdebrowser/downloadXMLPage.jsp?"+StringEscapeUtils.escapeHtml("src=deSearch")+"','xmlWin',500,200)";
   //String downloadExcelURL = "javascript:newDownloadWin('search?excelDownload=9"+pageUrl+"','downloadWin',10,10)";
   String downloadPriorExcelURL = "javascript:fileDownloadWin('" + contextPath + "/jsp/cdebrowser/downloadExcelPage.jsp?"+StringEscapeUtils.escapeHtml("src=deSearchPrior")+"','excelWin',500,200)";
   String downloadExcelURL = "javascript:fileDownloadWin('" + contextPath + "/jsp/cdebrowser/downloadExcelPage.jsp?"+StringEscapeUtils.escapeHtml("src=deSearch")+"','excelWin',500,200)";
   String downloadDTDURL = "javascript:newWin('http://ncicb.nci.nih.gov/xml/dtds/cadsr','dtdWin',500,200)";
-  String valueDomainLOVUrl= "javascript:newWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?valueDomainsLOV=9&idVar=jspValueDomain&nameVar=txtValueDomain")+pageUrl+"','vdLOV',700,600)";
-  String decLOVUrl= "javascript:newWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?dataElementConceptsLOV=9&idVar=jspDataElementConcept&nameVar=txtDataElementConcept")+pageUrl+"','decLOV',700,600)";
-  String csLOVUrl= "javascript:newBrowserWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?classificationsLOV=9&idVar=jspClassification&nameVar=txtClassSchemeItem")+pageUrl+"','csLOV',700,600)";
+  String valueDomainLOVUrl= "javascript:newWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?valueDomainsLOV=9")+"&"+StringEscapeUtils.escapeHtml("idVar=jspValueDomain")+"&"+StringEscapeUtils.escapeHtml("nameVar=txtValueDomain")+pageUrl+"','vdLOV',700,600)";
+  String decLOVUrl= "javascript:newWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?dataElementConceptsLOV=9")+"&"+StringEscapeUtils.escapeHtml("idVar=jspDataElementConcept")+"&"+StringEscapeUtils.escapeHtml("nameVar=txtDataElementConcept")+pageUrl+"','decLOV',700,600)";
+  String csLOVUrl= "javascript:newBrowserWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?classificationsLOV=9")+"&"+StringEscapeUtils.escapeHtml("idVar=jspClassification")+"&"+StringEscapeUtils.escapeHtml("nameVar=txtClassSchemeItem")+pageUrl+"','csLOV',700,600)";
 
   
   String txtDataElementConcept = StringEscapeUtils.escapeHtml(desb.getDECPrefName());
@@ -120,11 +119,11 @@
   }
 
   String urlParams = "";
-  String newSearchURL = contextPath + StringEscapeUtils.escapeHtml("/jsp/cdeBrowse.jsp?performQuery=newSearch&PageId=DataElementsGroup");
+  String newSearchURL = contextPath + "/"+StringEscapeUtils.escapeHtml("jsp/cdeBrowse.jsp?performQuery=newSearch")+"&"+StringEscapeUtils.escapeHtml("PageId=DataElementsGroup");
   if (src == null) src = "";
   if (!"".equals(src)) {
-    doneURL= contextPath + "/"+StringEscapeUtils.escapeHtml(src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex);
-    urlParams = StringEscapeUtils.escapeHtml("&src="+src+"&method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex);
+    doneURL= contextPath + "/"+StringEscapeUtils.escapeHtml(src+".do?method=displayCDECart")+"&"+StringEscapeUtils.escapeHtml("moduleIndex="+modIndex)+"&"+StringEscapeUtils.escapeHtml("questionIndex="+quesIndex);
+    urlParams = "&"+StringEscapeUtils.escapeHtml("src="+src)+"&"+StringEscapeUtils.escapeHtml("method=displayCDECart")+"&"+StringEscapeUtils.escapeHtml("moduleIndex="+modIndex+"&questionIndex="+quesIndex);
     newSearchURL += urlParams;
   }
   
@@ -169,12 +168,12 @@ Data Elements Search - Data Elements
 <!--
 function redirect1(detailReqType, linkParms )
 {
-  var urlString="<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?dataElementDetails=9")%>" + linkParms + "<%=StringEscapeUtils.escapeHtml(pageUrl) %>"+"<%=StringEscapeUtils.escapeHtml("&queryDE=yes")%>";
+  var urlString="<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?dataElementDetails=9")%>" + linkParms +"<%=pageUrl%>"+"<%="&"+StringEscapeUtils.escapeHtml("queryDE=yes")%>";
   newBrowserWin(urlString,'deDetails',800,600)
   
 }
 function goPage(pageNumber, pageInfo) {
-  document.location.href ="<%=contextPath%>" + "/"+"<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=9&")%>"+pageInfo+"<%=StringEscapeUtils.escapeJavaScript("&deSearchPageNum=")%>"+pageNumber+ "<%= StringEscapeUtils.escapeJavaScript(pageUrl) %>"+"<%= StringEscapeUtils.escapeJavaScript(urlParams) %>";  
+  document.location.href ="<%=contextPath%>" + "/"+"<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=9")+"&"%>"+pageInfo+"<%="&"+StringEscapeUtils.escapeJavaScript("deSearchPageNum=")%>"+pageNumber+ "<%=pageUrl%>"+"<%= StringEscapeUtils.escapeJavaScript(urlParams) %>";  
 }
 
 function clearValueDomain() {
@@ -312,12 +311,12 @@ function findFrame(doc, strName) {
 
 function listChanged(urlInfo) {
   var pgNum = document.forms[0].dePages.options[document.forms[0].dePages.selectedIndex].value
-  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9&performQuery=no&deSearchPageNum=")%>"+pgNum+"<%=StringEscapeUtils.escapeHtml(pageUrl)%>"+urlInfo;
+  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9")+"&"+StringEscapeUtils.escapeHtml("performQuery=no&deSearchPageNum=")%>"+pgNum+"<%=StringEscapeUtils.escapeHtml(pageUrl)%>"+urlInfo;
 }
 
 function topListChanged(urlInfo) {
   var pgNum = document.forms[0].dePagesTop.options[document.forms[0].dePagesTop.selectedIndex].value
-  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9&performQuery=no&deSearchPageNum=")%>"+pgNum+"<%=StringEscapeUtils.escapeHtml(pageUrl)%>"+urlInfo;
+  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9")+"&"+StringEscapeUtils.escapeHtml("performQuery=no&deSearchPageNum=")%>"+pgNum+"<%=StringEscapeUtils.escapeHtml(pageUrl)%>"+urlInfo;
 }
 
 function ToggleAll(e){

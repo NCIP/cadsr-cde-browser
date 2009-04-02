@@ -21,9 +21,9 @@
   DataElement de = (DataElement)infoBean.getInfo("de");
   DerivedDataElement dde = (DerivedDataElement)infoBean.getInfo("derivedDe");
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
-  String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
-  String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
-  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
+  String pageId = StringEscapeUtils.escapeHtml(infoBean.getPageId());
+  String pageName = StringEscapeUtils.escapeHtml(PageConstants.PAGEID);
+  String pageUrl = "&"+StringEscapeUtils.escapeHtml(pageName)+"="+StringEscapeUtils.escapeHtml(pageId);
   CDEBrowserParams params = CDEBrowserParams.getInstance();
 
 %>

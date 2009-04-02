@@ -1,28 +1,17 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
-import gov.nih.nci.ncicb.cadsr.common.base.process.*;
 import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
-import gov.nih.nci.ncicb.cadsr.common.database.*;
+import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.lov.ProtocolsLOVBean;
-import gov.nih.nci.ncicb.cadsr.common.util.*;
+import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
 
-import oracle.cle.persistence.HandlerFactory;
+import javax.servlet.http.HttpServletRequest;
 
-import oracle.cle.process.PersistingProcess;
-import oracle.cle.process.ProcessInfo;
 import oracle.cle.process.ProcessInfoException;
-import oracle.cle.process.ProcessParameter;
-import oracle.cle.process.ProcessResult;
 import oracle.cle.process.Service;
-
 import oracle.cle.util.statemachine.TransitionCondition;
 import oracle.cle.util.statemachine.TransitionConditionException;
-
-import java.io.*;
-
-import java.util.*;
-
-import javax.servlet.http.*;
 
 
 /**

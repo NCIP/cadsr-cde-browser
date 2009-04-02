@@ -21,9 +21,9 @@
   DataElementConceptsLOVBean declb = (DataElementConceptsLOVBean)infoBean.getInfo(ProcessConstants.DEC_LOV);
   CommonLOVBean clb = declb.getCommonLOVBean();
     
-  String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
-  String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
-  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
+  String pageId = StringEscapeUtils.escapeHtml(infoBean.getPageId());
+  String pageName = StringEscapeUtils.escapeHtml(PageConstants.PAGEID);
+  String pageUrl = "&"+StringEscapeUtils.escapeHtml(pageName)+"="+StringEscapeUtils.escapeHtml(pageId);
   CDEBrowserParams params = CDEBrowserParams.getInstance();
 %>
 
@@ -53,7 +53,7 @@ function closeOnClick() {
 }
 
 function goPage(pageInfo) {  
-  document.location.href = "<%=StringEscapeUtils.escapeHtml("search?dataElementConceptsLOV=9&")%>"+pageInfo+"<%=pageUrl%>";    
+  document.location.href = "<%=StringEscapeUtils.escapeHtml("search?dataElementConceptsLOV=9")+"&"%>"+pageInfo+"<%=pageUrl%>";    
 }
   
 //-->

@@ -25,7 +25,7 @@
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
   String pageId = StringEscapeUtils.escapeHtml(infoBean.getPageId());
   String pageName = StringEscapeUtils.escapeHtml(PageConstants.PAGEID);
-  String pageUrl = StringEscapeUtils.escapeHtml("&"+pageName+"="+pageId);
+  String pageUrl = "&"+StringEscapeUtils.escapeHtml(pageName)+"="+StringEscapeUtils.escapeHtml(pageId);
   CDEBrowserParams params = CDEBrowserParams.getInstance();
 
   String socVersion="";
@@ -65,7 +65,7 @@ function redirect1(detailReqType, linkParms )
   
 }
 function goPage(pageInfo) {
-  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=&")%>"+pageInfo;
+  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements")+"=&"%>"+pageInfo;
   
 }
   

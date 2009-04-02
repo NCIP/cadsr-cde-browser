@@ -154,8 +154,10 @@ public class ClassificationsLOVBean extends Object {
 			clb.setShowRowNum(40);
 			// clb.setPerformQueryToFalse();
 
-			clb.setJsId(StringEscapeUtils.escapeHtml(request.getParameter("idVar")));
-			clb.setJsName(StringEscapeUtils.escapeHtml(request.getParameter("nameVar")));
+			//clb.setJsId(StringEscapeUtils.escapeHtml(request.getParameter("idVar")));
+			clb.setJsId("jspClassification");
+			//clb.setJsName(StringEscapeUtils.escapeHtml(request.getParameter("nameVar")));
+			clb.setJsName("txtClassSchemeItem");
 			if (isContextSpecific)
 				clb.setExtraURLInfo("&performQuery=false&ckhContext=yes");
 			else

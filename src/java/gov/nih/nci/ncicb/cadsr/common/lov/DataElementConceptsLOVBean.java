@@ -106,8 +106,10 @@ public class DataElementConceptsLOVBean extends Object {
       clb.setDetailReq_Type("dec"); //set req_type for detail page
       clb.setShowRowNum(40);
       //clb.setPerformQueryToFalse();
-      clb.setJsId(StringEscapeUtils.escapeHtml(request.getParameter("idVar")));
-      clb.setJsName(StringEscapeUtils.escapeHtml(request.getParameter("nameVar")));
+      //clb.setJsId(StringEscapeUtils.escapeHtml(request.getParameter("idVar")));
+      clb.setJsId("jspDataElementConcept");
+      //clb.setJsName(StringEscapeUtils.escapeHtml(request.getParameter("nameVar")));
+      clb.setJsName("txtDataElementConcept");
       if (isContextSpecific)
         clb.setExtraURLInfo("&performQuery=false&ckhContext=yes");
       else

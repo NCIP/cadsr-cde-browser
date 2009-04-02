@@ -41,6 +41,7 @@
 			<script language="JavaScript1.2">
   <!--
   function performAction(urlParams){
+    alert("tree2.jsp: performAction = "+urlParams);
     var frm = findFrameByName('body');
     document.body.style.cursor = "wait";
     frm.document.body.style.cursor = "wait";
@@ -48,6 +49,7 @@
    }
   function performFormAction(urlParams){
     var frm = findFrameByName('body');
+    alert("tree2.jsp: performFormAction = "+urlParams);
     document.body.style.cursor = "wait";
     frm.document.body.style.cursor = "wait";
     frm.document.location = "<%=request.getContextPath()%>" + "/" + "<%=StringEscapeUtils.escapeHtml("search?")%>" + urlParams + "<%=StringEscapeUtils.escapeHtml(callerParams)%>";

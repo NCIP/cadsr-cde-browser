@@ -21,7 +21,7 @@
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
   String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
   String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
-  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
+  String pageUrl = "&"+StringEscapeUtils.escapeJavaScript(pageName+"="+pageId);
   CDEBrowserParams params = CDEBrowserParams.getInstance();    
 %>
 
@@ -46,14 +46,14 @@ function redirect1(detailReqType, linkParms )
   
 }
 function goPage(pageInfo) {
-  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=&")%>"+pageInfo;
+  document.location.href = "<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=")+"&"%>"+pageInfo;
   
 }
 
 
 function anotherDataElementDetails(linkParms, version )
 {
-  var urlString="/CDEBrowser/" + "<%=StringEscapeUtils.escapeJavaScript("search?dataElementDetails=9")%>" + linkParms + "<%=StringEscapeUtils.escapeJavaScript("&PageId=GetDetailsGroup"+"&queryDE=yes")%>";
+  var urlString="/CDEBrowser/" + "<%=StringEscapeUtils.escapeJavaScript("search?dataElementDetails=9")%>" + linkParms + "<%="&"+StringEscapeUtils.escapeHtml("PageId=GetDetailsGroup")+"&"+StringEscapeUtils.escapeHtml("queryDE=yes")%>";
   
   //remove the dot. javascript does not like dot.
   var temp = new Array();

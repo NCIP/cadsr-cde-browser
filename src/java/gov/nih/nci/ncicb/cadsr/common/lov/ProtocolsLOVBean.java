@@ -88,7 +88,9 @@ public class ProtocolsLOVBean extends Object {
       clb.setDetailReq_Type("protocols_ext"); //set req_type for detail page
       clb.setShowRowNum(40);
       clb.setJsId(StringEscapeUtils.escapeHtml(request.getParameter("idVar")));
+      //System.out.println(">> ProtocolLOVBean: idVar="+request.getParameter("idVar"));
       clb.setJsName(StringEscapeUtils.escapeHtml(request.getParameter("nameVar")));
+      //System.out.println(">> ProtocolLOVBean: nameVar="+request.getParameter("nameVar"));
       if (isContextSpecific)
         clb.setExtraURLInfo("&performQuery=false&ckhContext=yes");
       else
