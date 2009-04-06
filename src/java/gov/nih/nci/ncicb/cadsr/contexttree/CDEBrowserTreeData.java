@@ -82,7 +82,7 @@ public class CDEBrowserTreeData implements Serializable {
 	              "javascript:performAction('P_PARAM_TYPE=CONTEXT&P_IDSEQ=" +
 	              context.getConteIdseq() +
 	              "&P_CONTE_IDSEQ=" +  context.getConteIdseq() +
-	              StringEscapeUtils.escapeHtml("&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes")
+	              "&"+StringEscapeUtils.escapeHtml("PageId=DataElementsGroup")+"&"+StringEscapeUtils.escapeHtml("NOT_FIRST_DISPLAY=1")+"&"+StringEscapeUtils.escapeHtml("performQuery=yes")
 	              +"')",
 	              context.getConteIdseq(),  false);
 	         contextFolder.addLeaf(contextNode);

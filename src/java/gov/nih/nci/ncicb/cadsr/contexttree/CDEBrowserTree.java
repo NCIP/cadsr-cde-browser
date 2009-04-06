@@ -25,7 +25,7 @@ public class CDEBrowserTree
  
  private String treeType;
  private String functionName;
- private String extraURLParameters = StringEscapeUtils.escapeHtml("&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes");
+ private String extraURLParameters = "&"+StringEscapeUtils.escapeHtml("PageId=DataElementsGroup")+"&"+StringEscapeUtils.escapeHtml("NOT_FIRST_DISPLAY=1")+"&"+StringEscapeUtils.escapeHtml("performQuery=yes");
  private String contextExcludeListStr = null;
 
 

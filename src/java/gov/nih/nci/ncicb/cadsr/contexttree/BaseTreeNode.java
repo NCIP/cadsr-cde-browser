@@ -31,7 +31,7 @@ public class BaseTreeNode implements TreeConstants, CaDSRConstants,TreeFunctions
   public String getExtraURLParameters() {
     String extraURLParameters = (String)treeParams.get(EXTRA_URL_PARAMS);
     if ( extraURLParameters == null || getTreeType().equals(DE_SEARCH_TREE) ) {
-      extraURLParameters = "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes";
+      extraURLParameters = "&"+StringEscapeUtils.escapeHtml("PageId=DataElementsGroup")+"&"+StringEscapeUtils.escapeHtml("NOT_FIRST_DISPLAY=1")+"&"+StringEscapeUtils.escapeHtml("performQuery=yes");      
     }
 
     if (getTreeType().equals(DE_SEARCH_TREE) ) {
@@ -39,8 +39,7 @@ public class BaseTreeNode implements TreeConstants, CaDSRConstants,TreeFunctions
       if (src != null) {
         String modIndex = (String)treeParams.get("moduleIndex");
         String quesIndex = (String)treeParams.get("questionIndex");
-        extraURLParameters += "&src="+src+"&moduleIndex="+modIndex+
-                              "&questionIndex="+quesIndex;
+        extraURLParameters += "&"+StringEscapeUtils.escapeHtml("src="+src)+"&"+StringEscapeUtils.escapeHtml("moduleIndex="+modIndex)+"&"+StringEscapeUtils.escapeHtml("questionIndex="+quesIndex);
       }
     }
 
@@ -50,7 +49,7 @@ public class BaseTreeNode implements TreeConstants, CaDSRConstants,TreeFunctions
     else
       extraURLParameters = extraURLParameters + "&"+TREE_BREADCRUMBS+"="+TREE_BREADCRUMBS_HOLDER;
 
-    return StringEscapeUtils.escapeHtml(extraURLParameters);
+    return extraURLParameters;
   }
 
   public String getFormJsFunctionName() {
@@ -62,6 +61,5 @@ public class BaseTreeNode implements TreeConstants, CaDSRConstants,TreeFunctions
     if (functionName == null) functionName = "performAction";
     return StringEscapeUtils.escapeHtml(functionName);
   }
-
 
 }

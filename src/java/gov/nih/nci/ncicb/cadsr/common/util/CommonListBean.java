@@ -110,10 +110,10 @@ public class CommonListBean extends Object {
     if (searchParm != null) {
       int numSearchFields=this.searchParm.length /2;
     }
-    int ss=0;
-    //System.out.println("numSearchParm: "+ numSearchFields);
+    int ss=0;    
 
-    mySearchStr=request.getParameterValues("SEARCH");    
+    mySearchStr=request.getParameterValues("SEARCH");
+    log.debug(">> CommonListBean, SEARCH value: "+mySearchStr);
     if (buildSearchClause) {
       if (mySearchStr!=null){
         ss=mySearchStr.length;
@@ -124,11 +124,9 @@ public class CommonListBean extends Object {
                         myStr + "%') " ;
             /*searchClause+= " and upper (nvl(" + this.searchParm[2*s] + ",'%')) like upper ( nvl('" +
                         newStr + "','%')) " ;*/
-            //System.out.println("myStr: " + myStr + " searchClause: " + searchClause);
         }
       }
     }
-    
     if (request.getParameter("NOT_FIRST_DISPLAY") != null) {
       this.firstTime = false;
       populate();
@@ -425,17 +423,12 @@ public class CommonListBean extends Object {
          for (int a=0; a<numOfLinkParm; a++) {
            int p=numOfCol-numOfLinkParm + a;
            linkParm[a]=linkParmName[a]+ "=" + this.getColValue(p);
-           //System.out.println("i=s-->linkParm[" +a +"]: " + linkParm[a]);
+           
          }
          linkParms="";
          for (int m=0; m<linkParm.length; m++) {
            linkParms+="&" + linkParm[m];
          }
-      
-
-
-         //System.out.println("linkParms: " + linkParms);
-
          result.append("<TR class=\"OraTabledata\">");
 
          // check if the display column is the link column
@@ -443,7 +436,7 @@ public class CommonListBean extends Object {
          if ( this.getDisplayParm()!=null){
            dispLength=this.getDisplayParm().length;
          }
-         //System.out.println("dispLength: " + dispLength);
+         
          for (int d=0; d<dispLength/2; d++) {
            /********* Skip repetitive first col but show it on new page ***********/
           if (d==0){
@@ -556,7 +549,7 @@ public class CommonListBean extends Object {
   }
 
   public String getExtraURLInfo() {
-    return extraURL;
+	return extraURL;
   }
 
   public void setExtraURLInfo(String s) {
