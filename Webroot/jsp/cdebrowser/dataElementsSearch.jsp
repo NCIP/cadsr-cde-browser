@@ -119,11 +119,11 @@
   }
 
   String urlParams = "";
-  String newSearchURL = contextPath + "/"+StringEscapeUtils.escapeHtml("jsp/cdeBrowse.jsp?performQuery=newSearch")+"&"+StringEscapeUtils.escapeHtml("PageId=DataElementsGroup");
+  String newSearchURL = contextPath + StringEscapeUtils.escapeHtml("/jsp/cdeBrowse.jsp?performQuery=newSearch&PageId=DataElementsGroup");
   if (src == null) src = "";
   if (!"".equals(src)) {
-    doneURL= contextPath + "/"+StringEscapeUtils.escapeHtml(src+".do?method=displayCDECart")+"&"+StringEscapeUtils.escapeHtml("moduleIndex="+modIndex)+"&"+StringEscapeUtils.escapeHtml("questionIndex="+quesIndex);
-    urlParams = "&"+StringEscapeUtils.escapeHtml("src="+src)+"&"+StringEscapeUtils.escapeHtml("method=displayCDECart")+"&"+StringEscapeUtils.escapeHtml("moduleIndex="+modIndex+"&questionIndex="+quesIndex);
+    doneURL= contextPath + "/"+StringEscapeUtils.escapeHtml(src+".do?method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex);
+    urlParams = StringEscapeUtils.escapeHtml("&src="+src+"&method=displayCDECart&moduleIndex="+modIndex+"&questionIndex="+quesIndex);
     newSearchURL += urlParams;
   }
   
@@ -173,7 +173,7 @@ function redirect1(detailReqType, linkParms )
   
 }
 function goPage(pageNumber, pageInfo) {
-  document.location.href ="<%=contextPath%>" + "/"+"<%=StringEscapeUtils.escapeJavaScript("search?searchDataElements=9")+"&"%>"+pageInfo+"<%="&"+StringEscapeUtils.escapeJavaScript("deSearchPageNum=")%>"+pageNumber+ "<%=pageUrl%>"+"<%= StringEscapeUtils.escapeJavaScript(urlParams) %>";  
+  document.location.href ="<%=contextPath%>" + "/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9")+"&"%>"+pageInfo+"<%="&"+StringEscapeUtils.escapeHtml("deSearchPageNum=")%>"+pageNumber+ "<%=pageUrl%>"+"<%=urlParams%>";  
 }
 
 function clearValueDomain() {
@@ -311,12 +311,12 @@ function findFrame(doc, strName) {
 
 function listChanged(urlInfo) {
   var pgNum = document.forms[0].dePages.options[document.forms[0].dePages.selectedIndex].value
-  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9")+"&"+StringEscapeUtils.escapeHtml("performQuery=no&deSearchPageNum=")%>"+pgNum+"<%=StringEscapeUtils.escapeHtml(pageUrl)%>"+urlInfo;
+  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9")+"&"+StringEscapeUtils.escapeHtml("performQuery=no")+"&"+StringEscapeUtils.escapeHtml("deSearchPageNum=")%>"+pgNum+"<%=pageUrl%>"+urlInfo;
 }
 
 function topListChanged(urlInfo) {
   var pgNum = document.forms[0].dePagesTop.options[document.forms[0].dePagesTop.selectedIndex].value
-  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9")+"&"+StringEscapeUtils.escapeHtml("performQuery=no&deSearchPageNum=")%>"+pgNum+"<%=StringEscapeUtils.escapeHtml(pageUrl)%>"+urlInfo;
+  document.location.href= "<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?searchDataElements=9")+"&"+StringEscapeUtils.escapeHtml("performQuery=no")+"&"+StringEscapeUtils.escapeHtml("deSearchPageNum=")%>"+pgNum+"<%=pageUrl%>"+urlInfo;
 }
 
 function ToggleAll(e){
@@ -660,7 +660,7 @@ function gotoCDESearchPrefs() {
     </th>
   </tr>
 <%
-      String pagesDropDown = myScroller.getScrollerHTML();
+      String pagesDropDown = myScroller.getScrollerHTML();      
       for (int i=0; i <deList.size(); i++) {
         DataElement de = (DataElement)deList.get(i);
 %>

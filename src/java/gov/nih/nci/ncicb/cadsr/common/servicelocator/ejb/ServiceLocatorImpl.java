@@ -7,11 +7,8 @@ import java.net.URL;
 
 import javax.ejb.EJBHome;
 import javax.ejb.EJBLocalHome;
-
 import javax.naming.InitialContext;
-
 import javax.rmi.PortableRemoteObject;
-
 import javax.sql.DataSource;
 
 

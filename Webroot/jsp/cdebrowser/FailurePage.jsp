@@ -19,9 +19,9 @@
 <%
   TabInfoBean tib = (TabInfoBean)infoBean.getInfo("tib");
   UserErrorMessage uem = (UserErrorMessage)infoBean.getInfo("uem");
-  String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
-  String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
-  String pageUrl = StringEscapeUtils.escapeJavaScript("&"+pageName+"="+pageId);
+  String pageId = StringEscapeUtils.escapeHtml(infoBean.getPageId());
+  String pageName = StringEscapeUtils.escapeHtml(PageConstants.PAGEID);
+  String pageUrl = "&"+StringEscapeUtils.escapeHtml(pageName+"="+pageId);
   CDEBrowserParams params = CDEBrowserParams.getInstance(); 
 %>
 
@@ -44,7 +44,7 @@
 
 <CENTER>
 <FORM>
-<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeJavaScript(infoBean.getPageId())%>"/>
+<input type="HIDDEN" name="<%= PageConstants.PAGEID %>" value="<%= StringEscapeUtils.escapeHtml(infoBean.getPageId())%>"/>
 <TABLE WIDTH="90%">
 <TR>
 <TD ALIGN="<%= msgAlign %>">
