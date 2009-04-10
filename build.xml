@@ -1,5 +1,5 @@
 <!-- Copyright NCI/NCICB, Inc. 2005
-    $Header: /cvsshare/content/cvsroot/cdebrowser/build.xml,v 1.7 2009-04-08 02:46:04 davet Exp $
+    $Header: /cvsshare/content/cvsroot/cdebrowser/build.xml,v 1.8 2009-04-10 17:38:33 davet Exp $
     $Name: not supported by cvs2svn $
 -->
 <project name="CDEBrowser Tool" default="init" basedir=".">
@@ -121,7 +121,7 @@
 	<!-- these values that replaces some tags in the tool, are needed at the build time -->
 	<filter token="Tool.ds.jndi.Name" value="CDEBrowserDS"/>
 	<filter token="Tool.Version" value="4.0.1"/>
-	<filter token="Tool.Build" value="2"/>
+	<filter token="Tool.Build" value="3"/>
 	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
 	<filter token="Tool.Version.Suffix" value="4_0_1"/>
 	
