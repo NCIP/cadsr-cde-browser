@@ -178,7 +178,7 @@ function done() {
                 <td class="OraTableColumnHeader" width="<%=CDECompareJspUtils.getHeaderSize()%>" nowrap >Public ID</td>
                  <logic:iterate id="currCDE" name="<%=BrowserFormConstants.CDE_COMPARE_LIST%>" type="gov.nih.nci.ncicb.cadsr.common.resource.DataElement" property="cdeList" indexId="cdeIndex" >                                 
                          <td class="OraFieldText" width="<%=CDECompareJspUtils.getColumnSize()%>" >
-                              <html:link page='<%=StringEscapeUtils.escapeJavaScript("/search?dataElementDetails=9&PageId=DataElementsGroup&queryDE=yes")%>'
+                              <html:link page='<%=StringEscapeUtils.escapeHtml("/search?dataElementDetails=9")+"&"+StringEscapeUtils.escapeHtml("PageId=DataElementsGroup")+"&"+StringEscapeUtils.escapeHtml("queryDE=yes")%>'
                                                 paramId = "p_de_idseq"
                                                 paramName="currCDE"
                                                 paramProperty="deIdseq"
