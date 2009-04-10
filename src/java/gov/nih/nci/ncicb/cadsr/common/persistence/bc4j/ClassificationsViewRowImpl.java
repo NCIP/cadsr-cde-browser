@@ -209,13 +209,13 @@ public class ClassificationsViewRowImpl extends ViewRowImpl
 	/**Gets the attribute value for LONG_NAME using the alias name CsLongName.
 	 */
 	public String getCsLongName() {
-		return (String) getAttributeInternal(LONGNAME);
+		return (String) getAttributeInternal(CSLONGNAME);
 	}
 
 	/**Sets <code>value</code> as attribute value for LONG_NAME using the alias name CsLongName.
 	 */
 	public void setCsLongName(String value) {
-		setAttributeInternal(LONGNAME, value);
+		setAttributeInternal(CSLONGNAME, value);
 	}
 
 	/**Gets the attribute value for CS_ID using the alias name CsId.
