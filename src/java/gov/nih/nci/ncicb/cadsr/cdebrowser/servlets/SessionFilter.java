@@ -25,20 +25,17 @@ public class SessionFilter implements javax.servlet.Filter
     
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws java.io.IOException, javax.servlet.ServletException
     {
-      String expiredSessionJSP = filterConfig.getInitParameter("expiredSessionJSP");      
+      String expiredSessionJSP = filterConfig.getInitParameter("expiredSessionJSP");
       //String controller = filterConfig.getInitParameter("controllerName");   
       HttpServletRequest req = (HttpServletRequest)request;
-      Object param = request.getParameter("FirstTimer"); 
+      //Object param = request.getParameter("FirstTimer");
+      String param = request.getParameter("FirstTimer");
       HttpSession userSession = req.getSession(false);
       
-      if(param==null)
-      {
-        if(userSession==null)
-          {
-             ((HttpServletResponse)response).sendRedirect(req.getContextPath()+ expiredSessionJSP);
-            return;
-          }
-      }         
+      if(param == null && userSession==null){
+    	  ((HttpServletResponse)response).sendRedirect(req.getContextPath()+ expiredSessionJSP);
+    	  return;
+      }
       chain.doFilter(request, response);
     }
 
