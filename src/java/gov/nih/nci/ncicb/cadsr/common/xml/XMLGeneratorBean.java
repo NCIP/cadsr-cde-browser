@@ -36,10 +36,10 @@ public class XMLGeneratorBean  {
   public XMLGeneratorBean() {
   }
 
-  public String getXMLString(Connection con) {
+  public String getXMLString(Connection con) throws SQLException{
 	  
 	    String xmlString = "";
-	    
+	    Connection oracleConn = null;
 	    try {
 	    	buildQuery();
 	    	
@@ -47,7 +47,7 @@ public class XMLGeneratorBean  {
 		    	log.debug("Sql Stmt: " + sqlQuery);
 		    }
 		    
-		    Connection oracleConn = DBUtil.extractOracleConnection(con);
+		    oracleConn = DBUtil.extractOracleConnection(con);
 		    xmlQuery = new OracleXMLQuery(oracleConn, sqlQuery);
 		    xmlQuery.setEncoding("UTF-8");
 		    xmlQuery.useNullAttributeIndicator(showNull);
@@ -68,7 +68,16 @@ public class XMLGeneratorBean  {
 	    }
 	    catch (Exception e) {
 	      log.error("getXMLString()", e);
-	    }
+	    }finally{
+	    	try{
+	    		if (oracleConn != null){
+	    			oracleConn.close();
+	    		}
+	    	}catch(SQLException sqle) {
+	    		log.error("Exception getXMLString()", sqle);
+	    		throw sqle;
+	    	}
+	    }	    
 	    return xmlString;
 	  }
   
