@@ -120,9 +120,29 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 		} catch(Exception e) {
 			throw new RuntimeException(e);
 		}
-		DataElement dePop = (DataElement)deList.get(0);
-
-
+		//TestCode for the GF 22283 
+		DataElement dePop = new DataElement();
+		for (Object deObj: deList){
+			DataElement dePopObj = (DataElement)deObj;
+			if("Yes".equalsIgnoreCase(dePopObj.getLatestVersionIndicator())){
+				dePop = dePopObj;
+				//System.out.println(">>> version number: "+dePop.getVersion());
+			}
+			
+			/*System.out.println(">>> Latest version indicator: "+dePopObj.getLatestVersionIndicator());
+			System.out.println(">>> designation size: "+dePopObj.getDesignationCollection().size());
+			for (gov.nih.nci.cadsr.domain.Designation altNameObj : dePopObj.getDesignationCollection()){
+				System.out.println(">>>altName id: "+altNameObj.getId());				
+			}
+			System.out.println(">>> definition size: "+dePopObj.getDefinitionCollection().size());
+			for (gov.nih.nci.cadsr.domain.Definition altDefObj : dePopObj.getDefinitionCollection()){
+				System.out.println(">>>altName id: "+altDefObj.getId());				
+			}
+			System.out.println("---------------------");*/
+		} 
+		
+		//DataElement dePop = (DataElement)deList.get(0);
+		//End of TestCode for GF 22283
 		for (gov.nih.nci.cadsr.domain.Designation altName : dePop.getDesignationCollection()) {
 			//find the designation that match the altName
 			for (int i=0; i<de.getDesignations().size(); i++) {
@@ -143,9 +163,9 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 				}
 			}
 		}
-
-
-
+		
+		
+		
 		for(Definition def : dePop.getDefinitionCollection()) {
 			gov.nih.nci.ncicb.cadsr.common.resource.Definition definition = new DefinitionImpl();
 			definition.setContext(new ContextTransferObject());
