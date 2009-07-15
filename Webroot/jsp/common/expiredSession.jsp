@@ -44,7 +44,7 @@ if (parent.frames[1])
       <tr><td>&nbsp;</td></tr>
       <tr><td align="center" class="OraErrorText"><b>Your Session has Expired!</b></td></tr>
       <tr class="OraTipLabel">
-          <td align="center" class="OraTipLabel"> Click <a target="_top" href='<%=request.getContextPath()%>/cdeBrowse.jsp'>here</a> to return to CDEBrowser.
+          <td align="center" class="OraTipLabel"> Click <a target="_top" href='<%=request.getContextPath()%>/jsp/cdeBrowse.jsp'>here</a> to return to CDEBrowser.
           </td>
       </tr>
       <tr><td>&nbsp;</td></tr>
