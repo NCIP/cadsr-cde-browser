@@ -4,7 +4,7 @@
  * This class is the Action class for comparing CDEs side by side
   *
  * @release 3.0
- * @author: <a href=”mailto:jane.jiang@oracle.com”>Shaji Kakkodi</a>
+ * @author: <a href=mailto:jane.jiang@oracle.com>Shaji Kakkodi</a>
  * @date: 2/16/2005
  */
 
