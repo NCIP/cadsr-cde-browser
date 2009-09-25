@@ -5,7 +5,7 @@
  * application to be independent of any underlying logging package
  *
  * @release 3.0
- * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
+ * @author: <a href=mailto:jane.jiang@oracle.com>Jane Jiang</a>
  * @date: 8/16/2005
  * @version: $Id: LogFactory.java,v 1.1 2009-02-13 18:09:23 davet Exp $
  */
