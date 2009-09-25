@@ -4,7 +4,7 @@
  * This class is the Action class for selecting search screen tyep
   *
  * @release 3.0
- * @author: <a href=”mailto:jane.jiang@oracle.com”>Shaji Kakkodi</a>
+ * @author: <a href=mailto:jane.jiang@oracle.com>Shaji Kakkodi</a>
  * @date: 8/16/2005
  */
 package gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions;

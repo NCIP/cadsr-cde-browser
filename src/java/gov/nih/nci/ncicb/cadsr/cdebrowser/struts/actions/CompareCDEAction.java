@@ -4,7 +4,7 @@
  * This class is the Action class for comparing CDEs side by side
   *
  * @release 3.0
- * @author: <a href=”mailto:jane.jiang@oracle.com”>Jane Jiang</a>
+ * @author: <a href=mailto:jane.jiang@oracle.com>Jane Jiang</a>
  * @date: 8/16/2005
  * @version: $Id: CompareCDEAction.java,v 1.19 2008-07-30 14:21:46 davet Exp $
  */
