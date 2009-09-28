@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+     - Application context definition for Express on Hibernate.
+     -->
+<beans>
+ 
+  <!-- Use the following def if you want to use apache DS -->     
+  <!--
+       <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+         <property name="driverClassName"><value>oracle.jdbc.driver.OracleDriver</value></property>
+         <property name="url"><value>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV</value></property>
+         <property name="username"><value>sbrext</value></property>
+         <property name="password"><value>jjuser</value></property>
+       </bean>
+  -->
+  <!-- use the following for Oracle DS -->    
+  <!--bean id="dataSource" class="oracle.jdbc.pool.OracleConnectionPoolDataSource">
+    <property name="driverType"><value>oracle.jdbc.driver.OracleDriver</value></property>
+    <property name="URL"><value>jdbc:oracle:thin:@cbiodb2-d.nci.nih.gov:1521:CBDEV</value></property>
+    <property name="user"><value>sbrext</value></property>
+    <property name="password"><value>jjuser</value></property>
+  </bean-->
+  
+  <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+      <property name="jndiName"><value>java:comp/env/jdbc/@Tool.ds.jndi.Name@</value></property>
+   </bean>
+
+  <!-- Hibernate SessionFactory -->
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <property name="dataSource"><ref local="dataSource"/></property>    
+    
+    <!-- Must references all OR mapping files. -->
+    <!--<property name="mappingResources">
+      <list>
+      	<value>gov/nih/nci/ncicb/cadsr/domain/bean/AdminComponentClassSchemeClassSchemeItemBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/AttributeClassSchemeClassSchemeItemBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ContextBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ConceptualDomainBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ConceptualDomainValueMeaningBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/DataElementBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/DataElementConceptBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/DataElementConceptRelationshipBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/AlternateNameBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/DefinitionBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/PermissibleValueBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ValueDomainBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ValueDomainPermissibleValueBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ValueMeaningBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ObjectClassBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/PropertyBean.hbm.xml</value> 
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/QualifierBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ReferenceDocumentBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ReferenceDocumentAttachmentBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/RepresentationBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ClassificationSchemeBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ClassificationSchemeItemBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ClassSchemeClassSchemeItemBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/LoaderDefaultBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ObjectClassRelationshipBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ConceptBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ComponentConceptBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ConceptDerivationRuleBean.hbm.xml</value>
+        
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/AdminComponentContactBean.hbm.xml</value>
+        
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/PersonBean.hbm.xml</value>
+
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/OrganizationBean.hbm.xml</value>
+        
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/ContactCommunicationBean.hbm.xml</value>
+        
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/AdminComponentRegistrationBean.hbm.xml</value>
+        
+        <value>gov/nih/nci/ncicb/cadsr/domain/bean/RegistrarBean.hbm.xml</value>
+
+      </list>
+    </property>
+		
+    --><property name="hibernateProperties">
+      <props>
+        <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+		<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>		
+        <prop key="hibernate.show_sql">True</prop>
+      </props>
+    </property>
+  </bean><!--
+
+  <bean id="adminComponentDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.AdminComponentDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+	
+  <bean id="contextDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.ContextDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="conceptualDomainDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.ConceptualDomainDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="valueDomainDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.ValueDomainDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="dataElementDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.DataElementDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="dataElementConceptDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.DataElementConceptDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="objectClassDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.ObjectClassDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="objectClassRelationshipDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.ObjectClassRelationshipDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="propertyDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.PropertyDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="classificationSchemeDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.ClassificationSchemeDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="classificationSchemeItemDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.ClassificationSchemeItemDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="classSchemeClassSchemeItemDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.ClassSchemeClassSchemeItemDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="formDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.FormDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="loaderDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.LoaderDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="conceptDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.ConceptDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+  <bean id="alternateNameDAOTarget" class="gov.nih.nci.ncicb.cadsr.dao.hibernate.AlternateNameDAOImpl">
+    <property name="sessionFactory"><ref local="sessionFactory"/></property>
+  </bean>
+
+
+  <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+  </bean>
+
+
+
+
+
+  <bean id="adminComponentDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="adminComponentDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+  
+  <bean id="contextDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="contextDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+
+  <bean id="conceptualDomainDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="conceptualDomainDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="valueDomainDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="valueDomainDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="dataElementDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="dataElementDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="dataElementConceptDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="dataElementConceptDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="objectClassDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="objectClassDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="objectClassRelationshipDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="objectClassRelationshipDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="propertyDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="propertyDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="classificationSchemeDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="classificationSchemeDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="classificationSchemeItemDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="classificationSchemeItemDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="classSchemeClassSchemeItemDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="classSchemeClassSchemeItemDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="formDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="formDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="loaderDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="loaderDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+  
+
+  <bean id="conceptDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="conceptDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="alternateNameDAO"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref local="transactionManager"/></property>
+    <property name="target"><ref local="alternateNameDAOTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="add*">PROPAGATION_REQUIRED</prop>
+      </props>
+    </property>
+  </bean>
+  
+	
+-->
+  
+ </beans>

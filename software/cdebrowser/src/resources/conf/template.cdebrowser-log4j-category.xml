@@ -1,0 +1,14 @@
+
+    <!-- ======================= -->
+    <!-- Setup the cdebrowser category -->
+    <!-- ======================= -->
+    
+    <category name="gov.nih.nci.ncicb.cadsr.cdebrowser" additivity="false">
+        <priority value="INFO" />
+        <appender-ref ref="CDEBROWSER_FILE" />
+    </category>
+
+    <category name="gov.nih.nci.ncicb.cadsr.ocbrowser" additivity="false">
+        <priority value="INFO" />
+        <appender-ref ref="CDEBROWSER_FILE" />
+    </category>
