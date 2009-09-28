@@ -1,0 +1,27 @@
+<?xml version = '1.0' encoding = 'windows-1252'?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+  <form-beans>
+    <form-bean name="searchPrefForm"
+      type="gov.nih.nci.ncicb.cadsr.common.struts.formbeans.GenericDynaFormBean"
+      dynamic="true">
+      <form-property name="src" type="java.lang.String"/> 
+      <form-property name="moduleIndex" type="java.lang.String"/>
+      <form-property name="questionIndex" type="java.lang.String"/>
+      <form-property name="excludeTestContext" type="java.lang.String"/>
+      <form-property name="excludeTrainingContext" type="java.lang.String"/>
+      <form-property name="isPreferencesDefault" type="java.lang.String"/>
+    </form-bean>
+</form-beans>
+  <action-mappings>
+    <action name="searchPrefForm" path="/cdebrowser/cdeSearchPrefAction" parameter="method"
+      scope="request"
+      type="gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.CDESearchPrefAction"
+      validate="false">
+       <forward name="searchPage" path="/jsp/cdeBrowse.jsp?PageId=DataElementsGroup"/>
+       <forward name="prefPage" path="/jsp/cdebrowser/cdeSearchPreferences.jsp"/> 
+    </action>
+            
+   </action-mappings>
+
+</struts-config>
