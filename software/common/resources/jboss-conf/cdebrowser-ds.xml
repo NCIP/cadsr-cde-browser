@@ -11,14 +11,20 @@
 <!--  Datasource config for MySQL using 2.0.11 driver                     -->
 <!-- ==================================================================== -->
 
-
 <datasources>
-	<local-tx-datasource>
-		<jndi-name>@application.context.name@</jndi-name>
-		<use-java-context>false</use-java-context>
-		<connection-url>@database.url@</connection-url>
-		<user-name>@database.user@</user-name>
+    <local-tx-datasource>
+        <jndi-name>@application.context.name@</jndi-name>
+        <use-java-context>false</use-java-context>
+        <connection-url>@database.url@</connection-url>
+        <user-name>@database.user@</user-name>
 		<password>@database.password@</password>
-		<driver-class>@database.driver@</driver-class>
-	</local-tx-datasource>
+        <driver-class>@database.driver@</driver-class>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
+        <check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
+        <blocking-timeout-millis>10000</blocking-timeout-millis>
+        <idle-timeout-minutes>1</idle-timeout-minutes>
+        <max-pool-size>85</max-pool-size>
+        <min-pool-size>0</min-pool-size>
+        <application-managed-security/>
+    </local-tx-datasource>
 </datasources>
