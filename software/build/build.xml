@@ -341,7 +341,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 		init,
  		dist:tools:retrieve:jboss,
  		dist:tools:retrieve:jbosscp
- 		
 		" >
 	</target>
 

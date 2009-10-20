@@ -123,8 +123,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 		<property name="jboss.home" value="${application.base.path}/${jboss.relative.path}"/>
 		<jboss-version
 			/>
-		<tomcat-version
-			/>
 	</target>
 
 	<target name="install:jboss:init" depends="common:init:pre">
@@ -188,18 +186,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 				<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
 				<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
 				<property name="database.schema" value="${database.name}"/>
-			</case>
-			<case value="mysql">
-				<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-				<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.8.jar"/>
-				<property name="database.driver" value="com.mysql.jdbc.Driver"/>
-				<property name="database.schema" value="${database.name}"/>
-			</case>
-			<case value="postgresql">
-				<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-				<property name="database.driver.file" value="${bda-utils.dir}/postgresql-8.3-603.jdbc3.jar"/>
-				<property name="database.driver" value="org.postgresql.Driver"/>
-				<property name="database.schema" value="public"/>
 			</case>
 			<default>
 				<fail message="Invalid database type ${database.type}"/>
@@ -310,22 +296,22 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 		<mkdir dir="${os.temp.dir}/${project.name}"/>
 		<copy todir="${os.temp.dir}/${project.name}" filtering="true" flatten="true" overwrite="true">
 			<fileset dir="${db.dir.dest}">
-				<include name="**/db-upgrade.xml"/>
+				<include name="**/cdebrowser-db-upgrade.xml"/>
 			</fileset>
 		</copy>
 	</target>
-
+	<!--
 	<target name="install:database" description="Runs datbase creation scripts then calls uprade database." unless="exclude.database"
 		depends="
 
 		common:init,
 		install:database:prep,
 		install:database:validation:pre-install
-		">
+		">-->
 		<!-- Drop all schema objects or re-create the db -->
-		<database-clean/>
+		<!--<database-clean/> -->
 		<!-- Run baseline scripts stored in db.install.create.${database.type}.file.list variable -->
-		<switch value="${database.type}">
+		<!--<switch value="${database.type}">
 			<case value="oracle">
 				<database-install
 					db.install.create.file.list="${db.install.create.oracle.file.list}"
@@ -333,24 +319,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 					sql.delimitertype="row"
 					/>
 			</case>
-			<!-- <case value="postgresql">
-				<database-install
-					db.install.create.file.list="${db.install.create.postgresql.file.list}"
-					sql.delimiter="/"
-					sql.delimitertype="row"
-					/>
-			</case>
-			<case value="mysql">
-				<database-install
-					db.install.create.file.list="${db.install.create.mysql.file.list}"
-					/>
-			</case> -->
 		</switch>
 		<database-upgrade
 			database.changelog.file="${os.temp.dir}/${project.name}/db-upgrade.xml"
 			/>
 		<database-tag/>
-	</target>
+	</target> -->
 
 	<target name="install:jboss:binaries" description="Install JBoss binaries" unless="exclude.jboss" depends="common:jboss:init, common:init">
 		<jboss-install-binaries
@@ -393,7 +367,6 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 		<var name="property.block" value="property1=${authentication.type}${line.separator}
 			property2=${env.name}${line.separator}
 			property3=${jboss.home}${line.separator}
-			property4=${tomcat.home}${line.separator}
 			"/>
 		<copy file="${jboss.home}/server/${jboss.server.name}/deploy/properties-service.xml" tofile="${jboss.home}/server/${jboss.server.name}/deploy/properties-service.xml.orig" overwrite="true"/>
 		<jboss-update-properties-service
@@ -604,7 +577,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 		" >
 	</target>
 
-	<target name="install" description="Installs and configures JBOSS, creates database, and deploys application"
+	<target name="install" description="Installs and configures JBOSS, updates database, and deploys application"
 		depends="
 		common:jboss:init,
  		common:init,
@@ -615,7 +588,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
  		install:jboss:stop,
  		install:jboss:validation:pre-install:ports,
  		install:common:clean,
- 		install:database,
+ 		upgrade:database,
  		install:jboss,
  		install:common:post,
  		install:jboss:start,
@@ -652,14 +625,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 		-->
 	</target>
 
-	<target name="upgrade:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss" depends="upgrade:jboss:init,common:init,upgrade-ncm:jboss">
-	
+	<target name="upgrade:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss" depends="upgrade:jboss:init,common:init,upgrade-dac:jboss">
 	</target>
 
-	<target name="upgrade" description="Upgrades JBoss and Database" depends="upgrade:common:init,common:init,upgrade-ncm">
+	<target name="upgrade" description="Upgrades JBoss and Database" depends="upgrade:common:init,common:init,upgrade-dac">
 	</target>
 
-	<target name="upgrade-with-dbinstall" description="Upgrades JBoss and Database" depends="upgrade:common:init,common:init,upgrade-ncm:with-dbinstall">
+	<target name="upgrade-with-dbinstall" description="Upgrades JBoss and Database" depends="upgrade:common:init,common:init,upgrade-dac:with-dbinstall">
 	</target>
 
 	<target name="upgrade-dac:jboss" description="Wrapper target to call all targets required to upgrade jboss container." unless="exclude.jboss"
@@ -708,7 +680,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
  		install:jboss:validation:pre-install,
  		install:database:validation:pre-install,
  		install:jboss:stop,
- 		install:database,
+ 		upgrade:database,
  		upgrade:jboss,
  		install:common:validation:post-install
 		">
@@ -758,7 +730,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
  		install:jboss:validation:pre-install,
  		install:database:validation:pre-install,
  		install:jboss:stop,
- 		install:database,
+ 		upgrade:database,
  		upgrade:jboss,
  		install:common:validation:post-install
 		">
@@ -806,13 +778,13 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
  		install:jboss:validation:pre-install,
  		install:database:validation:pre-install,
  		install:jboss:stop,
- 		install:database,
+ 		upgrade:database,
  		upgrade:jboss,
  		install:common:validation:post-install
 		">
 	</target>
 
-	<target name="upgrade:database" description="Upgrades database using BDA Datbase Upgrade process." unless="exclude.database"
+	<target name="upgrade:database" description="Upgrades database using BDA Database Upgrade process." unless="exclude.database"
 		depends="
 		upgrade:database:init,
 		common:init,
@@ -820,7 +792,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 		install:database:validation:pre-install
 		">
 		<database-upgrade
-			database.changelog.file="${os.temp.dir}/${project.name}/db-upgrade.xml"
+			database.changelog.file="${os.temp.dir}/${project.name}/cdebrowser-db-upgrade.xml"
 			/>
 		<database-tag/>
 	</target>
@@ -939,7 +911,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 			</then>
 		</if>
 		<properties-print
-			properties.list="application.base.path,jboss.home,tomcat.home,jboss.server.name"
+			properties.list="application.base.path,jboss.home,jboss.server.name"
 			/>
 		<var name="read.properties.list" value=""/>
 	</target>
