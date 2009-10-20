@@ -6,7 +6,7 @@
 	<description>
         Build and deploy the caDSR CDEBrowser Tool
     </description>
-	<!-- set global properties for this build -->   
+	<!-- set global properties for this build --> 
 	<!-- Change the values in template.build.properties as per environment -->
 	<property name="PROP.FILE" location="local.build.properties"/>   
 	<property file="${PROP.FILE}" />
@@ -40,7 +40,7 @@
         TIER.UPPER = ${TIER.UPPER}
         TIER.NAME = ${TIER.NAME}
         TOOL.ROOT.DIR = ${TOOL.ROOT.DIR}
-        TOOL.LOG.DIR = ${TOOL.LOG.DIR}		
+        TOOL.LOG.DIR = ${TOOL.LOG.DIR}
     </echo>
 	<condition property="check.props">
 		<and>
@@ -58,7 +58,7 @@
 			<isset property="JBOSS.DEPLOY.DIR" />
 			<isset property="JBOSS.LOG.DIR" />
 			<isset property="TOOL.LOG.DIR" />
-			<isset property="TOOL.ROOT.DIR" />			
+			<isset property="TOOL.ROOT.DIR" />
 			<isset property="TEST" />
 			<isset property="TEST.VALID.USER" />
 			<isset property="TEST.VALID.PSWD" />
@@ -160,7 +160,7 @@
 			<compilerarg line="-deprecation"/>
 			<compilerarg line="-Xlint:unchecked"/>
 			<classpath refid="libpath"/>
-		</javac>	
+		</javac>
 		
 		<!--<unzip src="${lib.dir}/cadsrutil.jar" dest="${temp.classes.dir}" overwrite="No"/>-->
 		<copy tofile="${classes.dir}/gov/nih/nci/ncicb/cadsr/common/jndi.properties" filtering="true" overwrite="Yes">
@@ -251,7 +251,7 @@
 
 	<target name="-cjsp" depends="-assemble,-prop-check" description="Compiles the project JSP files to verify syntax.">
 		<echo>Compiling JSP files to verify syntax ...</echo>
-		<jspc srcdir="${root.dir}/jsp" destdir="${temp.classes.dir}" compiler="jasper41"  verbose="1" failonerror="no">
+		<jspc srcdir="${root.dir}/jsp" destdir="${temp.classes.dir}" compiler="jasper41"  verbose="1" failonerror="yes">
 			<classpath refid="libpath"/>
 			<include name="**/*.jsp"/>
 		</jspc>
