@@ -69,7 +69,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 	<!-- *-ds.xml and WAR -->
 	<property name="cdebrowser-webapp.dir.dist" location="${basedir}/${cdebrowser-webapp.dist.relative.dir}" />
 	<property name="cdebrowser-webapp.ds.file" value="cdebrowser-ds.xml" />
-	<property name="cdebrowser-webapp.name" value="cdebrowser" />
+	<property name="cdebrowser-webapp.name" value="CDEBrowser" />
 	<property name="cdebrowser-webapp.war.file" value="${cdebrowser-webapp.name}.war" />
 	<!-- Added to make sure that it works with both absolute and relative paths, this property is handed to sub-project scripts in absolute format. -->
 	<property name="jar-signing.keystore.abs-location" location="${jar-signing.keystore.location}"/>
