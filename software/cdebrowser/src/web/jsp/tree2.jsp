@@ -5,17 +5,70 @@
 <%@ taglib uri="http://ajaxanywhere.sourceforge.net/" prefix="aa"%>
 <%@ taglib uri="http://jsf-comp.sourceforge.net/aa" prefix="jcaa"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.util.*"%>
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="java.util.*"%>
 <%@page import="gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants"%>
 <%@ page import="net.sf.jsfcomp.aa.tree.AaTreeTag"%>
-<%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
+<%@ page import="org.owasp.esapi.*" %>
+<%@ page import="java.util.regex.Pattern" %>
+
+<%! 
+      private static final Pattern AUTOSCROLL_PATTERN = Pattern.compile("[0-9]*[,][0-9]*");
+      private static final Pattern NAVCMD_PATTERN = Pattern.compile("[0-9:]*");
+      private static final Pattern INT_PATTERN = Pattern.compile("[0-9]*");
+      private static final Pattern LINK_HIDDEN_PATTERN = Pattern.compile("[cdeBrowserTree:]*([[0-9]*[:]]*t2g|_idJsp3)");
+      private static final Pattern TREE_PARAMS_PATTERN = Pattern.compile("[[a-zA-Z0-9]*[;]?[:]?[a-zA-Z0-9]*]*");
+      
+      private void filterHiddenVariables(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException{
+            boolean valid = true;
+            
+            String autoScroll = request.getParameter("autoScroll");
+            String jsfSeq = request.getParameter("jsf_sequence");
+            String linkHidden = request.getParameter("cdeBrowserTree:_link_hidden_");
+            String navCmd = request.getParameter("cdeBrowserTree:org.apache.myfaces.tree.NAV_COMMAND");
+            String submit = request.getParameter("cdeBrowserTree_SUBMIT");
+            String treeParams = request.getParameter("treeParams");
+            
+            if (autoScroll != null && !AUTOSCROLL_PATTERN.matcher(autoScroll).matches()) {
+                  System.out.println("Auto Scroll:"+autoScroll);
+            valid = false;
+      }
+            if (jsfSeq != null && valid && !INT_PATTERN.matcher(jsfSeq).matches()) {
+                  System.out.println("JSF Seq:"+jsfSeq);
+                  valid = false;
+            }
+            if (linkHidden != null && valid && !LINK_HIDDEN_PATTERN.matcher(linkHidden).matches()) {
+                  System.out.println("Link Hidden:"+linkHidden);
+                  valid = false;
+            }
+            if (navCmd != null && valid && !NAVCMD_PATTERN.matcher(navCmd).matches()) {
+                  System.out.println("Nav Cmd:"+navCmd);
+                  valid = false;
+            }
+            if (submit != null && valid && !INT_PATTERN.matcher(submit).matches()) {
+                  System.out.println("Submit:"+submit);
+                  valid = false;
+            }
+            if (treeParams != null && valid && !TREE_PARAMS_PATTERN.matcher(treeParams).matches()) {
+                  System.out.println("Tree params:"+treeParams);
+                  valid = false;
+            }
+            
+            if (!valid) {
+                  response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            }
+      }
+%>
+
 <f:view>
 	<t:document>
 		<t:documentHead>
 			<%
-				String treeParams = StringEscapeUtils.escapeJavaScript(request.getParameter("treeParams"));
+				filterHiddenVariables(request, response);
+				
+				String treeParams = ESAPI.encoder().encodeForJavaScript(request.getParameter("treeParams"));
 							if (treeParams == null || treeParams.equals(""))
-								treeParams = StringEscapeUtils.escapeJavaScript((String) request.getSession().getAttribute("paramsTree"));
+								treeParams = ESAPI.encoder().encodeForJavaScript((String) request.getSession().getAttribute("paramsTree"));
 							String treeName = null;
 							String callerParams = "";
 							Hashtable params = null;
@@ -23,14 +76,14 @@
 								params = TreeUtils.parseParameters(treeParams);
 								String src = null;
 								if (params.containsKey("src")) {
-									src = StringEscapeUtils.escapeHtml((String) params.get("src"));
-									String modIndex = StringEscapeUtils.escapeJavaScript((String) params.get("moduleIndex"));
-									String quesIndex = StringEscapeUtils.escapeJavaScript((String) params.get("questionIndex"));
+									src = ESAPI.encoder().encodeForJavaScript((String) params.get("src"));
+									String modIndex = ESAPI.encoder().encodeForJavaScript((String) params.get("moduleIndex"));
+									String quesIndex = ESAPI.encoder().encodeForJavaScript((String) params.get("questionIndex"));
 									callerParams += "&src=" + src + "&moduleIndex="+ modIndex + "&questionIndex="+ quesIndex;
-									callerParams = StringEscapeUtils.escapeJavaScript(callerParams);
+									callerParams = ESAPI.encoder().encodeForJavaScript(callerParams);
 								}
 
-								treeName = StringEscapeUtils.escapeHtml((String) request.getSession().getAttribute("treeTypeName"));
+								treeName = ESAPI.encoder().encodeForJavaScript((String) request.getSession().getAttribute("treeTypeName"));
 							} catch (Exception ex) {
 								ex.printStackTrace();								;
 							}
@@ -202,7 +255,7 @@
 
   // Fix autoscroll for frame, AutoScroll filtered
   <%
-   String autoScroll= StringEscapeUtils.escapeHtml(request.getParameter("autoScroll"));      
+   String autoScroll= ESAPI.encoder().encodeForJavaScript(request.getParameter("autoScroll"));      
    if (autoScroll != null && ! "".equals(autoScroll)){
    int sampleLength = autoScroll.length();
    String reg = "[0-9]{1,3},[0-9]{1,5}" ;
