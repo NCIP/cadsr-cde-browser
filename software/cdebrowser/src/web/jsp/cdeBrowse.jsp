@@ -28,9 +28,9 @@
 <%
 
   //Publish Change Order
-  String ctepUser = StringEscapeUtils.escapeJavaScript((String)pageContext.getAttribute("accessValue"));
+  String ctepUser = (String)pageContext.getAttribute("accessValue");
 
-  String performQuery = StringEscapeUtils.escapeJavaScript(request.getParameter("performQuery"));
+  String performQuery = request.getParameter("performQuery");
   SessionUtils.setPreviousSessionValues(request);
   List cachedDeList = null;
   Boolean showCached = null;
@@ -109,8 +109,8 @@
   String extraURLParams = StringEscapeUtils.escapeHtml("");
   String treeParams = StringEscapeUtils.escapeHtml("");
   //get the source, module and question index
-  String modIndex = StringEscapeUtils.escapeHtml("");
-  String quesIndex = StringEscapeUtils.escapeHtml("");
+  //String modIndex = StringEscapeUtils.escapeHtml("");
+  //String quesIndex = StringEscapeUtils.escapeHtml("");
   String src = StringEscapeUtils.escapeHtml(request.getParameter("src"));
   if (src == null || src.equals(""))
   {	    
@@ -118,44 +118,43 @@
 	  if (srcParams.containsKey("src")) 
 	  {
 	    src = (String)srcParams.get("src");
-	    modIndex = StringEscapeUtils.escapeHtml((String)srcParams.get("moduleIndex"));
-	    quesIndex = StringEscapeUtils.escapeHtml((String)srcParams.get("questionIndex"));
+	    //modIndex = StringEscapeUtils.escapeHtml((String)srcParams.get("moduleIndex"));
+	    //quesIndex = StringEscapeUtils.escapeHtml((String)srcParams.get("questionIndex"));
 	  }
   }
   else
   {
-	modIndex = StringEscapeUtils.escapeHtml(request.getParameter("moduleIndex"));
-	quesIndex = StringEscapeUtils.escapeHtml(request.getParameter("questionIndex"));
+	//modIndex = StringEscapeUtils.escapeHtml(request.getParameter("moduleIndex"));
+	//quesIndex = StringEscapeUtils.escapeHtml(request.getParameter("questionIndex"));
   }
   
   if (src != null&&!src.equals("")) {
-    extraURLParams += StringEscapeUtils.escapeHtml("&src="+src+"&moduleIndex="+modIndex+"&questionIndex="+quesIndex);
-    treeParams += StringEscapeUtils.escapeHtml(treeParams + ";src:"+src + ";" + "questionIndex:" + quesIndex
-                  + ";moduleIndex:"+modIndex);
+    extraURLParams += "&"+StringEscapeUtils.escapeHtml("src="+src);//+"&moduleIndex="+modIndex+"&questionIndex="+quesIndex);
+    treeParams += treeParams + ";"+StringEscapeUtils.escapeHtml("src:"+src); //+ ";" + "questionIndex:" + quesIndex + ";moduleIndex:"+modIndex);
   }
 
   treeURL = "/jsp/treeLoader.jsp?&treeParams="+TreeConstants.TREE_TYPE_URL_PARAM +":" +TreeConstants.DE_SEARCH_TREE + ";"+
       //brContextExcludeListParamStr +
       TreeConstants.FUNCTION_NAME_URL_PARAM + ":" +
       TreeConstants.DE_SEARCH_FUNCTION + treeParams +
-      "&treeName=deTree";
+      "&"+"treeName=deTree";
 
 
   if (performQuery != null ) {
-    extraURLParams += StringEscapeUtils.escapeHtml("&performQuery="+performQuery); 
+    extraURLParams += "&"+StringEscapeUtils.escapeHtml("performQuery="+performQuery); 
   }
       
   if (pageId == null) {
    browserURL = "/search?"+StringEscapeUtils.escapeHtml("FirstTimer=0")+extraURLParams;
   }
   else {
-    treeURL = treeURL + StringEscapeUtils.escapeHtml("&PageId="+pageId);
-    browserURL = "/search?"+StringEscapeUtils.escapeHtml("PageId="+pageId+"&FirstTimer=0"+extraURLParams);
+    treeURL = treeURL + "&"+StringEscapeUtils.escapeHtml("PageId="+pageId);
+    browserURL = "/search?"+StringEscapeUtils.escapeHtml("PageId="+pageId)+"&"+StringEscapeUtils.escapeHtml("FirstTimer=0"+extraURLParams);
   }
 
   if((cachedDeList!=null||showCached!=null) && (performQuery == null)) {
     pageContext.setAttribute("resultsPresent",new Boolean("true"));
-    browserURL = "/jsp/cdebrowser/dataElementsSearch.jsp?"+StringEscapeUtils.escapeHtml("performQuery=cached"+"&FirstTimer=0"+extraURLParams);
+    browserURL = "/jsp/cdebrowser/dataElementsSearch.jsp?"+StringEscapeUtils.escapeHtml("performQuery=cached")+"&"+StringEscapeUtils.escapeHtml("FirstTimer=0")+extraURLParams;
   }
 %>
 <HTML>
@@ -173,9 +172,9 @@ CDE Browser
   <frameset cols="25%,*">
     <frameset rows="15%,*">
        <html:frame page="/jsp/common/tree_hdr.jsp" frameborder="0" scrolling = "no" frameName="tree_header"/>       
-       <html:frame page="<%=treeURL%>" frameborder="0"  frameName="tree"/>
+       <html:frame page="<%=treeURL%>" frameborder="0"  frameName="tree"/>       
     </frameset>    	   	
-      <html:frame page="<%=browserURL%>" frameborder="0" frameName="body"/>
+      <html:frame page="<%=browserURL%>" frameborder="0" frameName="body"/>      
    </frameset>   
  </frameset>
 </HTML>
