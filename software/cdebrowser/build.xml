@@ -87,7 +87,7 @@
 	<property name="web.dir" location="${root.dir}/WEB-INF" />
 	<property name="classes.dir" location="${web.dir}/classes" />
 	<property name="temp.classes.dir" location="${web.dir}/classes/temp" />
-	<property name="wlib.dir" location="${basedir}/lib" />
+	<property name="wlib.dir" location="${basedir}/src/web/lib" />
 	<property name="jsp.dir" location="${root.dir}/jsp" />
 	<property name="prop.dir" location="${classes.dir}/gov/nih/nci/ncicb" />
 	<property name="src.dir" location="${basedir}/src/java" />
@@ -122,10 +122,10 @@
 
 	<!-- these values that replaces some tags in the tool, are needed at the build time -->
 	<filter token="Tool.ds.jndi.Name" value="CDEBrowserDS"/>
-	<filter token="Tool.Version" value="4.0.1"/>
-	<filter token="Tool.Build" value="4"/>
+	<filter token="Tool.Version" value="4.0.2"/>
+	<filter token="Tool.Build" value="1"/>
 	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
-	<filter token="Tool.Version.Suffix" value="4_0_1"/>
+	<filter token="Tool.Version.Suffix" value="4_0_2"/>
 	
 	<path id="libpath">
 		<fileset dir="${lib.dir}">
@@ -246,12 +246,57 @@
 		<copy tofile="${artifacts.dir}/jboss/cdebrowser-login-config-service.xml" filtering="true">
 			<fileset file="${conf.dir}/template.cdebrowser-login-config-service.xml" />
 		</copy>
+		
+		<copy todir="${root.dir}/css" >
+		    <fileset dir="${basedir}/src/web/css" />
+		</copy>
+		<copy todir="${root.dir}/html" >
+		    <fileset dir="${basedir}/src/web/html" />
+		</copy>
+		<copy todir="${root.dir}/images" >
+		   	<fileset dir="${basedir}/src/web/images" />
+		</copy>
+		<copy todir="${root.dir}/i" >
+			<fileset dir="${basedir}/src/web/i" />
+		</copy>
+		<copy todir="${root.dir}/jsp" >
+		    <fileset dir="${basedir}/src/web/jsp" />
+		</copy>
+		<copy todir="${root.dir}/js" >
+		    <fileset dir="${basedir}/src/web/js" />
+		</copy>
+		<copy todir="${web.dir}/tld" >
+		    <fileset dir="${basedir}/src/web/tld" />
+		</copy>		
+		<copy todir="${web.dir}/lib" >			
+		    <fileset dir="${wlib.dir}" />			
+		</copy>		
+		<copy todir="${web.dir}/admin" >
+			<fileset dir="${basedir}/src/web/struts-config/admin" />
+		</copy>
+		<copy todir="${web.dir}/cdebrowser" >
+		    <fileset dir="${basedir}/src/web/struts-config/cdebrowser" />
+		</copy>
+		<copy todir="${web.dir}/ocbrowser" >
+			<fileset dir="${basedir}/src/web/struts-config/ocbrowser" />
+		</copy>			
+		<copy todir="${web.dir}/spring" >
+			<fileset dir="${basedir}/src/web/spring" />
+		</copy>
+		<copy tofile="${web.dir}/cdebrowser-faces-config.xml" >
+		    <fileset file="${basedir}/src/web/cdebrowser-faces-config.xml" />
+		</copy>
+		<copy tofile="${web.dir}/ehcache.xml" >
+		    <fileset file="${basedir}/src/web/ehcache.xml" />
+		</copy>
+		
+		
 		<fixcrlf srcdir="${artifacts.dir}" eol="lf" includes="**/*.sh, **/*.xml, **/*.properties, **/*.dtd" />
 	</target>
 
 	<target name="-cjsp" depends="-assemble,-prop-check" description="Compiles the project JSP files to verify syntax.">
 		<echo>Compiling JSP files to verify syntax ...</echo>
-		<jspc srcdir="${root.dir}/jsp" destdir="${temp.classes.dir}" compiler="jasper41"  verbose="1" failonerror="yes">
+		<jspc srcdir="${root.dir}/jsp" destdir="${temp.classes.dir}" compiler="jasper41"  verbose="1" failonerror="no">
 			<classpath refid="libpath"/>
 			<include name="**/*.jsp"/>
 		</jspc>
