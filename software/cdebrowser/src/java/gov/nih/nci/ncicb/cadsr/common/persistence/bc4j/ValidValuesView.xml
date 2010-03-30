@@ -21,9 +21,8 @@ SELECT contexts.name, contexts.conte_idseq,
                  valuemeaningslov.long_name, valuemeaningslov.VERSION,
                  valuemeaningslov.vm_id, vdpvs.vp_idseq, vdpvs.begin_date,
                  vdpvs.end_date,
-                 sbrext_common_routines.return_number
-                                       (permissiblevalues.VALUE)
-                                                                display_order
+                 -- sbrext_common_routines.return_number (permissiblevalues.VALUE)
+                 null display_order
             FROM contexts contexts, vd_pvs vdpvs,
                  value_meanings_view valuemeaningslov,
                  value_domains valuedomains,
