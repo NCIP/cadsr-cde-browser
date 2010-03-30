@@ -180,6 +180,7 @@ public class CDEBrowserBc4jModuleImpl extends ApplicationModuleImpl {
 			view.executeQuery();
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			throw e;
 		}
 
