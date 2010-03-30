@@ -9,6 +9,7 @@ import gov.nih.nci.ncicb.cadsr.common.resource.ValidValue;
 import gov.nih.nci.ncicb.cadsr.common.resource.handler.ValidValueHandler;
 import gov.nih.nci.ncicb.cadsr.common.util.PageIterator;
 
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import oracle.cle.persistence.Handler;
@@ -78,7 +79,8 @@ public class ValidValueHandlerImpl extends Handler implements ValidValueHandler 
         vvList.add(validValue);
       }
     } catch (Exception e) {
-      throw e;
+    	e.printStackTrace();
+    	throw e;
     } finally {
       releaseConnection(sessionId);
     }
