@@ -123,7 +123,7 @@
 	<!-- these values that replaces some tags in the tool, are needed at the build time -->
 	<filter token="Tool.ds.jndi.Name" value="CDEBrowserDS"/>
 	<filter token="Tool.Version" value="4.0.2"/>
-	<filter token="Tool.Build" value="1"/>
+	<filter token="Tool.Build" value="2"/>
 	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
 	<filter token="Tool.Version.Suffix" value="4_0_2"/>
 	
