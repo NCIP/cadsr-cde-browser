@@ -848,19 +848,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 				<property name="database.driver.file" value="${bda-utils.dir}/ojdbc14-10.2.0.3.0.jar"/>
 				<property name="database.driver" value="oracle.jdbc.driver.OracleDriver"/>
 				<property name="database.schema" value="${database.name}"/>
-			</case>
-			<case value="mysql">
-				<property name="database.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-				<property name="database.driver.file" value="${bda-utils.dir}/mysql-connector-java-5.0.8.jar"/>
-				<property name="database.driver" value="com.mysql.jdbc.Driver"/>
-				<property name="database.schema" value="${database.name}"/>
-			</case>
-			<case value="postgresql">
-				<property name="database.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-				<property name="database.driver.file" value="${bda-utils.dir}/postgresql-8.3-603.jdbc3.jar"/>
-				<property name="database.driver" value="org.postgresql.Driver"/>
-				<property name="database.schema" value="public"/>
-			</case>
+			</case>			
 			<default>
 				<fail message="Invalid database type ${database.type}"/>
 			</default>
