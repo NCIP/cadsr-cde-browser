@@ -44,7 +44,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 	<replaceregexp file="${properties.file}" byline="true" match="^([\w\d.]+)=[ \t]+(.*[\w\d\/\{\}\\]+)\r*$" replace="\1=\2"/>
 	<property file="${properties.file}" />
 	<property name="env.name" value="local"/>
-	
+
 	<!-- Generic properties -->
 	<property name="project.name" value="cdebrowser"/>
 	<property name="env.name" value="local"/>
@@ -65,7 +65,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 	<property name="db-upgrade.dir.dest" location="${working.dir}/${db-upgrade.dist.relative.dir}" />
 	<property name="jboss-conf.dir.src" location="${basedir}/${jboss-conf.dist.relative.dir}" />
 	<property name="jboss-conf.dir.dest" location="${working.dir}/${jboss-conf.dist.relative.dir}" />
-	
+
 	<!-- *-ds.xml and WAR -->
 	<property name="cdebrowser-webapp.dir.dist" location="${basedir}/${cdebrowser-webapp.dist.relative.dir}" />
 	<property name="cdebrowser-webapp.ds.file" value="cdebrowser-ds.xml" />
@@ -308,10 +308,10 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 		install:database:prep,
 		install:database:validation:pre-install
 		">-->
-		<!-- Drop all schema objects or re-create the db -->
-		<!--<database-clean/> -->
-		<!-- Run baseline scripts stored in db.install.create.${database.type}.file.list variable -->
-		<!--<switch value="${database.type}">
+	<!-- Drop all schema objects or re-create the db -->
+	<!--<database-clean/> -->
+	<!-- Run baseline scripts stored in db.install.create.${database.type}.file.list variable -->
+	<!--<switch value="${database.type}">
 			<case value="oracle">
 				<database-install
 					db.install.create.file.list="${db.install.create.oracle.file.list}"
@@ -958,170 +958,170 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 	</target>
 
 	<target name="upgrade:jboss:readers:bda" if="jboss.exists">
-
-		<!-- Make sure the ${properties.file} has at least the following props -->
-		<properties-exist
-			properties.list="application.base.path,jboss.home,jboss.server.name"
-			/>
-		<!-- Set these -->
-		<osfamily property="os.family"/>
+		<!--
+	        #### Make sure the ${properties.file} has at least the following props ###
+	        <properties-exist
+	            properties.list="application.base.path,jboss.home,jboss.server.name"
+	            />
+	        #### Set these ###
+	        <osfamily property="os.family"/>
+	        <if>
+	            <or>
+	                <equals arg1="${os.family}" arg2="unix"/>
+	                <equals arg1="${os.family}" arg2="mac"/>
+	            </or>
+	            <then>
+	                <property name="jboss.server.hostname" value="${env.HOSTNAME}"/>
+	            </then>
+	        </if>
+	        <if>
+	            <equals arg1="${os.family}" arg2="windows"/>
+	            <then>
+	                <property name="jboss.server.hostname" value="${env.COMPUTERNAME}"/>
+	            </then>
+	        </if>
+	        #### Begin JBoss Readers ###
+	        #### Reader reqiures that you have only one data source defined in each *-ds.xml file ###
+	        <jboss-read-dbconfig
+	            jboss.home="${read.jboss.home}"
+	            jboss.ds-xml.file="cdebrowser-ds.xml"
+	            />
+	        <jboss-read-ldapconfig
+	            jboss.home="${read.jboss.home}"
+	            />
+	        -->
+		<jboss-read-bindings-file-location jboss.home="${read.jboss.home}" />
 		<if>
-			<or>
-				<equals arg1="${os.family}" arg2="unix"/>
-				<equals arg1="${os.family}" arg2="mac"/>
-			</or>
+			<equals arg1="${jboss.major.version}" arg2="4" />
 			<then>
-				<property name="jboss.server.hostname" value="${env.HOSTNAME}"/>
+				<jboss-read-ports />
 			</then>
 		</if>
-		<if>
-			<equals arg1="${os.family}" arg2="windows"/>
-			<then>
-				<property name="jboss.server.hostname" value="${env.COMPUTERNAME}"/>
-			</then>
-		</if>
-		<!-- Begin JBoss Readers -->
-		<!-- Reader reqiures that you have only one data source defined in each *-ds.xml file -->
-		<jboss-read-dbconfig
-			jboss.home="${read.jboss.home}"
-			jboss.ds-xml.file="cdebrowser-ds.xml"
-			/>
-		<jboss-read-ldapconfig
-			jboss.home="${read.jboss.home}"
-			/>
-		<jboss-read-bindings-file-location
-			jboss.home="${read.jboss.home}"
-			/>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="4"/>
-			<then>
-				<jboss-read-ports
-					/>
-			</then>
-		</if>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="5"/>
-			<then>
-				<jboss51-read-ports
-				/>
-			</then>
-		</if>
-		<!-- Setting this variable will cause install to copy it into place if using CM/DAC, not modified in NCM -->
-		<var name="jboss.ssl.keystore.dir" value="${working.dir}/keys/jboss"/>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="4"/>
-			<then>
-				<jboss-read-ssl
-					jboss.home="${read.jboss.home}"
-					copied.keystore.dir="${jboss.ssl.keystore.dir}"
-					/>
-			</then>
-		</if>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="5"/>
-			<then>
-				<jboss-read-ssl
-					jboss.home="${read.jboss.home}"
-					jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
-					copied.keystore.dir="${jboss.ssl.keystore.dir}"
-					/>
-			</then>
-		</if>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="4"/>
-			<then>
-				<jboss-read-external-hostname
-					jboss.home="${read.jboss.home}"
-					search.ssl.port="${jboss.ssl.port}"
-					/>
-			</then>
-		</if>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="5"/>
-			<then>
-				<jboss-read-external-hostname
-					jboss.home="${read.jboss.home}"
-					jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
-					search.ssl.port="${jboss.ssl.port}"
-					/>
-			</then>
-		</if>
-		<!-- for tier installs, should be done first, since it is set first it will be the one used if it exists -->
-		<jboss-read-java_opts
-			jboss.bin.dir="${read.jboss.home}/server/${jboss.server.name}/bin"
-			/>
-		<jboss-read-java_opts
-			jboss.home="${read.jboss.home}"
-			/>
-		<!-- will have to add code to install:post:jboss to copy this back if exists -->
-		<property name="copied.jboss.log4j.dir" value="${working.dir}/copied-log4j"/>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="4"/>
-			<then>
-				<jboss-copy-log4j
-					jboss.home="${read.jboss.home}"
-					jboss.log4j.location="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
-					copied.jboss.log4j.dir="${copied.jboss.log4j.dir}"
-					/>
-			</then>
-		</if>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="5"/>
-			<then>
-				<jboss-copy-log4j
-					jboss.home="${read.jboss.home}"
-					jboss.log4j.location="${jboss.home}/server/${jboss.server.name}/conf/jboss-log4j.xml"
-					copied.jboss.log4j.dir="${copied.jboss.log4j.dir}"
-					/>
-			</then>
-		</if>
-		<!-- <grid-read-index-url
-			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
-			/>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="4"/>
-			<then>
-				<jboss-read-grid-secure
-					jboss.home="${read.jboss.home}"
-					copied.keystore.dir="${jboss.grid.secure.dir}"
-					/>
-			</then>
-		</if>
-		<if>
-			<equals arg1="${jboss.major.version}" arg2="5"/>
-			<then>
-				<jboss-read-grid-secure
-					jboss.home="${read.jboss.home}"
-					jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
-					copied.keystore.dir="${jboss.grid.secure.dir}"
-					/>
-			</then>
-		</if>
-		-->
-		<!-- will have to add code to install:post:jboss to copy this back if exists -->
-		<!-- no longer needed
-		<grid-copy-service-metadata
-			copied.service-metadata.dir="${copied.service-metadata.dir}"
-			/>
-		
-		<grid-read-poc
-			grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
-			grid.service.name="Sample"
-			/>
-		-->
-		<read-property-from-properties-service
-			jboss.home="${read.jboss.home}"
-			property.name="property1"
-			/>
-		<read-property-from-properties-service
-			jboss.home="${read.jboss.home}"
-			property.name="property2"
-			/>
+		<!--
+	        <if>
+	            <equals arg1="${jboss.major.version}" arg2="5"/>
+	            <then>
+	                <jboss51-read-ports
+	                />
+	            </then>
+	        </if>
+	        #### Setting this variable will cause install to copy it into place if using CM/DAC, not modified in NCM ###
+	        <var name="jboss.ssl.keystore.dir" value="${working.dir}/keys/jboss"/>
+	        <if>
+	            <equals arg1="${jboss.major.version}" arg2="4"/>
+	            <then>
+	                <jboss-read-ssl
+	                    jboss.home="${read.jboss.home}"
+	                    copied.keystore.dir="${jboss.ssl.keystore.dir}"
+	                    />
+	            </then>
+	        </if>
+	        <if>
+	            <equals arg1="${jboss.major.version}" arg2="5"/>
+	            <then>
+	                <jboss-read-ssl
+	                    jboss.home="${read.jboss.home}"
+	                    jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
+	                    copied.keystore.dir="${jboss.ssl.keystore.dir}"
+	                    />
+	            </then>
+	        </if>
+	        <if>
+	            <equals arg1="${jboss.major.version}" arg2="4"/>
+	            <then>
+	                <jboss-read-external-hostname
+	                    jboss.home="${read.jboss.home}"
+	                    search.ssl.port="${jboss.ssl.port}"
+	                    />
+	            </then>
+	        </if>
+	        <if>
+	            <equals arg1="${jboss.major.version}" arg2="5"/>
+	            <then>
+	                <jboss-read-external-hostname
+	                    jboss.home="${read.jboss.home}"
+	                    jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
+	                    search.ssl.port="${jboss.ssl.port}"
+	                    />
+	            </then>
+	        </if>
+	        #### for tier installs, should be done first, since it is set first it will be the one used if it exists ###
+	        <jboss-read-java_opts
+	            jboss.bin.dir="${read.jboss.home}/server/${jboss.server.name}/bin"
+	            />
+	        <jboss-read-java_opts
+	            jboss.home="${read.jboss.home}"
+	            />
+	        #### will have to add code to install:post:jboss to copy this back if exists ###
+	        <property name="copied.jboss.log4j.dir" value="${working.dir}/copied-log4j"/>
+	        <if>
+	            <equals arg1="${jboss.major.version}" arg2="4"/>
+	            <then>
+	                <jboss-copy-log4j
+	                    jboss.home="${read.jboss.home}"
+	                    jboss.log4j.location="${jboss.home}/server/${jboss.server.name}/conf/log4j.xml"
+	                    copied.jboss.log4j.dir="${copied.jboss.log4j.dir}"
+	                    />
+	            </then>
+	        </if>
+	        <if>
+	            <equals arg1="${jboss.major.version}" arg2="5"/>
+	            <then>
+	                <jboss-copy-log4j
+	                    jboss.home="${read.jboss.home}"
+	                    jboss.log4j.location="${jboss.home}/server/${jboss.server.name}/conf/jboss-log4j.xml"
+	                    copied.jboss.log4j.dir="${copied.jboss.log4j.dir}"
+	                    />
+	            </then>
+	        </if>
+	        #### <grid-read-index-url
+	            grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
+	            />
+	        <if>
+	            <equals arg1="${jboss.major.version}" arg2="4"/>
+	            <then>
+	                <jboss-read-grid-secure
+	                    jboss.home="${read.jboss.home}"
+	                    copied.keystore.dir="${jboss.grid.secure.dir}"
+	                    />
+	            </then>
+	        </if>
+	        <if>
+	            <equals arg1="${jboss.major.version}" arg2="5"/>
+	            <then>
+	                <jboss-read-grid-secure
+	                    jboss.home="${read.jboss.home}"
+	                    jboss.server-xml.file="${jboss.home}/server/${jboss.server.name}/deploy/jbossweb.sar/server.xml"
+	                    copied.keystore.dir="${jboss.grid.secure.dir}"
+	                    />
+	            </then>
+	        </if>
+	        ###
+	        #### will have to add code to install:post:jboss to copy this back if exists ###
+	        #### no longer needed
+	        <grid-copy-service-metadata
+	            copied.service-metadata.dir="${copied.service-metadata.dir}"
+	            />
+	        
+	        <grid-read-poc
+	            grid.wsrf.dir="${read.jboss.home}/server/${jboss.server.name}/deploy/wsrf.war"
+	            grid.service.name="Sample"
+	            />
+	        ###
+	        <read-property-from-properties-service
+	            jboss.home="${read.jboss.home}"
+	            property.name="property1"
+	            />
+	        <read-property-from-properties-service
+	            jboss.home="${read.jboss.home}"
+	            property.name="property2"
+	            />
+	        -->
 	</target>
 
 	<target name="upgrade:post:jboss">
 		<if>
-			<equals arg1="${jboss.major.version}" arg2="4"/>
+			<equals arg1="${jboss.major.version}" arg2="4" />
 			<then>
 				<copy file="${copied.jboss.log4j.dir}/log4j.xml" todir="${jboss.home}/server/${jboss.server.name}/conf"/>
 			</then>
