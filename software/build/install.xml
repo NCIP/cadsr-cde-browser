@@ -537,7 +537,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 		depends="
 		common:init
 		">
-		<validate-post-common />
+		<validate-post-common propertyfile.backup.location="${user.home}"/>
 	</target>
 
 	<target name="install:jboss:validation:post-install" description="Run post-install checks from bda-utils"
@@ -551,7 +551,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 				<isset property="exclude.start.servers"/>
 			</not>
 			<then>
-				<validate-post-jboss validate-post-common="${user.home}" />				
+				<validate-post-jboss />				
 			</then>
 		</if>
 	</target>
