@@ -552,7 +552,7 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 			</not>
 			<then>
 				<validate-post-jboss
-				           validate-post-common="${user.home}" />				
+				           validate-post-common="${user.temp}" />				
 			</then>
 		</if>
 	</target>
