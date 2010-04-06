@@ -551,7 +551,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 				<isset property="exclude.start.servers"/>
 			</not>
 			<then>
-				<validate-post-jboss />
+				<validate-post-jboss
+				           validate-post-common="${user.home}" />				
 			</then>
 		</if>
 	</target>
