@@ -48,6 +48,7 @@ public class CDEBrowserParams
     String cadsrAPIUrl="";
     String formBuilderHelpUrl="";
     String cdebrowserHelpUrl="";
+    String privacyURL = "";
     
     String contextTest = "";
     String contextTraining = "";
@@ -301,6 +302,14 @@ public class CDEBrowserParams
     return adminToolUrl;
   }
   
+  public String getPrivacyURL() {
+	  return privacyURL;
+  }
+
+  public void setPrivacyURL(String privacyURL) {
+	  this.privacyURL = privacyURL;
+  }
+
   private void initAttributesFromProperties(Properties properties)
   {
         // read the init parameters from the resource bundle
@@ -363,7 +372,9 @@ public class CDEBrowserParams
             contextTraining = properties.getProperty("BROADCAST.EXCLUDE.CONTEXT.01.NAME");
             index++; 
             formBuilderHelpUrl = properties.getProperty("HELP.ROOT");
-            index++;      
+            index++;
+            privacyURL = properties.getProperty("PRIVACY_URL");
+            index++;
             log.info("Loaded Properties"+properties);
             cdebrowserHelpUrl = properties.getProperty("HELP.ROOT");
             index++;      
