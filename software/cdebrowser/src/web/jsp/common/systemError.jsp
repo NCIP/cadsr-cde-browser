@@ -1,7 +1,10 @@
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 <HTML>
+<%   CDEBrowserParams params = CDEBrowserParams.getInstance();
+%>
   <HEAD>
     <TITLE>CDEBrowser: System Error</TITLE>
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/>
@@ -12,7 +15,7 @@
   </HEAD>
   <BODY topmargin=0 bgcolor="#ffffff">
     <% String urlPrefix = "";
-
+	
 %>
     <%@ include file="/jsp/common/syserror_common_header_inc.jsp"%>
     <jsp:include page="/jsp/common/tab_inc.jsp" flush="true">
