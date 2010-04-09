@@ -1,5 +1,10 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.*"%>
+
+<%
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
+%>
 <html>
 <head>
 <title>Login</title>
@@ -57,7 +62,7 @@ function clearForm()
   <table>
     <tr>    
       <td align="left" class="OraTipText">
-        Guest users can login using username "guest" and password "guest".
+        Guest users can login using username "guest" and password "Nci_gue5t".
    <br> If you require an account with curator privileges to a specific context other than Test, please contact NCICB Application Support Email: <a href='mailto:ncicb@pop.nci.nih.gov'>ncicb@pop.nci.nih.gov</a>
       </td>
     </tr>  

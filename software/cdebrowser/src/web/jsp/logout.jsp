@@ -1,4 +1,5 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <html>
 <head>
@@ -13,6 +14,7 @@ if (parent.frames[1])
 </SCRIPT>
 </head>
 <%
+	CDEBrowserParams params = CDEBrowserParams.getInstance();
 	//clear the session attribute so not to display done button which would take you back to form builder
 	request.getSession().removeAttribute("paramsTree");	
 	//reload session attributes

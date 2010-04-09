@@ -1,5 +1,9 @@
+<%@page import="gov.nih.nci.ncicb.cadsr.common.util.* " %>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <html>
+<%
+  CDEBrowserParams params = CDEBrowserParams.getInstance();
+%>
 <head>
 <title>Login</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -9,6 +13,7 @@
 if (parent.frames[1]) 
   parent.location.href = self.location.href; 
 -->
+
 </SCRIPT>
 </head>
 
