@@ -123,7 +123,7 @@
 	<!-- these values that replaces some tags in the tool, are needed at the build time -->
 	<filter token="Tool.ds.jndi.Name" value="CDEBrowserDS"/>
 	<filter token="Tool.Version" value="4.0.1.1"/>
-	<filter token="Tool.Build" value="1"/>
+	<filter token="Tool.Build" value="2"/>
 	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
 	<filter token="Tool.Version.Suffix" value="4_0_1_1"/>
 	
@@ -218,7 +218,7 @@
 		</copy>
 		<copy tofile="${jsp.dir}/common/common_bottom_border.jsp" overwrite="true" filtering="true">
 			<fileset file="${conf.dir}/template.common_bottom_border.jsp" />
-		</copy>
+		</copy>		
 		<copy tofile="${web.dir}/spring/applicationContext-domainDao.xml" filtering="true">
 			<fileset file="${conf.dir}/template.applicationContext-domainDao.xml" />
 		</copy>
