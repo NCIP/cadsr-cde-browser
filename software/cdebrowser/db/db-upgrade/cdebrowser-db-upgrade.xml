@@ -10,6 +10,15 @@
 		<comment>Need to have at least one change set to allow tagging to work.</comment> 
 		<sql>select * from tool_options_ext</sql> 
 	</changeSet>
+	<changeSet id="2" author="cdebrowser">
+		<comment>Update Term Browser urls for CDEBrowser</comment> 
+		<sqlFile path="@db-upgrade.run.dir@/TermBrowserUpdates.sql" /> 
+	</changeSet>
+	<changeSet id="3" author="cdebrowser">
+		<comment>Add caDSR Privacy Link for CDEBrowser</comment> 
+		<sqlFile path="@db-upgrade.run.dir@/PrivacyLink.sql" /> 
+	</changeSet>
+	
 	<!--  <changeSet id="1" author="ssaksa">
   		<comment>execute add-ssaksa_one.sql add-ssaksa_two.sql</comment> 
   		<sqlFile path="@db-upgrade.run.dir@/add-ssaksa_one.sql" /> 
