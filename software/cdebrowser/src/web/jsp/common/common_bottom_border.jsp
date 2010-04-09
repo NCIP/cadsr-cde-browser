@@ -19,11 +19,16 @@
   </logic:notPresent>
 </FONT>
 </td>
+<td td width="15%" align="right">
+  <FONT color="white" size=-2 face=arial>
+  	<A href="<%=params.getPrivacyURL()%>" target="_blank">Privacy Notice</A>      
+  </FONT>
+   &nbsp; &nbsp;
+</td>
 <td width="30%" align="right">
- <FONT color="white" size=-2 face=arial>Version 4.0.2&nbsp;&nbsp;Build 1
+ <FONT color="white" size=-2 face=arial>Version 4.0.1.1&nbsp;&nbsp;Build 2
  <%=CDEBrowserParams.mode%></FONT>
-</TD>
-
+</td>
 <td td width="70%" align="right">
   <FONT color="white" size=-3 face=arial>
      Please send comments and suggestions to 
