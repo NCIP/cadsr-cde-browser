@@ -8,7 +8,7 @@
     </description>
 	<!-- set global properties for this build --> 
 	<!-- Change the values in template.build.properties as per environment -->
-	<property name="PROP.FILE" location="local.build.properties"/>   
+	<property name="PROP.FILE" location="template.build.properties"/>   
 	<property file="${PROP.FILE}" />
 	<echo>
         PROP.FILE = ${PROP.FILE}
