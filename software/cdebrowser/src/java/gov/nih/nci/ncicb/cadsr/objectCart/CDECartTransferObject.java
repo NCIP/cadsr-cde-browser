@@ -97,4 +97,11 @@ public class CDECartTransferObject implements CDECart, Serializable {
 		  //TODO
   }
   
+  public String getCartName() {
+	  return new String();
+  }
+  public String getCartId() {
+	  
+	  return new String();
+  }
 }

@@ -27,7 +27,22 @@ public class CDECartOCImpl implements CDECart, Serializable  {
 	private String userId;
 	private String cartName;
 	private Class CDECartObjectType;
-
+	
+	public static ArrayList<CDECart> getAllCarts(ObjectCartClient client, String uid) {
+		ArrayList<CDECart> ret = new ArrayList<CDECart>();
+		try {
+			List<Cart> carts = client.retrieveUserCarts(uid);
+			for (Cart c: carts) {
+				CDECart retCart = new CDECartOCImpl(client, uid, c.getName());
+				ret.add(retCart);
+			}
+		} catch (ObjectCartException oce) {
+			throw new RuntimeException("Constructor: Error creating the Object Cart ", oce);
+		}
+		
+		return ret;
+	}
+	
 	public CDECartOCImpl(ObjectCartClient client, String uid, String cName) {
 		oCart = new Cart();
 		itemComparator = new CDECartItemComparator();
@@ -260,4 +275,7 @@ public class CDECartOCImpl implements CDECart, Serializable  {
 		this.cartName = cartName;
 	}	
 	
+	public String getCartId() {
+		return oCart.getId().toString();	
+	}
 }

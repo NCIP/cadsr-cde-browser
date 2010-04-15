@@ -24,4 +24,6 @@ public interface CDECart  {
   
   public void expireCart();
   public void expireCart(Date expireDate);
+  public String getCartName();
+  public String getCartId();
 }

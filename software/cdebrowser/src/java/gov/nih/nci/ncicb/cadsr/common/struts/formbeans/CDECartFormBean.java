@@ -10,7 +10,8 @@ public class CDECartFormBean extends ActionForm  {
   private String [] selectedSaveItems;
   private String [] selectedDeleteItems;
   private String [] selectedItems;
-  private String moduleIndex;
+  private String newCartName;
+private String moduleIndex;
   private String questionIndex;
   private String src;
   
@@ -88,5 +89,14 @@ public class CDECartFormBean extends ActionForm  {
   public void setSrc(String newSrc) {
     src = newSrc;
   }
+  
+  public String getNewCartName() {
+		return newCartName;
+  }
+
+  public void setNewCartName(String newCartName) {
+		this.newCartName = newCartName;
+  }
+
 
 }

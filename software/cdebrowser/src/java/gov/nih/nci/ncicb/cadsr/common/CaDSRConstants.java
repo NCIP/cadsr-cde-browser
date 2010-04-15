@@ -15,6 +15,7 @@ public interface CaDSRConstants {
   public static final String OBJ_SEPARATOR_START = "{";
   public static final String OBJ_SEPARATOR_END = "}";
   public static final String CDE_CART = "cdeCart";
+  
   public static final String CDE_CARTSCHEME = "CDE Cart Classification";
   public static final String USER_CONTEXTS = "userContexts";
   public static final String GLOBAL_SESSION_KEYS="globalSessionKeys";

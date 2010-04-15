@@ -1,5 +1,6 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
+import gov.nih.nci.ncicb.cadsr.cdebrowser.struts.actions.SecureCDECartAction;
 import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
@@ -34,7 +35,9 @@ import gov.nih.nci.objectCart.client.ObjectCartException;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -320,6 +323,18 @@ public class GetDataElements extends BasePersistingProcess {
 			}
 
 			else if (performQuery.equals("addToCart")) {
+				String addToCartIndex = myRequest.getParameter("addToCartIndex");
+				int cartIndex = 0;
+				
+				try {
+					cartIndex = Integer.valueOf(addToCartIndex).intValue();
+				} catch (Exception e) {
+					System.out.println("Could not convert addToCart param to int");
+					System.out.println("addToCartIndex="+addToCartIndex);
+					e.printStackTrace();
+					log.error("Could not convert addToCart param to int");
+				}
+				
 				ValidValueHandler valueHandler =
 					(ValidValueHandler) HandlerFactory.getHandler(ValidValue.class);
 				desb = (DataElementSearchBean) getInfoObject("desb");
@@ -331,10 +346,13 @@ public class GetDataElements extends BasePersistingProcess {
 							ProcessConstants.DE_SEARCH_QUERY_BUILDER);
 				queryResults = (List) getInfoObject(ProcessConstants.ALL_DATA_ELEMENTS);
 
-				CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
-				if (cart == null){
-					cart = this.findCart(userSession);
+				ArrayList<CDECart> carts = (ArrayList<CDECart>)userSession.getAttribute(CaDSRConstants.CDE_CART);
+				if (carts == null){
+					carts = this.findCarts(userSession);
 				}
+				
+				CDECart cart = carts.get(cartIndex);
+				
 				String[] itemsList = getInfoStringArray(ProcessConstants.SELECT_DE);
 				CDECartItem cdeItem = null;
 				DataElement de = null;
@@ -349,6 +367,8 @@ public class GetDataElements extends BasePersistingProcess {
 					cdeItem.setPersistedInd(false);
 					cart.setDataElement(cdeItem);          
 				}
+				carts.set(cartIndex, cart);
+				userSession.setAttribute(CaDSRConstants.CDE_CART, carts);
 				myRequest.setAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS,"Data Element(s) added to your CDE Cart Successfully.");
 			}
 			else if (performQuery.equals("newSearch")) {
@@ -528,8 +548,8 @@ public class GetDataElements extends BasePersistingProcess {
 			setResult("TREE_URL", params.getTreeURL());
 			setResult("INITIALIZED", "yes");
 			try{
-				CDECart cart = this.findCart(mySession);
-				mySession.setAttribute(CaDSRConstants.CDE_CART, cart);
+				ArrayList<CDECart> carts = this.findCarts(mySession);
+				mySession.setAttribute(CaDSRConstants.CDE_CART, SecureCDECartAction.nameSort(carts));
 			}catch (Exception e){
 				e.printStackTrace();
 				throw e;
@@ -599,13 +619,13 @@ public class GetDataElements extends BasePersistingProcess {
 		return ts;
 	}
 
-	private CDECart findCart(HttpSession mySession) throws Exception{
-		CDECart cart = (CDECart) mySession.getAttribute(CaDSRConstants.CDE_CART);	  
+	private ArrayList<CDECart> findCarts(HttpSession mySession) throws Exception{
+		ArrayList<CDECart> carts = (ArrayList<CDECart>) mySession.getAttribute(CaDSRConstants.CDE_CART);	  
 		NCIUser user = (NCIUser) mySession.getAttribute(CaDSRConstants.USER_KEY);
 		String sessionId = mySession.getId();
 		String uid = null ;
 		try{
-			if (cart == null) {
+			if (carts == null) {
 				//cart = new CDECartImpl(); 
 				//ClientManager cManager = ClientManager.getInstance();	
 				CDEBrowserParams params = CDEBrowserParams.getInstance();
@@ -623,15 +643,16 @@ public class GetDataElements extends BasePersistingProcess {
 					uid = "PublicUser" + sessionId;
 					log.debug(" Public User Cart:  "+uid);
 				}
-				cart = new CDECartOCImpl(ocClient,uid,CaDSRConstants.CDE_CART);		  			  
+				CDECart cart = new CDECartOCImpl(ocClient,uid,CaDSRConstants.CDE_CART);	
+				carts = new ArrayList<CDECart>();
+				carts.add(cart);
 			}
 		}catch (ObjectCartException oce){
 			log.error("Exception on GetDataElements", oce);
 			throw oce;
 		}
-		return cart;
+		return carts;
 	}
-
 
 
 	private void setValuesFromOldSearchBean(DataElementSearchBean desb) throws Exception

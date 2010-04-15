@@ -98,4 +98,11 @@ public class CDECartImpl implements CDECart, Serializable  {
   public void expireCart(Date expireDate){
 	  //TODO
   }
+  
+  public String getCartName() {
+	  return new String();
+  }
+  public String getCartId() {
+	  return new String();
+  }
 }
