@@ -110,6 +110,7 @@ function retrieveSavedItems() {
 			String downloadXMLURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
 			String downloadExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
 			String downloadPriorExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCartPrior','excelWin',500,200)";
+			CDEBrowserParams params = CDEBrowserParams.getInstance();
 		%>
 		<jsp:include page="/jsp/common/common_cdebrowser_header_jsp_inc.jsp"
 			flush="true">
