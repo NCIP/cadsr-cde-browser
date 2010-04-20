@@ -15,8 +15,11 @@
 		<TITLE>Display CDE Cart</TITLE>
 		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache" />
 		<LINK REL=STYLESHEET TYPE="text/css"
-			HREF="<%=request.getContextPath()%>/css/blaf.css">
+			HREF="<%=request.getContextPath()%>/css/blafModified.css">
+		<LINK REL=STYLESHEET TYPE="text/css"
+			HREF="<%=request.getContextPath()%>/css/btn.css">
 		<SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/js/checkbox.js"></SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript" SRC="<%=request.getContextPath()%>/js/btn.js"></SCRIPT>
 		<SCRIPT LANGUAGE="JavaScript">
 
 var sItems = "selectedItems"; 
@@ -41,7 +44,19 @@ function saveItemsNewCart(sItems) {
    return true;
   }
 }
-
+function setModChecked(val,chkName,chkValue) {
+  dml=document.forms[0];
+  len = dml.elements.length; 
+  var i=0;
+  for( i=0 ; i<len ; i++) {
+   if (dml.elements[i].name==chkName) {
+    chkVal = dml.elements[i].value;
+    if (chkVal.match('^'+chkValue+':') == chkValue+':'){
+    	dml.elements[i].checked=val;
+    }
+   }
+  }
+}
 function validateNewCartName ( )
 {
     valid = true;
@@ -62,21 +77,21 @@ function deleteItems(dItems) {
   }
 }
 
-function ToggleSaveAll(e){
+function ToggleSaveAll(e,cartId){
 	if (e.checked) {
-	    setChecked(1,'selectedSaveItems');
+	    setModChecked(1,'selectedSaveItems',cartId);
 	}
 	else {
-	    setChecked(0,'selectedSaveItems');
+	    setModChecked(0,'selectedSaveItems',cartId);
 	}
 }
 
-function ToggleDeleteAll(e){
+function ToggleDeleteAll(e,cartId){
 	if (e.checked) {
-	    setChecked(1,'selectedDeleteItems');
+	    setModChecked(1,'selectedDeleteItems',cartId);
 	}
 	else {
-	    setChecked(0,'selectedDeleteItems');
+	    setModChecked(0,'selectedDeleteItems',cartId);
 	}
 }
 function ToggleAll(e, name){
@@ -107,9 +122,9 @@ function retrieveSavedItems() {
 		<%
 			String contextPath = StringEscapeUtils.escapeHtml(request.getContextPath());
 			String urlPrefix = "";
-			String downloadXMLURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
-			String downloadExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
-			String downloadPriorExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCartPrior','excelWin',500,200)";
+			String downloadXMLURL = "";
+			String downloadExcelURL = "";
+			String downloadPriorExcelURL = "";
 			CDEBrowserParams params = CDEBrowserParams.getInstance();
 		%>
 		<jsp:include page="/jsp/common/common_cdebrowser_header_jsp_inc.jsp"
@@ -142,23 +157,31 @@ function retrieveSavedItems() {
 		<html:form action="/cdeCartAction.do">
 			<html:hidden value=""
 				property="<%=BrowserNavigationConstants.METHOD_PARAM%>" />
-			<c:forEach items="${cdeCart}" var="cart">	
-			Next element is <c:out value="${cart.cartName}"	/>
-		
+			<c:forEach items="${cdeCart}" var="cart">			
 			<c:if test="${ not empty cart }">
-				<% String sCartName = ((gov.nih.nci.ncicb.cadsr.objectCart.CDECart)pageContext.getAttribute("cart")).getCartName();%>
+				<% String sCartName = ((gov.nih.nci.ncicb.cadsr.objectCart.CDECart)pageContext.getAttribute("cart")).getCartName();
+				   String sCartId = ((gov.nih.nci.ncicb.cadsr.objectCart.CDECart)pageContext.getAttribute("cart")).getCartId();
+				
+				%>
 				<c:if test="${ not empty cart.dataElements }"> 
 					<table cellpadding="0" cellspacing="0" width="80%" align="center">
 						<tr>
 						<!--  TODO: FIX DL URLS -->
 							<td nowrap>
-								<b><a href="<%=downloadPriorExcelURL%>"
+								<%
+									downloadXMLURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
+									downloadExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
+									downloadPriorExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCartPrior','excelWin',500,200)";
+			
+								 %>							
+							
+								<b><a class="anchor" href="<%=downloadPriorExcelURL%>"
 									title="3.2.0.1 Version">[Download Data Elements to Prior
 										Excel]</a> </b> &nbsp;&nbsp;
-								<b><a href="<%=downloadExcelURL%>"
+								<b><a class="anchor" href="<%=downloadExcelURL%>"
 									title="3.2.0.2 Includes new content: Value Meaning Description in column BV, Value Meaning Concept(s) in column BW, Value Domain Representation in columns BI-BS.">
 										[Download Data Elements to Excel]</a> </b> &nbsp;&nbsp;
-								<b><a href="<%=downloadXMLURL%>">[Download Data Elements
+								<b><a class="anchor" href="<%=downloadXMLURL%>">[Download Data Elements
 										as XML]</a> </b> &nbsp;&nbsp;
 							</td>
 						</tr>
@@ -177,19 +200,19 @@ function retrieveSavedItems() {
 							<logic:present name="nciUser">
 								<th>
 									Save
-									<input type="checkbox" name="saveAllChk<%=sCartName%>" value="yes"
-										onClick="ToggleAll(this, 'selectedSaveItems<%=sCartName%>')" />
+									<input type="checkbox" name="saveAllChk:<%=sCartId%>" value="yes"
+										onClick="ToggleSaveAll(this, '<%=sCartId%>')" />
 								</th>
 								<th>
 									Delete
-									<input type="checkbox" name="deleteAllChk<%=sCartName%>" value="yes"
-										onClick="ToggleAll(this, 'selectedDeleteItems<%=sCartName%>')" />
+									<input type="checkbox" name="deleteAllChk:<%=sCartId%>" value="yes"
+										onClick="ToggleDeleteAll(this, '<%=sCartId%>')" />
 								</th>
 							</logic:present>
 							<logic:notPresent name="nciUser">
 								<th>
-									<input type="checkbox" name="allChk<%=sCartName%>" value="yes"
-										onClick="ToggleAll(this)" />
+									<input type="checkbox" name="allChk:<%=sCartId%>" value="yes"
+										onClick="ToggleAll(this,'<%=sCartId%>')" />
 								</th>
 							</logic:notPresent>
 						</c:if>
@@ -254,25 +277,25 @@ function retrieveSavedItems() {
 							<tr class="OraTabledata">
 								<logic:present name="nciUser">
 								<script>
-									sItems = "selectedSaveItems<%=sCartName%>";
-									dItems = "selectedDeleteItems<%=sCartName%>";
+									sItems = "selectedSaveItems";
+									dItems = "selectedDeleteItems";
 								</script>
 								<td>
 									<c:if test="${de.persistedInd == true}">
               							&nbsp;       
             						</c:if>
 									<c:if test="${de.persistedInd != true}">
-										<input type="checkbox" name="selectedSaveItems<%=sCartName%>" value="<%=deId%>" />
+										<input type="checkbox" name="selectedSaveItems" value="<%=sCartId%>:<%=deId%>" />
 									</c:if>
 									</td>
 									<td>
-										<input type="checkbox" name="selectedDeleteItems<%=sCartName%>" value="<%=deId%>" />
+										<input type="checkbox" name="selectedDeleteItems" value="<%=sCartId%>:<%=deId%>" />
 									</td>
 								</logic:present>
 								<logic:notPresent name="nciUser">
 									<td>
-										<input type="checkbox" name="selectedItems<%=sCartName%>"
-											value="<%=deId%>" />
+										<input type="checkbox" name="selectedItems"
+											value="<%=sCartId%>:<%=deId%>" />
 									</td>
 								</logic:notPresent>
 								<td class="OraFieldText">
@@ -301,7 +324,7 @@ function retrieveSavedItems() {
 						
 						<br>
 						<table width="40%" align="center" cellpadding="1" cellspacing="1"
-							border="0">
+							border="1">
 							<tr>
 								<logic:notPresent name="nciUser">
 									<td>
@@ -314,31 +337,25 @@ function retrieveSavedItems() {
 								<logic:present name="nciUser">
 									<td colspan="2">
 								</logic:present>
-									<a href="javascript:saveItems(sItems)"> <html:img
-											src='<%=urlPrefix + "i/save.gif"%>' border="0"
-											alt="Save Data Elements" /> </a>
+									<a href="javascript:saveItems(sItems)" class="btn blue">Save</a>
 								</td>
 								<td>
-									<a href="javascript:deleteItems(dItems)"> <html:img
-											src='<%=urlPrefix + "i/deleteButton.gif"%>' border="0"
-											alt="Remove Data Elements from CDE Cart " /> </a>
+									<a href="javascript:deleteItems(dItems)" class="btn blue">Delete</a>
 								</td>				
 							</tr>
 							<tr>
 								<logic:notPresent name="nciUser">
 									<td colspan="2">
-										<input name="newCartName"/>
+										<input type="text" name="newCartName"/>
 									</td>
 								</logic:notPresent>
 								<logic:present name="nciUser">
 									<td>
-										<input name="newCartName"/>
+										<input type="text" name="newCartName"/>
 									</td>
 								</logic:present>
 								<td>
-									<a href="javascript:saveItemsNewCart(sItems)"> <html:img
-											src='<%=urlPrefix + "i/save.gif"%>' border="0"
-											alt="Save in Cart by Name" /></a>
+									<a href="javascript:saveItemsNewCart(sItems)" class="btn blue">Save by Name</a>
 								</td>
 								<td>
 									<html:link page="/jsp/cdeBrowse.jsp?PageId=DataElementsGroup" >
