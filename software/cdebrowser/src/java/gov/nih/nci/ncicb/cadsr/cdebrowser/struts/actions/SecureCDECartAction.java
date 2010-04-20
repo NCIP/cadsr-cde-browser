@@ -188,10 +188,10 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 				ocClient = new ObjectCartClient();
 
 			userCart = new CDECartOCImpl(ocClient,userName,cartName);			
-			items = transferDataElements(sessionCarts, selectedSaveItems, true);
+			sessionCarts = transferDataElements(sessionCarts, selectedSaveItems, true, userCart);
 			    
 			//sessionCart.mergeDataElements(items);      
-			userCart.mergeDataElements(items);
+			this.setSessionObject(request, CaDSRConstants.CDE_CART, sessionCarts);
 			
 			//saveMessage("cadsr.cdecart.save.success",request);
 		}catch (ObjectCartException oce) {
@@ -244,8 +244,9 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 				ocClient = new ObjectCartClient();
 
 			userCart = new CDECartOCImpl(ocClient,userName,CaDSRConstants.CDE_CART);
-			items = transferDataElements(sessionCarts, selectedDeleteItems, false);
-
+			sessionCarts = transferDataElements(sessionCarts, selectedDeleteItems, false, userCart);
+			this.setSessionObject(request, CaDSRConstants.CDE_CART, sessionCarts);
+			
 			//saveMessage("cadsr.cdecart.delete.success",request);
 		}
 		catch (ObjectCartException oce) {
@@ -257,7 +258,7 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 		return mapping.findForward("addDeleteSuccess");
 	} 
 	
-	private ArrayList<CDECartItem> transferDataElements(ArrayList<CDECart> carts, String[] saveItems, boolean persist) {
+	private ArrayList<CDECart> transferDataElements(ArrayList<CDECart> carts, String[] saveItems, boolean persist, CDECart targetCart) {
 		
 		HashMap <String, CDECart> cartMap = new HashMap<String, CDECart>();
 		ArrayList<CDECartItem> ret = new ArrayList<CDECartItem>();
@@ -276,8 +277,15 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 			ret.add(ci);
 			cart.removeDataElement(split[1]);
 		}  
+		targetCart.mergeDataElements(ret);
 		
-		return ret;
+		for (int i = 0; i < carts.size(); i++) {
+			CDECart cart = carts.get(i);
+			if (cart.getCartId().equals(targetCart.getCartId()))
+				carts.set(i, targetCart);
+		}
+		
+		return carts;
 	}
 	
 	private HashMap<String, CDECart> makeCartMap(ArrayList<CDECart> carts) {
