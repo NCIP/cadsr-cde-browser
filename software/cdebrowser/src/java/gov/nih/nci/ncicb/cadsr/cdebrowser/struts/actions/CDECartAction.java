@@ -179,4 +179,29 @@ public class CDECartAction extends BrowserBaseDispatchAction {
 
 		return mapping.findForward("newCartSuccess");
 	}
+	
+	/**
+	 * Delete Cart.
+	 *
+	 * @param mapping The ActionMapping used to select this instance.
+	 * @param form The optional ActionForm bean for this request.
+	 * @param request The HTTP Request we are processing.
+	 * @param response The HTTP Response we are processing.
+	 *
+	 * @return
+	 *
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	public ActionForward deleteCart(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+
+		CDECartFormBean myForm = (CDECartFormBean) form;
+		
+
+		return mapping.findForward("deleteCartSuccess");
+	}
 }

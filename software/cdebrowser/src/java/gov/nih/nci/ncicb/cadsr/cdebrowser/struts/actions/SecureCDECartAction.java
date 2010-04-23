@@ -258,6 +258,71 @@ public class SecureCDECartAction extends BrowserSecureBaseDispatchAction {
 		return mapping.findForward("addDeleteSuccess");
 	} 
 	
+	/**
+	 * Delete CDE Cart.
+	 *
+	 * @param mapping The ActionMapping used to select this instance.
+	 * @param form The optional ActionForm bean for this request.
+	 * @param request The HTTP Request we are processing.
+	 * @param response The HTTP Response we are processing.
+	 *
+	 * @return
+	 *
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	public ActionForward deleteCart(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+
+		try {
+			String userName = getLoggedInUsername(request);
+			ArrayList<CDECart> sessionCarts = (ArrayList<CDECart>) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+
+			CDECartFormBean myForm = (CDECartFormBean) form;
+			String[] selectedSaveItems = myForm.getSelectedSaveItems();	
+			String cartName = myForm.getDeleteCartName();
+			
+			myForm.setSelectedSaveItems(null);
+			
+			Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
+
+			CDEBrowserParams params = CDEBrowserParams.getInstance();
+			String ocURL = params.getObjectCartUrl();			
+			ObjectCartClient ocClient = null;
+			CDECart userCart = null;  
+			if (!ocURL.equals(""))
+				ocClient = new ObjectCartClient(ocURL);
+			else
+				ocClient = new ObjectCartClient();
+
+			userCart = new CDECartOCImpl(ocClient,userName,cartName);	
+			//Set expiration for Now.
+			userCart.expireCart(new java.util.Date(System.currentTimeMillis()));
+			
+			removeCart(sessionCarts, userCart);
+			          
+			this.setSessionObject(request, CaDSRConstants.CDE_CART, sessionCarts);
+			
+		}catch (ObjectCartException oce) {
+			if (log.isErrorEnabled()) {
+				log.error("Exception on addItems " , oce);
+			}    
+		}
+
+		return mapping.findForward("addDeleteSuccess");
+	}
+	private void removeCart(ArrayList<CDECart> carts, CDECart targetCart) {
+		
+		for (int i = 0; i < carts.size(); i++) {
+			CDECart cart = carts.get(i);
+			if (cart.getCartId().equals(targetCart.getCartId()))
+				carts.remove(i);
+		}
+	}
+	
 	private ArrayList<CDECart> transferDataElements(ArrayList<CDECart> carts, String[] saveItems, boolean persist, CDECart targetCart) {
 		
 		HashMap <String, CDECart> cartMap = new HashMap<String, CDECart>();

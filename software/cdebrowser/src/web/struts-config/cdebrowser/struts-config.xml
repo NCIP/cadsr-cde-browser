@@ -29,6 +29,9 @@
       <forward name="success" path="/jsp/cdebrowser/displayCDECart.jsp"/>
       <forward name="saveSuccess" path="/formCDECartRedirectAction.do?method=addItems" redirect="true"/>
       <forward name="deleteSuccess" path="/formCDECartRedirectAction.do?method=removeItems" redirect="true"/>
+      <forward name="newCartSuccess" path="/formCDECartRedirectAction.do?method=addNewCart" redirect="true"/>
+      <forward name="deleteCartSuccess" path="/formCDECartRedirectAction.do?method=deleteCart" redirect="true"/>
+      
       <forward name="secureSuccess" path="/formCDECartAction.do?method=displayCDECart"/>
     </action>
     <action name="displayCartForm" path="/formCDECartRedirectAction" parameter="method"

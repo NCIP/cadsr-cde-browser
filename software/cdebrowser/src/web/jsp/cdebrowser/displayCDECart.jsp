@@ -29,6 +29,16 @@ function submitForm() {
   document.forms[0].submit();
 }
 
+function deleteCart(cartName) {
+var r=confirm('You are about to delete cart '+cartName+'.')
+if (r == true) {
+	document.forms[0].method.value = 'deleteCart';
+	document.forms[0].deleteCartName.value = cartName;
+   submitForm();
+} else { }
+
+}
+
 function saveItems(sItems) {  
   if (validateSelection(sItems,'Please select at least one data element to save to your CDE Cart.')) {
    document.forms[0].method.value = 'addItems'
@@ -157,6 +167,9 @@ function retrieveSavedItems() {
 		<html:form action="/cdeCartAction.do">
 			<html:hidden value=""
 				property="<%=BrowserNavigationConstants.METHOD_PARAM%>" />
+				
+			<input type="hidden" value="" name="deleteCartName"/>
+			
 			<c:forEach items="${cdeCart}" var="cart">			
 			<c:if test="${ not empty cart }">
 				<% String sCartName = ((gov.nih.nci.ncicb.cadsr.objectCart.CDECart)pageContext.getAttribute("cart")).getCartName();
@@ -196,9 +209,25 @@ function retrieveSavedItems() {
 				<table width="80%" align="center" cellpadding="1" cellspacing="1"
 					border="0" class="OraBGAccentVeryDark">
 					<tr class="OraTableColumnHeader">
+						<logic:present name="nciUser">
+							
+							<th colspan="8">
+								<%=sCartName%>
+							</th>
+							<th><span size="small"> <a class="btn red" href="javascript:deleteCart('<%=sCartName%>')">Remove Cart</a></span>
+							</th>
+						</logic:present>
+						<logic:notPresent name="nciUser">
+							<th colspan="8">
+								<%=sCartName%>
+							</th>
+						</logic:notPresent>
+					</tr>
+					
+					<tr class="OraTableColumnHeader">
 						<c:if test="${ not empty cart.dataElements }">
 							<logic:present name="nciUser">
-								<th>
+							    <th>
 									Save
 									<input type="checkbox" name="saveAllChk:<%=sCartId%>" value="yes"
 										onClick="ToggleSaveAll(this, '<%=sCartId%>')" />
@@ -328,7 +357,7 @@ function retrieveSavedItems() {
 							<tr>
 								<logic:notPresent name="nciUser">
 									<td>
-										<a href="javascript:retrieveSavedItems()()"> <html:img
+										<a href="javascript:retrieveSavedItems()"> <html:img
 												src='<%=urlPrefix + "i/retrieve.gif"%>' border="0"
 												alt="Retrieve Saved Data Elements" /> </a>
 									</td>
