@@ -597,6 +597,23 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 	</target>
 
 	<target name="install:jboss:cdebrowser-webapp:re-configure" description="Update contents of artifacts if not all properties have been externalized, by extracting artifact, modify it as needed and re-archive it." unless="exclude.jboss"  depends="common:init">
+		<delete dir="${cdebrowser-webapp.dir.dist}/tmp"/>
+		<unzip src="${cdebrowser-webapp.dir.dist}/${cdebrowser-webapp.war.file}" dest="${cdebrowser-webapp.dir.dist}/tmp"/>
+		
+		<replace file="${cdebrowser-webapp.dir.dist}/tmp/WEB-INF/classes/cle-providers.xml">
+			<replacefilter token="@database.url@" value="${database.url}"/>
+			<replacefilter token="@database.server@" value="${database.server}"/>
+			<replacefilter token="@database.name@" value="${database.name}"/>
+			<replacefilter token="@database.user@" value="${database.user}"/>
+			<replacefilter token="@database.password@" value="${database.password}"/>
+		</replace>
+		
+		<war destfile="${cdebrowser-webapp.dir.dist}/${cdebrowser-webapp.war.file}" compress="false" webxml="${cdebrowser-webapp.dir.dist}/tmp/WEB-INF/web.xml" >
+            <fileset dir="${cdebrowser-webapp.dir.dist}/tmp">
+                <include name="*/**" />
+            </fileset>
+        </war>
+		
 		<copy file="${cdebrowser-webapp.dir.dist}/${cdebrowser-webapp.war.file}" todir="${jboss.home}/server/${jboss.server.name}/deploy" overwrite="true" />
 		<if>
 			<equals arg1="${jar-signing.execution.time}" arg2="install"/>

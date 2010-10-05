@@ -169,7 +169,7 @@
 		<copy tofile="${classes.dir}/gov/nih/nci/ncicb/cadsr/common/persistence/dao/jdbc/jndi.properties" filtering="true" overwrite="Yes">
 			<fileset file="${conf.dir}/template.jndi.properties"/>
 		</copy>
-		<copy tofile="${classes.dir}/cle-providers.xml" filtering="true" overwrite="Yes">
+		<copy tofile="${classes.dir}/cle-providers.xml" overwrite="Yes">
 			<fileset file="${conf.dir}/template.cle-providers.xml"/>
 		</copy>
 		<copy tofile="${classes.dir}/deployment.properties" filtering="true" overwrite="Yes">
