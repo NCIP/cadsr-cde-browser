@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/tld/cdebrowser.tld" prefix="cde"%>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ page import="oracle.clex.process.jsp.GetInfoBean"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.html.*"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.util.*"%>
@@ -15,11 +14,8 @@
 		<TITLE>Display CDE Cart</TITLE>
 		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache" />
 		<LINK REL=STYLESHEET TYPE="text/css"
-			HREF="<%=request.getContextPath()%>/css/blafModified.css">
-		<LINK REL=STYLESHEET TYPE="text/css"
-			HREF="<%=request.getContextPath()%>/css/btn.css">
+			HREF="<%=request.getContextPath()%>/css/blaf.css">
 		<SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/js/checkbox.js"></SCRIPT>
-		<SCRIPT LANGUAGE="JavaScript" SRC="<%=request.getContextPath()%>/js/btn.js"></SCRIPT>
 		<SCRIPT LANGUAGE="JavaScript">
 
 var sItems = "selectedItems"; 
@@ -29,55 +25,12 @@ function submitForm() {
   document.forms[0].submit();
 }
 
-function deleteCart(cartName) {
-var r=confirm('You are about to delete cart '+cartName+'.')
-if (r == true) {
-	document.forms[0].method.value = 'deleteCart';
-	document.forms[0].deleteCartName.value = cartName;
-   submitForm();
-} else { }
-
-}
-
 function saveItems(sItems) {  
   if (validateSelection(sItems,'Please select at least one data element to save to your CDE Cart.')) {
    document.forms[0].method.value = 'addItems'
    submitForm();
    return true;
   }
-}
-function saveItemsNewCart(sItems) {  
-  if (validateSelection(sItems,'Please select at least one data element to save to your CDE Cart.') && 
-  	validateNewCartName()) {
-   document.forms[0].method.value = 'addNewCart'
-   submitForm();
-   return true;
-  }
-}
-function setModChecked(val,chkName,chkValue) {
-  dml=document.forms[0];
-  len = dml.elements.length; 
-  var i=0;
-  for( i=0 ; i<len ; i++) {
-   if (dml.elements[i].name==chkName) {
-    chkVal = dml.elements[i].value;
-    if (chkVal.match('^'+chkValue+':') == chkValue+':'){
-    	dml.elements[i].checked=val;
-    }
-   }
-  }
-}
-function validateNewCartName ( )
-{
-    valid = true;
-
-    if ( document.forms[0].newCartName.value == "" )
-    {
-        alert ( "Please fill in the 'New Cart Name' to create new cart." );
-        valid = false;
-    }
-
-    return valid;
 }
 
 function deleteItems(dItems) {
@@ -87,29 +40,29 @@ function deleteItems(dItems) {
   }
 }
 
-function ToggleSaveAll(e,cartId){
+function ToggleSaveAll(e){
 	if (e.checked) {
-	    setModChecked(1,'selectedSaveItems',cartId);
+	    setChecked(1,'selectedSaveItems');
 	}
 	else {
-	    setModChecked(0,'selectedSaveItems',cartId);
+	    setChecked(0,'selectedSaveItems');
 	}
 }
 
-function ToggleDeleteAll(e,cartId){
+function ToggleDeleteAll(e){
 	if (e.checked) {
-	    setModChecked(1,'selectedDeleteItems',cartId);
+	    setChecked(1,'selectedDeleteItems');
 	}
 	else {
-	    setModChecked(0,'selectedDeleteItems',cartId);
+	    setChecked(0,'selectedDeleteItems');
 	}
 }
-function ToggleAll(e, name){
+function ToggleAll(e){
 	if (e.checked) {
-	    setChecked(1,name);
+	    setChecked(1,'selectedItems');
 	}
 	else {
-	    setChecked(0,name);
+	    setChecked(0,'selectedItems');
 	}
 }
 
@@ -132,9 +85,9 @@ function retrieveSavedItems() {
 		<%
 			String contextPath = StringEscapeUtils.escapeHtml(request.getContextPath());
 			String urlPrefix = "";
-			String downloadXMLURL = "";
-			String downloadExcelURL = "";
-			String downloadPriorExcelURL = "";
+			String downloadXMLURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
+			String downloadExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
+			String downloadPriorExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCartPrior','excelWin',500,200)";
 			CDEBrowserParams params = CDEBrowserParams.getInstance();
 		%>
 		<jsp:include page="/jsp/common/common_cdebrowser_header_jsp_inc.jsp"
@@ -167,84 +120,54 @@ function retrieveSavedItems() {
 		<html:form action="/cdeCartAction.do">
 			<html:hidden value=""
 				property="<%=BrowserNavigationConstants.METHOD_PARAM%>" />
-				
-			<input type="hidden" value="" name="deleteCartName"/>
-			
-			<c:forEach items="${cdeCart}" var="cart">			
-			<c:if test="${ not empty cart }">
-				<% String sCartName = ((gov.nih.nci.ncicb.cadsr.objectCart.CDECart)pageContext.getAttribute("cart")).getCartName();
-				   String sCartId = ((gov.nih.nci.ncicb.cadsr.objectCart.CDECart)pageContext.getAttribute("cart")).getCartId();
-				
-				%>
-				<c:if test="${ not empty cart.dataElements }"> 
+			<logic:present name="<%=CaDSRConstants.CDE_CART%>">
+				<logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>"
+					property="dataElements">
 					<table cellpadding="0" cellspacing="0" width="80%" align="center">
 						<tr>
-						<!--  TODO: FIX DL URLS -->
 							<td nowrap>
-								<%
-									downloadXMLURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
-									downloadExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
-									downloadPriorExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCartPrior','excelWin',500,200)";
-			
-								 %>							
-							
-								<b><a class="anchor" href="<%=downloadPriorExcelURL%>"
+								<b><a href="<%=downloadPriorExcelURL%>"
 									title="3.2.0.1 Version">[Download Data Elements to Prior
 										Excel]</a> </b> &nbsp;&nbsp;
-								<b><a class="anchor" href="<%=downloadExcelURL%>"
+								<b><a href="<%=downloadExcelURL%>"
 									title="3.2.0.2 Includes new content: Value Meaning Description in column BV, Value Meaning Concept(s) in column BW, Value Domain Representation in columns BI-BS.">
 										[Download Data Elements to Excel]</a> </b> &nbsp;&nbsp;
-								<b><a class="anchor" href="<%=downloadXMLURL%>">[Download Data Elements
+								<b><a href="<%=downloadXMLURL%>">[Download Data Elements
 										as XML]</a> </b> &nbsp;&nbsp;
 							</td>
 						</tr>
 						<tr>
 							<td width="100%" nowrap>
-								<img height="2" src="i/beigedot.gif" width="99%" align="top"
-									border="0">
+								<img height=2 src="i/beigedot.gif" width="99%" align=top
+									border=0>
 							</td>
 						</tr>
 					</table>
-				</c:if>
+				</logic:notEmpty>
 				<table width="80%" align="center" cellpadding="1" cellspacing="1"
 					border="0" class="OraBGAccentVeryDark">
 					<tr class="OraTableColumnHeader">
-						<logic:present name="nciUser">
-							
-							<th colspan="8">
-								<%=sCartName%>
-							</th>
-							<th><span size="small"> <a class="btn red" href="javascript:deleteCart('<%=sCartName%>')">Remove Cart</a></span>
-							</th>
-						</logic:present>
-						<logic:notPresent name="nciUser">
-							<th colspan="8">
-								<%=sCartName%>
-							</th>
-						</logic:notPresent>
-					</tr>
-					
-					<tr class="OraTableColumnHeader">
-						<c:if test="${ not empty cart.dataElements }">
+						<logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>"
+							property="dataElements">
 							<logic:present name="nciUser">
-							    <th>
+								<th>
 									Save
-									<input type="checkbox" name="saveAllChk:<%=sCartId%>" value="yes"
-										onClick="ToggleSaveAll(this, '<%=sCartId%>')" />
+									<input type="checkbox" name="saveAllChk" value="yes"
+										onClick="ToggleSaveAll(this)" />
 								</th>
 								<th>
 									Delete
-									<input type="checkbox" name="deleteAllChk:<%=sCartId%>" value="yes"
-										onClick="ToggleDeleteAll(this, '<%=sCartId%>')" />
+									<input type="checkbox" name="deleteAllChk" value="yes"
+										onClick="ToggleDeleteAll(this)" />
 								</th>
 							</logic:present>
 							<logic:notPresent name="nciUser">
 								<th>
-									<input type="checkbox" name="allChk:<%=sCartId%>" value="yes"
-										onClick="ToggleAll(this,'<%=sCartId%>')" />
+									<input type="checkbox" name="allChk" value="yes"
+										onClick="ToggleAll(this)" />
 								</th>
 							</logic:notPresent>
-						</c:if>
+						</logic:notEmpty>
 						<th>
 							Long Name
 						</th>
@@ -267,11 +190,10 @@ function retrieveSavedItems() {
 							Version
 						</th>
 					</tr>
-					
-					
-					<c:if test="${ empty cart.dataElements }">
+					<logic:empty name="<%=CaDSRConstants.CDE_CART%>"
+						property="dataElements">
 						<tr class="OraTabledata">
-							<td class="OraFieldText" colspan="7"> <bean:write name="cart" property="cartName"/> is empty.	</td>
+							<td class="OraFieldText" colspan="7"> CDE Cart is empty.	</td>
 						</tr>
 						<logic:notPresent name="nciUser">
 							<table width="20%" align="center" cellpadding="1" cellspacing="1"
@@ -295,12 +217,12 @@ function retrieveSavedItems() {
 								</tr>
 							</table>
 						</logic:notPresent>
-					</c:if>		
-					<!--Cart is now ArrayList<CDECart> -->	
-					<c:if test="${ not empty cart.dataElements }">
-						<c:forEach items="${cart.dataElements}" var="de">				
-
-							<% String deId = ((gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem)pageContext.getAttribute("de")).getId();
+					</logic:empty>		
+					<logic:notEmpty name="<%=CaDSRConstants.CDE_CART%>" property="dataElements">					
+						<logic:iterate id="de" name="<%=CaDSRConstants.CDE_CART%>"
+							type="gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem"
+							property="dataElements">
+							<% String deId = de.getId();
 							   String detailsURL = "javascript:details('&p_de_idseq="+deId +"')";
 							%>
 							<tr class="OraTabledata">
@@ -310,81 +232,66 @@ function retrieveSavedItems() {
 									dItems = "selectedDeleteItems";
 								</script>
 								<td>
-									<c:if test="${de.persistedInd == true}">
+									<logic:equal name="de" property="persistedInd" value="true">
               							&nbsp;       
-            						</c:if>
-									<c:if test="${de.persistedInd != true}">
-										<input type="checkbox" name="selectedSaveItems" value="<%=sCartId%>:<%=deId%>" />
-									</c:if>
+            						</logic:equal>
+									<logic:notEqual name="de" property="persistedInd" value="true">
+										<input type="checkbox" name="selectedSaveItems" value="<%=de.getId()%>" />
+									</logic:notEqual>
 									</td>
 									<td>
-										<input type="checkbox" name="selectedDeleteItems" value="<%=sCartId%>:<%=deId%>" />
+										<input type="checkbox" name="selectedDeleteItems" value="<%=de.getId()%>" />
 									</td>
 								</logic:present>
 								<logic:notPresent name="nciUser">
 									<td>
 										<input type="checkbox" name="selectedItems"
-											value="<%=sCartId%>:<%=deId%>" />
+											value="<%=de.getId()%>" />
 									</td>
 								</logic:notPresent>
 								<td class="OraFieldText">
-									<c:out value="${de.item.longName}" />
+									<bean:write name="de" property="item.longName" />
 								</td>
 								<td class="OraFieldText">
-									<c:out value="${de.item.longCDEName}" />
+									<bean:write name="de" property="item.longCDEName" />
 								</td>
 								<td class="OraFieldText">
-									<c:out value="${de.item.contextName}" />
+									<bean:write name="de" property="item.contextName" />
 								</td>
 								<td class="OraFieldText">
-									<c:out value="${de.item.registrationStatus}" />
+									<bean:write name="de" property="item.registrationStatus" />
 								</td>
 								<td class="OraFieldText">
-									<c:out value="${de.item.aslName}" />
+									<bean:write name="de" property="item.aslName" />
 								</td>
 								<td class="OraFieldText">
-									<c:out value="${de.item.publicId}" />
+									<bean:write name="de" property="item.publicId" />
 								</td>
 								<td class="OraFieldText">
-									<c:out value="${de.item.version}" />
+									<bean:write name="de" property="item.version" />
 								</td>
 							</tr>
-						</c:forEach>
-						
+						</logic:iterate>
 						<br>
 						<table width="40%" align="center" cellpadding="1" cellspacing="1"
-							border="1">
+							border="0">
 							<tr>
 								<logic:notPresent name="nciUser">
 									<td>
-										<a href="javascript:retrieveSavedItems()"> <html:img
+										<a href="javascript:retrieveSavedItems()()"> <html:img
 												src='<%=urlPrefix + "i/retrieve.gif"%>' border="0"
 												alt="Retrieve Saved Data Elements" /> </a>
 									</td>
-									<td>
 								</logic:notPresent>
-								<logic:present name="nciUser">
-									<td colspan="2">
-								</logic:present>
-									<a href="javascript:saveItems(sItems)" class="btn blue">Save</a>
+								<td>
+									<a href="javascript:saveItems(sItems)"> <html:img
+											src='<%=urlPrefix + "i/save.gif"%>' border="0"
+											alt="Save Data Elements" /> </a>
 								</td>
 								<td>
-									<a href="javascript:deleteItems(dItems)" class="btn blue">Delete</a>
-								</td>				
-							</tr>
-							<tr>
-								<logic:notPresent name="nciUser">
-									<td colspan="2">
-										<input type="text" name="newCartName"/>
-									</td>
-								</logic:notPresent>
-								<logic:present name="nciUser">
-									<td>
-										<input type="text" name="newCartName"/>
-									</td>
-								</logic:present>
-								<td>
-									<a href="javascript:saveItemsNewCart(sItems)" class="btn blue">Save by Name</a>
+									<a href="javascript:deleteItems(dItems)"> <html:img
+											src='<%=urlPrefix + "i/deleteButton.gif"%>' border="0"
+											alt="Remove Data Elements from CDE Cart " /> </a>
 								</td>
 								<td>
 									<html:link page="/jsp/cdeBrowse.jsp?PageId=DataElementsGroup" >
@@ -394,10 +301,8 @@ function retrieveSavedItems() {
 								</td>
 							</tr>
 						</table>
-					</c:if>		
-					</table>
-			</c:if>
-			</c:forEach>
+					</logic:notEmpty>
+			</logic:present>
 					<table width="20%" align="center" cellpadding="1" cellspacing="1"
 						border="0">
 						<tr>
