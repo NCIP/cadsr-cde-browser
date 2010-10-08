@@ -45,21 +45,14 @@ public class CDECartAction extends BrowserBaseDispatchAction {
 				return mapping.findForward("secureSuccess");
 			}			
 			//Get the cart in the session
-			ArrayList<CDECart> sessionCarts = (ArrayList<CDECart>) this.getSessionObject(request, CaDSRConstants.CDE_CART);
-			int i = 0;
-			for (CDECart sessionCart: sessionCarts) {
-				
-				Collection<CDECartItem> cartItems = sessionCart.getDataElements();
-				Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
-				
-				for(Object o:cartItems){
-					CDECartItem item = (CDECartItem)o;
-					item.setPersistedInd(false);
-					items.add(item);
-				}
-				sessionCart.mergeDataElements(items);
-				sessionCarts.set(i, sessionCart);
-				i++;
+			CDECart sessionCart = (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
+			Collection<CDECartItem> cartItems = sessionCart.getDataElements();
+			Collection<CDECartItem> items = new ArrayList<CDECartItem> ();
+			
+			for(Object o:cartItems){
+				CDECartItem item = (CDECartItem)o;
+				item.setPersistedInd(false);
+				items.add(item);
 			}
 			
 			this.setSessionObject(request, CaDSRConstants.CDE_CART, sessionCarts);			

@@ -10,9 +10,7 @@ public class CDECartFormBean extends ActionForm  {
   private String [] selectedSaveItems;
   private String [] selectedDeleteItems;
   private String [] selectedItems;
-  private String newCartName;
-  private String deleteCartName;
-private String moduleIndex;
+  private String moduleIndex;
   private String questionIndex;
   private String src;
   

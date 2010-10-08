@@ -367,8 +367,6 @@ public class GetDataElements extends BasePersistingProcess {
 					cdeItem.setPersistedInd(false);
 					cart.setDataElement(cdeItem);          
 				}
-				carts.set(cartIndex, cart);
-				userSession.setAttribute(CaDSRConstants.CDE_CART, carts);
 				myRequest.setAttribute(ProcessConstants.CDE_CART_ADD_SUCCESS,"Data Element(s) added to your CDE Cart Successfully.");
 			}
 			else if (performQuery.equals("newSearch")) {
