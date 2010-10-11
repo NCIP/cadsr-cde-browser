@@ -89,18 +89,4 @@ public class CDECartFormBean extends ActionForm  {
     src = newSrc;
   }
   
-  public String getNewCartName() {
-		return newCartName;
-  }
-
-  public void setNewCartName(String newCartName) {
-		this.newCartName = newCartName;
-  }
-
-  public String getDeleteCartName() {
-	  return deleteCartName;
-  }
-  public void setDeleteCartName(String deleteCartName) {
-	  this.deleteCartName = deleteCartName;
-  }
 }

@@ -54,8 +54,9 @@ public class CDECartAction extends BrowserBaseDispatchAction {
 				item.setPersistedInd(false);
 				items.add(item);
 			}
+			sessionCart.mergeDataElements(items);
 			
-			this.setSessionObject(request, CaDSRConstants.CDE_CART, sessionCarts);			
+			this.setSessionObject(request, CaDSRConstants.CDE_CART, sessionCart);			
 		}catch (Exception exp) {
 			if (log.isErrorEnabled()) {
 				log.error("Exception on displayCDECart.....", exp);
@@ -86,13 +87,11 @@ public class CDECartAction extends BrowserBaseDispatchAction {
 		try{
 			Collection items = new ArrayList();		
 			NCIUser user = (NCIUser) this.getSessionObject(request, CaDSRConstants.USER_KEY);	      
-			ArrayList<CDECart> sessionCarts = (ArrayList<CDECart>)this.getSessionObject(request, CaDSRConstants.CDE_CART);
-
+			CDECart sessionCart = (CDECart) this.getSessionObject(request, CaDSRConstants.CDE_CART);
 
 			if(user!= null){
 				return mapping.findForward("deleteSuccess");
 			}
-			CDECart sessionCart = sessionCarts.get(0);
 			CDECartFormBean myForm = (CDECartFormBean) form;
 			String[] selectedDeleteItems = {};
 			selectedDeleteItems = myForm.getSelectedItems();
@@ -140,61 +139,4 @@ public class CDECartAction extends BrowserBaseDispatchAction {
 
 		return mapping.findForward("saveSuccess");
 	}	
-	
-	/**
-	 * Add new Cart.
-	 *
-	 * @param mapping The ActionMapping used to select this instance.
-	 * @param form The optional ActionForm bean for this request.
-	 * @param request The HTTP Request we are processing.
-	 * @param response The HTTP Response we are processing.
-	 *
-	 * @return
-	 *
-	 * @throws IOException
-	 * @throws ServletException
-	 */
-	public ActionForward addNewCart(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-
-		CDECartFormBean myForm = (CDECartFormBean) form;
-		String[] selectedSaveItems = {};
-		if(myForm.getSelectedItems()!= null && myForm.getSelectedItems().length > 0){
-			selectedSaveItems = myForm.getSelectedItems();			
-			myForm.setSelectedItems(null);
-		}else{
-			selectedSaveItems = myForm.getSelectedSaveItems();
-		}		
-		myForm.setSelectedSaveItems(selectedSaveItems);		
-
-		return mapping.findForward("newCartSuccess");
-	}
-	
-	/**
-	 * Delete Cart.
-	 *
-	 * @param mapping The ActionMapping used to select this instance.
-	 * @param form The optional ActionForm bean for this request.
-	 * @param request The HTTP Request we are processing.
-	 * @param response The HTTP Response we are processing.
-	 *
-	 * @return
-	 *
-	 * @throws IOException
-	 * @throws ServletException
-	 */
-	public ActionForward deleteCart(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-
-		CDECartFormBean myForm = (CDECartFormBean) form;
-		
-
-		return mapping.findForward("deleteCartSuccess");
-	}
 }
