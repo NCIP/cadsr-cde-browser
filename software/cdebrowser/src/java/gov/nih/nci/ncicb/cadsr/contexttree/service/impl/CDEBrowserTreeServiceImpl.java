@@ -1142,7 +1142,7 @@ implements CDEBrowserTreeService {
 										template.getFormCategory()) + "&templateName=" + URLEncoder.encode(
 												longName) + "&contextName="
 												+ URLEncoder.encode(contextName) 
-												+ StringEscapeUtils.escapeHtml("&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes&") +
+												+ "&PageId=DataElementsGroup&NOT_FIRST_DISPLAY=1&performQuery=yes&" +
 												csi.getClassSchemeItemName() + ">>" + longName                                
 												+    "')",
 												templateIdseq, true);		
