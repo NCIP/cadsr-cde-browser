@@ -503,10 +503,9 @@ public class CompareCDEAction
    ValidValueHandler validValueHandler = (ValidValueHandler)HandlerFactory.getHandler(ValidValue.class);
    List vvList = validValueHandler.getValidValues(de.getVdIdseq(), sessionId);
 
-  /** if (vvList != null && !vvList.isEmpty()) {
+  if (vvList != null && !vvList.isEmpty()) {
     vvList = conDAO.populateConceptsForValidValues(vvList);
    }
-   **/
 
    de.getValueDomain().setValidValues(vvList);
   }

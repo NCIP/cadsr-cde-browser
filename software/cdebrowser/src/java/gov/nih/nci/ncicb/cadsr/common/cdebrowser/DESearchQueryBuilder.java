@@ -786,7 +786,7 @@ public class DESearchQueryBuilder extends Object {
                   +" from sbr.reference_documents_view rd2,sbr.data_elements_view de2 "
                   +" where  de2.de_idseq  = rd2.ac_idseq (+) "
                   +" and    rd2.dctl_name (+) = 'Alternate Question Text' "
-                  +" and    upper (nvl(rd2.doc_text,'%')) like upper ('"+newSearchStr+"')) ";
+                  +" and    upper (nvl(rd2.doc_text,'%')) like upper ('%"+newSearchStr+"%')) ";
      } else if  ( StringUtils.containsKey(searchDomain,"Doc Text")) {
         docTextTypeWhere = "rd1.dctl_name (+) = 'Preferred Question Text'";
      } else if  ( StringUtils.containsKey(searchDomain,"Hist")) {

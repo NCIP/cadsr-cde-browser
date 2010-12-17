@@ -184,7 +184,7 @@ function goPage(pageInfo) {
       %>
       <tr class="OraTabledata">
         <td class="OraFieldText"><%=deDerivation.getDisplayOrder()%> </td>
-        <td class="OraFieldText"><%=derivedDe.getLongName()%> </td>
+        <td class="OraFieldText"><a href="search?dataElementDetails=9&p_de_idseq=<%=derivedDe.getDeIdseq()%>&PageId=DataElementsGroup&queryDE=yes" target="_blank"><%=derivedDe.getLongName()%></a> </td>
         <td class="OraFieldText"><%=derivedDe.getContextName()%> </td>
         <td class="OraFieldText"><%=derivedDe.getAslName()%> </td>
         <td class="OraFieldText"><%=derivedDe.getCDEId()%> </td>

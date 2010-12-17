@@ -7,7 +7,7 @@
 	initial="SearchRouter">
 	<process name="SearchRouter"
 		class="oracle.clex.process.ProcessRouter" end="false">
-		<argument type="Integer" value="14" />
+		<argument type="Integer" value="15" />
 		<argument type="Boolean" value="false" />
 		<argument type="String" value="success" />
 		<infoalias local="pp1" global="searchDataElements" />
@@ -24,6 +24,7 @@
 		<infoalias local="pp12" global="dataElementConceptsLOV" />
 		<infoalias local="pp13" global="dataElementConceptDetails" />
 		<infoalias local="pp14" global="dataElementDerivations" />
+		<infoalias local="pp15" global="adminInfo" />
 	</process>
 	<processgroup name="DataElementsGroup"
 		class="oracle.cle.process.DisplayGroup" end="true"
@@ -395,6 +396,25 @@
 		<transition src="DataElementDerivationRouter" condition="tc1"
 			dest="GetDataElementDerivation" />
 	</processgroup>
+	<processgroup name="AdminInfoGroup" class="oracle.cle.process.DisplayGroup" end="true" initial="AdminInfoGroupRouter">
+		<process name="GetAdminInfo" class="gov.nih.nci.ncicb.cadsr.cdebrowser.process.GetAdminInfo" end="false" />
+		<process name="GetAdminInfoPage" class="oracle.clex.process.CreateJSPPage" end="true">
+			<argument type="String" value="&docpath;adminInfo.jsp" />
+		</process>
+		<process name="FailurePage" class="oracle.clex.process.CreateJSPPage" end="true">
+			<argument type="String" value="&docpath;FailurePage.jsp" />
+		</process>
+		<process name="AdminInfoGroupRouter"
+			class="oracle.clex.process.ProcessRouter" end="false">
+			<argument type="Integer" value="1" />
+			<argument type="Boolean" value="true" />
+			<argument type="String" value="success" />
+			<infoalias local="pp1" global="adminInfo" />
+		</process>
+		<transition src="GetAdminInfo" condition="success" dest="GetAdminInfoPage" />
+		<transition src="GetAdminInfo" condition="failure" dest="FailurePage" />
+		<transition src="AdminInfoGroupRouter" condition="tc1" dest="GetAdminInfo" />
+	</processgroup>
 	<transition src="SearchRouter" condition="success"
 		dest="DataElementsGroup" />
 	<transition src="SearchRouter" condition="tc1"
@@ -426,7 +446,9 @@
 	<transition src="SearchRouter" condition="tc13"
 		dest="DataElementConceptDetails" />
 	<transition src="SearchRouter" condition="tc14"
-		dest="DataElementDerivationGroup" />
+	dest="DataElementDerivationGroup" />
+	<transition src="SearchRouter" condition="tc15"
+		dest="AdminInfoGroup" />
 	<grouptransition srcgroup="DataElementsGroup"
 		srcprocess="DataElementsPage" dest="SearchRouter" />
 	<grouptransition srcgroup="DataElementsGroup"
@@ -472,5 +494,9 @@
 	<grouptransition srcgroup="DataElementDerivationGroup"
 		srcprocess="FailurePage" dest="SearchRouter" />
 	<grouptransition srcgroup="DataElementDerivationGroup"
-		srcprocess="DataElementDerivationPage" dest="SearchRouter" />
+	srcprocess="DataElementDerivationPage" dest="SearchRouter" />
+	<grouptransition srcgroup="AdminInfoGroup"
+		srcprocess="FailurePage" dest="SearchRouter" />
+	<grouptransition srcgroup="AdminInfoGroup"
+		srcprocess="GetAdminInfoPage" dest="SearchRouter" />
 </service>

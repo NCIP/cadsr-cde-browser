@@ -1573,7 +1573,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
        + " addr.ADDR_LINE1, addr.ADDR_LINE2, addr.CADDR_IDSEQ, addr.CITY, addr.POSTAL_CODE, addr.STATE_PROV "
       + "  FROM sbr.ac_contacts_view acc, sbr.persons_view per, sbr.contact_addresses_view addr "
         + " where  acc.ac_idseq = '"+ acidSeq +"' and "
-      + " acc.per_idseq = per.per_idseq  and addr.PER_IDSEQ = per.PER_IDSEQ "
+      + " acc.per_idseq = per.per_idseq(+)  and addr.PER_IDSEQ(+) = per.PER_IDSEQ "
       + "   ORDER BY acc.acc_idseq, acc.rank_order ";
        super.setSql(querySql);
      }
@@ -1676,7 +1676,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
        + " addr.ADDR_LINE1, addr.ADDR_LINE2, addr.CADDR_IDSEQ, addr.CITY, addr.POSTAL_CODE, addr.STATE_PROV "
       + "  FROM sbr.ac_contacts_view acc, sbr.organizations_view org, sbr.contact_addresses_view addr "
         + " where  acc.ac_idseq = '"+ acidSeq +"' and "
-      + " acc.org_idseq = org.org_idseq  and addr.ORG_IDSEQ = ORG.ORG_IDSEQ "
+      + " acc.org_idseq = org.org_idseq(+)  and addr.ORG_IDSEQ(+) = ORG.ORG_IDSEQ "
       + "   ORDER BY acc.acc_idseq, acc.rank_order ";
        super.setSql(querySql);
      }

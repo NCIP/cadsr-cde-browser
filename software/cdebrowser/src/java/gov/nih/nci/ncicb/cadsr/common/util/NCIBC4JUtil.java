@@ -51,7 +51,6 @@ public class NCIBC4JUtil
     {
         CLEUtil util = new CLEUtil();
         String tempName = "x" + CLEUtil.getRandomString(25);
-        log.info("CLEUtil.getRandomString " + tempName);
         ViewObject clonedView = null;
         try
         {

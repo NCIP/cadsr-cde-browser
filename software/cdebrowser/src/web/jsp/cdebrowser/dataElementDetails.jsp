@@ -23,6 +23,7 @@
   String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
   String pageUrl = "&"+StringEscapeUtils.escapeJavaScript(pageName+"="+pageId);
   CDEBrowserParams params = CDEBrowserParams.getInstance();    
+  config.getServletContext().setAttribute("de", de);
 %>
 
 <HTML>
@@ -194,6 +195,7 @@ function anotherDataElementDetails(linkParms, version )
     List altNames = de.getDesignations();
     List altDefs = de.getDefinitions();
     
+    /*
     HashMap idToCscsi = new HashMap();
     HashMap csToAltName = new HashMap();
     HashMap csToAltDef = new HashMap();
@@ -243,6 +245,7 @@ function anotherDataElementDetails(linkParms, version )
     	idToCscsi.put("null", null);
     	csToAltDef.put("null", altDefsNoCS);
     }
+    */
   %>
 
 <br>
@@ -255,104 +258,80 @@ function anotherDataElementDetails(linkParms, version )
   </tr>
 </table>
 <p>
-<% Iterator csiIter = idToCscsi.keySet().iterator();
-while (csiIter.hasNext()) {
-    String csiId = (String) csiIter.next();
-    ClassSchemeItem currCSI = (ClassSchemeItem) idToCscsi.get(csiId);
-    List currAltNames = (List) csToAltName.get(csiId);
-    List currAltDefs = (List) csToAltDef.get(csiId);
- %>   
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-<% if (currCSI != null) { %>
-<TR class="OraTableColumnHeader">
- <th class="OraTableColumnHeader">CS* Long Name</th>
- <th class="OraTableColumnHeader">CS* Definition</th>
- <th class="OraTableColumnHeader">CSI* Name</th>
- <th class="OraTableColumnHeader">CSI* Type</th>
-</TR>
-      <tr class="OraTabledata">
-        <td class="OraFieldText"><%=currCSI.getClassSchemeLongName()%> </td>
-        <td class="OraFieldText"><%=currCSI.getClassSchemeDefinition()%> </td>
-        <td class="OraFieldText"><%=currCSI.getClassSchemeItemName()%> </td>
-        <td class="OraFieldText"><%=currCSI.getClassSchemeItemType()%> </td>
-      </tr>
-<%} %>
-
 <tr class="OraTabledata">
-<td class="OraHeaderSubSubSub" width="100%" colspan=4>Alternate Names </td>
+	<td class="OraHeaderSubSubSub" width="100%" colspan=4>Alternate Names </td>
 </tr>
-<tr class="OraTabledata"><td width="100%" colspan=4>
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Name</th>
-    <th class="OraTableColumnHeader">Type</th>
-    <th class="OraTableColumnHeader">Context</th>
-    <th class="OraTableColumnHeader">Language</th>
-  </tr>
-<%
-  Designation des = null;
-  if (currAltNames!=null && currAltNames.size() > 0) {
-    for (int i=0;i<currAltNames.size(); i++) {
-      des = (Designation)currAltNames.get(i);
-%>
-      <tr class="OraTabledata">
-        <td class="OraFieldText"><%=des.getName()%> </td>
-        <td class="OraFieldText"><%=des.getType()%> </td>
-        <td class="OraFieldText"><%=des.getContext().getName()%> </td>
-        <td class="OraFieldText"><%=des.getLanguage()%> </td>
-      </tr>
-<%
-    }
-  }
-  else {
-%>
-       <tr class="OraTabledata">
-         <td colspan=4">There are no alternate names for the selected CDE.</td>
-       </tr>
-<%
-  }
-%>
-
+<logic:notEmpty name="de" property="designations">
+	<tr class="OraTabledata"><td width="100%" colspan=4>
+	<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+	  <tr class="OraTableColumnHeader">
+	    <th class="OraTableColumnHeader">Name</th>
+	    <th class="OraTableColumnHeader">Type</th>
+	    <th class="OraTableColumnHeader">Context</th>
+	    <th class="OraTableColumnHeader">Classification Schemes</th>
+	  </tr>
+	<logic:iterate id="des" name="de" property="designations" type="gov.nih.nci.ncicb.cadsr.common.resource.Designation">
+	      <tr class="OraTabledata">
+	        <td class="OraFieldText"><bean:write name="des" property="name" /> </td>
+	        <td class="OraFieldText"><bean:write name="des" property="type" /> </td>
+	        <td class="OraFieldText"><bean:write name="des" property="context.name" /> </td>
+	        <td class="OraFieldText">
+				<logic:notEmpty name="des" property="csCsis">
+					<logic:iterate id="cs" name="des" indexId="idx" property="csCsis" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem">
+						<logic:greaterEqual name="idx" value="1"><br/></logic:greaterEqual>
+						<bean:write name="cs" property="classSchemeLongName" />
+					</logic:iterate>
+				</logic:notEmpty>
+			</td>
+	      </tr>
+	</logic:iterate>
 </table> 
-</td></tr>
-<tr class="OraTabledata">
-<td class="OraHeaderSubSubSub" width="100%" colspan=4>Alternate Definitions </td>
-</tr>
-<tr class="OraTabledata"><td width="100%" colspan=4>
-<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-  <tr class="OraTableColumnHeader">
-    <th class="OraTableColumnHeader">Name</th>
-    <th class="OraTableColumnHeader">Type</th>
-    <th class="OraTableColumnHeader">Context</th>
-  </tr>
-<%
-  if (currAltDefs != null && currAltDefs.size() > 0) {
-    for (int i=0;i<currAltDefs.size(); i++) {
-      Definition def = (Definition)currAltDefs.get(i);
-%>
-      <tr class="OraTabledata">
-        <td class="OraFieldText"><%=def.getDefinition()%> </td>
-        <td class="OraFieldText"><%=def.getType()%> </td>
-        <td class="OraFieldText"><%=def.getContext().getName()%> </td>
+</logic:notEmpty>  
+<logic:empty name="de" property="designations">
+	<tr class="OraTabledata">
+        <td colspan="4">There are no alternate names for the selected CDE.</td>
       </tr>
-<%
-    }
-  }
-  else {
-%>
-       <tr class="OraTabledata">
-         <td colspan=4">There are no alternate definitions for the selected CDE.</td>
-       </tr>
-<%
-  }
-%>
-
-</table> 
-</td></tr>
+</logic:empty>
 </table>
-<p>
-<%} %>
 
+<p>
+<table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+<tr class="OraTabledata">
+	<td class="OraHeaderSubSubSub" width="100%" colspan=4>Alternate Definitions </td>
+</tr>
+<logic:notEmpty name="de" property="definitions">
+	<tr class="OraTabledata"><td width="100%" colspan=4>
+	<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+	  <tr class="OraTableColumnHeader">
+	    <th class="OraTableColumnHeader">Definition</th>
+	    <th class="OraTableColumnHeader">Type</th>
+	    <th class="OraTableColumnHeader">Context</th>
+	    <th class="OraTableColumnHeader">Classification Schemes</th>
+	  </tr>
+	<logic:iterate id="def" name="de" property="definitions" type="gov.nih.nci.ncicb.cadsr.common.resource.Definition">
+	      <tr class="OraTabledata">
+	        <td class="OraFieldText"><bean:write name="def" property="definition" /> </td>
+	        <td class="OraFieldText"><bean:write name="def" property="type" /> </td>
+	        <td class="OraFieldText"><bean:write name="def" property="context.name" /> </td>
+	        <td class="OraFieldText">
+				<logic:notEmpty name="def" property="csCsis">
+					<logic:iterate id="cs" name="def" indexId="idx" property="csCsis" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem">
+						<logic:greaterEqual name="idx" value="1"><br/></logic:greaterEqual>
+						<bean:write name="cs" property="classSchemeLongName" />
+					</logic:iterate>
+				</logic:notEmpty>
+			</td>
+	      </tr>
+	</logic:iterate>
+</table> 
+</logic:notEmpty>  
+<logic:empty name="de" property="definitions">
+	<tr class="OraTabledata">
+        <td colspan="4">There are no alternate definitions for the selected CDE.</td>
+      </tr>
+</logic:empty>
+</table>
 
 
 

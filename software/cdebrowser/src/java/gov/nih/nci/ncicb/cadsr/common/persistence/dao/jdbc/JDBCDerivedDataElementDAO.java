@@ -115,7 +115,7 @@ public class JDBCDerivedDataElementDAO extends JDBCBaseDAO implements DerivedDat
     DataElementDerivationQuery(DataSource ds) {
     
       String dedSql = "select cdr.cdr_idseq, cdr.c_de_idseq, de.long_name, "
-       + "de.CDE_ID, de.ASL_NAME, de.VERSION, cdr.display_order, ct.NAME" +
+       + "de.CDE_ID, de.ASL_NAME, de.VERSION, cdr.display_order, ct.NAME, de.de_idseq" +
       " from sbr.contexts_view ct, sbr.complex_de_rel_view cdr, sbr.data_elements_view de " +
       " where de.CONTE_IDSEQ = ct.CONTE_IDSEQ and cdr.c_de_idseq = de.de_idseq and p_de_idseq= ? " +
       "order by cdr.display_order";
@@ -139,6 +139,7 @@ public class JDBCDerivedDataElementDAO extends JDBCBaseDAO implements DerivedDat
       de.setVersion(new Float(rs.getFloat(6)));
       ded.setDisplayOrder(rs.getInt(7));
       de.setContextName(rs.getString(8));
+      de.setDeIdseq(rs.getString(9));
       ded.setDerivedDataElement(de);
       return ded;
     }
