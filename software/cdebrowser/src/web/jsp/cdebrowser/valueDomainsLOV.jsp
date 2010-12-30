@@ -82,6 +82,37 @@ function goPage(pageInfo) {
 <table>
 <%= clb.getSearchFields() %>
 <tr>
+	<td class="fieldtitlebold">Type</td>
+
+<%
+String enumChkd = "";
+String nonEnumChkd = "";
+String bothChkd = "";
+
+  if (clb.isFirstDisplay() 
+		  || (vlb.getSearchEnumerated() && vlb.getSearchNonEnumerated())) {
+	  bothChkd = "checked";
+	  enumChkd = "";
+	  nonEnumChkd = "";
+  }
+  else if (vlb.getSearchEnumerated()) {
+	  bothChkd = "";
+	  enumChkd = "checked";
+	  nonEnumChkd = "";
+  }
+  else if (vlb.getSearchNonEnumerated()) {
+	  bothChkd = "";
+	  enumChkd = "";
+	  nonEnumChkd = "checked";
+  }
+%>
+	<td class="OraFieldText">
+		<input type="radio" name="enum" value="enum" id="enum" <%= enumChkd %>/> <label for="enum">Enumerated</label><br/>
+		<input type="radio" name="enum" value="nonenum" id="nonenum" <%= nonEnumChkd %> /> <label for="nonenum">Non Enumerated</label><br/>
+		<input type="radio" name="enum" value="both" id="both" <%= bothChkd %> /> <label for="both">Both</label>
+	</td>
+</tr>
+<tr>
   <td class="fieldtitlebold">Restrict Search to Current Context</td>
 <%
   if (clb.isFirstDisplay()) {

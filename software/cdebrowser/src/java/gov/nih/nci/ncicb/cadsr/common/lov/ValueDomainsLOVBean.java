@@ -13,25 +13,19 @@ import org.apache.commons.lang.StringEscapeUtils;
 import java.sql.*;
 
 import javax.servlet.http.*;
-//import healthtoolkit.beans.dbservice.*;
-//import healthtoolkit.utils.*;
 
 public class ValueDomainsLOVBean extends Object {
   private static Log log = LogFactory.getLog(ValueDomainsLOVBean.class.getName());
 
-  private String[] searchName;
-  private String[] displayName;
-  private String[] jspParm;
-  private String[] sqlStmtParm;
-  //private DBBroker dBBroker = null;
   private CommonLOVBean clb;
   private String targetJsp = "valueDomainsLOV.jsp";
   private String whereClause = "";
   private String searchStr = "";
   private boolean isContextSpecific = false;
+  private boolean searchEnumerated = true;
+  private boolean searchNonEnumerated = true;
 
   public ValueDomainsLOVBean(HttpServletRequest request
-                            //,DBLAccess dblAccess
                             ,DBUtil dbUtil
                             ,String additionalWhere
                              ){
@@ -43,26 +37,37 @@ public class ValueDomainsLOVBean extends Object {
       String newSearchStr = "";
       if (!searchStr.equals("")) {
         newSearchStr = StringReplace.strReplace(searchStr,"*","%");
-        //Release 3.0, TT#1178
         newSearchStr = StringReplace.strReplace(newSearchStr,"'","''");
         searchWhere = " and   (upper(vd.long_name) like upper ( '"+newSearchStr+"') " +
                       " OR upper(vd.preferred_name) like upper ( '"+newSearchStr+"')) "
                       ;
       }
+      
+      String enumStr = request.getParameter("enum");
+      if (enumStr != null && !enumStr.equalsIgnoreCase("both")) {
+    	  if (enumStr.equalsIgnoreCase("enum")) {
+    		  searchWhere += " and vd.vd_type_flag = 'E'";
+    		  searchEnumerated = true;
+    		  searchNonEnumerated = false;
+    	  }
+    	  else if (enumStr.equalsIgnoreCase("nonenum")) {
+    		  searchWhere += " and vd.vd_type_flag = 'N'";
+    		  searchEnumerated = false;
+    		  searchNonEnumerated = true;
+    	  }
+      }
+      else {
+    	  searchEnumerated = true;
+		  searchNonEnumerated = true;
+      }
+            
       if (request.getParameter("chkContext") == null){
-        /*whereClause = " and   (upper (nvl(vd.long_name,'%')) like upper ( '%"+searchStr+"%') " +
-                      " OR upper (nvl(vd.preferred_name,'%')) like upper ( '%"+searchStr+"%')) "
-                      ;*/
           whereClause = searchWhere;
       }
       else {
-        /*whereClause = " and   (upper (nvl(vd.long_name,'%')) like upper ( '%"+searchStr+"%') " +
-                      " OR upper (nvl(vd.preferred_name,'%')) like upper ( '%"+searchStr+"%')) "+
-                      additionalWhere;*/
         whereClause = searchWhere+additionalWhere;
         isContextSpecific = true;
       }
-      //dBBroker = dblAccess.getDBBroker();
 
       // pass the following parameters to CommonListCntrlBean
       String[] searchParm ={"vd.long_name","Keyword"};
@@ -76,14 +81,12 @@ public class ValueDomainsLOVBean extends Object {
       String[] sqlStmtParm = new String[2];
       sqlStmtParm[0] = " from sbr.value_domains_view vd, sbr.contexts_view vd_conte " +
                            " where vd.conte_idseq = vd_conte.conte_idseq " +
-                           //" and vd.deleted_ind = 'No' " +  this is done in the view
                            " and vd.asl_name not in ('RETIRED PHASED OUT','RETIRED DELETED') " + whereClause;
       sqlStmtParm[1] = " order by vd.preferred_name ";
       int[] lovPassbackCols = {0};
 
       clb = new CommonLOVBean(
         request,
-        //dBBroker,
         dbUtil,
         searchParm,
         jspLinkParm,
@@ -121,6 +124,14 @@ public class ValueDomainsLOVBean extends Object {
   }
   public boolean getIsContextSpecific(){
     return isContextSpecific;
+  }
+  
+  public boolean getSearchEnumerated(){
+    return searchEnumerated;
+  }
+  
+  public boolean getSearchNonEnumerated(){
+    return searchNonEnumerated;
   }
 
 }

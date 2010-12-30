@@ -26,6 +26,12 @@ public class FormUsagesForACdeViewRowImpl extends ViewRowImpl
     public static final int QUELONGNAME = 7;
 
     public static final int QUEDEIDSEQ = 8;
+    
+    public static final int PUBLICID = 9;
+    
+    public static final int VERSION = 10;
+    
+    public static final int FRMBASEURL = 11;
 
     /**
    * 
@@ -184,6 +190,12 @@ public class FormUsagesForACdeViewRowImpl extends ViewRowImpl
             return getQueLongName();
         case QUEDEIDSEQ :
             return getQueDeIdseq();
+        case PUBLICID :
+        	return getPublicId();
+        case VERSION :
+        	return getVersion();
+        case FRMBASEURL :
+        	return getFrmBaseURL();
         default :
             return super.getAttrInvokeAccessor(index, attrDef);
         }
@@ -220,6 +232,15 @@ public class FormUsagesForACdeViewRowImpl extends ViewRowImpl
         case QUEDEIDSEQ :
             setQueDeIdseq((String)value);
             return;
+        case PUBLICID :
+        	setPublicId((String) value);
+        	return;
+        case VERSION:
+        	setVersion((String)value);
+        	return;
+        case FRMBASEURL :
+        	setFrmBaseURL((String)value);
+        	return;
         default :
             super.setAttrInvokeAccessor(index, value, attrDef);
             return;
@@ -240,5 +261,53 @@ public class FormUsagesForACdeViewRowImpl extends ViewRowImpl
    */
   public void setQueDeIdseq(String value) {
     setAttributeInternal(QUEDEIDSEQ, value);
+  }
+  
+  /**
+   * 
+   * Gets the attribute value for the calculated attribute PublicId
+   */
+  public String getPublicId() {
+    return (String)getAttributeInternal(PUBLICID);
+  }
+
+  /**
+   * 
+   * Sets <code>value</code> as the attribute value for the calculated attribute PublicId
+   */
+  public void setPublicId(String value) {
+    setAttributeInternal(PUBLICID, value);
+  }
+  
+  /**
+   * 
+   * Gets the attribute value for the calculated attribute Version
+   */
+  public String getVersion() {
+    return (String)getAttributeInternal(VERSION);
+  }
+
+  /**
+   * 
+   * Sets <code>value</code> as the attribute value for the calculated attribute Version
+   */
+  public void setVersion(String value) {
+    setAttributeInternal(VERSION, value);
+  }
+  
+  /**
+   * 
+   * Gets the attribute value for the calculated attribute FRMBASEURL
+   */
+  public String getFrmBaseURL() {
+    return (String)getAttributeInternal(FRMBASEURL);
+  }
+
+  /**
+   * 
+   * Sets <code>value</code> as the attribute value for the calculated attribute FRMBASEURL
+   */
+  public void setFrmBaseURL(String value) {
+    setAttributeInternal(FRMBASEURL, value);
   }
 }

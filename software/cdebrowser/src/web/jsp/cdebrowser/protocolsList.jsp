@@ -140,6 +140,8 @@ function listChanged(urlInfo) {
     <th class="OraTableColumnHeader">Form Name</th>
     <th class="OraTableColumnHeader">Question Name</th>
     <th class="OraTableColumnHeader">Form Usage Type</th>
+	<th class="OraTableColumnHeader">Public Id</th>
+	<th class="OraTableColumnHeader">Version</th>
   </tr>
 <%
 
@@ -154,6 +156,23 @@ function listChanged(urlInfo) {
     <td class="OraFieldText"><%=frmUsage.getFormLongName()%> </td>
     <td class="OraFieldText"><%=frmUsage.getQuestionLongName()%> </td>
     <td class="OraFieldText"><%=frmUsage.getUsageType()%> </td>
+	<td class="OraFieldText">
+	<%
+		String frmBaseURL = frmUsage.getFormDetailBaseURL();
+		if ( frmBaseURL != null && !frmBaseURL.trim().equals("")) {
+			frmBaseURL += "&formIdSeq="+frmUsage.getCrfIdSeq();
+	%>
+	<a href="<%= frmBaseURL %>" target="_blank"> <%=frmUsage.getPublicId()%> </a>
+	<%
+		}
+		else {
+	%>
+	<%=frmUsage.getPublicId()%>
+	<%
+		}
+	%>
+	</td>
+	<td class="OraFieldText"><%=frmUsage.getVersion()%> </td>
   </tr>
 <%
     }
@@ -166,9 +185,11 @@ function listChanged(urlInfo) {
     <th class="OraTableColumnHeader">Lead Org</th>
     <th class="OraTableColumnHeader">Used By</th>
     <th class="OraTableColumnHeader">Form Usage Type</th>
+	<th class="OraTableColumnHeader">Public Id</th>
+	<th class="OraTableColumnHeader">Version</th>
   </tr>
   <tr class="OraTabledata">
-         <td colspan="4">No Form usages exist for the selected CDE.</td>
+         <td colspan="6">No Form usages exist for the selected CDE.</td>
   </tr>
   </table>
 <%
