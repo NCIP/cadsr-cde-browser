@@ -24,6 +24,8 @@
   String pageUrl = "&"+StringEscapeUtils.escapeJavaScript(pageName+"="+pageId);
   CDEBrowserParams params = CDEBrowserParams.getInstance();    
   config.getServletContext().setAttribute("de", de);
+  String appPath = request.getRequestURL().toString().replace(request.getServletPath(),"");
+  String directURL = appPath+"/search?elementDetails=9&FirstTimer=0&publicId="+de.getPublicId()+"&version="+de.getVersion();
 %>
 
 <HTML>
@@ -142,6 +144,10 @@ function anotherDataElementDetails(linkParms, version )
     <td class="TableRowPromptText">Registration Status:</td>
     <td class="OraFieldText"><%=de.getRegistrationStatus()%> </td>
  </tr>
+<tr class="OraTabledata">
+    <td class="TableRowPromptText">Direct Link:</td>
+    <td class="OraFieldText"><a href="<%= directURL %>"><%= directURL %></a> </td>
+ </tr>
  
 </table>
 
@@ -195,57 +201,6 @@ function anotherDataElementDetails(linkParms, version )
     List altNames = de.getDesignations();
     List altDefs = de.getDefinitions();
     
-    /*
-    HashMap idToCscsi = new HashMap();
-    HashMap csToAltName = new HashMap();
-    HashMap csToAltDef = new HashMap();
-    List altNamesNoCS = new ArrayList();
-    List altDefsNoCS = new ArrayList();
-    if (altNames !=null)
-    for (int i=0; i<altNames.size(); i++) {
-    	Designation des = (Designation) altNames.get(i);
-    	if (des.getCsCsis() == null || des.getCsCsis().size() == 0) 
-    	   altNamesNoCS.add(des);
-    	else {
-		Iterator iter = des.getCsCsis().iterator();
-
-		while (iter.hasNext()) {
-		   ClassSchemeItem cscsi= (ClassSchemeItem) iter.next();
-		   idToCscsi.put(cscsi.getCsCsiIdseq(), cscsi);
-		   if (csToAltName.get(cscsi.getCsCsiIdseq()) == null)
-			csToAltName.put(cscsi.getCsCsiIdseq(), new ArrayList());
-		   ((ArrayList) csToAltName.get(cscsi.getCsCsiIdseq())).add(des);
-		}
-    	}
-    }
-  
-  if (altDefs != null)
-    for (int i=0; i<altDefs.size(); i++) {
-      Definition definition = (Definition) altDefs.get(i);
-	if (definition.getCsCsis() == null || definition.getCsCsis().size() == 0) 
-	   altDefsNoCS.add(definition);
-	else {
-	  Iterator iter = definition.getCsCsis().iterator();
-	  while (iter.hasNext()) {
-	    ClassSchemeItem cscsi= (ClassSchemeItem) iter.next();
-	    idToCscsi.put(cscsi.getCsCsiIdseq(), cscsi);
-	    if (csToAltDef.get(cscsi.getCsCsiIdseq()) == null)
-		csToAltDef.put(cscsi.getCsCsiIdseq(), new ArrayList());
-	    ((ArrayList) csToAltDef.get(cscsi.getCsCsiIdseq())).add(definition);
-	}
-    	}
-    }
-    
-    if (altNamesNoCS.size() >0) {
-    	idToCscsi.put("null", null);
-    	csToAltName.put("null", altNamesNoCS);
-    }
-    	
-    if (altDefsNoCS.size() >0) {
-    	idToCscsi.put("null", null);
-    	csToAltDef.put("null", altDefsNoCS);
-    }
-    */
   %>
 
 <br>
@@ -269,7 +224,17 @@ function anotherDataElementDetails(linkParms, version )
 	    <th class="OraTableColumnHeader">Name</th>
 	    <th class="OraTableColumnHeader">Type</th>
 	    <th class="OraTableColumnHeader">Context</th>
-	    <th class="OraTableColumnHeader">Classification Schemes</th>
+	    <th class="OraTableColumnHeader">
+			<table width="400px" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDarkFixWidth">
+				<col width="70%">
+				<col width="30%">
+				<tr class="OraTableColumnHeader"><th class="OraTableColumnHeader" colspan="2" ><center>Classification Schemes</center></th></tr>
+				<tr class="OraTableColumnHeader">
+					<th class="OraTableColumnHeader" >Classification Scheme Item</th>
+					<th class="OraTableColumnHeader" >Classification Scheme</th>
+				</tr>
+			</table>
+		</th>
 	  </tr>
 	<logic:iterate id="des" name="de" property="designations" type="gov.nih.nci.ncicb.cadsr.common.resource.Designation">
 	      <tr class="OraTabledata">
@@ -278,10 +243,16 @@ function anotherDataElementDetails(linkParms, version )
 	        <td class="OraFieldText"><bean:write name="des" property="context.name" /> </td>
 	        <td class="OraFieldText">
 				<logic:notEmpty name="des" property="csCsis">
-					<logic:iterate id="cs" name="des" indexId="idx" property="csCsis" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem">
-						<logic:greaterEqual name="idx" value="1"><br/></logic:greaterEqual>
-						<bean:write name="cs" property="classSchemeLongName" />
-					</logic:iterate>
+					<table width="400px" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDarkFixWidth">
+						<col width="70%">
+						<col width="30%">
+						<logic:iterate id="cs" name="des" indexId="idx" property="csCsis" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem">
+							<tr class="OraTabledata">
+								<td class="OraFieldText"><bean:write name="cs" property="classSchemeItemName" /></td>
+								<td class="OraFieldText"><bean:write name="cs" property="classSchemeLongName" /></td>
+							</tr>
+						</logic:iterate>
+					</table>
 				</logic:notEmpty>
 			</td>
 	      </tr>
@@ -307,7 +278,17 @@ function anotherDataElementDetails(linkParms, version )
 	    <th class="OraTableColumnHeader">Definition</th>
 	    <th class="OraTableColumnHeader">Type</th>
 	    <th class="OraTableColumnHeader">Context</th>
-	    <th class="OraTableColumnHeader">Classification Schemes</th>
+	    <th class="OraTableColumnHeader">
+			<table width="400px" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDarkFixWidth">
+				<col width="70%">
+				<col width="30%">
+				<tr class="OraTableColumnHeader"><th class="OraTableColumnHeader" colspan="2" ><center>Classification Schemes</center></th></tr>
+				<tr class="OraTableColumnHeader">
+					<th class="OraTableColumnHeader" >Classification Scheme Item</th>
+					<th class="OraTableColumnHeader" >Classification Scheme</th>
+				</tr>
+			</table>
+		</th>
 	  </tr>
 	<logic:iterate id="def" name="de" property="definitions" type="gov.nih.nci.ncicb.cadsr.common.resource.Definition">
 	      <tr class="OraTabledata">
@@ -316,10 +297,16 @@ function anotherDataElementDetails(linkParms, version )
 	        <td class="OraFieldText"><bean:write name="def" property="context.name" /> </td>
 	        <td class="OraFieldText">
 				<logic:notEmpty name="def" property="csCsis">
-					<logic:iterate id="cs" name="def" indexId="idx" property="csCsis" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem">
-						<logic:greaterEqual name="idx" value="1"><br/></logic:greaterEqual>
-						<bean:write name="cs" property="classSchemeLongName" />
-					</logic:iterate>
+					<table width="400px" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDarkFixWidth">
+						<col width="70%">
+						<col width="30%">
+						<logic:iterate id="cs" name="def" indexId="idx" property="csCsis" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem">
+							<tr class="OraTabledata">
+								<td class="OraFieldText"><bean:write name="cs" property="classSchemeItemName" /></td>
+								<td class="OraFieldText"><bean:write name="cs" property="classSchemeLongName" /></td>
+							</tr>
+						</logic:iterate>
+					</table>
 				</logic:notEmpty>
 			</td>
 	      </tr>

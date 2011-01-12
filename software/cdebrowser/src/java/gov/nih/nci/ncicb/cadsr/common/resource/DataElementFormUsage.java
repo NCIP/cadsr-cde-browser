@@ -8,6 +8,7 @@ public interface DataElementFormUsage  {
   public String getQuestionLongName();
   public String getPublicId();
   public String getVersion();
-  public String getFormDetailBaseURL();
+  public String getFormURL();
+  public String getFormDetailURL();
   public String getCrfIdSeq();
 }

@@ -27,6 +27,8 @@
   List ctxContacts = (List)infoBean.getInfo("ctxContacts");
   List vdContacts = (List)infoBean.getInfo("vdContacts");
   List repTermContacts = (List)infoBean.getInfo("repTermContacts");
+  List vmContacts = (List)infoBean.getInfo("vmContacts");
+  List conContacts = (List)infoBean.getInfo("conContacts");
   String pageId = StringEscapeUtils.escapeJavaScript(infoBean.getPageId());
   String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
   String pageUrl = "&"+StringEscapeUtils.escapeJavaScript(pageName+"="+pageId);
@@ -56,7 +58,7 @@
 					
 					if (i > 0) out.println("<br/>");
 					
-					if (person != null) {
+					if (person != null && person.getId() != null) {
 						out.println("<table width=\"80%\" align=\"center\" cellpadding=\"1\" cellspacing=\"1\" class=\"OraBGAccentVeryDark\">");
 						out.println("<tr class=\"OraTabledata\">");
 						out.println("<td class=\"TableRowPromptText\" width=\"20%\">Name</td>");
@@ -73,7 +75,7 @@
 						printContactComms(out, person.getContactCommunications());
 						out.println("</table>");
 					}
-					else if (org != null) {
+					if (org != null && org.getId() != null) {
 						out.println("<table width=\"80%\" align=\"center\" cellpadding=\"1\" cellspacing=\"1\" class=\"OraBGAccentVeryDark\">");
 						out.println("<tr class=\"OraTabledata\">");
 						out.println("<td class=\"TableRowPromptText\" width=\"20%\">Organization Name</td>");
@@ -206,6 +208,8 @@ Admin Info
 <% printContacts(out, "Property Contacts", propContacts); %>
 <% printContacts(out, "Value Domain Contacts", vdContacts); %>
 <% printContacts(out, "Representation Term Contacts", repTermContacts); %>
+<% printContacts(out, "Value Meaning Contacts", vmContacts); %>
+<% printContacts(out, "Concepts Contacts", conContacts); %>
 <% printCSContacts(out, "Classification Scheme Contacts", csContacts); %>
 <% printContacts(out, "Context Contacts", ctxContacts); %>
 

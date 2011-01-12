@@ -71,10 +71,13 @@ public class OrganizationTransferObject extends BaseTransferObject
    }
     public String toString() {
         String person = "Name: " + this.getName() + "<br>";
-        for (Iterator iter=this.getContactCommunications().iterator(); iter.hasNext();){
-            ContactCommunication cc= (ContactCommunication) iter.next();
-            person += cc.getType() + ": " + cc.getValue() + "<br>";
+        if (this.getContactCommunications() != null) {
+        	for (Iterator iter=this.getContactCommunications().iterator(); iter.hasNext();){
+                ContactCommunication cc= (ContactCommunication) iter.next();
+                person += cc.getType() + ": " + cc.getValue() + "<br>";
+            }
         }
+        
         return person;
     }
    

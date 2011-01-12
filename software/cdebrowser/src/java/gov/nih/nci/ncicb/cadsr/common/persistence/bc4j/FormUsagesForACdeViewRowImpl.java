@@ -31,7 +31,9 @@ public class FormUsagesForACdeViewRowImpl extends ViewRowImpl
     
     public static final int VERSION = 10;
     
-    public static final int FRMBASEURL = 11;
+    public static final int FRMURL = 11;
+    
+    public static final int FRMDETURL = 12;
 
     /**
    * 
@@ -194,8 +196,8 @@ public class FormUsagesForACdeViewRowImpl extends ViewRowImpl
         	return getPublicId();
         case VERSION :
         	return getVersion();
-        case FRMBASEURL :
-        	return getFrmBaseURL();
+        case FRMDETURL :
+        	return getFormDetailURL();
         default :
             return super.getAttrInvokeAccessor(index, attrDef);
         }
@@ -238,8 +240,8 @@ public class FormUsagesForACdeViewRowImpl extends ViewRowImpl
         case VERSION:
         	setVersion((String)value);
         	return;
-        case FRMBASEURL :
-        	setFrmBaseURL((String)value);
+        case FRMDETURL :
+        	setFormDetailURL((String)value);
         	return;
         default :
             super.setAttrInvokeAccessor(index, value, attrDef);
@@ -297,17 +299,33 @@ public class FormUsagesForACdeViewRowImpl extends ViewRowImpl
   
   /**
    * 
-   * Gets the attribute value for the calculated attribute FRMBASEURL
+   * Gets the attribute value for the calculated attribute FRMURL
    */
-  public String getFrmBaseURL() {
-    return (String)getAttributeInternal(FRMBASEURL);
+  public String getFormURL() {
+    return (String)getAttributeInternal(FRMURL);
   }
 
   /**
    * 
-   * Sets <code>value</code> as the attribute value for the calculated attribute FRMBASEURL
+   * Sets <code>value</code> as the attribute value for the calculated attribute FRMURL
    */
-  public void setFrmBaseURL(String value) {
-    setAttributeInternal(FRMBASEURL, value);
+  public void setFormURL(String value) {
+    setAttributeInternal(FRMURL, value);
+  }
+  
+  /**
+   * 
+   * Gets the attribute value for the calculated attribute FRMDETURL
+   */
+  public String getFormDetailURL() {
+    return (String)getAttributeInternal(FRMDETURL);
+  }
+
+  /**
+   * 
+   * Sets <code>value</code> as the attribute value for the calculated attribute FRMDETURL
+   */
+  public void setFormDetailURL(String value) {
+    setAttributeInternal(FRMDETURL, value);
   }
 }

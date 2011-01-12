@@ -158,11 +158,13 @@ function listChanged(urlInfo) {
     <td class="OraFieldText"><%=frmUsage.getUsageType()%> </td>
 	<td class="OraFieldText">
 	<%
-		String frmBaseURL = frmUsage.getFormDetailBaseURL();
-		if ( frmBaseURL != null && !frmBaseURL.trim().equals("")) {
-			frmBaseURL += "&formIdSeq="+frmUsage.getCrfIdSeq();
+		String frmDetURL = frmUsage.getFormDetailURL();
+		String frmURL = frmUsage.getFormURL();
+		
+		if ( frmDetURL != null && !frmDetURL.trim().equals("")) {
+		frmDetURL += "&formIdSeq="+frmUsage.getCrfIdSeq();
 	%>
-	<a href="<%= frmBaseURL %>" target="_blank"> <%=frmUsage.getPublicId()%> </a>
+	<a href="<%= frmURL+frmDetURL %>" target="_blank"> <%=frmUsage.getPublicId()%> </a>
 	<%
 		}
 		else {

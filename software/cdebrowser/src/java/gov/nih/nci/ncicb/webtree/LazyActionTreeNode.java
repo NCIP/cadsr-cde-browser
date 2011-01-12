@@ -73,7 +73,7 @@ public class LazyActionTreeNode extends TreeNodeBase {
    String actionWithTreeCrumbs = _action.trim();
       if ( actionWithTreeCrumbs.endsWith("')")) {
          actionWithTreeCrumbs = actionWithTreeCrumbs.substring(0, actionWithTreeCrumbs.length()-2).trim()
-         + "&treeBreadCrumbs=" + getTreeCrumbs() +"')";
+         + "&treeBreadCrumbs=" + StringUtils.strReplace(getTreeCrumbs(), "&","-")+"')";
          
       }
       return actionWithTreeCrumbs;

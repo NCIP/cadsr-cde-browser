@@ -14,6 +14,7 @@ B:gvisited {font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; co
 .OraBGGrayMedium {background-color:#999999}
 .OraBGGrayLight {background-color:#cccccc}
 .OraBGAccentVeryDark {background-color:#999966}
+.OraBGAccentVeryDarkFixWidth {background-color:#999966; table-layout:fixed}
 .OraBGAccentWhite {background-color:#FFFFFF}
 .OraBGAccentBlack {background-color:#000000}
 .OraBGAccentDark {background-color:#cccc99}

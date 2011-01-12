@@ -21,7 +21,8 @@ select  NVL(proto.long_name,'N/A') protocol_number,
 	   que.de_idseq que_de_idseq,
 	   crf.qc_id public_id,
 	   crf.version version,
-    (select (select value from tool_options_ext where tool_name ='FormBuilder' and property='FRM_DET_BASE_URL') from dual) FRM_BASE_URL
+	   (select (select value from tool_options_ext where tool_name ='FormBuilder' and property='URL') from dual) FRM_URL,
+    (select (select value from tool_options_ext where tool_name ='FormBuilder' and property='FRM_DET_URL') from dual) FRM_DET_URL
 from   sbrext.protocols_ext proto,
        sbrext.quest_contents_ext crf,
        sbrext.quest_contents_ext que,
@@ -196,14 +197,28 @@ and	   crf.deleted_ind = 'No'
       </DesignTime>
    </ViewAttribute>
    <ViewAttribute
+      Name="FormURL"
+      IsQueriable="false"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="FRM_URL"
+      Expression="FRM_URL"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
       Name="FormDetailBaseURL"
       IsQueriable="false"
       IsPersistent="false"
       Precision="255"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
-      AliasName="FRM_BASE_URL"
-      Expression="FRM_BASE_URL"
+      AliasName="FRM_DET_URL"
+      Expression="FRM_DET_URL"
       SQLType="VARCHAR" >
       <DesignTime>
          <Attr Name="_DisplaySize" Value="255" />

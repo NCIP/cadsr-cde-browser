@@ -431,6 +431,24 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       contacts.addAll(orgContacts);
       return contacts;
    }
+   
+   public Map<String, List<Contact>> getContacts(List acIdSeqs) {
+	   ContactsHolder conHolder = new ContactsHolder();
+	   
+	   PersonContactByACIdQuery personQuery = new PersonContactByACIdQuery();
+	   personQuery.setDataSource(getDataSource());
+	   personQuery.setPersonContacts(acIdSeqs, conHolder);
+	   
+	   OrgContactByACIdQuery orgQuery = new OrgContactByACIdQuery();
+	   orgQuery.setDataSource(getDataSource());
+	   orgQuery.setOrgContacts(acIdSeqs, conHolder);
+	   
+	   ContactCommunicationsQuery commQry = new ContactCommunicationsQuery();
+	   commQry.setDataSource(getDataSource());
+	   commQry.setContactComms(conHolder);
+	   
+	   return conHolder.getContactsByAC();
+   }
 
     public List<Designation> getDesignations(String acIdSeq, String type) {
         DesignationQuery query = new DesignationQuery();
@@ -1561,6 +1579,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       String last_accId = null;
       Contact currentContact = null;
       List contactList = new ArrayList();
+      ContactsHolder conHolder;
       Person currPerson = null;
 
      PersonContactByACIdQuery() {
@@ -1568,7 +1587,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
      }
 
      public void setQuerySql(String acidSeq) {
-       String querySql = " SELECT acc.acc_idseq, acc.org_idseq, acc.per_idseq, acc.contact_role,"
+       String querySql = " SELECT acc.ac_idseq, acc.acc_idseq, acc.org_idseq, acc.per_idseq, acc.contact_role,"
        +" per.LNAME, per.FNAME, addr.CADDR_IDSEQ,"
        + " addr.ADDR_LINE1, addr.ADDR_LINE2, addr.CADDR_IDSEQ, addr.CITY, addr.POSTAL_CODE, addr.STATE_PROV "
       + "  FROM sbr.ac_contacts_view acc, sbr.persons_view per, sbr.contact_addresses_view addr "
@@ -1577,10 +1596,40 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       + "   ORDER BY acc.acc_idseq, acc.rank_order ";
        super.setSql(querySql);
      }
+     
+     public void setQuerySqlForMultiple(List acidSeqs) {
+    	 StringBuffer sb = new StringBuffer();
+    	 int noOfIds = acidSeqs.size();
+    	 
+         sb.append(" SELECT acc.ac_idseq, acc.acc_idseq, acc.org_idseq, acc.per_idseq, acc.contact_role,"
+         +" per.LNAME, per.FNAME, addr.CADDR_IDSEQ,"
+         + " addr.ADDR_LINE1, addr.ADDR_LINE2, addr.CADDR_IDSEQ, addr.CITY, addr.POSTAL_CODE, addr.STATE_PROV "
+        + "  FROM sbr.ac_contacts_view acc, sbr.persons_view per, sbr.contact_addresses_view addr "
+          + " where "); 
+         
+         int j=0;
+         for (int i=0; i<= noOfIds/1000&&j<noOfIds; i++) {
+    		 if (i > 0) sb.append("or ");
+    		 sb.append("acc.ac_idseq in (");
+    		 for (j=i*1000; j<(i*1000)+1000&&j<noOfIds; j++) {
+    			 if (j > i*1000) sb.append(",");
+        		 sb.append("'");
+        		 sb.append(acidSeqs.get(j));
+        		 sb.append("'");
+    		 }
+    		 sb.append(") ");
+    	 }
+         
+         sb.append("and acc.per_idseq = per.per_idseq(+)  and addr.PER_IDSEQ(+) = per.PER_IDSEQ "
+        + "   ORDER BY acc.acc_idseq, acc.rank_order ");
+         
+         super.setSql(sb.toString());
+       }
 
 
      protected Object mapRow( ResultSet rs,  int rownum) throws SQLException {
-        String accId = rs.getString("acc_idseq");
+    	 String acId = rs.getString("ac_idseq");
+    	 String accId = rs.getString("acc_idseq");
 
         Address address = new AddressTransferObject();
         address.setAddressLine1(rs.getString("addr_line1"));
@@ -1592,7 +1641,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
         String personId = rs.getString("per_idseq");
 
-        if (currPerson == null || !currPerson.getId().equals(personId)) {
+        if (currPerson == null || currPerson.getId()==null || !currPerson.getId().equals(personId)) {
            currPerson = new PersonTransferObject();
            currPerson.setFirstName(rs.getString("fname"));
            currPerson.setLastName(rs.getString("lname"));
@@ -1602,13 +1651,14 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
         currPerson.getAddresses().add(address);
 
-        if (currentContact == null || !currentContact.getIdseq().equals(accId)) {
+        if (currentContact == null || currentContact.getIdseq()==null || !currentContact.getIdseq().equals(accId)) {
            currentContact = new ContactTransferObject();
            currentContact.setIdseq(accId);
            currentContact.setContactRole(rs.getString("contact_role"));
            contactList.add(currentContact);
         }
         currentContact.setPerson(currPerson);
+        if (conHolder != null) conHolder.add(acId, currentContact);
 
        return currentContact;
      }
@@ -1618,22 +1668,96 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         this.execute();
         return contactList;
       }
+      
+      protected void setPersonContacts(List acIdSeqs, ContactsHolder conHolder) {
+    	setQuerySqlForMultiple(acIdSeqs);
+    	this.conHolder = conHolder;
+		this.execute();
+      }
+   }
+   
+   class ContactsHolder {
+	   
+	   private Map<String, List<Contact>> contactsByAC = new HashMap<String, List<Contact>>();
+	   private Map<String, List<Contact>> contactsByPer = new HashMap<String, List<Contact>>();
+	   private Map<String, List<Contact>> contactsByOrg = new HashMap<String, List<Contact>>();
+
+	   public void add(String acId, Contact contact) {
+		   Person person = contact.getPerson();
+		   Organization org = contact.getOrganization();
+		   
+		   if (person != null && person.getId() != null && !person.getId().trim().equals("")) {
+			   List<Contact> perContacts = contactsByPer.get(contact.getPerson().getId());
+			   if (perContacts == null) {
+				   perContacts = new ArrayList<Contact>();
+				   contactsByPer.put(person.getId(), perContacts);
+			   }
+			   perContacts.add(contact);
+		   }
+		   
+		   if (org != null && org.getId() != null && !org.getId().trim().equals("")) {
+			   List<Contact> orgContacts = contactsByOrg.get(contact.getOrganization().getId());
+			   if (orgContacts == null) {
+				   orgContacts = new ArrayList<Contact>();
+				   contactsByOrg.put(org.getId(), orgContacts);
+			   }
+			   orgContacts.add(contact);
+		   }
+		   
+		   List<Contact> contacts = contactsByAC.get(acId);
+		   if (contacts == null) {
+			   contacts = new ArrayList<Contact>();
+			   contactsByAC.put(acId, contacts);
+		   }
+		   contacts.add(contact);
+	   }
+	   
+	   public Map<String, List<Contact>> getContactsByAC() {return contactsByAC; }
+	   public Map<String, List<Contact>> getContactsByPer() {return contactsByPer; }
+	   public Map<String, List<Contact>> getContactsByOrg() {return contactsByOrg; }
    }
 
    class ContactCommunicationsQuery extends MappingSqlQuery {
+	   private Map<String, List<ContactCommunication>> commMap = new HashMap<String, List<ContactCommunication>>();
    ContactCommunicationsQuery() {
      super();
    }
 
    public void setQuerySql(String idType, String orgIdSeq) {
     String querySql = " select cc.CCOMM_IDSEQ, cc.CTL_NAME, cc.CYBER_ADDRESS, " +
-    " cc.RANK_ORDER " +
+    " cc.RANK_ORDER, " +idType+" as id"+
     " from sbr.contact_comms_view cc "
     + " where "+ idType +" = '"+ orgIdSeq +"'"
     + " and ( CTL_NAME='PHONE' OR CTL_NAME='EMAIL') "
        + " ORDER BY rank_order";
      super.setSql(querySql);
    }
+   
+   public void setQuerySqlForMultiple(String idType, List orgidSeqs) {
+       StringBuffer sb = new StringBuffer();
+  	 sb.append(" select cc.CCOMM_IDSEQ, cc.CTL_NAME, cc.CYBER_ADDRESS, " +
+  		    " cc.RANK_ORDER, " +idType+" as id"+
+  		    " from sbr.contact_comms_view cc "
+  		    + " where "); 
+  	 
+  	 int noOfIds = orgidSeqs.size();
+  	 int j=0;
+       for (int i=0; i<= noOfIds/1000&&j<noOfIds; i++) {
+  		 if (i > 0) sb.append("or ");
+  		 sb.append(idType+" in (");
+  		 for (j=i*1000; j<(i*1000)+1000&&j<noOfIds; j++) {
+  			 if (j > i*1000) sb.append(",");
+      		 sb.append("'");
+      		 sb.append(orgidSeqs.get(j));
+      		 sb.append("'");
+  		 }
+  		 sb.append(") ");
+  	 }
+  	 
+      sb.append(" and ( CTL_NAME='PHONE' OR CTL_NAME='EMAIL') "
+    	       + " ORDER BY rank_order");
+       super.setSql(sb.toString());
+     }
 
 
    protected Object mapRow( ResultSet rs, int rownum) throws SQLException {
@@ -1643,6 +1767,16 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
      cc.setType(rs.getString("ctl_name"));
      cc.setValue(rs.getString("cyber_address"));
      cc.setRankOrder(rs.getInt("rank_order"));
+     String id = rs.getString("id");
+     
+     if (commMap != null) {
+    	 List<ContactCommunication> ccs = commMap.get(id);
+    	 if (ccs == null) {
+    		 ccs = new ArrayList<ContactCommunication>();
+    		 commMap.put(id, ccs);
+    	 }
+    	 ccs.add(cc);
+     }
 
      return cc;
    }
@@ -1652,18 +1786,58 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       return execute();
 
     }
+    
+    protected void setContactComms(ContactsHolder conHolder) {
+    	Map<String, List<Contact>> perContactsMap = conHolder.getContactsByPer();
+    	List<String> perIds = new ArrayList<String>(perContactsMap.keySet());
+    	if (perIds != null && !perIds.isEmpty()) {
+    		setQuerySqlForMultiple("per_idseq", perIds);
+        	commMap = new HashMap<String, List<ContactCommunication>>();
+        	this.execute();
+        	Iterator<String> perIdIter = commMap.keySet().iterator();
+        	while (perIdIter.hasNext()) {
+        		String perId = perIdIter.next();
+        		List<Contact> perContacts = perContactsMap.get(perId);
+        		if (perContacts != null) {
+        			for (Contact con: perContacts) {
+        				if (con.getPerson() != null) con.getPerson().setContactCommunications(commMap.get(perId));
+        			}
+        		}
+        	}
+    	}
+    	
+    	
+    	Map<String, List<Contact>> orgContactsMap = conHolder.getContactsByOrg();
+    	List<String> orgIds = new ArrayList<String>(orgContactsMap.keySet());
+    	if (orgIds != null && !orgIds.isEmpty()) {
+    		setQuerySqlForMultiple("org_idseq", orgIds);
+        	commMap = new HashMap<String, List<ContactCommunication>>();
+        	this.execute();
+        	Iterator<String> orgIdIter = commMap.keySet().iterator();
+        	while (orgIdIter.hasNext()) {
+        		String orgId = orgIdIter.next();
+        		List<Contact> perContacts = orgContactsMap.get(orgId);
+        		if (perContacts != null) {
+        			for (Contact con: perContacts) {
+        				if (con.getOrganization() != null) con.getOrganization().setContactCommunications(commMap.get(orgId));
+        			}
+        		}
+        	}
+    	}
+    }
 
     protected List<ContactCommunication> getContactCommsbyOrg( String orgId) {
       this.setQuerySql("org_idseq", orgId);
       return execute();
-
     }
+
    }
 
    class OrgContactByACIdQuery extends MappingSqlQuery {
       String last_accId = null;
       Contact currentContact = null;
       List contactList = new ArrayList();
+      ContactsHolder conHolder;
       Organization currOrg = null;
 
      OrgContactByACIdQuery() {
@@ -1671,7 +1845,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
      }
 
      public void setQuerySql(String acidSeq) {
-       String querySql = " SELECT acc.acc_idseq, acc.org_idseq, acc.per_idseq, acc.contact_role,"
+       String querySql = " SELECT acc.ac_idseq, acc.acc_idseq, acc.org_idseq, acc.per_idseq, acc.contact_role,"
        +" org.name, addr.CADDR_IDSEQ,"
        + " addr.ADDR_LINE1, addr.ADDR_LINE2, addr.CADDR_IDSEQ, addr.CITY, addr.POSTAL_CODE, addr.STATE_PROV "
       + "  FROM sbr.ac_contacts_view acc, sbr.organizations_view org, sbr.contact_addresses_view addr "
@@ -1680,10 +1854,38 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
       + "   ORDER BY acc.acc_idseq, acc.rank_order ";
        super.setSql(querySql);
      }
+     
+     public void setQuerySqlForMultiple(List acidSeqs) {
+         StringBuffer sb = new StringBuffer();
+    	 sb.append(" SELECT acc.ac_idseq, acc.acc_idseq, acc.org_idseq, acc.per_idseq, acc.contact_role,"
+         +" org.name, addr.CADDR_IDSEQ,"
+         + " addr.ADDR_LINE1, addr.ADDR_LINE2, addr.CADDR_IDSEQ, addr.CITY, addr.POSTAL_CODE, addr.STATE_PROV "
+        + "  FROM sbr.ac_contacts_view acc, sbr.organizations_view org, sbr.contact_addresses_view addr "
+          + " where "); 
+    	 
+    	 int noOfIds = acidSeqs.size();
+    	 int j=0;
+         for (int i=0; i<= noOfIds/1000&&j<noOfIds; i++) {
+    		 if (i > 0) sb.append("or ");
+    		 sb.append("acc.ac_idseq in (");
+    		 for (j=i*1000; j<(i*1000)+1000&&j<noOfIds; j++) {
+    			 if (j > i*1000) sb.append(",");
+        		 sb.append("'");
+        		 sb.append(acidSeqs.get(j));
+        		 sb.append("'");
+    		 }
+    		 sb.append(") ");
+    	 }
+    	 
+        sb.append(" and acc.org_idseq = org.org_idseq(+)  and addr.ORG_IDSEQ(+) = ORG.ORG_IDSEQ "
+        + "   ORDER BY acc.acc_idseq, acc.rank_order ");
+         super.setSql(sb.toString());
+       }
 
 
      protected Object mapRow( ResultSet rs,  int rownum) throws SQLException {
-        String accId = rs.getString("acc_idseq");
+    	 String acId = rs.getString("ac_idseq");
+    	 String accId = rs.getString("acc_idseq");
 
         Address address = new AddressTransferObject();
         address.setAddressLine1(rs.getString("addr_line1"));
@@ -1711,6 +1913,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
            contactList.add(currentContact);
         }
         currentContact.setOrganization(currOrg);
+        if (conHolder != null) conHolder.add(acId, currentContact);
 
        return currentContact;
      }
@@ -1720,6 +1923,12 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
         this.execute();
         return contactList;
       }
+      
+      protected void setOrgContacts(List acIdSeqs, ContactsHolder conHolder) {
+          setQuerySqlForMultiple(acIdSeqs);
+          this.conHolder = conHolder;
+          this.execute();
+        }
    }
 
 }

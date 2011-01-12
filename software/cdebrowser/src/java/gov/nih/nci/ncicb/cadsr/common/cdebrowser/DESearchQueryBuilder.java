@@ -127,7 +127,7 @@ public class DESearchQueryBuilder extends Object {
       searchStr = "";
       whereClause = "";
       selIndex = "";
-      if((treeParamType!=null)&&(treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")))
+      /*if((treeParamType!=null)&&(treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")))
       {
         latestWhere = "";
       }
@@ -135,7 +135,7 @@ public class DESearchQueryBuilder extends Object {
       {
         latestWhere = " and de.latest_version_ind = 'Yes' ";
       }
-      whereBuffer.append(latestWhere);
+      whereBuffer.append(latestWhere);*/
 
       if (this.treeParamRegStatus !=null)
         whereBuffer.append(" and acr.registration_status = '"+ this.treeParamRegStatus + "'");
@@ -786,7 +786,7 @@ public class DESearchQueryBuilder extends Object {
                   +" from sbr.reference_documents_view rd2,sbr.data_elements_view de2 "
                   +" where  de2.de_idseq  = rd2.ac_idseq (+) "
                   +" and    rd2.dctl_name (+) = 'Alternate Question Text' "
-                  +" and    upper (nvl(rd2.doc_text,'%')) like upper ('%"+newSearchStr+"%')) ";
+                  +" and    "+buildSearchString("upper (nvl(rd2.doc_text,'%')) like upper ('SRCSTR') ",newSearchStr, searchMode)+") ";
      } else if  ( StringUtils.containsKey(searchDomain,"Doc Text")) {
         docTextTypeWhere = "rd1.dctl_name (+) = 'Preferred Question Text'";
      } else if  ( StringUtils.containsKey(searchDomain,"Hist")) {

@@ -7,6 +7,8 @@ import gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
 import gov.nih.nci.ncicb.cadsr.common.resource.Context;
 import gov.nih.nci.ncicb.cadsr.common.resource.Contact;
 import gov.nih.nci.ncicb.cadsr.common.resource.Definition;
@@ -183,6 +185,8 @@ public interface AdminComponentDAO {
   public List getCSCSIHierarchyByTypeAndContext(String csType, String csiType,String contextIdseq);
 
   public List<Contact> getContacts(String acIdseq);
+  
+  public Map<String, List<Contact>> getContacts(List acIdSeqs);
 
   //added for Value Meaning becomes an admin component
   public List<Designation> getDesignations(String acIdSeq, String type);

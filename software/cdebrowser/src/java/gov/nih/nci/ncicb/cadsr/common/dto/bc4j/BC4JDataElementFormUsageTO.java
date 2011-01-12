@@ -10,7 +10,8 @@ public class BC4JDataElementFormUsageTO implements DataElementFormUsage  {
   private String questionLongName;
   private String publicId;
   private String version;
-  private String formDetailBaseURL;
+  private String formURL;
+  private String formDetailURL;
   private String crfIdSeq;
   
   public BC4JDataElementFormUsageTO() {
@@ -24,7 +25,8 @@ public class BC4JDataElementFormUsageTO implements DataElementFormUsage  {
     questionLongName = usage.getQueLongName();
     publicId = usage.getPublicId();
     version = usage.getVersion();
-    formDetailBaseURL = usage.getFrmBaseURL();
+    formURL = usage.getFormURL();
+    formDetailURL = usage.getFormDetailURL();
     crfIdSeq = usage.getCrfIdseq();
   }
 
@@ -58,8 +60,12 @@ public class BC4JDataElementFormUsageTO implements DataElementFormUsage  {
     return version;
   }
   
-  public String getFormDetailBaseURL() {
-    return formDetailBaseURL;
+  public String getFormURL() {
+    return formURL;
+  }
+  
+  public String getFormDetailURL() {
+    return formDetailURL;
   }
   
   public String getCrfIdSeq() {

@@ -107,10 +107,13 @@ public class PersonTransferObject  extends BaseTransferObject
    
    public String toString() {
        String person = "Name: " + this.getFirstName() + " " + this.getLastName() + "<br>";
-       for (Iterator iter=this.getContactCommunications().iterator(); iter.hasNext();){
-           ContactCommunication cc= (ContactCommunication) iter.next();
-           person += cc.getType() + ": " + cc.getValue() + "<br>";
+       if (getContactCommunications() != null) {
+    	   for (Iterator iter=this.getContactCommunications().iterator(); iter.hasNext();){
+               ContactCommunication cc= (ContactCommunication) iter.next();
+               person += cc.getType() + ": " + cc.getValue() + "<br>";
+           }
        }
+       
        return person + "<br>";
    }
 }

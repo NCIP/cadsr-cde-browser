@@ -43,7 +43,7 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=WINDOWS-1252">
 <LINK REL=STYLESHEET TYPE="text/css" HREF="<%=request.getContextPath()%>/css/blaf.css">
 <TITLE>
-Permissible Values
+Value Domain
 </TITLE>
 </HEAD>
 <BODY topmargin="0">

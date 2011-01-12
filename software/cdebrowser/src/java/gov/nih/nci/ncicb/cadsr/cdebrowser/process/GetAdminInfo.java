@@ -5,13 +5,22 @@ import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.AdminComponentDAO;
 import gov.nih.nci.ncicb.cadsr.common.resource.Classification;
+import gov.nih.nci.ncicb.cadsr.common.resource.ComponentConcept;
+import gov.nih.nci.ncicb.cadsr.common.resource.Concept;
+import gov.nih.nci.ncicb.cadsr.common.resource.ConceptDerivationRule;
 import gov.nih.nci.ncicb.cadsr.common.resource.Contact;
 import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
+import gov.nih.nci.ncicb.cadsr.common.resource.ObjectClass;
+import gov.nih.nci.ncicb.cadsr.common.resource.Property;
+import gov.nih.nci.ncicb.cadsr.common.resource.ValidValue;
+import gov.nih.nci.ncicb.cadsr.common.resource.ValueMeaning;
 import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocator;
 import gov.nih.nci.ncicb.cadsr.common.servicelocator.ServiceLocatorFactory;
 import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +30,17 @@ import oracle.cle.util.statemachine.TransitionCondition;
 
 public class GetAdminInfo extends BasePersistingProcess {
 
+	private static final String DE_CON_VAR = "deContacts";
+	private static final String DEC_CON_VAR = "decContacts";
+	private static final String OC_CON_VAR = "ocContacts";
+	private static final String PROP_CON_VAR = "propContacts";
+	private static final String VD_CON_VAR = "vdContacts";
+	private static final String CS_CON_VAR = "csContacts";
+	private static final String CTX_CON_VAR = "ctxContacts";
+	private static final String REP_CON_VAR = "repTermContacts";
+	private static final String CON_CON_VAR = "conContacts";
+	private static final String VM_CON_VAR = "vmContacts";
+	
 	public GetAdminInfo() {
 	    this(null);
 
@@ -40,14 +60,15 @@ public class GetAdminInfo extends BasePersistingProcess {
 	  public void registerInfo() {
 	    try {
 	    	registerResultObject("tib");
-	      registerResultObject("deContacts");
-	      registerResultObject("decContacts");
-	      registerResultObject("ocContacts");
-	      registerResultObject("propContacts");
-	      registerResultObject("csContacts");
-	      registerResultObject("ctxContacts");
-	      registerResultObject("vdContacts");
-	      registerResultObject("repTermContacts");
+	      registerResultObject(DE_CON_VAR);
+	      registerResultObject(DEC_CON_VAR);
+	      registerResultObject(OC_CON_VAR);
+	      registerResultObject(PROP_CON_VAR);
+	      registerResultObject(CS_CON_VAR);
+	      registerResultObject(CTX_CON_VAR);
+	      registerResultObject(VD_CON_VAR);
+	      registerResultObject(REP_CON_VAR);
+	      registerResultObject(CON_CON_VAR);
 	    }
 	    catch (ProcessInfoException pie) {
 	      reportException(pie, true);
@@ -76,61 +97,113 @@ public class GetAdminInfo extends BasePersistingProcess {
 	      }
 	      
 	      DataElement de = (DataElement) getInfoObject("de");
-		  List<Contact> deContacts = null;
-		  List<Contact> decContacts = null;
-		  List<Contact> ocContacts = null;
-		  List<Contact> propContacts = null;
 		  Map<Classification, List<Contact>> csContacts = null;
-		  List<Contact> ctxContacts = null;
-		  List<Contact> vdContacts = null;
-		  List<Contact> repTermContacts = null;
+		  Map<Concept, List<Contact>> conContacts = null;
+		  Map<ValueMeaning, List<Contact>> vmContacts = null;
 		  
-		  if (de != null) {
-			ServiceLocator locator = ServiceLocatorFactory.getLocator(CaDSRConstants.CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
-			AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
-			AdminComponentDAO adminDAO = daoFactory.getAdminComponentDAO();
-			deContacts = adminDAO.getContacts(de.getIdseq());
+		  if (de != null) {			
+			Map<String, Object> varMap = new HashMap<String, Object>();
+			
+			varMap.put(de.getIdseq(), DE_CON_VAR);
 			
 			if (de.getDataElementConcept() != null) {
-				decContacts = adminDAO.getContacts(de.getDataElementConcept().getIdseq());
-				if (de.getDataElementConcept().getObjectClass() != null) {
-					ocContacts = adminDAO.getContacts(de.getDataElementConcept().getObjectClass().getIdseq());
+				varMap.put(de.getDataElementConcept().getIdseq(), DEC_CON_VAR);
+				ObjectClass oc = de.getDataElementConcept().getObjectClass();
+				Property prop = de.getDataElementConcept().getProperty();
+				if (oc != null) {
+					varMap.put(oc.getIdseq(),OC_CON_VAR);
+					addConceptsToMap(oc.getConceptDerivationRule(), varMap);
 				}
-				if (de.getDataElementConcept().getProperty() != null) {
-					propContacts = adminDAO.getContacts(de.getDataElementConcept().getProperty().getIdseq());
+				if (prop != null) {
+					varMap.put(prop.getIdseq(), PROP_CON_VAR);
+					addConceptsToMap(prop.getConceptDerivationRule(), varMap);
 				}
 			}
 			
 			if (de.getClassifications() != null ) {
-				csContacts = new HashMap<Classification, List<Contact>>();
 				for (Classification cs: (List<Classification>)de.getClassifications()) {
-					csContacts.put(cs, adminDAO.getContacts(cs.getCsIdseq()));
+					varMap.put(cs.getCsIdseq(), cs);
 				}
 			}
 			
 			if (de.getConteIdseq() != null) {
-				ctxContacts = adminDAO.getContacts(de.getConteIdseq());
+				varMap.put(de.getConteIdseq(), CTX_CON_VAR);
 			}
 			
 			if (de.getVdIdseq() != null) {
-				vdContacts = adminDAO.getContacts(de.getVdIdseq());
+				varMap.put(de.getVdIdseq(), VD_CON_VAR);
+			}
+			
+			if (de.getValueDomain() != null) {
+				List vvs = de.getValueDomain().getValidValues();
+				if (vvs != null && !vvs.isEmpty()) {
+					for (Object obj: vvs) {
+						ValidValue vv = (ValidValue)obj;
+						ValueMeaning vm = vv.getValueMeaning();
+						if (vm != null) {
+							varMap.put(vm.getIdseq(), vm);
+						}
+					}
+				}
 			}
 			
 			if (de.getValueDomain().getRepresentation()!=null) {
-				repTermContacts = adminDAO.getContacts(de.getValueDomain().getRepresentation().getIdseq());
+				varMap.put(de.getValueDomain().getRepresentation().getIdseq(), REP_CON_VAR);
+				addConceptsToMap(de.getValueDomain().getRepresentation().getConceptDerivationRule(), varMap);
+			}
+			
+			ServiceLocator locator = ServiceLocatorFactory.getLocator(CaDSRConstants.CDEBROWSER_SERVICE_LOCATOR_CLASSNAME);
+			AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(locator);
+			AdminComponentDAO adminDAO = daoFactory.getAdminComponentDAO();
+			
+			Map<String, List<Contact>> contactsMap = adminDAO.getContacts(new ArrayList<String>(varMap.keySet()));
+			if (contactsMap != null) {
+				Iterator<String> iter = contactsMap.keySet().iterator();
+				while (iter.hasNext()) {
+					String id = iter.next();
+					Object varType = varMap.get(id);
+					if (varType instanceof String) {
+						setResult((String)varType, contactsMap.get(id));
+					}
+					else {
+						if (varType instanceof Classification ) {
+							if (csContacts == null) {
+								csContacts = new HashMap<Classification, List<Contact>>();
+								setResult(CS_CON_VAR, csContacts);
+							}
+							csContacts.put((Classification)varType, contactsMap.get(id));
+						}
+						else if (varType instanceof Concept) {
+							if (conContacts == null) {
+								conContacts = new HashMap<Concept, List<Contact>>();
+								setResult(CON_CON_VAR, conContacts);
+							}
+							conContacts.put((Concept)varType, contactsMap.get(id));
+						}
+						else if (varType instanceof ValueMeaning) {
+							if (vmContacts == null) {
+								vmContacts = new HashMap<ValueMeaning, List<Contact>>();
+								setResult(VM_CON_VAR, vmContacts);
+							}
+							vmContacts.put((ValueMeaning)varType, contactsMap.get(id));
+						}
+					}
+				}
 			}
 		  }
-		  
-		setResult("deContacts", deContacts);
-		setResult("decContacts", decContacts);
-		setResult("ocContacts", ocContacts);
-		setResult("propContacts", propContacts);
-		setResult("csContacts", csContacts);
-		setResult("ctxContacts", ctxContacts);
-		setResult("vdContacts", vdContacts);
-		setResult("repTermContacts", repTermContacts);
+		  	
 		setResult("tib", tib);
 		setCondition(SUCCESS);
+	  }
+	  
+	  private void addConceptsToMap(ConceptDerivationRule conDR, Map<String, Object> varMap) {
+		  if (conDR != null && conDR.getComponentConcepts() != null) {
+				for (Object compCons: conDR.getComponentConcepts()) {
+					ComponentConcept compCon = (ComponentConcept)compCons;
+					Concept con = compCon.getConcept();
+					if (con != null) varMap.put(con.getIdseq(), con);
+				}
+			}
 	  }
 	  
 	  protected TransitionCondition getPersistSuccessCondition() {
