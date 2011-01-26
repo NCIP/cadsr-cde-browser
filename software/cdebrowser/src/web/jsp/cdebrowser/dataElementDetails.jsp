@@ -23,6 +23,9 @@
   String pageName = StringEscapeUtils.escapeJavaScript(PageConstants.PAGEID);
   String pageUrl = "&"+StringEscapeUtils.escapeJavaScript(pageName+"="+pageId);
   CDEBrowserParams params = CDEBrowserParams.getInstance();    
+  config.getServletContext().setAttribute("de", de);
+  String appPath = request.getRequestURL().toString().replace(request.getServletPath(),"");
+  String directURL = appPath+"/search?elementDetails=9&FirstTimer=0&publicId="+de.getPublicId()+"&version="+de.getVersion();
 %>
 
 <HTML>
@@ -141,7 +144,10 @@ function anotherDataElementDetails(linkParms, version )
     <td class="TableRowPromptText">Registration Status:</td>
     <td class="OraFieldText"><%=de.getRegistrationStatus()%> </td>
  </tr>
- 
+ <tr class="OraTabledata">
+    <td class="TableRowPromptText">Direct Link:</td>
+    <td class="OraFieldText"><a href="<%= directURL %>"><%= directURL %></a> </td>
+ </tr>
 </table>
 
 <br>
