@@ -25,7 +25,7 @@
   CDEBrowserParams params = CDEBrowserParams.getInstance();    
   config.getServletContext().setAttribute("de", de);
   String appPath = request.getRequestURL().toString().replace(request.getServletPath(),"");
-  String directURL = appPath+"/search?elementDetails=9&FirstTimer=0&publicId="+de.getPublicId()+"&version="+de.getVersion();
+  String directURL = appPath+"/search?elementDetails=9&FirstTimer=0&PageId=ElementDetailsGroup&publicId="+de.getPublicId()+"&version="+de.getVersion();
 %>
 
 <HTML>
