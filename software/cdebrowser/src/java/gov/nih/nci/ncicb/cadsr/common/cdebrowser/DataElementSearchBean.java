@@ -63,6 +63,7 @@ public class DataElementSearchBean extends Object {
   private String property;
   
   private String excludeContextList;
+  private String vdType;
 
   
   public DataElementSearchBean() {
@@ -94,6 +95,7 @@ public DataElementSearchBean( HttpServletRequest request) throws SQLException {
     property = StringEscapeUtils.escapeHtml(request.getParameter("jspProperty"));
     nameSearchMode = StringEscapeUtils.escapeHtml(request.getParameter("jspNameSearchMode"));
     pvSearchMode = StringEscapeUtils.escapeHtml(request.getParameter("jspPVSearchMode"));
+    vdType = StringEscapeUtils.escapeHtml(request.getParameter("jspVDType"));
 
     if (contextUse == null) {
       contextUse = "";
@@ -641,6 +643,12 @@ public DataElementSearchBean( HttpServletRequest request) throws SQLException {
         if (pvSearchMode== null)
             pvSearchMode = ProcessConstants.DE_SEARCH_MODE_EXACT;
         return pvSearchMode;
+    }
+    
+    public String getVDType() {
+        if (vdType== null)
+            vdType = ProcessConstants.VD_TYPE_BOTH;
+        return vdType;
     }
     
     public String getExcludeContextList()

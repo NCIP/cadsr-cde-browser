@@ -80,6 +80,7 @@ public class DESearchQueryBuilder extends Object {
     String decFrom = "";
     String conceptName = "";
     String conceptCode = "";
+    String vdType = "";
     StringBuffer whereBuffer = new StringBuffer();
 
     // release 3.0 updated to add display order for registration status
@@ -183,6 +184,8 @@ public class DESearchQueryBuilder extends Object {
         StringUtils.replaceNull(request.getParameter("jspConceptName"));
       conceptCode =
         StringUtils.replaceNull(request.getParameter("jspConceptCode"));
+      vdType =
+          StringUtils.replaceNull(request.getParameter("jspVDType"));
 
       if (searchStr6.equals("Yes")||searchStr6.equals("")) {
         //latestWhere = " and de.latest_version_ind = '"+searchStr6+"'";
@@ -240,6 +243,15 @@ public class DESearchQueryBuilder extends Object {
                  +" and vd.vd_idseq = de.vd_idseq ";
         vdFrom = " ,sbr.value_domains_view vd ";
         //queryParams[1] = searchStr2;
+      }
+      else if (!vdType.equals("") && !vdType.equals(ProcessConstants.VD_TYPE_BOTH)){
+    	  String type = "E";
+    	  if (vdType.equals(ProcessConstants.VD_TYPE_NON_ENUMERATED)) {
+    		  type = "N";
+    	  }
+    	  vdWhere = " and vd.VD_TYPE_FLAG = '"+type+"'"
+				          +" and vd.vd_idseq = de.vd_idseq ";
+				 vdFrom = " ,sbr.value_domains_view vd ";
       }
       //if (!getSearchStr(4).equals("")){
       if (!searchStr4.equals("")){

@@ -85,4 +85,8 @@ public interface ProcessConstants extends oracle.cle.process.ProcessConstants {
   public static final String DE_SEARCH_MODE_EXACT = "Exact phrase";
   public static final String DE_SEARCH_MODE_ALL = "All of the words";
   public static final String DE_SEARCH_MODE_ANY = "At least one of the words";
+  
+  public static final String VD_TYPE_ENUMERATED = "enumerated";
+  public static final String VD_TYPE_NON_ENUMERATED = "nonenumerated";
+  public static final String VD_TYPE_BOTH = "both";
 }

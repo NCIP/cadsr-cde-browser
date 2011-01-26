@@ -221,6 +221,20 @@
                   <input type="hidden" name="jspValueDomain" value="<%=desb.getVdIdseq()%>" >
               </td>
             </tr>
+			<tr >
+              <td class="OraTableColumnHeaderNoBG" nowrap>Value Domain Type</td>
+              <td class="OraTabledata" nowrap>
+                <input type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_ENUMERATED%>"
+	    	        <%if (desb.getVDType().equals(ProcessConstants.VD_TYPE_ENUMERATED))
+	    	        { %> checked <%}%> >Enumerated
+	    	        <input type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_NON_ENUMERATED%>"
+	    	        <%if (desb.getVDType().equals(ProcessConstants.VD_TYPE_NON_ENUMERATED))
+	    	        { %> checked <%}%> >Non Enumerated
+					<input type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_BOTH%>"
+	    	        <%if (desb.getVDType().equals(ProcessConstants.VD_TYPE_BOTH))
+	    	        { %> checked <%}%> >Both
+              </td>
+            </tr>
             <tr>
                 <td class="OraTableColumnHeaderNoBG" nowrap>Permissible Value</td>
                 <td class="OraTabledata" nowrap>
