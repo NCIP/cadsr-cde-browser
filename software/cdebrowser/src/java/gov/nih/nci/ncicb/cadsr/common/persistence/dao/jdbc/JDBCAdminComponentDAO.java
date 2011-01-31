@@ -1897,7 +1897,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
         String orgId = rs.getString("org_idseq");
 
-        if (currOrg == null || !currOrg.getId().equals(orgId)) {
+        if (currOrg == null || currOrg.getId() == null || !currOrg.getId().equals(orgId)) {
            currOrg = new OrganizationTransferObject();
            currOrg.setName(rs.getString("name"));
            currOrg.setId(rs.getString("org_idseq"));
@@ -1906,7 +1906,7 @@ public class JDBCAdminComponentDAO extends JDBCBaseDAO
 
         currOrg.getAddresses().add(address);
 
-        if (currentContact == null || !currentContact.getIdseq().equals(accId)) {
+        if (currentContact == null || currentContact.getIdseq()==null || !currentContact.getIdseq().equals(accId)) {
            currentContact = new ContactTransferObject();
            currentContact.setIdseq(accId);
            currentContact.setContactRole(rs.getString("contact_role"));
