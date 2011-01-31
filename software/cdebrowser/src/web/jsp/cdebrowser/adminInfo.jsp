@@ -103,11 +103,35 @@
 	}
 
 	public void printCSContacts(javax.servlet.jsp.JspWriter out, String name, Map contacts) {
-		if (contacts != null) {
-			Iterator contactsIter = contacts.values().iterator();
-			while (contactsIter.hasNext()) {
-				printContacts(out, name, (List)contactsIter.next());
+		try {
+			out.println("<br/>");
+			out.println("<table cellpadding=\"0\" cellspacing=\"0\" width=\"80%\" align=\"center\">");
+			out.println("<tr>");
+			out.println("<td class=\"OraHeaderSubSub\" width=\"100%\">"+name+"</td>");
+			out.println("</tr>");
+			out.println("<tr>");
+			out.println("<td width=\"100%\"><img height=1 src=\"i/beigedot.gif\" width=\"99%\" align=top border=0> </td>");
+			out.println("</tr>");
+			out.println("<tr><td>");
+			
+			if (contacts != null) {
+				Iterator contactsIter = contacts.keySet().iterator();
+				while (contactsIter.hasNext()) {
+					Classification cs = (Classification)contactsIter.next();
+					printContacts(out, cs.getClassSchemeName(), (List)contacts.get(cs));
+				}
 			}
+			else {
+				out.println("<table width=\"100%\" cellpadding=\"1\" cellspacing=\"1\" class=\"OraBGAccentVeryDark\">");
+				out.println("<tr class=\"OraTabledata\">");
+				out.println("<td class=\"OraFieldText\" width=\"1000%\">No Contact Information</td>");
+				out.println("</tr>");
+				out.println("</table>");
+			}
+			out.println("</td></tr>");
+			out.println("</table>");
+		} catch (java.io.IOException ioe) {
+			ioe.printStackTrace();
 		}
 	}
 	
