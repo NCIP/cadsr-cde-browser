@@ -69,6 +69,7 @@ public class GetAdminInfo extends BasePersistingProcess {
 	      registerResultObject(VD_CON_VAR);
 	      registerResultObject(REP_CON_VAR);
 	      registerResultObject(CON_CON_VAR);
+	      registerResultObject(VM_CON_VAR);
 	    }
 	    catch (ProcessInfoException pie) {
 	      reportException(pie, true);
@@ -83,7 +84,7 @@ public class GetAdminInfo extends BasePersistingProcess {
 	   * condition returned by <code>getPersistSuccessCondition()</code> is set.
 	   */
 	  public void persist() throws Exception {
-		  
+		  resetResults();
 		  TabInfoBean tib = null;
 		  if (getInfoObject("tib") == null) {
 			  tib = new TabInfoBean("cdebrowser_details_tabs");
@@ -194,6 +195,19 @@ public class GetAdminInfo extends BasePersistingProcess {
 		  	
 		setResult("tib", tib);
 		setCondition(SUCCESS);
+	  }
+	  
+	  private void resetResults() {
+		  setResult(DE_CON_VAR, "");
+		  setResult(DEC_CON_VAR, "");
+		  setResult(OC_CON_VAR, "");
+		  setResult(PROP_CON_VAR, "");
+		  setResult(CS_CON_VAR, "");
+		  setResult(CTX_CON_VAR, "");
+		  setResult(VD_CON_VAR, "");
+		  setResult(REP_CON_VAR, "");
+		  setResult(CON_CON_VAR, "");
+		  setResult(VM_CON_VAR, "");
 	  }
 	  
 	  private void addConceptsToMap(ConceptDerivationRule conDR, Map<String, Object> varMap) {
