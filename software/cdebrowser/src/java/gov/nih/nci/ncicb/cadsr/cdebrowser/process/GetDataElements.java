@@ -32,6 +32,8 @@ import gov.nih.nci.ncicb.cadsr.objectCart.impl.CDECartOCImpl;
 import gov.nih.nci.objectCart.client.ObjectCartClient;
 import gov.nih.nci.objectCart.client.ObjectCartException;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -130,6 +132,7 @@ public class GetDataElements extends BasePersistingProcess {
 			registerResultObject(ProcessConstants.DE_SEARCH_TOP_PAGE_SCROLLER);
 			registerResultObject("uem");
 			registerParameterObject(ProcessConstants.SELECT_DE);
+			registerStringResult(ProcessConstants.DOWNLOAD_LINK_WIKI);
 
 		}
 		catch (ProcessInfoException pie) {
@@ -213,6 +216,7 @@ public class GetDataElements extends BasePersistingProcess {
 				desb = new DataElementSearchBean(myRequest);
 				dePageIterator = new BC4JPageIterator(100);
 				desb.initSearchPreferences(dbUtil);
+				setDownloadLink(dbUtil);
 			}else if (performQuery.equals("yes")) {
 				desb = new DataElementSearchBean(myRequest);
 				//TODO: After creating the bean it is set with default values : GF 18442
@@ -544,6 +548,21 @@ public class GetDataElements extends BasePersistingProcess {
 			setResult("XML_FILE_MAX_RECORDS", getStringInfo("XML_FILE_MAX_RECORDS"));
 			setResult("TREE_URL", getStringInfo("TREE_URL"));
 			setResult("INITIALIZED", "yes");
+		}
+	}
+	
+	private void setDownloadLink(DBUtil dbUtil) {
+		ResultSet rs = null;
+		try {
+			rs = dbUtil.executeQuery("select value from TOOL_OPTIONS_EXT where tool_name='CDEBrowser' and property='DOWNLOAD_LINK_WIKI'");
+			if (rs.next()) {
+				setResult(ProcessConstants.DOWNLOAD_LINK_WIKI, rs.getString(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (rs!=null) try { rs.close(); } catch(Exception e){}
 		}
 	}
 
