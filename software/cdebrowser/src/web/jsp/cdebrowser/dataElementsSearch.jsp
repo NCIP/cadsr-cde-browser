@@ -62,6 +62,7 @@
   String decLOVUrl= "javascript:newWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?dataElementConceptsLOV=9")+"&"+StringEscapeUtils.escapeHtml("idVar=jspDataElementConcept")+"&"+StringEscapeUtils.escapeHtml("nameVar=txtDataElementConcept")+pageUrl+"','decLOV',700,600)";
   String csLOVUrl= "javascript:newBrowserWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?classificationsLOV=9")+"&"+StringEscapeUtils.escapeHtml("idVar=jspClassification")+"&"+StringEscapeUtils.escapeHtml("nameVar=txtClassSchemeItem")+pageUrl+"','csLOV',700,600)";
 
+  String downloadLinkWiki = infoBean.getStringInfo(ProcessConstants.DOWNLOAD_LINK_WIKI);
   
   String txtDataElementConcept = StringEscapeUtils.escapeHtml(desb.getDECPrefName());
   String txtValueDomain = StringEscapeUtils.escapeHtml(desb.getVDPrefName());
