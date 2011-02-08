@@ -89,4 +89,6 @@ public interface ProcessConstants extends oracle.cle.process.ProcessConstants {
   public static final String VD_TYPE_ENUMERATED = "enumerated";
   public static final String VD_TYPE_NON_ENUMERATED = "nonenumerated";
   public static final String VD_TYPE_BOTH = "both";
+  
+  public static final String DOWNLOAD_LINK_WIKI = "DOWNLOAD_LINK_WIKI";
 }
