@@ -10,7 +10,7 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
 
 %>
 <INPUT TYPE="HIDDEN" NAME="jspSearchIn" VALUE="ALL">
-<INPUT TYPE="HIDDEN" NAME="jspLatestVersion" VALUE="Yes">
+<!-- >INPUT TYPE="HIDDEN" NAME="jspLatestVersion" VALUE="Yes"-->
 <INPUT TYPE="HIDDEN" NAME="contextUse" VALUE="both">
 <INPUT TYPE="HIDDEN" NAME="jspStatus" VALUE="ALL">
 <INPUT TYPE="HIDDEN" NAME="regStatus" VALUE="ALL">
