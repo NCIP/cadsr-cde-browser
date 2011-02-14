@@ -187,8 +187,7 @@ public class DESearchQueryBuilder extends Object {
       vdType =
           StringUtils.replaceNull(request.getParameter("jspVDType"));
 
-      if (searchStr6.equals("Yes")||searchStr6.equals("")) {
-        //latestWhere = " and de.latest_version_ind = '"+searchStr6+"'";
+      if (searchStr6.equals("Yes")) {
         latestWhere = " and de.latest_version_ind = 'Yes' ";
       }
       else {
