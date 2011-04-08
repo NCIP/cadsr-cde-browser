@@ -56,7 +56,7 @@ public class DataElementSearchBean extends Object {
   private StringBuffer searchInList;
   private String validValue;
   private String altName;
-  private String basicSearchType="";
+  //private String basicSearchType="";
   private String conceptName = "";
   private String conceptCode = "";
   private String objectClass;
@@ -64,6 +64,7 @@ public class DataElementSearchBean extends Object {
   
   private String excludeContextList;
   private String vdType;
+  private String cdeType;
 
   
   public DataElementSearchBean() {
@@ -88,7 +89,7 @@ public DataElementSearchBean( HttpServletRequest request) throws SQLException {
     contextUse = StringEscapeUtils.escapeHtml(request.getParameter("contextUse"));
     validValue = StringEscapeUtils.escapeHtml(request.getParameter("jspValidValue"));
     altName = StringEscapeUtils.escapeHtml(request.getParameter("jspAltName"));
-    basicSearchType = StringEscapeUtils.escapeHtml(request.getParameter("jspBasicSearchType"));
+    //basicSearchType = StringEscapeUtils.escapeHtml(request.getParameter("jspBasicSearchType"));
     conceptName = StringEscapeUtils.escapeHtml(request.getParameter("jspConceptName"));
     conceptCode = StringEscapeUtils.escapeHtml(request.getParameter("jspConceptCode"));
     objectClass = StringEscapeUtils.escapeHtml(request.getParameter("jspObjectClass"));
@@ -96,6 +97,7 @@ public DataElementSearchBean( HttpServletRequest request) throws SQLException {
     nameSearchMode = StringEscapeUtils.escapeHtml(request.getParameter("jspNameSearchMode"));
     pvSearchMode = StringEscapeUtils.escapeHtml(request.getParameter("jspPVSearchMode"));
     vdType = StringEscapeUtils.escapeHtml(request.getParameter("jspVDType"));
+    cdeType = StringEscapeUtils.escapeHtml(request.getParameter("jspCDEType"));
 
     if (contextUse == null) {
       contextUse = "";
@@ -461,7 +463,7 @@ public DataElementSearchBean( HttpServletRequest request) throws SQLException {
     return StringUtils.replaceNull(altName);
   }
 
-  public String getBasicSearchType()
+  /*public String getBasicSearchType()
   {
     return StringUtils.replaceNull(basicSearchType);
   }
@@ -469,7 +471,7 @@ public DataElementSearchBean( HttpServletRequest request) throws SQLException {
   public void setBasicSearchType(String jspBasicSearchType)
   {
       this.basicSearchType = jspBasicSearchType;
-  }
+  }*/
 
   public String getSimpleSearchStr()
   {
@@ -649,6 +651,12 @@ public DataElementSearchBean( HttpServletRequest request) throws SQLException {
         if (vdType== null)
             vdType = ProcessConstants.VD_TYPE_BOTH;
         return vdType;
+    }
+    
+    public String getCDEType() {
+        if (cdeType== null)
+            cdeType = "";
+        return cdeType;
     }
     
     public String getExcludeContextList()

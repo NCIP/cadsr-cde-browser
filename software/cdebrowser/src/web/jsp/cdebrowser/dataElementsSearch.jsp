@@ -161,12 +161,13 @@
 Data Elements Search - Data Elements
 </TITLE>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=contextPath%>/js/checkbox.js"></SCRIPT>
-
+<script type="text/javascript" src="/CDEBrowser/js/dojo/dojo/dojo.js" djConfig="parseOnLoad: true">
+    </script>
 </HEAD>
 
 <BODY  bgcolor="#ffffff" onLoad="turnOff()" topmargin="0" >
-<SCRIPT LANGUAGE="JavaScript">
-<!--
+<SCRIPT LANGUAGE="JavaScript"><!--
+
 function redirect1(detailReqType, linkParms )
 {
   var urlString="<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?dataElementDetails=9")%>" + linkParms +"<%=pageUrl%>"+"<%="&"+StringEscapeUtils.escapeHtml("queryDE=yes")%>";
@@ -201,7 +202,7 @@ function submitForm() {
 }
 
 function submitSimpleForm() {
-     if(document.forms[0].jspBasicSearchType.selectedIndex==1)
+     /*if(document.forms[0].jspBasicSearchType.selectedIndex==1)
      {
         document.forms[0].jspCdeId.value=document.forms[0].jspSimpleKeyword.value;
         document.forms[0].jspKeyword.value="";
@@ -211,7 +212,7 @@ function submitSimpleForm() {
      {
        document.forms[0].jspKeyword.value=document.forms[0].jspSimpleKeyword.value;
        document.forms[0].jspCdeId.value="";
-     }
+     }*/
      
      document.forms[0].submit();
   }
@@ -327,6 +328,7 @@ function ToggleAll(e){
 	else {
 	    setChecked(0,'selectDE');
 	}
+	addOrDeleteAll();
 }
 
 function updateCart() {
@@ -400,8 +402,24 @@ function gotoCDESearchPrefs() {
   document.forms[0].submit();
 }
 
-//-->
-</SCRIPT>
+function addOrDeleteForDownload(elem) {
+	var actn;
+	if (elem.checked) actn="add";
+	else actn = "remove";
+	dojo.xhrGet({url:"/CDEBrowser/jsp/cdebrowser/customDownloadHelper.jsp?deIdSeq="+elem.value+"&action="+actn});
+}
+
+function addOrDeleteAll(elem) {
+	var elems = document.getElementsByName("selectDE");
+	for (i=0;i<elems.length;i++) {
+		addOrDeleteForDownload(elems[i]);
+	}
+}
+function clrDwnld() {
+	dojo.xhrGet({url:"/CDEBrowser/jsp/cdebrowser/customDownloadHelper.jsp?action=clear"});
+}
+//
+--></SCRIPT>
 
 <form action="<%=infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=StringEscapeUtils.escapeHtml(submitFunction)%>};">
 <INPUT TYPE="HIDDEN" NAME="<%=StringEscapeUtils.escapeHtml(BrowserNavigationConstants.METHOD_PARAM)%>" > 
@@ -532,6 +550,13 @@ function gotoCDESearchPrefs() {
 %>
     </td>
   </tr>
+	<tr>
+		<td>
+			<a href="#" onClick="javascript:window.open('/CDEBrowser/search?customDownload=9&PageId=DataElementsGroup');" ><b>Custom Download</b></a>
+			&nbsp;&nbsp;
+			<a href="#" onClick="clrDwnld();" ><b>Clear Download</b></a>
+		</td>
+	</tr>
    <tr>
            <td  colspan=2 nowrap>&nbsp;</td>
    </tr>
@@ -666,7 +691,7 @@ function gotoCDESearchPrefs() {
         DataElement de = (DataElement)deList.get(i);
 %>
   <tr class="OraTabledata">
-    <td class="OraTableCellSelect"><input type="checkbox" name="selectDE" value="<%=de.getDeIdseq()%>"/></td>
+    <td class="OraTableCellSelect"><input type="checkbox" name="selectDE" value="<%=de.getDeIdseq()%>" onClick="addOrDeleteForDownload(this)"/></td>
     <td class="OraFieldText"><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=<%=de.getDeIdseq()%>')"><%=de.getLongName()%></a></td>
     <td class="OraFieldText"><%=de.getLongCDEName()%> </td>
     <td class="OraFieldText"><%=de.getContextName()%> </td>

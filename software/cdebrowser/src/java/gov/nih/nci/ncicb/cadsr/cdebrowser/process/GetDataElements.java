@@ -133,7 +133,7 @@ public class GetDataElements extends BasePersistingProcess {
 			registerResultObject("uem");
 			registerParameterObject(ProcessConstants.SELECT_DE);
 			registerStringResult(ProcessConstants.DOWNLOAD_LINK_WIKI);
-
+			registerResultObject("downloadList");
 		}
 		catch (ProcessInfoException pie) {
 			reportException(pie, true);
@@ -217,6 +217,7 @@ public class GetDataElements extends BasePersistingProcess {
 				dePageIterator = new BC4JPageIterator(100);
 				desb.initSearchPreferences(dbUtil);
 				setDownloadLink(dbUtil);
+				clearDownloadList();
 			}else if (performQuery.equals("yes")) {
 				desb = new DataElementSearchBean(myRequest);
 				//TODO: After creating the bean it is set with default values : GF 18442
@@ -264,7 +265,7 @@ public class GetDataElements extends BasePersistingProcess {
 					if (desb.getSimpleSearchStr()!=null) {
 						queryStmt = queryStmt + " and de.de_idseq in ( " + previousQuery + " )";
 						String searchCrumb = (String)userSession.getAttribute("searchCrumb") + ">>" 
-						+ desb.getNameSearchMode() + " (" + desb.getBasicSearchType() + "=" +
+						+ //desb.getNameSearchMode() + " (" + desb.getBasicSearchType() + "=" +
 						desb.getSimpleSearchStr() + ")";
 						userSession.setAttribute("searchCrumb", searchCrumb);
 					}
@@ -292,6 +293,7 @@ public class GetDataElements extends BasePersistingProcess {
 					userSession.setAttribute("baseQuery", queryBuilder.getXMLQueryStmt()+ " and de.de_idseq in ( " + previousQuery + " )");					
 				}
 				log.trace("Created both page scrollers successfully");
+				clearDownloadList();
 			}else if (performQuery.equals("no")) {
 				desb = (DataElementSearchBean) getInfoObject("desb");
 
@@ -370,7 +372,7 @@ public class GetDataElements extends BasePersistingProcess {
 				userSession.setAttribute(BrowserFormConstants.BROWSER_SEARCH_SCOPE, BrowserFormConstants.BROWSER_SEARCH_SCOPE_NEW);
 				userSession.setAttribute("baseQuery", "");
 				userSession.setAttribute("searchCrumb", "");
-
+				clearDownloadList();
 			}
 			else if (performQuery.equals("sortResults")) {
 				desb = (DataElementSearchBean) getInfoObject("desb");
@@ -665,5 +667,9 @@ public class GetDataElements extends BasePersistingProcess {
 		}else {
 			log.debug("GetDataElements.java setValuesFromOldSearchBean oldDesb is null");
 		}
+	}
+	
+	private void clearDownloadList() {
+		setResult("downloadList", null);
 	}
 }

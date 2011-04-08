@@ -437,9 +437,8 @@ function listChanged(urlInfo) {
 						<%
 							}
 						%>
-					
-					<td class="OraFieldText">
 					</td>
+					<td class="OraFieldText">
 					<%
 						if (refDoc.getURL() != null) {
 					%>

@@ -1,16 +1,43 @@
 
-<%
-String  basicSearchType = desb.getBasicSearchType();
-String  basicSearchTypeName ="selected";
-String  basicSearchTypePublicId="";
-if(basicSearchType.equalsIgnoreCase("publicId"))
-{
-  basicSearchTypePublicId="selected";
-}
+ <script type="text/javascript" src="/CDEBrowser/js/dojo/dojo/dojo.js" djConfig="parseOnLoad: true">
+ </script>
 
-%>
+<link rel="stylesheet" type="text/css" href="/CDEBrowser/js/dojo/dijit/themes/claro/claro.css" />
+
+<script type="text/javascript">
+	dojo.require("dijit.form.ComboBox");
+	dojo.require("dojo.data.ItemFileReadStore");
+	
+	var completeData = new dojo.data.ItemFileReadStore({url:"", clearOnClose:"true", urlPreventCache:"true"});
+	var tmpVal = null;
+	var cookieStoreName = "cdeBrowserCookies";
+	
+	function refreshStore(evnt) {
+		if (evnt.target.value != tmpVal && evnt.target.value.length >= 3) {
+			tmpVal = evnt.target.value;
+			completeData.close();
+			completeData.url = "/CDEBrowser/jsp/cdebrowser/instantSearch.jsp?searchStr="+evnt.target.value;
+			searchBox.store=completeData;
+		}
+	}
+
+	function populateLongName(widget, item, store) {
+		if (item != null) {
+			var label = store.getValue(item, 'longName');
+			document.forms[0].jspSimpleKeyword.value = label;
+			widget.setValue(tmpVal);
+		}
+    }
+
+    function labelFunc(item) {
+    	var longName = searchBox.store.getValue(item, 'longName');
+    	return "<font face=\"Arial, Helvetica, sans-serif\" size=\"2\">"+longName+"</font>";
+    }
+
+</script>
+
 <INPUT TYPE="HIDDEN" NAME="jspSearchIn" VALUE="ALL">
-<!-- >INPUT TYPE="HIDDEN" NAME="jspLatestVersion" VALUE="Yes"-->
+<!-- >INPUT TYPE="HIDDEN" NAME="jspLatestVersion" VALUE="Yes" -->
 <INPUT TYPE="HIDDEN" NAME="contextUse" VALUE="both">
 <INPUT TYPE="HIDDEN" NAME="jspStatus" VALUE="ALL">
 <INPUT TYPE="HIDDEN" NAME="regStatus" VALUE="ALL">
@@ -102,15 +129,37 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
   </tr>
 </table>    
     </td>
-    <td width="40%" align="left" nowrap >
-      <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" size ="60"> 
-    </td>
-    <td width="20%" align="left" nowrap >
-      <select  name="jspBasicSearchType" class="Dropdown" name="contextIdSeq" >
-        <option value="name" <%=basicSearchTypeName%> >Name</option> 
-        <option value="publicId" <%=basicSearchTypePublicId%> >Public ID</option> 
-      </select>
-    </td>
+	<td>
+		<table valign="top">
+			<tr>
+				<td >
+					<select dojoType="dijit.form.ComboBox"
+					   onKeyUp="refreshStore"
+						onChange="populateLongName(this, this.item, this.store)" 
+						searchAttr="searchStr" 
+						 id="searchBox"
+						labelType="html"
+						labelFunc=labelFunc
+					   style="width: 500px; font-family: Arial, Helvetica, sans-serif" autoComplete="false"
+					   jsId="searchBox" { sort: {attribute:"longName"} } 
+						hasDownArrow="false" ignoreCase="true"
+						pageSize=10 
+						dir="right" 
+						title="Start typing the long name here for a list of possible matches"
+						value="Start typing the long name here for a list of possible matches"
+						onFocus="if (this.getValue()=='' || this.getValue()=='Start typing the long name here for a list of possible matches') this.setValue('')"
+						onBlur="if (this.getValue()=='') this.setValue('Start typing the long name here for a list of possible matches')"
+					>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td width="40%" align="left" nowrap >
+			      <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" style="border-color:black;border-width:1px;border-style:solid;width:500px"> 
+			    </td>
+			</tr>
+		</table>
+	</td>
  </tr>
  </table>
  
@@ -159,7 +208,7 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
 %>
   <table with ="80%" align="center">
   <TR>
-    <td  nowrap  ><a href="javascript:submitSimpleForm()"><html:img page="/i/SearchDataElements.gif" border="0" /></a>
+    <td  nowrap  ><a href="javascript:submitSimpleForm();"><html:img page="/i/SearchDataElements.gif" border="0" /></a>
     </td>
     <td><a href="javascript:clearSimpleForm()"><html:img page="/i/clear.gif" border="0" /></a>
     </td>

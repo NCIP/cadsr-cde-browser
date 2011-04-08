@@ -163,11 +163,9 @@ public class GetExcelDownload extends BasePersistingProcess {
 		HSSFWorkbook wb = null;
 		FileOutputStream fileOut = null;
 		source = getStringInfo("src");
+		String requestIDs = getStringInfo("downloadIDs");
 
 		try {
-			//String dataSource = getStringInfo("SBREXT_DSN");
-			//cn = dbUtil.getConnection(); -- Commented for JBoss deployment
-			//ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
 			dbUtil.getOracleConnectionFromContainer();  //getConnectionFromContainer(); went back to original call
 			cn = dbUtil.getConnection();
 			st = cn.createStatement();
@@ -186,25 +184,22 @@ public class GetExcelDownload extends BasePersistingProcess {
 					(HttpServletRequest) getInfoObject("HTTPRequest");
 
 				HttpSession userSession = myRequest.getSession(false);
-				CDECart cart =
-					(CDECart) userSession.getAttribute(CaDSRConstants.CDE_CART);
-				Collection items = cart.getDataElements();
-				CDECartItem item = null;
+				String[] reqIDsArray = new String[0];
+				if (requestIDs != null && requestIDs.length() > 0) {
+					reqIDsArray = requestIDs.split(",");
+				}
 				boolean firstOne = true;
 				StringBuffer whereBuffer = new StringBuffer("");
-				Iterator itemsIt = items.iterator();
 
-				while (itemsIt.hasNext()) {
-					item = (CDECartItem) itemsIt.next();
-
+				for (String reqID: reqIDsArray) {
 					if (firstOne) {
-						whereBuffer.append("'" + item.getId() + "'");
+						whereBuffer.append("'" + reqID + "'");
 
 						firstOne = false;
 					}
 					else
 					{
-						whereBuffer.append(",'" + item.getId() + "'");
+						whereBuffer.append(",'" + reqID + "'");
 					}
 				}
 
@@ -218,7 +213,6 @@ public class GetExcelDownload extends BasePersistingProcess {
 				"SELECT * FROM DE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
 				" ( " + where + " )  ";
 
-			//+" ORDER BY PREFERRED_NAME ";
 			rs = st.executeQuery(sqlStmt);
 			List colInfo = this.initColumnInfo(source);
 			wb = new HSSFWorkbook();

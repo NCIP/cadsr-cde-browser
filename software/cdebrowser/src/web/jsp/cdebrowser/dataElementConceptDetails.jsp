@@ -489,6 +489,72 @@ function goPage(pageInfo) {
            </tr>                 
          </table>    
  </logic:notPresent > 
+<logic:present name="de" property = "dataElementConcept.designations">                    
+     <br>
+    <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+          <tr  valign="bottom" >
+            <td class="OraHeaderSubSubSub" width="100%">Alternate Names</td>
+          </tr>
+       </table>
+      <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader">Long Name</td>
+          </tr>   
+         <logic:iterate id="desig" name="de" type="gov.nih.nci.ncicb.cadsr.common.resource.Designation" property="dataElementConcept.designations" indexId="ccIndex" >                                 
+          <tr class="OraTabledata">
+             <td class="OraFieldText"><%=desig.getName()%> </td>
+          </tr>
+         </logic:iterate>
+      </table>                      
+</logic:present>
+<logic:notPresent name="de" property = "dataElementConcept.designations"> 
+        <br>
+        <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+         <tr  valign="bottom" >
+          <td class="OraHeaderSubSubSub" width="100%">Alternate Names</td>
+         </tr>
+        </table>
+        <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+             <td  width="20%" >No Alternate Names</td>
+          </tr>
+          </tr>                 
+        </table>    
+</logic:notPresent >
+
+<logic:present name="de" property = "dataElementConcept.definitions">
+     <br>
+    <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+          <tr  valign="bottom" >
+            <td class="OraHeaderSubSubSub" width="100%">Alternate Definitions</td>
+          </tr>
+       </table>
+      <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader">Definitions</td>
+          </tr>   
+         <logic:iterate id="def" name="de" type="gov.nih.nci.ncicb.cadsr.common.resource.Definition" property="dataElementConcept.definitions" indexId="ccIndex" >                                 
+          <tr class="OraTabledata">
+             <td class="OraFieldText"><%=def.getDefinition()%> </td>
+          </tr>
+         </logic:iterate>
+      </table>                      
+</logic:present>
+<logic:notPresent name="de" property = "dataElementConcept.designations"> 
+        <br>
+        <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+         <tr  valign="bottom" >
+          <td class="OraHeaderSubSubSub" width="100%">Alternate Definitions</td>
+         </tr>
+        </table>
+        <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+             <td  width="20%" >No Alternate Definitions</td>
+          </tr>
+          </tr>                 
+        </table>    
+</logic:notPresent >
+
  
 </form>
 

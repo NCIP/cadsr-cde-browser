@@ -2,27 +2,33 @@ package gov.nih.nci.ncicb.cadsr.common.cdebrowser.service.impl;
 
 import gov.nih.nci.cadsr.domain.ClassSchemeClassSchemeItem;
 import gov.nih.nci.cadsr.domain.ClassificationScheme;
+import gov.nih.nci.cadsr.domain.ClassificationSchemeItem;
+import gov.nih.nci.cadsr.domain.Context;
 import gov.nih.nci.cadsr.domain.DataElement;
+import gov.nih.nci.cadsr.domain.DataElementConcept;
 import gov.nih.nci.cadsr.domain.Definition;
 import gov.nih.nci.cadsr.domain.DefinitionClassSchemeItem;
 import gov.nih.nci.cadsr.domain.DesignationClassSchemeItem;
+import gov.nih.nci.cadsr.domain.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.service.CDEBrowserService;
 import gov.nih.nci.ncicb.cadsr.common.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.ContextTransferObject;
+import gov.nih.nci.ncicb.cadsr.common.dto.DefinitionTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.UtilDAO;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.domain.AbstractDomainObjectsDAOFactory;
 import gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.common.resource.Designation;
 import gov.nih.nci.ncicb.cadsr.common.resource.impl.DefinitionImpl;
+import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 import gov.nih.nci.system.applicationservice.ApplicationException;
 import gov.nih.nci.system.applicationservice.ApplicationService;
 import gov.nih.nci.system.client.ApplicationServiceProvider;
-import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -177,6 +183,76 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 				de.setDefinitions(new ArrayList());
 			de.getDefinitions().add(definition);
 		}
+		
+		DataElementConcept dec = dePop.getDataElementConcept();
+		if (dec!=null && de.getDataElementConcept() != null) {
+			Collection<Definition> decDefs = dec.getDefinitionCollection();
+			if (decDefs != null) {
+				Iterator<Definition> decDefsIter = decDefs.iterator();
+				List<gov.nih.nci.ncicb.cadsr.common.resource.Definition> bc4jDefs = new ArrayList<gov.nih.nci.ncicb.cadsr.common.resource.Definition>();
+				while (decDefsIter.hasNext()) {
+					DefinitionTransferObject dto = new DefinitionTransferObject();
+					Definition def = decDefsIter.next();
+					dto.setDefinition(def.getText());
+					dto.setType(def.getType());
+					
+					bc4jDefs.add(dto);
+				}
+				
+				de.getDataElementConcept().setDefinitions(bc4jDefs);
+			}
+		}
+		
+		ValueDomain vd = dePop.getValueDomain();
+		if (vd!=null && de.getValueDomain() != null) {
+			Collection<Definition> vdDefs = vd.getDefinitionCollection();
+			if (vdDefs != null) {
+				Iterator<Definition> vdDefsIter = vdDefs.iterator();
+				List<gov.nih.nci.ncicb.cadsr.common.resource.Definition> bc4jDefs = new ArrayList<gov.nih.nci.ncicb.cadsr.common.resource.Definition>();
+				while (vdDefsIter.hasNext()) {
+					DefinitionTransferObject dto = new DefinitionTransferObject();
+					Definition def = vdDefsIter.next();
+					dto.setDefinition(def.getText());
+					dto.setType(def.getType());
+					
+					Context ctx = def.getContext();
+					gov.nih.nci.ncicb.cadsr.common.resource.Context bc4jCtx = new gov.nih.nci.ncicb.cadsr.common.dto.bc4j.BC4JContextTransferObject();
+					bc4jCtx.setName(ctx.getName());
+					bc4jCtx.setDescription(ctx.getDescription());
+					
+					dto.setContext(bc4jCtx);
+					
+					List<gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem> bc4jCsis = new ArrayList<gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem>();
+					Collection<DefinitionClassSchemeItem> defCsis = def.getDefinitionClassSchemeItemCollection();
+					if (defCsis != null) {
+						Iterator<DefinitionClassSchemeItem> defCsiIter = defCsis.iterator();
+						while (defCsiIter.hasNext()) {
+							DefinitionClassSchemeItem defCsi = defCsiIter.next();
+							ClassificationSchemeItem csi = defCsi.getClassSchemeClassSchemeItem().getClassificationSchemeItem();
+							gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem bc4jCsi = new gov.nih.nci.ncicb.cadsr.common.dto.CSITransferObject();
+							bc4jCsi.setClassSchemeItemName(csi.getLongName());
+							bc4jCsi.setClassSchemeItemType(csi.getType());
+							bc4jCsi.setCsiDescription(csi.getPreferredDefinition());
+							bc4jCsi.setCsiIdseq(csi.getId());
+							bc4jCsi.setCsiId(csi.getPublicID().intValue());
+							bc4jCsi.setCsiVersion(csi.getVersion());
+							
+							ClassificationScheme cs = defCsi.getClassSchemeClassSchemeItem().getClassificationScheme();
+							bc4jCsi.setClassSchemeLongName(cs.getLongName());
+							bc4jCsi.setClassSchemeType(cs.getType());
+							bc4jCsi.setClassSchemeDefinition(cs.getPreferredDefinition());
+							bc4jCsi.setClassSchemePrefName(cs.getPreferredName());
+							bc4jCsi.setCsIdseq(cs.getId());
+							bc4jCsi.setCsVersion(cs.getVersion());
+						}
+					}
+					dto.setCsCsis(bc4jCsis);
+					bc4jDefs.add(dto);
+				}
+				
+				de.getValueDomain().setDefinitions(bc4jDefs);
+			}
+		}
 
 	}
 
@@ -218,12 +294,18 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 		return new ArrayList(cs.getReferenceDocumentCollection());
 	}
 
-	/* public List getReferenceDocumentsForCSI(String csiIdseq){
-    ClassificationSchemeItemDAO dao = domainObjectsDaoFactory.getClassificationSchemeItemDAO();
-    ClassificationSchemeItemBean csi = new ClassificationSchemeItemBean();
-    csi.setId(csiIdseq);
-    List refDocs = dao.getReferenceDocuments(csi);
-    return refDocs;
+	 public List getReferenceDocumentsForCSI(String csiIdseq){
+		ClassificationSchemeItem csi = new ClassificationSchemeItem();
+		csi.setId(csiIdseq);
+		List csiList;
+		try {
+			this.getCadsrService();
+			csiList = appService.search(csi.getClass(), csi);
+		} catch (ApplicationException e) {
+			throw new RuntimeException(e);
+		}
+		csi = (ClassificationSchemeItem)csiList.get(0);
 
- }*/
+		return new ArrayList(csi.getReferenceDocumentCollection());
+ }
 }

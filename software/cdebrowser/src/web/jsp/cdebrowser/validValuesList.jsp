@@ -585,6 +585,72 @@ function valueMeaningDetails(shortMeaning)
 </table>
 
 
+<logic:notEmpty name="de" property = "valueDomain.designations">                    
+     <br>
+    <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+          <tr  valign="bottom" >
+            <td class="OraHeaderSubSubSub" width="100%">Alternate Names</td>
+          </tr>
+       </table>
+      <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader">Long Name</td>
+          </tr>   
+         <logic:iterate id="desig" name="de" type="gov.nih.nci.ncicb.cadsr.common.resource.Designation" property="valueDomain.designations" indexId="ccIndex" >                                 
+          <tr class="OraTabledata">
+             <td class="OraFieldText"><%=desig.getName()%> </td>
+          </tr>
+         </logic:iterate>
+      </table>                      
+</logic:notEmpty>
+<logic:empty name="de" property = "valueDomain.designations"> 
+        <br>
+        <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+         <tr  valign="bottom" >
+          <td class="OraHeaderSubSubSub" width="100%">Alternate Names</td>
+         </tr>
+        </table>
+        <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+             <td  width="20%" >No Alternate Names</td>
+          </tr>
+          </tr>                 
+        </table>    
+</logic:empty >
+
+<logic:notEmpty name="de" property = "valueDomain.definitions">
+     <br>
+    <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+          <tr  valign="bottom" >
+            <td class="OraHeaderSubSubSub" width="100%">Alternate Definitions</td>
+          </tr>
+       </table>
+      <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+            <td class="OraTableColumnHeader">Definition</td>
+          </tr>   
+         <logic:iterate id="def" name="de" type="gov.nih.nci.ncicb.cadsr.common.resource.Definition" property="valueDomain.definitions" indexId="ccIndex" >                                 
+          <tr class="OraTabledata">
+             <td class="OraFieldText"><%=def.getDefinition()%> </td>
+          </tr>
+         </logic:iterate>
+      </table>                      
+</logic:notEmpty>
+<logic:empty name="de" property = "valueDomain.definitions"> 
+        <br>
+        <table valign="bottom" cellpadding="0" cellspacing="0" width="80%" align="center">
+         <tr  valign="bottom" >
+          <td class="OraHeaderSubSubSub" width="100%">Alternate Definitions</td>
+         </tr>
+        </table>
+        <table width="80%" align="center" cellpadding="4" cellspacing="1" class="OraBGAccentVeryDark">
+          <tr class="OraTabledata">
+             <td  width="20%" >No Alternate Definitions</td>
+          </tr>
+          </tr>                 
+        </table>    
+</logic:empty >
+
 </form>
 
 <%@ include file="/jsp/common/common_bottom_border.jsp"%>

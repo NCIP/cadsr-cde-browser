@@ -175,6 +175,12 @@
 		<copy tofile="${classes.dir}/deployment.properties" filtering="true" overwrite="Yes">
 			<fileset file="${conf.dir}/template.deployment.properties"/>
 		</copy>
+		<copy tofile="${classes.dir}/hibernate.cfg.xml" filtering="true" overwrite="Yes">
+			<fileset file="${conf.dir}/template.hibernate.cfg.xml"/>
+		</copy>
+		<copy tofile="${classes.dir}/ehcache.xml" filtering="true" overwrite="Yes">
+			<fileset file="${conf.dir}/template.ehcache.xml"/>
+		</copy>
 	    <copy todir="${classes.dir}">      
 	      <fileset dir="${src.dir}">
             <patternset>
