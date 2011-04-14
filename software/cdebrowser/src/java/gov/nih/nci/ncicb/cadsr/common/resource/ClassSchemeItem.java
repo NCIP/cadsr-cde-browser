@@ -52,6 +52,10 @@ public interface ClassSchemeItem   extends Cloneable{
   public void setCsiVersion(Float csiVersion);
   public Float getCsiVersion();
   
+  public String getClassSchemeWfStatus();
+
+  public void setClassSchemeWfStatus(String wfStatus);
+  
   public Object clone() throws CloneNotSupportedException;
 
 }

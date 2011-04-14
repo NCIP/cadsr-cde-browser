@@ -272,6 +272,7 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 		cscsi.setCsCsiIdseq(cscsiIn.getId());
 		cscsi.setClassSchemeLongName(cscsiIn.getClassificationScheme().getLongName());
 		cscsi.setClassSchemePrefName(cscsiIn.getClassificationScheme().getPreferredName());   
+		cscsi.setClassSchemeWfStatus(cscsiIn.getClassificationScheme().getWorkflowStatusName());
 		cscsi.setClassSchemeDefinition(cscsiIn.getClassificationScheme().getPreferredDefinition());
 		cscsi.setClassSchemeItemName(cscsiIn.getClassificationSchemeItem().getLongName());
 		cscsi.setClassSchemeItemType(cscsiIn.getClassificationSchemeItem().getType());

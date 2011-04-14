@@ -19,6 +19,7 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 	protected Float csVersion;
 	protected Integer classSchemeItemId;
 	protected Float classSchemeItemVersion;	
+	protected String classSchemeWfStatus;
 
 	public BC4JClassificationsTransferObject() {
 		super();
@@ -42,6 +43,8 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 			csPublicId = classificationsViewRowImpl.getCsId().stringValue();
 		else
 			csPublicId = "";
+		
+		classSchemeWfStatus = classificationsViewRowImpl.getClassificationSchemes().getAslName();
 	}
 
 	//getter method
@@ -155,6 +158,14 @@ public class BC4JClassificationsTransferObject implements Classification,Seriali
 	 */
 	public void setClassSchemeItemVersion(Float classSchemeItemVersion) {
 		this.classSchemeItemVersion = classSchemeItemVersion;
+	}
+
+	public String getClassSchemeWfStatus() {
+		return classSchemeWfStatus;
+	}
+
+	public void setClassSchemeWfStatus(String classSchemeWfStatus) {
+		this.classSchemeWfStatus = classSchemeWfStatus;
 	}
 
 

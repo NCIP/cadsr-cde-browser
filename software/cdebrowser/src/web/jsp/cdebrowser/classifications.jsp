@@ -199,10 +199,10 @@ function listChanged(urlInfo) {
 					</th>
 					<%-- <th>CS* Version</th> changed for 4.0--%>
 					<th>
-						CSI* Name
+						CS* Workflow Status
 					</th>
 					<th>
-						CSI* Type
+						CSI* Name
 					</th>
 					<th>
 						CSI* Public ID/Version
@@ -228,10 +228,12 @@ function listChanged(urlInfo) {
 						<%=classification.getClassSchemePublicId()
 							+ "v" + classification.getCsVersion()%>
 					</td>
-					<%-- <td class="OraFieldText"><%=classification.getCsVersion()%> </td> changed for 4.0--%>
-					<td class="OraFieldText"><%=classification.getClassSchemeItemName()%>
+					<td class="OraFieldText"><%=classification.getClassSchemeWfStatus()%>
 					</td>
-					<td class="OraFieldText"><%=classification.getClassSchemeItemType()%>
+					<td class="OraFieldText">
+						<label title="<%= classification.getClassSchemeItemType() %>" >
+							<%=classification.getClassSchemeItemName()%>
+						</label>
 					</td>
 					<td class="OraFieldText"><%=classification.getClassSchemeItemId() + "v"
 							+ classification.getClassSchemeItemVersion()%>

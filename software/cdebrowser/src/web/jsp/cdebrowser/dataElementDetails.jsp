@@ -185,7 +185,7 @@ function anotherDataElementDetails(linkParms, version )
 	var struct1 = [{field: "type", name: "Type", width: "100px"},
 	               {field: "value", name: "Value", width: "200px"},
 					{field: "context", name: "Context", width: "100px"},
-					{field: "CS", name: "<center>Classification Schemes<br/><table align='center'><col width='70%'><col width='30%'><tr><td><center>Classification Scheme</center></td><td><center>Classification Scheme Item</center></td></tr></table></center>", width: "400px"}];
+					{field: "CS", name: "<center>Classification Schemes<br/><table align='center'><col width='50%'><col width='30%'><col width='20%'><tr><td><center>Class Scheme Item</center></td><td><center>Class Scheme</center></td><td><center>Class Scheme WF Status</center></td></tr></table></center>", width: "400px"}];
 </script>
                 
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -212,12 +212,14 @@ function anotherDataElementDetails(linkParms, version )
 	        <td class="OraFieldText">
 				<logic:notEmpty name="des" property="csCsis">
 					&lt;table width="400px" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDarkFixWidth"&gt;
-						&lt;col width="70%"&gt;
+						&lt;col width="50%"&gt;
 						&lt;col width="30%"&gt;
+						&lt;col width="20%"&gt;
 						<logic:iterate id="cs" name="des" indexId="idx" property="csCsis" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem">
 							&lt;tr class="OraTabledata"&gt;
 								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeItemName" />&lt;/td&gt;
 								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeLongName" />&lt;/td&gt;
+								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeWfStatus" />&lt;/td&gt;
 							&lt;/tr&gt;
 						</logic:iterate>
 					&lt;/table&gt;
@@ -240,12 +242,14 @@ function anotherDataElementDetails(linkParms, version )
 	        <td class="OraFieldText">
 				<logic:notEmpty name="def" property="csCsis">
 					&lt;table width="400px" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDarkFixWidth"&gt;
-						&lt;col width="70%"&gt;
+						&lt;col width="50%"&gt;
 						&lt;col width="30%"&gt;
+						&lt;col width="20%"&gt;
 						<logic:iterate id="cs" name="def" indexId="idx" property="csCsis" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem">
 							&lt;tr class="OraTabledata"&gt;
 								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeItemName" />&lt;/td&gt;
 								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeLongName" />&lt;/td&gt;
+								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeWfStatus" />&lt;/td&gt;
 							&lt;/tr&gt;
 						</logic:iterate>
 					&lt;/table&gt;

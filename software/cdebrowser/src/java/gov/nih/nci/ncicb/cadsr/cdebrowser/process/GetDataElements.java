@@ -159,9 +159,10 @@ public class GetDataElements extends BasePersistingProcess {
 			myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
 			userSession = myRequest.getSession(false);
 
-
+			dbUtil = getDBUtil();
+			
 			log.info("GetDataElements process started successfully ");
-			initialize(userSession);
+			initialize(userSession, dbUtil);
 			log.info(" -Performed intialization successfully");
 
 			tib = new TabInfoBean("cdebrowser_search_tabs");
@@ -210,13 +211,12 @@ public class GetDataElements extends BasePersistingProcess {
 			DataElementHandler dh = null;
 			Object[] queryParams = null;
 
-			dbUtil = getDBUtil();
+			
 
 			if (performQuery == null) {
 				desb = new DataElementSearchBean(myRequest);
 				dePageIterator = new BC4JPageIterator(100);
 				desb.initSearchPreferences(dbUtil);
-				setDownloadLink(dbUtil);
 				clearDownloadList();
 			}else if (performQuery.equals("yes")) {
 				desb = new DataElementSearchBean(myRequest);
@@ -522,7 +522,7 @@ public class GetDataElements extends BasePersistingProcess {
 		return getCondition(FAILURE);
 	}
 
-	private void initialize(HttpSession mySession) throws Exception {
+	private void initialize(HttpSession mySession, DBUtil dbUtil) throws Exception {
 		if (getStringInfo("INITIALIZED") == null) {
 			CDEBrowserParams params = CDEBrowserParams.getInstance();
 			//setResult("SBREXT_DSN", params.getSbrextDSN());
@@ -533,6 +533,8 @@ public class GetDataElements extends BasePersistingProcess {
 			setResult("XML_FILE_MAX_RECORDS", params.getXMLFileMaxRecords());
 			setResult("TREE_URL", params.getTreeURL());
 			setResult("INITIALIZED", "yes");
+			setToolOptions(mySession, dbUtil);
+			
 			try{
 				CDECart cart = this.findCart(mySession);
 				mySession.setAttribute(CaDSRConstants.CDE_CART, cart);
@@ -553,12 +555,17 @@ public class GetDataElements extends BasePersistingProcess {
 		}
 	}
 	
-	private void setDownloadLink(DBUtil dbUtil) {
-		ResultSet rs = null;
+	private void setToolOptions(HttpSession mySession, DBUtil dbUtil) {
+		ResultSet rs = null;		
 		try {
-			rs = dbUtil.executeQuery("select value from TOOL_OPTIONS_EXT where tool_name='CDEBrowser' and property='DOWNLOAD_LINK_WIKI'");
-			if (rs.next()) {
-				setResult(ProcessConstants.DOWNLOAD_LINK_WIKI, rs.getString(1));
+			rs = dbUtil.executeQuery("select property, value from TOOL_OPTIONS_EXT where tool_name='CDEBrowser' and property in ('DOWNLOAD_LINK_WIKI', 'RELEASE_NOTES_WIKI')");
+			while (rs.next()) {
+				String property = rs.getString(1);
+				if (property.equalsIgnoreCase(ProcessConstants.DOWNLOAD_LINK_WIKI)) {
+					mySession.setAttribute(ProcessConstants.DOWNLOAD_LINK_WIKI, rs.getString(2));
+				} else if (property.equalsIgnoreCase(ProcessConstants.RELEASE_NOTES_WIKI)) {
+					mySession.setAttribute(ProcessConstants.RELEASE_NOTES_WIKI, rs.getString(2));
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -566,6 +573,8 @@ public class GetDataElements extends BasePersistingProcess {
 		finally {
 			if (rs!=null) try { rs.close(); } catch(Exception e){}
 		}
+		
+		
 	}
 
 	public DBUtil getDBUtil() throws Exception {

@@ -24,6 +24,7 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
   private Float csVersion = null;
   private Integer csiId = null;
   private Float csiVersion = null;
+  private String wfStatus;
   /*private String csiID = null;
   */
   
@@ -191,6 +192,14 @@ public class CSITransferObject implements ClassSchemeItem, Serializable  {
 	public void setCsiVersion(Float csiVersion) {
 		this.csiVersion = csiVersion;
 	}*/
+
+	public String getClassSchemeWfStatus() {
+		return wfStatus;
+	}
+
+	public void setClassSchemeWfStatus(String wfStatus) {
+		this.wfStatus = wfStatus;
+	}
 
 	/**
      * This equals method only compares the Idseq to define equals

@@ -28,7 +28,7 @@ function subTabClicked(tabNum,urlParams) {
 
   pageContext.setAttribute("deList",deList);
   CDEBrowserParams params = CDEBrowserParams.getInstance();
-  String fbPath = params.getFormBuilderUrl();
+  String fbPath = params.getFormBuilderUrl()+"/FormBuilder/formSearchAction.do";
 %>
 <TABLE valign="top" width=100% Cellpadding=0 Cellspacing=0 border=0>
   <tr>
@@ -42,24 +42,16 @@ function subTabClicked(tabNum,urlParams) {
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >
         <TR>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link href="/CDEBrowser/cdeCartAction.do?method=displayCDECart" target="_top"><html:img page="/i/cde_cart.gif" alt="CDE Cart" border="0" /></html:link><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
- <!--  
-		<logic:notPresent name="nciUser">
-          <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="/cdeCartAction.do?method=displayCDECart" target="_top"><html:img page="/i/cde_cart.gif" alt="CDE Cart" border="0" /></html:link><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
-		</logic:notPresent>
-        <logic:present name="nciUser">
- 		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="<%=fbPath+\"/formCDECartAction.do?method=displayCDECart\" + urlParams%>" target="_top"><html:img page="/i/cde_cart.gif" alt="CDE Cart" border="0" /></html:link><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
-      </logic:present>   
- 		<TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link href="<%=fbPath+\"/formCDECartAction.do?method=displayCDECart\" + urlParams%>" target="_blank"><html:img page="/i/cde_cart.gif" alt="CDE Cart" border="0" /></html:link><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
- --> 
         <%
 		  if ("".equals(src)) {
 		 %>
 		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="/" target="_top"><html:img page="/i/icon_home.gif" alt="Home" border="0"  width="32" height="32"/></html:link><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font></TD>
-		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link href="<%=fbPath+\"/FormBuilder/formSearchAction.do\"%>" target="_blank"><html:img page="/i/formicon.gif" alt="FormBuilder" border="0"  width="32" height="32" /></html:link><br><font color=brown face=verdana size=1>&nbsp;FormBuilder&nbsp;</font></TD>
 		  <%
 			 }
           %>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=params.getCdeBrowserHelpUrl()%>" target="_blank"><html:img page="/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
+          <TD valign="middle" align="CENTER" width="1%" colspan=1><a href="<%=(String)session.getAttribute(ProcessConstants.RELEASE_NOTES_WIKI)%>" target="_blank"><font color=brown face=verdana size=1>What's new</font></a></TD>
+		  <TD valign="middle" align="CENTER" width="1%" colspan=1><a href="<%=(String)session.getAttribute(ProcessConstants.DOWNLOAD_LINK_WIKI)%>" target="_blank"><font color=brown face=verdana size=1>Available Downloads<sup><font color="red"><b>New!</b></font></sup></font></a></TD>
 		<logic:present name="nciUser">
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="/logout?FirstTimer=0" target="_top"><html:img page="/i/logout.gif" alt="Logout" border="0"  width="32" height="32" /></html:link><br><font color=brown face=verdana size=1>&nbsp;Logout&nbsp;</font></TD>
         </logic:present>
@@ -69,50 +61,39 @@ function subTabClicked(tabNum,urlParams) {
     </td>
   </tr >
  </table>
- <table>
-   <tr>
-    <td  width="100%" >
+ 
      <TABLE align ="left" width="100%" Cellpadding=0 Cellspacing=1 border=0 >
           <tr>
-           <td  valign="bottom" align="center" width="15%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
-               <a href="<%=params.getAdminToolUrl()%>" target="_blank" >Admin Tool&nbsp;</a> </span></td>
+           <td  valign="bottom" align="center" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+               <a href="<%=params.getAdminToolUrl()%>" target="_blank" >Admin</a> </span></td>
 
-           <td  align="center" valign="bottom" width="15%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+           <td  align="center" valign="bottom" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
                 <a href="<%=params.getCurationToolUrl()%>" target="_blank">
-                      Curation Tool&nbsp;</a></span>
+                      Curation</a></span>
             </td>
-           <td  align="center" valign="bottom" width="22%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+           <td  align="center" valign="bottom" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
                 <a href="<%=params.getNciMetathesaurusUrl()%>" target="_blank" >
-                      NCI Metathesaurus&nbsp;</a></span>
+                      NCI Meta</a></span>
             </td>
-           <td  align="center" valign="bottom" width="25%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+           <td  align="center" valign="bottom" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
                 <a href="<%=params.getNciTerminologyServerUrl()%>" target="_blank">
-                      NCI Terminology Server&nbsp;</a></span>
+                      NCI Terms</a></span>
             </td>
-           <td  align="center" valign="bottom" width="15%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+           <td  align="center" valign="bottom" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
                 <a href="<%=params.getSentinelToolUrl()%>" target="_blank">
-                      Sentinel Tool&nbsp;</a></span>
+                      Sentinel</a></span>
             </td>
-           <td  align="center" valign="bottom" width="15%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+           <td  align="center" valign="bottom" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
                 <a href="<%=params.getUmlBrowserUrl()%>" target="_blank">
-                      UML Model Browser&nbsp;</a></span>
+                      UML Browser</a></span>
             </td>
-
-			<td height="10" valign="bottom" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-                &nbsp;&nbsp;<A HREF="<%=params.getCdeBrowserHelpUrl()%>" target="_blank">
-                      What's new</a>&nbsp;&nbsp;</span>
-            </td>
-            <td height="10" valign="bottom" align="right" nowrap><span style="font-size: 10.0pt; font-family: Arial">
-                <A HREF="<%=downloadLinkWiki%>" target="_blank">
-                      Available Downloads<sup><font color="red"><b>New!</b></font></sup></a>&nbsp;&nbsp;</span>
+            <td  align="center" valign="bottom" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
+                <a href="<%= fbPath %>" target="_blank">
+                      Form Builder</a></span>
             </td>
             
         </tr>
       </table>
-     </td>
-
-    </tr>
-   </table>
   <table>
   <logic:present name="nciUser">
   <tr>
