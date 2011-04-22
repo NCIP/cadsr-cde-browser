@@ -541,7 +541,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 			validValueInfo.add(new ColumnInfo(6, "VMPUBLICID", "Value Meaning PublicID", "Number"));
 			validValueInfo.add(new ColumnInfo(7, "VMVERSION", "Value Meaning Version", "Number"));
 			
-			ColumnInfo vmDefsInfo = new ColumnInfo(8, "VM_DEFS", "Value Meaning Definitions", "Array");
+			ColumnInfo vmDefsInfo = new ColumnInfo(8, "VM_DEFS", "Value Meaning Alternate Definitions", "Array");
 			List defsInfoList = new ArrayList();
 			defsInfoList.add(new ColumnInfo(0, "Definition", "Value Meanings Definition", "String"));
 			vmDefsInfo.nestedColumns = defsInfoList;

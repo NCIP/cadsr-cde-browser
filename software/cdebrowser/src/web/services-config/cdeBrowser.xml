@@ -7,7 +7,7 @@
 	initial="SearchRouter">
 	<process name="SearchRouter"
 		class="oracle.clex.process.ProcessRouter" end="false">
-		<argument type="Integer" value="16" />
+		<argument type="Integer" value="17" />
 		<argument type="Boolean" value="false" />
 		<argument type="String" value="success" />
 		<infoalias local="pp1" global="searchDataElements" />
@@ -26,6 +26,7 @@
 		<infoalias local="pp14" global="dataElementDerivations" />
 		<infoalias local="pp15" global="adminInfo" />
 		<infoalias local="pp16" global="elementDetails" />
+		<infoalias local="pp17" global="customDownload" />
 	</process>
 	<processgroup name="DataElementsGroup"
 		class="oracle.cle.process.DisplayGroup" end="true"
@@ -445,6 +446,25 @@
 		<transition src="GetDataElementDetails" condition="success" dest="DataElementDetailsPage" />
 		<transition src="GetDataElementDetails" condition="failure" dest="FailurePage" />
 	</processgroup>
+	<processgroup name="CustomDownloadGroup" class="oracle.cle.process.DisplayGroup" end="true" initial="CustomDownloadGroupRouter">
+		<process name="GetCustomDownload" class="gov.nih.nci.ncicb.cadsr.cdebrowser.process.GetCustomDownload" end="false" />
+		<process name="GetCustomDownloadPage" class="oracle.clex.process.CreateJSPPage" end="true">
+			<argument type="String" value="&docpath;custDownloadSrchResults.jsp" />
+		</process>
+		<process name="FailurePage" class="oracle.clex.process.CreateJSPPage" end="true">
+			<argument type="String" value="&docpath;FailurePage.jsp" />
+		</process>
+		<process name="CustomDownloadGroupRouter"
+			class="oracle.clex.process.ProcessRouter" end="false">
+			<argument type="Integer" value="1" />
+			<argument type="Boolean" value="true" />
+			<argument type="String" value="success" />
+			<infoalias local="pp1" global="customDownload" />
+		</process>
+		<transition src="GetCustomDownload" condition="success" dest="GetCustomDownloadPage" />
+		<transition src="GetCustomDownload" condition="failure" dest="FailurePage" />
+		<transition src="CustomDownloadGroupRouter" condition="tc1" dest="GetCustomDownload" />
+	</processgroup>
 	<transition src="SearchRouter" condition="success"
 		dest="DataElementsGroup" />
 	<transition src="SearchRouter" condition="tc1"
@@ -480,7 +500,9 @@
 	<transition src="SearchRouter" condition="tc15"
 	dest="AdminInfoGroup" />
 	<transition src="SearchRouter" condition="tc16"
-		dest="ElementDetailsGroup" />
+	dest="ElementDetailsGroup" />
+	<transition src="SearchRouter" condition="tc17"
+		dest="CustomDownloadGroup" />
 	<grouptransition srcgroup="DataElementsGroup"
 		srcprocess="DataElementsPage" dest="SearchRouter" />
 	<grouptransition srcgroup="DataElementsGroup"
@@ -532,5 +554,7 @@
 	<grouptransition srcgroup="AdminInfoGroup"
 		srcprocess="GetAdminInfoPage" dest="SearchRouter" />
 	<grouptransition srcgroup="ElementDetailsGroup"
-		srcprocess="DataElementDetailsPage" dest="SearchRouter" />
+	srcprocess="DataElementDetailsPage" dest="SearchRouter" />
+	<grouptransition srcgroup="CustomDownloadGroup"
+		srcprocess="GetCustomDownloadPage" dest="SearchRouter" />
 </service>

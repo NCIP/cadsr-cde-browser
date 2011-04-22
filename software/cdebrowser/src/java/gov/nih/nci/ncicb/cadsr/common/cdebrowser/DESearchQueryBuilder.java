@@ -145,7 +145,7 @@ public class DESearchQueryBuilder extends Object {
         whereBuffer.append(" and acr.registration_status = '"+ this.treeParamRegStatus + "'");
     }
     else {
-      searchStr0 = StringUtils.replaceNull(request.getParameter("jspSimpleKeyword"));//StringUtils.replaceNull(request.getParameter("jspKeyword"));
+      searchStr0 = StringUtils.replaceNull(request.getParameter("jspKeyword"));
       String [] searchStr1 = request.getParameterValues("jspStatus");
       String[] searchStr7 = request.getParameterValues("regStatus");;
       String[] searchStr9 = request.getParameterValues("altName");;
