@@ -205,9 +205,8 @@
   }
   else {
 %>
-  <table with ="80%" align="center">
   <TR>
-    <td  nowrap  ><a href="javascript:submitSimpleForm();"><html:img page="/i/SearchDataElements.gif" border="0" /></a>
+    <td  nowrap  ><a href="javascript:unLockFormSubmission();submitSimpleForm();"><html:img page="/i/SearchDataElements.gif" border="0" /></a>
     </td>
     <td><a href="javascript:clearSimpleForm()"><html:img page="/i/clear.gif" border="0" /></a>
     </td>
