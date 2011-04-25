@@ -44,7 +44,7 @@ Data Element Details
 	@import url("/CDEBrowser/js/dojo/dojox/grid/enhanced/resources/EnhancedGrid_rtl.css");
 </style>
 </HEAD>
-<BODY topmargin="0">
+<BODY topmargin="0" >
 
 
 
@@ -181,7 +181,7 @@ function anotherDataElementDetails(linkParms, version )
 	dojo.require("dojox.data.HtmlStore");
 	dojo.require("dojox.grid.enhanced.plugins.DnD");
 	dojo.require("dojox.grid.enhanced.plugins.NestedSorting");
-	
+
 	var struct1 = [{field: "type", name: "Type", width: "100px"},
 	               {field: "value", name: "Value", width: "200px"},
 					{field: "context", name: "Context", width: "100px"},
@@ -228,11 +228,7 @@ function anotherDataElementDetails(linkParms, version )
 	      </tr>
 	</logic:iterate>
 </logic:notEmpty>  
-<logic:empty name="de" property="designations">
-	<tr class="OraTabledata">
-        <td colspan="4">There are no alternate names for the selected CDE.</td>
-      </tr>
-</logic:empty>
+
 <logic:notEmpty name="de" property="definitions">
 	<logic:iterate id="def" name="de" property="definitions" type="gov.nih.nci.ncicb.cadsr.common.resource.Definition">
 	      <tr class="OraTabledata">
@@ -258,18 +254,15 @@ function anotherDataElementDetails(linkParms, version )
 	      </tr>
 	</logic:iterate>
 </logic:notEmpty>  
-<logic:empty name="de" property="definitions">
-	<tr class="OraTabledata">
-        <td colspan="4">There are no alternate definitions for the selected CDE.</td>
-      </tr>
-</logic:empty>
+
 </tbody>
 </table>
 <div dojoType="dojox.data.HtmlStore" dataId="altNames" jsId="htmlStor"></div>
 
 <div style="{width: 100%; height:400px}">
-<div dojoType="dojox.grid.EnhancedGrid" store="htmlStor" query="{}" escapeHTMLInData="false"
-				selectable="true" structure= "struct1" plugins="{dnd: true, nestedSorting: true}"></div>
+<div id="nameDefGrid" dojoType="dojox.grid.EnhancedGrid" store="htmlStor" query="{}" escapeHTMLInData="false"
+				selectable="true" structure= "struct1" plugins="{dnd: true, nestedSorting: true}" autoWidth="true"
+				noDataMessage="There are no alternate names or definitions for the selected CDE"></div>
 </div>
 
 </td></tr>
