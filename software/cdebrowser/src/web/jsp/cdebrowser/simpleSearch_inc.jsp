@@ -10,13 +10,13 @@
 	
 	var completeData = new dojo.data.ItemFileReadStore({url:"", clearOnClose:"true", urlPreventCache:"true"});
 	var tmpVal = null;
-	var cookieStoreName = "cdeBrowserCookies";
 	
 	function refreshStore(evnt) {
 		if (evnt.target.value != tmpVal && evnt.target.value.length >= 3) {
 			tmpVal = evnt.target.value;
 			completeData.close();
 			completeData.url = "/CDEBrowser/jsp/cdebrowser/instantSearch.jsp?searchStr="+evnt.target.value;
+			completeData.fetch({onComplete: function(items, req){searchBox.open();}});
 			searchBox.store=completeData;
 		}
 	}
@@ -30,8 +30,8 @@
     }
 
     function labelFunc(item) {
-    	var longName = searchBox.store.getValue(item, 'longName');
-    	return "<font face=\"Arial, Helvetica, sans-serif\" size=\"2\">"+longName+"</font>";
+    	var longName = searchBox.store.getValue(item, 'prettyLongName');
+    	return longName;
     }
 
 </script>
@@ -132,19 +132,18 @@
 	<td>
 		<table valign="top">
 			<tr>
-				<td >
+				<td>
 					<select dojoType="dijit.form.ComboBox"
 					   onKeyUp="refreshStore"
 						onChange="populateLongName(this, this.item, this.store)" 
 						searchAttr="searchStr" 
 						 id="searchBox"
 						labelType="html"
-						labelFunc=labelFunc
-					   style="width: 500px; font-family: Arial, Helvetica, sans-serif" autoComplete="false"
+						labelAttr="prettyLongName"
+					   style="width: 500px; font-family: Arial, Helvetica, sans-serif; font-size: 16px" autoComplete="false"
 					   jsId="searchBox" { sort: {attribute:"longName"} } 
 						hasDownArrow="false" ignoreCase="true"
 						pageSize=10 
-						dir="right" 
 						title="Start typing the long name here for a list of possible matches"
 						value="Start typing the long name here for a list of possible matches"
 						onFocus="if (this.getValue()=='' || this.getValue()=='Start typing the long name here for a list of possible matches') this.setValue('')"
@@ -155,7 +154,7 @@
 			</tr>
 			<tr>
 				<td width="40%" align="left" nowrap >
-			      <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" style="border-color:black;border-width:1px;border-style:solid;width:500px"> 
+			      <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" style="border-color:black;border-width:1px;border-style:solid;width:500px;font-family: Arial, Helvetica, sans-serif;font-size: 16px"> 
 			    </td>
 			</tr>
 		</table>

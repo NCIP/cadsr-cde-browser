@@ -9,6 +9,7 @@ import gov.nih.nci.cadsr.domain.DataElementConcept;
 import gov.nih.nci.cadsr.domain.Definition;
 import gov.nih.nci.cadsr.domain.DefinitionClassSchemeItem;
 import gov.nih.nci.cadsr.domain.DesignationClassSchemeItem;
+import gov.nih.nci.cadsr.domain.ReferenceDocument;
 import gov.nih.nci.cadsr.domain.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.service.CDEBrowserService;
@@ -28,9 +29,11 @@ import gov.nih.nci.system.client.ApplicationServiceProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 
@@ -307,6 +310,24 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 		}
 		csi = (ClassificationSchemeItem)csiList.get(0);
 
-		return new ArrayList(csi.getReferenceDocumentCollection());
- }
+		Collection<ReferenceDocument> rds = csi.getReferenceDocumentCollection();
+		return getDistinctRefDocs(rds); //account for bug in cadsr api that retrieves the same csi rd twice
+	 }
+	 
+	 private List<ReferenceDocument> getDistinctRefDocs(Collection<ReferenceDocument> rds) {
+		 List<ReferenceDocument> rdsList = new ArrayList<ReferenceDocument>();
+		 if (rds != null && !rds.isEmpty()) {
+			 Iterator<ReferenceDocument> rdsIter = rds.iterator();
+				Map<String, ReferenceDocument> rdsMap = new HashMap<String, ReferenceDocument>();
+				while(rdsIter.hasNext()) {
+					ReferenceDocument rd = rdsIter.next();
+					String key = rd.getName()+rd.getType();
+					if (!rdsMap.containsKey(key)) {
+						rdsMap.put(key, rd);
+					}
+				}
+				rdsList.addAll(rdsMap.values());
+		 }
+		 return rdsList;
+	 }
 }

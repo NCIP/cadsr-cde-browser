@@ -50,8 +50,8 @@ function subTabClicked(tabNum,urlParams) {
 			 }
           %>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=params.getCdeBrowserHelpUrl()%>" target="_blank"><html:img page="/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
-          <TD valign="middle" align="CENTER" width="1%" colspan=1><a href="<%=(String)session.getAttribute(ProcessConstants.RELEASE_NOTES_WIKI)%>" target="_blank"><font color=brown face=verdana size=1>What's new</font></a></TD>
-		  <TD valign="middle" align="CENTER" width="1%" colspan=1><a href="<%=(String)session.getAttribute(ProcessConstants.DOWNLOAD_LINK_WIKI)%>" target="_blank"><font color=brown face=verdana size=1>Available Downloads<sup><font color="red"><b>New!</b></font></sup></font></a></TD>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><a href="<%=(String)session.getAttribute(ProcessConstants.RELEASE_NOTES_WIKI)%>" target="_blank"><html:img page="/i/whatsnew.gif" alt="What's New" border="0"  width="32" height="32" /></a><br/><font color=brown face=verdana size=1>What's new</font></TD>
+		  <TD valign="TOP" align="CENTER" width="1%" colspan=1><a href="<%=(String)session.getAttribute(ProcessConstants.DOWNLOAD_LINK_WIKI)%>" target="_blank"><html:img page="/i/download.gif" alt="Available Downloads" border="0"  width="32" height="32" /></a><br/><font color=brown face=verdana size=1>Downloads</font></TD>
 		<logic:present name="nciUser">
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="/logout?FirstTimer=0" target="_top"><html:img page="/i/logout.gif" alt="Logout" border="0"  width="32" height="32" /></html:link><br><font color=brown face=verdana size=1>&nbsp;Logout&nbsp;</font></TD>
         </logic:present>
