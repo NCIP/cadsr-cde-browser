@@ -200,18 +200,7 @@ function submitForm() {
 }
 
 function submitSimpleForm() {
-     /*if(document.forms[0].jspBasicSearchType.selectedIndex==1)
-     {
-        document.forms[0].jspCdeId.value=document.forms[0].jspSimpleKeyword.value;
-        document.forms[0].jspKeyword.value="";
-        
-     }
-     else
-     {
-       document.forms[0].jspKeyword.value=document.forms[0].jspSimpleKeyword.value;
-       document.forms[0].jspCdeId.value="";
-     }*/
-     
+     document.forms[0].jspKeyword.value=document.forms[0].jspSimpleKeyword.value;
      document.forms[0].submit();
   }
 
@@ -326,7 +315,6 @@ function ToggleAll(e){
 	else {
 	    setChecked(0,'selectDE');
 	}
-	addOrDeleteAll();
 }
 
 function updateCart() {
@@ -400,22 +388,7 @@ function gotoCDESearchPrefs() {
   document.forms[0].submit();
 }
 
-function addOrDeleteForDownload(elem) {
-	var actn;
-	if (elem.checked) actn="add";
-	else actn = "remove";
-	dojo.xhrGet({url:"/CDEBrowser/jsp/cdebrowser/customDownloadHelper.jsp?deIdSeq="+elem.value+"&action="+actn});
-}
 
-function addOrDeleteAll(elem) {
-	var elems = document.getElementsByName("selectDE");
-	for (i=0;i<elems.length;i++) {
-		addOrDeleteForDownload(elems[i]);
-	}
-}
-function clrDwnld() {
-	dojo.xhrGet({url:"/CDEBrowser/jsp/cdebrowser/customDownloadHelper.jsp?action=clear"});
-}
 //
 --></SCRIPT>
 
@@ -551,8 +524,6 @@ function clrDwnld() {
 	<tr>
 		<td>
 			<a href="#" onClick="javascript:window.open('/CDEBrowser/search?customDownload=9&PageId=DataElementsGroup');" ><b>Custom Download</b></a>
-			&nbsp;&nbsp;
-			<a href="#" onClick="clrDwnld();" ><b>Clear Download</b></a>
 		</td>
 	</tr>
    <tr>
@@ -689,7 +660,7 @@ function clrDwnld() {
         DataElement de = (DataElement)deList.get(i);
 %>
   <tr class="OraTabledata">
-    <td class="OraTableCellSelect"><input type="checkbox" name="selectDE" value="<%=de.getDeIdseq()%>" onClick="addOrDeleteForDownload(this)"/></td>
+    <td class="OraTableCellSelect"><input type="checkbox" name="selectDE" value="<%=de.getDeIdseq()%>" /></td>
     <td class="OraFieldText"><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=<%=de.getDeIdseq()%>')"><%=de.getLongName()%></a></td>
     <td class="OraFieldText"><%=de.getLongCDEName()%> </td>
     <td class="OraFieldText"><%=de.getContextName()%> </td>
