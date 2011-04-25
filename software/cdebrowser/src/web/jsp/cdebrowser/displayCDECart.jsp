@@ -8,6 +8,7 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserNavigationConstants"%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
+<%@ page import="gov.nih.nci.ncicb.cadsr.common.ProcessConstants"%>
 
 <HTML>
 	<HEAD>
@@ -81,8 +82,10 @@ function retrieveSavedItems() {
 function submitCustomizedDownload() {
 	var srchID = getAllCheckedCSVValues();
 	
-	document.customDownloadForm.SearchID.value = srchID;
-	document.customDownloadForm.submit();
+	if (srchID != null && srchID != '') {
+		document.customDownloadForm.SearchID.value = srchID;
+		document.customDownloadForm.submit();
+	}	
 }
 
 function getAllCheckedCSVValues() {
@@ -92,8 +95,14 @@ function getAllCheckedCSVValues() {
 
 	var srchID = selectedItemValues + selectedSaveItemValues + selectedDeleteItemValues;
 	if (srchID.length > 0) srchID = srchID.substring(0, srchID.length-1);
-	
-	return srchID;
+
+	var ids = null;
+	if (srchID == null || srchID=='') {
+		alert('Please select atleast one CDE to download');
+	} else {
+		ids = srchID;
+	}
+	return ids;
 }
 
 function getItemValues(itemName) {
@@ -125,9 +134,11 @@ function submitXMLDownload() {
 
 function submitDownload(url) {
 	var srchID = getAllCheckedCSVValues();
-	var contextPath = '<%= StringEscapeUtils.escapeHtml(request.getContextPath()) %>';
-	var downloadURL = contextPath+url+"&downloadIDs="+srchID;
-	fileDownloadWin(downloadURL, 'excelWin',500,200);
+	if (srchID != null && srchID != '') {
+		var contextPath = '<%= StringEscapeUtils.escapeHtml(request.getContextPath()) %>';
+		var downloadURL = contextPath+url+"&downloadIDs="+srchID;
+		fileDownloadWin(downloadURL, 'excelWin',500,200);
+	}
 }
 
 </SCRIPT>
@@ -375,7 +386,7 @@ function submitDownload(url) {
 					</table>
 		</html:form>
 
-		<form name="customDownloadForm" action="https://cdecurate-dev.nci.nih.gov/cdecurate/NCICurationServlet" target="_blank" method="POST">
+		<form name="customDownloadForm" action="<%= (String)session.getAttribute(ProcessConstants.CURATION_URL) %>/cdecurate/NCICurationServlet" target="_blank" method="POST">
 			<input type="hidden" name="reqType" value="showDEfromOutside" />
 			<input type="hidden" name="SearchID" value="" />
 		</form>
