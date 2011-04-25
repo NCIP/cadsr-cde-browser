@@ -199,15 +199,25 @@ function submitForm() {
   }
 }
 
+var locked = true;
 function submitSimpleForm() {
-     document.forms[0].jspKeyword.value=document.forms[0].jspSimpleKeyword.value;
-     document.forms[0].submit();
-  }
-
+	if (!locked) {
+	     document.forms[0].jspKeyword.value=document.forms[0].jspSimpleKeyword.value;
+	     document.forms[0].submit();
+	}
+}
 
 function clearSimpleForm() {
-  document.forms[0].jspSimpleKeyword.value = "";
-  document.forms[0].jspBasicSearchType.selectedIndex=0;
+	document.forms[0].jspSimpleKeyword.value = "";
+	document.forms[0].jspBasicSearchType.selectedIndex=0;
+}
+
+function unLockFormSubmission() {
+	locked = false;
+}
+
+function lockFormSubmission() {
+	locked = true;
 }
 
 function clearForm() {

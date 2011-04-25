@@ -16,8 +16,8 @@
 			tmpVal = evnt.target.value;
 			completeData.close();
 			completeData.url = "/CDEBrowser/jsp/cdebrowser/instantSearch.jsp?searchStr="+evnt.target.value;
-			completeData.fetch({onComplete: function(items, req){searchBox.open();}});
 			searchBox.store=completeData;
+			completeData.fetch({onComplete: function(items, req){if (items != null && items.length > 0) searchBox.open();}});
 		}
 	}
 
@@ -154,7 +154,7 @@
 			</tr>
 			<tr>
 				<td width="40%" align="left" nowrap >
-			      <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" style="border-color:black;border-width:1px;border-style:solid;width:500px;font-family: Arial, Helvetica, sans-serif;font-size: 16px"> 
+			      <input type="text" name="jspSimpleKeyword" onFocus="unLockFormSubmission();" onBlur="lockFormSubmission();" value="<%=desb.getSimpleSearchStr()%>" style="border-color:black;border-width:1px;border-style:solid;width:500px;font-family: Arial, Helvetica, sans-serif;font-size: 16px"> 
 			    </td>
 			</tr>
 		</table>
@@ -183,9 +183,9 @@
 <%
   if ("".equals(src)) {
 %>
- <table with ="80%" align="center" border="0">
+ <table width ="80%" align="center" border="0">
  <TR>
-    <td align="center" nowrap><a href="javascript:submitSimpleForm()">
+    <td align="center" nowrap><a href="javascript:unLockFormSubmission();submitSimpleForm()">
 <% if (searchMode!=null && searchMode.equals(BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS)) {
 %>
     <html:img page="/i/search_within_result.gif" border="0" />
