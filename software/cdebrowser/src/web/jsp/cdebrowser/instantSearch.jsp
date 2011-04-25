@@ -21,6 +21,7 @@
 				JSONObject row = new JSONObject();
 				row.put("searchStr", searchStr);
 				row.put("longName", deName.getLongName());
+				row.put("prettyLongName", "<font face=\"Arial, Helvetica, sans-serif\" size=\"2\">"+deName.getLongName()+"</font>");
 				row.put("publicId", deName.getPublicId());
 				
 				jArray.put(row);
