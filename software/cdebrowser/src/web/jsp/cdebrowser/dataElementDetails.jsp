@@ -174,7 +174,6 @@ function anotherDataElementDetails(linkParms, version )
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
   </tr>
 </table>
-<p>
 
 <script type="text/javascript">
 	dojo.require("dojox.grid.EnhancedGrid");
@@ -182,24 +181,30 @@ function anotherDataElementDetails(linkParms, version )
 	dojo.require("dojox.grid.enhanced.plugins.DnD");
 	dojo.require("dojox.grid.enhanced.plugins.NestedSorting");
 
-	var struct1 = [{field: "type", name: "Type", width: "100px"},
-	               {field: "value", name: "Value", width: "200px"},
-					{field: "context", name: "Context", width: "100px"},
-					{field: "CS", name: "<center>Classification Schemes<br/><table align='center'><col width='50%'><col width='30%'><col width='20%'><tr><td><center>Class Scheme Item</center></td><td><center>Class Scheme</center></td><td><center>Class Scheme WF Status</center></td></tr></table></center>", width: "400px"}];
+	var struct1 = [{field: "type", name: "Type", width: "100px", 
+								styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color: #f7f7e7;", 
+								headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"},
+	               {field: "value", name: "Value", width: "200px", 
+									styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt;background-color: #f7f7e7;", 
+									headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"},
+					{field: "context", name: "Context", width: "100px", 
+										styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color: #f7f7e7;", 
+										headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"},
+					{field: "CS", name: "<center>Classification Schemes<br/><table align='center'><col width='50%'><col width='30%'><col width='20%'><tr><td class='TableRowPromptText'><center>Class Scheme Item</center></td><td class='TableRowPromptText'><center>Class Scheme</center></td><td class='TableRowPromptText'><center>Class Scheme WF Status</center></td></tr></table></center>", 
+								width: "400px", 
+								styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color: #f7f7e7;", 
+								headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"}];
 </script>
                 
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-<tr class="OraTabledata">
-	<td class="OraHeaderSubSubSub" width="100%" colspan="4">Alternate Names & Definitions</td>
-</tr>
 <tr class="OraTabledata"><td width="100%" colspan="4" >
-	<table id="altNames" width="100%" align="center" cellpadding="1" cellspacing="1" border="0" style="{display: none}">
+	<table id="altNames" width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" style="{display: none}">
 	<thead>  
-	<tr class="OraTableColumnHeader">
-	    <th class="OraTableColumnHeader">type</th>
-	    <th class="OraTableColumnHeader">value</th>
-	    <th class="OraTableColumnHeader">context</th>
-		<th class="OraTableColumnHeader">CS</th>
+	<tr>
+	    <th class="TableRowPromptText">type</th>
+	    <th class="TableRowPromptText">value</th>
+	    <th class="TableRowPromptText">context</th>
+		<th class="TableRowPromptText">CS</th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -207,7 +212,7 @@ function anotherDataElementDetails(linkParms, version )
 	<logic:iterate id="des" name="de" property="designations" type="gov.nih.nci.ncicb.cadsr.common.resource.Designation">
 	      <tr class="OraTabledata">
 	        <td class="OraFieldText">Alt Name</td>
-			<td class="OraFieldText">&lt;label title='<bean:write name="des" property="type" />'&gt;<bean:write name="des" property="name" />&lt;/label&gt; </td>
+			<td class="OraFieldText"><bean:write name="des" property="name" />&lt;br/&gt;&lt;b&gt;Type:&lt;/b&gt; <bean:write name="des" property="type" /></td>
 	        <td class="OraFieldText"><bean:write name="des" property="context.name" /> </td>
 	        <td class="OraFieldText">
 				<logic:notEmpty name="des" property="csCsis">
@@ -233,7 +238,7 @@ function anotherDataElementDetails(linkParms, version )
 	<logic:iterate id="def" name="de" property="definitions" type="gov.nih.nci.ncicb.cadsr.common.resource.Definition">
 	      <tr class="OraTabledata">
 			<td class="OraFieldText">Alt Definition</td>
-	        <td class="OraFieldText">&lt;label title='<bean:write name="def" property="type" />'&gt;<bean:write name="def" property="definition" />&lt;/label&gt; </td>
+	        <td class="OraFieldText"><bean:write name="def" property="definition" />&lt;br/&gt;&lt;b&gt;Type:&lt;/b&gt;<bean:write name="def" property="type" /></td>
 	        <td class="OraFieldText"><bean:write name="def" property="context.name" /> </td>
 	        <td class="OraFieldText">
 				<logic:notEmpty name="def" property="csCsis">
@@ -258,10 +263,10 @@ function anotherDataElementDetails(linkParms, version )
 </tbody>
 </table>
 <div dojoType="dojox.data.HtmlStore" dataId="altNames" jsId="htmlStor"></div>
-
-<div style="{width: 100%; height:400px}">
+<div style="{width: 100%; height:400px;}">
 <div id="nameDefGrid" dojoType="dojox.grid.EnhancedGrid" store="htmlStor" query="{}" escapeHTMLInData="false"
-				selectable="true" structure= "struct1" plugins="{dnd: true, nestedSorting: true}" autoWidth="true"
+				selectable="true" structure= "struct1" plugins="{dnd: true, nestedSorting: true}" 
+				rowSelector="0px" elasticView="2" style="{width: 100%; height:400px; background-color: #f7f7e7;}"
 				noDataMessage="There are no alternate names or definitions for the selected CDE"></div>
 </div>
 

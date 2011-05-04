@@ -123,10 +123,19 @@
 	dojo.require("dojox.grid.enhanced.plugins.DnD");
 	dojo.require("dojox.grid.enhanced.plugins.NestedSorting");
 
-	var struct1 = [{field: "type", name: "Type", width: "100px"},
-	               {field: "value", name: "Value", width: "200px"},
-					{field: "context", name: "Context", width: "100px"},
-					{field: "CS", name: "<center>Classification Schemes<br/><table align='center'><col width='50%'><col width='30%'><col width='20%'><tr><td><center>Class Scheme Item</center></td><td><center>Class Scheme</center></td><td><center>Class Scheme WF Status</center></td></tr></table></center>", width: "400px"}];
+	var struct1 = [{field: "type", name: "Type", width: "100px", 
+		styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color: #f7f7e7;", 
+		headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"},
+{field: "value", name: "Value", width: "200px", 
+			styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt;background-color: #f7f7e7;", 
+			headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"},
+{field: "context", name: "Context", width: "100px", 
+				styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color: #f7f7e7;", 
+				headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"},
+{field: "CS", name: "<center>Classification Schemes<br/><table align='center'><col width='50%'><col width='30%'><col width='20%'><tr><td class='TableRowPromptText'><center>Class Scheme Item</center></td><td class='TableRowPromptText'><center>Class Scheme</center></td><td class='TableRowPromptText'><center>Class Scheme WF Status</center></td></tr></table></center>", 
+		width: "400px", 
+		styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color: #f7f7e7;", 
+		headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"}];
 </script>
                 
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -202,7 +211,8 @@
 
 <div style="{width: 100%; height:400px}">
 <div id="nameDefGrid" dojoType="dojox.grid.EnhancedGrid" store="htmlStor" query="{}" escapeHTMLInData="false"
-				selectable="true" structure= "struct1" plugins="{dnd: true, nestedSorting: true}"
+				selectable="true" structure= "struct1" plugins="{dnd: true, nestedSorting: true}" 
+				rowSelector="0px" elasticView="2" style="{width: 100%; height:400px; background-color: #f7f7e7;}"
 				noDataMessage="There are no alternate names or definitions for the selected VM"></div>
 </div>
 

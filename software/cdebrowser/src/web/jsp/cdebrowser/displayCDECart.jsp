@@ -89,28 +89,59 @@ function submitCustomizedDownload() {
 }
 
 function getAllCheckedCSVValues() {
-	var selectedItemValues = getItemValues("selectedItems");
-	var selectedSaveItemValues = getItemValues("selectedSaveItems");
-	var selectedDeleteItemValues = getItemValues("selectedDeleteItems");
+	
+	var ids = getAllCheckedIdSeqs();
+	if (ids == null || ids=='') {
+		ids = getAllIdSeqs();
+	}
+
+	if (ids == null || ids=='') {
+		alert('Please add at least one CDE to the cart');
+	}
+	
+	return ids;
+}
+
+function getAllCheckedIdSeqs() {
+	var selectedItemValues = getCheckedIdSeqs("selectedItems");
+	var selectedSaveItemValues = getCheckedIdSeqs("selectedSaveItems");
+	var selectedDeleteItemValues = getCheckedIdSeqs("selectedDeleteItems");
 
 	var srchID = selectedItemValues + selectedSaveItemValues + selectedDeleteItemValues;
 	if (srchID.length > 0) srchID = srchID.substring(0, srchID.length-1);
 
-	var ids = null;
-	if (srchID == null || srchID=='') {
-		alert('Please select atleast one CDE to download');
-	} else {
-		ids = srchID;
-	}
-	return ids;
+	return srchID;
 }
 
-function getItemValues(itemName) {
+function getAllIdSeqs() {
+	var itemValues = getIdSeqs("selectedItems");
+	var saveItemValues = getIdSeqs("selectedSaveItems");
+	var deleteItemValues = getIdSeqs("selectedDeleteItems");
+
+	var srchID = itemValues + saveItemValues + deleteItemValues;
+	if (srchID.length > 0) srchID = srchID.substring(0, srchID.length-1);
+
+	return srchID;
+}
+
+function getCheckedIdSeqs(itemName) {
 	var elems = document.getElementsByName(itemName);
 	var srchID = '';
 	if (elems != null) {
 		for (i=0;i<elems.length;i++) {
 			if (elems[i].checked) srchID += elems[i].value+',';
+		}
+	}
+
+	return srchID;
+}
+
+function getIdSeqs(itemName) {
+	var elems = document.getElementsByName(itemName);
+	var srchID = '';
+	if (elems != null) {
+		for (i=0;i<elems.length;i++) {
+			srchID += elems[i].value+',';
 		}
 	}
 
@@ -136,8 +167,9 @@ function submitDownload(url) {
 	var srchID = getAllCheckedCSVValues();
 	if (srchID != null && srchID != '') {
 		var contextPath = '<%= StringEscapeUtils.escapeHtml(request.getContextPath()) %>';
-		var downloadURL = contextPath+url+"&downloadIDs="+srchID;
-		fileDownloadWin(downloadURL, 'excelWin',500,200);
+		document.downloadForm.action = contextPath+url;
+		document.downloadForm.downloadIDs.value = srchID;
+		document.downloadForm.submit();
 	}
 }
 
@@ -188,7 +220,7 @@ function submitDownload(url) {
 								<b><a href="#" onClick="javascript: submitPriorExcelDownload();"
 									title="3.2.0.1 Version">[Download Data Elements to Prior
 										Excel]</a> </b> &nbsp;&nbsp;
-								<b><a href="#" onClick="javascript: submitExcelDownload();"
+								<b><a href="javascript: submitExcelDownload();"
 									title="3.2.0.2 Includes new content: Value Meaning Description in column BV, Value Meaning Concept(s) in column BW, Value Domain Representation in columns BI-BS.">
 										[Download Data Elements to Excel]</a> </b> &nbsp;&nbsp;
 								<b><a href="#" onClick="javascript: submitXMLDownload();">[Download Data Elements
@@ -389,6 +421,9 @@ function submitDownload(url) {
 		<form name="customDownloadForm" action="<%= (String)session.getAttribute(ProcessConstants.CURATION_URL) %>/cdecurate/NCICurationServlet" target="_blank" method="POST">
 			<input type="hidden" name="reqType" value="showDEfromOutside" />
 			<input type="hidden" name="SearchID" value="" />
+		</form>
+		<form name="downloadForm" action="" target="_blank" method="POST">
+			<input type="hidden" name="downloadIDs" />
 		</form>
 
 		<%@ include file="/jsp/common/common_bottom_border.jsp"%>

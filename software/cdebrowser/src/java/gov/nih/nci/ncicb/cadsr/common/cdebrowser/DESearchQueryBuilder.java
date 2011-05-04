@@ -68,7 +68,7 @@ public class DESearchQueryBuilder extends Object {
 
     String searchStr0 = "";
     String searchStr2 = "";
-    //String searchStr3 = "";
+    String searchStr3 = "";
     String searchStr4 = "";
     String searchStr5 = "";
     String searchStr6 = "";
@@ -174,7 +174,7 @@ public class DESearchQueryBuilder extends Object {
 
       searchStr2 =
         StringUtils.replaceNull(request.getParameter("jspValueDomain"));
-      //searchStr3 = StringUtils.replaceNull(request.getParameter("jspCdeId"));
+      searchStr3 = StringUtils.replaceNull(request.getParameter("jspCdeId"));
       searchStr4 =
         StringUtils.replaceNull(request.getParameter("jspDataElementConcept"));
       searchStr5 =
@@ -231,12 +231,12 @@ public class DESearchQueryBuilder extends Object {
       if (doRegStatusSearch){
         regStatusWhere = this.buildRegStatusWhereClause(searchStr7);
       }
-      //if (!getSearchStr(3).equals("")){
-      /*if (!searchStr3.equals("")){
+
+      if (!searchStr3.equals("")){
         String newCdeStr = StringReplace.strReplace(searchStr3,"*","%");
         cdeIdWhere = " and " + buildSearchString("to_char(de.cde_id) like 'SRCSTR'",
         newCdeStr, searchBean.getNameSearchMode());
-      }*/
+      }
 
 
 

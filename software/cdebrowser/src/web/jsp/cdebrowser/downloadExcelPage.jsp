@@ -13,15 +13,14 @@ String downloadIDs = request.getParameter("downloadIDs");
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function goPage() {
-	var downloadLocation = "<%=request.getContextPath()%>" + "<%=StringEscapeUtils.escapeJavaScript("/search?excelDownload=9&PageId=DataElementsGroup&src=")%>" + "<%= StringEscapeUtils.escapeJavaScript(source)+"&downloadIDs=" %>"+"<%= downloadIDs %>";
-	document.location.href =downloadLocation;
+	document.forms[0].submit();
 }
 function closeWindow() {
   close();
 }
 //-->
 </SCRIPT>
-<form name="downloadForm">
+<form name="downloadForm" action="/CDEBrowser/search" method="post">
 <br>
 <p class="OraHeaderSubSub">Downloading data elements to Excel...</p>
 
@@ -30,7 +29,10 @@ operation may take a few minutes, so please do not close this status window whil
 it is in progress. You may close this status window after the download is 
 complete.</font></p>
 
-
+<input type="hidden" name="excelDownload" value="9" />
+<input type="hidden" name="PageId" value="DataElementsGroup" />
+<input type="hidden" name="src" value="<%= StringEscapeUtils.escapeJavaScript(source) %>" />
+<input type="hidden" name="downloadIDs" value="<%= downloadIDs %>" />
 </form>
 </BODY>
 </HTML>

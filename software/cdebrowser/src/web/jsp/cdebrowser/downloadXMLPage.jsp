@@ -14,9 +14,7 @@
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function goPage() {
-	var downloadLocation = "<%=request.getContextPath()%>" + "<%=StringEscapeUtils.escapeJavaScript("/search?xmlDownload=9&PageId=DataElementsGroup&src=")%>" + "<%= StringEscapeUtils.escapeJavaScript(source)+"&downloadIDs=" %>"+"<%= downloadIDs %>";
-	document.location.href = downloadLocation;
-  
+	document.forms[0].submit();
 }
 function closeWindow() {
   close();
@@ -42,6 +40,10 @@ saved file in any text or XML editor.
 </font>
 </p>
 
+<input type="hidden" name="xmlDownload" value="9" />
+<input type="hidden" name="PageId" value="DataElementsGroup" />
+<input type="hidden" name="src" value="<%= StringEscapeUtils.escapeJavaScript(source) %>" />
+<input type="hidden" name="downloadIDs" value="<%= downloadIDs %>" />
 </form>
 </BODY>
 </HTML>
