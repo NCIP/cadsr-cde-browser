@@ -24,7 +24,7 @@ function closeWindow() {
 
 //-->
 </SCRIPT>
-<form name="downloadForm">
+<form name="downloadForm" action="/CDEBrowser/search" method="post">
 
 <br>
 
