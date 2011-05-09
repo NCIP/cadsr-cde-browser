@@ -115,7 +115,6 @@
     <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
   </tr>
 </table>
-<p>
 
 <script type="text/javascript">
 	dojo.require("dojox.grid.EnhancedGrid");
@@ -139,9 +138,6 @@
 </script>
                 
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-<tr class="OraTabledata">
-	<td class="OraHeaderSubSubSub" width="100%" colspan="4">Alternate Names & Definitions</td>
-</tr>
 <tr class="OraTabledata"><td width="100%" colspan="4" >
 	<table id="altNames" width="100%" align="center" cellpadding="1" cellspacing="1" border="0" style="{display: none}">
 	<thead>  

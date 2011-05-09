@@ -120,26 +120,19 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 
 		DataElement deExample = new DataElement();      
 		deExample.setPublicID(new Long(de.getCDEId()));
+		deExample.setVersion(de.getVersion()); //fix for GF 22283 & 31085
 
 		List deList = null;
 
 		try { 
 			this.getCadsrService();
 			deList = appService.search(deExample.getClass(), deExample);
+			deList.get(0); // test to make sure we didn't get an empty or a null list back. Throws exception if we did
 		} catch(Exception e) {
 			throw new RuntimeException(e);
 		}
 		
-		//Code for the GF 22283 
-		DataElement dePop = new DataElement();
-		for (Object deObj: deList){
-			DataElement dePopObj = (DataElement)deObj;
-			if("Yes".equalsIgnoreCase(dePopObj.getLatestVersionIndicator())){
-				dePop = dePopObj;				
-			}			
-		}		
-		//DataElement dePop = (DataElement)deList.get(0);
-		//End of Code for GF 22283		
+		DataElement dePop = (DataElement)deList.get(0);
 	
 		for (gov.nih.nci.cadsr.domain.Designation altName : dePop.getDesignationCollection()) {
 			//find the designation that match the altName

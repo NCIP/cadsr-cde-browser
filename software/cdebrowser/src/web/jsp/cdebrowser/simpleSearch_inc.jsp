@@ -131,7 +131,7 @@
     </td>
 	<td>
 		<table valign="top">
-			<tr>
+			<!-- >tr>
 				<td>
 					<select dojoType="dijit.form.ComboBox"
 					   onKeyUp="refreshStore"
@@ -151,10 +151,10 @@
 					>
 					</select>
 				</td>
-			</tr>
+			</tr-->
 			<tr>
 				<td width="40%" align="left" nowrap >
-			      <input type="text" name="jspSimpleKeyword" onFocus="unLockFormSubmission();" onBlur="lockFormSubmission();" value="<%=desb.getSimpleSearchStr()%>" style="border-color:black;border-width:1px;border-style:solid;width:500px;font-family: Arial, Helvetica, sans-serif;font-size: 16px"> 
+			      <input type="text" name="jspSimpleKeyword" onFocus="unLockFormSubmission();" onBlur="lockFormSubmission();" value="<%=desb.getSimpleSearchStr()%>" style="width:500px;font-family: Arial, Helvetica, sans-serif;"> 
 			    </td>
 			</tr>
 		</table>

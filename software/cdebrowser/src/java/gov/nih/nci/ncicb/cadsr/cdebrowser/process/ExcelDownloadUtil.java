@@ -75,10 +75,13 @@ public class ExcelDownloadUtil {
 	
 	private synchronized void write(HSSFCell cell, Object data) {
 		if (data instanceof String) {
+			cell.setCellType(HSSFCell.CELL_TYPE_STRING);
 			cell.setCellValue((String)data);
 		} else if (data instanceof Float) {
+			cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
 			cell.setCellValue((Float)data);
 		}else if (data instanceof Double) {
+			cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
 			cell.setCellValue((Double)data);
 		}
 	}

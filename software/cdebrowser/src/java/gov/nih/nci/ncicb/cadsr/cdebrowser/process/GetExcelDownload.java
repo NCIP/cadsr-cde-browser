@@ -317,7 +317,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 					if (nestedCol.rsSubIndex < 0) {
 						if (valueDatum[nestedCol.rsIndex] != null) {
 							if (nestedCol.type.equalsIgnoreCase("Number")) {
-								rowData[nestedI] = new Float((((NUMBER) valueDatum[nestedCol.rsIndex]).floatValue())).toString();
+								rowData[nestedI] = ((NUMBER) valueDatum[nestedCol.rsIndex]).stringValue();
 							}else if (nestedCol.type.equalsIgnoreCase("Date")){  
 								rowData[nestedI] = (((DATE) valueDatum[nestedCol.rsIndex]).dateValue().toString());
 							}else if (nestedCol.type.equalsIgnoreCase("Array")){ 
@@ -541,7 +541,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 			validValueInfo.add(new ColumnInfo(6, "VMPUBLICID", "Value Meaning PublicID", "Number"));
 			validValueInfo.add(new ColumnInfo(7, "VMVERSION", "Value Meaning Version", "Number"));
 			
-			ColumnInfo vmDefsInfo = new ColumnInfo(8, "VM_DEFS", "Value Meaning Alternate Definitions", "Array");
+			ColumnInfo vmDefsInfo = new ColumnInfo(8, "VM_ALT_DEFS", "Value Meaning Alternate Definitions", "Array");
 			List defsInfoList = new ArrayList();
 			defsInfoList.add(new ColumnInfo(0, "Definition", "Value Meanings Definition", "String"));
 			vmDefsInfo.nestedColumns = defsInfoList;
