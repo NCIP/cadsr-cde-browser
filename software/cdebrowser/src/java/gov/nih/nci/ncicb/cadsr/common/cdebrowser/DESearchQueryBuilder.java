@@ -783,9 +783,9 @@ public class DESearchQueryBuilder extends Object {
      
      Pattern idPattern = Pattern.compile("%*[0-9]*%*");
      Matcher idMatcher = idPattern.matcher(newSearchStr);
-     String publicIdWhere = "";
+     String publicIdWhere = null;
      if (idMatcher.matches()) {
-    	 publicIdWhere = " or " + buildSearchString("to_char(de.cde_id) like 'SRCSTR'", newSearchStr, searchMode);
+    	 publicIdWhere = buildSearchString("to_char(de.cde_id) like 'SRCSTR'", newSearchStr, searchMode);
      }
 
      // compose the search for data elements table
@@ -797,7 +797,11 @@ public class DESearchQueryBuilder extends Object {
         searchWhere = searchWhere + " OR " + shortNameWhere;
      }
      
-     searchWhere += publicIdWhere;
+     if (searchWhere == null) {
+         searchWhere = publicIdWhere;
+      } else if (publicIdWhere !=null) {
+         searchWhere = searchWhere + " OR " + publicIdWhere;
+      }
 
      if (searchWhere == null && docTextSearchWhere != null ) {
         searchWhere = " and " + docTextSearchWhere;
