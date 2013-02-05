@@ -2,7 +2,7 @@
  	<!-- Properties -->
 	<property name="software.dir" location="${basedir}"/>
 	<property name="temp.dir" location="${software.dir}/target/temp"/>
-	<property name="build-utils.dir" location="${software.dir}/build-utils"/>
+	<property name="build-utils.dir" location="${software.dir}/local-ivy-repo"/>
 	<property name="build-utils.resource.dir" location="${build-utils.dir}/resource"/>
  	<property name="antunit.jar" value="antunit-1.0.jar"/>
 	<property name="template.dbintegrate.file" location="${build-utils.resource.dir}/template-db-integrate.xml"/>

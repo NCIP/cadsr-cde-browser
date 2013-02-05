@@ -55,7 +55,8 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 	<property name="temp.dir" location="${target.dir}/temp" />
 	<property name="reports.dir" location="${target.dir}/reports" />
 	<!-- property name="bda-utils.dir" location="${target.dir}/bda-utils" / -->
-	<property name="bda-utils.dir" location="${software.dir}/build-utils" />
+	<!-- property name="bda-utils.dir" location="${software.dir}/build-utils" / -->
+	<property name="bda-utils.dir" location="${software.dir}/local-ivy-repo" />
 	<property name="log.dir" location="${target.dir}/logs" />
 	<property name="dist.dir" location="${target.dir}/dist" />
 	<property name="download.dir" location="${target.dir}/download" />
