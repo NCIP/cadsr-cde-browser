@@ -127,6 +127,13 @@
 	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
 	<filter token="Tool.Version.Suffix" value="4_1"/>
 	
+	<!-- token for cle-providers -->
+	<filter token="database.user" value="${database.user}"/>
+	<filter token="database.password" value="${database.password}"/>
+	<filter token="database.url" value="${database.url}"/>
+	<filter token="database.server" value="${database.server}"/>
+	<filter token="database.name" value="${database.name}"/>
+	   
 	<path id="libpath">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar"/>
@@ -169,7 +176,7 @@
 		<copy tofile="${classes.dir}/gov/nih/nci/ncicb/cadsr/common/persistence/dao/jdbc/jndi.properties" filtering="true" overwrite="Yes">
 			<fileset file="${conf.dir}/template.jndi.properties"/>
 		</copy>
-		<copy tofile="${classes.dir}/cle-providers.xml" overwrite="Yes">
+		<copy tofile="${classes.dir}/cle-providers.xml" filtering="true" overwrite="Yes">
 			<fileset file="${conf.dir}/template.cle-providers.xml"/>
 		</copy>
 		<copy tofile="${classes.dir}/deployment.properties" filtering="true" overwrite="Yes">
