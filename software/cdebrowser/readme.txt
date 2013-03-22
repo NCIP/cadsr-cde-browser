@@ -5,17 +5,18 @@
 
 ant build-all
 
-5. Ignore all warnings for now
+Ignore all warnings for now
 
-In deployment-artifacts/jboss/CDEBrowser.war (42.6 MB)
+Build output will be in deployment-artifacts/jboss/CDEBrowser.war (42.6 MB)
 
-6. Deploy locally if needed
+3. Deploy locally if needed
 
 ant deploy
 
-7. Copy *-ds.xml under cdebrowser/deployment-artifacts/jboss to your jboss server/default/deploy directory
+4. Copy *-ds.xml under cdebrowser/deployment-artifacts/jboss to your jboss server/default/deploy directory
 
-8. Visit http://localhost:8080/CDEBrowser
+5. Visit http://localhost:8080/CDEBrowser
+
 
 *** Good Sample JBoss 4.0.5 Console Output ***
 
