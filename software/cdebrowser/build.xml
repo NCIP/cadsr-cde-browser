@@ -212,6 +212,12 @@
 				</patternset>
 			</fileset>
 		</copy>	
+		
+		<!-- copy jdbc driver for AHP to deploy with -->
+		<copy todir="${war.dir}">
+		   	<fileset file="${basedir}/lib/ojdbc14.jar"/>
+		</copy>
+
 	</target>
 
 	<target name="-assemble" depends="-compile,-prop-check" description="Assembles the deployment parts into the artifacts folders.">
