@@ -168,13 +168,13 @@ CDE Browser
 
 
 <frameset rows="7%,*">
-   <html:frame page="/jsp/common/topHeader1.jsp" frameborder="0" scrolling = "no" frameName="tree_header"/>
+   <html:frame page="/jsp/common/topHeader1.jsp" frameborder="0" scrolling = "no" frameName="tree_header" title="Top header frame"/>
   <frameset cols="25%,*">
     <frameset rows="15%,*">
-       <html:frame page="/jsp/common/tree_hdr.jsp" frameborder="0" scrolling = "no" frameName="tree_header"/>       
-       <html:frame page="<%=treeURL%>" frameborder="0"  frameName="tree"/>       
+       <html:frame page="/jsp/common/tree_hdr.jsp" frameborder="0" scrolling = "no" frameName="tree_header" title="Tree header frame"/>       
+       <html:frame page="<%=treeURL%>" frameborder="0"  frameName="tree" title="Tree loader frame"/>       
     </frameset>    	   	
-      <html:frame page="<%=browserURL%>" frameborder="0" frameName="body"/>      
+      <html:frame page="<%=browserURL%>" frameborder="0" frameName="body" title="Tree body frame"/>      
    </frameset>   
  </frameset>
 </HTML>
