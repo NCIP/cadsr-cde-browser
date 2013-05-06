@@ -340,10 +340,12 @@ $HeadURL: http://gforge.nci.nih.gov/svnroot/automation/trunk/software/bda-build-
 	</target>
 
 	<target name="dist:tools:retrieve" description="Downloads binary applications from commonlibrary repository" depends="
-		init,
+		init">
+		<!--
  		dist:tools:retrieve:jboss,
  		dist:tools:retrieve:jbosscp
 		" >
+		-->
 	</target>
 
 	<target name="dist:tools:retrieve:jbosscp" unless="jbosscp.tools.exists" description="Downloads JBOSS Cumulative Patch from binary repository and verifies checksum">
