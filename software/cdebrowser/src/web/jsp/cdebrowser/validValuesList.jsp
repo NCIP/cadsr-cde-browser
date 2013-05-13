@@ -82,7 +82,7 @@ function valueMeaningDetails(shortMeaning)
     <td class="OraHeaderSubSub" width="100%">Selected Data Element</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 
@@ -132,7 +132,7 @@ function valueMeaningDetails(shortMeaning)
     <td class="OraHeaderSubSub" width="100%">Value Domain Details</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 
@@ -446,7 +446,7 @@ function valueMeaningDetails(shortMeaning)
     <td class="OraHeaderSubSub" width="100%">Permissible Values</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 
@@ -538,7 +538,7 @@ function valueMeaningDetails(shortMeaning)
     <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">

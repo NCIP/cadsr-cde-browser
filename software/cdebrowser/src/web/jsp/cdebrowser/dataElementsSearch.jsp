@@ -402,7 +402,7 @@ function gotoCDESearchPrefs() {
 
 //-->
 </SCRIPT>
-
+<label for="searchForm"/>
 <form action="<%=infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=StringEscapeUtils.escapeHtml(submitFunction)%>};">
 <INPUT TYPE="HIDDEN" NAME="<%=StringEscapeUtils.escapeHtml(BrowserNavigationConstants.METHOD_PARAM)%>" > 
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
@@ -480,7 +480,7 @@ function gotoCDESearchPrefs() {
   </tr>
   <tr valign="top">
     <td valign="top" width="100%" nowrap >
-      <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
+      <html:img height="1" page="/i/beigedot.gif" alt="beige dot"  width="99%" align="top" border="0" />
     </td>
     
   </tr>
@@ -563,9 +563,9 @@ function gotoCDESearchPrefs() {
 
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
     <tr>
-      <td align="left" width="20%" ><a href="javascript:updateCart()"><html:img page="/i/AddToCDECart.gif" border="0" /></a></td>
-      <td align="left" width="20%" ><a href="javascript:updateCompareList()"><html:img page="/i/addToCDECompareList.gif" border="0" /></a></td>
-      <td align="left" width="20%" ><a href="javascript:compareCDEs(<%=cdeCompareSizeStr%>)"><html:img page="/i/compareCDEs.gif" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="javascript:updateCart()"><html:img page="/i/AddToCDECart.gif" alt="add to CDE cart" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="javascript:updateCompareList()"><html:img page="/i/addToCDECompareList.gif" alt="add to CDE compare list" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="javascript:compareCDEs(<%=cdeCompareSizeStr%>)"><html:img page="/i/compareCDEs.gif" alt="compare CDE" border="0" /></a></td>
       <td align="right"><%=topScroller.getScrollerHTML()%></td>
     </tr>
 </table>
@@ -699,7 +699,7 @@ function gotoCDESearchPrefs() {
   </tr>
   <tr valign="top">
     <td valign="top" width="100%" nowrap >
-      <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
+      <html:img height="1" page="/i/beigedot.gif" alt="beige dot" width="99%" align="top" border="0" />
     </td>
   </tr>
         <tr valign="top">    

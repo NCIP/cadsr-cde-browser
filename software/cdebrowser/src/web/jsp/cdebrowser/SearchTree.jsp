@@ -18,7 +18,7 @@
        
               <tr>
                 <td>Search:</td>
-                <td><input name="searchTerm" size="25"/>&nbsp;<INPUT type="submit" name="search" value="Search"/></td>
+                <td><input name="searchTerm" size="25"/>&nbsp;<INPUT type="submit" title="Submit Search" name="search" value="Search"/></td>
               </tr>
               <tr>              
                 <td>&nbsp;</td> 

@@ -137,7 +137,7 @@ function done() {
           <td class="OraHeaderSubSub" width="100%">Data Element</td>
         </tr>
         <tr height='2' >
-           <td width="100%" ><img height=2 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+           <td width="100%" ><img height=2 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=1> </td>
         </tr>  
       </table>   
 
@@ -279,7 +279,7 @@ function done() {
                 <td class="OraHeaderSubSub" width="100%">Data Element Concept</td>
               </tr>
               <tr>
-                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+                <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=1> </td>
               </tr>  
             </table> 
             
@@ -438,7 +438,7 @@ function done() {
                 <td class="OraHeaderSubSub" width="100%">Value Domain</td>
               </tr>
               <tr>
-                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+                <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=1> </td>
               </tr>  
             </table>
            <table width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">
@@ -626,7 +626,7 @@ function done() {
                 <td class="OraHeaderSubSub" width="100%">Permissible Values</td>
               </tr>
               <tr>
-                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+                <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=1> </td>
               </tr>  
             </table>
 
@@ -705,7 +705,7 @@ function done() {
                 <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
               </tr>
               <tr>
-                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+                <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=1> </td>
               </tr>  
             </table>
 
@@ -773,7 +773,7 @@ function done() {
                 <td class="OraHeaderSubSub" width="100%">Classifications</td>
               </tr>
               <tr>
-                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+                <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=1> </td>
               </tr>  
             </table>
 
@@ -843,7 +843,7 @@ function done() {
                 <td class="OraHeaderSubSub" width="100%">Data Element Derivation</td>
               </tr>
               <tr>
-                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+                <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=1> </td>
               </tr>  
             </table>             
              
@@ -988,7 +988,7 @@ function done() {
     <br>
             <table cellpadding="0" cellspacing="0" width="<%=CDECompareJspUtils.getTotalPageWidth(listSize)%>" align="center">
               <tr>
-                <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=1> </td>
+                <td width="100%"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=1> </td>
               </tr>  
             </table>   
             

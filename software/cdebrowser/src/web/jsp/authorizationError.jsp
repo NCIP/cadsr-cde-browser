@@ -34,7 +34,7 @@ if (parent.frames[1])
   
   <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
   <TR>
-  <td align=left valign=top width="1%" bgcolor="#336699"><img src="i/top_left.gif" width=4 height="25"></td>
+  <td align=left valign=top width="1%" bgcolor="#336699"><img src="i/top_left.gif" alt="top left" width=4 height="25"></td>
   <td nowrap align=left valign=top width="5%" bgcolor="#336699"><b><font size="3" face="Arial" color="#FFFFFF"></font></b></td>
 
   <td align=left valign=top width="5%" bgcolor="#336699">&nbsp;</td>
@@ -45,9 +45,9 @@ if (parent.frames[1])
   
   <table  width=100% Cellpadding=0 Cellspacing=0 border=0>
   <tr>
-  <td align=right valign=top width=49 height=21 bgcolor="#336699"><img src="i/left_end_bottom.gif" height=21 width=49></td>
-  <TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><img src="i/bottom_middle.gif" height=6 width=100%></TD>
-  <td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><img src="i/right_end_bottom.gif" height=7 width=5></td>
+  <td align=right valign=top width=49 height=21 bgcolor="#336699"><img src="i/left_end_bottom.gif" alt="left end bottom" height=21 width=49></td>
+  <TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><img src="i/bottom_middle.gif" alt="bottom middle" height=6 width=100%></TD>
+  <td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><img src="i/right_end_bottom.gif" alt="right end bottom" height=7 width=5></td>
   </TR>
   </table>
   
@@ -74,8 +74,8 @@ if (parent.frames[1])
 
 <%--<TABLE width=100% cellspacing=0 cellpadding=0 border=0>
 <TR>
-<TD valign=bottom width=99%><img src="<%=request.getContextPath()%>/i/bottom_shade.gif" height=6 width="100%"></TD>
-<TD valign=bottom width="1%" align=right><IMG src="<%=request.getContextPath()%>/i/bottomblueright.gif"></TD>
+<TD valign=bottom width=99%><img src="<%=request.getContextPath()%>/i/bottom_shade.gif" alt="bottom shade" height=6 width="100%"></TD>
+<TD valign=bottom width="1%" align=right><IMG src="<%=request.getContextPath()%>/i/bottomblueright.gif" alt="bottom blue right"></TD>
 </TR>
 </TABLE>
 --%><%--<TABLE width=100% cellspacing=0 cellpadding=0 bgcolor="#336699" border=0>

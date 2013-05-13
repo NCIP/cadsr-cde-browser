@@ -92,7 +92,7 @@ function listChanged(urlInfo) {
 				</tr>
 				<tr>
 					<td width="100%">
-						<img height=1 src="i/beigedot.gif" width="99%" align=top border=0>
+						<img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0>
 					</td>
 				</tr>
 			</table>
@@ -167,7 +167,7 @@ function listChanged(urlInfo) {
 				</tr>
 				<tr>
 					<td>
-						<img height=1 src="i/beigedot.gif" width="99%" align=top border=0>
+						<img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0>
 					</td>
 				</tr>
 				<tr>
@@ -259,7 +259,7 @@ function listChanged(urlInfo) {
 				</tr>
 				<tr>
 					<td>
-						<img height=1 src="i/beigedot.gif" width="99%" align=top border=0>
+						<img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0>
 					</td>
 				</tr>
 				<tr>
@@ -380,7 +380,7 @@ function listChanged(urlInfo) {
 				</tr>
 				<tr>
 					<td>
-						<img height=1 src="i/beigedot.gif" width="99%" align=top border=0>
+						<img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0>
 					</td>
 				</tr>
 				<tr>

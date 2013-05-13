@@ -90,7 +90,7 @@
     <td class="OraHeaderSubSub" width="100%" colspan="2">Value Meaning Alternate Names and Definitions</td>
   </tr>
   <tr>
-    <td width="100%" colspan="2"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%" colspan="2"><img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 <p>

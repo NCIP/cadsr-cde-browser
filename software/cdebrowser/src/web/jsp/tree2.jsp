@@ -138,7 +138,7 @@
 								<h:commandLink immediate="true"
 									action="#{treeBacker.selectedNode}"
 									actionListener="#{t.setNodeSelected}">
-									<t:graphicImage value="/i/yellow-folder-closed.png" border="0" />
+									<t:graphicImage value="/i/yellow-folder-closed.png" alt="yellow folder closed" border="0" />
 									<f:param name="docNum" value="#{node.identifier}" />
 								</h:commandLink>
 								<h:outputLink value="#{node.action}">
@@ -151,7 +151,7 @@
 								<h:commandLink immediate="true"
 									action="#{treeBacker.selectedNode}"
 									actionListener="#{t.setNodeSelected}">
-									<t:graphicImage value="/i/yellow-folder-closed.png" border="0" />
+									<t:graphicImage value="/i/yellow-folder-closed.png" alt="yellow folder closed"  border="0" />
 									<f:param name="docNum" value="#{node.identifier}" />
 								</h:commandLink>
 								<h:outputText value="#{node.description}" styleClass="treeNode" />

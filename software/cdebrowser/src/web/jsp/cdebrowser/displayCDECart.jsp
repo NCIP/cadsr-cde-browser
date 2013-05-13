@@ -138,7 +138,7 @@ function retrieveSavedItems() {
 						</tr>
 						<tr>
 							<td width="100%" nowrap>
-								<img height=2 src="i/beigedot.gif" width="99%" align=top
+								<img height=2 src="i/beigedot.gif" alt="beige dot" width="99%" align=top
 									border=0>
 							</td>
 						</tr>
@@ -206,7 +206,7 @@ function retrieveSavedItems() {
 								<tr>
 									<td>
 										<a href="javascript:retrieveSavedItems()"> <html:img
-												src='<%=request.getContextPath() + "/i/retrieve.gif"%>' border="0"
+												src='<%=request.getContextPath() + "/i/retrieve.gif"%>' alt="retrieve" border="0"
 												alt="Retrieve Saved Data Elements" /> </a>
 									</td>
 									<td>

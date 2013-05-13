@@ -57,7 +57,7 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
    
  </tr>   
  <tr>
-   <td  align="center" colspan="4"><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+   <td  align="center" colspan="4"><html:img page="/i/beigedot.gif" alt="beigedot" border="0"  height="1" width="99%" align="top" /> </td>
   </tr> 
  </table>
  
@@ -79,6 +79,8 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="1"  border="0" >
  <tr>
     <td   width="40%" align="left" nowrap >
+    <fieldset>
+  	<legend/>
  <table valign="top">
   <tr>
    <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
@@ -100,16 +102,19 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
       <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> >At least one of the words
    </td >
   </tr>
-</table>    
+</table>
+	</fieldset>    
     </td>
     <td width="40%" align="left" nowrap >
       <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" size ="60"> 
     </td>
     <td width="20%" align="left" nowrap >
       <select  name="jspBasicSearchType" class="Dropdown" name="contextIdSeq" >
+
         <option value="name" <%=basicSearchTypeName%> >Name</option> 
         <option value="publicId" <%=basicSearchTypePublicId%> >Public ID</option> 
       </select>
+
     </td>
  </tr>
  </table>
@@ -140,16 +145,16 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
     <td align="center" nowrap><a href="javascript:submitSimpleForm()">
 <% if (searchMode!=null && searchMode.equals(BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS)) {
 %>
-    <html:img page="/i/search_within_result.gif" border="0" />
+    <html:img page="/i/search_within_result.gif" alt="search within results" border="0" />
 <% }else { %>       
-    <html:img page="/i/search.gif" border="0" />
+    <html:img page="/i/search.gif" alt="search" border="0" />
 <% } %>
     </a></td>
-    <td  align="center" nowrap><a href="javascript:clearSimpleForm()"><html:img page="/i/clear.gif" border="0" /></a></td>
+    <td  align="center" nowrap><a href="javascript:clearSimpleForm()"><html:img page="/i/clear.gif" alt="clear" border="0" /></a></td>
     <%
        if(deList!=null){
     %>
-   <td  align="center" nowrap><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a></td>
+   <td  align="center" nowrap><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" alt="new search button" border="0" /></a></td>
    <%}%>
  </TR>
  </table>
@@ -159,17 +164,17 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
 %>
   <table with ="80%" align="center">
   <TR>
-    <td  nowrap  ><a href="javascript:submitSimpleForm()"><html:img page="/i/SearchDataElements.gif" border="0" /></a>
+    <td  nowrap  ><a href="javascript:submitSimpleForm()"><html:img page="/i/SearchDataElements.gif" alt="search data elements" border="0" /></a>
     </td>
-    <td><a href="javascript:clearSimpleForm()"><html:img page="/i/clear.gif" border="0" /></a>
+    <td><a href="javascript:clearSimpleForm()"><html:img page="/i/clear.gif" alt="clear" border="0" /></a>
     </td>
     <%
       if(deList!=null){
     %>
-    <td><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a>
+    <td><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" alt="new search button" border="0" /></a>
     </td>
     <%}%>
-    <td><a href="javascript:done()"><html:img page="/i/backButton.gif" border="0" /></a>
+    <td><a href="javascript:done()"><html:img page="/i/backButton.gif" alt="back button" border="0" /></a>
     </td>
    </TR>
  </table>

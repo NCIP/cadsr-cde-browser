@@ -17,7 +17,7 @@
 
     <td align="left" nowrap>
 
-    <img src="<%=request.getContextPath()%>/i/graphic6.gif" border=0>
+    <img src="<%=request.getContextPath()%>/i/graphic6.gif" alt="graphic 6" border=0>
     </td>
 
     <td align=right valign=top colspan=2 nowrap>

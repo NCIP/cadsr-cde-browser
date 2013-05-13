@@ -80,7 +80,7 @@ function anotherDataElementDetails(linkParms, version )
     <td class="OraHeaderSubSub" width="100%">Data Element Details</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 
@@ -156,7 +156,7 @@ function anotherDataElementDetails(linkParms, version )
     <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -257,7 +257,7 @@ function anotherDataElementDetails(linkParms, version )
     <td class="OraHeaderSubSub" width="100%">Alternate Names and Definitions</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 <p>
@@ -377,7 +377,7 @@ while (csiIter.hasNext()) {
     <td class="OraHeaderSubSub" width="100%">Other Versions</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 

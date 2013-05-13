@@ -90,7 +90,7 @@
 						</tr>
 						<tr>
 							<td width="100%">
-								<img height="1" src="<%=contextPath%>/i/beigedot.gif"
+								<img height="1" src="<%=contextPath%>/i/beigedot.gif" alt="beigedot"
 									width="99%" align="top" border="0" />
 							</td>
 						</tr>
@@ -146,7 +146,7 @@
 							</tr>
 							<tr>
 								<td width="100%">
-									<img height="1" src="<%=contextPath%>/i/beigedot.gif"
+									<img height="1" src="<%=contextPath%>/i/beigedot.gif" alt="beigedot"
 										width="99%" align="top" border="0" />
 								</td>
 							</tr>
@@ -252,7 +252,7 @@
 								</tr>
 								<tr>
 									<td width="100%">
-										<img height="1" src="<%=contextPath%>/i/beigedot.gif"
+										<img height="1" src="<%=contextPath%>/i/beigedot.gif" alt="beigodot"
 											width="90%" align="top" border="0" />
 									</td>
 								</tr>
@@ -344,7 +344,7 @@
 									</tr>
 									<tr>
 										<td width="100%">
-											<img height="1" src="<%=contextPath%>/i/beigedot.gif"
+											<img height="1" src="<%=contextPath%>/i/beigedot.gif" alt="beigodot"
 												width="99%" align="top" border="0" />
 										</td>
 									</tr>
@@ -422,7 +422,7 @@
 										</tr>
 										<tr>
 											<td width="100%">
-												<img height="1" src="<%=contextPath%>/i/beigedot.gif"
+												<img height="1" src="<%=contextPath%>/i/beigedot.gif" alt="beigodot"
 													width="90%" align="top" border="0" />
 											</td>
 										</tr>
@@ -569,7 +569,7 @@
 											</tr>
 											<tr>
 												<td width="100%">
-													<img height="1" src="<%=contextPath%>/i/beigedot.gif"
+													<img height="1" src="<%=contextPath%>/i/beigedot.gif" alt="beigodot"
 														width="90%" align="top" border="0" />
 												</td>
 											</tr>
@@ -716,7 +716,7 @@
 												</tr>
 												<tr>
 													<td width="100%">
-														<img height="1" src="<%=contextPath%>/i/beigedot.gif"
+														<img height="1" src="<%=contextPath%>/i/beigedot.gif" alt="beigodot"
 															width="99%" align="top" border="0" />
 													</td>
 												</tr>

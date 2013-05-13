@@ -36,7 +36,7 @@
    
  </tr>   
  <tr valign="top" >
-   <td  align="center" colspan="4"><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+   <td  align="center" colspan="4"><html:img page="/i/beigedot.gif" alt="beigedot" border="0"  height="1" width="99%" align="top" /> </td>
   </tr> 
  </table>
  
@@ -128,7 +128,7 @@
    
   </tr>  
   <tr>
-    <td align="center" ><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+    <td align="center" ><html:img page="/i/beigedot.gif" alt="beigedot"  border="0"  height="1" width="99%" align="top" /> </td>
    </tr> 
  </table> 
  
@@ -166,7 +166,7 @@
   
  </tr>  
  <tr valign="top" >
-   <td align="center" ><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+   <td align="center" ><html:img page="/i/beigedot.gif"  alt="beigedot" border="0"  height="1" width="99%" align="top" /> </td>
   </tr> 
  </table> 
  
@@ -189,7 +189,7 @@
                       class="LOVField"
                       size ="18"
                     >
-                  &nbsp;<a href="<%=decLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Data Element Concepts" /></a>&nbsp;
+                  &nbsp;<a href="<%=decLOVUrl%>"><html:img page="/i/search_light.gif"  alt="search light" border="0" alt="Search for Data Element Concepts" /></a>&nbsp;
                   <a href="javascript:clearDataElementConcept()"><i>Clear</i></a>
                   <input type="hidden" name="jspDataElementConcept" value="<%=desb.getDecIdseq()%>" >
                 </td>
@@ -203,7 +203,7 @@
                     class="LOVField"
                     size ="18"
                   >
-                &nbsp;<a href="<%=csLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Classification Scheme Items" /></a>&nbsp;
+                &nbsp;<a href="<%=csLOVUrl%>"><html:img page="/i/search_light.gif" alt="search light" border="0" alt="Search for Classification Scheme Items" /></a>&nbsp;
                 <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
                 <input type="hidden" name="jspClassification" value="<%=desb.getCsCsiIdseq()%>" >
               </td>
@@ -311,7 +311,7 @@
   
  </tr>  
  <tr>
-   <td align="center" ><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+   <td align="center" ><html:img page="/i/beigedot.gif" alt="beigedot" border="0"  height="1" width="99%" align="top" /> </td>
   </tr> 
  </table> 
  
@@ -390,16 +390,16 @@
     <td align="center" nowrap><a href="javascript:submitForm()">
 <% if (searchMode!=null && searchMode.equals(BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS)) {
 %>
-   <html:img page="/i/search_within_result.gif" border="0" />
+   <html:img page="/i/search_within_result.gif" alt="search within results" border="0" />
  <% }else { %>       
-     <html:img page="/i/search.gif" border="0" />
+     <html:img page="/i/search.gif" alt="search" border="0" />
  <% } %>
     </a></td>
-    <td  align="center" nowrap><a href="javascript:clearForm()"><html:img page="/i/clear.gif" border="0" /></a></td>
+    <td  align="center" nowrap><a href="javascript:clearForm()"><html:img page="/i/clear.gif" alt="clear" border="0" /></a></td>
      <%
      if(deList!=null){
     %>
- <td  align="center" nowrap><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a></td>
+ <td  align="center" nowrap><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" alt="new search button" border="0" /></a></td>
  <%}%>
  </TR>
  </table>
@@ -409,15 +409,15 @@
 %>
   <table with ="80%" align="center">
   <TR>
-    <td  nowrap  ><a href="javascript:submitForm()"><html:img page="/i/SearchDataElements.gif" border="0" /></a>
+    <td  nowrap  ><a href="javascript:submitForm()"><html:img page="/i/SearchDataElements.gif" alt="search data element" border="0" /></a>
     </td>
-    <td><a href="javascript:clearForm()"><html:img page="/i/clear.gif" border="0" /></a>
+    <td><a href="javascript:clearForm()"><html:img page="/i/clear.gif" alt="clear" border="0" /></a>
     </td>
     <% if(deList!=null){    %>
-    <td><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" border="0" /></a>
+    <td><a href="javascript:newSearch()"><html:img page="/i/newSearchButton.gif" alt="new search button" border="0" /></a>
     </td>
     <%}%>
-    <td><a href="javascript:done()"><html:img page="/i/backButton.gif" border="0" /></a>
+    <td><a href="javascript:done()"><html:img page="/i/backButton.gif" alt="back button" border="0" /></a>
     </td>
    </TR>
  </table>
