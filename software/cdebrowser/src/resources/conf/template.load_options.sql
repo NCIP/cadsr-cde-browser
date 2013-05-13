@@ -4,8 +4,7 @@ SET SCAN OFF;
 
 /*
    Database values owned by CDEBrowser
-*/  
-/*
+*/      
 MERGE INTO sbrext.tool_options_view_ext s
    USING (SELECT 'CDEBrowser' AS tool_name, 'HELP.ROOT' AS property,
                     'https://cdebrowser@TIER@.nci.nih.gov/help' AS value,
@@ -19,20 +18,6 @@ MERGE INTO sbrext.tool_options_view_ext s
       INSERT (tool_name, property, value, description, locale)
       VALUES (t.tool_name, t.property, t.value, t.description, 'US');
 
-     */
-MERGE INTO sbrext.tool_options_view_ext s
-   USING (SELECT 'CDEBrowser' AS tool_name, 'HELP.ROOT' AS property,
-                    'https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide' AS value,
-                 'Help URL for CDEBrowser.' AS description
-            FROM DUAL) t
-   ON (s.tool_name = t.tool_name AND s.property = t.property)
-   WHEN MATCHED THEN
-      UPDATE
-         SET s.value = t.value, s.description = t.description
-   WHEN NOT MATCHED THEN
-      INSERT (tool_name, property, value, description, locale)
-      VALUES (t.tool_name, t.property, t.value, t.description, 'US');
-      
 /*
     Database values used by FreeStyle Search 
 */
