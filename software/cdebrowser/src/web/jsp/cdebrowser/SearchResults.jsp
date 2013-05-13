@@ -112,7 +112,7 @@
         {           
 %>        <a name="synonyms"></a>
           <table width="100%" height="100%" border="0" cellpadding="2" cellspacing="0" id="synonyms">
-          <tr> <td height="15" <img src="images/transparent.gif" width="1" height="1" hspace="0" vspace="0" border="0"></td> </tr>
+          <tr> <td height="15" <img src="images/transparent.gif" alt="transparent" width="1" height="1" hspace="0" vspace="0" border="0"></td> </tr>
           <tr><td height="5" class="synonymsTitle">Alternate Search Terms Used</td></tr>        
           <tr> 
             <td height="100%" align="left" valign="top" class="synonyms">
@@ -133,9 +133,9 @@
             </td>
          </tr>
         <tr> 
-          <td height="1" class="synonymsTitle"><img src="images/transparent.gif" width="1" height="1" hspace="0" vspace="0" border="0"></td>
+          <td height="1" class="synonymsTitle"><img src="images/transparent.gif" alt="transparent" width="1" height="1" hspace="0" vspace="0" border="0"></td>
         </tr>
-        <tr> <td height="15" <img src="images/transparent.gif" width="1" height="1" hspace="0" vspace="0" border="0"></td> </tr>
+        <tr> <td height="15" <img src="images/transparent.gif" alt="transparent" width="1" height="1" hspace="0" vspace="0" border="0"></td> </tr>
         </table>        
 <%      } %>    
         </td>      

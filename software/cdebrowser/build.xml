@@ -122,18 +122,11 @@
 
 	<!-- these values that replaces some tags in the tool, are needed at the build time -->
 	<filter token="Tool.ds.jndi.Name" value="CDEBrowserDS"/>
-	<filter token="Tool.Version" value="4.1"/>
+	<filter token="Tool.Version" value="4.0.2"/>
 	<filter token="Tool.Build" value="1"/>
 	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
-	<filter token="Tool.Version.Suffix" value="4_1"/>
+	<filter token="Tool.Version.Suffix" value="4_0_2"/>
 	
-	<!-- token for cle-providers -->
-	<filter token="database.user" value="${database.user}"/>
-	<filter token="database.password" value="${database.password}"/>
-	<filter token="database.url" value="${database.url}"/>
-	<filter token="database.server" value="${database.server}"/>
-	<filter token="database.name" value="${database.name}"/>
-	   
 	<path id="libpath">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar"/>
@@ -163,7 +156,7 @@
 
 	<target name="-compile" depends="clean,-prop-check" description="Compiles the project source.">
 		<echo>Compiling project source, debug is ${JDEBUG} ...</echo>
-		<javac srcdir="${src.dir}" destdir="${temp.classes.dir}" tempdir="${temp.dir}" debug="${JDEBUG}" failonerror="yes">
+		<javac  target="1.5" srcdir="${src.dir}" destdir="${temp.classes.dir}" tempdir="${temp.dir}" debug="${JDEBUG}" failonerror="yes">
 			<compilerarg line="-deprecation"/>
 			<compilerarg line="-Xlint:unchecked"/>
 			<classpath refid="libpath"/>
@@ -181,12 +174,6 @@
 		</copy>
 		<copy tofile="${classes.dir}/deployment.properties" filtering="true" overwrite="Yes">
 			<fileset file="${conf.dir}/template.deployment.properties"/>
-		</copy>
-		<copy tofile="${classes.dir}/hibernate.cfg.xml" filtering="true" overwrite="Yes">
-			<fileset file="${conf.dir}/template.hibernate.cfg.xml"/>
-		</copy>
-		<copy tofile="${classes.dir}/ehcache.xml" filtering="true" overwrite="Yes">
-			<fileset file="${conf.dir}/template.ehcache.xml"/>
 		</copy>
 	    <copy todir="${classes.dir}">      
 	      <fileset dir="${src.dir}">
@@ -212,12 +199,6 @@
 				</patternset>
 			</fileset>
 		</copy>	
-		
-		<!-- copy jdbc driver for AHP to deploy with -->
-		<copy todir="${war.dir}">
-		   	<fileset file="${basedir}/lib/ojdbc14.jar"/>
-		</copy>
-
 	</target>
 
 	<target name="-assemble" depends="-compile,-prop-check" description="Assembles the deployment parts into the artifacts folders.">
@@ -321,7 +302,7 @@
 		</jspc>
 		
 		<echo>Compiling JSP-java files to verify syntax ...</echo>
-		<javac srcdir="${temp.classes.dir}/jsp" destdir="${temp.classes.dir}" encoding="Cp1252" debug="${JDEBUG}" >
+		<javac  target="1.5" srcdir="${temp.classes.dir}/jsp" destdir="${temp.classes.dir}" encoding="Cp1252" debug="${JDEBUG}" >
 			<classpath refid="libpath"/>
 			<include name="**/*.java"/>
 			<exclude name="**/*_inc*.java"/>

@@ -32,10 +32,8 @@ import gov.nih.nci.ncicb.cadsr.objectCart.impl.CDECartOCImpl;
 import gov.nih.nci.objectCart.client.ObjectCartClient;
 import gov.nih.nci.objectCart.client.ObjectCartException;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -135,8 +133,7 @@ public class GetDataElements extends BasePersistingProcess {
 			registerResultObject("uem");
 			registerParameterObject(ProcessConstants.SELECT_DE);
 			registerStringResult(ProcessConstants.DOWNLOAD_LINK_WIKI);
-			registerResultObject("downloadList");
-			registerStringResult("curationURL");
+
 		}
 		catch (ProcessInfoException pie) {
 			reportException(pie, true);
@@ -162,10 +159,9 @@ public class GetDataElements extends BasePersistingProcess {
 			myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
 			userSession = myRequest.getSession(false);
 
-			dbUtil = getDBUtil();
-			
+
 			log.info("GetDataElements process started successfully ");
-			initialize(userSession, dbUtil);
+			initialize(userSession);
 			log.info(" -Performed intialization successfully");
 
 			tib = new TabInfoBean("cdebrowser_search_tabs");
@@ -214,12 +210,13 @@ public class GetDataElements extends BasePersistingProcess {
 			DataElementHandler dh = null;
 			Object[] queryParams = null;
 
-			
+			dbUtil = getDBUtil();
 
 			if (performQuery == null) {
 				desb = new DataElementSearchBean(myRequest);
 				dePageIterator = new BC4JPageIterator(100);
 				desb.initSearchPreferences(dbUtil);
+				setDownloadLink(dbUtil);
 			}else if (performQuery.equals("yes")) {
 				desb = new DataElementSearchBean(myRequest);
 				//TODO: After creating the bean it is set with default values : GF 18442
@@ -267,7 +264,7 @@ public class GetDataElements extends BasePersistingProcess {
 					if (desb.getSimpleSearchStr()!=null) {
 						queryStmt = queryStmt + " and de.de_idseq in ( " + previousQuery + " )";
 						String searchCrumb = (String)userSession.getAttribute("searchCrumb") + ">>" 
-						+ //desb.getNameSearchMode() + " (" + desb.getBasicSearchType() + "=" +
+						+ desb.getNameSearchMode() + " (" + desb.getBasicSearchType() + "=" +
 						desb.getSimpleSearchStr() + ")";
 						userSession.setAttribute("searchCrumb", searchCrumb);
 					}
@@ -373,6 +370,7 @@ public class GetDataElements extends BasePersistingProcess {
 				userSession.setAttribute(BrowserFormConstants.BROWSER_SEARCH_SCOPE, BrowserFormConstants.BROWSER_SEARCH_SCOPE_NEW);
 				userSession.setAttribute("baseQuery", "");
 				userSession.setAttribute("searchCrumb", "");
+
 			}
 			else if (performQuery.equals("sortResults")) {
 				desb = (DataElementSearchBean) getInfoObject("desb");
@@ -522,7 +520,7 @@ public class GetDataElements extends BasePersistingProcess {
 		return getCondition(FAILURE);
 	}
 
-	private void initialize(HttpSession mySession, DBUtil dbUtil) throws Exception {
+	private void initialize(HttpSession mySession) throws Exception {
 		if (getStringInfo("INITIALIZED") == null) {
 			CDEBrowserParams params = CDEBrowserParams.getInstance();
 			//setResult("SBREXT_DSN", params.getSbrextDSN());
@@ -533,8 +531,6 @@ public class GetDataElements extends BasePersistingProcess {
 			setResult("XML_FILE_MAX_RECORDS", params.getXMLFileMaxRecords());
 			setResult("TREE_URL", params.getTreeURL());
 			setResult("INITIALIZED", "yes");
-			setToolOptions(mySession, dbUtil);
-			
 			try{
 				CDECart cart = this.findCart(mySession);
 				mySession.setAttribute(CaDSRConstants.CDE_CART, cart);
@@ -555,20 +551,12 @@ public class GetDataElements extends BasePersistingProcess {
 		}
 	}
 	
-	private void setToolOptions(HttpSession mySession, DBUtil dbUtil) {
-		ResultSet rs = null;		
+	private void setDownloadLink(DBUtil dbUtil) {
+		ResultSet rs = null;
 		try {
-			rs = dbUtil.executeQuery("select property, value from TOOL_OPTIONS_EXT where tool_name='CDEBrowser' and property in ('DOWNLOAD_LINK_WIKI', 'RELEASE_NOTES_WIKI')" +
-																						" or tool_name='CURATION' and property='URL'");
-			while (rs.next()) {
-				String property = rs.getString(1);
-				if (property.equalsIgnoreCase(ProcessConstants.DOWNLOAD_LINK_WIKI)) {
-					mySession.setAttribute(ProcessConstants.DOWNLOAD_LINK_WIKI, rs.getString(2));
-				} else if (property.equalsIgnoreCase(ProcessConstants.RELEASE_NOTES_WIKI)) {
-					mySession.setAttribute(ProcessConstants.RELEASE_NOTES_WIKI, rs.getString(2));
-				} else if (property.equalsIgnoreCase("URL")) {
-					mySession.setAttribute(ProcessConstants.CURATION_URL, rs.getString(2));
-				}
+			rs = dbUtil.executeQuery("select value from TOOL_OPTIONS_EXT where tool_name='CDEBrowser' and property='DOWNLOAD_LINK_WIKI'");
+			if (rs.next()) {
+				setResult(ProcessConstants.DOWNLOAD_LINK_WIKI, rs.getString(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -576,8 +564,6 @@ public class GetDataElements extends BasePersistingProcess {
 		finally {
 			if (rs!=null) try { rs.close(); } catch(Exception e){}
 		}
-		
-		
 	}
 
 	public DBUtil getDBUtil() throws Exception {
@@ -680,5 +666,4 @@ public class GetDataElements extends BasePersistingProcess {
 			log.debug("GetDataElements.java setValuesFromOldSearchBean oldDesb is null");
 		}
 	}
-
 }

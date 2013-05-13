@@ -228,7 +228,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
 				</tr>
 				<tr>
 					<td width="100%">
-						<img height=1 src="<%=contextPath%>/i/beigedot.gif" width="99%"
+						<img height=1 src="<%=contextPath%>/i/beigedot.gif" alt="beigodot" width="99%"
 							align=top border=0>
 					</td>
 				</tr>
@@ -530,7 +530,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
 				</tr>
 				<tr>
 					<td width="100%">
-						<img height=1 src="<%=contextPath%>/i/beigedot.gif" width="99%"
+						<img height=1 src="<%=contextPath%>/i/beigedot.gif" width="99%" alt="beigodot"
 							align=top border=0>
 					</td>
 				</tr>
@@ -832,7 +832,7 @@ function navigateOCR(ocId,ocrIndex,direction) {
 				</tr>
 				<tr>
 					<td width="100%">
-						<img height=1 src="<%=contextPath%>/i/beigedot.gif" width="99%"
+						<img height=1 src="<%=contextPath%>/i/beigedot.gif" width="99%" alt="beigodot"
 							align=top border=0>
 					</td>
 				</tr>

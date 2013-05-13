@@ -45,7 +45,7 @@
 			out.println("<td class=\"OraHeaderSubSub\" width=\"100%\">"+name+"</td>");
 			out.println("</tr>");
 			out.println("<tr>");
-			out.println("<td width=\"100%\"><img height=1 src=\"i/beigedot.gif\" width=\"99%\" align=top border=0> </td>");
+			out.println("<td width=\"100%\"><img height=1 src=\"i/beigedot.gif\"  alt=\"beigedot\" width=\"99%\" align=top border=0> </td>");
 			out.println("</tr>");
 			out.println("</table>");
 
@@ -110,7 +110,7 @@
 			out.println("<td class=\"OraHeaderSubSub\" width=\"100%\">"+name+"</td>");
 			out.println("</tr>");
 			out.println("<tr>");
-			out.println("<td width=\"100%\"><img height=1 src=\"i/beigedot.gif\" width=\"99%\" align=top border=0> </td>");
+			out.println("<td width=\"100%\"><img height=1 src=\"i/beigedot.gif\" alt=\"beigedot\" width=\"99%\" align=top border=0> </td>");
 			out.println("</tr>");
 			out.println("<tr><td>");
 			

@@ -77,7 +77,7 @@ function submitForm(methodName) {
         <tr >
          <td align="center">
             <a href="javascript:submitForm('<%=BrowserNavigationConstants.DONE_CDE_COMPARE%>')">
-                <html:img src='<%=urlPrefix+"/i/backButton.gif"%>' border="0" alt="No"/>
+                <html:img src='<%=urlPrefix+"/i/backButton.gif"%>' alt="back button" border="0" alt="No"/>
              </a> 
           </td>            
       </tr>      

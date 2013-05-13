@@ -12,7 +12,7 @@
 
     <td valign="top" align="left" nowrap>
 
-    <html:img page="/i/cde_form_builder_banner_full.gif" border="0" />
+    <html:img page="/i/cde_form_builder_banner_full.gif" alt="cde form builder banner" border="0" />
     </td>
 
     <td align=right valign="top" colspan=2 nowrap>

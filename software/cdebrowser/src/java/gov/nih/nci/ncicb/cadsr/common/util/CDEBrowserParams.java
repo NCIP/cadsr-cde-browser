@@ -474,7 +474,8 @@ public class CDEBrowserParams
 	}	
 	
 	public String getCdeBrowserHelpUrl() {
-		return (cdebrowserHelpUrl == null) ? "/help" : cdebrowserHelpUrl;
+//		return (cdebrowserHelpUrl == null) ? "/help" : cdebrowserHelpUrl;
+		return "https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide";
 	}
 
 	public void setCdeBrowserHelpUrl(String cdebrowserHelpUrl) {

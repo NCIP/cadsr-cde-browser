@@ -13,6 +13,6 @@ public interface CDEBrowserService
 	public Properties reloadApplicationProperties(Locale locale, String username);
 	public void populateDataElementAltNameDef (DataElement de);
 	public List getReferenceDocuments(String acIdseq);
-	public List getReferenceDocumentsForCSI(String cscsiIdseq);
+	//public List getReferenceDocumentsForCSI(String cscsiIdseq);
 	public Properties getApplicationProperties(Locale locale, String toolName);
 }

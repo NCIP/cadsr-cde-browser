@@ -24,7 +24,7 @@
 
     <td valign="top" align="left" nowrap>
 
-    <html:img page="/i/cde_browser_banner_full.gif" border="0" />
+    <html:img page="/i/cde_browser_banner_full.gif"  alt="cde browser banner full" border="0" />
     </td>
     <td align=right valign=top colspan=2 nowrap>
       <TABLE Cellpadding=0 Cellspacing=0 border=0 >

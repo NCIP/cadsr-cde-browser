@@ -163,10 +163,11 @@ public class GetExcelDownload extends BasePersistingProcess {
 		HSSFWorkbook wb = null;
 		FileOutputStream fileOut = null;
 		source = getStringInfo("src");
-		String requestIDs = getStringInfo("downloadIDs");
-		ExcelDownloadUtil excelUtility = new ExcelDownloadUtil();
 
 		try {
+			//String dataSource = getStringInfo("SBREXT_DSN");
+			//cn = dbUtil.getConnection(); -- Commented for JBoss deployment
+			//ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
 			dbUtil.getOracleConnectionFromContainer();  //getConnectionFromContainer(); went back to original call
 			cn = dbUtil.getConnection();
 			st = cn.createStatement();
@@ -185,22 +186,25 @@ public class GetExcelDownload extends BasePersistingProcess {
 					(HttpServletRequest) getInfoObject("HTTPRequest");
 
 				HttpSession userSession = myRequest.getSession(false);
-				String[] reqIDsArray = new String[0];
-				if (requestIDs != null && requestIDs.length() > 0) {
-					reqIDsArray = requestIDs.split(",");
-				}
+				CDECart cart =
+					(CDECart) userSession.getAttribute(CaDSRConstants.CDE_CART);
+				Collection items = cart.getDataElements();
+				CDECartItem item = null;
 				boolean firstOne = true;
 				StringBuffer whereBuffer = new StringBuffer("");
+				Iterator itemsIt = items.iterator();
 
-				for (String reqID: reqIDsArray) {
+				while (itemsIt.hasNext()) {
+					item = (CDECartItem) itemsIt.next();
+
 					if (firstOne) {
-						whereBuffer.append("'" + reqID + "'");
+						whereBuffer.append("'" + item.getId() + "'");
 
 						firstOne = false;
 					}
 					else
 					{
-						whereBuffer.append(",'" + reqID + "'");
+						whereBuffer.append(",'" + item.getId() + "'");
 					}
 				}
 
@@ -211,12 +215,28 @@ public class GetExcelDownload extends BasePersistingProcess {
 			}
 
 			String sqlStmt =
-				"SELECT * FROM sbrext.DE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
+				"SELECT * FROM DE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
 				" ( " + where + " )  ";
 
+			//+" ORDER BY PREFERRED_NAME ";
 			rs = st.executeQuery(sqlStmt);
 			List colInfo = this.initColumnInfo(source);
-			List<String> colHeaders = new ArrayList<String>();
+			wb = new HSSFWorkbook();
+
+			HSSFSheet sheet = wb.createSheet();
+			int rowNumber = 0;
+
+			HSSFCellStyle boldCellStyle = wb.createCellStyle();
+			HSSFFont font = wb.createFont();
+			font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+			boldCellStyle.setFont(font);
+			boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
+
+
+			// Create a row and put the column header in it
+			HSSFRow row = sheet.createRow(rowNumber++);
+			short col = 0;
+
 			for (int i = 0; i < colInfo.size(); i++) {
 				ColumnInfo currCol = (ColumnInfo) colInfo.get(i);
 
@@ -225,17 +245,26 @@ public class GetExcelDownload extends BasePersistingProcess {
 					nestedI++) {
 						ColumnInfo nestedCol =
 							(ColumnInfo) currCol.nestedColumns.get(nestedI);
-						colHeaders.add(currCol.displayName + nestedCol.displayName);
+
+						HSSFCell cell = row.createCell(col++);
+						cell.setCellValue(currCol.displayName + nestedCol.displayName);
+						cell.setCellStyle(boldCellStyle);
 					}
 				}
 				else {
-					colHeaders.add(currCol.displayName);
+					HSSFCell cell = row.createCell(col++);
+
+					cell.setCellValue(currCol.displayName);
+					cell.setCellStyle(boldCellStyle);
 				}
 			}
-			
-			excelUtility.init(colHeaders);
+
+			int maxRowNumber = 0;
 
 			while (rs.next()) {
+				row = sheet.createRow(rowNumber);
+				col = 0;
+
 				for (int i = 0; i < colInfo.size(); i++) {
 					ColumnInfo currCol = (ColumnInfo) colInfo.get(i);
 
@@ -246,33 +275,102 @@ public class GetExcelDownload extends BasePersistingProcess {
 							array = ((OracleResultSet) rs).getARRAY(currCol.rsColumnName);
 						}
 						else if (currCol.type.equalsIgnoreCase("StructArray")) {
-							STRUCT struct = ((OracleResultSet) rs).getSTRUCT(currCol.rsColumnName);
+							STRUCT struct =
+								((OracleResultSet) rs).getSTRUCT(currCol.rsColumnName);
 							Object[] valueStruct = struct.getAttributes();
 							array = (ARRAY) valueStruct[currCol.rsIndex];
 						}
 
-						List<Object[]> nestedData = getNestedData(array, currCol);
-						excelUtility.write(nestedData);
+						if ((array != null) && (array.length()!=0)) {
+							ResultSet nestedRs = array.getResultSet();
+
+							int nestedRowNumber = 0;  
+
+							while (nestedRs.next()) {
+								row = sheet.getRow(rowNumber + nestedRowNumber);
+
+								if (row == null) {
+									row = sheet.createRow(rowNumber + nestedRowNumber);
+
+									maxRowNumber = rowNumber + nestedRowNumber;
+								}
+
+								STRUCT valueStruct = (STRUCT) nestedRs.getObject(2);
+								Datum[] valueDatum = valueStruct.getOracleAttributes();
+
+								for (
+										short nestedI = 0; nestedI < currCol.nestedColumns.size();
+										nestedI++) {
+									ColumnInfo nestedCol =
+										(ColumnInfo) currCol.nestedColumns.get(nestedI);
+
+									HSSFCell cell = row.createCell((short) (col + nestedI));
+
+									if (nestedCol.rsSubIndex < 0) {
+										if (valueDatum[nestedCol.rsIndex] != null) {
+											if (nestedCol.type.equalsIgnoreCase("Number")) {
+												cell.setCellValue(
+														((NUMBER) valueDatum[nestedCol.rsIndex]).floatValue());
+											}else if (nestedCol.type.equalsIgnoreCase("Date")){  
+												cell.setCellValue(
+														((DATE) valueDatum[nestedCol.rsIndex]).dateValue().toString());                    	  
+											}else {                    	
+												cell.setCellValue(
+														((CHAR) valueDatum[nestedCol.rsIndex]).stringValue());
+											}
+										}
+									}
+									else {
+										STRUCT nestedStruct =
+											(STRUCT) valueDatum[nestedCol.rsIndex];
+
+										Datum[] nestedDatum = nestedStruct.getOracleAttributes();
+
+										if (nestedCol.type.equalsIgnoreCase("Number")) {
+											//changed the conversion from stringValue from floatValue 07/11/2007 to fix GF7664 Prerna
+											cell.setCellValue(
+													((NUMBER) nestedDatum[nestedCol.rsSubIndex]).stringValue());
+										}
+										else if (nestedCol.type.equalsIgnoreCase("String")) {
+											cell.setCellValue(
+													((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString());
+										}
+									}
+								}
+
+								nestedRowNumber++;
+							}
+						}
+
+						col += currCol.nestedColumns.size();
 					}
 					else if (currCol.type.equalsIgnoreCase("Struct")) {
-						STRUCT struct = ((OracleResultSet) rs).getSTRUCT(currCol.rsColumnName);
+						STRUCT struct =
+							((OracleResultSet) rs).getSTRUCT(currCol.rsColumnName);
 
 						Object[] valueStruct = struct.getAttributes();
-						excelUtility.write((String) valueStruct[currCol.rsIndex]);
+						HSSFCell cell = row.createCell(col++);
+						cell.setCellValue((String) valueStruct[currCol.rsIndex]);
 					}
 					else {
+						row = sheet.getRow(rowNumber);
+						HSSFCell cell = row.createCell(col++);
+						// Changed the way date is displayed in Excel in 4.0
 						String columnName = ((ColumnInfo) colInfo.get(i)).rsColumnName;											
 						if(currCol.type.equalsIgnoreCase("Date")){
-							excelUtility.write((rs.getDate(columnName) != null)?(rs.getDate(columnName)).toString():"");
+							cell.setCellValue((rs.getDate(columnName) != null)?(rs.getDate(columnName)).toString():"");
 						}else{						
-							excelUtility.write(rs.getString(columnName));
+							cell.setCellValue(rs.getString(columnName));
 						}
 					}
 				}
-				excelUtility.newRecord(1);
+				if (maxRowNumber > rowNumber)
+					rowNumber = maxRowNumber + 2;
+				else 
+					rowNumber += 2;
 			}
 			fileOut = new FileOutputStream(filename);
-			excelUtility.print(fileOut);
+			wb.write(fileOut);
 		}
 		catch (Exception ex) {
 			log.error("Exception caught in Generate Excel File", ex);			
@@ -298,57 +396,6 @@ public class GetExcelDownload extends BasePersistingProcess {
 				log.debug("Unable to perform clean up due to the following error ", e);
 			}
 		}
-	}
-	
-	private List<Object[]> getNestedData(ARRAY array, ColumnInfo currCol) throws Exception {
-		List<Object[]> nestedRecs = new ArrayList<Object[]>();
-		
-		if ((array != null) && (array.length()!=0)) {
-			ResultSet nestedRs = array.getResultSet();
-
-			while (nestedRs.next()) {
-				STRUCT valueStruct = (STRUCT) nestedRs.getObject(2);
-				Datum[] valueDatum = valueStruct.getOracleAttributes();
-
-				Object[] rowData = new Object[currCol.nestedColumns.size()];
-				for (short nestedI = 0; nestedI < currCol.nestedColumns.size(); nestedI++) {
-					
-					ColumnInfo nestedCol = (ColumnInfo) currCol.nestedColumns.get(nestedI);
-					if (nestedCol.rsSubIndex < 0) {
-						if (valueDatum[nestedCol.rsIndex] != null) {
-							if (nestedCol.type.equalsIgnoreCase("Number")) {
-								rowData[nestedI] = ((NUMBER) valueDatum[nestedCol.rsIndex]).stringValue();
-							}else if (nestedCol.type.equalsIgnoreCase("Date")){  
-								rowData[nestedI] = (((DATE) valueDatum[nestedCol.rsIndex]).dateValue().toString());
-							}else if (nestedCol.type.equalsIgnoreCase("Array")){ 
-								ARRAY nestedArray = (ARRAY)valueDatum[nestedCol.rsIndex];
-								rowData[nestedI] = getNestedData(nestedArray, nestedCol);
-							}else {                    	
-								rowData[nestedI] = (((CHAR) valueDatum[nestedCol.rsIndex]).stringValue());
-							}
-						}else {
-							rowData[nestedI] = "";
-						}
-					}
-					else {
-						STRUCT nestedStruct = (STRUCT) valueDatum[nestedCol.rsIndex];
-						Datum[] nestedDatum = nestedStruct.getOracleAttributes();
-
-						if (nestedCol.type.equalsIgnoreCase("Number")) {							
-							rowData[nestedI] = ((NUMBER) nestedDatum[nestedCol.rsSubIndex]).stringValue();
-						}
-						else if (nestedCol.type.equalsIgnoreCase("String")) {
-							rowData[nestedI] = ((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString();
-						}
-					}
-				}
-				nestedRecs.add(rowData);
-			}
-		} else {
-			nestedRecs.add(new Object[currCol.nestedColumns.size()]);
-		}
-		
-		return nestedRecs;
 	}
 
 	private List initColumnInfo(String source) {
@@ -540,13 +587,6 @@ public class GetExcelDownload extends BasePersistingProcess {
 			validValueInfo.add(new ColumnInfo(5, "PVENDDATE","PV End Date", "Date"));
 			validValueInfo.add(new ColumnInfo(6, "VMPUBLICID", "Value Meaning PublicID", "Number"));
 			validValueInfo.add(new ColumnInfo(7, "VMVERSION", "Value Meaning Version", "Number"));
-			
-			ColumnInfo vmDefsInfo = new ColumnInfo(8, "VM_ALT_DEFS", "Value Meaning Alternate Definitions", "Array");
-			List defsInfoList = new ArrayList();
-			defsInfoList.add(new ColumnInfo(0, "Definition", "Value Meanings Definition", "String"));
-			vmDefsInfo.nestedColumns = defsInfoList;
-			
-			validValueInfo.add(vmDefsInfo);
 			//	Added for 4.0	*/
 		}else {
 			validValueInfo.add(new ColumnInfo(1, "Value Meaning"));

@@ -4,7 +4,7 @@
 
     <td align="left" nowrap>
 
-    <html:img page="/i/objectClassBanner.gif" border="0" />
+    <html:img page="/i/objectClassBanner.gif" alt="object class banner" border="0" />
     </td>
 
     <td align=right valign=top colspan=2 nowrap>

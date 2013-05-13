@@ -79,7 +79,7 @@ function setDefaults() {
     </logic:equal>
   </tr>  
   <tr>
-    <td align="center" colspan="2" ><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+    <td align="center" colspan="2" ><html:img page="/i/beigedot.gif" alt="beigedot" border="0"  height="1" width="99%" align="top" /> </td>
    </tr> 
  </table> 
  
@@ -134,7 +134,7 @@ function setDefaults() {
   </table>  
  <table width="100%">
   <tr>
-    <td align="center" ><html:img page="/i/beigedot.gif" border="0"  height="1" width="99%" align="top" /> </td>
+    <td align="center" ><html:img page="/i/beigedot.gif" alt="beigedot" border="0"  height="1" width="99%" align="top" /> </td>
    </tr> 
  </table>             
     <%@ include file="/jsp/cdebrowser/cdeSearchPreferences_inc.jsp"%>

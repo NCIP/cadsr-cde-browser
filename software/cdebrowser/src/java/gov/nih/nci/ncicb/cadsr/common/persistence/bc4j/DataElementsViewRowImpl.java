@@ -498,9 +498,6 @@ public class DataElementsViewRowImpl extends ViewRowImpl {
       ValueDomain vd =
         (ValueDomain) new BC4JValueDomainTransferObject(
           (ValueDomainsViewRowImpl) row);
-      
-      List designations = getDesignations(getVdIdseq());
-      vd.setDesignations(designations);
 
       return vd;
     } // end try
@@ -623,9 +620,6 @@ public class DataElementsViewRowImpl extends ViewRowImpl {
         (DataElementConcept) new BC4JDataElementConceptTransferObject(
           (DataElementConceptsViewRowImpl) row);
 
-      List designations = getDesignations(getDecIdseq());
-      dec.setDesignations(designations);
-      
       return dec;
     } // end try
     catch (Exception e) {
@@ -633,24 +627,6 @@ public class DataElementsViewRowImpl extends ViewRowImpl {
 
       return null;
     }
-  }
-  
-  private List getDesignations(String idSeq) throws Exception {
-	  List designations = new ArrayList();
-	  oracle.jbo.ViewObject desigView =
-          getViewObject().getApplicationModule().findViewObject(
-            "DesignationsView");
-      desigView.setWhereClause("AC_IDSEQ='" +idSeq+"'");
-      desigView.executeQuery();
-      
-      while (desigView.hasNext()) {
-    	  DesignationsViewRowImpl desig = (DesignationsViewRowImpl)desigView.next();
-    	  BC4JDesignationTransferObject to = new BC4JDesignationTransferObject(desig);
-    	  designations.add(to);
-      }
-      desigView.closeRowSet();
-      
-      return designations;
   }
 
   public List getReferenceDocs() {

@@ -17,7 +17,7 @@
 
     <td align="left" nowrap>
 
-    <img src="<%=request.getContextPath()%>/i/graphic6.gif" border=0>
+    <img src="<%=request.getContextPath()%>/i/graphic6.gif" alt="graphic 6" border=0>
     </td>
 
     <td align=right valign=top colspan=2 nowrap>
@@ -25,9 +25,8 @@
         <TR>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%="formCDECartAction.do?method=displayCDECart"%>" TARGET="_top"><IMG SRC="<%=request.getContextPath()%>/i/cde_cart.gif" alt="CDE Cart" border=0 ></A><br><font color=brown face=verdana size=1>&nbsp;CDE &nbsp;Cart</font></TD>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%="/jsp/cdeBrowse.jsp?PageId=DataElementsGroup"%>" TARGET="_top"><IMG SRC="<%=request.getContextPath()%>/i/icon_home.gif" alt="Home" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;Home&nbsp;</font></TD>
+          <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=params.getFormBuilderUrl()+"/FormBuilder/formSearchAction.do"%>" TARGET="_top"><IMG SRC="<%=request.getContextPath()%>/i/formicon.gif" alt="FormBuilder" border=0  width=32 height=32></A><br><font color=brown face=verdana size=1>&nbsp;FormBuilder&nbsp;</font></TD>
           <TD valign="TOP" align="CENTER" width="1%" colspan=1><A HREF="<%=params.getCdeBrowserHelpUrl()%>" target="_blank"><html:img page="<%=request.getContextPath()%>/i/icon_help.gif" alt="Task Help" border="0"  width="32" height="32" /></A><br><font color=brown face=verdana size=1>&nbsp;Help&nbsp;</font></TD>
-		<TD valign="TOP" align="CENTER" width="1%" colspan=1><a href="#" ><font color=brown face=verdana size=1>&nbsp;What's New&nbsp;</font></a></TD>
-		<TD valign="TOP" align="CENTER" width="1%" colspan=1><a href="#" ><font color=brown face=verdana size=1>&nbsp;What's New&nbsp;</font></a></TD>
           <logic:present name="nciUser">
             <TD valign="TOP" align="CENTER" width="1%" colspan=1><html:link page="/logout?FirstTimer=0" target="_top"><html:img page="<%=request.getContextPath()%>/i/logout.gif" alt="Logout" border="0"  width="32" height="32" /></html:link><br><font color=brown face=verdana size=1>&nbsp;Logout&nbsp;</font></TD>
           </logic:present>
@@ -41,32 +40,40 @@
  </table>
   <table valign="top">
    <tr>
-    <td  width="100%" >
+    <td  width="90%" >
     <TABLE align ="left" width="100%" Cellpadding=0 Cellspacing=1 border=0 >
           <tr>
            <td  valign="bottom" align="center" width="15%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
-               <a href="<%=params.getAdminToolUrl()%>" target="_blank" >Admin&nbsp;</a> </span></td>
+               <a href="<%=params.getAdminToolUrl()%>" target="_blank" >Admin Tool&nbsp;</a> </span></td>
 
            <td  align="left" width="15%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
                 <a href="<%=params.getCurationToolUrl()%>" target="_blank">
-                      Curation&nbsp;</a></span>
+                      Curation Tool&nbsp;</a></span>
             </td>
            <td  align="center"  width="22%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
                 <a href="<%=params.getNciMetathesaurusUrl()%>" target="_blank" >
-                      NCI Meta&nbsp;</a></span>
+                      NCI Metathesaurus&nbsp;</a></span>
             </td>
            <td  align="center" width="25%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
                 <a href="<%=params.getNciTerminologyServerUrl()%>" target="_blank">
-                      NCI Terms&nbsp;</a></span>
+                      NCI Terminology Server&nbsp;</a></span>
             </td>
            <td  align="center" width="15%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
                 <a href="<%=params.getSentinelToolUrl()%>" target="_blank">
-                      Sentinel&nbsp;</a></span>
+                      Sentinel Tool&nbsp;</a></span>
             </td>            
            <td  valign="bottom" align="center" width="10%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
-               <a href="<%=params.getUmlBrowserUrl()%>" target="_blank" >UML Browser&nbsp;</a> </span></td>
-			<td  valign="bottom" align="center" width="10%" height="10" nowrap><span style="font-size: 9pt; font-family: Arial">
-               <a href="<%=params.getFormBuilderUrl()+"/FormBuilder/formSearchAction.do"%>" target="_blank" >Form Builder</a> </span></td>
+               <a href="<%=params.getUmlBrowserUrl()%>" target="_blank" >UML Model Browser&nbsp;</a> </span></td>
+        </tr>
+      </table>
+     </td>
+    <td  width="10%" >
+    <TABLE align ="right" width="100%" Cellpadding=0 Cellspacing=0 border=0 >
+     <tr>
+           <td  align="right"   height="10" nowrap><span style="font-size: 10.0pt; font-family: Arial">
+                <A HREF="<%=params.getCdeBrowserHelpUrl()%>" target="_blank">
+                      What's new</a>&nbsp;&nbsp;</span>
+            </td>
         </tr>
       </table>
      </td>

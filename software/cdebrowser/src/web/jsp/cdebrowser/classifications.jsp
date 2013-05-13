@@ -92,7 +92,7 @@ function listChanged(urlInfo) {
 				</tr>
 				<tr>
 					<td width="100%">
-						<img height=1 src="i/beigedot.gif" width="99%" align=top border=0>
+						<img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0>
 					</td>
 				</tr>
 			</table>
@@ -167,7 +167,7 @@ function listChanged(urlInfo) {
 				</tr>
 				<tr>
 					<td>
-						<img height=1 src="i/beigedot.gif" width="99%" align=top border=0>
+						<img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0>
 					</td>
 				</tr>
 				<tr>
@@ -199,10 +199,10 @@ function listChanged(urlInfo) {
 					</th>
 					<%-- <th>CS* Version</th> changed for 4.0--%>
 					<th>
-						CS* Workflow Status
+						CSI* Name
 					</th>
 					<th>
-						CSI* Name
+						CSI* Type
 					</th>
 					<th>
 						CSI* Public ID/Version
@@ -228,12 +228,10 @@ function listChanged(urlInfo) {
 						<%=classification.getClassSchemePublicId()
 							+ "v" + classification.getCsVersion()%>
 					</td>
-					<td class="OraFieldText"><%=classification.getClassSchemeWfStatus()%>
+					<%-- <td class="OraFieldText"><%=classification.getCsVersion()%> </td> changed for 4.0--%>
+					<td class="OraFieldText"><%=classification.getClassSchemeItemName()%>
 					</td>
-					<td class="OraFieldText">
-						<label title="<%= classification.getClassSchemeItemType() %>" >
-							<%=classification.getClassSchemeItemName()%>
-						</label>
+					<td class="OraFieldText"><%=classification.getClassSchemeItemType()%>
 					</td>
 					<td class="OraFieldText"><%=classification.getClassSchemeItemId() + "v"
 							+ classification.getClassSchemeItemVersion()%>
@@ -261,7 +259,7 @@ function listChanged(urlInfo) {
 				</tr>
 				<tr>
 					<td>
-						<img height=1 src="i/beigedot.gif" width="99%" align=top border=0>
+						<img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0>
 					</td>
 				</tr>
 				<tr>
@@ -382,7 +380,7 @@ function listChanged(urlInfo) {
 				</tr>
 				<tr>
 					<td>
-						<img height=1 src="i/beigedot.gif" width="99%" align=top border=0>
+						<img height=1 src="i/beigedot.gif" alt="beigedot" width="99%" align=top border=0>
 					</td>
 				</tr>
 				<tr>
@@ -439,8 +437,9 @@ function listChanged(urlInfo) {
 						<%
 							}
 						%>
-					</td>
+					
 					<td class="OraFieldText">
+					</td>
 					<%
 						if (refDoc.getURL() != null) {
 					%>

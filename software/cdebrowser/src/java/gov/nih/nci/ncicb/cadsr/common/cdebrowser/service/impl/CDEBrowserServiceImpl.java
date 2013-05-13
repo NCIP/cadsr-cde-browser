@@ -2,38 +2,29 @@ package gov.nih.nci.ncicb.cadsr.common.cdebrowser.service.impl;
 
 import gov.nih.nci.cadsr.domain.ClassSchemeClassSchemeItem;
 import gov.nih.nci.cadsr.domain.ClassificationScheme;
-import gov.nih.nci.cadsr.domain.ClassificationSchemeItem;
-import gov.nih.nci.cadsr.domain.Context;
 import gov.nih.nci.cadsr.domain.DataElement;
-import gov.nih.nci.cadsr.domain.DataElementConcept;
 import gov.nih.nci.cadsr.domain.Definition;
 import gov.nih.nci.cadsr.domain.DefinitionClassSchemeItem;
 import gov.nih.nci.cadsr.domain.DesignationClassSchemeItem;
-import gov.nih.nci.cadsr.domain.ReferenceDocument;
-import gov.nih.nci.cadsr.domain.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.service.CDEBrowserService;
 import gov.nih.nci.ncicb.cadsr.common.dto.CSITransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.ContextTransferObject;
-import gov.nih.nci.ncicb.cadsr.common.dto.DefinitionTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.AbstractDAOFactory;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.UtilDAO;
 import gov.nih.nci.ncicb.cadsr.common.persistence.dao.domain.AbstractDomainObjectsDAOFactory;
 import gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem;
 import gov.nih.nci.ncicb.cadsr.common.resource.Designation;
 import gov.nih.nci.ncicb.cadsr.common.resource.impl.DefinitionImpl;
-import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 import gov.nih.nci.system.applicationservice.ApplicationException;
 import gov.nih.nci.system.applicationservice.ApplicationService;
 import gov.nih.nci.system.client.ApplicationServiceProvider;
+import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Properties;
 
 
@@ -120,19 +111,26 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 
 		DataElement deExample = new DataElement();      
 		deExample.setPublicID(new Long(de.getCDEId()));
-		deExample.setVersion(de.getVersion()); //fix for GF 22283 & 31085
 
 		List deList = null;
 
 		try { 
 			this.getCadsrService();
 			deList = appService.search(deExample.getClass(), deExample);
-			deList.get(0); // test to make sure we didn't get an empty or a null list back. Throws exception if we did
 		} catch(Exception e) {
 			throw new RuntimeException(e);
 		}
 		
-		DataElement dePop = (DataElement)deList.get(0);
+		//Code for the GF 22283 
+		DataElement dePop = new DataElement();
+		for (Object deObj: deList){
+			DataElement dePopObj = (DataElement)deObj;
+			if("Yes".equalsIgnoreCase(dePopObj.getLatestVersionIndicator())){
+				dePop = dePopObj;				
+			}			
+		}		
+		//DataElement dePop = (DataElement)deList.get(0);
+		//End of Code for GF 22283		
 	
 		for (gov.nih.nci.cadsr.domain.Designation altName : dePop.getDesignationCollection()) {
 			//find the designation that match the altName
@@ -179,76 +177,6 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 				de.setDefinitions(new ArrayList());
 			de.getDefinitions().add(definition);
 		}
-		
-		DataElementConcept dec = dePop.getDataElementConcept();
-		if (dec!=null && de.getDataElementConcept() != null) {
-			Collection<Definition> decDefs = dec.getDefinitionCollection();
-			if (decDefs != null) {
-				Iterator<Definition> decDefsIter = decDefs.iterator();
-				List<gov.nih.nci.ncicb.cadsr.common.resource.Definition> bc4jDefs = new ArrayList<gov.nih.nci.ncicb.cadsr.common.resource.Definition>();
-				while (decDefsIter.hasNext()) {
-					DefinitionTransferObject dto = new DefinitionTransferObject();
-					Definition def = decDefsIter.next();
-					dto.setDefinition(def.getText());
-					dto.setType(def.getType());
-					
-					bc4jDefs.add(dto);
-				}
-				
-				de.getDataElementConcept().setDefinitions(bc4jDefs);
-			}
-		}
-		
-		ValueDomain vd = dePop.getValueDomain();
-		if (vd!=null && de.getValueDomain() != null) {
-			Collection<Definition> vdDefs = vd.getDefinitionCollection();
-			if (vdDefs != null) {
-				Iterator<Definition> vdDefsIter = vdDefs.iterator();
-				List<gov.nih.nci.ncicb.cadsr.common.resource.Definition> bc4jDefs = new ArrayList<gov.nih.nci.ncicb.cadsr.common.resource.Definition>();
-				while (vdDefsIter.hasNext()) {
-					DefinitionTransferObject dto = new DefinitionTransferObject();
-					Definition def = vdDefsIter.next();
-					dto.setDefinition(def.getText());
-					dto.setType(def.getType());
-					
-					Context ctx = def.getContext();
-					gov.nih.nci.ncicb.cadsr.common.resource.Context bc4jCtx = new gov.nih.nci.ncicb.cadsr.common.dto.bc4j.BC4JContextTransferObject();
-					bc4jCtx.setName(ctx.getName());
-					bc4jCtx.setDescription(ctx.getDescription());
-					
-					dto.setContext(bc4jCtx);
-					
-					List<gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem> bc4jCsis = new ArrayList<gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem>();
-					Collection<DefinitionClassSchemeItem> defCsis = def.getDefinitionClassSchemeItemCollection();
-					if (defCsis != null) {
-						Iterator<DefinitionClassSchemeItem> defCsiIter = defCsis.iterator();
-						while (defCsiIter.hasNext()) {
-							DefinitionClassSchemeItem defCsi = defCsiIter.next();
-							ClassificationSchemeItem csi = defCsi.getClassSchemeClassSchemeItem().getClassificationSchemeItem();
-							gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem bc4jCsi = new gov.nih.nci.ncicb.cadsr.common.dto.CSITransferObject();
-							bc4jCsi.setClassSchemeItemName(csi.getLongName());
-							bc4jCsi.setClassSchemeItemType(csi.getType());
-							bc4jCsi.setCsiDescription(csi.getPreferredDefinition());
-							bc4jCsi.setCsiIdseq(csi.getId());
-							bc4jCsi.setCsiId(csi.getPublicID().intValue());
-							bc4jCsi.setCsiVersion(csi.getVersion());
-							
-							ClassificationScheme cs = defCsi.getClassSchemeClassSchemeItem().getClassificationScheme();
-							bc4jCsi.setClassSchemeLongName(cs.getLongName());
-							bc4jCsi.setClassSchemeType(cs.getType());
-							bc4jCsi.setClassSchemeDefinition(cs.getPreferredDefinition());
-							bc4jCsi.setClassSchemePrefName(cs.getPreferredName());
-							bc4jCsi.setCsIdseq(cs.getId());
-							bc4jCsi.setCsVersion(cs.getVersion());
-						}
-					}
-					dto.setCsCsis(bc4jCsis);
-					bc4jDefs.add(dto);
-				}
-				
-				de.getValueDomain().setDefinitions(bc4jDefs);
-			}
-		}
 
 	}
 
@@ -268,7 +196,6 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 		cscsi.setCsCsiIdseq(cscsiIn.getId());
 		cscsi.setClassSchemeLongName(cscsiIn.getClassificationScheme().getLongName());
 		cscsi.setClassSchemePrefName(cscsiIn.getClassificationScheme().getPreferredName());   
-		cscsi.setClassSchemeWfStatus(cscsiIn.getClassificationScheme().getWorkflowStatusName());
 		cscsi.setClassSchemeDefinition(cscsiIn.getClassificationScheme().getPreferredDefinition());
 		cscsi.setClassSchemeItemName(cscsiIn.getClassificationSchemeItem().getLongName());
 		cscsi.setClassSchemeItemType(cscsiIn.getClassificationSchemeItem().getType());
@@ -291,36 +218,12 @@ public class CDEBrowserServiceImpl implements CDEBrowserService
 		return new ArrayList(cs.getReferenceDocumentCollection());
 	}
 
-	 public List getReferenceDocumentsForCSI(String csiIdseq){
-		ClassificationSchemeItem csi = new ClassificationSchemeItem();
-		csi.setId(csiIdseq);
-		List csiList;
-		try {
-			this.getCadsrService();
-			csiList = appService.search(csi.getClass(), csi);
-		} catch (ApplicationException e) {
-			throw new RuntimeException(e);
-		}
-		csi = (ClassificationSchemeItem)csiList.get(0);
+	/* public List getReferenceDocumentsForCSI(String csiIdseq){
+    ClassificationSchemeItemDAO dao = domainObjectsDaoFactory.getClassificationSchemeItemDAO();
+    ClassificationSchemeItemBean csi = new ClassificationSchemeItemBean();
+    csi.setId(csiIdseq);
+    List refDocs = dao.getReferenceDocuments(csi);
+    return refDocs;
 
-		Collection<ReferenceDocument> rds = csi.getReferenceDocumentCollection();
-		return getDistinctRefDocs(rds); //account for bug in cadsr api that retrieves the same csi rd twice
-	 }
-	 
-	 private List<ReferenceDocument> getDistinctRefDocs(Collection<ReferenceDocument> rds) {
-		 List<ReferenceDocument> rdsList = new ArrayList<ReferenceDocument>();
-		 if (rds != null && !rds.isEmpty()) {
-			 Iterator<ReferenceDocument> rdsIter = rds.iterator();
-				Map<String, ReferenceDocument> rdsMap = new HashMap<String, ReferenceDocument>();
-				while(rdsIter.hasNext()) {
-					ReferenceDocument rd = rdsIter.next();
-					String key = rd.getName()+rd.getType();
-					if (!rdsMap.containsKey(key)) {
-						rdsMap.put(key, rd);
-					}
-				}
-				rdsList.addAll(rdsMap.values());
-		 }
-		 return rdsList;
-	 }
+ }*/
 }

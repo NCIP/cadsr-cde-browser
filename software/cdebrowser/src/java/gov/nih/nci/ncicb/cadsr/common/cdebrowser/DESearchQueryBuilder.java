@@ -81,9 +81,6 @@ public class DESearchQueryBuilder extends Object {
     String conceptName = "";
     String conceptCode = "";
     String vdType = "";
-    String cdeType = "";
-    String deDerivWhere = "";
-    String deDerivFrom = "";
     StringBuffer whereBuffer = new StringBuffer();
 
     // release 3.0 updated to add display order for registration status
@@ -189,8 +186,6 @@ public class DESearchQueryBuilder extends Object {
         StringUtils.replaceNull(request.getParameter("jspConceptCode"));
       vdType =
           StringUtils.replaceNull(request.getParameter("jspVDType"));
-      cdeType =
-          StringUtils.replaceNull(request.getParameter("jspCDEType"));
 
       if (searchStr6.equals("Yes")) {
         latestWhere = " and de.latest_version_ind = 'Yes' ";
@@ -231,7 +226,7 @@ public class DESearchQueryBuilder extends Object {
       if (doRegStatusSearch){
         regStatusWhere = this.buildRegStatusWhereClause(searchStr7);
       }
-
+      //if (!getSearchStr(3).equals("")){
       if (!searchStr3.equals("")){
         String newCdeStr = StringReplace.strReplace(searchStr3,"*","%");
         cdeIdWhere = " and " + buildSearchString("to_char(de.cde_id) like 'SRCSTR'",
@@ -279,11 +274,6 @@ public class DESearchQueryBuilder extends Object {
       // release 3.0, TT1235, 1236
       // check to see if a Where clause for object class and property needs to be added
       String deConceptWhere = this.buildDEConceptWhere(objectClass, property);
-      
-      if (!cdeType.equals("")) {
-    	  deDerivWhere = " and comp_de.P_DE_IDSEQ = de.de_idseq";
-    	  deDerivFrom = ", sbr.COMPLEX_DATA_ELEMENTS_VIEW comp_de ";
-      }
 
       whereBuffer.append(wkFlowWhere);
       whereBuffer.append(regStatusWhere);
@@ -297,7 +287,6 @@ public class DESearchQueryBuilder extends Object {
       whereBuffer.append(altNameWhere);
       whereBuffer.append(conceptWhere);
       whereBuffer.append(deConceptWhere);
-      whereBuffer.append(deDerivWhere);
     }
 
     if (treeConteIdSeq != null) {
@@ -318,7 +307,6 @@ public class DESearchQueryBuilder extends Object {
                             fromClause+
                             registrationFrom+
                             wkFlowFrom+
-                            deDerivFrom+
                      //" where de.deleted_ind = 'No' "+  [don't need to use this since we are using view)
                      " where de.de_idseq = rd.ac_idseq (+) and rd.dctl_name (+) = 'Preferred Question Text'" +
                      registrationExcludeWhere + workflowExcludeWhere+contextExludeWhere +
@@ -328,8 +316,7 @@ public class DESearchQueryBuilder extends Object {
                      //" and de.de_idseq = dc.ac_idseq (+) "+
                      //" and vd.vd_idseq = de.vd_idseq " +
                      //" and dec.dec_idseq = de.dec_idseq " +
-                     csiWhere + whereClause + registrationWhere + workFlowWhere+
-                     deDerivWhere;
+                     csiWhere + whereClause + registrationWhere + workFlowWhere;
 
       }
       else if (treeParamType.equals("CONTEXT")){
@@ -780,13 +767,6 @@ public class DESearchQueryBuilder extends Object {
        docTextSearchWhere =
          buildSearchString("upper (nvl(rd1.doc_text,'%')) like upper ('SRCSTR') ", newSearchStr, searchMode);
      }
-     
-     Pattern idPattern = Pattern.compile("%*[0-9]*%*");
-     Matcher idMatcher = idPattern.matcher(newSearchStr);
-     String publicIdWhere = null;
-     if (idMatcher.matches()) {
-    	 publicIdWhere = buildSearchString("to_char(de.cde_id) like 'SRCSTR'", newSearchStr, searchMode);
-     }
 
      // compose the search for data elements table
      searchWhere = longNameWhere;
@@ -796,12 +776,6 @@ public class DESearchQueryBuilder extends Object {
      } else if (shortNameWhere !=null) {
         searchWhere = searchWhere + " OR " + shortNameWhere;
      }
-     
-     if (searchWhere == null) {
-         searchWhere = publicIdWhere;
-      } else if (publicIdWhere !=null) {
-         searchWhere = searchWhere + " OR " + publicIdWhere;
-      }
 
      if (searchWhere == null && docTextSearchWhere != null ) {
         searchWhere = " and " + docTextSearchWhere;

@@ -8,7 +8,6 @@
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.CaDSRConstants"%>
 <%@ page import="gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserNavigationConstants"%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
-<%@ page import="gov.nih.nci.ncicb.cadsr.common.ProcessConstants"%>
 
 <HTML>
 	<HEAD>
@@ -17,8 +16,6 @@
 		<LINK REL=STYLESHEET TYPE="text/css"
 			HREF="<%=request.getContextPath()%>/css/blaf.css">
 		<SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=request.getContextPath()%>/js/checkbox.js"></SCRIPT>
-		<script type="text/javascript" src="/CDEBrowser/js/dojo/dojo/dojo.js" djConfig="parseOnLoad: true">
-    </script>
 		<SCRIPT LANGUAGE="JavaScript">
 
 var sItems = "selectedItems"; 
@@ -79,106 +76,18 @@ function retrieveSavedItems() {
   document.location.href = "formCDECartAction.do?method=displayCDECart";
 }
 
-function submitCustomizedDownload() {
-	var srchID = getAllCheckedCSVValues();
-	
-	if (srchID != null && srchID != '') {
-		document.customDownloadForm.SearchID.value = srchID;
-		document.customDownloadForm.submit();
-	}	
-}
 
-function getAllCheckedCSVValues() {
-	
-	var ids = getAllCheckedIdSeqs();
-	if (ids == null || ids=='') {
-		ids = getAllIdSeqs();
-	}
-
-	if (ids == null || ids=='') {
-		alert('Please add at least one CDE to the cart');
-	}
-	
-	return ids;
-}
-
-function getAllCheckedIdSeqs() {
-	var selectedItemValues = getCheckedIdSeqs("selectedItems");
-	var selectedSaveItemValues = getCheckedIdSeqs("selectedSaveItems");
-	var selectedDeleteItemValues = getCheckedIdSeqs("selectedDeleteItems");
-
-	var srchID = selectedItemValues + selectedSaveItemValues + selectedDeleteItemValues;
-	if (srchID.length > 0) srchID = srchID.substring(0, srchID.length-1);
-
-	return srchID;
-}
-
-function getAllIdSeqs() {
-	var itemValues = getIdSeqs("selectedItems");
-	var saveItemValues = getIdSeqs("selectedSaveItems");
-	var deleteItemValues = getIdSeqs("selectedDeleteItems");
-
-	var srchID = itemValues + saveItemValues + deleteItemValues;
-	if (srchID.length > 0) srchID = srchID.substring(0, srchID.length-1);
-
-	return srchID;
-}
-
-function getCheckedIdSeqs(itemName) {
-	var elems = document.getElementsByName(itemName);
-	var srchID = '';
-	if (elems != null) {
-		for (i=0;i<elems.length;i++) {
-			if (elems[i].checked) srchID += elems[i].value+',';
-		}
-	}
-
-	return srchID;
-}
-
-function getIdSeqs(itemName) {
-	var elems = document.getElementsByName(itemName);
-	var srchID = '';
-	if (elems != null) {
-		for (i=0;i<elems.length;i++) {
-			srchID += elems[i].value+',';
-		}
-	}
-
-	return srchID;
-}
-
-function submitExcelDownload() {
-	var url = "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCart";
-	submitDownload(url);
-}
-
-function submitPriorExcelDownload() {
-	var url = "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCartPrior";
-	submitDownload(url);
-}
-
-function submitXMLDownload() {
-	var url = "/jsp/cdebrowser/downloadXMLPage.jsp?src=cdeCart";
-	submitDownload(url);
-}
-
-function submitDownload(url) {
-	var srchID = getAllCheckedCSVValues();
-	if (srchID != null && srchID != '') {
-		var contextPath = '<%= StringEscapeUtils.escapeHtml(request.getContextPath()) %>';
-		document.downloadForm.action = contextPath+url;
-		document.downloadForm.downloadIDs.value = srchID;
-		document.downloadForm.submit();
-	}
-}
 
 </SCRIPT>
 	</HEAD>
 	<BODY bgcolor="#ffffff" topmargin="0">
 
 		<%
+			String contextPath = StringEscapeUtils.escapeHtml(request.getContextPath());
 			String urlPrefix = "";
+			String downloadXMLURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadXMLPage.jsp?src=cdeCart','xmlWin',500,200)";
+			String downloadExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCart','excelWin',500,200)";
+			String downloadPriorExcelURL = "javascript:fileDownloadWin('"+ contextPath+ "/jsp/cdebrowser/downloadExcelPage.jsp?src=cdeCartPrior','excelWin',500,200)";
 			CDEBrowserParams params = CDEBrowserParams.getInstance();
 		%>
 		<jsp:include page="/jsp/common/common_cdebrowser_header_jsp_inc.jsp"
@@ -217,24 +126,19 @@ function submitDownload(url) {
 					<table cellpadding="0" cellspacing="0" width="80%" align="center">
 						<tr>
 							<td nowrap>
-								<b><a href="#" onClick="javascript: submitPriorExcelDownload();"
+								<b><a href="<%=downloadPriorExcelURL%>"
 									title="3.2.0.1 Version">[Download Data Elements to Prior
 										Excel]</a> </b> &nbsp;&nbsp;
-								<b><a href="javascript: submitExcelDownload();"
+								<b><a href="<%=downloadExcelURL%>"
 									title="3.2.0.2 Includes new content: Value Meaning Description in column BV, Value Meaning Concept(s) in column BW, Value Domain Representation in columns BI-BS.">
 										[Download Data Elements to Excel]</a> </b> &nbsp;&nbsp;
-								<b><a href="#" onClick="javascript: submitXMLDownload();">[Download Data Elements
+								<b><a href="<%=downloadXMLURL%>">[Download Data Elements
 										as XML]</a> </b> &nbsp;&nbsp;
 							</td>
 						</tr>
 						<tr>
-							<td>
-								<a href="#" onClick="javascript:submitCustomizedDownload();" ><b>Custom Download</b></a>
-							</td>
-						</tr>
-						<tr>
 							<td width="100%" nowrap>
-								<img height=2 src="i/beigedot.gif" width="99%" align=top
+								<img height=2 src="i/beigedot.gif" alt="beige dot" width="99%" align=top
 									border=0>
 							</td>
 						</tr>
@@ -302,7 +206,7 @@ function submitDownload(url) {
 								<tr>
 									<td>
 										<a href="javascript:retrieveSavedItems()"> <html:img
-												src='<%=request.getContextPath() + "/i/retrieve.gif"%>' border="0"
+												src='<%=request.getContextPath() + "/i/retrieve.gif"%>' alt="retrieve" border="0"
 												alt="Retrieve Saved Data Elements" /> </a>
 									</td>
 									<td>
@@ -417,15 +321,6 @@ function submitDownload(url) {
 						</tr>
 					</table>
 		</html:form>
-
-		<form name="customDownloadForm" action="<%= (String)session.getAttribute(ProcessConstants.CURATION_URL) %>/cdecurate/NCICurationServlet" target="_blank" method="POST">
-			<input type="hidden" name="reqType" value="showDEfromOutside" />
-			<input type="hidden" name="SearchID" value="" />
-		</form>
-		<form name="downloadForm" action="" target="_blank" method="POST">
-			<input type="hidden" name="downloadIDs" />
-		</form>
-
 		<%@ include file="/jsp/common/common_bottom_border.jsp"%>
 	</body>
 </html>

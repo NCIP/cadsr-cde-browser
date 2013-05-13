@@ -61,6 +61,8 @@
   String valueDomainLOVUrl= "javascript:newWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?valueDomainsLOV=9")+"&"+StringEscapeUtils.escapeHtml("idVar=jspValueDomain")+"&"+StringEscapeUtils.escapeHtml("nameVar=txtValueDomain")+pageUrl+"','vdLOV',700,600)";
   String decLOVUrl= "javascript:newWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?dataElementConceptsLOV=9")+"&"+StringEscapeUtils.escapeHtml("idVar=jspDataElementConcept")+"&"+StringEscapeUtils.escapeHtml("nameVar=txtDataElementConcept")+pageUrl+"','decLOV',700,600)";
   String csLOVUrl= "javascript:newBrowserWin('" + contextPath +"/" + StringEscapeUtils.escapeHtml("search?classificationsLOV=9")+"&"+StringEscapeUtils.escapeHtml("idVar=jspClassification")+"&"+StringEscapeUtils.escapeHtml("nameVar=txtClassSchemeItem")+pageUrl+"','csLOV',700,600)";
+
+  String downloadLinkWiki = infoBean.getStringInfo(ProcessConstants.DOWNLOAD_LINK_WIKI);
   
   String txtDataElementConcept = StringEscapeUtils.escapeHtml(desb.getDECPrefName());
   String txtValueDomain = StringEscapeUtils.escapeHtml(desb.getVDPrefName());
@@ -159,13 +161,12 @@
 Data Elements Search - Data Elements
 </TITLE>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC="<%=contextPath%>/js/checkbox.js"></SCRIPT>
-<script type="text/javascript" src="/CDEBrowser/js/dojo/dojo/dojo.js" djConfig="parseOnLoad: true">
-    </script>
+
 </HEAD>
 
 <BODY  bgcolor="#ffffff" onLoad="turnOff()" topmargin="0" >
-<SCRIPT LANGUAGE="JavaScript"><!--
-
+<SCRIPT LANGUAGE="JavaScript">
+<!--
 function redirect1(detailReqType, linkParms )
 {
   var urlString="<%=contextPath%>"+"/"+"<%=StringEscapeUtils.escapeHtml("search?dataElementDetails=9")%>" + linkParms +"<%=pageUrl%>"+"<%="&"+StringEscapeUtils.escapeHtml("queryDE=yes")%>";
@@ -199,25 +200,26 @@ function submitForm() {
   }
 }
 
-var locked = true;
 function submitSimpleForm() {
-	if (!locked) {
-	     document.forms[0].jspKeyword.value=document.forms[0].jspSimpleKeyword.value;
-	     document.forms[0].submit();
-	}
-}
+     if(document.forms[0].jspBasicSearchType.selectedIndex==1)
+     {
+        document.forms[0].jspCdeId.value=document.forms[0].jspSimpleKeyword.value;
+        document.forms[0].jspKeyword.value="";
+        
+     }
+     else
+     {
+       document.forms[0].jspKeyword.value=document.forms[0].jspSimpleKeyword.value;
+       document.forms[0].jspCdeId.value="";
+     }
+     
+     document.forms[0].submit();
+  }
+
 
 function clearSimpleForm() {
-	document.forms[0].jspSimpleKeyword.value = "";
-	document.forms[0].jspBasicSearchType.selectedIndex=0;
-}
-
-function unLockFormSubmission() {
-	locked = false;
-}
-
-function lockFormSubmission() {
-	locked = true;
+  document.forms[0].jspSimpleKeyword.value = "";
+  document.forms[0].jspBasicSearchType.selectedIndex=0;
 }
 
 function clearForm() {
@@ -398,10 +400,9 @@ function gotoCDESearchPrefs() {
   document.forms[0].submit();
 }
 
-
-//
---></SCRIPT>
-
+//-->
+</SCRIPT>
+<label for="searchForm"/>
 <form action="<%=infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=StringEscapeUtils.escapeHtml(submitFunction)%>};">
 <INPUT TYPE="HIDDEN" NAME="<%=StringEscapeUtils.escapeHtml(BrowserNavigationConstants.METHOD_PARAM)%>" > 
 <INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
@@ -479,7 +480,7 @@ function gotoCDESearchPrefs() {
   </tr>
   <tr valign="top">
     <td valign="top" width="100%" nowrap >
-      <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
+      <html:img height="1" page="/i/beigedot.gif" alt="beige dot"  width="99%" align="top" border="0" />
     </td>
     
   </tr>
@@ -531,11 +532,6 @@ function gotoCDESearchPrefs() {
 %>
     </td>
   </tr>
-	<tr>
-		<td>
-			<a href="#" onClick="javascript:window.open('/CDEBrowser/search?customDownload=9&PageId=DataElementsGroup');" ><b>Custom Download</b></a>
-		</td>
-	</tr>
    <tr>
            <td  colspan=2 nowrap>&nbsp;</td>
    </tr>
@@ -567,9 +563,9 @@ function gotoCDESearchPrefs() {
 
 <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
     <tr>
-      <td align="left" width="20%" ><a href="javascript:updateCart()"><html:img page="/i/AddToCDECart.gif" border="0" /></a></td>
-      <td align="left" width="20%" ><a href="javascript:updateCompareList()"><html:img page="/i/addToCDECompareList.gif" border="0" /></a></td>
-      <td align="left" width="20%" ><a href="javascript:compareCDEs(<%=cdeCompareSizeStr%>)"><html:img page="/i/compareCDEs.gif" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="javascript:updateCart()"><html:img page="/i/AddToCDECart.gif" alt="add to CDE cart" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="javascript:updateCompareList()"><html:img page="/i/addToCDECompareList.gif" alt="add to CDE compare list" border="0" /></a></td>
+      <td align="left" width="20%" ><a href="javascript:compareCDEs(<%=cdeCompareSizeStr%>)"><html:img page="/i/compareCDEs.gif" alt="compare CDE" border="0" /></a></td>
       <td align="right"><%=topScroller.getScrollerHTML()%></td>
     </tr>
 </table>
@@ -670,7 +666,7 @@ function gotoCDESearchPrefs() {
         DataElement de = (DataElement)deList.get(i);
 %>
   <tr class="OraTabledata">
-    <td class="OraTableCellSelect"><input type="checkbox" name="selectDE" value="<%=de.getDeIdseq()%>" /></td>
+    <td class="OraTableCellSelect"><input type="checkbox" name="selectDE" value="<%=de.getDeIdseq()%>"/></td>
     <td class="OraFieldText"><a href="javascript:redirect1('dataElementDetails','&p_de_idseq=<%=de.getDeIdseq()%>')"><%=de.getLongName()%></a></td>
     <td class="OraFieldText"><%=de.getLongCDEName()%> </td>
     <td class="OraFieldText"><%=de.getContextName()%> </td>
@@ -703,7 +699,7 @@ function gotoCDESearchPrefs() {
   </tr>
   <tr valign="top">
     <td valign="top" width="100%" nowrap >
-      <html:img height="1" page="/i/beigedot.gif" width="99%" align="top" border="0" />
+      <html:img height="1" page="/i/beigedot.gif" alt="beige dot" width="99%" align="top" border="0" />
     </td>
   </tr>
         <tr valign="top">    

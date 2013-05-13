@@ -3,11 +3,6 @@
 <web-app>
 	<description>web.xml file for CDE Browser</description>
 	<context-param>
-     <param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
-     <param-value>true</param-value>
-     <description>Remove JSF implementation from WAR or if using the MyFaces JSF impl</description>
-   </context-param> 
-	<context-param>
 		<param-name>javax.faces.CONFIG_FILES</param-name>
 		<param-value>/WEB-INF/cdebrowser-faces-config.xml</param-value>
 		<description>
@@ -125,54 +120,55 @@
 		<param-value>false</param-value>
 	</context-param>
 	<context-param>
-    	<param-name>org.apache.myfaces.RESOURCE_VIRTUAL_PATH</param-name>
-    	<param-value>/faces/extensionResource</param-value>
-        <description>
-	        Change the url-pattern from the ExtensionsFilter
-	        Default is "/faces/myFacesExtensionResource"
-	        Note: The filter-mapping for ExtensionsFilter, the url-pattern is
-	        this value + "/*", else there comes a exception
+    <description>
+        Change the url-pattern from the ExtensionsFilter
+        Default is "/faces/myFacesExtensionResource"
+        Note: The filter-mapping for ExtensionsFilter, the url-pattern is
+        this value + "/*", else there comes a exception
     </description>
+    <param-name>org.apache.myfaces.RESOURCE_VIRTUAL_PATH</param-name>
+    <param-value>/faces/extensionResource</param-value>
   </context-param>
 
     <context-param>
-      <param-name>javax.faces.PARTIAL_STATE_SAVING_METHOD</param-name>
-      <param-value>false</param-value>
       <description>
           This parameter enables partial state saving.
       </description>
+      <param-name>javax.faces.PARTIAL_STATE_SAVING_METHOD</param-name>
+      <param-value>false</param-value>
     </context-param>
 
     <context-param>
-      <param-name>javax.faces.PARTIAL_STATE_SAVING_DISPATCH_EVERY_TIME</param-name>
-      <param-value>true</param-value>
       <description>
           If true every time a page is rendered, the corresponding JSP is dispatched also.
           This is very usefull if Scriptlets are used inside the JSP.
       </description>
+      <param-name>javax.faces.PARTIAL_STATE_SAVING_DISPATCH_EVERY_TIME</param-name>
+      <param-value>true</param-value>
     </context-param>
     
     <context-param>
-        <param-name>org.apache.myfaces.READONLY_AS_DISABLED_FOR_SELECTS</param-name>
-        <param-value>true</param-value>
         <description>
             Treat read only same as if disabled attribute was set for select elements.
         </description>
+        <param-name>org.apache.myfaces.READONLY_AS_DISABLED_FOR_SELECTS</param-name>
+        <param-value>true</param-value>
     </context-param>
     
     <context-param>
-        <param-name>org.apache.myfaces.RENDER_VIEWSTATE_ID</param-name>
-        <param-value>false</param-value>
         <description>
             Do not render the "javax.jsf.ViewState" id attribute for view state hidden inputs. 
             Necessary for valid XHTML on multiple forms on one page. The default value is true for backwards compatibility.
         </description>
+        <param-name>org.apache.myfaces.RENDER_VIEWSTATE_ID</param-name>
+        <param-value>false</param-value>
     </context-param>
     
 	<context-param>
 		<param-name>org.apache.myfaces.STRICT_XHTML_LINKS</param-name>
 		<param-value>true</param-value>
 	</context-param>
+−
 	<context-param>
 		<param-name>org.apache.myfaces.CONFIG_REFRESH_PERIOD</param-name>
 		<param-value>2</param-value>
@@ -195,17 +191,14 @@
 		<init-param>
 			<param-name>controllerName</param-name>
 			<param-value>search</param-value>
-			<description>controller name</description>
 		</init-param>
 		<init-param>
 			<param-name>expiredSessionJSP</param-name>
 			<param-value>/jsp/common/expiredSession.jsp</param-value>
-			<description>expired session JSP</description>
 		</init-param>
 		<init-param>
 			<param-name>debug</param-name>
 			<param-value>N</param-value>
-			<description>debug enabling</description>
 		</init-param>
 	</filter>
 		
@@ -218,13 +211,7 @@
 		<filter-class>org.apache.myfaces.webapp.filter.ExtensionsFilter</filter-class>
 		<init-param>
 			<param-name>uploadMaxFileSize</param-name>
-        	<param-value>20m</param-value>	
-        	<description>
-				Set the size limit for uploaded files. Format: 10 - 10
-				bytes 10k - 10 KB 10m - 10 MB 1g - 1 GB
-			</description>
-        </init-param>
-        <init-param>		
+        	<param-value>20m</param-value>			
 			<param-name>maxFileSize</param-name>
 			<param-value>20m</param-value>
 			<description>

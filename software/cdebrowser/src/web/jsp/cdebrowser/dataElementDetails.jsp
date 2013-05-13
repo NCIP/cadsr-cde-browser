@@ -25,7 +25,7 @@
   CDEBrowserParams params = CDEBrowserParams.getInstance();    
   config.getServletContext().setAttribute("de", de);
   String appPath = request.getRequestURL().toString().replace(request.getServletPath(),"");
-  String directURL = appPath+"/search?elementDetails=9&FirstTimer=0&publicId="+de.getPublicId()+"&version="+de.getVersion();
+  String directURL = appPath+"/search?elementDetails=9&FirstTimer=0&PageId=ElementDetailsGroup&publicId="+de.getPublicId()+"&version="+de.getVersion();
 %>
 
 <HTML>
@@ -35,16 +35,9 @@
 <TITLE>
 Data Element Details
 </TITLE>
-<SCRIPT LANGUAGE="JavaScript1.1" SRC="/CDEBrowser/js/checkbox.js"></SCRIPT>
-<script type="text/javascript" src="/CDEBrowser/js/dojo/dojo/dojo.js" djConfig="parseOnLoad: true">
-    </script>
-<link rel="stylesheet" type="text/css" href="/CDEBrowser/js/dojo/dijit/themes/claro/claro.css" />
-<style type="text/css">
-	@import url("/CDEBrowser/js/dojo/dojox/grid/enhanced/resources/claroEnhancedGrid.css");
-	@import url("/CDEBrowser/js/dojo/dojox/grid/enhanced/resources/EnhancedGrid_rtl.css");
-</style>
+<SCRIPT LANGUAGE="JavaScript1.1" SRC="/js/checkbox.js"></SCRIPT>
 </HEAD>
-<BODY topmargin="0" >
+<BODY topmargin="0">
 
 
 
@@ -87,7 +80,7 @@ function anotherDataElementDetails(linkParms, version )
     <td class="OraHeaderSubSub" width="100%">Data Element Details</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 
@@ -151,128 +144,11 @@ function anotherDataElementDetails(linkParms, version )
     <td class="TableRowPromptText">Registration Status:</td>
     <td class="OraFieldText"><%=de.getRegistrationStatus()%> </td>
  </tr>
-<tr class="OraTabledata">
+ <tr class="OraTabledata">
     <td class="TableRowPromptText">Direct Link:</td>
     <td class="OraFieldText"><a href="<%= directURL %>"><%= directURL %></a> </td>
  </tr>
- 
 </table>
-
-
-<%
-    List altNames = de.getDesignations();
-    List altDefs = de.getDefinitions();
-    
-  %>
-
-<br>
-<table cellpadding="0" cellspacing="0" width="80%" align="center" >
-  <tr>
-    <td class="OraHeaderSubSub" width="100%">Alternate Names and Definitions</td>
-  </tr>
-  <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
-  </tr>
-</table>
-
-<script type="text/javascript">
-	dojo.require("dojox.grid.EnhancedGrid");
-	dojo.require("dojox.data.HtmlStore");
-	dojo.require("dojox.grid.enhanced.plugins.DnD");
-	dojo.require("dojox.grid.enhanced.plugins.NestedSorting");
-
-	var struct1 = [{field: "type", name: "Type", width: "100px", 
-								styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color: #f7f7e7;", 
-								headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"},
-	               {field: "value", name: "Value", width: "200px", 
-									styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt;background-color: #f7f7e7;", 
-									headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"},
-					{field: "context", name: "Context", width: "100px", 
-										styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color: #f7f7e7;", 
-										headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"},
-					{field: "CS", name: "<center>Classification Schemes<br/><table align='center'><col width='50%'><col width='30%'><col width='20%'><tr><td class='TableRowPromptText'><center>Class Scheme Item</center></td><td class='TableRowPromptText'><center>Class Scheme</center></td><td class='TableRowPromptText'><center>Class Scheme WF Status</center></td></tr></table></center>", 
-								width: "400px", 
-								styles: "font-family:Arial, Helvetica, Geneva, sans-serif; font-size:10pt; background-color: #f7f7e7;", 
-								headerStyles: "FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; background-color: #CCCC99; background-image: none"}];
-</script>
-                
-<table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
-<tr class="OraTabledata"><td width="100%" colspan="4" >
-	<table id="altNames" width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark" style="{display: none}">
-	<thead>  
-	<tr>
-	    <th class="TableRowPromptText">type</th>
-	    <th class="TableRowPromptText">value</th>
-	    <th class="TableRowPromptText">context</th>
-		<th class="TableRowPromptText">CS</th>
-	  </tr>
-	</thead>
-	<tbody>
-<logic:notEmpty name="de" property="designations">
-	<logic:iterate id="des" name="de" property="designations" type="gov.nih.nci.ncicb.cadsr.common.resource.Designation">
-	      <tr class="OraTabledata">
-	        <td class="OraFieldText">Alt Name</td>
-			<td class="OraFieldText"><bean:write name="des" property="name" />&lt;br/&gt;&lt;b&gt;Type:&lt;/b&gt; <bean:write name="des" property="type" /></td>
-	        <td class="OraFieldText"><bean:write name="des" property="context.name" /> </td>
-	        <td class="OraFieldText">
-				<logic:notEmpty name="des" property="csCsis">
-					&lt;table width="400px" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDarkFixWidth"&gt;
-						&lt;col width="50%"&gt;
-						&lt;col width="30%"&gt;
-						&lt;col width="20%"&gt;
-						<logic:iterate id="cs" name="des" indexId="idx" property="csCsis" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem">
-							&lt;tr class="OraTabledata"&gt;
-								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeItemName" />&lt;/td&gt;
-								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeLongName" />&lt;/td&gt;
-								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeWfStatus" />&lt;/td&gt;
-							&lt;/tr&gt;
-						</logic:iterate>
-					&lt;/table&gt;
-				</logic:notEmpty>
-			</td>
-	      </tr>
-	</logic:iterate>
-</logic:notEmpty>  
-
-<logic:notEmpty name="de" property="definitions">
-	<logic:iterate id="def" name="de" property="definitions" type="gov.nih.nci.ncicb.cadsr.common.resource.Definition">
-	      <tr class="OraTabledata">
-			<td class="OraFieldText">Alt Definition</td>
-	        <td class="OraFieldText"><bean:write name="def" property="definition" />&lt;br/&gt;&lt;b&gt;Type:&lt;/b&gt;<bean:write name="def" property="type" /></td>
-	        <td class="OraFieldText"><bean:write name="def" property="context.name" /> </td>
-	        <td class="OraFieldText">
-				<logic:notEmpty name="def" property="csCsis">
-					&lt;table width="400px" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDarkFixWidth"&gt;
-						&lt;col width="50%"&gt;
-						&lt;col width="30%"&gt;
-						&lt;col width="20%"&gt;
-						<logic:iterate id="cs" name="def" indexId="idx" property="csCsis" type="gov.nih.nci.ncicb.cadsr.common.resource.ClassSchemeItem">
-							&lt;tr class="OraTabledata"&gt;
-								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeItemName" />&lt;/td&gt;
-								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeLongName" />&lt;/td&gt;
-								&lt;td class="OraFieldText"&gt;<bean:write name="cs" property="classSchemeWfStatus" />&lt;/td&gt;
-							&lt;/tr&gt;
-						</logic:iterate>
-					&lt;/table&gt;
-				</logic:notEmpty>
-			</td>
-	      </tr>
-	</logic:iterate>
-</logic:notEmpty>  
-
-</tbody>
-</table>
-<div dojoType="dojox.data.HtmlStore" dataId="altNames" jsId="htmlStor"></div>
-<div style="{width: 100%; height:400px;}">
-<div id="nameDefGrid" dojoType="dojox.grid.EnhancedGrid" store="htmlStor" query="{}" escapeHTMLInData="false"
-				selectable="true" structure= "struct1" plugins="{dnd: true, nestedSorting: true}" 
-				rowSelector="0px" elasticView="2" style="{width: 100%; height:400px; background-color: #f7f7e7;}"
-				noDataMessage="There are no alternate names or definitions for the selected CDE"></div>
-</div>
-
-</td></tr>
-</table >
-
 
 <br>
 <table cellpadding="0" cellspacing="0" width="80%" align="center" >
@@ -280,7 +156,7 @@ function anotherDataElementDetails(linkParms, version )
     <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -320,6 +196,179 @@ function anotherDataElementDetails(linkParms, version )
   }
 %>
 </table>
+<%
+    List altNames = de.getDesignations();
+    List altDefs = de.getDefinitions();
+    
+    HashMap idToCscsi = new HashMap();
+    HashMap csToAltName = new HashMap();
+    HashMap csToAltDef = new HashMap();
+    List altNamesNoCS = new ArrayList();
+    List altDefsNoCS = new ArrayList();
+    if (altNames !=null)
+    for (int i=0; i<altNames.size(); i++) {
+    	Designation des = (Designation) altNames.get(i);
+    	if (des.getCsCsis() == null || des.getCsCsis().size() == 0) 
+    	   altNamesNoCS.add(des);
+    	else {
+		Iterator iter = des.getCsCsis().iterator();
+
+		while (iter.hasNext()) {
+		   ClassSchemeItem cscsi= (ClassSchemeItem) iter.next();
+		   idToCscsi.put(cscsi.getCsCsiIdseq(), cscsi);
+		   if (csToAltName.get(cscsi.getCsCsiIdseq()) == null)
+			csToAltName.put(cscsi.getCsCsiIdseq(), new ArrayList());
+		   ((ArrayList) csToAltName.get(cscsi.getCsCsiIdseq())).add(des);
+		}
+    	}
+    }
+  
+  if (altDefs != null)
+    for (int i=0; i<altDefs.size(); i++) {
+      Definition definition = (Definition) altDefs.get(i);
+	if (definition.getCsCsis() == null || definition.getCsCsis().size() == 0) 
+	   altDefsNoCS.add(definition);
+	else {
+	  Iterator iter = definition.getCsCsis().iterator();
+	  while (iter.hasNext()) {
+	    ClassSchemeItem cscsi= (ClassSchemeItem) iter.next();
+	    idToCscsi.put(cscsi.getCsCsiIdseq(), cscsi);
+	    if (csToAltDef.get(cscsi.getCsCsiIdseq()) == null)
+		csToAltDef.put(cscsi.getCsCsiIdseq(), new ArrayList());
+	    ((ArrayList) csToAltDef.get(cscsi.getCsCsiIdseq())).add(definition);
+	}
+    	}
+    }
+    
+    if (altNamesNoCS.size() >0) {
+    	idToCscsi.put("null", null);
+    	csToAltName.put("null", altNamesNoCS);
+    }
+    	
+    if (altDefsNoCS.size() >0) {
+    	idToCscsi.put("null", null);
+    	csToAltDef.put("null", altDefsNoCS);
+    }
+  %>
+
+<br>
+<table cellpadding="0" cellspacing="0" width="80%" align="center" >
+  <tr>
+    <td class="OraHeaderSubSub" width="100%">Alternate Names and Definitions</td>
+  </tr>
+  <tr>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
+  </tr>
+</table>
+<p>
+<% Iterator csiIter = idToCscsi.keySet().iterator();
+while (csiIter.hasNext()) {
+    String csiId = (String) csiIter.next();
+    ClassSchemeItem currCSI = (ClassSchemeItem) idToCscsi.get(csiId);
+    List currAltNames = (List) csToAltName.get(csiId);
+    List currAltDefs = (List) csToAltDef.get(csiId);
+ %>   
+<table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+<% if (currCSI != null) { %>
+<TR class="OraTableColumnHeader">
+ <th class="OraTableColumnHeader">CS* Long Name</th>
+ <th class="OraTableColumnHeader">CS* Definition</th>
+ <th class="OraTableColumnHeader">CSI* Name</th>
+ <th class="OraTableColumnHeader">CSI* Type</th>
+</TR>
+      <tr class="OraTabledata">
+        <td class="OraFieldText"><%=currCSI.getClassSchemeLongName()%> </td>
+        <td class="OraFieldText"><%=currCSI.getClassSchemeDefinition()%> </td>
+        <td class="OraFieldText"><%=currCSI.getClassSchemeItemName()%> </td>
+        <td class="OraFieldText"><%=currCSI.getClassSchemeItemType()%> </td>
+      </tr>
+<%} %>
+
+<tr class="OraTabledata">
+<td class="OraHeaderSubSubSub" width="100%" colspan=4>Alternate Names </td>
+</tr>
+<tr class="OraTabledata"><td width="100%" colspan=4>
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Name</th>
+    <th class="OraTableColumnHeader">Type</th>
+    <th class="OraTableColumnHeader">Context</th>
+    <th class="OraTableColumnHeader">Language</th>
+  </tr>
+<%
+  Designation des = null;
+  if (currAltNames!=null && currAltNames.size() > 0) {
+    for (int i=0;i<currAltNames.size(); i++) {
+      des = (Designation)currAltNames.get(i);
+%>
+      <tr class="OraTabledata">
+        <td class="OraFieldText"><%=des.getName()%> </td>
+        <td class="OraFieldText"><%=des.getType()%> </td>
+        <td class="OraFieldText"><%=des.getContext().getName()%> </td>
+        <td class="OraFieldText"><%=des.getLanguage()%> </td>
+      </tr>
+<%
+    }
+  }
+  else {
+%>
+       <tr class="OraTabledata">
+         <td colspan=4">There are no alternate names for the selected CDE.</td>
+       </tr>
+<%
+  }
+%>
+
+</table> 
+</td></tr>
+<tr class="OraTabledata">
+<td class="OraHeaderSubSubSub" width="100%" colspan=4>Alternate Definitions </td>
+</tr>
+<tr class="OraTabledata"><td width="100%" colspan=4>
+<table width="100%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
+  <tr class="OraTableColumnHeader">
+    <th class="OraTableColumnHeader">Name</th>
+    <th class="OraTableColumnHeader">Type</th>
+    <th class="OraTableColumnHeader">Context</th>
+  </tr>
+<%
+  if (currAltDefs != null && currAltDefs.size() > 0) {
+    for (int i=0;i<currAltDefs.size(); i++) {
+      Definition def = (Definition)currAltDefs.get(i);
+%>
+      <tr class="OraTabledata">
+        <td class="OraFieldText"><%=def.getDefinition()%> </td>
+        <td class="OraFieldText"><%=def.getType()%> </td>
+        <td class="OraFieldText"><%=def.getContext().getName()%> </td>
+      </tr>
+<%
+    }
+  }
+  else {
+%>
+       <tr class="OraTabledata">
+         <td colspan=4">There are no alternate definitions for the selected CDE.</td>
+       </tr>
+<%
+  }
+%>
+
+</table> 
+</td></tr>
+</table>
+<p>
+<%} %>
+
+
+
+
+
+
+
+
+
+
+
 
 <%--start all versions--%>
 <br>
@@ -328,7 +377,7 @@ function anotherDataElementDetails(linkParms, version )
     <td class="OraHeaderSubSub" width="100%">Other Versions</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 

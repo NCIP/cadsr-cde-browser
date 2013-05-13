@@ -42,7 +42,7 @@ function clearForm()
   
   <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
   <TR>
-  <td align=left valign=top width="1%" bgcolor="#336699"><img src="<%=request.getContextPath()%>/i/top_left.gif" width=4 height="25"></td>
+  <td align=left valign=top width="1%" bgcolor="#336699"><img src="<%=request.getContextPath()%>/i/top_left.gif" alt="top left"width=4 height="25"></td>
   <td nowrap align=left valign=top width="5%" bgcolor="#336699"><b><font size="3" face="Arial" color="#FFFFFF">&nbsp; &nbsp;Please Login</font></b></td>
 
   <td align=left valign=top width="5%" bgcolor="#336699">&nbsp;</td>
@@ -53,9 +53,9 @@ function clearForm()
   
   <table  width=100% Cellpadding=0 Cellspacing=0 border=0>
   <tr>
-  <td align=right valign=top width=49 height=21 bgcolor="#336699"><img src="<%=request.getContextPath()%>/i/left_end_bottom.gif" height=21 width=49></td>
-  <TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><img src="<%=request.getContextPath()%>/i/bottom_middle.gif" height=6 width=100%></TD>
-  <td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><img src="<%=request.getContextPath()%>/i/right_end_bottom.gif" height=7 width=5></td>
+  <td align=right valign=top width=49 height=21 bgcolor="#336699"><img src="<%=request.getContextPath()%>/i/left_end_bottom.gif" alt="left end bottom" height=21 width=49></td>
+  <TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><img src="<%=request.getContextPath()%>/i/bottom_middle.gif" alt="bottom middle" height=6 width=100%></TD>
+  <td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><img src="<%=request.getContextPath()%>/i/right_end_bottom.gif" alt="right end bottom" height=7 width=5></td>
   </TR>
   </table>
   
@@ -67,7 +67,7 @@ function clearForm()
       </td>
     </tr>  
   </table> 
-  
+
   <form method="post" action="<%= StringEscapeUtils.escapeHtml(response.encodeURL("j_security_check")) %>">
 
   <table align=center cellspacing="2" cellpadding="3" border="0" onkeypress="if(event.keyCode==13){submitForm()};">
@@ -81,13 +81,13 @@ function clearForm()
     <tr>
         <td class="OraFieldtitlebold" nowrap>Username:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" name="j_username" value="<%=StringEscapeUtils.escapeHtml("")%>" size ="20" /> 
+          <input type="text" title ="User Name" name="j_username" value="<%=StringEscapeUtils.escapeHtml("")%>" size ="20" /> 
         </td>
     </tr>
     <tr>
         <td class="OraFieldtitlebold" nowrap>Password:</td>
         <td class="OraFieldText" nowrap>
-          <input type="password" name="j_password" value="<%=StringEscapeUtils.escapeHtml("")%>" size ="20" autocomplete="off" /> 
+          <input type="password" title="User Password" name="j_password" value="<%=StringEscapeUtils.escapeHtml("")%>" size ="20" autocomplete="off" /> 
         </td>
     </tr>
   </table>
@@ -98,7 +98,7 @@ function clearForm()
       	  <table cellspacing="2" cellpadding="3" border="0">
 		     <TR>
 		        <td colspan="1" align="left" nowrap><a href="javascript:submitForm()"><img src=<%=request.getContextPath()%>/i/logon.gif border=0 alt="Logon"></a></td>
-		        <td colspan="1" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=request.getContextPath()%>/i/clear.gif border=0 alt="Clear"></a></td>
+		        <td colspan="1" align="left" nowrap><a href="javascript:clearForm()"><img src=<%=request.getContextPath()%>/i/clear.gif  border=0 alt="Clear"></a></td>
 		     </TR>  
 		  </table>    
       	</td>

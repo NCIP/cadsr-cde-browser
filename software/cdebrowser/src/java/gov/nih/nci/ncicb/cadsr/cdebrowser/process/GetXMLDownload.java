@@ -129,20 +129,19 @@ public class GetXMLDownload extends BasePersistingProcess {
         HttpServletRequest myRequest =
           (HttpServletRequest) getInfoObject("HTTPRequest");
         HttpSession userSession = myRequest.getSession(false);
-        String requestIDs = getStringInfo("downloadIDs");
-        String[] reqIDsArray = new String[0];
-		if (requestIDs != null && requestIDs.length() > 0) {
-			reqIDsArray = requestIDs.split(",");
-		}
-
+        CDECart cart = (CDECart)userSession.getAttribute(CaDSRConstants.CDE_CART);
+        Collection items = cart.getDataElements();
+        CDECartItem item = null;
         boolean firstOne = true;
         StringBuffer whereBuffer = new StringBuffer("");
-        for (String downloadID: reqIDsArray) {
+        Iterator itemsIt = items.iterator();
+        while (itemsIt.hasNext()) {
+        	item = (CDECartItem)itemsIt.next();
         	if (firstOne) {
-        		whereBuffer.append("'" +downloadID+"'");
+        		whereBuffer.append("'" +item.getId()+"'");
         		firstOne = false;
         	}else{
-        		whereBuffer.append(",'" +downloadID+"'");
+        		whereBuffer.append(",'" +item.getId()+"'");
         	}
         }
         where = "DE_IDSEQ IN (" + whereBuffer.toString() + ")";

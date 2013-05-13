@@ -12,7 +12,7 @@
 
 &nbsp;
 <P>
-<IMG SRC="i/onred1.jpg">
+<IMG SRC="i/onred1.jpg" alt="on red" >
 </CENTER>
 </BODY>
 </HTML>

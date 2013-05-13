@@ -1,7 +1,6 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%
-	String source = request.getParameter("src");
-	String downloadIDs = request.getParameter("downloadIDs");
+  String source = request.getParameter("src");
 %>
 
 <HTML>
@@ -14,7 +13,8 @@
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 function goPage() {
-	document.forms[0].submit();
+  document.location.href ="<%=request.getContextPath()%>" + "<%=StringEscapeUtils.escapeJavaScript("/search?xmlDownload=9&PageId=DataElementsGroup&src=")%>" + "<%= StringEscapeUtils.escapeJavaScript(source) %>";
+  
 }
 function closeWindow() {
   close();
@@ -24,7 +24,7 @@ function closeWindow() {
 
 //-->
 </SCRIPT>
-<form name="downloadForm" action="/CDEBrowser/search" method="post">
+<form name="downloadForm">
 
 <br>
 
@@ -40,10 +40,6 @@ saved file in any text or XML editor.
 </font>
 </p>
 
-<input type="hidden" name="xmlDownload" value="9" />
-<input type="hidden" name="PageId" value="DataElementsGroup" />
-<input type="hidden" name="src" value="<%= StringEscapeUtils.escapeJavaScript(source) %>" />
-<input type="hidden" name="downloadIDs" value="<%= downloadIDs %>" />
 </form>
 </BODY>
 </HTML>

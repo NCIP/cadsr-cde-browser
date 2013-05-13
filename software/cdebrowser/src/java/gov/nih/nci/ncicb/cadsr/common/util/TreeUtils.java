@@ -27,6 +27,10 @@ public class TreeUtils {
           String value = stPair.nextToken();
           results.put(name, value);
         }
+        else {
+          System.err.println("invalid 'name=value' pair parameter");
+          throw (new Exception("invalid 'name=value' pair parameter"));
+        }
       }
     }
 

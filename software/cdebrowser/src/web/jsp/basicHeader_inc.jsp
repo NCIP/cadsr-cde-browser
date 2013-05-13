@@ -14,7 +14,7 @@
   <tr>
     <td align="left" nowrap>
 
-    <img src="<%=request.getContextPath()%>/i/cde_browser_banner_full.gif" border=0>
+    <img src="<%=request.getContextPath()%>/i/cde_browser_banner_full.gif" alt="cde browser banner" border=0>
     </td>
     <td align=right valign=top nowrap>
       <TABLE Cellpadding=0 Cellspacing=0 border=0>

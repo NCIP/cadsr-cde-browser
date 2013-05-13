@@ -44,8 +44,5 @@ public interface Classification
     
     public Float getClassSchemeItemVersion();
     public void setClassSchemeItemVersion(Float aClassSchemeItemVersion);
-    
-    public String getClassSchemeWfStatus();
-    public void setClassSchemeWfStatus(String wfStatus);
    
 }

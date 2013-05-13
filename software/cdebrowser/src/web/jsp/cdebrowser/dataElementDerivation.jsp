@@ -62,7 +62,7 @@ function goPage(pageInfo) {
     <td class="OraHeaderSubSub" width="100%">Selected Data Element</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 
@@ -114,7 +114,7 @@ function goPage(pageInfo) {
     <td class="OraHeaderSubSub" width="100%">Data Element Derivation Details</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 
@@ -164,7 +164,7 @@ function goPage(pageInfo) {
     <td class="OraHeaderSubSub" width="100%">Component Data Elements</td>
   </tr>
   <tr>
-    <td><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 

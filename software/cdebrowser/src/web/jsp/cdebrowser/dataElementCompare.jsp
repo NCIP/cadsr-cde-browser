@@ -51,7 +51,7 @@ function subTabClicked(tabNum,urlParams) {
   <tr>
     <td align="left" nowrap>
 
-      <img src="i/details_banner.gif" border="0">
+      <img src="i/details_banner.gif" alt="details bannert" border="0">
     </td>
 
     <td align=right valign=top colspan=2 nowrap>
@@ -79,33 +79,33 @@ function subTabClicked(tabNum,urlParams) {
 
 
 
-<TD bgcolor="#336699" width="1%" align=LEFT valign=TOP><img src="i/ctab_open.gif" height="21" width="18" border="0"></TD>
+<TD bgcolor="#336699" width="1%" align=LEFT valign=TOP><img src="i/ctab_open.gif" alt="c tab open" height="21" width="18" border="0"></TD>
 <TD width=1% bgcolor="#336699"><b><font size="-1" face="Arial" color="#FFFFFF">Data&nbsp;Element</font></b></TD>
-<TD bgcolor="#336699" width="1%" align=RIGHT valign=TOP><img src="i/ctab_close.gif" height="21" width="12" border="0"></TD>
+<TD bgcolor="#336699" width="1%" align=RIGHT valign=TOP><img src="i/ctab_close.gif" alt="c tab close" height="21" width="12" border="0"></TD>
 
-<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="i/tab_open.gif" height="21" width="13" border="0"></TD>
+<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="i/tab_open.gif" alt="tab open" height="21" width="13" border="0"></TD>
 <TD width=1% bgcolor="#B6B687"><A HREF="javascript:tabClicked(1, 'search?dataElementConceptDetails=9')"><font size="-1" face="Arial" color="#000000">Data&nbsp;Element&nbsp;Concept</font></A></TD>
-<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="i/tab_close.gif" height="21" width="10" border="0" /></TD>
+<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="i/tab_close.gif" alt="tab close" height="21" width="10" border="0" /></TD>
 
 
-<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="i/tab_open.gif" height="21" width="13" border="0"></TD>
+<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="i/tab_open.gif" alt="tab open" height="21" width="13" border="0"></TD>
 <TD width=1% bgcolor="#B6B687"><A HREF="javascript:tabClicked(2, 'search?listValidValuesForDataElements=9')"><font size="-1" face="Arial" color="#000000">Permissible&nbsp;Values</font></A></TD>
-<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="/i/tab_close.gif" height="21" width="10" border="0" /></TD>
+<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="/i/tab_close.gif" alt="tab close" height="21" width="10" border="0" /></TD>
 
 
-<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="i/tab_open.gif" height="21" width="13" border="0"></TD>
+<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="i/tab_open.gif" alt="tab open" height="21" width="13" border="0"></TD>
 <TD width=1% bgcolor="#B6B687"><A HREF="javascript:tabClicked(3, 'search?classificationsForDataElements=9')"><font size="-1" face="Arial" color="#000000">Classifications</font></A></TD>
-<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="i/tab_close.gif" height="21" width="10" border="0" /></TD>
+<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="i/tab_close.gif" alt="tab close" height="21" width="10" border="0" /></TD>
 
 
-<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="i/tab_open.gif" height="21" width="13" border="0"></TD>
+<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="i/tab_open.gif" alt="tab open" height="21" width="13" border="0"></TD>
 <TD width=1% bgcolor="#B6B687"><A HREF="javascript:tabClicked(4, 'search?protocolsForDataElements=9')"><font size="-1" face="Arial" color="#000000">Form Usage</font></A></TD>
-<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="i/tab_close.gif" height="21" width="10" border="0" /></TD>
+<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="i/tab_close.gif" alt="tab close" height="21" width="10" border="0" /></TD>
 
 
-<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="i/tab_open.gif" height="21" width="13" border="0"></TD>
+<TD bgcolor="#B6B687" width="1%" align=LEFT valign=TOP><img src="i/tab_open.gif" alt="tab open" height="21" width="13" border="0"></TD>
 <TD width=1% bgcolor="#B6B687"><A HREF="javascript:tabClicked(5, 'search?dataElementDerivations=9')"><font size="-1" face="Arial" color="#000000">Data&nbsp;Element&nbsp;Derivation</font></A></TD>
-<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="i/tab_close.gif" height="21" width="10" border="0" /></TD>
+<TD bgcolor="#B6B687" width="1%" align=RIGHT valign=TOP><htmlImg page="i/tab_close.gif" alt="tab close" height="21" width="10" border="0" /></TD>
 
 
 
@@ -115,7 +115,7 @@ function subTabClicked(tabNum,urlParams) {
 </TABLE>
 <TABLE width=100% Cellpadding=0 Cellspacing=0 border=0>
 <TR>
-<td align=left valign=top width="1%" bgcolor="#336699"><img src="i/top_left.gif" height="25" width="4"></td>
+<td align=left valign=top width="1%" bgcolor="#336699"><img src="i/top_left.gif" alt="top left" height="25" width="4"></td>
 <td align=left valign=top width="5%" bgcolor="#336699">&nbsp;</td>
 
 
@@ -129,9 +129,9 @@ function subTabClicked(tabNum,urlParams) {
 
 <table  width=100% Cellpadding=0 Cellspacing=0 border=0>
 <tr>
-<td align=right valign=top width=49 height=21 bgcolor="#336699"><img src="i/left_end_bottom.gif" height="21" width="49"></td>
-<TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><img src="i/bottom_middle.gif" height="6" width="100%"></TD>
-<td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><img src="i/right_end_bottom.gif" height="7" width="5"></td>
+<td align=right valign=top width=49 height=21 bgcolor="#336699"><img src="i/left_end_bottom.gif" alt="left end bottom" height="21" width="49"></td>
+<TD align=right valign=top bgcolor="#FFFFFF" height=21 width="100%"><img src="i/bottom_middle.gif" alt="bottom middle" height="6" width="100%"></TD>
+<td align="LEFT" valign=top height=21 width=5  bgcolor="#FFFFFF"><img src="i/right_end_bottom.gif" alt="right end bottom" height="7" width="5"></td>
 </TR>
 </TABLE>
 
@@ -143,7 +143,7 @@ function subTabClicked(tabNum,urlParams) {
     <td class="OraHeaderSubSub" width="100%">Data Element Details</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 
@@ -214,7 +214,7 @@ function subTabClicked(tabNum,urlParams) {
     <td class="OraHeaderSubSub" width="100%">Reference Documents</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -237,7 +237,7 @@ function subTabClicked(tabNum,urlParams) {
     <td class="OraHeaderSubSub" width="100%">Alternate Names</td>
   </tr>
   <tr>
-    <td width="100%"><img height=1 src="i/beigedot.gif" width="99%" align=top border=0> </td>
+    <td width="100%"><img height=1 src="i/beigedot.gif" alt="beige dot" width="99%" align=top border=0> </td>
   </tr>
 </table>
 <table width="80%" align="center" cellpadding="1" cellspacing="1" border="0" class="OraBGAccentVeryDark">
@@ -262,8 +262,8 @@ function subTabClicked(tabNum,urlParams) {
 
 <TABLE width=100% cellspacing=0 cellpadding=0 border=0>
 <TR>
-<TD valign=bottom width=99%><img src="i/bottom_shade.gif" height="6" width="100%"></TD>
-<TD valign=bottom width="1%" align=right><img src="i/bottomblueright.gif"></TD>
+<TD valign=bottom width=99%><img src="i/bottom_shade.gif" alt="bottom shade" height="6" width="100%"></TD>
+<TD valign=bottom width="1%" align=right><img src="i/bottomblueright.gif" alt="bottom blue right"></TD>
 </TR>
 </TABLE>
 <TABLE width=100% cellspacing=0 cellpadding=0 bgcolor="#336699" border=0>
@@ -284,7 +284,7 @@ function subTabClicked(tabNum,urlParams) {
 
 </TR>
 <TR>
-<TD colspan=2><img src="i/bottom_middle.gif" height="6" width="100%"></TD>
+<TD colspan=2><img src="i/bottom_middle.gif" alt="bottom middle" height="6" width="100%"></TD>
 </TR>
 </TABLE>
 
