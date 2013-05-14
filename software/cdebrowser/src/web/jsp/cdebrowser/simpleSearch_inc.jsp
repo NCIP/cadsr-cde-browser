@@ -79,7 +79,7 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="1"  border="0" >
  <tr>
     <td   width="40%" align="left" nowrap >
-    <fieldset>
+    <fieldset style="border:0px;">
   	<legend/>
  <table valign="top">
   <tr>
