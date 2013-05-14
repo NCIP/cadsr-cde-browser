@@ -26,7 +26,7 @@
    &nbsp; &nbsp;
 </td>
 <td width="30%" align="right">
- <FONT color="white" size=-2 face=arial>Version 4.0.2&nbsp;&nbsp;Build 1
+ <FONT color="white" size=-2 face=arial>Version 4.0.3&nbsp;&nbsp;Build 1
  <%=CDEBrowserParams.mode%></FONT>
 </td>
 <td td width="70%" align="right">
