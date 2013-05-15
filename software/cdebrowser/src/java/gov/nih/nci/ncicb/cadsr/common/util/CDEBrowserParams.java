@@ -44,6 +44,7 @@ public class CDEBrowserParams
     String sentinelAPIUrl="";
     String formBuilderUrl="";
     String cdeBrowserUrl="";
+    String cdeBrowserReleaseNoteUrl="";
     String objectCartUrl="";
     String cadsrAPIUrl="";
     String formBuilderHelpUrl="";
@@ -439,6 +440,12 @@ public class CDEBrowserParams
 		this.cdeBrowserUrl = cdeBrowserUrl;
 	}
 	
+	
+	public void setCdeReleaseNoteUrl(String newUrl)
+	{
+		cdeBrowserReleaseNoteUrl=newUrl;
+	}
+	
 	public String getObjectCartUrl() {
 		return (objectCartUrl == null) ? "" : objectCartUrl;
 	}
@@ -476,6 +483,12 @@ public class CDEBrowserParams
 	public String getCdeBrowserHelpUrl() {
 //		return (cdebrowserHelpUrl == null) ? "/help" : cdebrowserHelpUrl;
 		return "https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide";
+	}
+	
+	public String getCdeBrowserReleaseNoteUrl()
+	{
+//		return cdeBrowserReleaseNoteUrl;
+		return "https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+4.0.3+Release+Notes";
 	}
 
 	public void setCdeBrowserHelpUrl(String cdebrowserHelpUrl) {
