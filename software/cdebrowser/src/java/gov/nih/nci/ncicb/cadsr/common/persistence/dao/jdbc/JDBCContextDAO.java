@@ -178,7 +178,7 @@ public class JDBCContextDAO extends JDBCBaseDAO implements ContextDAO {
 
     JDBCContextDAO test = new JDBCContextDAO(locator);
     //Collection coll = test.getAllContexts();
-    System.out.println(test.getAllContexts("'caBIG'"));
+    System.out.println(test.getAllContexts("'NCIP'"));	//GF32649
   }
 
 }

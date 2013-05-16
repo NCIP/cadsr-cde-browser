@@ -5,7 +5,7 @@ public interface CaDSRConstants {
   public static final String CDE_MANAGER = "CDE MANAGER";  
   //Publish Change Order Oct 24/04
   public static final String CONTEXT_ADMIN = "CONTEXT ADMIN";
-  public static final String CONTEXT_CABIG = "caBIG";
+  public static final String DEFAULT_CONTEXT = "NCIP";	//"caBIG";	//GF32649
   public static final String CONTEXT_TEST = "TEST";
   public static final String CONTEXT_TRAINING = "TRAINING";
 
