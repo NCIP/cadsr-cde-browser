@@ -81,13 +81,15 @@ function clearForm()
     <tr>
         <td class="OraFieldtitlebold" nowrap>Username:</td>
         <td class="OraFieldText" nowrap>
-          <input type="text" title ="User Name" name="j_username" value="<%=StringEscapeUtils.escapeHtml("")%>" size ="20" /> 
+        	<label for="loginUserName"/>
+          <input type="text" id ="loginUserName" name="j_username" value="<%=StringEscapeUtils.escapeHtml("")%>" size ="20" /> 
         </td>
     </tr>
     <tr>
         <td class="OraFieldtitlebold" nowrap>Password:</td>
         <td class="OraFieldText" nowrap>
-          <input type="password" title="User Password" name="j_password" value="<%=StringEscapeUtils.escapeHtml("")%>" size ="20" autocomplete="off" /> 
+        <label for="loginPassword"/>
+          <input type="password" id="loginPassword" name="j_password" value="<%=StringEscapeUtils.escapeHtml("")%>" size ="20" autocomplete="off" /> 
         </td>
     </tr>
   </table>

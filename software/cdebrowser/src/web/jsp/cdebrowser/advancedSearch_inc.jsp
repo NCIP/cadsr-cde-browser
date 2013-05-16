@@ -62,21 +62,24 @@
            <table valign="top">
 	    <tr>
 	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-	        <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
+	     	<label for ="advanceSearch_input_1"/>
+	        <input id="advanceSearch_input_1" type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
 	        <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
 	        { %> checked <%}%> >Exact phrase
 	     </td >
 	    </tr>
 	    <tr>
 	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-	        <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
+	     	<label for ="advanceSearch_input_2"/>
+	        <input id="advanceSearch_input_2" type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
 	        <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ALL)) 
 	        { %> checked <%}%>>All of the words
 	     </td >
 	    </tr>
 	    <tr>
 	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-	        <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
+	     	<label for ="advanceSearch_input_3"/>
+	        <input  id ="advanceSearch_input_3" type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
 	        <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> >At least one of the words
 	     </td >
 	    </tr>
@@ -84,7 +87,8 @@
 
           </td>
           <td>
-           <input type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="45"> 
+          <label for ="advanceSearch_input_4"/>
+           <input id ="advanceSearch_input_4" type="text" name="jspKeyword" value="<%=desb.getSearchText()%>" size ="45"> 
            </td>
            </tr>
            </table>
@@ -139,7 +143,9 @@
             <table  width="100%" cellpadding="1" cellspacing="1" class="OraBGAccentVeryDark">  
              <tr >
                <td width="40%" class="OraTableColumnHeaderNoBG" nowrap>Concept Name</td>
-               <td width="60%" class="OraTabledata"><input type="text"  name="jspConceptName" value="<%=desb.getConceptName()%>"  size="30" ></td>
+               <td width="60%" class="OraTabledata">
+               <label for ="advanceSearch_input_5"/>
+               <input id ="advanceSearch_input_5" type="text"  name="jspConceptName" value="<%=desb.getConceptName()%>"  size="30" ></td>
              </tr>               
             </table>           
            </td>
@@ -148,7 +154,8 @@
              <tr >
               <td width="40%" class="OraTableColumnHeaderNoBG" nowrap>Concept Code </td>
               <td  width="60%" class="OraTabledata" nowrap>
-               <input type="text"  name="jspConceptCode" value="<%=desb.getConceptCode()%>"  size="20"> 
+              <label for ="advanceSearch_input_6"/>
+               <input id ="advanceSearch_input_6" type="text"  name="jspConceptCode" value="<%=desb.getConceptCode()%>"  size="20"> 
               </td>
              </tr>                
             </table>  
@@ -177,13 +184,15 @@
             <tr >
                 <td class="OraTableColumnHeaderNoBG" nowrap>Public ID</td>
                 <td class="OraTabledata" nowrap>
-                   <input type="text" name="jspCdeId" value="<%=desb.getCdeId()%>" > 
+                 <label for ="advanceSearch_input_7"/>
+                   <input id ="advanceSearch_input_7" type="text" name="jspCdeId" value="<%=desb.getCdeId()%>" > 
                  </td>
             </tr>
             <tr >
                <td class="OraTableColumnHeaderNoBG" >Data Element Concept</td>
                <td class="OraTabledata" nowrap>
-                   <input type="text" name="txtDataElementConcept" 
+                	<label for ="advanceSearch_input_8"/>
+                   <input id ="advanceSearch_input_8" type="text" name="txtDataElementConcept" 
                       value="<%=txtDataElementConcept%>" 
                       readonly onFocus="this.blur();"
                       class="LOVField"
@@ -191,13 +200,15 @@
                     >
                   &nbsp;<a href="<%=decLOVUrl%>"><html:img page="/i/search_light.gif"  alt="search light" border="0" alt="Search for Data Element Concepts" /></a>&nbsp;
                   <a href="javascript:clearDataElementConcept()"><i>Clear</i></a>
-                  <input type="hidden" name="jspDataElementConcept" value="<%=desb.getDecIdseq()%>" >
+   
+                  <input id ="advanceSearch_input_9" type="hidden" name="jspDataElementConcept" value="<%=desb.getDecIdseq()%>" >
                 </td>
             </tr>
             <tr >
                <td class="OraTableColumnHeaderNoBG" nowrap>Classification</td>
                <td class="OraTabledata" nowrap>
-                  <input type="text" name="txtClassSchemeItem" 
+               <label for ="advanceSearch_input_10"/>
+                  <input id ="advanceSearch_input_10" type="text" name="txtClassSchemeItem" 
                     value="<%=txtClassSchemeItem%>" 
                     readonly onFocus="this.blur();"
                     class="LOVField"
@@ -205,32 +216,38 @@
                   >
                 &nbsp;<a href="<%=csLOVUrl%>"><html:img page="/i/search_light.gif" alt="search light" border="0" alt="Search for Classification Scheme Items" /></a>&nbsp;
                 <a href="javascript:clearClassSchemeItem()"><i>Clear</i></a>
-                <input type="hidden" name="jspClassification" value="<%=desb.getCsCsiIdseq()%>" >
+ 
+                <input id ="advanceSearch_input_11" type="hidden" name="jspClassification" value="<%=desb.getCsCsiIdseq()%>" >
               </td>
             </tr>            
             <tr >
               <td class="OraTableColumnHeaderNoBG" nowrap>Value Domain</td>
               <td class="OraTabledata" nowrap>
-                <input type="text" name="txtValueDomain" 
+              <label for ="advanceSearch_input_12"/>
+                <input id ="advanceSearch_input_12" type="text" name="txtValueDomain" 
                     value="<%=txtValueDomain%>" readonly onFocus="this.blur();"
                     class="LOVField"
                     size ="18"
                  >
                  &nbsp;<a href="<%=valueDomainLOVUrl%>"><html:img page="/i/search_light.gif" border="0" alt="Search for Value Domains" /></a>&nbsp;
                 <a href="javascript:clearValueDomain()"><i>Clear</i></a>
-                  <input type="hidden" name="jspValueDomain" value="<%=desb.getVdIdseq()%>" >
+ 
+                  <input id ="advanceSearch_input_13" type="hidden" name="jspValueDomain" value="<%=desb.getVdIdseq()%>" >
               </td>
             </tr>
 			<tr >
               <td class="OraTableColumnHeaderNoBG" nowrap>Value Domain Type</td>
               <td class="OraTabledata" nowrap>
-                <input type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_ENUMERATED%>"
+              <label for ="advanceSearch_input_14"/>
+                <input id ="advanceSearch_input_14" type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_ENUMERATED%>"
 	    	        <%if (desb.getVDType().equals(ProcessConstants.VD_TYPE_ENUMERATED))
 	    	        { %> checked <%}%> >Enumerated
-	    	        <input type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_NON_ENUMERATED%>"
+	    	        <label for ="advanceSearch_input_15"/>
+	    	        <input id ="advanceSearch_input_15" type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_NON_ENUMERATED%>"
 	    	        <%if (desb.getVDType().equals(ProcessConstants.VD_TYPE_NON_ENUMERATED))
 	    	        { %> checked <%}%> >Non Enumerated
-					<input type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_BOTH%>"
+					<label for ="advanceSearch_input_16"/>
+					<input id ="advanceSearch_input_16" type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_BOTH%>"
 	    	        <%if (desb.getVDType().equals(ProcessConstants.VD_TYPE_BOTH))
 	    	        { %> checked <%}%> >Both
               </td>
@@ -238,7 +255,8 @@
             <tr>
                 <td class="OraTableColumnHeaderNoBG" nowrap>Permissible Value</td>
                 <td class="OraTabledata" nowrap>
-                <input type="text" name="jspValidValue" value="<%=desb.getValidValue()%>" size ="20"> 
+                  <label for ="advanceSearch_input_17"/>
+                <input id ="advanceSearch_input_17" type="text" name="jspValidValue" value="<%=desb.getValidValue()%>" size ="20"> 
                </td>
             </tr>
             <tr>
@@ -246,13 +264,16 @@
                       <table valign="top">
 	    	    <tr>
 	    	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-	    	        <input type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
+	    	     	<label for ="advanceSearch_input_18"/>
+	    	        <input id ="advanceSearch_input_18" type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
 	    	        <%if (desb.getPvSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
 	    	        { %> checked <%}%> >Exact phrase
-	    	        <input type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
+	    	        <label for ="advanceSearch_input_19"/>
+	    	        <input id ="advanceSearch_input_19" type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
 	    	        <%if (desb.getPvSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ALL)) 
 	    	        { %> checked <%}%>>All words
-	    	        <input type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
+	    	        <label for ="advanceSearch_input_20"/>
+	    	        <input id ="advanceSearch_input_20" type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
 	    	        <%if (desb.getPvSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> >At least one word
 	    	     </td >
 	    	    </tr>
@@ -272,7 +293,8 @@
                         <tr >
                          <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Alternate Name</td>
                          <td width="70%" class="OraTabledata" nowrap>
-                           <input type="text" name="jspAltName" value="<%=desb.getAltName()%>" size ="20"> 
+                         <label for ="advanceSearch_input_21"/>
+                           <input id ="advanceSearch_input_21" type="text" name="jspAltName" value="<%=desb.getAltName()%>" size ="20"> 
                          </td>
                         </tr>    
                         <tr >
@@ -282,13 +304,15 @@
                         <tr >
                          <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Object Class</td>
                          <td width="70%" class="OraTabledata" nowrap>
-                           <input type="text" name="jspObjectClass" value="<%=desb.getObjectClass()%>" size ="20"> 
+                         <label for ="advanceSearch_input_22"/>
+                           <input  id ="advanceSearch_input_22" type="text" name="jspObjectClass" value="<%=desb.getObjectClass()%>" size ="20"> 
                          </td>
                         </tr>    
                         <tr >
                          <td width="30%" class="OraTableColumnHeaderNoBG" nowrap>Property</td>
                          <td width="70%" class="OraTabledata" nowrap>
-                           <input type="text" name="jspProperty" value="<%=desb.getProperty()%>" size ="20"> 
+                         <label for ="advanceSearch_input_23"/>
+                           <input  id ="advanceSearch_input_23" type="text" name="jspProperty" value="<%=desb.getProperty()%>" size ="20"> 
                          </td>
                         </tr>    
                         </table>
@@ -332,16 +356,20 @@
                             if (latestVer.equals("Yes") || latestVer.equals("")) {
                           %>
                                     <td class="OraTableColumnHeaderNoBG" nowrap>
-                                      <input type="radio" name="jspLatestVersion" value="Yes" checked> Latest Version
-                                      <input type="radio" name="jspLatestVersion" value="No"> All Versions
+                                    	<label for ="advanceSearch_input_24"/>
+                                      <input  id ="advanceSearch_input_24" type="radio" name="jspLatestVersion" value="Yes" checked> Latest Version
+                                      <label for ="advanceSearch_input_25"/>
+                                      <input  id ="advanceSearch_input_25" type="radio" name="jspLatestVersion" value="No"> All Versions
                                    </td>
                           <%
                             }
                             else {
                           %>
                                     <td class="OraTableColumnHeaderNoBG" nowrap>
-                                      <input type="radio" name="jspLatestVersion" value="Yes" > Latest Version
-                                      <input type="radio" name="jspLatestVersion" value="No" checked > All Versions
+                                     <label for ="advanceSearch_input_26"/>
+                                      <input id ="advanceSearch_input_26" type="radio" name="jspLatestVersion" value="Yes" > Latest Version
+                                      <label for ="advanceSearch_input_27"/>
+                                      <input id ="advanceSearch_input_27" type="radio" name="jspLatestVersion" value="No" checked > All Versions
                                    </td>
                           <%
                             }

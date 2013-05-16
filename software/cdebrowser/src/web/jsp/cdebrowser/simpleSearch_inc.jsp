@@ -9,13 +9,20 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
 }
 
 %>
-<INPUT TYPE="HIDDEN" NAME="jspSearchIn" VALUE="ALL">
+ 
+<INPUT id ="simpleSearch_input_5"  TYPE="HIDDEN" NAME="jspSearchIn" VALUE="ALL">
+
 <!-- >INPUT TYPE="HIDDEN" NAME="jspLatestVersion" VALUE="Yes"-->
-<INPUT TYPE="HIDDEN" NAME="contextUse" VALUE="both">
-<INPUT TYPE="HIDDEN" NAME="jspStatus" VALUE="ALL">
-<INPUT TYPE="HIDDEN" NAME="regStatus" VALUE="ALL">
-<INPUT TYPE="HIDDEN" NAME="jspCdeId" >
-<INPUT TYPE="HIDDEN" NAME="jspKeyword" >
+ 
+<INPUT id ="simpleSearch_input_7"  TYPE="HIDDEN" NAME="contextUse" VALUE="both">
+ 
+<INPUT id ="simpleSearch_input_8"  TYPE="HIDDEN" NAME="jspStatus" VALUE="ALL">
+ 
+<INPUT id ="simpleSearch_input_9"  TYPE="HIDDEN" NAME="regStatus" VALUE="ALL">
+ 
+<INPUT id ="simpleSearch_input_10"  TYPE="HIDDEN" NAME="jspCdeId" >
+ 
+<INPUT id ="simpleSearch_input_11"  TYPE="HIDDEN" NAME="jspKeyword" >
 
 <table width="100%" >
  
@@ -84,21 +91,24 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
  <table valign="top">
   <tr>
    <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-      <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
+ 	<label  for ="simpleSearch_input_1"/>
+      <input id ="simpleSearch_input_1" type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
       <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
       { %> checked <%}%> >Exact phrase
    </td >
   </tr>
   <tr>
    <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-      <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
+   <label  for ="simpleSearch_input_2"/>
+      <input id ="simpleSearch_input_2"  type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
       <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ALL)) 
       { %> checked <%}%>>All of the words
    </td >
   </tr>
   <tr>
    <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-      <input type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
+   <label  for ="simpleSearch_input_3"/>
+      <input id ="simpleSearch_input_3"  type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
       <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> >At least one of the words
    </td >
   </tr>
@@ -106,10 +116,12 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
 	</fieldset>    
     </td>
     <td width="40%" align="left" nowrap >
-      <input type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" size ="60"> 
+    <label  for ="simpleSearch_input_4"/>
+      <input id ="simpleSearch_input_4"  type="text" name="jspSimpleKeyword" value="<%=desb.getSimpleSearchStr()%>" size ="60"> 
     </td>
     <td width="20%" align="left" nowrap >
-      <select  name="jspBasicSearchType" class="Dropdown" name="contextIdSeq" >
+     <label  for ="simpleSearch_select"/>
+      <select id ="simpleSearch_select" name="jspBasicSearchType" class="Dropdown" name="contextIdSeq" >
 
         <option value="name" <%=basicSearchTypeName%> >Name</option> 
         <option value="publicId" <%=basicSearchTypePublicId%> >Public ID</option> 

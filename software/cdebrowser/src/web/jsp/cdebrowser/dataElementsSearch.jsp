@@ -402,21 +402,32 @@ function gotoCDESearchPrefs() {
 
 //-->
 </SCRIPT>
-<label for="searchForm"/>
 <form action="<%=infoBean.getStringInfo("controller") %>" METHOD="POST" NAME="searchForm" onkeypress="if(event.keyCode==13){<%=StringEscapeUtils.escapeHtml(submitFunction)%>};">
-<INPUT TYPE="HIDDEN" NAME="<%=StringEscapeUtils.escapeHtml(BrowserNavigationConstants.METHOD_PARAM)%>" > 
-<INPUT TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
-<INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
-<INPUT TYPE="HIDDEN" NAME="SEARCH" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
-<INPUT TYPE="HIDDEN" NAME="performQuery" VALUE="<%=StringEscapeUtils.escapeHtml("yes")%>">
-<INPUT TYPE="HIDDEN" NAME="src" VALUE="<%=StringEscapeUtils.escapeHtml(src)%>">
-<INPUT TYPE="HIDDEN" NAME="moduleIndex" VALUE="<%=StringEscapeUtils.escapeHtml(modIndex)%>">
-<INPUT TYPE="HIDDEN" NAME="questionIndex" VALUE="<%=StringEscapeUtils.escapeHtml(quesIndex)%>">
-<input type="HIDDEN" name="<%=PageConstants.PAGEID%>" value="<%=StringEscapeUtils.escapeHtml(infoBean.getPageId())%>"/>
+ 
+<INPUT id="hiddenInput_1" TYPE="HIDDEN" NAME="<%=StringEscapeUtils.escapeHtml(BrowserNavigationConstants.METHOD_PARAM)%>" > 
+ 
+<INPUT id="hiddenInput_2" TYPE="HIDDEN" NAME="NOT_FIRST_DISPLAY" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
+ 
+<INPUT id="hiddenInput_3" TYPE="HIDDEN" NAME="SEARCH" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
+ 
+<INPUT id="hiddenInput_4" TYPE="HIDDEN" NAME="SEARCH" VALUE="<%=StringEscapeUtils.escapeHtml("1")%>">
+ 
+<INPUT id="hiddenInput_5" TYPE="HIDDEN" NAME="performQuery" VALUE="<%=StringEscapeUtils.escapeHtml("yes")%>">
+ 
+<INPUT id="hiddenInput_6" TYPE="HIDDEN" NAME="src" VALUE="<%=StringEscapeUtils.escapeHtml(src)%>">
+ 
+<INPUT id="hiddenInput_7"  TYPE="HIDDEN" NAME="moduleIndex" VALUE="<%=StringEscapeUtils.escapeHtml(modIndex)%>">
+ 
+<INPUT id="hiddenInput_8" TYPE="HIDDEN" NAME="questionIndex" VALUE="<%=StringEscapeUtils.escapeHtml(quesIndex)%>">
+ 
+<input id="hiddenInput_9" type="HIDDEN" name="<%=PageConstants.PAGEID%>" value="<%=StringEscapeUtils.escapeHtml(infoBean.getPageId())%>"/>
 <!--screenType-->
-<INPUT TYPE="HIDDEN" NAME="<%=BrowserFormConstants.BROWSER_SEARCH_SCREEN_TYPE%>" >
-<INPUT TYPE="HIDDEN" NAME="browserSearchScope" value="<%=StringEscapeUtils.escapeHtml(searchMode)%>">
-<INPUT TYPE="HIDDEN" NAME="baseQuery" value="<%=StringEscapeUtils.escapeHtml(baseQuery)%>">
+ 
+<INPUT id="hiddenInput_10" TYPE="HIDDEN" NAME="<%=BrowserFormConstants.BROWSER_SEARCH_SCREEN_TYPE%>" >
+ 
+<INPUT id="hiddenInput_11"  TYPE="HIDDEN" NAME="browserSearchScope" value="<%=StringEscapeUtils.escapeHtml(searchMode)%>">
+ 
+<INPUT id="hiddenInput_12" TYPE="HIDDEN" NAME="baseQuery" value="<%=StringEscapeUtils.escapeHtml(baseQuery)%>">
  
 <%@ include  file="/jsp/cdebrowser/cdebrowserCommon_html/tab_include_search.html" %>
 
