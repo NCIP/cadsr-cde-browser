@@ -7,7 +7,8 @@ package gov.nih.nci.ncicb.webtree;
  * @version 1.0
  */
  
-import java.io.*;
+import gov.nih.nci.ncicb.cadsr.common.util.TreeUtils;
+
 import java.util.*;
 import javax.swing.tree.*;
 import javax.servlet.http.*;
@@ -27,7 +28,7 @@ public class BDWebTree
     try
     {
       webTree = (WebTree) (Class.forName(treeClassName).newInstance());      
-      paramsHT = parseParameters(treeClassParams);  
+      paramsHT =TreeUtils.parseParameters(treeClassParams);  
       _root = webTree.getTree(paramsHT);                        
     }
     catch (ClassNotFoundException e)
@@ -37,41 +38,41 @@ public class BDWebTree
     }                  
     catch (Exception e)
     {
-      System.err.println("Error getting instance of Class Name: "+treeClassName+" - "+e.toString());   
-      throw(new Exception("Error getting instance of Class Name: "+treeClassName+"   Error Message: "+e.toString()));   
+      System.err.println("Error getting instance of Class Name: "+treeClassName+" - parameters:  "+treeClassParams +" _ "+e.toString());   
+      throw(new Exception("Error getting instance of Class Name: "+treeClassName+" - parameters:  "+treeClassParams +" _  Error Message: "+e.toString()));   
     }
     
   }
   
-  private Hashtable parseParameters(String params) throws Exception
-  {
-    // parses a string of parameters defined with the following syntax:
-    // name1:value1;name2:value2;
-  
-    Hashtable results = new Hashtable();
-  
-    if (params != null && !params.equals("null"))
-    {
-      StringTokenizer st = new StringTokenizer(params, ";");
-      while (st.hasMoreTokens()) 
-      {
-        String pair = st.nextToken();
-        StringTokenizer stPair = new StringTokenizer(pair, ":");
-        if (stPair.countTokens() == 2)
-        {
-          String name = stPair.nextToken();
-          String value = stPair.nextToken();
-          results.put(name, value);  
-        }
-        else
-        {
-          System.err.println("invalid 'name=value' pair parameter");
-          throw(new Exception("invalid 'name=value' pair parameter"));
-        }      
-      }         
-    }  
-    return results;      
-  }
+//  private Hashtable parseParameters(String params) throws Exception
+//  {
+//    // parses a string of parameters defined with the following syntax:
+//    // name1:value1;name2:value2;
+//  
+//    Hashtable results = new Hashtable();
+//  
+//    if (params != null && !params.equals("null"))
+//    {
+//      StringTokenizer st = new StringTokenizer(params, ";");
+//      while (st.hasMoreTokens()) 
+//      {
+//        String pair = st.nextToken();
+//        StringTokenizer stPair = new StringTokenizer(pair, ":");
+//        if (stPair.countTokens() == 2)
+//        {
+//          String name = stPair.nextToken();
+//          String value = stPair.nextToken();
+//          results.put(name, value);  
+//        }
+//        else
+//        {
+//          System.err.println("invalid 'name=value' pair parameter");
+//          throw(new Exception("invalid 'name=value' pair parameter"));
+//        }      
+//      }         
+//    }  
+//    return results;      
+//  }
   
   public DefaultMutableTreeNode getDisplayTree(String treeAction, String targetId, HttpSession userSession, String treeDirective) throws Exception 
   {    
@@ -153,7 +154,7 @@ public class BDWebTree
     // parse directive instructions
     try 
     {
-      Hashtable directivesHT = parseParameters(directive);
+      Hashtable directivesHT = TreeUtils.parseParameters(directive);
       
       if (directivesHT.containsKey("openToName"))
       {

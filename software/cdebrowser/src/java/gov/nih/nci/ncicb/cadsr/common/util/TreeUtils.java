@@ -2,7 +2,6 @@ package gov.nih.nci.ncicb.cadsr.common.util;
 
 import gov.nih.nci.ncicb.cadsr.contexttree.TreeConstants;
 import gov.nih.nci.ncicb.webtree.WebNode;
-import java.net.URLEncoder;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -28,8 +27,8 @@ public class TreeUtils {
           results.put(name, value);
         }
         else {
-          System.err.println("invalid 'name=value' pair parameter");
-          throw (new Exception("invalid 'name=value' pair parameter"));
+          System.err.println("invalid 'name=value' pair parameter...:"+pair);
+          throw (new Exception("invalid 'name=value' pair parameter...:"+pair));
         }
       }
     }
