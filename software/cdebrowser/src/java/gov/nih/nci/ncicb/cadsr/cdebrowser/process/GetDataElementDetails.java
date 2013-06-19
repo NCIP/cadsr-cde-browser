@@ -7,6 +7,7 @@ import gov.nih.nci.ncicb.cadsr.common.cdebrowser.userexception.IllegalURLParamet
 import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.common.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.common.servicelocator.ApplicationServiceLocator;
+import gov.nih.nci.ncicb.cadsr.common.util.AppScanValidator;
 import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
 import gov.nih.nci.ncicb.cadsr.common.util.UserErrorMessage;
 
@@ -77,6 +78,11 @@ public class GetDataElementDetails extends BasePersistingProcess {
 
     String queryDE = getStringInfo("queryDE");
     String deIdseq = getStringInfo("p_de_idseq");
+    if (!AppScanValidator.validateElementIdSequence(deIdseq))
+    {
+    	throw new Exception("Invalid input element id:"+deIdseq);
+    }
+    
     String cdeId = getStringInfo("cdeId");
     String version = getStringInfo("version");
     Object sessionId = getSessionId();
