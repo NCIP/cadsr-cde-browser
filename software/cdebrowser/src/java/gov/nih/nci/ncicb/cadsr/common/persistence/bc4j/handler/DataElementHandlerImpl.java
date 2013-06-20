@@ -6,28 +6,21 @@ import gov.nih.nci.ncicb.cadsr.common.dto.ContextTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.DataElementConceptTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.dto.ValueDomainTransferObject;
 import gov.nih.nci.ncicb.cadsr.common.persistence.bc4j.CDEBrowserBc4jModuleImpl;
-import gov.nih.nci.ncicb.cadsr.common.persistence.bc4j.DataElementsViewRowImpl;
 import gov.nih.nci.ncicb.cadsr.common.resource.DataElement;
 import gov.nih.nci.ncicb.cadsr.common.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.common.resource.DataElementConcept;
 import gov.nih.nci.ncicb.cadsr.common.resource.Context;
 import gov.nih.nci.ncicb.cadsr.common.resource.handler.DataElementHandler;
-import gov.nih.nci.ncicb.cadsr.common.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.common.util.PageIterator;
 
 import oracle.cle.persistence.Handler;
-import oracle.cle.persistence.HandlerFactory;
-
-import oracle.cle.util.CLEUtil;
 
 import oracle.jbo.Row;
-import oracle.jbo.RowIterator;
 import oracle.jbo.ViewObject;
 
 import oracle.jbo.domain.Number;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import oracle.jbo.server.ViewRowImpl;
 
@@ -61,7 +54,7 @@ public class DataElementHandlerImpl extends Handler
         "Exception caught in " +
         "DataElementHandlerImpl.findObject(String, String) " + e.getMessage());
       e.printStackTrace();
-      throw e;
+      throw new Exception ("Exception caught in  DataElementHandlerImpl.findObject(String, String) ");
     }
     finally {
       releaseConnection(sessionId);
@@ -117,7 +110,7 @@ public class DataElementHandlerImpl extends Handler
         "DataElementHandlerImpl.findDataElementsBasedOnQuery(String , String) " +
         ex.getMessage());
       ex.printStackTrace();
-      throw ex;
+      throw new Exception ("Exception caught in  DataElementHandlerImpl.findDataElementsBasedOnQuery(String, String) ");
     }
     finally {
       if (runtimeVO != null) {
@@ -191,10 +184,10 @@ public class DataElementHandlerImpl extends Handler
     catch (Exception ex) {
       System.out.println(
         "Exception caught in " +
-        "DataElementHandlerImpl.findDataElementsBasedOnQuery(String , String) " +
+        "DataElementHandlerImpl.findDataElementsFromQueryClause(String sqlQuery, String orderByClause, Object sessionId,  PageIterator deIterator)" +
         ex.getMessage());
       ex.printStackTrace();
-      throw ex;
+      throw new Exception ("Exception caught in  DataElementHandlerImpl.findDataElementsFromQueryClause(String sqlQuery, String orderByClause, Object sessionId,  PageIterator deIterator)");
     }
     finally {
       if (runtimeVO != null) {
@@ -230,10 +223,10 @@ public class DataElementHandlerImpl extends Handler
     catch (Exception ex) {
       System.out.println(
         "Exception caught in " +
-        "DataElementHandlerImpl.findDataElementsBasedOnQuery(String , String) " +
+        "DataElementHandlerImpl.findDataElementIdsFromQueryClause( String sqlQuery, String orderByClause,   Object sessionId) " +
         ex.getMessage());
       ex.printStackTrace();
-      throw ex;
+      throw new Exception ("Exception caught in  DataElementHandlerImpl.findDataElementIdsFromQueryClause( String sqlQuery, String orderByClause,   Object sessionId) ");
     }
     finally {
       if (runtimeVO != null) {
@@ -263,14 +256,14 @@ public class DataElementHandlerImpl extends Handler
       System.out.println(
         "DataElementNotFoundException caught in findDataElementsByPublicId (...)" +
         dex.getMessage());
-      throw dex;
+      throw new Exception ("DataElementNotFoundException caught in  DataElementHandlerImpl.findDataElementsByPublicId( int cdeId,   float version,   Object sessionId) ");
     }
     catch (Exception ex) {
       System.out.println(
         "Exception caught in findDataElementsByPublicId (...)" +
         ex.getMessage());
       ex.printStackTrace();
-      throw ex;
+      throw new Exception ("Exception caught in  DataElementHandlerImpl.findDataElementsByPublicId( int cdeId,   float version,   Object sessionId) ");
     }
     finally {
       releaseConnection(sessionId);
@@ -293,7 +286,7 @@ public class DataElementHandlerImpl extends Handler
     catch (Exception ex) {
       System.out.println("Exception caught in getAllFormUsages(...)");
       ex.printStackTrace();
-      throw ex;
+      throw new Exception ("Exception caught in  DataElementHandlerImpl.getAllFormUsages ");
     }
     finally {
       releaseConnection(sessionId);
@@ -315,7 +308,7 @@ public class DataElementHandlerImpl extends Handler
     catch (Exception ex) {
       System.out.println("Exception caught in getAllFormUsages(...)");
       ex.printStackTrace();
-      throw ex;
+      throw new Exception ("Exception caught in  DataElementHandlerImpl.getAllFormUsages ");
     }
     finally {
       releaseConnection(sessionId);
