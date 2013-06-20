@@ -3,6 +3,7 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.lov.ProtocolsLOVBean;
+import gov.nih.nci.ncicb.cadsr.common.util.AppScanValidator;
 import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
 
@@ -91,7 +92,12 @@ public class GetProtocolsLov extends BasePersistingProcess {
         if (conteIdseq == null) {
           conteIdseq = "";
         }
+        else
+		{
 
+			if (!AppScanValidator.validateElementIdSequence(conteIdseq))
+				throw new Exception ("Invalidate ID sequence:"+conteIdseq);
+		}
         additionalWhere =
           " and upper(nvl(proto_conte.conte_idseq,'%')) like upper ( '%" +
           conteIdseq + "%') ";

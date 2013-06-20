@@ -103,7 +103,12 @@ public class GetDataElementConceptsLOV extends BasePersistingProcess {
         if (conteIdseq == null) {
           conteIdseq = "";
         }
+        else
+		{
 
+			if (!AppScanValidator.validateElementIdSequence(conteIdseq))
+				throw new Exception ("Invalidate ID sequence:"+conteIdseq);
+		}
         String additionalWhere =
           " and upper(nvl(dec_conte.conte_idseq,'%')) like upper ( '%" +
           conteIdseq + "%') ";

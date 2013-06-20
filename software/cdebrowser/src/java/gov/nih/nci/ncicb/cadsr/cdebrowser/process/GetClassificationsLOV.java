@@ -4,6 +4,7 @@ import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.common.lov.ClassificationsLOVBean;
 import gov.nih.nci.ncicb.cadsr.common.resource.Context;
+import gov.nih.nci.ncicb.cadsr.common.util.AppScanValidator;
 import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
 import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
@@ -117,10 +118,12 @@ public class GetClassificationsLOV extends BasePersistingProcess {
 
         String contextIdSeq = StringEscapeUtils.escapeHtml(getStringInfo("P_CONTE_IDSEQ"));
 
-//         if (conteIdseq == null) {
-//           conteIdseq = "";
-//         }
+		if (contextIdSeq!=null)
+		{
 
+			if (!AppScanValidator.validateElementIdSequence(contextIdSeq))
+				throw new Exception ("Invalidate ID sequence:"+contextIdSeq);
+		}
 	String chk = StringEscapeUtils.escapeHtml(getStringInfo("chkContext"));
 
 	String[] contexts = null;

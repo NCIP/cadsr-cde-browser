@@ -191,7 +191,22 @@ public class GetDataElements extends BasePersistingProcess {
 			}
 			
 			String paramRegStatus = getStringInfo("P_REGSTATUS");
+			//addition validation rule maybe required
+			if (paramRegStatus!=null)
+			{
+				if (!AppScanValidator.validateSearchParameterType(paramRegStatus))
+					throw new Exception ("Invalidate registration status type:"+paramRegStatus);
+ 
+			}
+			
 			String treeConteIdseq = getStringInfo("P_CONTE_IDSEQ");
+			if (treeConteIdseq!=null)
+			{
+ 
+				if (!AppScanValidator.validateElementIdSequence(treeConteIdseq))
+					throw new Exception ("Invalidate ID sequence:"+treeConteIdseq);
+			}
+			
 			searchParam = getInfoStringArray("SEARCH");
 
 			String performQuery = getStringInfo("performQuery");
