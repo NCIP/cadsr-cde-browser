@@ -59,12 +59,6 @@ public class ResetParameters extends BaseGenericProcess {
    */
   public void start() {
     try {
-      /*String paramType = getStringInfo("P_PARAM_TYPE");
-      String paramIdSeq = getStringInfo("P_IDSEQ");
-      DBUtil dbUtil = (DBUtil) getInfoObject("dbUtil");
-      dbUtil.getConnectionFromContainer(dsName);
-      DataElementSearchBean desb =
-          new DataElementSearchBean(myRequest, paramType, paramIdSeq, dbUtil);*/
       setCondition(SUCCESS);
     }
     catch (Exception ex) {

@@ -14,6 +14,7 @@ import gov.nih.nci.ncicb.cadsr.common.resource.ValueDomain;
 import gov.nih.nci.ncicb.cadsr.common.resource.handler.DataElementHandler;
 import gov.nih.nci.ncicb.cadsr.common.resource.handler.ValidValueHandler;
 import gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants;
+import gov.nih.nci.ncicb.cadsr.common.util.AppScanValidator;
 import gov.nih.nci.ncicb.cadsr.common.util.BC4JPageIterator;
 import gov.nih.nci.ncicb.cadsr.common.util.CDEBrowserParams;
 import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
@@ -175,7 +176,20 @@ public class GetDataElements extends BasePersistingProcess {
 			log.info("- Intialized TabInfoBean successfully");
 
 			String paramType = getStringInfo("P_PARAM_TYPE");
+			if (paramType!=null)
+			{
+				if (!AppScanValidator.validateSearchParameterType(paramType))
+					throw new Exception ("Invalidate parameter type:"+paramType);
+ 
+			}
 			String paramIdSeq = getStringInfo("P_IDSEQ");
+			if (paramIdSeq!=null)
+			{
+ 
+				if (!AppScanValidator.validateElementIdSequence(paramIdSeq))
+					throw new Exception ("Invalidate ID sequence:"+paramIdSeq);
+			}
+			
 			String paramRegStatus = getStringInfo("P_REGSTATUS");
 			String treeConteIdseq = getStringInfo("P_CONTE_IDSEQ");
 			searchParam = getInfoStringArray("SEARCH");

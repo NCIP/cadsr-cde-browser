@@ -4,11 +4,30 @@ import java.util.regex.Pattern;
 
 public class AppScanValidator {
  	private static Pattern cdeIdSequencePattern = Pattern.compile("^[A-Za-z0-9_-]{36}$");
-	public static boolean validateElementIdSequence(String idToCheck)
+ 	private static Pattern searchParameterTypePatter=Pattern.compile("^[A-Za-z]+$");
+ 	
+ 	/**
+ 	 * Validate the ID sequence of a CDEElement
+ 	 * @param idSequenceToCheck
+ 	 * @return
+ 	 */
+	public static boolean validateElementIdSequence(String idSequenceToCheck)
 	{
  
-	        return  validatePatternAndValue(cdeIdSequencePattern, idToCheck);        
+	        return  validatePatternAndValue(cdeIdSequencePattern, idSequenceToCheck);        
 	}
+	
+ 	/**
+ 	 * Validate the search parameter type
+ 	 * @param parameterTypeToCheck
+ 	 * @return
+ 	 */
+	public static boolean validateSearchParameterType(String parameterTypeToCheck)
+	{
+ 
+	        return  validatePatternAndValue(searchParameterTypePatter, parameterTypeToCheck);        
+	}
+	
 	
 	private static boolean validatePatternAndValue(Pattern checkPattern, String valueToCheck)
 	{
