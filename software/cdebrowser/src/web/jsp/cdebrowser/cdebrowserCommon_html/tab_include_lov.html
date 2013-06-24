@@ -48,6 +48,8 @@ function subTabClicked(tabNum,urlParams) {
 
 
 <%
+if (tib!=null)
+{
   for (int i = 0; i < tib.getMainTabCount(); i++) {
     if (tib.getMainTabNum() == i) { %>
 
@@ -63,6 +65,7 @@ function subTabClicked(tabNum,urlParams) {
 <%
     }
   }
+}
 %>
 
 </table>
@@ -78,6 +81,8 @@ function subTabClicked(tabNum,urlParams) {
 <td align=left valign=top width="5%" bgcolor="#336699">&nbsp;</td>
 
 <%
+if (tib!=null)
+{
   for (int i = 0; i < tib.getSubTabCount(); i++) {
     if (tib.getSubTabNum() == i) {
 %>
@@ -93,6 +98,7 @@ function subTabClicked(tabNum,urlParams) {
     <td width=1% bgcolor="#336699"><img src="i/subtab.gif" alt="sub tab" ></TD>
 <%
   }
+ }
 %>
 <TD align=left valign=center bgcolor="#336699" height=25 width="94%">&nbsp;</TD>
 </tr>

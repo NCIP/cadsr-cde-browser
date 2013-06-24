@@ -179,7 +179,7 @@ public class GetDataElements extends BasePersistingProcess {
 			if (paramType!=null)
 			{
 				if (!AppScanValidator.validateSearchParameterType(paramType))
-					throw new Exception ("Invalidate parameter type:"+paramType);
+					throw new Exception ("Invalidate parameter type");
  
 			}
 			String paramIdSeq = getStringInfo("P_IDSEQ");
@@ -187,7 +187,7 @@ public class GetDataElements extends BasePersistingProcess {
 			{
  
 				if (!AppScanValidator.validateElementIdSequence(paramIdSeq))
-					throw new Exception ("Invalidate ID sequence:"+paramIdSeq);
+					throw new Exception ("Invalidate element ID ");
 			}
 			
 			String paramRegStatus = getStringInfo("P_REGSTATUS");
@@ -195,7 +195,7 @@ public class GetDataElements extends BasePersistingProcess {
 			if (paramRegStatus!=null)
 			{
 				if (!AppScanValidator.validateSearchParameterType(paramRegStatus))
-					throw new Exception ("Invalidate registration status type:"+paramRegStatus);
+					throw new Exception ("Invalidate registration status type");
  
 			}
 			
@@ -204,7 +204,7 @@ public class GetDataElements extends BasePersistingProcess {
 			{
  
 				if (!AppScanValidator.validateElementIdSequence(treeConteIdseq))
-					throw new Exception ("Invalidate ID sequence:"+treeConteIdseq);
+					throw new Exception ("Invalidate ID sequence");
 			}
 			
 			searchParam = getInfoStringArray("SEARCH");

@@ -28,9 +28,14 @@
 <%
   
   String msgAlign = "CENTER";
-  if (uem.getMsgTechnical().length() > 0) {
+  if (uem!=null && uem.getMsgTechnical().length() > 0) {
     msgAlign = "LEFT";
   }
+  else
+  {
+	  uem=new UserErrorMessage();
+  }
+  
 %>
 
 <HTML>

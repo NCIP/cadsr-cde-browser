@@ -77,17 +77,43 @@ public class GetDataElementDetails extends BasePersistingProcess {
     HttpServletRequest myRequest = null;
 
     String queryDE = getStringInfo("queryDE");
-    String deIdseq = getStringInfo("p_de_idseq");
-    if (!AppScanValidator.validateElementIdSequence(deIdseq))
-    {
-    	throw new Exception("Invalid input element id:"+deIdseq);
-    }
-    
+    String deIdseq = getStringInfo("p_de_idseq");   
     String cdeId = getStringInfo("cdeId");
     String version = getStringInfo("version");
     Object sessionId = getSessionId();
     myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
+    if (!AppScanValidator.validateElementIdSequence(deIdseq))
+    {
+    	Exception validationExp= new Exception("Invalid input element id");
+        try {
+            UserErrorMessage uem;
+            tib = new TabInfoBean("cdebrowser_error_tabs");
+            myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
+            tib.processRequest(myRequest);
 
+            if (tib.getMainTabNum() != 0) {
+              tib.setMainTabNum(0);
+            }
+
+            uem = new UserErrorMessage();
+            uem.setMsgOverview("Input validation Error");
+            uem.setMsgText(
+              "Input validation error has occurred. Please re-try your request");
+            uem.setMsgTechnical(
+              "<b>System Error:</b> Here is the stack " +
+              "trace from the Exception.<BR><BR>" + validationExp.toString() + "<BR><BR>");
+            setResult("tib", tib);
+            setResult("uem", uem);
+            setCondition(FAILURE);
+          }
+          catch (TransitionConditionException tce) {
+            reportException(tce, DEBUG);
+          }
+
+          reportException(validationExp, DEBUG);
+          throw validationExp;
+    }
+    
     try {
       if (queryDE == null) {
         throw new IllegalURLParametersException("Incorrect URL parameters");
