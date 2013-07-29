@@ -10,7 +10,7 @@ You will find more details about the caDSR CDE Browser in the following links:
  * [Community Wiki] (https://wiki.nci.nih.gov/x/O4EI)
  * [Code Repository] (https://github.com/NCIP/cadsr-cdebrowser)
  * [Issue Tracker] (https://tracker.nci.nih.gov/browse/CDEBROWSER)
- * [Downloads] (http://gforge.nci.nih.gov/frs/?group_id=582)
+ * [Downloads] (http://gforge.nci.nih.gov/frs/?group_id=34)
  
 An NCI hosted instance of caDSR CDE Browser is publicly available at:
 
