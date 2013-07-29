@@ -1,3 +1,10 @@
+<%--L
+  Copyright Oracle Inc, SAIC-F Inc.
+
+  Distributed under the OSI-approved BSD 3-Clause License.
+  See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
+L--%>
+
 <logic:messagesPresent >
   <table width="100%" align="center">
     <html:messages id="error" >

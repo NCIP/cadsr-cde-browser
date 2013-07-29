@@ -1,3 +1,10 @@
+/*L
+ * Copyright Oracle Inc, SAIC-F Inc.
+ *
+ * Distributed under the OSI-approved BSD 3-Clause License.
+ * See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
+ */
+
 // Copyright (c) 2008 ScenPro, Inc.
 
 // $Header: /cvsshare/content/cvsroot/cdebrowser/src/java/gov/nih/nci/ncicb/cadsr/common/security/jboss/CaDsrUserCredentials.java,v 1.1 2009-02-13 18:07:45 davet Exp $

@@ -1,3 +1,10 @@
+/*L
+ * Copyright Oracle Inc, SAIC-F Inc.
+ *
+ * Distributed under the OSI-approved BSD 3-Clause License.
+ * See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
+ */
+
 // Copyright (c) 2000 Oracle Corporation
 package gov.nih.nci.ncicb.cadsr.common.util;
 

@@ -1,3 +1,10 @@
+<%--L
+  Copyright Oracle Inc, SAIC-F Inc.
+
+  Distributed under the OSI-approved BSD 3-Clause License.
+  See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
+L--%>
+
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/js/helpWinJS.js"/>'></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript1.1" SRC='<html:rewrite page="/js/newWinJS.js"/>'></SCRIPT>
 <%@ include  file="/jsp/common/topHeader.jsp" %>

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--L
+  Copyright Oracle Inc, SAIC-F Inc.
+
+  Distributed under the OSI-approved BSD 3-Clause License.
+  See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
+L-->
+
 <!-- $Id: template.cdebrowser-login-config-service.xml,v 1.1 2009-01-12 16:43:53 davet Exp $ -->
 
 <!-- ===================================================================== -->

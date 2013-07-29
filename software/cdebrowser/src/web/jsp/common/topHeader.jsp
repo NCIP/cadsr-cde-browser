@@ -1,3 +1,10 @@
+<%--L
+  Copyright Oracle Inc, SAIC-F Inc.
+
+  Distributed under the OSI-approved BSD 3-Clause License.
+  See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
+L--%>
+
 <HTML>
 <BODY topmargin="0">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#A90101">

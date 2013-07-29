@@ -1,3 +1,10 @@
+/*L
+  Copyright Oracle Inc, SAIC-F Inc.
+
+  Distributed under the OSI-approved BSD 3-Clause License.
+  See http://ncip.github.com/cadsr-cde-browser/LICENSE.txt for details.
+L*/
+
 /* Formatted on 2010/03/31 14:31 (Formatter Plus v4.8.6) */
 MERGE INTO sbrext.tool_options_view_ext s
    USING (SELECT 'CDEBrowser' AS tool_name,
