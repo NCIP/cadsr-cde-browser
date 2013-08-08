@@ -8,7 +8,7 @@ Please see the NOTICE and LICENSE files for details.
 
 You will find more details about the caDSR CDE Browser in the following links:
  * [Community Wiki] (https://wiki.nci.nih.gov/x/OoEI)
- * [Code Repository] (https://github.com/NCIP/cadsr-cdebrowser)
+ * [Code Repository] (https://github.com/NCIP/cadsr-cde-browser)
  * [Issue Tracker] (https://tracker.nci.nih.gov/browse/CDEBROWSER)
  * [Downloads] (http://gforge.nci.nih.gov/frs/?group_id=34)
  
