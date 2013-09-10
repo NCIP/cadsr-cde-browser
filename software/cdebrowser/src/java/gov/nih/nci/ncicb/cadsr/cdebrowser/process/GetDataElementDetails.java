@@ -51,6 +51,7 @@ public class GetDataElementDetails extends BasePersistingProcess {
   public void registerInfo() {
     try {
       registerStringParameter("p_de_idseq");
+      registerStringResult("p_de_idseq");
       registerParameterObject("de");
       registerResultObject("de");
       registerResultObject("tib");
@@ -89,9 +90,15 @@ public class GetDataElementDetails extends BasePersistingProcess {
     String version = getStringInfo("version");
     Object sessionId = getSessionId();
     myRequest = (HttpServletRequest) getInfoObject("HTTPRequest");
-    if (!AppScanValidator.validateElementIdSequence(deIdseq))
+    boolean validElementId=false;
+    if (deIdseq!=null)
+    	validElementId=AppScanValidator.validateElementIdSequence(deIdseq);
+    else if (cdeId!=null)
+    	validElementId=AppScanValidator.validateElementPublicId(cdeId);
+    System.out.println("GetDataElementDetails.persist()... parametersinput element id:"+deIdseq +":"+cdeId);
+    if (!validElementId)
     {
-    	Exception validationExp= new Exception("Invalid input element id");
+    	Exception validationExp= new Exception("Invalid input element id:"+deIdseq +":"+cdeId);
         try {
             UserErrorMessage uem;
             tib = new TabInfoBean("cdebrowser_error_tabs");
@@ -163,6 +170,7 @@ public class GetDataElementDetails extends BasePersistingProcess {
       setResult("tib", tib);
       setResult("de", de);
       setResult("queryDE", "no");
+      setResult("p_de_idseq", null);
       setResult("cdeId", null);
       setResult("version", null);
       setResult("derivedDe", null);

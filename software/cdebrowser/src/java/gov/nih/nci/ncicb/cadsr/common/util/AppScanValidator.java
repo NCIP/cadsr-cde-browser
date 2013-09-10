@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class AppScanValidator {
  	private static Pattern cdeIdSequencePattern = Pattern.compile("^[A-Za-z0-9_-]{36}$");
+ 	private static Pattern cdePublicIdPattern=Pattern.compile("^[0-9]+$");
  	private static Pattern searchParameterTypePatter=Pattern.compile("^[A-Za-z]+$");
  	
  	/**
@@ -35,6 +36,15 @@ public class AppScanValidator {
 	        return  validatePatternAndValue(searchParameterTypePatter, parameterTypeToCheck);        
 	}
 	
+	/**
+	 * Validate the Public Id of a CDE Element
+	 * @param publicIdToCheck
+	 * @return
+	 */
+	public static boolean validateElementPublicId(String publicIdToCheck)
+	{
+		return  validatePatternAndValue(cdePublicIdPattern, publicIdToCheck);   
+	}
 	
 	private static boolean validatePatternAndValue(Pattern checkPattern, String valueToCheck)
 	{
