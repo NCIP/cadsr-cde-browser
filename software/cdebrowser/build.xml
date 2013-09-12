@@ -13,11 +13,13 @@ L-->
 	<description>
         Build and deploy the caDSR CDEBrowser Tool
     </description>
-	<!-- set global properties for this build --> 
-	<!-- Change the values in template.build.properties as per environment -->
+	<!-- Change the values in tier.build.properties as per environment -->
+	<property name="TIER.PROP.FILE" location="tier.build.properties"/> 
 	<property name="PROP.FILE" location="template.build.properties"/>   
+  	<property file="${TIER.PROP.FILE}" />
 	<property file="${PROP.FILE}" />
 	<echo>
+		TIER.PROP.FILE=${TIER.PROP.FILE}
         PROP.FILE = ${PROP.FILE}
         CADSR.DS.HOST = ${CADSR.DS.HOST}
         CADSR.DS.URL = ${CADSR.DS.URL}
