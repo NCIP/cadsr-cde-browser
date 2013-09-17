@@ -131,11 +131,14 @@ L-->
 
 	<!-- these values that replaces some tags in the tool, are needed at the build time -->
 	<filter token="Tool.ds.jndi.Name" value="CDEBrowserDS"/>
-	<filter token="Tool.Version" value="4.0.4"/>
+	<!-- filter token="Tool.Version" value="4.0.4"/>
 	<filter token="Tool.Build" value="1"/>
 	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
-	<!--  filter token="Tool.Version.Suffix" value="4_0_3"/ -->
-	
+	<filter token="Tool.Version.Suffix" value="4_0_3"/ -->
+	<filter token="Tool.Version" value="${TOOL.RELEASE.VERSION}"/>
+	<filter token="Tool.Build" value="${TOOL.RELEASE.BUILD}"/>
+	<filter token="Tool.Support" value="${TOOL.SUPPORT.MAIL}"/>
+
 	<path id="libpath">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar"/>
