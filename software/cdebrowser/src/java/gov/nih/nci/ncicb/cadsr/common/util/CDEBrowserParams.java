@@ -492,11 +492,11 @@ public class CDEBrowserParams
 		return "https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+User+Guide";
 	}
 	
-	public String getCdeBrowserReleaseNoteUrl()
-	{
-//		return cdeBrowserReleaseNoteUrl;
-		return "https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+4.0.4+Release+Notes";
-	}
+//	public String getCdeBrowserReleaseNoteUrl()
+//	{
+////		return cdeBrowserReleaseNoteUrl;
+//		return "https://wiki.nci.nih.gov/display/caDSR/CDE+Browser+4.0.4+Release+Notes";
+//	}
 
 	public void setCdeBrowserHelpUrl(String cdebrowserHelpUrl) {
 		this.cdebrowserHelpUrl = cdebrowserHelpUrl;

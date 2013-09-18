@@ -138,6 +138,7 @@ L-->
 	<filter token="Tool.Version" value="${TOOL.RELEASE.VERSION}"/>
 	<filter token="Tool.Build" value="${TOOL.RELEASE.BUILD}"/>
 	<filter token="Tool.Support" value="${TOOL.SUPPORT.MAIL}"/>
+	<filter token="Tool.Release.Note.Url" value="${TOOL.RELEASE.NOTE.URL}"/>
 
 	<path id="libpath">
 		<fileset dir="${lib.dir}">
@@ -271,8 +272,14 @@ L-->
 		<copy todir="${root.dir}/i" >
 			<fileset dir="${basedir}/src/web/i" />
 		</copy>
-		<copy todir="${root.dir}/jsp" >
-		    <fileset dir="${basedir}/src/web/jsp" />
+		<copy todir="${root.dir}/jsp">
+		    <fileset dir="${basedir}/src/web/jsp" >
+				<exclude name="**/cdebrowser/cdebrowserCommon_html/*.*"/>
+			</fileset>
+		</copy>
+		<!-- apply token to replace Tool.Release.Note.Url -->
+		<copy todir="${root.dir}/jsp/cdebrowser/cdebrowserCommon_html" filtering="true">
+		    <fileset dir="${basedir}/src/web/jsp/cdebrowser/cdebrowserCommon_html"/>
 		</copy>
 		<copy todir="${root.dir}/js" >
 		    <fileset dir="${basedir}/src/web/js" />
