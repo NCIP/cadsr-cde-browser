@@ -135,9 +135,6 @@ L-->
 	<filter token="Tool.Build" value="1"/>
 	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
 	<filter token="Tool.Version.Suffix" value="4_0_3"/ -->
-	<filter token="Tool.Version" value="${TOOL.RELEASE.VERSION}"/>
-	<filter token="Tool.Build" value="${TOOL.RELEASE.BUILD}"/>
-	<filter token="Tool.Support" value="${TOOL.SUPPORT.MAIL}"/>
 
 	<path id="libpath">
 		<fileset dir="${lib.dir}">
@@ -227,9 +224,6 @@ L-->
 		</copy>
 		<copy tofile="${web.dir}/jboss-web.xml" filtering="true">
 			<fileset file="${conf.dir}/template.jboss-web.xml" />
-		</copy>
-		<copy tofile="${jsp.dir}/common/common_bottom_border.jsp" overwrite="true" filtering="true">
-			<fileset file="${conf.dir}/template.common_bottom_border.jsp" />
 		</copy>		
 		<copy tofile="${web.dir}/spring/applicationContext-domainDao.xml" filtering="true">
 			<fileset file="${conf.dir}/template.applicationContext-domainDao.xml" />
@@ -271,14 +265,16 @@ L-->
 		<copy todir="${root.dir}/i" >
 			<fileset dir="${basedir}/src/web/i" />
 		</copy>
-		<!-- apply token to replace Tool.Release.Note.Url -->
+		<!-- apply token common jsp or html pages -->
 		<copy todir="${root.dir}/jsp" overwrite="true">
 		    <fileset dir="${basedir}/src/web/jsp"/>
 		    <filterset>
-		      <filter token="Tool.Release.Note.Url" value="${TOOL.RELEASE.NOTE.URL}"/>
+				<filter token="Tool.Version" value="${TOOL.RELEASE.VERSION}"/>
+				<filter token="Tool.Build" value="${TOOL.RELEASE.BUILD}"/>
+				<filter token="Tool.Support" value="${TOOL.SUPPORT.MAIL}"/>
+		      	<filter token="Tool.Release.Note.Url" value="${TOOL.RELEASE.NOTE.URL}"/>
 		    </filterset>
 		</copy>
-
 		<copy todir="${root.dir}/js" >
 		    <fileset dir="${basedir}/src/web/js" />
 		</copy>
