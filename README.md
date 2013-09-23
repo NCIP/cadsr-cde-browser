@@ -5,7 +5,7 @@ The CDE Browser is the primary starting point for exploring the contents of the 
 
 The CDE Browser is developed in Java and requires Apache Ant for building.
  
-The caDSR CDE Browser is distributed under the BSD 3-Clause License.
+The CDE Browser is distributed under the BSD 3-Clause License.
 Please see the NOTICE and LICENSE files for details.
 
 You will find more details about the caDSR CDE Browser in the following links:
