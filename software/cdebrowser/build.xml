@@ -14,15 +14,12 @@ L-->
         Build and deploy the caDSR CDEBrowser Tool
     </description>
 	<!-- Change the values in tier.build.properties as per environment -->
-	<property name="TIER.PROP.FILE" location="tier.build.properties"/> 
 	<property name="PROP.FILE" location="template.build.properties"/>   
-  	<property file="${TIER.PROP.FILE}" />
 	<property file="${PROP.FILE}" />
 	<echo>
-		TIER.PROP.FILE=${TIER.PROP.FILE}
         PROP.FILE = ${PROP.FILE}
         CADSR.DS.HOST = ${CADSR.DS.HOST}
-        CADSR.DS.URL = ${CADSR.DS.URL}
+        CADSR.DS.PORT = ${CADSR.DS.PORT} 
         CADSR.DS.USER = ${CADSR.DS.USER}
         CADSR.DS.PSWD = ${CADSR.DS.PSWD}
         CADSR.DS.TNS.ENTRY=${CADSR.DS.TNS.ENTRY}
@@ -54,7 +51,8 @@ L-->
 	<condition property="check.props">
 		<and>
 			<isset property="JDEBUG" />
-			<isset property="CADSR.DS.URL" />
+			<isset property="CADSR.DS.HOST" />
+			<isset property="CADSR.DS.PORT" />
 			<isset property="CADSR.DS.USER" />
 			<isset property="CADSR.DS.PSWD" />
 			<isset property="CADSR.DS.TNS.ENTRY" />
@@ -114,10 +112,10 @@ L-->
 	</condition>
 
 	<filter token="CADSR.DS.HOST" value="${CADSR.DS.HOST}" />
-	<filter token="CADSR.DS.URL" value="${CADSR.DS.URL}" />
+	<filter token="CADSR.DS.TNS.ENTRY" value="${CADSR.DS.TNS.ENTRY}" />
+	<filter token="CADSR.DS.URL" value="${CADSR.DS.HOST}:${CADSR.DS.PORT}:${CADSR.DS.TNS.ENTRY}" />
 	<filter token="CADSR.DS.USER" value="${CADSR.DS.USER}" />
 	<filter token="CADSR.DS.PSWD" value="${CADSR.DS.PSWD}" />
-	<filter token="CADSR.DS.TNS.ENTRY" value="${CADSR.DS.TNS.ENTRY}" />
 	<filter token="TEST.VALID.USER" value="${TEST.VALID.USER}" />
 	<filter token="TEST.VALID.PSWD" value="${TEST.VALID.PSWD}" />
 	<filter token="TEST.BAD.USER" value="${TEST.BAD.USER}" />
@@ -131,10 +129,6 @@ L-->
 
 	<!-- these values that replaces some tags in the tool, are needed at the build time -->
 	<filter token="Tool.ds.jndi.Name" value="CDEBrowserDS"/>
-	<!-- filter token="Tool.Version" value="4.0.4"/>
-	<filter token="Tool.Build" value="1"/>
-	<filter token="Tool.Support" value="ncicb@pop.nci.nih.gov"/>
-	<filter token="Tool.Version.Suffix" value="4_0_3"/ -->
 
 	<path id="libpath">
 		<fileset dir="${lib.dir}">
