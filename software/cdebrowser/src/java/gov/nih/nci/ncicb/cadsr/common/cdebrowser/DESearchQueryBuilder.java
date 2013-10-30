@@ -14,7 +14,6 @@
 
 package gov.nih.nci.ncicb.cadsr.common.cdebrowser;
 
-import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
 import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.common.util.SimpleSortableColumnHeader;
 import gov.nih.nci.ncicb.cadsr.common.util.SortableColumnHeader;
@@ -142,15 +141,6 @@ public class DESearchQueryBuilder extends Object {
       searchStr = "";
       whereClause = "";
       selIndex = "";
-      /*if((treeParamType!=null)&&(treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")))
-      {
-        latestWhere = "";
-      }
-      else
-      {
-        latestWhere = " and de.latest_version_ind = 'Yes' ";
-      }
-      whereBuffer.append(latestWhere);*/
 
       if (this.treeParamRegStatus !=null)
         whereBuffer.append(" and acr.registration_status = '"+ this.treeParamRegStatus + "'");
@@ -201,29 +191,34 @@ public class DESearchQueryBuilder extends Object {
       vdType =
           StringUtils.replaceNull(request.getParameter("jspVDType"));
 
-      if (searchStr6.equals("Yes")) {
-        latestWhere = " and de.latest_version_ind = 'Yes' ";
-      }
-      else {
-        latestWhere = "";
-      }
+//      if (searchStr6.equals("Yes")) {
+//        latestWhere = " and de.latest_version_ind = 'Yes' ";
+//      }
+//      else {
+//        latestWhere = "";
+//      }
+//
+//      if((treeParamType!=null)&&(treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")))
+//      {
+//        if(!searchStr6.equals("Yes")||searchStr6.equals(""))
+//          latestWhere = "";
+//      }
 
-      if((treeParamType!=null)&&(treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")))
-      {
-        if(!searchStr6.equals("Yes")||searchStr6.equals(""))
-          latestWhere = "";
-      }
-
+      //As default, return latest version
+      //Only if user choose "all versions", return all versions
+      if (searchStr6.equals("No")) 
+    	  latestWhere = "";
+      else
+    	  latestWhere = " and de.latest_version_ind = 'Yes' ";
+ 
       if (searchStr5.equals("")) {
             csiWhere = "";
             fromClause = "";
           }
       else{
-            csiWhere = " and de.de_idseq = acs.ac_idseq " +
-                       " and acs.cs_csi_idseq = '"+searchStr5+"'";
+            csiWhere = getCSItemWhereClause(searchStr5);
             fromClause = " ,sbr.ac_csi_view acs ";
       }
-
 
       String wkFlowWhere = "";
       String cdeIdWhere = "";
@@ -618,6 +613,13 @@ public class DESearchQueryBuilder extends Object {
 
   }
 
+protected String getCSItemWhereClause(String searchStr5) {
+	String csiWhere;
+	csiWhere = " and de.de_idseq = acs.ac_idseq " +
+	           " and acs.cs_csi_idseq = '"+searchStr5+"'";
+	return csiWhere;
+}
+
   public String getSearchStr(int arrayIndex){
    if (strArray != null) {
      return strArray[arrayIndex];
@@ -681,7 +683,7 @@ public class DESearchQueryBuilder extends Object {
     return sb.toString();
   }
 
-  private String getUsageWhereClause() {
+  protected String getUsageWhereClause() {
     String usageWhere = "";
     if ("used_by".equals(contextUse)) {
           usageWhere =
@@ -1079,7 +1081,7 @@ public class DESearchQueryBuilder extends Object {
       return sortColumnHeader;
    }
 
-   private String getCSWhere(String csId) {
+   protected String getCSWhere(String csId) {
     String csWhere =  " and de.de_idseq IN ( " +
                       " select de_idseq " +
                       " from  sbr.data_elements_view de , " +
@@ -1113,5 +1115,15 @@ public class DESearchQueryBuilder extends Object {
     return csWhere;
 
    }
+   
+   
+   protected String getTreeParamType() {
+	   return treeParamType;
+   }
+   
+   protected String getTreeConteIdSeq() {
+	   return treeConteIdSeq;
+   }
+
 
 }
