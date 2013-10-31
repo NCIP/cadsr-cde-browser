@@ -15,6 +15,7 @@
 package gov.nih.nci.ncicb.cadsr.common.cdebrowser;
 
 import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
+import gov.nih.nci.ncicb.cadsr.common.struts.common.BrowserFormConstants;
 import gov.nih.nci.ncicb.cadsr.common.util.SimpleSortableColumnHeader;
 import gov.nih.nci.ncicb.cadsr.common.util.SortableColumnHeader;
 import gov.nih.nci.ncicb.cadsr.common.util.StringReplace;
@@ -25,6 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * This class will be used to build the sql query for CDE Browser's
@@ -204,13 +206,24 @@ public class DESearchQueryBuilder extends Object {
 //          latestWhere = "";
 //      }
 
-      //As default, return latest version
-      //Only if user choose "all versions", return all versions
+      //set filter on "version"
       if (searchStr6.equals("No")) 
-    	  latestWhere = "";
+    	  latestWhere = ""; // advance search, return all version if user choose so
+      else if((treeParamType!=null)&&(treeParamType.equals("CRF")||treeParamType.equals("TEMPLATE")
+    		  ||treeParamType.equals("CSI")||treeParamType.equals("CLASSIFICATION")))
+    	  latestWhere = ""; //Tree expanded search, return all version
       else
-    	  latestWhere = " and de.latest_version_ind = 'Yes' ";
- 
+    	  latestWhere = " and de.latest_version_ind = 'Yes' "; //basic search, only return the latest version as default
+    
+      //search within results
+      //remove "version" filtering and return all object within previously found data
+      HttpSession session = request.getSession(false);
+      if (session != null) {
+    	  String searchScope=(String) session.getAttribute(BrowserFormConstants.BROWSER_SEARCH_SCOPE);  
+    	  if (searchScope!=null&&searchScope.equalsIgnoreCase(BrowserFormConstants.BROWSER_SEARCH_SCOPE_SEARCHRESULTS))
+    		  latestWhere = ""; 
+      }
+
       if (searchStr5.equals("")) {
             csiWhere = "";
             fromClause = "";
