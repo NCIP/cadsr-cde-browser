@@ -120,7 +120,7 @@ public class GetValueDomainsLOV extends BasePersistingProcess {
 		{
 
 			if (!AppScanValidator.validateElementIdSequence(conteIdseq))
-				throw new Exception ("Invalidate ID sequence:"+conteIdseq);
+				throw new Exception ("Invalidate ID sequence");
 		}
         additionalWhere =
           " and upper(nvl(vd_conte.conte_idseq,'%')) like upper ( '%" +

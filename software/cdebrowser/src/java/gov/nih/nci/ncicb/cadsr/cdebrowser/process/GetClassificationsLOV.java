@@ -136,7 +136,7 @@ public class GetClassificationsLOV extends BasePersistingProcess {
 		{
 
 			if (!AppScanValidator.validateElementIdSequence(contextIdSeq))
-				throw new Exception ("Invalidate ID sequence:"+contextIdSeq);
+				throw new Exception ("Invalidate ID sequence");
 		}
 	String chk = StringEscapeUtils.escapeHtml(getStringInfo("chkContext"));
 

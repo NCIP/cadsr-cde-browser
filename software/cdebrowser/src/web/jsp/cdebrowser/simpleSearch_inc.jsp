@@ -104,25 +104,23 @@ if(basicSearchType.equalsIgnoreCase("publicId"))
  <table valign="top">
   <tr>
    <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
- 	<label  for ="simpleSearch_input_1"/>
       <input id ="simpleSearch_input_1" type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
       <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
-      { %> checked <%}%> >Exact phrase
+      { %> checked <%}%> /><label  for ="simpleSearch_input_1">Exact phrase</label>
    </td >
   </tr>
   <tr>
    <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-   <label  for ="simpleSearch_input_2"/>
       <input id ="simpleSearch_input_2"  type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
       <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ALL)) 
-      { %> checked <%}%>>All of the words
+      { %> checked <%}%>/><label  for ="simpleSearch_input_2">All of the words</label>
    </td >
   </tr>
   <tr>
    <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-   <label  for ="simpleSearch_input_3"/>
       <input id ="simpleSearch_input_3"  type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
-      <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> >At least one of the words
+      <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> />
+         <label  for ="simpleSearch_input_3">At least one of the words</label>
    </td >
   </tr>
 </table>

@@ -121,7 +121,7 @@ public class GetDataElementConceptsLOV extends BasePersistingProcess {
 		{
 
 			if (!AppScanValidator.validateElementIdSequence(conteIdseq))
-				throw new Exception ("Invalidate ID sequence:"+conteIdseq);
+				throw new Exception ("Invalidate ID sequence");
 		}
         String additionalWhere =
           " and upper(nvl(dec_conte.conte_idseq,'%')) like upper ( '%" +

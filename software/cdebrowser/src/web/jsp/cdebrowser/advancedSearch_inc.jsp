@@ -75,25 +75,27 @@ L--%>
            <table valign="top">
 	    <tr>
 	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-	     	<label for ="advanceSearch_input_1"/>
+
 	        <input id="advanceSearch_input_1" type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
 	        <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
-	        { %> checked <%}%> >Exact phrase
+	        { %> checked <%}%> >
+	        <label for ="advanceSearch_input_1">Exact phrase</label>
 	     </td >
 	    </tr>
 	    <tr>
 	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-	     	<label for ="advanceSearch_input_2"/>
+
 	        <input id="advanceSearch_input_2" type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
 	        <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ALL)) 
-	        { %> checked <%}%>>All of the words
+	        { %> checked <%}%>/>
+	       	<label for ="advanceSearch_input_2">All of the words</label>
 	     </td >
 	    </tr>
 	    <tr>
 	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-	     	<label for ="advanceSearch_input_3"/>
 	        <input  id ="advanceSearch_input_3" type="radio" name="jspNameSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
-	        <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> >At least one of the words
+	        <%if (desb.getNameSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> />
+	        <label for ="advanceSearch_input_3">At least one of the words</label>
 	     </td >
 	    </tr>
 	  </table>    
@@ -251,18 +253,16 @@ L--%>
 			<tr >
               <td class="OraTableColumnHeaderNoBG" nowrap>Value Domain Type</td>
               <td class="OraTabledata" nowrap>
-              <label for ="advanceSearch_input_14"/>
                 <input id ="advanceSearch_input_14" type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_ENUMERATED%>"
 	    	        <%if (desb.getVDType().equals(ProcessConstants.VD_TYPE_ENUMERATED))
-	    	        { %> checked <%}%> >Enumerated
-	    	        <label for ="advanceSearch_input_15"/>
+	    	        { %> checked <%}%>/> <label for ="advanceSearch_input_14">Enumerated</label>
+
 	    	        <input id ="advanceSearch_input_15" type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_NON_ENUMERATED%>"
 	    	        <%if (desb.getVDType().equals(ProcessConstants.VD_TYPE_NON_ENUMERATED))
-	    	        { %> checked <%}%> >Non Enumerated
-					<label for ="advanceSearch_input_16"/>
+	    	        { %> checked <%}%> /><label for ="advanceSearch_input_15">Non Enumerated</label>
 					<input id ="advanceSearch_input_16" type="radio" name="jspVDType" value="<%=ProcessConstants.VD_TYPE_BOTH%>"
 	    	        <%if (desb.getVDType().equals(ProcessConstants.VD_TYPE_BOTH))
-	    	        { %> checked <%}%> >Both
+	    	        { %> checked <%}%> /><label for ="advanceSearch_input_16">Both</label>
               </td>
             </tr>
             <tr>
@@ -274,26 +274,21 @@ L--%>
             </tr>
             <tr>
             <td colspan="2" class="OraTableColumnHeaderNoBG" >
-                      <table valign="top">
+                <table valign="top">
 	    	    <tr>
-	    	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
-	    	     	<label for ="advanceSearch_input_18"/>
+	    	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>   	     	
 	    	        <input id ="advanceSearch_input_18" type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_EXACT%>"
 	    	        <%if (desb.getPvSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_EXACT))
-	    	        { %> checked <%}%> >Exact phrase
-	    	        <label for ="advanceSearch_input_19"/>
+	    	        { %> checked <%}%> /><label for ="advanceSearch_input_18">Exact phrase</label>
 	    	        <input id ="advanceSearch_input_19" type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ALL%>" 
 	    	        <%if (desb.getPvSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ALL)) 
-	    	        { %> checked <%}%>>All words
-	    	        <label for ="advanceSearch_input_20"/>
+	    	        { %> checked <%}%>/><label for ="advanceSearch_input_19">All words</label>
+	    	        
 	    	        <input id ="advanceSearch_input_20" type="radio" name="jspPVSearchMode" value="<%=ProcessConstants.DE_SEARCH_MODE_ANY%>" 
-	    	        <%if (desb.getPvSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> >At least one word
+	    	        <%if (desb.getPvSearchMode().equals(ProcessConstants.DE_SEARCH_MODE_ANY)) { %> checked <%}%> /><label for ="advanceSearch_input_20">At least one word</label>
 	    	     </td >
 	    	    </tr>
 	    	  </table>    
-
-            
-            
             </td>
             </tr>
           </table>
@@ -369,20 +364,21 @@ L--%>
                             if (latestVer.equals("Yes") || latestVer.equals("")) {
                           %>
                                     <td class="OraTableColumnHeaderNoBG" nowrap>
-                                    	<label for ="advanceSearch_input_24"/>
-                                      <input  id ="advanceSearch_input_24" type="radio" name="jspLatestVersion" value="Yes" checked> Latest Version
-                                      <label for ="advanceSearch_input_25"/>
-                                      <input  id ="advanceSearch_input_25" type="radio" name="jspLatestVersion" value="No"> All Versions
+                                    	
+                                      <input  id ="advanceSearch_input_24" type="radio" name="jspLatestVersion" value="Yes" checked/>
+                                      <label for ="advanceSearch_input_24"> Latest Version</label>
+                                      <input  id ="advanceSearch_input_25" type="radio" name="jspLatestVersion" value="No"/>
+                                      <label for ="advanceSearch_input_25"> All Versions</label>
                                    </td>
                           <%
                             }
                             else {
                           %>
                                     <td class="OraTableColumnHeaderNoBG" nowrap>
-                                     <label for ="advanceSearch_input_26"/>
-                                      <input id ="advanceSearch_input_26" type="radio" name="jspLatestVersion" value="Yes" > Latest Version
-                                      <label for ="advanceSearch_input_27"/>
-                                      <input id ="advanceSearch_input_27" type="radio" name="jspLatestVersion" value="No" checked > All Versions
+                                     	<input id ="advanceSearch_input_26" type="radio" name="jspLatestVersion" value="Yes" />
+                                     	<label for ="advanceSearch_input_26"> Latest Version</label>
+                                      	<input id ="advanceSearch_input_27" type="radio" name="jspLatestVersion" value="No" checked />
+                                      	<label for ="advanceSearch_input_27"> All Versions</label>
                                    </td>
                           <%
                             }

@@ -102,10 +102,10 @@ public class GetDataElementDetails extends BasePersistingProcess {
     	validElementId=AppScanValidator.validateElementIdSequence(deIdseq);
     else if (cdeId!=null)
     	validElementId=AppScanValidator.validateElementPublicId(cdeId);
-    System.out.println("GetDataElementDetails.persist()... parametersinput element id:"+deIdseq +":"+cdeId);
+
     if (!validElementId)
     {
-    	Exception validationExp= new Exception("Invalid input element id:"+deIdseq +":"+cdeId);
+    	Exception validationExp= new Exception("Invalid input parameters: p_de_idseq or cdeId ");
         try {
             UserErrorMessage uem;
             tib = new TabInfoBean("cdebrowser_error_tabs");
@@ -177,10 +177,10 @@ public class GetDataElementDetails extends BasePersistingProcess {
       setResult("tib", tib);
       setResult("de", de);
       setResult("queryDE", "no");
-      setResult("p_de_idseq", null);
-      setResult("cdeId", null);
-      setResult("version", null);
-      setResult("derivedDe", null);
+//      setResult("derivedDe", null);
+      setResult("p_de_idseq", deIdseq);
+      setResult("cdeId", cdeId);
+      setResult("version", version);
       setCondition(SUCCESS);
     }
     catch (IllegalURLParametersException iex) {
