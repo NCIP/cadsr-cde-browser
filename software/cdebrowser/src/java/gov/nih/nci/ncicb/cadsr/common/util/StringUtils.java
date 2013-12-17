@@ -276,6 +276,35 @@ public class StringUtils {
     }
   }
 
+  /**
+   * Reformate data for Excell download to support special characters
+   * @param fieldValue Orginal field value using ASCII codes
+   * @return filedValue using unicode
+   */
+  public static String updateDataForSpecialCharacters(String fieldValue) {
+      if( fieldValue == null ) {
+             return fieldValue;
+      }
+             
+      fieldValue = fieldValue.replace("&#8322;", "\u2082");  //Subscript 2
+      fieldValue = fieldValue.replace("&#945;", "\u03B1"); // Alpha
+      fieldValue = fieldValue.replace("&#946;", "\u03B2"); // Beta
+      fieldValue = fieldValue.replace("&#947;", "\u03B3"); // Gamma
+      fieldValue = fieldValue.replace("&#948;", "\u03B4"); // Delta
+      fieldValue = fieldValue.replace("&#178;", "\u00B2"); // Superscript 2
+      fieldValue = fieldValue.replace("&#176;", "\u00B0"); // Degree
+      fieldValue = fieldValue.replace("&#181;", "\u00B5"); // Micro
+      fieldValue = fieldValue.replace("&#955;", "\u03BB"); // lambda
+      fieldValue = fieldValue.replace("&#8805;", "\u2265"); // Greater than or equal to
+      fieldValue = fieldValue.replace("&#8804;", "\u2264"); // Less than or equal to
+      fieldValue = fieldValue.replace("&#177;", "\u00B1"); // Plus-Minus sign
+      fieldValue = fieldValue.replace("&#954;", "\u03BA"); // Kappa Small
+      fieldValue = fieldValue.replace("&#8495;", "\u212F"); // Small Exponent
+      fieldValue = fieldValue.replace("&#922;", "\u03BA"); // Kappa Big
+      
+       return fieldValue;
+}
+
    public static void main(String[] args) {
    String str = "\"test\"";
    String newStr="\\\"";
