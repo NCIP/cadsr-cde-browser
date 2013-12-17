@@ -328,9 +328,11 @@ public class GetExcelDownload extends BasePersistingProcess {
 											}else if (nestedCol.type.equalsIgnoreCase("Date")){  
 												cell.setCellValue(
 														((DATE) valueDatum[nestedCol.rsIndex]).dateValue().toString());                    	  
-											}else {                    	
-												cell.setCellValue(
-														((CHAR) valueDatum[nestedCol.rsIndex]).stringValue());
+											}else {  
+												String stringCellValue=((CHAR) valueDatum[nestedCol.rsIndex]).stringValue();
+												cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
+//												cell.setCellValue(
+//														((CHAR) valueDatum[nestedCol.rsIndex]).stringValue());
 											}
 										}
 									}
@@ -346,8 +348,10 @@ public class GetExcelDownload extends BasePersistingProcess {
 													((NUMBER) nestedDatum[nestedCol.rsSubIndex]).stringValue());
 										}
 										else if (nestedCol.type.equalsIgnoreCase("String")) {
-											cell.setCellValue(
-													((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString());
+											String stringCellValue=((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString();
+											cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
+//											cell.setCellValue(
+//													((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString());
 										}
 									}
 								}
