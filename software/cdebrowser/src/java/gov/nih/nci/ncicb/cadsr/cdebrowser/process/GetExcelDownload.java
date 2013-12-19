@@ -33,6 +33,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -163,259 +164,269 @@ public class GetExcelDownload extends BasePersistingProcess {
 		return getCondition(FAILURE);
 	}
 
-	public void generateExcelFile(
-			String filename,
-			DBUtil dbUtil) throws Exception {
-		Connection cn = null;
-
-		Statement st = null;
-		ResultSet rs = null;
-		PrintWriter pw = null;
-		String where = "";
-		DataElementSearchBean desb = null;
-		DESearchQueryBuilder deSearch = null;
-		String source = null;
-		HSSFWorkbook wb = null;
-		FileOutputStream fileOut = null;
-		source = getStringInfo("src");
-
-		try {
-			//String dataSource = getStringInfo("SBREXT_DSN");
-			//cn = dbUtil.getConnection(); -- Commented for JBoss deployment
-			//ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
-			dbUtil.getOracleConnectionFromContainer();  //getConnectionFromContainer(); went back to original call
-			cn = dbUtil.getConnection();
-			st = cn.createStatement();
-
-			if ("deSearch".equals(source)||"deSearchPrior".equals(source)) {
-
-				desb = (DataElementSearchBean) getInfoObject("desb");
-
-				deSearch =
-					(DESearchQueryBuilder) getInfoObject(
-							ProcessConstants.DE_SEARCH_QUERY_BUILDER);
-				where = deSearch.getXMLQueryStmt();
-			}
-			else if ("cdeCart".equals(source)|| "cdeCartPrior".equals(source)) {
-				HttpServletRequest myRequest =
-					(HttpServletRequest) getInfoObject("HTTPRequest");
-
-				HttpSession userSession = myRequest.getSession(false);
-				CDECart cart =
-					(CDECart) userSession.getAttribute(CaDSRConstants.CDE_CART);
-				Collection items = cart.getDataElements();
-				CDECartItem item = null;
-				boolean firstOne = true;
-				StringBuffer whereBuffer = new StringBuffer("");
-				Iterator itemsIt = items.iterator();
-
-				while (itemsIt.hasNext()) {
-					item = (CDECartItem) itemsIt.next();
-
-					if (firstOne) {
-						whereBuffer.append("'" + item.getId() + "'");
-
-						firstOne = false;
+			public void generateExcelFile(
+					String filename,
+					DBUtil dbUtil) throws Exception {
+				Connection cn = null;
+		
+				Statement st = null;
+				ResultSet rs = null;
+				PrintWriter pw = null;
+				String where = "";
+				DataElementSearchBean desb = null;
+				DESearchQueryBuilder deSearch = null;
+				String source = null;
+				HSSFWorkbook wb = null;
+				FileOutputStream fileOut = null;
+				source = getStringInfo("src");
+		
+				try {
+					//String dataSource = getStringInfo("SBREXT_DSN");
+					//cn = dbUtil.getConnection(); -- Commented for JBoss deployment
+					//ApplicationParameters ap = ApplicationParameters.getInstance("cdebrowser");
+					dbUtil.getOracleConnectionFromContainer();  //getConnectionFromContainer(); went back to original call
+					cn = dbUtil.getConnection();
+					st = cn.createStatement();
+		
+					if ("deSearch".equals(source)||"deSearchPrior".equals(source)) {
+		
+						desb = (DataElementSearchBean) getInfoObject("desb");
+		
+						deSearch =
+							(DESearchQueryBuilder) getInfoObject(
+									ProcessConstants.DE_SEARCH_QUERY_BUILDER);
+						where = deSearch.getXMLQueryStmt();
 					}
-					else
-					{
-						whereBuffer.append(",'" + item.getId() + "'");
-					}
-				}
-
-				where = whereBuffer.toString();
-			}
-			else {
-				throw new Exception("No result set to download");
-			}
-
-			String sqlStmt =
-				"SELECT * FROM DE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
-				" ( " + where + " )  ";
-
-			//+" ORDER BY PREFERRED_NAME ";
-			rs = st.executeQuery(sqlStmt);
-			List colInfo = this.initColumnInfo(source);
-			wb = new HSSFWorkbook();
-
-			HSSFSheet sheet = wb.createSheet();
-			int rowNumber = 0;
-
-			HSSFCellStyle boldCellStyle = wb.createCellStyle();
-			HSSFFont font = wb.createFont();
-			font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-			boldCellStyle.setFont(font);
-			boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
-
-
-			// Create a row and put the column header in it
-			HSSFRow row = sheet.createRow(rowNumber++);
-			short col = 0;
-
-			for (int i = 0; i < colInfo.size(); i++) {
-				ColumnInfo currCol = (ColumnInfo) colInfo.get(i);
-
-				if (currCol.type.indexOf("Array") >= 0) {
-					for (int nestedI = 0; nestedI < currCol.nestedColumns.size();
-					nestedI++) {
-						ColumnInfo nestedCol =
-							(ColumnInfo) currCol.nestedColumns.get(nestedI);
-
-						HSSFCell cell = row.createCell(col++);
-						cell.setCellValue(currCol.displayName + nestedCol.displayName);
-						cell.setCellStyle(boldCellStyle);
-					}
-				}
-				else {
-					HSSFCell cell = row.createCell(col++);
-
-					cell.setCellValue(currCol.displayName);
-					cell.setCellStyle(boldCellStyle);
-				}
-			}
-
-			int maxRowNumber = 0;
-
-			while (rs.next()) {
-				row = sheet.createRow(rowNumber);
-				col = 0;
-
-				for (int i = 0; i < colInfo.size(); i++) {
-					ColumnInfo currCol = (ColumnInfo) colInfo.get(i);
-
-					if (currCol.type.indexOf("Array") >= 0) {
-						ARRAY array = null;
-
-						if (currCol.type.equalsIgnoreCase("Array")) {
-							array = ((OracleResultSet) rs).getARRAY(currCol.rsColumnName);
-						}
-						else if (currCol.type.equalsIgnoreCase("StructArray")) {
-							STRUCT struct =
-								((OracleResultSet) rs).getSTRUCT(currCol.rsColumnName);
-							Object[] valueStruct = struct.getAttributes();
-							array = (ARRAY) valueStruct[currCol.rsIndex];
-						}
-
-						if ((array != null) && (array.length()!=0)) {
-							ResultSet nestedRs = array.getResultSet();
-
-							int nestedRowNumber = 0;  
-
-							while (nestedRs.next()) {
-								row = sheet.getRow(rowNumber + nestedRowNumber);
-
-								if (row == null) {
-									row = sheet.createRow(rowNumber + nestedRowNumber);
-
-									maxRowNumber = rowNumber + nestedRowNumber;
-								}
-
-								STRUCT valueStruct = (STRUCT) nestedRs.getObject(2);
-								Datum[] valueDatum = valueStruct.getOracleAttributes();
-
-								for (
-										short nestedI = 0; nestedI < currCol.nestedColumns.size();
-										nestedI++) {
-									ColumnInfo nestedCol =
-										(ColumnInfo) currCol.nestedColumns.get(nestedI);
-
-									HSSFCell cell = row.createCell((short) (col + nestedI));
-
-									if (nestedCol.rsSubIndex < 0) {
-										if (valueDatum[nestedCol.rsIndex] != null) {
-											if (nestedCol.type.equalsIgnoreCase("Number")) {
-												cell.setCellValue(
-														((NUMBER) valueDatum[nestedCol.rsIndex]).floatValue());
-											}else if (nestedCol.type.equalsIgnoreCase("Date")){  
-												cell.setCellValue(
-														((DATE) valueDatum[nestedCol.rsIndex]).dateValue().toString());                    	  
-											}else {  
-												String stringCellValue=((CHAR) valueDatum[nestedCol.rsIndex]).stringValue();
-												cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
-//												cell.setCellValue(
-//														((CHAR) valueDatum[nestedCol.rsIndex]).stringValue());
-											}
-										}
-									}
-									else {
-										STRUCT nestedStruct =
-											(STRUCT) valueDatum[nestedCol.rsIndex];
-
-										Datum[] nestedDatum = nestedStruct.getOracleAttributes();
-
-										if (nestedCol.type.equalsIgnoreCase("Number")) {
-											//changed the conversion from stringValue from floatValue 07/11/2007 to fix GF7664 Prerna
-											cell.setCellValue(
-													((NUMBER) nestedDatum[nestedCol.rsSubIndex]).stringValue());
-										}
-										else if (nestedCol.type.equalsIgnoreCase("String")) {
-											String stringCellValue=((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString();
-											cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
-//											cell.setCellValue(
-//													((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString());
-										}
-									}
-								}
-
-								nestedRowNumber++;
+					else if ("cdeCart".equals(source)|| "cdeCartPrior".equals(source)) {
+						HttpServletRequest myRequest =
+							(HttpServletRequest) getInfoObject("HTTPRequest");
+		
+						HttpSession userSession = myRequest.getSession(false);
+						CDECart cart =
+							(CDECart) userSession.getAttribute(CaDSRConstants.CDE_CART);
+						Collection items = cart.getDataElements();
+						CDECartItem item = null;
+						boolean firstOne = true;
+						StringBuffer whereBuffer = new StringBuffer("");
+						Iterator itemsIt = items.iterator();
+		
+						while (itemsIt.hasNext()) {
+							item = (CDECartItem) itemsIt.next();
+		
+							if (firstOne) {
+								whereBuffer.append("'" + item.getId() + "'");
+		
+								firstOne = false;
+							}
+							else
+							{
+								whereBuffer.append(",'" + item.getId() + "'");
 							}
 						}
-
-						col += currCol.nestedColumns.size();
-					}
-					else if (currCol.type.equalsIgnoreCase("Struct")) {
-						STRUCT struct =
-							((OracleResultSet) rs).getSTRUCT(currCol.rsColumnName);
-
-						Object[] valueStruct = struct.getAttributes();
-						HSSFCell cell = row.createCell(col++);
-						cell.setCellValue((String) valueStruct[currCol.rsIndex]);
+		
+						where = whereBuffer.toString();
 					}
 					else {
-						row = sheet.getRow(rowNumber);
-						HSSFCell cell = row.createCell(col++);
-						// Changed the way date is displayed in Excel in 4.0
-						String columnName = ((ColumnInfo) colInfo.get(i)).rsColumnName;											
-						if(currCol.type.equalsIgnoreCase("Date")){
-							cell.setCellValue((rs.getDate(columnName) != null)?(rs.getDate(columnName)).toString():"");
-						}else{						
-							cell.setCellValue(rs.getString(columnName));
+						throw new Exception("No result set to download");
+					}
+		
+					String sqlStmt =
+						"SELECT * FROM DE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
+						" ( " + where + " )  ";
+		
+					//+" ORDER BY PREFERRED_NAME ";
+					rs = st.executeQuery(sqlStmt);
+					List colInfo = this.initColumnInfo(source);
+					wb = new HSSFWorkbook();
+		
+					HSSFSheet sheet = wb.createSheet();
+					int rowNumber = 0;
+		
+					HSSFCellStyle boldCellStyle = wb.createCellStyle();
+					HSSFFont font = wb.createFont();
+					font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+					boldCellStyle.setFont(font);
+					boldCellStyle.setAlignment(HSSFCellStyle.ALIGN_GENERAL);
+		
+		
+					// Create a row and put the column header in it
+					HSSFRow row = sheet.createRow(rowNumber++);
+					short col = 0;
+		
+					for (int i = 0; i < colInfo.size(); i++) {
+						ColumnInfo currCol = (ColumnInfo) colInfo.get(i);
+		
+						if (currCol.type.indexOf("Array") >= 0) {
+							for (int nestedI = 0; nestedI < currCol.nestedColumns.size();
+							nestedI++) {
+								ColumnInfo nestedCol =
+									(ColumnInfo) currCol.nestedColumns.get(nestedI);
+		
+								HSSFCell cell = row.createCell(col++);
+								cell.setCellValue(currCol.displayName + nestedCol.displayName);
+								cell.setCellStyle(boldCellStyle);
+							}
+						}
+						else {
+							HSSFCell cell = row.createCell(col++);
+		
+							cell.setCellValue(currCol.displayName);
+							cell.setCellStyle(boldCellStyle);
 						}
 					}
+		
+					int maxRowNumber = 0;
+		
+					while (rs.next()) {
+						row = sheet.createRow(rowNumber);
+						col = 0;
+		
+						for (int i = 0; i < colInfo.size(); i++) {
+							ColumnInfo currCol = (ColumnInfo) colInfo.get(i);
+		
+							if (currCol.type.indexOf("Array") >= 0) {
+								ARRAY array = null;
+		
+								if (currCol.type.equalsIgnoreCase("Array")) {
+									array = ((OracleResultSet) rs).getARRAY(currCol.rsColumnName);
+								}
+								else if (currCol.type.equalsIgnoreCase("StructArray")) {
+									STRUCT struct =
+										((OracleResultSet) rs).getSTRUCT(currCol.rsColumnName);
+									Object[] valueStruct = struct.getAttributes();
+									array = (ARRAY) valueStruct[currCol.rsIndex];
+								}
+		
+								if ((array != null) && (array.length()!=0)) {
+									ResultSet nestedRs = array.getResultSet();
+		
+									int nestedRowNumber = 0;  
+		
+									while (nestedRs.next()) {
+										row = sheet.getRow(rowNumber + nestedRowNumber);
+		
+										if (row == null) {
+											row = sheet.createRow(rowNumber + nestedRowNumber);
+		
+											maxRowNumber = rowNumber + nestedRowNumber;
+										}
+										STRUCT valueStruct=null;
+//										STRUCT valueStruct = (STRUCT) nestedRs.getObject(2);
+										try {
+											valueStruct = (STRUCT) nestedRs.getObject(2);
+										}
+										catch (SQLException sqlEx) {
+										
+											sqlEx.printStackTrace();
+											
+										}
+										if (valueStruct==null)
+											continue;							
+										Datum[] valueDatum = valueStruct.getOracleAttributes();
+		
+										for (
+												short nestedI = 0; nestedI < currCol.nestedColumns.size();
+												nestedI++) {
+											ColumnInfo nestedCol =
+												(ColumnInfo) currCol.nestedColumns.get(nestedI);
+		
+											HSSFCell cell = row.createCell((short) (col + nestedI));
+		
+											if (nestedCol.rsSubIndex < 0) {
+												if (valueDatum[nestedCol.rsIndex] != null) {
+													if (nestedCol.type.equalsIgnoreCase("Number")) {
+														cell.setCellValue(
+																((NUMBER) valueDatum[nestedCol.rsIndex]).floatValue());
+													}else if (nestedCol.type.equalsIgnoreCase("Date")){  
+														cell.setCellValue(
+																((DATE) valueDatum[nestedCol.rsIndex]).dateValue().toString());                    	  
+													}else {  
+														String stringCellValue=((CHAR) valueDatum[nestedCol.rsIndex]).stringValue();
+														cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
+		//												cell.setCellValue(
+		//														((CHAR) valueDatum[nestedCol.rsIndex]).stringValue());
+													}
+												}
+											}
+											else {
+												STRUCT nestedStruct =
+													(STRUCT) valueDatum[nestedCol.rsIndex];
+		
+												Datum[] nestedDatum = nestedStruct.getOracleAttributes();
+		
+												if (nestedCol.type.equalsIgnoreCase("Number")) {
+													//changed the conversion from stringValue from floatValue 07/11/2007 to fix GF7664 Prerna
+													cell.setCellValue(
+															((NUMBER) nestedDatum[nestedCol.rsSubIndex]).stringValue());
+												}
+												else if (nestedCol.type.equalsIgnoreCase("String")) {
+													String stringCellValue=((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString();
+													cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
+		//											cell.setCellValue(
+		//													((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString());
+												}
+											}
+										}
+		
+										nestedRowNumber++;
+									}
+								}
+		
+								col += currCol.nestedColumns.size();
+							}
+							else if (currCol.type.equalsIgnoreCase("Struct")) {
+								STRUCT struct =
+									((OracleResultSet) rs).getSTRUCT(currCol.rsColumnName);
+		
+								Object[] valueStruct = struct.getAttributes();
+								HSSFCell cell = row.createCell(col++);
+								cell.setCellValue((String) valueStruct[currCol.rsIndex]);
+							}
+							else {
+								row = sheet.getRow(rowNumber);
+								HSSFCell cell = row.createCell(col++);
+								// Changed the way date is displayed in Excel in 4.0
+								String columnName = ((ColumnInfo) colInfo.get(i)).rsColumnName;											
+								if(currCol.type.equalsIgnoreCase("Date")){
+									cell.setCellValue((rs.getDate(columnName) != null)?(rs.getDate(columnName)).toString():"");
+								}else{						
+									cell.setCellValue(rs.getString(columnName));
+								}
+							}
+						}
+						if (maxRowNumber > rowNumber)
+							rowNumber = maxRowNumber + 2;
+						else 
+							rowNumber += 2;
+					}
+					fileOut = new FileOutputStream(filename);
+					wb.write(fileOut);
 				}
-				if (maxRowNumber > rowNumber)
-					rowNumber = maxRowNumber + 2;
-				else 
-					rowNumber += 2;
+				catch (Exception ex) {
+					log.error("Exception caught in Generate Excel File", ex);			
+					ex.printStackTrace();
+					throw ex;
+				}
+				finally {
+					try {
+						if (rs != null) {
+							rs.close();
+						}
+						if (st != null) {
+							st.close();
+						}
+						if (cn != null) {
+							cn.close(); // Uncommented for JBoss deployment
+						}
+						if (fileOut != null) {
+							fileOut.close();
+						}
+					}
+					catch (Exception e) {
+						log.debug("Unable to perform clean up due to the following error ", e);
+					}
+				}
 			}
-			fileOut = new FileOutputStream(filename);
-			wb.write(fileOut);
-		}
-		catch (Exception ex) {
-			log.error("Exception caught in Generate Excel File", ex);			
-			ex.printStackTrace();
-			throw ex;
-		}
-		finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (st != null) {
-					st.close();
-				}
-				if (cn != null) {
-					cn.close(); // Uncommented for JBoss deployment
-				}
-				if (fileOut != null) {
-					fileOut.close();
-				}
-			}
-			catch (Exception e) {
-				log.debug("Unable to perform clean up due to the following error ", e);
-			}
-		}
-	}
 
 	private List initColumnInfo(String source) {
 		List columnInfo = new ArrayList();
