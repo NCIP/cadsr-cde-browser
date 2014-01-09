@@ -319,9 +319,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 										
 											sqlEx.printStackTrace();
 											
-										}
-										if (valueStruct==null)
-											continue;							
+										}						
 										Datum[] valueDatum = valueStruct.getOracleAttributes();
 		
 										for (
