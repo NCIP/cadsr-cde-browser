@@ -98,6 +98,12 @@ L--%>
 	        <label for ="advanceSearch_input_3">At least one of the words</label>
 	     </td >
 	    </tr>
+	    <tr>
+	     <td valign="top" class="OraTableColumnHeaderWhiteBG" nowrap>
+	        <input type="checkbox" name="jspCDEType" value="derived" 
+	        <%if (!desb.getCDEType().equals("") ) { %> checked <%}%> >Search only Derived DEs
+	     </td >
+	    </tr>	    
 	  </table>    
 
           </td>
