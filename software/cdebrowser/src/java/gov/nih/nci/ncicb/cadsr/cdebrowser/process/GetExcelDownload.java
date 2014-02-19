@@ -388,7 +388,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 								if(currCol.type.equalsIgnoreCase("Date")){
 									cell.setCellValue((rs.getDate(columnName) != null)?(rs.getDate(columnName)).toString():"");
 								}else{						
-									cell.setCellValue(rs.getString(columnName));
+									cell.setCellValue(StringUtils.updateDataForSpecialCharacters(rs.getString(columnName)));
 								}
 							}
 						}

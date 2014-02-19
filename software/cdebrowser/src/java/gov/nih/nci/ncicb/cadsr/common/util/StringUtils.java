@@ -293,8 +293,10 @@ public class StringUtils {
       fieldValue = fieldValue.replace("&#948;", "\u03B4"); // Delta
       fieldValue = fieldValue.replace("&#178;", "\u00B2"); // Superscript 2
       fieldValue = fieldValue.replace("&#176;", "\u00B0"); // Degree
+      fieldValue = fieldValue.replace("&amp;#9702;", "\u00B0"); // Degree
       fieldValue = fieldValue.replace("&#181;", "\u00B5"); // Micro
       fieldValue = fieldValue.replace("&#955;", "\u03BB"); // lambda
+      fieldValue = fieldValue.replace("&#411;", "\u03BB"); // lambda
       fieldValue = fieldValue.replace("&#8805;", "\u2265"); // Greater than or equal to
       fieldValue = fieldValue.replace("&#8804;", "\u2264"); // Less than or equal to
       fieldValue = fieldValue.replace("&#177;", "\u00B1"); // Plus-Minus sign
@@ -304,6 +306,39 @@ public class StringUtils {
       
        return fieldValue;
 }
+  
+  /**
+   * Reformate data for XML download to support special characters
+   * @param fieldValue Orginal field value using ASCII codes
+   * @return filedValue using unicode
+   */
+  public static String updateXMLDataForSpecialCharacters(String fieldValue) {
+      if( fieldValue == null ) {
+             return fieldValue;
+      }
+             
+      fieldValue = fieldValue.replace("&amp;#8322;", "\u2082");  //Subscript 2
+      fieldValue = fieldValue.replace("&amp;#945;", "\u03B1"); // Alpha
+      fieldValue = fieldValue.replace("&amp;#946;", "\u03B2"); // Beta
+      fieldValue = fieldValue.replace("&amp;#947;", "\u03B3"); // Gamma
+      fieldValue = fieldValue.replace("&amp;#948;", "\u03B4"); // Delta
+      fieldValue = fieldValue.replace("&amp;#178;", "\u00B2"); // Superscript 2
+      fieldValue = fieldValue.replace("&amp;#176;", "\u00B0"); // Degree
+      fieldValue = fieldValue.replace("&amp;#9702;", "\u00B0"); // Degree
+      fieldValue = fieldValue.replace("&amp;#181;", "\u00B5"); // Micro
+      fieldValue = fieldValue.replace("&amp;#955;", "\u03BB"); // lambda
+      fieldValue = fieldValue.replace("&amp;#411;", "\u03BB"); // lambda
+      fieldValue = fieldValue.replace("&amp;#8805;", "\u2265"); // Greater than or equal to
+      fieldValue = fieldValue.replace("&amp;#8804;", "\u2264"); // Less than or equal to
+      fieldValue = fieldValue.replace("&amp;#177;", "\u00B1"); // Plus-Minus sign
+      fieldValue = fieldValue.replace("&amp;#954;", "\u03BA"); // Kappa Small
+      fieldValue = fieldValue.replace("&amp;#8495;", "\u212F"); // Small Exponent
+      fieldValue = fieldValue.replace("&amp;#922;", "\u03BA"); // Kappa Big
+      fieldValue = fieldValue.replace("&lt;", "<"); // less than
+      fieldValue = fieldValue.replace("&gt;", "<"); // greater than
+      
+       return fieldValue;
+}  
 
    public static void main(String[] args) {
    String str = "\"test\"";

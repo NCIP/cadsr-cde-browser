@@ -20,6 +20,7 @@ import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DataElementSearchBean;
 import gov.nih.nci.ncicb.cadsr.common.util.DBUtil;
+import gov.nih.nci.ncicb.cadsr.common.util.StringUtils;
 import gov.nih.nci.ncicb.cadsr.common.util.TabInfoBean;
 import gov.nih.nci.ncicb.cadsr.common.util.UserErrorMessage;
 import gov.nih.nci.ncicb.cadsr.common.util.logging.Log;
@@ -235,7 +236,7 @@ public class GetXMLDownload extends BasePersistingProcess {
           filename =
             getStringInfo("XML_DOWNLOAD_DIR") + "DataElements" + "_" +
             fileSuffix + ".xml";
-          writeToFile(xmlString, filename);
+          writeToFile(StringUtils.updateXMLDataForSpecialCharacters(xmlString), filename);
           zipFileVec.addElement(filename);
         }
       }else {
@@ -249,7 +250,7 @@ public class GetXMLDownload extends BasePersistingProcess {
         filename =
           getStringInfo("XML_DOWNLOAD_DIR") + "DataElements" + "_" +
           fileSuffix + ".xml";
-        writeToFile(xmlString, filename);
+        writeToFile(StringUtils.updateXMLDataForSpecialCharacters(xmlString), filename);
         setResult("FILE_TYPE", "xml");
 
         //createZipFile(filename,zipFilename);
@@ -321,12 +322,17 @@ public class GetXMLDownload extends BasePersistingProcess {
     String fn) throws Exception {
     FileOutputStream newFos;
     DataOutputStream newDos;
-
+    BufferedOutputStream bos;
+    
     try {
       newFos = new FileOutputStream(fn);
-      newDos = new DataOutputStream(newFos);
-      newDos.writeBytes(xmlStr + "\n");
-      newDos.close();
+      //newDos = new DataOutputStream(newFos);
+      //newDos.writeBytes(xmlStr + "\n");
+      //newDos.close();
+            
+      bos = new BufferedOutputStream(newFos);
+      bos.write(xmlStr.getBytes("UTF-8"));
+      bos.close();
       setResult("FILE_NAME", fn);
     }
     catch (java.io.IOException e) {

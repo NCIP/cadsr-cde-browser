@@ -64,6 +64,7 @@ public class CDEBrowserParams
     String formBuilderHelpUrl="";
     String cdebrowserHelpUrl="";
     String privacyURL = "";
+    String pcsUrl = "";
     
     String contextTest = "";
     String contextTraining = "";
@@ -392,7 +393,9 @@ public class CDEBrowserParams
             index++;
             log.info("Loaded Properties"+properties);
             cdebrowserHelpUrl = properties.getProperty("HELP.ROOT");
-            index++;      
+            index++; 
+            pcsUrl = properties.getProperty("PCS_URL");
+            index++;
             log.info("Loaded Properties"+properties);
                         
         } 
@@ -508,4 +511,14 @@ public class CDEBrowserParams
 	public void setCdeBrowserHelpUrl(String cdebrowserHelpUrl) {
 		this.cdebrowserHelpUrl = cdebrowserHelpUrl;
 	}
+
+	public String getPcsUrl() {
+		return pcsUrl;
+	}
+
+	public void setPcsUrl(String pcsUrl) {
+		this.pcsUrl = pcsUrl;
+	}
+	
+	
 }

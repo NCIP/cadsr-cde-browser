@@ -87,8 +87,8 @@ function clearForm()
   <table align=center cellspacing="2" cellpadding="3" border="0" onkeypress="if(event.keyCode==13){submitForm()};">
     <%	if(request.getParameter("failed") != null && (("y").equalsIgnoreCase((String)request.getParameter("failed")))) {%>
     <tr>
-      <td colspan=2 class="OraErrorText" nowrap>
-      <b>Invalid username/password combination. Please Retry Login </b>
+      <td colspan=2 class="OraErrorText">
+      <b>Could not validate the User Name and Password, please try again. You could try up to 6 attempts before being locked out, or visit Password Change Station at <a href="<%=params.getPcsUrl()%>" target="_blank" >Password Change Station&nbsp;</a> to reset your password.</b>
       </td>
     </tr>
     <% } %>    
