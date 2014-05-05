@@ -293,7 +293,7 @@ public class StringUtils {
       fieldValue = fieldValue.replace("&#948;", "\u03B4"); // Delta
       fieldValue = fieldValue.replace("&#178;", "\u00B2"); // Superscript 2
       fieldValue = fieldValue.replace("&#176;", "\u00B0"); // Degree
-      fieldValue = fieldValue.replace("&amp;#9702;", "\u00B0"); // Degree
+      fieldValue = fieldValue.replace("&#9702;", "\u00B0"); // Degree
       fieldValue = fieldValue.replace("&#181;", "\u00B5"); // Micro
       fieldValue = fieldValue.replace("&#955;", "\u03BB"); // lambda
       fieldValue = fieldValue.replace("&#411;", "\u03BB"); // lambda
@@ -335,7 +335,7 @@ public class StringUtils {
       fieldValue = fieldValue.replace("&amp;#8495;", "\u212F"); // Small Exponent
       fieldValue = fieldValue.replace("&amp;#922;", "\u03BA"); // Kappa Big
       fieldValue = fieldValue.replace("&lt;", "<"); // less than
-      fieldValue = fieldValue.replace("&gt;", "<"); // greater than
+      fieldValue = fieldValue.replace("&gt;", ">"); // greater than
       
        return fieldValue;
 }  

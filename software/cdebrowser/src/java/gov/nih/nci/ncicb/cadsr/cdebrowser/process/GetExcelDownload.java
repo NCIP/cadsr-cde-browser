@@ -18,6 +18,7 @@ package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 //java imports
 //CDE Browser Application Imports
 import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.common.CaDSRUtil;
 import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
@@ -30,6 +31,7 @@ import gov.nih.nci.ncicb.cadsr.objectCart.CDECart;
 import gov.nih.nci.ncicb.cadsr.objectCart.CDECartItem;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -70,6 +72,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 public class GetExcelDownload extends BasePersistingProcess {
 	private static Log log = LogFactory.getLog(GetExcelDownload.class.getName());
 	private static final int NUMBER_OF_DE_COLUMNS = 32;
+	public static final String DEFAULT_RAI = "'2.16.840.1.113883.3.26.2'";
 
 	public GetExcelDownload() {
 		this(null);
@@ -179,6 +182,15 @@ public class GetExcelDownload extends BasePersistingProcess {
 				HSSFWorkbook wb = null;
 				FileOutputStream fileOut = null;
 				source = getStringInfo("src");
+				
+				String RAI = "";
+				try
+				{
+					RAI = "'" + CaDSRUtil.getNciRegistryId() + "'";
+				}
+				catch ( IOException e) {
+					RAI = DEFAULT_RAI;
+		        }
 		
 				try {
 					//String dataSource = getStringInfo("SBREXT_DSN");
@@ -231,7 +243,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 					}
 		
 					String sqlStmt =
-						"SELECT * FROM DE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
+						"SELECT DE_EXCEL_GENERATOR_VIEW.*," + RAI + " as \"RAI\" FROM DE_EXCEL_GENERATOR_VIEW " + "WHERE DE_IDSEQ IN " +
 						" ( " + where + " )  ";
 		
 					//+" ORDER BY PREFERRED_NAME ";
@@ -317,51 +329,53 @@ public class GetExcelDownload extends BasePersistingProcess {
 										}
 										catch (SQLException sqlEx) {
 										
-											sqlEx.printStackTrace();
+											//sqlEx.printStackTrace();
 											
-										}						
-										Datum[] valueDatum = valueStruct.getOracleAttributes();
-		
-										for (
-												short nestedI = 0; nestedI < currCol.nestedColumns.size();
-												nestedI++) {
-											ColumnInfo nestedCol =
-												(ColumnInfo) currCol.nestedColumns.get(nestedI);
-		
-											HSSFCell cell = row.createCell((short) (col + nestedI));
-		
-											if (nestedCol.rsSubIndex < 0) {
-												if (valueDatum[nestedCol.rsIndex] != null) {
-													if (nestedCol.type.equalsIgnoreCase("Number")) {
-														cell.setCellValue(
-																((NUMBER) valueDatum[nestedCol.rsIndex]).floatValue());
-													}else if (nestedCol.type.equalsIgnoreCase("Date")){  
-														cell.setCellValue(
-																((DATE) valueDatum[nestedCol.rsIndex]).dateValue().toString());                    	  
-													}else {  
-														String stringCellValue=((CHAR) valueDatum[nestedCol.rsIndex]).stringValue();
-														cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
-		//												cell.setCellValue(
-		//														((CHAR) valueDatum[nestedCol.rsIndex]).stringValue());
+										}	
+										if ( valueStruct != null ) {
+											Datum[] valueDatum = valueStruct.getOracleAttributes();
+			
+											for (
+													short nestedI = 0; nestedI < currCol.nestedColumns.size();
+													nestedI++) {
+												ColumnInfo nestedCol =
+													(ColumnInfo) currCol.nestedColumns.get(nestedI);
+			
+												HSSFCell cell = row.createCell((short) (col + nestedI));
+			
+												if (nestedCol.rsSubIndex < 0) {
+													if (valueDatum[nestedCol.rsIndex] != null) {
+														if (nestedCol.type.equalsIgnoreCase("Number")) {
+															cell.setCellValue(
+																	((NUMBER) valueDatum[nestedCol.rsIndex]).floatValue());
+														}else if (nestedCol.type.equalsIgnoreCase("Date")){  
+															cell.setCellValue(
+																	((DATE) valueDatum[nestedCol.rsIndex]).dateValue().toString());                    	  
+														}else {  
+															String stringCellValue=((CHAR) valueDatum[nestedCol.rsIndex]).stringValue();
+															cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
+			//												cell.setCellValue(
+			//														((CHAR) valueDatum[nestedCol.rsIndex]).stringValue());
+														}
 													}
 												}
-											}
-											else {
-												STRUCT nestedStruct =
-													(STRUCT) valueDatum[nestedCol.rsIndex];
-		
-												Datum[] nestedDatum = nestedStruct.getOracleAttributes();
-		
-												if (nestedCol.type.equalsIgnoreCase("Number")) {
-													//changed the conversion from stringValue from floatValue 07/11/2007 to fix GF7664 Prerna
-													cell.setCellValue(
-															((NUMBER) nestedDatum[nestedCol.rsSubIndex]).stringValue());
-												}
-												else if (nestedCol.type.equalsIgnoreCase("String")) {
-													String stringCellValue=((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString();
-													cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
-		//											cell.setCellValue(
-		//													((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString());
+												else {
+													STRUCT nestedStruct =
+														(STRUCT) valueDatum[nestedCol.rsIndex];
+			
+													Datum[] nestedDatum = nestedStruct.getOracleAttributes();
+			
+													if (nestedCol.type.equalsIgnoreCase("Number")) {
+														//changed the conversion from stringValue from floatValue 07/11/2007 to fix GF7664 Prerna
+														cell.setCellValue(
+																((NUMBER) nestedDatum[nestedCol.rsSubIndex]).stringValue());
+													}
+													else if (nestedCol.type.equalsIgnoreCase("String")) {
+														String stringCellValue=((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString();
+														cell.setCellValue(StringUtils.updateDataForSpecialCharacters(stringCellValue));
+			//											cell.setCellValue(
+			//													((CHAR) nestedDatum[nestedCol.rsSubIndex]).toString());
+													}
 												}
 											}
 										}
@@ -378,7 +392,7 @@ public class GetExcelDownload extends BasePersistingProcess {
 		
 								Object[] valueStruct = struct.getAttributes();
 								HSSFCell cell = row.createCell(col++);
-								cell.setCellValue((String) valueStruct[currCol.rsIndex]);
+								cell.setCellValue(StringUtils.updateDataForSpecialCharacters((String) valueStruct[currCol.rsIndex]));
 							}
 							else {
 								row = sheet.getRow(rowNumber);
@@ -387,8 +401,16 @@ public class GetExcelDownload extends BasePersistingProcess {
 								String columnName = ((ColumnInfo) colInfo.get(i)).rsColumnName;											
 								if(currCol.type.equalsIgnoreCase("Date")){
 									cell.setCellValue((rs.getDate(columnName) != null)?(rs.getDate(columnName)).toString():"");
-								}else{						
-									cell.setCellValue(StringUtils.updateDataForSpecialCharacters(rs.getString(columnName)));
+								}else{	
+									/* if (columnName.equals("RAI")) {
+										if (rowNumber == 1)
+											cell.setCellValue(RAI);
+										else
+											cell.setCellValue("");
+									}
+									else { */
+										cell.setCellValue(StringUtils.updateDataForSpecialCharacters(rs.getString(columnName)));
+									//}
 								}
 							}
 						}
@@ -692,7 +714,10 @@ public class GetExcelDownload extends BasePersistingProcess {
 		ColumnInfo deDrivation =
 			new ColumnInfo(5, "DE_DERIVATION", "DDE ", "StructArray");
 		deDrivation.nestedColumns = dedInfo;
-		columnInfo.add(deDrivation);    
+		columnInfo.add(deDrivation);  
+		
+		columnInfo.add(
+				new ColumnInfo("RAI", "RAI", "String"));
 
 		return columnInfo;
 	}

@@ -15,6 +15,7 @@
 package gov.nih.nci.ncicb.cadsr.cdebrowser.process;
 
 import gov.nih.nci.ncicb.cadsr.common.CaDSRConstants;
+import gov.nih.nci.ncicb.cadsr.common.CaDSRUtil;
 import gov.nih.nci.ncicb.cadsr.common.ProcessConstants;
 import gov.nih.nci.ncicb.cadsr.common.base.process.BasePersistingProcess;
 import gov.nih.nci.ncicb.cadsr.common.cdebrowser.DESearchQueryBuilder;
@@ -36,6 +37,7 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.Collection;
@@ -127,6 +129,15 @@ public class GetXMLDownload extends BasePersistingProcess {
     String source = null;
     String where = "";
     Connection cn = null;
+    
+	String RAI = "";
+	try
+	{
+		RAI = "'" + CaDSRUtil.getNciRegistryId() + "'";
+	}
+	catch ( IOException e) {
+		RAI = GetExcelDownload.DEFAULT_RAI;
+    }    
 
     try {
       source = getStringInfo("src");
@@ -165,7 +176,8 @@ public class GetXMLDownload extends BasePersistingProcess {
         throw new Exception("No result set to download");
       }
 
-      String stmt = " SELECT PublicId " +
+      String stmt = " SELECT " + RAI + " as \"RAI\"" +
+      					", PublicId " +  
                         ", LongName "+
                         ",  PreferredName  "+
                         ",  PreferredDefinition  "+
